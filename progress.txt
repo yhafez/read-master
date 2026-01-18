@@ -4326,3 +4326,96 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (65+ tests covering all functionality)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4880 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 79
+
+[2026-01-18] api-srs-001: Implement flashcard CRUD endpoints
+- Created comprehensive flashcard CRUD endpoints in apps/api/api/flashcards/index.ts:
+  - POST /api/flashcards - Create manual flashcard:
+    - Request validation with Zod schema (front, back required; type, bookId, tags, sourceChapterId, sourceOffset optional)
+    - Front: 1-1,000 characters, Back: 1-5,000 characters
+    - Type defaults to CUSTOM
+    - Book ownership verification when bookId provided
+    - Creates flashcard with SM-2 default values (easeFactor: 2.5, interval: 0, dueDate: now)
+    - Returns formatted flashcard response
+  - GET /api/flashcards - List user's flashcards:
+    - Query parameters: page, limit (max 100), sortBy, sortDirection
+    - Filter by: bookId, status (NEW, LEARNING, REVIEW, SUSPENDED), type (VOCABULARY, CONCEPT, COMPREHENSION, QUOTE, CUSTOM), tags (hasEvery), search (front/back), dueOnly, dueBefore, includeDeleted
+    - Pagination with offset/limit
+    - Book ownership verification when filtering by bookId
+    - Returns paginated response with total, page, limit, totalPages
+  - PUT /api/flashcards?id=xxx - Update flashcard:
+    - Updates front, back, type, tags, status
+    - Ownership verification
+    - At least one field required for update
+    - Returns updated flashcard
+  - DELETE /api/flashcards?id=xxx - Soft delete flashcard:
+    - Sets deletedAt timestamp
+    - Ownership verification
+    - Returns confirmation with deleted timestamp
+  - Helper functions exported for testing:
+    - formatFlashcardResponse (formatFlashcard)
+    - buildWhereClause
+    - buildOrderByClause
+  - Constants exported:
+    - DEFAULT_LIMIT (20), MAX_LIMIT (100)
+    - SUPPORTED_METHODS, VALID_TYPES, VALID_STATUSES
+- Created comprehensive test suite with 65+ tests in index.test.ts:
+  - formatFlashcardResponse tests (8 tests):
+    - Full field formatting
+    - Null bookId handling
+    - Date conversion to ISO strings
+    - SM-2 field preservation
+    - Different types and statuses
+    - Empty tags array
+  - buildWhereClause tests (12 tests):
+    - Basic userId clause
+    - bookId, status, type, tags filters
+    - dueOnly filter (excludes suspended)
+    - dueBefore filter
+    - search filter (OR on front/back)
+    - includeDeleted handling
+    - Multiple filter combination
+    - Empty tags handling
+  - buildOrderByClause tests (7 tests):
+    - All sort fields (createdAt, updatedAt, dueDate, easeFactor, interval, front)
+    - Default fallback handling
+  - createFlashcardSchema tests (12 tests):
+    - Minimal and full input validation
+    - Front/back constraints
+    - Type validation
+    - Tags validation
+    - BookId format validation
+  - updateFlashcardSchema tests (8 tests):
+    - Single field updates
+    - Multiple field updates
+    - Empty object rejection
+    - Status validation
+  - flashcardQuerySchema tests (12 tests):
+    - Default values
+    - Type coercion
+    - Limit constraints
+    - Tags parsing
+    - Sort field/direction validation
+    - BookId and search validation
+  - flashcardIdSchema tests (4 tests):
+    - CUID validation
+  - Constants tests (5 tests)
+  - Integration tests (3 tests):
+    - Query validation + where clause building
+    - Create schema + response formatting
+- Files created:
+  - apps/api/api/flashcards/index.ts
+  - apps/api/api/flashcards/index.test.ts
+- Leveraged existing schemas from @read-master/shared/schemas:
+  - createFlashcardSchema, updateFlashcardSchema
+  - flashcardQuerySchema, flashcardIdSchema
+  - Type definitions for FlashcardQueryInput, etc.
+- Acceptance criteria verification:
+  - ✅ CRUD operations work (POST creates, GET lists, PUT updates, DELETE soft-deletes)
+  - ✅ Filtering works correctly (by bookId, status, type, tags, search, dueOnly)
+  - ✅ Pagination works (page, limit with max 100)
+  - ✅ Tests pass (65+ tests covering all functionality)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4953 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
