@@ -146,6 +146,60 @@
       "progress": "{{percent}}% tapos",
       "continueReading": "Magpatuloy sa Pagbabasa",
       "startReading": "Magsimulang Magbasa"
+    },
+    "addBook": {
+      "title": "Magdagdag ng Libro",
+      "tabsLabel": "Mga paraan ng pag-import ng libro",
+      "tabs": {
+        "upload": "Upload",
+        "url": "URL",
+        "paste": "I-paste",
+        "search": "Maghanap"
+      },
+      "dragOrClick": "I-drag at i-drop ang file o mag-click para mag-browse",
+      "dropHere": "I-drop ang file dito",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "Maximum na laki ng file: {{size}}MB",
+      "titleLabel": "Pamagat",
+      "titlePlaceholder": "Ilagay ang pamagat ng libro",
+      "authorLabel": "May-akda",
+      "authorPlaceholder": "Ilagay ang pangalan ng may-akda (opsyonal)",
+      "contentLabel": "Nilalaman",
+      "contentPlaceholder": "I-paste ang iyong text content dito...",
+      "urlLabel": "URL",
+      "urlDescription": "Mag-import ng artikulo o web page mula sa URL",
+      "pasteDescription": "Direktang i-paste ang text content para gumawa ng libro",
+      "wordCount": "{{count}} salita",
+      "minLength": "Kinakailangan ng minimum na 50 character",
+      "uploadButton": "I-upload ang Libro",
+      "uploading": "Nag-a-upload...",
+      "importButton": "Mag-import mula sa URL",
+      "importing": "Nag-i-import...",
+      "saveButton": "I-save bilang Libro",
+      "saving": "Nagse-save...",
+      "addButton": "Idagdag sa Library",
+      "adding": "Nagdadagdag...",
+      "success": "Matagumpay na naidagdag ang libro!",
+      "search": {
+        "description": "Maghanap sa Google Books at Open Library para magdagdag ng mga libro",
+        "label": "Maghanap ng mga libro",
+        "placeholder": "Maghanap ayon sa pamagat, may-akda, o ISBN",
+        "searchButton": "Maghanap",
+        "searching": "Naghahanap...",
+        "noResults": "Walang nahanap na libro. Subukan ang ibang search term.",
+        "enterQuery": "Mangyaring maglagay ng search term",
+        "searchFailed": "Nabigo ang paghahanap. Pakisubukan ulit.",
+        "selectBook": "Mangyaring pumili ng libro na idadagdag",
+        "selectedBook": "Napiling libro:",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "Public Domain"
+      },
+      "errors": {
+        "noFile": "Mangyaring pumili ng file na i-a-upload",
+        "invalidData": "Hindi wasto ang form data",
+        "addFailed": "Nabigo ang pagdagdag ng libro. Pakisubukan ulit."
+      }
     }
   },
   "reader": {

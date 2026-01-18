@@ -20,6 +20,7 @@ import {
   LibraryToolbar,
   LibraryFilterPanel,
   LibraryGrid,
+  AddBookModal,
   DEFAULT_LIBRARY_FILTERS,
   type LibraryViewMode,
   type LibraryFilters,
@@ -203,18 +204,11 @@ export function LibraryPage(): React.ReactElement {
         </Box>
       </Box>
 
-      {/* TODO: Add Book Modal - will be implemented in frontend-008 */}
-      {addBookModalOpen && (
-        <Box>
-          {/* Placeholder for AddBookModal */}
-          <Typography
-            sx={{ display: "none" }}
-            onClick={() => setAddBookModalOpen(false)}
-          >
-            {/* AddBookModal component will be added in task frontend-008 */}
-          </Typography>
-        </Box>
-      )}
+      {/* Add Book Modal */}
+      <AddBookModal
+        open={addBookModalOpen}
+        onClose={() => setAddBookModalOpen(false)}
+      />
     </Box>
   );
 }

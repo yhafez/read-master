@@ -146,6 +146,60 @@
       "progress": "{{percent}}% مكتمل",
       "continueReading": "متابعة القراءة",
       "startReading": "بدء القراءة"
+    },
+    "addBook": {
+      "title": "إضافة كتاب",
+      "tabsLabel": "طرق استيراد الكتب",
+      "tabs": {
+        "upload": "رفع",
+        "url": "رابط",
+        "paste": "لصق",
+        "search": "بحث"
+      },
+      "dragOrClick": "اسحب وأفلت ملفًا أو انقر للتصفح",
+      "dropHere": "أفلت الملف هنا",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "الحد الأقصى لحجم الملف: {{size}}MB",
+      "titleLabel": "العنوان",
+      "titlePlaceholder": "أدخل عنوان الكتاب",
+      "authorLabel": "المؤلف",
+      "authorPlaceholder": "أدخل اسم المؤلف (اختياري)",
+      "contentLabel": "المحتوى",
+      "contentPlaceholder": "الصق محتوى النص هنا...",
+      "urlLabel": "الرابط",
+      "urlDescription": "استيراد مقال أو صفحة ويب من رابط",
+      "pasteDescription": "الصق محتوى نصي مباشرة لإنشاء كتاب",
+      "wordCount": "{{count}} كلمة",
+      "minLength": "مطلوب 50 حرفًا على الأقل",
+      "uploadButton": "رفع الكتاب",
+      "uploading": "جارٍ الرفع...",
+      "importButton": "استيراد من الرابط",
+      "importing": "جارٍ الاستيراد...",
+      "saveButton": "حفظ ككتاب",
+      "saving": "جارٍ الحفظ...",
+      "addButton": "إضافة إلى المكتبة",
+      "adding": "جارٍ الإضافة...",
+      "success": "تمت إضافة الكتاب بنجاح!",
+      "search": {
+        "description": "ابحث في Google Books وOpen Library لإضافة كتب",
+        "label": "البحث عن كتب",
+        "placeholder": "ابحث بالعنوان أو المؤلف أو ISBN",
+        "searchButton": "بحث",
+        "searching": "جارٍ البحث...",
+        "noResults": "لم يتم العثور على كتب. جرب مصطلح بحث مختلف.",
+        "enterQuery": "الرجاء إدخال مصطلح بحث",
+        "searchFailed": "فشل البحث. الرجاء المحاولة مرة أخرى.",
+        "selectBook": "الرجاء تحديد كتاب لإضافته",
+        "selectedBook": "الكتاب المحدد:",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "ملكية عامة"
+      },
+      "errors": {
+        "noFile": "الرجاء تحديد ملف للرفع",
+        "invalidData": "بيانات النموذج غير صالحة",
+        "addFailed": "فشل إضافة الكتاب. الرجاء المحاولة مرة أخرى."
+      }
     }
   },
   "reader": {

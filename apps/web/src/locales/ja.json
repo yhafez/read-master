@@ -146,6 +146,60 @@
       "progress": "{{percent}}% 完了",
       "continueReading": "読書を続ける",
       "startReading": "読み始める"
+    },
+    "addBook": {
+      "title": "本を追加",
+      "tabsLabel": "本のインポート方法",
+      "tabs": {
+        "upload": "アップロード",
+        "url": "URL",
+        "paste": "貼り付け",
+        "search": "検索"
+      },
+      "dragOrClick": "ファイルをドラッグ&ドロップまたはクリックして選択",
+      "dropHere": "ここにファイルをドロップ",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "最大ファイルサイズ: {{size}}MB",
+      "titleLabel": "タイトル",
+      "titlePlaceholder": "本のタイトルを入力",
+      "authorLabel": "著者",
+      "authorPlaceholder": "著者名を入力（任意）",
+      "contentLabel": "コンテンツ",
+      "contentPlaceholder": "テキストコンテンツをここに貼り付け...",
+      "urlLabel": "URL",
+      "urlDescription": "URLから記事やウェブページをインポート",
+      "pasteDescription": "テキストを直接貼り付けて本を作成",
+      "wordCount": "{{count}}語",
+      "minLength": "50文字以上必要です",
+      "uploadButton": "本をアップロード",
+      "uploading": "アップロード中...",
+      "importButton": "URLからインポート",
+      "importing": "インポート中...",
+      "saveButton": "本として保存",
+      "saving": "保存中...",
+      "addButton": "ライブラリに追加",
+      "adding": "追加中...",
+      "success": "本が正常に追加されました！",
+      "search": {
+        "description": "Google BooksとOpen Libraryから本を検索して追加",
+        "label": "本を検索",
+        "placeholder": "タイトル、著者、またはISBNで検索",
+        "searchButton": "検索",
+        "searching": "検索中...",
+        "noResults": "本が見つかりませんでした。別の検索語をお試しください。",
+        "enterQuery": "検索語を入力してください",
+        "searchFailed": "検索に失敗しました。もう一度お試しください。",
+        "selectBook": "追加する本を選択してください",
+        "selectedBook": "選択された本:",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "パブリックドメイン"
+      },
+      "errors": {
+        "noFile": "アップロードするファイルを選択してください",
+        "invalidData": "フォームデータが無効です",
+        "addFailed": "本の追加に失敗しました。もう一度お試しください。"
+      }
     }
   },
   "reader": {

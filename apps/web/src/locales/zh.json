@@ -146,6 +146,60 @@
       "progress": "{{percent}}% 完成",
       "continueReading": "继续阅读",
       "startReading": "开始阅读"
+    },
+    "addBook": {
+      "title": "添加书籍",
+      "tabsLabel": "书籍导入方式",
+      "tabs": {
+        "upload": "上传",
+        "url": "URL",
+        "paste": "粘贴",
+        "search": "搜索"
+      },
+      "dragOrClick": "拖放文件或点击浏览",
+      "dropHere": "将文件拖放到此处",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "最大文件大小：{{size}}MB",
+      "titleLabel": "标题",
+      "titlePlaceholder": "输入书籍标题",
+      "authorLabel": "作者",
+      "authorPlaceholder": "输入作者姓名（可选）",
+      "contentLabel": "内容",
+      "contentPlaceholder": "在此粘贴文本内容...",
+      "urlLabel": "URL",
+      "urlDescription": "从URL导入文章或网页",
+      "pasteDescription": "直接粘贴文本内容创建书籍",
+      "wordCount": "{{count}}字",
+      "minLength": "至少需要50个字符",
+      "uploadButton": "上传书籍",
+      "uploading": "上传中...",
+      "importButton": "从URL导入",
+      "importing": "导入中...",
+      "saveButton": "保存为书籍",
+      "saving": "保存中...",
+      "addButton": "添加到书库",
+      "adding": "添加中...",
+      "success": "书籍添加成功！",
+      "search": {
+        "description": "搜索Google Books和Open Library来添加书籍",
+        "label": "搜索书籍",
+        "placeholder": "按标题、作者或ISBN搜索",
+        "searchButton": "搜索",
+        "searching": "搜索中...",
+        "noResults": "未找到书籍。请尝试其他搜索词。",
+        "enterQuery": "请输入搜索词",
+        "searchFailed": "搜索失败。请重试。",
+        "selectBook": "请选择要添加的书籍",
+        "selectedBook": "已选书籍：",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "公共领域"
+      },
+      "errors": {
+        "noFile": "请选择要上传的文件",
+        "invalidData": "表单数据无效",
+        "addFailed": "添加书籍失败。请重试。"
+      }
     }
   },
   "reader": {

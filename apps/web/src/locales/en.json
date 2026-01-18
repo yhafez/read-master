@@ -146,6 +146,60 @@
       "progress": "{{percent}}% complete",
       "continueReading": "Continue Reading",
       "startReading": "Start Reading"
+    },
+    "addBook": {
+      "title": "Add Book",
+      "tabsLabel": "Book import methods",
+      "tabs": {
+        "upload": "Upload",
+        "url": "URL",
+        "paste": "Paste",
+        "search": "Search"
+      },
+      "dragOrClick": "Drag & drop a file or click to browse",
+      "dropHere": "Drop file here",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "Maximum file size: {{size}}MB",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter book title",
+      "authorLabel": "Author",
+      "authorPlaceholder": "Enter author name (optional)",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Paste your text content here...",
+      "urlLabel": "URL",
+      "urlDescription": "Import an article or web page from a URL",
+      "pasteDescription": "Paste text content directly to create a book",
+      "wordCount": "{{count}} words",
+      "minLength": "Minimum 50 characters required",
+      "uploadButton": "Upload Book",
+      "uploading": "Uploading...",
+      "importButton": "Import from URL",
+      "importing": "Importing...",
+      "saveButton": "Save as Book",
+      "saving": "Saving...",
+      "addButton": "Add to Library",
+      "adding": "Adding...",
+      "success": "Book added successfully!",
+      "search": {
+        "description": "Search Google Books and Open Library to add books",
+        "label": "Search for books",
+        "placeholder": "Search by title, author, or ISBN",
+        "searchButton": "Search",
+        "searching": "Searching...",
+        "noResults": "No books found. Try a different search term.",
+        "enterQuery": "Please enter a search term",
+        "searchFailed": "Search failed. Please try again.",
+        "selectBook": "Please select a book to add",
+        "selectedBook": "Selected book:",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "Public Domain"
+      },
+      "errors": {
+        "noFile": "Please select a file to upload",
+        "invalidData": "Invalid form data",
+        "addFailed": "Failed to add book. Please try again."
+      }
     }
   },
   "reader": {

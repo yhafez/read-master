@@ -15,3 +15,4 @@ export {
   LibraryFilterPanel,
   type LibraryFilterPanelProps,
 } from "./LibraryFilterPanel";
+export { AddBookModal, type AddBookModalProps } from "./addBook";

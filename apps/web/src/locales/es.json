@@ -146,6 +146,60 @@
       "progress": "{{percent}}% completo",
       "continueReading": "Continuar Leyendo",
       "startReading": "Comenzar a Leer"
+    },
+    "addBook": {
+      "title": "Agregar Libro",
+      "tabsLabel": "Métodos de importación de libros",
+      "tabs": {
+        "upload": "Subir",
+        "url": "URL",
+        "paste": "Pegar",
+        "search": "Buscar"
+      },
+      "dragOrClick": "Arrastra y suelta un archivo o haz clic para buscar",
+      "dropHere": "Suelta el archivo aquí",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "Tamaño máximo de archivo: {{size}}MB",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Ingresa el título del libro",
+      "authorLabel": "Autor",
+      "authorPlaceholder": "Ingresa el nombre del autor (opcional)",
+      "contentLabel": "Contenido",
+      "contentPlaceholder": "Pega tu contenido de texto aquí...",
+      "urlLabel": "URL",
+      "urlDescription": "Importa un artículo o página web desde una URL",
+      "pasteDescription": "Pega contenido de texto directamente para crear un libro",
+      "wordCount": "{{count}} palabras",
+      "minLength": "Se requieren al menos 50 caracteres",
+      "uploadButton": "Subir Libro",
+      "uploading": "Subiendo...",
+      "importButton": "Importar desde URL",
+      "importing": "Importando...",
+      "saveButton": "Guardar como Libro",
+      "saving": "Guardando...",
+      "addButton": "Agregar a la Biblioteca",
+      "adding": "Agregando...",
+      "success": "¡Libro agregado exitosamente!",
+      "search": {
+        "description": "Busca en Google Books y Open Library para agregar libros",
+        "label": "Buscar libros",
+        "placeholder": "Buscar por título, autor o ISBN",
+        "searchButton": "Buscar",
+        "searching": "Buscando...",
+        "noResults": "No se encontraron libros. Intenta con un término diferente.",
+        "enterQuery": "Por favor ingresa un término de búsqueda",
+        "searchFailed": "La búsqueda falló. Por favor intenta de nuevo.",
+        "selectBook": "Por favor selecciona un libro para agregar",
+        "selectedBook": "Libro seleccionado:",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "Dominio Público"
+      },
+      "errors": {
+        "noFile": "Por favor selecciona un archivo para subir",
+        "invalidData": "Datos de formulario inválidos",
+        "addFailed": "Error al agregar el libro. Por favor intenta de nuevo."
+      }
     }
   },
   "reader": {
