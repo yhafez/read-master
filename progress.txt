@@ -1181,3 +1181,58 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Type safety tests (3 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (692 tests total: 47 api + 172 database + 12 web + 461 shared)
 - Files: packages/shared/src/utils/srs.ts, packages/shared/src/utils/srs.test.ts, packages/shared/src/utils/index.ts
+
+## Iteration 29
+
+[2026-01-17] shared-005: Create Zod schemas for Forum operations
+- Created packages/shared/src/schemas/forum.ts with comprehensive forum validation
+- Implemented all enum schemas matching Prisma schema:
+  - userTierSchema (FREE, PRO, SCHOLAR) - for category access control
+  - voteValueSchema (1 or -1) - upvote/downvote validation
+  - reportTypeSchema (SPAM, HARASSMENT, INAPPROPRIATE, OFF_TOPIC, MISINFORMATION, OTHER)
+- Created ID schemas with CUID format validation:
+  - forumPostIdSchema, forumReplyIdSchema, forumCategoryIdSchema
+  - forumCategorySlugSchema (URL-friendly: lowercase, numbers, hyphens)
+  - forumBookIdSchema (optional/nullable for book-specific discussions)
+- Created content field schemas with profanity filtering:
+  - forumPostTitleSchema (3-200 chars) and forumPostTitlePublicSchema (with profanity filter)
+  - forumContentSchema (10-50,000 chars) and forumContentPublicSchema
+  - forumReplyContentSchema (1-50,000 chars) and forumReplyContentPublicSchema
+- Created forum post schemas:
+  - createForumPostSchema/createForumPostBaseSchema (with/without profanity filter)
+  - updateForumPostSchema with "at least one field" validation
+  - forumPostQuerySchema with pagination (max 100), sorting (6 fields), filtering, search
+  - forumPostSortFieldSchema: createdAt, updatedAt, voteScore, viewCount, repliesCount, lastReplyAt
+  - postIdParamsSchema, categoryPostIdParamsSchema for route parameters
+- Created forum reply schemas:
+  - createForumReplySchema with nested reply support (parentReplyId)
+  - updateForumReplySchema
+  - forumReplyQuerySchema with maxDepth for nested replies (default 5, max 10)
+  - forumReplySortFieldSchema: createdAt, updatedAt, voteScore
+- Created vote schemas:
+  - voteOnPostSchema, voteOnReplySchema
+  - removePostVoteSchema, removeReplyVoteSchema
+  - forumVoteSchema (unified) with XOR validation for postId/replyId
+- Created moderation schemas:
+  - markBestAnswerSchema, togglePinPostSchema, toggleLockPostSchema
+  - reportContentSchema with XOR validation and reason (max 1000 chars)
+- Created bulk operation schemas:
+  - bulkDeletePostsSchema (1-100 IDs)
+  - bulkDeleteRepliesSchema (1-100 IDs)
+- Created forumSearchSchema with searchIn filter (posts, replies, all)
+- Created forumCategoryResponseSchema for API responses
+- Exported forumSchemas collection object for convenient importing
+- Updated packages/shared/src/schemas/index.ts to export forum schemas
+- Created comprehensive test suite with 121 tests in forum.test.ts:
+  - Enum validation tests (userTier, voteValue, reportType)
+  - ID schema tests (CUID format, slug format)
+  - Content field validation with profanity filter integration
+  - Create/update schema tests for posts and replies
+  - Vote schema tests (upvote, downvote, unified vote with XOR)
+  - Moderation schema tests (best answer, pin, lock, report)
+  - Query schema tests with defaults and coercion
+  - Bulk operation schema tests (1-100 IDs)
+  - Search schema tests
+  - Edge cases: unicode, RTL content, boundary conditions, whitespace
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (814 tests total: 47 api + 172 database + 12 web + 582 shared)
+- Files: packages/shared/src/schemas/forum.ts, packages/shared/src/schemas/forum.test.ts, packages/shared/src/schemas/index.ts

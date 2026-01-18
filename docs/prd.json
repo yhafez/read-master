@@ -631,7 +631,7 @@
         "Profanity filter is applied",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-006",

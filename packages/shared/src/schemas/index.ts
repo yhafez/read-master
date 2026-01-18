@@ -9,6 +9,7 @@
  * import { createBookSchema, bookQuerySchema } from '@read-master/shared/schemas';
  * import { createAnnotationSchema, annotationSchemas } from '@read-master/shared/schemas';
  * import { createFlashcardSchema, reviewFlashcardSchema } from '@read-master/shared/schemas';
+ * import { createForumPostSchema, forumVoteSchema, forumSchemas } from '@read-master/shared/schemas';
  *
  * // Server-side validation
  * const result = createBookSchema.safeParse(req.body);
@@ -28,6 +29,13 @@
  * if (!reviewResult.success) {
  *   return res.status(400).json({ errors: reviewResult.error.flatten() });
  * }
+ *
+ * // Forum post validation with profanity filtering
+ * const postResult = createForumPostSchema.safeParse({
+ *   categoryId: 'clhcat123',
+ *   title: 'Discussion topic',
+ *   content: 'Post content here...',
+ * });
  * ```
  */
 
@@ -39,3 +47,6 @@ export * from "./annotations";
 
 // Flashcard schemas
 export * from "./flashcards";
+
+// Forum schemas
+export * from "./forum";
