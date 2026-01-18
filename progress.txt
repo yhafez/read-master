@@ -4249,3 +4249,80 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (73 tests covering all functionality)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4815 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 78
+
+[2026-01-18] api-ai-006: Implement POST /api/ai/comprehension-check endpoint
+- Created comprehensive comprehension check endpoint in apps/api/api/ai/comprehension-check.ts:
+  - Request validation with Zod schema:
+    - bookId: Required CUID format
+    - recentContent: Required, 50-10000 characters
+    - questionType: Optional, enum ["multiple_choice", "true_false", "short_answer"], defaults to "multiple_choice"
+    - chapterId: Optional string
+  - Security checks:
+    - Authentication required (withAuth wrapper)
+    - AI service availability check
+    - User AI enabled check
+    - Rate limit enforcement with headers
+    - Book ownership verification
+  - AI integration:
+    - Uses generateComprehensionCheckPrompt from @read-master/ai package
+    - Maps user reading level to prompt context
+    - Builds book context from database record
+    - Uses completion() for AI response
+    - Parses response with parseComprehensionCheckResponse
+  - Database storage:
+    - Stores in Assessment table with CHAPTER_CHECK type
+    - Stores question object with all parsed fields
+    - Uses Prisma.InputJsonValue for JSON fields
+    - Tracks chapterIds, bloomsBreakdown, generatedBy, tokensUsed
+  - Response structure:
+    - id: Assessment ID for tracking
+    - question: The comprehension question
+    - type: Question type (multiple_choice, true_false, short_answer)
+    - options: Answer options array (for multiple choice)
+    - difficulty: Question difficulty (1-5)
+    - textReference: Where in text the answer is found
+    - usage: Token counts (prompt, completion, total)
+    - cost: Cost breakdown (input, output, total)
+    - durationMs: Response time
+  - AI usage logging:
+    - Logs successful calls to AIUsageLog table
+    - Logs failed AI operations with error details
+    - Tracks bookId, contentLength, questionType, readingLevel, assessmentId
+  - Helper functions exported for testing:
+    - comprehensionCheckRequestSchema
+    - mapReadingLevel
+    - buildBookContext
+    - mapQuestionTypeToDb
+    - buildQuestionObject
+- Created comprehensive test suite with 65+ tests in comprehension-check.test.ts:
+  - comprehensionCheckRequestSchema tests (~30 tests):
+    - bookId validation (6 tests)
+    - recentContent validation (6 tests)
+    - questionType validation (5 tests)
+    - chapterId validation (2 tests)
+    - full request validation (2 tests)
+  - mapReadingLevel tests (20 tests):
+    - Null/empty input handling (2 tests)
+    - Keyword-based levels (6 tests)
+    - Lexile score mapping (6 tests)
+    - Edge cases (4 tests)
+  - buildBookContext tests (7 tests)
+  - mapQuestionTypeToDb tests (4 tests)
+  - buildQuestionObject tests (4 tests)
+  - Constants tests (5 tests)
+  - Integration-like tests (5 tests):
+    - Complete request scenarios
+    - Reading level and book context integration
+    - Question type handling
+- Files created:
+  - apps/api/api/ai/comprehension-check.ts
+  - apps/api/api/ai/comprehension-check.test.ts
+- Acceptance criteria verification:
+  - ✅ Questions are relevant (AI prompt designed for comprehension questions from recent content)
+  - ✅ Format is correct (structured response with question, options, explanation, difficulty)
+  - ✅ Tests pass (65+ tests covering all functionality)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4880 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

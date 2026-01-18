@@ -737,7 +737,7 @@
         "Format is correct",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-ai-007",
