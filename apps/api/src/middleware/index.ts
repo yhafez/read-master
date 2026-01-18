@@ -49,3 +49,26 @@ export {
   assert,
   assertExists,
 } from "./error.js";
+
+export {
+  // Types
+  type ValidationSchema,
+  type ValidatedData,
+  type ValidationResult,
+  type ValidatedRequest,
+  // Validation functions
+  validateWithSchema,
+  validateBody,
+  validateQuery,
+  validateParams,
+  validateRequest,
+  formatValidationErrors,
+  // Higher-order middleware
+  withValidation,
+  // Utilities
+  parseOrThrow,
+  extractValidated,
+  // Common schemas
+  CommonSchemas,
+  createQuerySchema,
+} from "./validation.js";

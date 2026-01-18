@@ -1680,3 +1680,54 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Error inheritance tests: all classes extend AppError and Error
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1993 tests total: 139 api + 172 database + 12 web + 1670 shared)
 - Files: apps/api/src/middleware/error.ts, apps/api/src/middleware/error.test.ts, apps/api/src/middleware/index.ts
+
+## Iteration 38
+
+[2026-01-17] api-infra-003: Create Zod validation middleware
+- Created apps/api/src/middleware/validation.ts with comprehensive validation utilities
+- Implemented type-safe validation schema configuration:
+  - ValidationSchema<TBody, TQuery, TParams>: Schema configuration type
+  - ValidatedData<TSchema>: Inferred validated data types
+  - ValidationResult<T>: Success/error discriminated union result type
+  - ValidatedRequest<TSchema>: Extended request with validated data attached
+- Implemented core validation functions:
+  - validateWithSchema: Validate any data against a Zod schema
+  - validateBody: Validate request body with source set to "body"
+  - validateQuery: Validate query params with source set to "query"
+  - validateParams: Validate URL params with source set to "params"
+  - validateRequest: Validate all parts of a request (body, query, params)
+  - formatValidationErrors: Group errors by source for structured response
+- Implemented higher-order middleware:
+  - withValidation: Wraps handlers with automatic validation
+    - Returns 400 with grouped validation errors on failure
+    - Attaches validated data to request.validated on success
+    - Fully type-safe with inferred types from schemas
+- Implemented utility functions:
+  - parseOrThrow: Parse single value or throw ValidationError
+  - extractValidated: Extract and validate data or throw with detailed message
+- Created CommonSchemas for reusable validation patterns:
+  - uuid: UUID validation
+  - pagination: { page, limit } with coercion and defaults
+  - idParam: { id: uuid } for URL path params
+  - sortDirection: "asc" | "desc" with default "desc"
+  - queryBoolean: Transform "true"/"false"/"1"/"0" to boolean
+  - commaSeparated: Split and trim comma-separated strings
+- Created createQuerySchema helper:
+  - Build query schemas with optional pagination and sort fields
+  - Composable with custom field definitions
+- Updated src/middleware/index.ts to export all validation utilities
+- Created comprehensive test suite with 43 tests in validation.test.ts:
+  - validateWithSchema tests: valid data, invalid data, nested objects
+  - validateBody tests: source tracking, multiple errors
+  - validateQuery tests: string coercion, optional params, defaults
+  - validateParams tests: UUID validation, source tracking
+  - validateRequest tests: all parts, error aggregation, partial schemas
+  - formatValidationErrors tests: grouping, multiple sources, empty array
+  - withValidation tests: success path, 400 errors, async handlers, type preservation
+  - parseOrThrow tests: success, ValidationError, field name in message
+  - extractValidated tests: success, detailed error messages, source tracking
+  - CommonSchemas tests: all schema validations
+  - createQuerySchema tests: custom fields, pagination, sort, combined
+  - Type inference tests: body type preservation
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2036 tests total: 182 api + 172 database + 12 web + 1670 shared)
+- Files: apps/api/src/middleware/validation.ts, apps/api/src/middleware/validation.test.ts, apps/api/src/middleware/index.ts
