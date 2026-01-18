@@ -124,6 +124,47 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.annotation.count).toBe("function");
       expect(typeof prisma.annotation.aggregate).toBe("function");
     });
+
+    it("should have preReadingGuide model accessor", () => {
+      expect(prisma.preReadingGuide).toBeDefined();
+      expect(typeof prisma.preReadingGuide.findMany).toBe("function");
+      expect(typeof prisma.preReadingGuide.findUnique).toBe("function");
+      expect(typeof prisma.preReadingGuide.create).toBe("function");
+      expect(typeof prisma.preReadingGuide.update).toBe("function");
+      expect(typeof prisma.preReadingGuide.delete).toBe("function");
+      expect(typeof prisma.preReadingGuide.upsert).toBe("function");
+    });
+
+    it("should have preReadingGuide model with expected query methods", () => {
+      expect(typeof prisma.preReadingGuide.findFirst).toBe("function");
+      expect(typeof prisma.preReadingGuide.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.preReadingGuide.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.preReadingGuide.createMany).toBe("function");
+      expect(typeof prisma.preReadingGuide.updateMany).toBe("function");
+      expect(typeof prisma.preReadingGuide.deleteMany).toBe("function");
+      expect(typeof prisma.preReadingGuide.count).toBe("function");
+      expect(typeof prisma.preReadingGuide.aggregate).toBe("function");
+    });
+
+    it("should have assessment model accessor", () => {
+      expect(prisma.assessment).toBeDefined();
+      expect(typeof prisma.assessment.findMany).toBe("function");
+      expect(typeof prisma.assessment.findUnique).toBe("function");
+      expect(typeof prisma.assessment.create).toBe("function");
+      expect(typeof prisma.assessment.update).toBe("function");
+      expect(typeof prisma.assessment.delete).toBe("function");
+    });
+
+    it("should have assessment model with expected query methods", () => {
+      expect(typeof prisma.assessment.findFirst).toBe("function");
+      expect(typeof prisma.assessment.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.assessment.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.assessment.createMany).toBe("function");
+      expect(typeof prisma.assessment.updateMany).toBe("function");
+      expect(typeof prisma.assessment.deleteMany).toBe("function");
+      expect(typeof prisma.assessment.count).toBe("function");
+      expect(typeof prisma.assessment.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

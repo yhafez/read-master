@@ -328,7 +328,7 @@
         "Assessment model supports different types",
         "Relations work correctly"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-006",

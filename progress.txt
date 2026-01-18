@@ -435,3 +435,47 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (109 tests total: 47 api + 34 shared + 12 web + 16 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 15
+
+[2026-01-17] db-005: Create PreReadingGuide and Assessment models
+- Created PreReadingGuide model with all fields from specification:
+  - id (cuid), bookId with @unique constraint (one guide per book)
+  - Relation to Book with onDelete: Cascade
+  - JSON fields for structured data:
+    - vocabulary: Array of { term, definition, examples }
+    - keyArguments: Array of { argument, explanation }
+    - chapterSummaries: Array of { chapterIndex, summary }
+    - keyThemes: Array of theme strings
+    - readingTips: Array of tips for reading this book
+    - discussionTopics: Suggested discussion questions
+  - Text fields for contextual information:
+    - historicalContext: Historical background
+    - authorContext: About the author
+    - intellectualContext: Intellectual/philosophical context
+  - AI generation metadata: generatedAt, generatedBy, tokensUsed
+  - Timestamps: createdAt, updatedAt
+  - Index on bookId
+- Created Assessment model with all fields from specification:
+  - id (cuid), userId and bookId with relations to User and Book
+  - type (AssessmentType enum: CHAPTER_CHECK, BOOK_ASSESSMENT, CUSTOM)
+  - chapterIds: String[] for scoping assessment to specific chapters
+  - JSON fields for questions and answers:
+    - questions: Array of { id, type, question, options?, correctAnswer, bloomsLevel }
+    - answers: Array of { questionId, userAnswer, isCorrect, feedback }
+  - Scoring fields: score (0-100), totalQuestions, correctAnswers
+  - bloomsBreakdown: JSON for Bloom's taxonomy distribution { remember, understand, apply, analyze, evaluate, create }
+  - Timing fields: startedAt, completedAt, timeSpent
+  - AI generation metadata: generatedBy, tokensUsed
+  - Timestamps: createdAt, updatedAt
+  - Indexes on userId, bookId, userId+bookId, userId+type, completedAt
+- Created AssessmentType enum: CHAPTER_CHECK, BOOK_ASSESSMENT, CUSTOM
+- Added User relation: assessments[]
+- Added Book relations: preReadingGuide? (one-to-one), assessments[]
+- Added onDelete: Cascade to all new relations
+- Updated packages/database/src/index.ts with examples for PreReadingGuide upsert and Assessment create
+- Added 4 new tests for PreReadingGuide and Assessment model accessors
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (113 tests total: 47 api + 34 shared + 12 web + 20 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

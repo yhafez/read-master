@@ -58,6 +58,7 @@ model User {
   books           Book[]
   readingProgress ReadingProgress[]
   annotations     Annotation[]
+  assessments     Assessment[]
 
   // Indexes for common queries
   @@index([clerkId])
@@ -126,6 +127,8 @@ model Book {
   chapters        Chapter[]
   readingProgress ReadingProgress[]
   annotations     Annotation[]
+  preReadingGuide PreReadingGuide?
+  assessments     Assessment[]
 
   // Indexes for common queries
   @@index([userId])
@@ -268,4 +271,97 @@ model Annotation {
   @@index([userId, type])
   @@index([deletedAt])
   @@index([bookId, startOffset]) // For finding annotations by position
+}
+
+// =============================================================================
+// PRE-READING GUIDES & ASSESSMENTS
+// =============================================================================
+
+/// PreReadingGuide - AI-generated pre-reading guide for a book
+/// Contains vocabulary, key arguments, summaries, and contextual information
+/// One guide per book (unique bookId)
+model PreReadingGuide {
+  id     String @id @default(cuid())
+  bookId String @unique
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Vocabulary and key concepts (stored as JSON arrays)
+  vocabulary       Json @default("[]") // Array of { term, definition, examples }
+  keyArguments     Json @default("[]") // Array of { argument, explanation }
+  chapterSummaries Json @default("[]") // Array of { chapterIndex, summary }
+
+  // Contextual information (text fields for rich content)
+  historicalContext   String? @db.Text // Historical background
+  authorContext       String? @db.Text // About the author
+  intellectualContext String? @db.Text // Intellectual/philosophical context
+
+  // Additional metadata
+  keyThemes        Json @default("[]") // Array of theme strings
+  readingTips      Json @default("[]") // Array of tips for reading this book
+  discussionTopics Json @default("[]") // Suggested discussion questions
+
+  // AI generation metadata
+  generatedAt DateTime @default(now())
+  generatedBy String? // AI model version used
+  tokensUsed  Int? // Tokens consumed for generation
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
+  @@index([bookId])
+}
+
+/// Assessment - Post-reading assessments for comprehension checking
+/// Supports multiple assessment types with Bloom's taxonomy breakdown
+model Assessment {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Assessment type and scope
+  type       AssessmentType
+  chapterIds String[]       @default([]) // Specific chapters, empty = whole book
+
+  // Questions and answers (stored as JSON for flexibility)
+  questions Json @default("[]") // Array of { id, type, question, options?, correctAnswer, bloomsLevel }
+  answers   Json @default("[]") // Array of { questionId, userAnswer, isCorrect, feedback }
+
+  // Scoring
+  score          Float? // Overall score (0-100)
+  totalQuestions Int    @default(0)
+  correctAnswers Int    @default(0)
+
+  // Bloom's Taxonomy breakdown
+  bloomsBreakdown Json @default("{}") // { remember: %, understand: %, apply: %, analyze: %, evaluate: %, create: % }
+
+  // Timing
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  timeSpent   Int?      @default(0) // Time spent in seconds
+
+  // AI generation metadata
+  generatedBy String? // AI model version used
+  tokensUsed  Int? // Tokens consumed for generation
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
+  @@index([userId])
+  @@index([bookId])
+  @@index([userId, bookId])
+  @@index([userId, type])
+  @@index([completedAt])
+}
+
+/// AssessmentType - Types of assessments available
+enum AssessmentType {
+  CHAPTER_CHECK // Quick check after reading a chapter
+  BOOK_ASSESSMENT // Full book comprehension assessment
+  CUSTOM // User-created or teacher-created assessment
 }
