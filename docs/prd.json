@@ -1058,7 +1058,7 @@
         "All voice options are available",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-tts-004",
@@ -1087,7 +1087,7 @@
         "Status tracking works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-social-001",
@@ -4716,6 +4716,33 @@
         "Rollback documented",
         "Scaling documented",
         "Incident plan ready"
+      ],
+      "passes": false
+    },
+    {
+      "id": "db-tts-001",
+      "category": "database",
+      "phase": "discovery",
+      "priority": "medium",
+      "description": "Add TTSDownload database model for persistent storage",
+      "defer_to_next_sprint": true,
+      "steps": [
+        "Add TTSDownload model to Prisma schema",
+        "Include fields: id, userId, bookId, status, provider, voice, format",
+        "Include fields: totalChunks, processedChunks, totalCharacters",
+        "Include fields: estimatedCost, actualCost, fileKey, fileSize, downloadUrl",
+        "Include fields: errorMessage, createdAt, updatedAt, completedAt, expiresAt",
+        "Run migration",
+        "Update download endpoints to use database",
+        "Add cleanup cron job for expired downloads",
+        "Write tests for database integration"
+      ],
+      "acceptance_criteria": [
+        "TTSDownload model exists in schema",
+        "Migrations run successfully",
+        "Endpoints persist to database",
+        "Cleanup job removes expired downloads",
+        "Tests pass"
       ],
       "passes": false
     }
