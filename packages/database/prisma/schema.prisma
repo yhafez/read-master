@@ -55,13 +55,15 @@ model User {
   deletedAt DateTime? // Soft delete
 
   // Relations
-  books           Book[]
-  readingProgress ReadingProgress[]
-  annotations     Annotation[]
-  assessments     Assessment[]
-  flashcards      Flashcard[]
-  stats           UserStats?
-  achievements    UserAchievement[]
+  books             Book[]
+  readingProgress   ReadingProgress[]
+  annotations       Annotation[]
+  assessments       Assessment[]
+  flashcards        Flashcard[]
+  stats             UserStats?
+  achievements      UserAchievement[]
+  curriculums       Curriculum[] // Curriculums created by this user
+  curriculumFollows CurriculumFollow[] // Curriculums this user is following
 
   // Indexes for common queries
   @@index([clerkId])
@@ -133,6 +135,7 @@ model Book {
   preReadingGuide PreReadingGuide?
   assessments     Assessment[]
   flashcards      Flashcard[]
+  curriculumItems CurriculumItem[] // Curriculum items that reference this book
 
   // Indexes for common queries
   @@index([userId])
@@ -604,4 +607,125 @@ enum AchievementTier {
   RARE // Significant effort required
   EPIC // Major accomplishment
   LEGENDARY // Exceptional achievement
+}
+
+// =============================================================================
+// CURRICULUM - User-created reading plans and learning paths
+// =============================================================================
+
+/// Visibility - Controls who can see content
+enum Visibility {
+  PRIVATE // Only owner can see
+  UNLISTED // Anyone with link can see
+  PUBLIC // Visible in browse/search
+}
+
+/// Curriculum - A curated reading plan/learning path
+/// Can be created by Pro/Scholar users and shared with others
+model Curriculum {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Curriculum metadata
+  title       String  @db.VarChar(200) // Title of the curriculum
+  description String  @db.Text // Description of the learning path
+  coverImage  String? // Optional cover image URL
+
+  // Categorization
+  category   String?  @db.VarChar(100) // e.g., "Philosophy", "Science", "History"
+  tags       String[] @default([])
+  difficulty String?  @db.VarChar(50) // e.g., "Beginner", "Intermediate", "Advanced"
+
+  // Visibility settings
+  visibility Visibility @default(PRIVATE)
+
+  // Statistics (denormalized for performance)
+  totalItems     Int @default(0) // Number of items in curriculum
+  followersCount Int @default(0) // Number of users following this curriculum
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  items     CurriculumItem[]
+  followers CurriculumFollow[]
+
+  // Indexes
+  @@index([userId])
+  @@index([userId, visibility])
+  @@index([visibility]) // For browsing public curriculums
+  @@index([category])
+  @@index([deletedAt])
+  @@index([followersCount]) // For popularity sorting
+  @@index([tags])
+}
+
+/// CurriculumItem - An item within a curriculum (book, external resource, etc.)
+/// Maintains order within the curriculum
+model CurriculumItem {
+  id           String     @id @default(cuid())
+  curriculumId String
+  curriculum   Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
+
+  // Item ordering
+  orderIndex Int // Order within the curriculum (0-indexed)
+
+  // Item content - can reference a book or be an external resource
+  bookId String? // Optional reference to a book in the system
+  book   Book?   @relation(fields: [bookId], references: [id], onDelete: SetNull)
+
+  // For external resources not in the system
+  externalTitle  String? @db.VarChar(500) // Title of external resource
+  externalAuthor String? @db.VarChar(200) // Author of external resource
+  externalUrl    String? // URL to external resource
+  externalIsbn   String? @db.VarChar(20) // ISBN for books not in system
+
+  // Item-specific notes from curator
+  notes String? @db.Text // Curator's notes/instructions for this item
+
+  // Estimated time to complete
+  estimatedTime Int? // Estimated time in minutes
+
+  // Status
+  isOptional Boolean @default(false) // Optional items in the curriculum
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
+  @@index([curriculumId])
+  @@index([curriculumId, orderIndex])
+  @@index([bookId])
+}
+
+/// CurriculumFollow - Tracks users following a curriculum
+/// Junction table with progress tracking
+model CurriculumFollow {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  curriculumId String
+  curriculum   Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
+
+  // Progress tracking
+  currentItemIndex Int       @default(0) // Current item index in curriculum
+  completedItems   Int       @default(0) // Number of items completed
+  lastProgressAt   DateTime? // Last time progress was updated
+  startedAt        DateTime  @default(now()) // When user started following
+  completedAt      DateTime? // When user completed the curriculum
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraint: each user can only follow a curriculum once
+  @@unique([userId, curriculumId])
+  // Indexes
+  @@index([userId])
+  @@index([curriculumId])
+  @@index([userId, completedAt]) // For finding completed/in-progress curriculums
 }

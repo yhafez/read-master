@@ -399,7 +399,7 @@
         "CurriculumFollow tracks progress",
         "Relations are properly defined"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-009",

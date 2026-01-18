@@ -266,6 +266,66 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.userAchievement.count).toBe("function");
       expect(typeof prisma.userAchievement.aggregate).toBe("function");
     });
+
+    it("should have curriculum model accessor", () => {
+      expect(prisma.curriculum).toBeDefined();
+      expect(typeof prisma.curriculum.findMany).toBe("function");
+      expect(typeof prisma.curriculum.findUnique).toBe("function");
+      expect(typeof prisma.curriculum.create).toBe("function");
+      expect(typeof prisma.curriculum.update).toBe("function");
+      expect(typeof prisma.curriculum.delete).toBe("function");
+    });
+
+    it("should have curriculum model with expected query methods", () => {
+      expect(typeof prisma.curriculum.findFirst).toBe("function");
+      expect(typeof prisma.curriculum.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.curriculum.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.curriculum.createMany).toBe("function");
+      expect(typeof prisma.curriculum.updateMany).toBe("function");
+      expect(typeof prisma.curriculum.deleteMany).toBe("function");
+      expect(typeof prisma.curriculum.count).toBe("function");
+      expect(typeof prisma.curriculum.aggregate).toBe("function");
+    });
+
+    it("should have curriculumItem model accessor", () => {
+      expect(prisma.curriculumItem).toBeDefined();
+      expect(typeof prisma.curriculumItem.findMany).toBe("function");
+      expect(typeof prisma.curriculumItem.findUnique).toBe("function");
+      expect(typeof prisma.curriculumItem.create).toBe("function");
+      expect(typeof prisma.curriculumItem.update).toBe("function");
+      expect(typeof prisma.curriculumItem.delete).toBe("function");
+    });
+
+    it("should have curriculumItem model with expected query methods", () => {
+      expect(typeof prisma.curriculumItem.findFirst).toBe("function");
+      expect(typeof prisma.curriculumItem.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.curriculumItem.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.curriculumItem.createMany).toBe("function");
+      expect(typeof prisma.curriculumItem.updateMany).toBe("function");
+      expect(typeof prisma.curriculumItem.deleteMany).toBe("function");
+      expect(typeof prisma.curriculumItem.count).toBe("function");
+      expect(typeof prisma.curriculumItem.aggregate).toBe("function");
+    });
+
+    it("should have curriculumFollow model accessor", () => {
+      expect(prisma.curriculumFollow).toBeDefined();
+      expect(typeof prisma.curriculumFollow.findMany).toBe("function");
+      expect(typeof prisma.curriculumFollow.findUnique).toBe("function");
+      expect(typeof prisma.curriculumFollow.create).toBe("function");
+      expect(typeof prisma.curriculumFollow.update).toBe("function");
+      expect(typeof prisma.curriculumFollow.delete).toBe("function");
+    });
+
+    it("should have curriculumFollow model with expected query methods", () => {
+      expect(typeof prisma.curriculumFollow.findFirst).toBe("function");
+      expect(typeof prisma.curriculumFollow.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.curriculumFollow.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.curriculumFollow.createMany).toBe("function");
+      expect(typeof prisma.curriculumFollow.updateMany).toBe("function");
+      expect(typeof prisma.curriculumFollow.deleteMany).toBe("function");
+      expect(typeof prisma.curriculumFollow.count).toBe("function");
+      expect(typeof prisma.curriculumFollow.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

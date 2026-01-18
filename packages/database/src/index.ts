@@ -11,6 +11,7 @@
  * import type { Flashcard, FlashcardReview, FlashcardType, FlashcardStatus } from '@read-master/database';
  * import type { UserStats, Achievement, UserAchievement } from '@read-master/database';
  * import type { AchievementCategory, AchievementTier } from '@read-master/database';
+ * import type { Curriculum, CurriculumItem, CurriculumFollow, Visibility } from '@read-master/database';
  * import type { BookSource, FileType, ReadingStatus, AnnotationType } from '@read-master/database';
  *
  * // Fetch user with books
@@ -169,6 +170,78 @@
  *   include: { achievement: true },
  *   orderBy: { earnedAt: 'desc' }
  * });
+ *
+ * // Create a curriculum (reading plan/learning path)
+ * const curriculum = await prisma.curriculum.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     title: 'Introduction to Philosophy',
+ *     description: 'A beginner-friendly path through major philosophical works',
+ *     category: 'Philosophy',
+ *     difficulty: 'Beginner',
+ *     visibility: 'PUBLIC',
+ *     tags: ['philosophy', 'classics', 'beginner']
+ *   }
+ * });
+ *
+ * // Add items to a curriculum with ordering
+ * const curriculumItem = await prisma.curriculumItem.create({
+ *   data: {
+ *     curriculumId: 'curriculum_123',
+ *     orderIndex: 0,
+ *     bookId: 'book_123', // Reference to a book in the system
+ *     notes: 'Start here - this book introduces key concepts',
+ *     estimatedTime: 180, // 3 hours
+ *     isOptional: false
+ *   }
+ * });
+ *
+ * // Add external resource (book not in system)
+ * const externalItem = await prisma.curriculumItem.create({
+ *   data: {
+ *     curriculumId: 'curriculum_123',
+ *     orderIndex: 1,
+ *     externalTitle: 'The Republic',
+ *     externalAuthor: 'Plato',
+ *     externalIsbn: '9780140455113',
+ *     notes: 'Classic foundational text',
+ *     isOptional: false
+ *   }
+ * });
+ *
+ * // Follow a curriculum with progress tracking
+ * const follow = await prisma.curriculumFollow.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     curriculumId: 'curriculum_123',
+ *     currentItemIndex: 0,
+ *     completedItems: 0
+ *   }
+ * });
+ *
+ * // Update curriculum progress
+ * const progress = await prisma.curriculumFollow.update({
+ *   where: { userId_curriculumId: { userId: 'user_123', curriculumId: 'curriculum_123' } },
+ *   data: {
+ *     currentItemIndex: 2,
+ *     completedItems: 2,
+ *     lastProgressAt: new Date()
+ *   }
+ * });
+ *
+ * // Browse public curriculums with filters
+ * const publicCurriculums = await prisma.curriculum.findMany({
+ *   where: {
+ *     visibility: 'PUBLIC',
+ *     deletedAt: null,
+ *     category: 'Philosophy'
+ *   },
+ *   include: {
+ *     items: { orderBy: { orderIndex: 'asc' } },
+ *     user: { select: { displayName: true, username: true, avatarUrl: true } }
+ *   },
+ *   orderBy: { followersCount: 'desc' }
+ * });
  * ```
  */
 
@@ -192,4 +265,7 @@ export type {
   UserStats,
   Achievement,
   UserAchievement,
+  Curriculum,
+  CurriculumItem,
+  CurriculumFollow,
 } from "@prisma/client";

@@ -568,3 +568,51 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (123 tests total: 47 api + 34 shared + 12 web + 30 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 18
+
+[2026-01-17] db-008: Create Curriculum, CurriculumItem, and CurriculumFollow models
+- Created Visibility enum: PRIVATE, UNLISTED, PUBLIC
+  - Controls who can see curriculum content
+- Created Curriculum model with all fields from specification:
+  - id (cuid), userId with relation to User, onDelete: Cascade
+  - Metadata: title (VarChar 200), description (Text), coverImage (String?)
+  - Categorization: category (VarChar 100), tags (String[]), difficulty (VarChar 50)
+  - Visibility settings: visibility (Visibility enum, default PRIVATE)
+  - Statistics (denormalized): totalItems, followersCount
+  - Soft delete support via deletedAt
+  - Relation to CurriculumItem[] and CurriculumFollow[]
+  - Indexes on userId, userId+visibility, visibility, category, deletedAt, followersCount, tags
+- Created CurriculumItem model with all fields from specification:
+  - id (cuid), curriculumId with relation to Curriculum, onDelete: Cascade
+  - orderIndex (Int) for maintaining order within curriculum (0-indexed)
+  - bookId (String?) for optional reference to Book in system (onDelete: SetNull)
+  - External resource fields: externalTitle, externalAuthor, externalUrl, externalIsbn
+  - notes (Text) for curator's notes/instructions
+  - estimatedTime (Int?) in minutes
+  - isOptional (Boolean) for optional items
+  - Timestamps: createdAt, updatedAt
+  - Indexes on curriculumId, curriculumId+orderIndex, bookId
+- Created CurriculumFollow model (junction table) with all fields from specification:
+  - id (cuid), userId and curriculumId with relations to User and Curriculum
+  - onDelete: Cascade for both relations
+  - Progress tracking: currentItemIndex, completedItems, lastProgressAt
+  - Timing: startedAt, completedAt
+  - @@unique([userId, curriculumId]) constraint
+  - Timestamps: createdAt, updatedAt
+  - Indexes on userId, curriculumId, userId+completedAt
+- Added User relations: curriculums[], curriculumFollows[]
+- Added Book relation: curriculumItems[]
+- Updated packages/database/src/index.ts with:
+  - Import examples for Curriculum, CurriculumItem, CurriculumFollow, Visibility types
+  - Example for creating a curriculum with metadata
+  - Example for adding items to curriculum (both internal books and external resources)
+  - Example for following a curriculum with progress tracking
+  - Example for updating curriculum progress
+  - Example for browsing public curriculums with filters
+  - Added type exports for Curriculum, CurriculumItem, CurriculumFollow
+- Added 6 new tests for Curriculum, CurriculumItem, and CurriculumFollow model accessors
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (129 tests total: 47 api + 34 shared + 12 web + 36 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
