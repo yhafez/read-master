@@ -865,7 +865,7 @@
         "Errors are logged",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-003",

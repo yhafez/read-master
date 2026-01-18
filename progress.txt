@@ -1623,3 +1623,60 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Uses Winston logger for error logging (no console statements)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1937 tests total: 83 api + 172 database + 12 web + 1670 shared)
 - Files: apps/api/src/middleware/auth.ts, apps/api/src/middleware/auth.test.ts, apps/api/src/middleware/index.ts, apps/api/src/index.ts, apps/api/package.json
+
+## Iteration 37
+
+[2026-01-17] api-infra-002: Create error handling middleware
+- Created apps/api/src/middleware/error.ts with comprehensive error handling
+- Implemented custom error classes for different error types:
+  - AppError: Base class with statusCode, code, details, isOperational properties
+  - ValidationError: 400 status for request validation failures
+  - UnauthorizedError: 401 status for unauthenticated requests
+  - ForbiddenError: 403 status for forbidden access
+  - NotFoundError: 404 status for missing resources
+  - ConflictError: 409 status for duplicate resources
+  - RateLimitError: 429 status with retryAfter support
+  - DatabaseError: 500 status for database operation failures
+  - ServiceUnavailableError: 503 status for external service failures
+- Implemented Zod validation error handling:
+  - formatZodErrors: Converts ZodError into readable field-level errors
+  - Maps nested paths (user.profile.age) correctly
+  - Returns 400 status with details array
+- Implemented Prisma error handling:
+  - isPrismaError: Type guard for Prisma errors (P2xxx codes)
+  - handlePrismaError: Converts Prisma errors to appropriate AppError
+    - P2002 (unique constraint) → ConflictError
+    - P2025 (record not found) → NotFoundError
+    - P2003 (foreign key) → ValidationError
+    - P2014 (required relation) → ValidationError
+    - P2024 (connection timeout) → ServiceUnavailableError
+    - Unknown codes → DatabaseError
+- Implemented main error handling utilities:
+  - createErrorResponse: Creates standardized error response format
+  - handleError: Main function to process any error and send response
+    - Handles ZodError, Prisma errors, AppError, and unknown errors
+    - Logs errors with context (statusCode, errorCode, custom context)
+    - Sets Retry-After header for rate limit errors
+- Implemented withErrorHandling higher-order function:
+  - Wraps handlers to automatically catch and handle errors
+  - Extracts request context (method, url, userId) for logging
+  - Eliminates need for try-catch blocks in handlers
+- Implemented assertion utilities:
+  - assert: Throw error if condition is falsy (accepts string or AppError)
+  - assertExists: Type-safe assertion that value is not null/undefined
+    - Narrows type from T | null | undefined to T
+- Updated src/middleware/index.ts to export all error handling utilities
+- Created comprehensive test suite with 56 tests in error.test.ts:
+  - AppError tests: default values, custom values, stack trace
+  - Specialized error tests: all 8 error classes with defaults and custom messages
+  - formatZodErrors tests: single field, nested fields, multiple errors, root-level
+  - isPrismaError tests: various Prisma codes, non-Prisma errors, edge cases
+  - handlePrismaError tests: P2002, P2025, P2003, P2014, P2024, unknown codes
+  - createErrorResponse tests: with and without details
+  - handleError tests: AppError, ZodError, Prisma errors, unknown errors, Retry-After header, context logging
+  - withErrorHandling tests: normal handler, thrown errors, sync errors, request context
+  - assert tests: truthy values, string error, AppError, falsy conditions
+  - assertExists tests: existing values, null, undefined, type narrowing
+  - Error inheritance tests: all classes extend AppError and Error
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1993 tests total: 139 api + 172 database + 12 web + 1670 shared)
+- Files: apps/api/src/middleware/error.ts, apps/api/src/middleware/error.test.ts, apps/api/src/middleware/index.ts
