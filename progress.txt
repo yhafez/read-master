@@ -211,3 +211,58 @@ No discoveries added during this sprint (foundational infrastructure work)
   - src/utils/logger.test.ts: 8 tests for logging utilities
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (63 tests total: 29 api + 34 shared)
 - Files: apps/api/package.json, api/health.ts, src/utils/*.ts, vitest.config.ts
+
+## Iteration 9
+
+[2026-01-17] infra-007: Set up i18next with initial locale files for 6 languages
+- Marked infra-009 (.env.example) as passes: true (work was already completed in Iteration 6)
+- Installed i18next dependencies in apps/web:
+  - i18next (core library)
+  - react-i18next (React bindings)
+  - i18next-browser-languagedetector (automatic language detection)
+  - i18next-http-backend (translation file loading)
+  - @mui/icons-material ^6.4.0 (for LanguageSwitcher icons)
+- Created apps/web/src/locales/ directory with 6 translation files:
+  - en.json: English (base language)
+  - ar.json: Arabic (RTL language)
+  - es.json: Spanish
+  - ja.json: Japanese
+  - zh.json: Chinese (Simplified)
+  - tl.json: Tagalog
+- Each locale file contains comprehensive translations for:
+  - Common UI elements (buttons, loading states, errors)
+  - Navigation and main menu
+  - Home page and features
+  - Library and book management
+  - Reader interface and toolbar
+  - Flashcards and SRS
+  - Assessments
+  - Forum
+  - Settings (appearance, reading, language, privacy, notifications)
+  - Language names in native scripts
+  - Error messages
+  - Accessibility labels
+- Created apps/web/src/i18n/index.ts with:
+  - Language configuration (supportedLanguages, rtlLanguages, languageNames)
+  - RTL detection utilities (isRtlLanguage, getDocumentDirection)
+  - Document direction management (updateDocumentDirection)
+  - i18next initialization with language detection
+  - Automatic RTL/LTR switching on language change
+- Created apps/web/src/components/common/LanguageSwitcher.tsx:
+  - MUI-based dropdown menu for language selection
+  - Shows current language in native script
+  - Displays both native and translated language names
+  - Respects RTL direction for Arabic option
+  - Accessible with proper ARIA attributes
+- Updated apps/web/src/main.tsx to import i18n configuration
+- Updated apps/web/src/App.tsx to use translations and include LanguageSwitcher
+- Updated apps/web/tsconfig.json to include JSON files in compilation
+- Created comprehensive test suite (12 tests) in apps/web/src/i18n/index.test.ts:
+  - Tests for supportedLanguages array
+  - Tests for rtlLanguages configuration
+  - Tests for languageNames mapping
+  - Tests for isRtlLanguage utility
+  - Tests for getDocumentDirection utility
+  - Tests for locale file key consistency across all 6 languages
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (75 tests total: 29 api + 34 shared + 12 web)
+- Files: apps/web/package.json, apps/web/src/locales/*.json, apps/web/src/i18n/index.ts, apps/web/src/components/common/LanguageSwitcher.tsx, apps/web/src/App.tsx, apps/web/src/main.tsx, apps/web/tsconfig.json

@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "阅读大师",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "submit": "提交",
+    "confirm": "确认",
+    "yes": "是",
+    "no": "否"
+  },
+  "nav": {
+    "home": "首页",
+    "library": "图书馆",
+    "reading": "阅读",
+    "flashcards": "闪卡",
+    "forum": "论坛",
+    "profile": "个人资料",
+    "settings": "设置",
+    "signIn": "登录",
+    "signOut": "退出"
+  },
+  "home": {
+    "welcome": "欢迎来到阅读大师",
+    "tagline": "使用AI工具掌握阅读理解能力",
+    "getStarted": "开始使用",
+    "features": {
+      "title": "功能特点",
+      "preReading": {
+        "title": "阅读前指南",
+        "description": "阅读前获取AI生成的背景、词汇和章节摘要"
+      },
+      "duringReading": {
+        "title": "阅读辅助",
+        "description": "获取即时解释、提问并跟踪您的进度"
+      },
+      "postReading": {
+        "title": "测评",
+        "description": "涵盖布鲁姆分类法所有层次的自适应测试"
+      },
+      "srs": {
+        "title": "间隔重复",
+        "description": "通过智能闪卡调度，永不遗忘所学内容"
+      }
+    }
+  },
+  "library": {
+    "title": "我的图书馆",
+    "addBook": "添加书籍",
+    "upload": "上传文件",
+    "importUrl": "从URL导入",
+    "pasteText": "粘贴文本",
+    "searchBooks": "搜索书籍",
+    "noBooks": "您的图书馆还没有书籍",
+    "startReading": "开始添加书籍，开启您的阅读之旅",
+    "filters": {
+      "all": "全部",
+      "reading": "正在阅读",
+      "completed": "已完成",
+      "wantToRead": "想读"
+    },
+    "bookCard": {
+      "progress": "已完成{{percent}}%",
+      "continueReading": "继续阅读",
+      "startReading": "开始阅读"
+    }
+  },
+  "reader": {
+    "tableOfContents": "目录",
+    "preReadingGuide": "阅读前指南",
+    "generateGuide": "生成阅读前指南",
+    "vocabulary": "词汇",
+    "keyArguments": "核心论点",
+    "chapterSummaries": "章节摘要",
+    "context": {
+      "historical": "历史背景",
+      "author": "关于作者",
+      "intellectual": "思想背景"
+    },
+    "toolbar": {
+      "explain": "解释这个",
+      "ask": "提问",
+      "highlight": "高亮",
+      "note": "添加笔记",
+      "bookmark": "书签"
+    },
+    "progress": {
+      "title": "阅读进度",
+      "wordsRead": "已读字数",
+      "timeSpent": "花费时间",
+      "percentComplete": "完成"
+    }
+  },
+  "flashcards": {
+    "title": "闪卡",
+    "dueToday": "今日待复习",
+    "totalCards": "卡片总数",
+    "studyNow": "立即学习",
+    "createCard": "创建卡片",
+    "noCards": "还没有闪卡",
+    "generateFromBook": "从您的阅读中生成卡片",
+    "review": {
+      "showAnswer": "显示答案",
+      "again": "再来",
+      "hard": "困难",
+      "good": "良好",
+      "easy": "简单",
+      "cardsRemaining": "剩余{{count}}张"
+    },
+    "stats": {
+      "retention": "记忆率",
+      "streak": "连续天数",
+      "reviewed": "已复习卡片"
+    }
+  },
+  "assessment": {
+    "title": "测评",
+    "startAssessment": "开始测评",
+    "question": "第{{current}}题，共{{total}}题",
+    "submitAnswer": "提交答案",
+    "results": {
+      "title": "测评结果",
+      "score": "得分：{{score}}%",
+      "bloomsBreakdown": "布鲁姆分类法分布",
+      "recommendations": "建议"
+    }
+  },
+  "forum": {
+    "title": "论坛",
+    "newPost": "发新帖",
+    "categories": "分类",
+    "recentPosts": "最新帖子",
+    "post": {
+      "replies": "{{count}}条回复",
+      "views": "{{count}}次浏览",
+      "postedBy": "由{{author}}发布",
+      "reply": "回复",
+      "vote": "投票"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "appearance": {
+      "title": "外观",
+      "theme": "主题",
+      "themes": {
+        "light": "浅色",
+        "dark": "深色",
+        "sepia": "褐色",
+        "highContrast": "高对比度"
+      },
+      "fontSize": "字体大小",
+      "fontFamily": "字体",
+      "dyslexiaFont": "阅读障碍友好字体"
+    },
+    "reading": {
+      "title": "阅读偏好",
+      "wordsPerMinute": "阅读速度（字/分钟）",
+      "enableAI": "启用AI功能",
+      "comprehensionChecks": "理解检查频率"
+    },
+    "language": {
+      "title": "语言",
+      "select": "选择语言"
+    },
+    "privacy": {
+      "title": "隐私",
+      "shareProgress": "分享阅读进度",
+      "showOnLeaderboard": "显示在排行榜",
+      "publicProfile": "公开资料"
+    },
+    "notifications": {
+      "title": "通知",
+      "emailReminders": "邮件提醒",
+      "flashcardReminders": "闪卡提醒",
+      "streakAlerts": "连续记录提醒"
+    }
+  },
+  "languages": {
+    "en": "英语",
+    "ar": "阿拉伯语",
+    "es": "西班牙语",
+    "ja": "日语",
+    "zh": "简体中文",
+    "tl": "他加禄语"
+  },
+  "errors": {
+    "notFound": "页面未找到",
+    "unauthorized": "您无权查看此页面",
+    "serverError": "出现问题，请重试。",
+    "networkError": "无法连接，请检查网络连接。",
+    "validationError": "请检查您的输入后重试。"
+  },
+  "accessibility": {
+    "skipToContent": "跳到主要内容",
+    "openMenu": "打开导航菜单",
+    "closeMenu": "关闭导航菜单",
+    "expandSection": "展开部分",
+    "collapseSection": "折叠部分"
+  }
+}

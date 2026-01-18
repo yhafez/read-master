@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "ريد ماستر",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "submit": "إرسال",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "library": "المكتبة",
+    "reading": "القراءة",
+    "flashcards": "البطاقات التعليمية",
+    "forum": "المنتدى",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج"
+  },
+  "home": {
+    "welcome": "مرحباً بك في ريد ماستر",
+    "tagline": "أتقن مهارات القراءة والفهم باستخدام أدوات الذكاء الاصطناعي",
+    "getStarted": "ابدأ الآن",
+    "features": {
+      "title": "المميزات",
+      "preReading": {
+        "title": "أدلة ما قبل القراءة",
+        "description": "سياق ومفردات وملخصات للفصول مُنشأة بالذكاء الاصطناعي قبل القراءة"
+      },
+      "duringReading": {
+        "title": "المساعدة أثناء القراءة",
+        "description": "احصل على شروحات فورية واطرح أسئلة وتتبع تقدمك"
+      },
+      "postReading": {
+        "title": "التقييمات",
+        "description": "اختبارات تكيفية تغطي جميع مستويات تصنيف بلوم"
+      },
+      "srs": {
+        "title": "التكرار المتباعد",
+        "description": "لا تنسَ ما تعلمته مع جدولة البطاقات الذكية"
+      }
+    }
+  },
+  "library": {
+    "title": "مكتبتي",
+    "addBook": "إضافة كتاب",
+    "upload": "رفع ملف",
+    "importUrl": "استيراد من رابط",
+    "pasteText": "لصق نص",
+    "searchBooks": "البحث عن كتب",
+    "noBooks": "لا توجد كتب في مكتبتك بعد",
+    "startReading": "ابدأ بإضافة كتب لبدء رحلة القراءة",
+    "filters": {
+      "all": "الكل",
+      "reading": "قيد القراءة",
+      "completed": "مكتملة",
+      "wantToRead": "أريد قراءتها"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% مكتمل",
+      "continueReading": "متابعة القراءة",
+      "startReading": "بدء القراءة"
+    }
+  },
+  "reader": {
+    "tableOfContents": "جدول المحتويات",
+    "preReadingGuide": "دليل ما قبل القراءة",
+    "generateGuide": "إنشاء دليل ما قبل القراءة",
+    "vocabulary": "المفردات",
+    "keyArguments": "الحجج الرئيسية",
+    "chapterSummaries": "ملخصات الفصول",
+    "context": {
+      "historical": "السياق التاريخي",
+      "author": "عن المؤلف",
+      "intellectual": "الخلفية الفكرية"
+    },
+    "toolbar": {
+      "explain": "اشرح هذا",
+      "ask": "اطرح سؤالاً",
+      "highlight": "تمييز",
+      "note": "إضافة ملاحظة",
+      "bookmark": "إشارة مرجعية"
+    },
+    "progress": {
+      "title": "تقدم القراءة",
+      "wordsRead": "الكلمات المقروءة",
+      "timeSpent": "الوقت المستغرق",
+      "percentComplete": "مكتمل"
+    }
+  },
+  "flashcards": {
+    "title": "البطاقات التعليمية",
+    "dueToday": "مستحقة اليوم",
+    "totalCards": "إجمالي البطاقات",
+    "studyNow": "ادرس الآن",
+    "createCard": "إنشاء بطاقة",
+    "noCards": "لا توجد بطاقات تعليمية بعد",
+    "generateFromBook": "أنشئ بطاقات من قراءتك",
+    "review": {
+      "showAnswer": "إظهار الإجابة",
+      "again": "مجدداً",
+      "hard": "صعب",
+      "good": "جيد",
+      "easy": "سهل",
+      "cardsRemaining": "{{count}} بطاقات متبقية"
+    },
+    "stats": {
+      "retention": "معدل الاحتفاظ",
+      "streak": "أيام متتالية",
+      "reviewed": "البطاقات المراجعة"
+    }
+  },
+  "assessment": {
+    "title": "التقييم",
+    "startAssessment": "بدء التقييم",
+    "question": "السؤال {{current}} من {{total}}",
+    "submitAnswer": "إرسال الإجابة",
+    "results": {
+      "title": "نتائج التقييم",
+      "score": "النتيجة: {{score}}%",
+      "bloomsBreakdown": "توزيع تصنيف بلوم",
+      "recommendations": "التوصيات"
+    }
+  },
+  "forum": {
+    "title": "المنتدى",
+    "newPost": "موضوع جديد",
+    "categories": "الفئات",
+    "recentPosts": "المواضيع الأخيرة",
+    "post": {
+      "replies": "{{count}} ردود",
+      "views": "{{count}} مشاهدات",
+      "postedBy": "بواسطة {{author}}",
+      "reply": "رد",
+      "vote": "تصويت"
+    }
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "appearance": {
+      "title": "المظهر",
+      "theme": "السمة",
+      "themes": {
+        "light": "فاتح",
+        "dark": "داكن",
+        "sepia": "بني داكن",
+        "highContrast": "تباين عالي"
+      },
+      "fontSize": "حجم الخط",
+      "fontFamily": "نوع الخط",
+      "dyslexiaFont": "خط صديق لعسر القراءة"
+    },
+    "reading": {
+      "title": "تفضيلات القراءة",
+      "wordsPerMinute": "سرعة القراءة (كلمة/دقيقة)",
+      "enableAI": "تفعيل ميزات الذكاء الاصطناعي",
+      "comprehensionChecks": "تكرار فحوصات الفهم"
+    },
+    "language": {
+      "title": "اللغة",
+      "select": "اختر اللغة"
+    },
+    "privacy": {
+      "title": "الخصوصية",
+      "shareProgress": "مشاركة تقدم القراءة",
+      "showOnLeaderboard": "الظهور في لوحة المتصدرين",
+      "publicProfile": "ملف شخصي عام"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "emailReminders": "تذكيرات البريد الإلكتروني",
+      "flashcardReminders": "تذكيرات البطاقات",
+      "streakAlerts": "تنبيهات الأيام المتتالية"
+    }
+  },
+  "languages": {
+    "en": "الإنجليزية",
+    "ar": "العربية",
+    "es": "الإسبانية",
+    "ja": "اليابانية",
+    "zh": "الصينية (المبسطة)",
+    "tl": "التاغالوغية"
+  },
+  "errors": {
+    "notFound": "الصفحة غير موجودة",
+    "unauthorized": "غير مصرح لك بعرض هذه الصفحة",
+    "serverError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "networkError": "تعذر الاتصال. تحقق من اتصالك بالإنترنت.",
+    "validationError": "يرجى التحقق من إدخالك والمحاولة مرة أخرى."
+  },
+  "accessibility": {
+    "skipToContent": "تخطي إلى المحتوى الرئيسي",
+    "openMenu": "فتح قائمة التنقل",
+    "closeMenu": "إغلاق قائمة التنقل",
+    "expandSection": "توسيع القسم",
+    "collapseSection": "طي القسم"
+  }
+}

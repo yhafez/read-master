@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "Read Master",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "submit": "Enviar",
+    "confirm": "Confirmar",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "nav": {
+    "home": "Inicio",
+    "library": "Biblioteca",
+    "reading": "Lectura",
+    "flashcards": "Tarjetas",
+    "forum": "Foro",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión"
+  },
+  "home": {
+    "welcome": "Bienvenido a Read Master",
+    "tagline": "Domina tu comprensión lectora con herramientas impulsadas por IA",
+    "getStarted": "Comenzar",
+    "features": {
+      "title": "Características",
+      "preReading": {
+        "title": "Guías de Pre-Lectura",
+        "description": "Contexto, vocabulario y resúmenes de capítulos generados por IA antes de leer"
+      },
+      "duringReading": {
+        "title": "Asistencia de Lectura",
+        "description": "Obtén explicaciones instantáneas, haz preguntas y sigue tu progreso"
+      },
+      "postReading": {
+        "title": "Evaluaciones",
+        "description": "Pruebas adaptativas que cubren todos los niveles de la taxonomía de Bloom"
+      },
+      "srs": {
+        "title": "Repetición Espaciada",
+        "description": "Nunca olvides lo que aprendes con programación inteligente de tarjetas"
+      }
+    }
+  },
+  "library": {
+    "title": "Mi Biblioteca",
+    "addBook": "Agregar Libro",
+    "upload": "Subir Archivo",
+    "importUrl": "Importar desde URL",
+    "pasteText": "Pegar Texto",
+    "searchBooks": "Buscar Libros",
+    "noBooks": "Aún no hay libros en tu biblioteca",
+    "startReading": "Comienza agregando libros para iniciar tu viaje de lectura",
+    "filters": {
+      "all": "Todos",
+      "reading": "Leyendo",
+      "completed": "Completados",
+      "wantToRead": "Quiero Leer"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% completado",
+      "continueReading": "Continuar Leyendo",
+      "startReading": "Comenzar a Leer"
+    }
+  },
+  "reader": {
+    "tableOfContents": "Tabla de Contenidos",
+    "preReadingGuide": "Guía de Pre-Lectura",
+    "generateGuide": "Generar Guía de Pre-Lectura",
+    "vocabulary": "Vocabulario",
+    "keyArguments": "Argumentos Clave",
+    "chapterSummaries": "Resúmenes de Capítulos",
+    "context": {
+      "historical": "Contexto Histórico",
+      "author": "Sobre el Autor",
+      "intellectual": "Contexto Intelectual"
+    },
+    "toolbar": {
+      "explain": "Explicar Esto",
+      "ask": "Hacer una Pregunta",
+      "highlight": "Resaltar",
+      "note": "Agregar Nota",
+      "bookmark": "Marcador"
+    },
+    "progress": {
+      "title": "Progreso de Lectura",
+      "wordsRead": "Palabras Leídas",
+      "timeSpent": "Tiempo Dedicado",
+      "percentComplete": "Completado"
+    }
+  },
+  "flashcards": {
+    "title": "Tarjetas",
+    "dueToday": "Para Hoy",
+    "totalCards": "Total de Tarjetas",
+    "studyNow": "Estudiar Ahora",
+    "createCard": "Crear Tarjeta",
+    "noCards": "Aún no hay tarjetas",
+    "generateFromBook": "Genera tarjetas desde tu lectura",
+    "review": {
+      "showAnswer": "Mostrar Respuesta",
+      "again": "Otra vez",
+      "hard": "Difícil",
+      "good": "Bien",
+      "easy": "Fácil",
+      "cardsRemaining": "{{count}} tarjetas restantes"
+    },
+    "stats": {
+      "retention": "Tasa de Retención",
+      "streak": "Racha de Días",
+      "reviewed": "Tarjetas Revisadas"
+    }
+  },
+  "assessment": {
+    "title": "Evaluación",
+    "startAssessment": "Iniciar Evaluación",
+    "question": "Pregunta {{current}} de {{total}}",
+    "submitAnswer": "Enviar Respuesta",
+    "results": {
+      "title": "Resultados de la Evaluación",
+      "score": "Puntuación: {{score}}%",
+      "bloomsBreakdown": "Desglose de Taxonomía de Bloom",
+      "recommendations": "Recomendaciones"
+    }
+  },
+  "forum": {
+    "title": "Foro",
+    "newPost": "Nueva Publicación",
+    "categories": "Categorías",
+    "recentPosts": "Publicaciones Recientes",
+    "post": {
+      "replies": "{{count}} respuestas",
+      "views": "{{count}} vistas",
+      "postedBy": "Publicado por {{author}}",
+      "reply": "Responder",
+      "vote": "Votar"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "appearance": {
+      "title": "Apariencia",
+      "theme": "Tema",
+      "themes": {
+        "light": "Claro",
+        "dark": "Oscuro",
+        "sepia": "Sepia",
+        "highContrast": "Alto Contraste"
+      },
+      "fontSize": "Tamaño de Fuente",
+      "fontFamily": "Tipo de Fuente",
+      "dyslexiaFont": "Fuente para Dislexia"
+    },
+    "reading": {
+      "title": "Preferencias de Lectura",
+      "wordsPerMinute": "Velocidad de Lectura (PPM)",
+      "enableAI": "Habilitar Funciones de IA",
+      "comprehensionChecks": "Frecuencia de Verificación de Comprensión"
+    },
+    "language": {
+      "title": "Idioma",
+      "select": "Seleccionar Idioma"
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "shareProgress": "Compartir Progreso de Lectura",
+      "showOnLeaderboard": "Mostrar en Tabla de Líderes",
+      "publicProfile": "Perfil Público"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "emailReminders": "Recordatorios por Email",
+      "flashcardReminders": "Recordatorios de Tarjetas",
+      "streakAlerts": "Alertas de Racha"
+    }
+  },
+  "languages": {
+    "en": "Inglés",
+    "ar": "Árabe",
+    "es": "Español",
+    "ja": "Japonés",
+    "zh": "Chino (Simplificado)",
+    "tl": "Tagalo"
+  },
+  "errors": {
+    "notFound": "Página no encontrada",
+    "unauthorized": "No estás autorizado para ver esta página",
+    "serverError": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "networkError": "No se puede conectar. Verifica tu conexión a internet.",
+    "validationError": "Por favor, verifica tu entrada e inténtalo de nuevo."
+  },
+  "accessibility": {
+    "skipToContent": "Saltar al contenido principal",
+    "openMenu": "Abrir menú de navegación",
+    "closeMenu": "Cerrar menú de navegación",
+    "expandSection": "Expandir sección",
+    "collapseSection": "Contraer sección"
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "Read Master",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "reading": "Reading",
+    "flashcards": "Flashcards",
+    "forum": "Forum",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "home": {
+    "welcome": "Welcome to Read Master",
+    "tagline": "Master your reading comprehension with AI-powered tools",
+    "getStarted": "Get Started",
+    "features": {
+      "title": "Features",
+      "preReading": {
+        "title": "Pre-Reading Guides",
+        "description": "AI-generated context, vocabulary, and chapter summaries before you read"
+      },
+      "duringReading": {
+        "title": "Reading Assistance",
+        "description": "Get instant explanations, ask questions, and track your progress"
+      },
+      "postReading": {
+        "title": "Assessments",
+        "description": "Adaptive tests covering all Bloom's taxonomy levels"
+      },
+      "srs": {
+        "title": "Spaced Repetition",
+        "description": "Never forget what you learn with smart flashcard scheduling"
+      }
+    }
+  },
+  "library": {
+    "title": "My Library",
+    "addBook": "Add Book",
+    "upload": "Upload File",
+    "importUrl": "Import from URL",
+    "pasteText": "Paste Text",
+    "searchBooks": "Search Books",
+    "noBooks": "No books in your library yet",
+    "startReading": "Start adding books to begin your reading journey",
+    "filters": {
+      "all": "All",
+      "reading": "Currently Reading",
+      "completed": "Completed",
+      "wantToRead": "Want to Read"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% complete",
+      "continueReading": "Continue Reading",
+      "startReading": "Start Reading"
+    }
+  },
+  "reader": {
+    "tableOfContents": "Table of Contents",
+    "preReadingGuide": "Pre-Reading Guide",
+    "generateGuide": "Generate Pre-Reading Guide",
+    "vocabulary": "Vocabulary",
+    "keyArguments": "Key Arguments",
+    "chapterSummaries": "Chapter Summaries",
+    "context": {
+      "historical": "Historical Context",
+      "author": "About the Author",
+      "intellectual": "Intellectual Background"
+    },
+    "toolbar": {
+      "explain": "Explain This",
+      "ask": "Ask a Question",
+      "highlight": "Highlight",
+      "note": "Add Note",
+      "bookmark": "Bookmark"
+    },
+    "progress": {
+      "title": "Reading Progress",
+      "wordsRead": "Words Read",
+      "timeSpent": "Time Spent",
+      "percentComplete": "Complete"
+    }
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "dueToday": "Due Today",
+    "totalCards": "Total Cards",
+    "studyNow": "Study Now",
+    "createCard": "Create Card",
+    "noCards": "No flashcards yet",
+    "generateFromBook": "Generate cards from your reading",
+    "review": {
+      "showAnswer": "Show Answer",
+      "again": "Again",
+      "hard": "Hard",
+      "good": "Good",
+      "easy": "Easy",
+      "cardsRemaining": "{{count}} cards remaining"
+    },
+    "stats": {
+      "retention": "Retention Rate",
+      "streak": "Day Streak",
+      "reviewed": "Cards Reviewed"
+    }
+  },
+  "assessment": {
+    "title": "Assessment",
+    "startAssessment": "Start Assessment",
+    "question": "Question {{current}} of {{total}}",
+    "submitAnswer": "Submit Answer",
+    "results": {
+      "title": "Assessment Results",
+      "score": "Score: {{score}}%",
+      "bloomsBreakdown": "Bloom's Taxonomy Breakdown",
+      "recommendations": "Recommendations"
+    }
+  },
+  "forum": {
+    "title": "Forum",
+    "newPost": "New Post",
+    "categories": "Categories",
+    "recentPosts": "Recent Posts",
+    "post": {
+      "replies": "{{count}} replies",
+      "views": "{{count}} views",
+      "postedBy": "Posted by {{author}}",
+      "reply": "Reply",
+      "vote": "Vote"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "sepia": "Sepia",
+        "highContrast": "High Contrast"
+      },
+      "fontSize": "Font Size",
+      "fontFamily": "Font Family",
+      "dyslexiaFont": "Dyslexia-Friendly Font"
+    },
+    "reading": {
+      "title": "Reading Preferences",
+      "wordsPerMinute": "Reading Speed (WPM)",
+      "enableAI": "Enable AI Features",
+      "comprehensionChecks": "Comprehension Check Frequency"
+    },
+    "language": {
+      "title": "Language",
+      "select": "Select Language"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "shareProgress": "Share Reading Progress",
+      "showOnLeaderboard": "Show on Leaderboard",
+      "publicProfile": "Public Profile"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "emailReminders": "Email Reminders",
+      "flashcardReminders": "Flashcard Reminders",
+      "streakAlerts": "Streak Alerts"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ar": "Arabic",
+    "es": "Spanish",
+    "ja": "Japanese",
+    "zh": "Chinese (Simplified)",
+    "tl": "Tagalog"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "unauthorized": "You are not authorized to view this page",
+    "serverError": "Something went wrong. Please try again.",
+    "networkError": "Unable to connect. Check your internet connection.",
+    "validationError": "Please check your input and try again."
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "expandSection": "Expand section",
+    "collapseSection": "Collapse section"
+  }
+}

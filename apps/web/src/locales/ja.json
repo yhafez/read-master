@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "リードマスター",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "search": "検索",
+    "filter": "フィルター",
+    "sort": "並べ替え",
+    "submit": "送信",
+    "confirm": "確認",
+    "yes": "はい",
+    "no": "いいえ"
+  },
+  "nav": {
+    "home": "ホーム",
+    "library": "ライブラリ",
+    "reading": "読書",
+    "flashcards": "フラッシュカード",
+    "forum": "フォーラム",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "signIn": "ログイン",
+    "signOut": "ログアウト"
+  },
+  "home": {
+    "welcome": "リードマスターへようこそ",
+    "tagline": "AIパワードツールで読解力をマスター",
+    "getStarted": "始める",
+    "features": {
+      "title": "機能",
+      "preReading": {
+        "title": "読前ガイド",
+        "description": "読む前にAIが生成する文脈、語彙、章の要約"
+      },
+      "duringReading": {
+        "title": "読書アシスタント",
+        "description": "即座に説明を得て、質問をし、進捗を追跡"
+      },
+      "postReading": {
+        "title": "アセスメント",
+        "description": "ブルームの分類学のすべてのレベルをカバーする適応テスト"
+      },
+      "srs": {
+        "title": "間隔反復",
+        "description": "スマートなカードスケジューリングで学んだことを忘れない"
+      }
+    }
+  },
+  "library": {
+    "title": "マイライブラリ",
+    "addBook": "本を追加",
+    "upload": "ファイルをアップロード",
+    "importUrl": "URLからインポート",
+    "pasteText": "テキストを貼り付け",
+    "searchBooks": "本を検索",
+    "noBooks": "ライブラリにはまだ本がありません",
+    "startReading": "本を追加して読書の旅を始めましょう",
+    "filters": {
+      "all": "すべて",
+      "reading": "読書中",
+      "completed": "完了",
+      "wantToRead": "読みたい"
+    },
+    "bookCard": {
+      "progress": "{{percent}}%完了",
+      "continueReading": "続きを読む",
+      "startReading": "読み始める"
+    }
+  },
+  "reader": {
+    "tableOfContents": "目次",
+    "preReadingGuide": "読前ガイド",
+    "generateGuide": "読前ガイドを生成",
+    "vocabulary": "語彙",
+    "keyArguments": "主要な論点",
+    "chapterSummaries": "章の要約",
+    "context": {
+      "historical": "歴史的背景",
+      "author": "著者について",
+      "intellectual": "知的背景"
+    },
+    "toolbar": {
+      "explain": "これを説明",
+      "ask": "質問する",
+      "highlight": "ハイライト",
+      "note": "メモを追加",
+      "bookmark": "ブックマーク"
+    },
+    "progress": {
+      "title": "読書の進捗",
+      "wordsRead": "読んだ単語数",
+      "timeSpent": "費やした時間",
+      "percentComplete": "完了"
+    }
+  },
+  "flashcards": {
+    "title": "フラッシュカード",
+    "dueToday": "今日の予定",
+    "totalCards": "カード総数",
+    "studyNow": "今すぐ学習",
+    "createCard": "カードを作成",
+    "noCards": "フラッシュカードはまだありません",
+    "generateFromBook": "読書からカードを生成",
+    "review": {
+      "showAnswer": "答えを表示",
+      "again": "もう一度",
+      "hard": "難しい",
+      "good": "良い",
+      "easy": "簡単",
+      "cardsRemaining": "残り{{count}}枚"
+    },
+    "stats": {
+      "retention": "記憶率",
+      "streak": "連続日数",
+      "reviewed": "復習したカード"
+    }
+  },
+  "assessment": {
+    "title": "アセスメント",
+    "startAssessment": "アセスメントを開始",
+    "question": "質問 {{current}}/{{total}}",
+    "submitAnswer": "回答を送信",
+    "results": {
+      "title": "アセスメント結果",
+      "score": "スコア: {{score}}%",
+      "bloomsBreakdown": "ブルームの分類学の内訳",
+      "recommendations": "推奨事項"
+    }
+  },
+  "forum": {
+    "title": "フォーラム",
+    "newPost": "新規投稿",
+    "categories": "カテゴリ",
+    "recentPosts": "最近の投稿",
+    "post": {
+      "replies": "{{count}}件の返信",
+      "views": "{{count}}回閲覧",
+      "postedBy": "{{author}}による投稿",
+      "reply": "返信",
+      "vote": "投票"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "appearance": {
+      "title": "外観",
+      "theme": "テーマ",
+      "themes": {
+        "light": "ライト",
+        "dark": "ダーク",
+        "sepia": "セピア",
+        "highContrast": "ハイコントラスト"
+      },
+      "fontSize": "フォントサイズ",
+      "fontFamily": "フォント",
+      "dyslexiaFont": "ディスレクシア対応フォント"
+    },
+    "reading": {
+      "title": "読書設定",
+      "wordsPerMinute": "読書速度（WPM）",
+      "enableAI": "AI機能を有効にする",
+      "comprehensionChecks": "理解度チェックの頻度"
+    },
+    "language": {
+      "title": "言語",
+      "select": "言語を選択"
+    },
+    "privacy": {
+      "title": "プライバシー",
+      "shareProgress": "読書の進捗を共有",
+      "showOnLeaderboard": "リーダーボードに表示",
+      "publicProfile": "公開プロフィール"
+    },
+    "notifications": {
+      "title": "通知",
+      "emailReminders": "メールリマインダー",
+      "flashcardReminders": "フラッシュカードリマインダー",
+      "streakAlerts": "連続記録アラート"
+    }
+  },
+  "languages": {
+    "en": "英語",
+    "ar": "アラビア語",
+    "es": "スペイン語",
+    "ja": "日本語",
+    "zh": "中国語（簡体字）",
+    "tl": "タガログ語"
+  },
+  "errors": {
+    "notFound": "ページが見つかりません",
+    "unauthorized": "このページを表示する権限がありません",
+    "serverError": "問題が発生しました。もう一度お試しください。",
+    "networkError": "接続できません。インターネット接続を確認してください。",
+    "validationError": "入力内容を確認してもう一度お試しください。"
+  },
+  "accessibility": {
+    "skipToContent": "メインコンテンツにスキップ",
+    "openMenu": "ナビゲーションメニューを開く",
+    "closeMenu": "ナビゲーションメニューを閉じる",
+    "expandSection": "セクションを展開",
+    "collapseSection": "セクションを折りたたむ"
+  }
+}

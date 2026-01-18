@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "Read Master",
+    "loading": "Naglo-load...",
+    "error": "May naganap na error",
+    "save": "I-save",
+    "cancel": "Kanselahin",
+    "delete": "Tanggalin",
+    "edit": "I-edit",
+    "close": "Isara",
+    "back": "Bumalik",
+    "next": "Susunod",
+    "previous": "Nakaraan",
+    "search": "Maghanap",
+    "filter": "Salain",
+    "sort": "Ayusin",
+    "submit": "Isumite",
+    "confirm": "Kumpirmahin",
+    "yes": "Oo",
+    "no": "Hindi"
+  },
+  "nav": {
+    "home": "Home",
+    "library": "Aklatan",
+    "reading": "Pagbabasa",
+    "flashcards": "Mga Flashcard",
+    "forum": "Forum",
+    "profile": "Profile",
+    "settings": "Mga Setting",
+    "signIn": "Mag-sign In",
+    "signOut": "Mag-sign Out"
+  },
+  "home": {
+    "welcome": "Maligayang pagdating sa Read Master",
+    "tagline": "I-master ang iyong pag-unawa sa pagbabasa gamit ang mga AI-powered na tool",
+    "getStarted": "Magsimula",
+    "features": {
+      "title": "Mga Tampok",
+      "preReading": {
+        "title": "Mga Gabay Bago Magbasa",
+        "description": "AI-generated na konteksto, bokabularyo, at mga buod ng kabanata bago ka magbasa"
+      },
+      "duringReading": {
+        "title": "Tulong sa Pagbabasa",
+        "description": "Makakuha ng instant na mga paliwanag, magtanong, at subaybayan ang iyong progreso"
+      },
+      "postReading": {
+        "title": "Mga Pagsusulit",
+        "description": "Adaptive na mga pagsusulit na sumasaklaw sa lahat ng antas ng Bloom's taxonomy"
+      },
+      "srs": {
+        "title": "Spaced Repetition",
+        "description": "Huwag kalimutan ang iyong natutunan gamit ang matalinong pag-schedule ng card"
+      }
+    }
+  },
+  "library": {
+    "title": "Aking Aklatan",
+    "addBook": "Magdagdag ng Libro",
+    "upload": "Mag-upload ng File",
+    "importUrl": "Mag-import mula sa URL",
+    "pasteText": "Mag-paste ng Teksto",
+    "searchBooks": "Maghanap ng Libro",
+    "noBooks": "Wala pang libro sa iyong aklatan",
+    "startReading": "Magsimulang magdagdag ng mga libro para simulan ang iyong paglalakbay sa pagbabasa",
+    "filters": {
+      "all": "Lahat",
+      "reading": "Kasalukuyang Binabasa",
+      "completed": "Nakumpleto",
+      "wantToRead": "Gustong Basahin"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% kumpleto",
+      "continueReading": "Magpatuloy sa Pagbabasa",
+      "startReading": "Simulan ang Pagbabasa"
+    }
+  },
+  "reader": {
+    "tableOfContents": "Talaan ng mga Nilalaman",
+    "preReadingGuide": "Gabay Bago Magbasa",
+    "generateGuide": "Gumawa ng Gabay Bago Magbasa",
+    "vocabulary": "Bokabularyo",
+    "keyArguments": "Mga Pangunahing Argumento",
+    "chapterSummaries": "Mga Buod ng Kabanata",
+    "context": {
+      "historical": "Makasaysayang Konteksto",
+      "author": "Tungkol sa May-akda",
+      "intellectual": "Intelektwal na Background"
+    },
+    "toolbar": {
+      "explain": "Ipaliwanag Ito",
+      "ask": "Magtanong",
+      "highlight": "I-highlight",
+      "note": "Magdagdag ng Tala",
+      "bookmark": "Bookmark"
+    },
+    "progress": {
+      "title": "Progreso sa Pagbabasa",
+      "wordsRead": "Mga Salitang Nabasa",
+      "timeSpent": "Oras na Ginugol",
+      "percentComplete": "Kumpleto"
+    }
+  },
+  "flashcards": {
+    "title": "Mga Flashcard",
+    "dueToday": "Dapat Gawin Ngayon",
+    "totalCards": "Kabuuang Cards",
+    "studyNow": "Mag-aral Ngayon",
+    "createCard": "Gumawa ng Card",
+    "noCards": "Wala pang mga flashcard",
+    "generateFromBook": "Gumawa ng mga card mula sa iyong binabasa",
+    "review": {
+      "showAnswer": "Ipakita ang Sagot",
+      "again": "Ulit",
+      "hard": "Mahirap",
+      "good": "Maganda",
+      "easy": "Madali",
+      "cardsRemaining": "{{count}} (na) card ang natitira"
+    },
+    "stats": {
+      "retention": "Rate ng Pagkakaalala",
+      "streak": "Mga Araw na Sunod-sunod",
+      "reviewed": "Mga Na-review na Card"
+    }
+  },
+  "assessment": {
+    "title": "Pagsusulit",
+    "startAssessment": "Simulan ang Pagsusulit",
+    "question": "Tanong {{current}} sa {{total}}",
+    "submitAnswer": "Isumite ang Sagot",
+    "results": {
+      "title": "Mga Resulta ng Pagsusulit",
+      "score": "Iskor: {{score}}%",
+      "bloomsBreakdown": "Breakdown ng Bloom's Taxonomy",
+      "recommendations": "Mga Rekomendasyon"
+    }
+  },
+  "forum": {
+    "title": "Forum",
+    "newPost": "Bagong Post",
+    "categories": "Mga Kategorya",
+    "recentPosts": "Kamakailang mga Post",
+    "post": {
+      "replies": "{{count}} (na) tugon",
+      "views": "{{count}} (na) view",
+      "postedBy": "Ni-post ni {{author}}",
+      "reply": "Tumugon",
+      "vote": "Bumoto"
+    }
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "appearance": {
+      "title": "Hitsura",
+      "theme": "Tema",
+      "themes": {
+        "light": "Maliwanag",
+        "dark": "Madilim",
+        "sepia": "Sepia",
+        "highContrast": "Mataas na Contrast"
+      },
+      "fontSize": "Laki ng Font",
+      "fontFamily": "Uri ng Font",
+      "dyslexiaFont": "Dyslexia-Friendly Font"
+    },
+    "reading": {
+      "title": "Mga Kagustuhan sa Pagbabasa",
+      "wordsPerMinute": "Bilis ng Pagbabasa (WPM)",
+      "enableAI": "I-enable ang mga AI Feature",
+      "comprehensionChecks": "Dalas ng Pag-check ng Pag-unawa"
+    },
+    "language": {
+      "title": "Wika",
+      "select": "Pumili ng Wika"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "shareProgress": "I-share ang Progreso sa Pagbabasa",
+      "showOnLeaderboard": "Ipakita sa Leaderboard",
+      "publicProfile": "Pampublikong Profile"
+    },
+    "notifications": {
+      "title": "Mga Notifikasyon",
+      "emailReminders": "Mga Email Reminder",
+      "flashcardReminders": "Mga Flashcard Reminder",
+      "streakAlerts": "Mga Streak Alert"
+    }
+  },
+  "languages": {
+    "en": "Ingles",
+    "ar": "Arabik",
+    "es": "Espanyol",
+    "ja": "Hapon",
+    "zh": "Tsino (Simplified)",
+    "tl": "Tagalog"
+  },
+  "errors": {
+    "notFound": "Hindi natagpuan ang pahina",
+    "unauthorized": "Hindi ka awtorisadong tingnan ang pahinang ito",
+    "serverError": "May nangyaring mali. Subukan ulit.",
+    "networkError": "Hindi makakonekta. Suriin ang iyong koneksyon sa internet.",
+    "validationError": "Suriin ang iyong input at subukan ulit."
+  },
+  "accessibility": {
+    "skipToContent": "Lumaktaw sa pangunahing nilalaman",
+    "openMenu": "Buksan ang navigation menu",
+    "closeMenu": "Isara ang navigation menu",
+    "expandSection": "Palawakin ang seksyon",
+    "collapseSection": "I-collapse ang seksyon"
+  }
+}

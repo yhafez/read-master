@@ -166,7 +166,7 @@
         "Language switching works in UI",
         "Arabic displays in RTL mode"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "infra-008",
@@ -211,7 +211,7 @@
         "Each variable has a descriptive comment",
         "File includes instructions for obtaining API keys"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-001",
