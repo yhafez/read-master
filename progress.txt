@@ -2626,3 +2626,74 @@ No discoveries added during this sprint (foundational infrastructure work)
     - News article with JSON-LD
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (89 new tests)
 - Files: apps/api/api/books/import-url.ts, apps/api/api/books/import-url.test.ts
+
+## Iteration 54
+
+[2026-01-18] api-books-009: Implement POST /api/books/paste endpoint
+- Created apps/api/api/books/paste.ts with comprehensive paste text handling
+- Implemented Zod validation schema (pasteTextSchema):
+  - text: required, min 10 chars, max 5MB
+  - title: required, max 500 chars, trimmed
+  - author: optional/nullable, max 200 chars
+  - description: optional/nullable, max 50000 chars
+  - genre: optional/nullable, max 100 chars
+  - tags: optional array, max 20 tags, each max 50 chars
+  - language: optional, exactly 2 characters (ISO code)
+  - isPublic: optional boolean, defaults to false
+- Implemented tier limit checking:
+  - Uses getTierLimits() and isWithinLimit() from @read-master/shared
+  - Counts existing non-deleted books for user
+  - Returns 403 with upgrade message when limit reached
+- Implemented word count and reading time calculation:
+  - Uses countWords() and calculateReadingTime() from books.ts service
+  - Results stored in Book record
+- Implemented excerpt generation:
+  - generateExcerpt() function with word-boundary truncation
+  - Used when description is not provided
+  - Default max length of 500 characters
+- Created Book record in database:
+  - Uses Prisma db.book.create()
+  - Sets source as "PASTED"
+  - Sets fileType as "TXT"
+  - Returns book data with all fields
+- Added comprehensive error handling:
+  - Method validation (405 for non-POST)
+  - Request body validation with Zod error details
+  - User not found (404)
+  - Tier limit exceeded (403)
+  - Internal server error (500)
+- Exported constants for testing:
+  - MIN_TEXT_LENGTH (10)
+  - MAX_TEXT_LENGTH (5MB)
+  - MAX_TITLE_LENGTH (500)
+  - MAX_AUTHOR_LENGTH (200)
+  - MAX_DESCRIPTION_LENGTH (50000)
+  - MAX_GENRE_LENGTH (100)
+  - MAX_TAGS_COUNT (20)
+  - MAX_TAG_LENGTH (50)
+- Created comprehensive tests in apps/api/api/books/paste.test.ts (78 tests):
+  - Schema validation tests:
+    - text validation (min, max, required, empty, newlines, unicode, HTML)
+    - title validation (required, trim, max length, whitespace-only)
+    - author validation (valid, null, undefined, max length)
+    - description validation (valid, null, undefined, max length)
+    - genre validation (valid, null, max length)
+    - tags validation (array, empty, max count, max tag length)
+    - language validation (2-char code, reject 1-char and 3-char)
+    - isPublic validation (true, false, undefined, non-boolean)
+    - combined validation (complete input, minimal input, missing fields)
+  - Helper function tests:
+    - generateExcerpt (under max, truncate at word boundary, no boundaries, empty, default max)
+  - Constants tests (verify all constants have reasonable values)
+  - Edge cases:
+    - Text with newlines, tabs, unicode, HTML tags, special characters
+    - Title with numbers, punctuation, unicode
+    - generateExcerpt with whitespace-only, very long words, boundary text
+  - Comprehensive validation scenarios:
+    - Realistic book paste request
+    - Technical document paste request
+    - Poetry paste request
+    - JSON-like content as text
+    - Code content as text
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (78 new tests)
+- Files: apps/api/api/books/paste.ts, apps/api/api/books/paste.test.ts
