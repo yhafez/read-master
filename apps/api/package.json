@@ -18,6 +18,7 @@
     "@aws-sdk/client-s3": "^3.971.0",
     "@aws-sdk/s3-request-presigner": "^3.971.0",
     "@clerk/backend": "^1.21.0",
+    "@read-master/ai": "workspace:^",
     "@read-master/database": "workspace:^",
     "@read-master/shared": "workspace:^",
     "@upstash/ratelimit": "^2.0.8",

@@ -53,6 +53,9 @@ importers:
       '@clerk/backend':
         specifier: ^1.21.0
         version: 1.34.0(react@18.3.1)
+      '@read-master/ai':
+        specifier: workspace:^
+        version: link:../../packages/ai
       '@read-master/database':
         specifier: workspace:^
         version: link:../../packages/database

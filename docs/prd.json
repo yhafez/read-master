@@ -666,7 +666,7 @@
         "Rate limits are enforced",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-ai-004",
