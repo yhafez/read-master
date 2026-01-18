@@ -214,6 +214,12 @@
     "vocabulary": "المفردات",
     "keyArguments": "الحجج الرئيسية",
     "chapterSummaries": "ملخصات الفصول",
+    "pageNumber": "رقم الصفحة",
+    "firstPage": "الصفحة الأولى",
+    "lastPage": "الصفحة الأخيرة",
+    "zoomIn": "تكبير",
+    "zoomOut": "تصغير",
+    "zoomLevel": "مستوى التكبير",
     "context": {
       "historical": "السياق التاريخي",
       "author": "عن المؤلف",

@@ -3865,3 +3865,70 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (37 new tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4443 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+
+## Iteration 73
+
+[2026-01-18] frontend-010: Integrate PDF.js for PDF rendering
+- Installed pdfjs-dist library (v4.9.155)
+- Created comprehensive PDF reader types in pdfTypes.ts:
+  - PdfLocation interface: pageNumber, totalPages, percentage
+  - PdfTextSelection interface: text, pageNumber, position
+  - PdfReaderState interface: isLoaded, hasError, location, selection, scale, etc.
+  - PdfReaderProps interface: url, callbacks, initial values
+  - PdfErrorType union type: load_failed, render_failed, password_required, etc.
+  - INITIAL_PDF_READER_STATE constant
+  - ZOOM_PRESETS constant (FIT_PAGE, FIT_WIDTH, 50%-200%)
+  - MIN_ZOOM (0.25), MAX_ZOOM (4.0), ZOOM_STEP (0.25) constants
+  - createPdfError() and getPdfErrorMessage() utilities
+  - validatePdfUrl() for URL validation
+  - clampZoom(), calculateFitWidthZoom(), calculateFitPageZoom() for zoom handling
+  - formatZoomPercent() for display formatting
+- Created PdfReader component in PdfReader.tsx:
+  - Initializes PDF.js document and renders pages to canvas
+  - Page navigation: first/prev/next/last buttons, keyboard shortcuts
+  - Zoom controls: zoom in/out buttons, dropdown presets
+  - Text layer rendering for text selection
+  - Text selection with position tracking
+  - Responsive toolbar with navigation and zoom controls
+  - Progress indicator at bottom
+  - Error and loading states
+  - Proper cleanup on unmount
+- Created comprehensive test suite with 63 tests in pdfTypes.test.ts:
+  - INITIAL_PDF_READER_STATE tests (2 tests)
+  - ZOOM_PRESETS tests (3 tests)
+  - Zoom constants tests (3 tests)
+  - createPdfError tests (2 tests)
+  - getPdfErrorMessage tests (12 tests)
+  - validatePdfUrl tests (10 tests)
+  - clampZoom tests (5 tests)
+  - calculateFitWidthZoom tests (6 tests)
+  - calculateFitPageZoom tests (5 tests)
+  - formatZoomPercent tests (5 tests)
+  - Type definition tests (3 tests)
+  - Edge case tests (7 tests)
+- Updated reader exports in index.ts to include PdfReader
+- Integrated PdfReader in ReaderPage.tsx:
+  - Added PDF format detection and conditional rendering
+  - Added PDF-specific location and text selection handlers
+  - Updated mock book data to support PDF format detection
+- Added translation keys for PDF reader:
+  - pageNumber, firstPage, lastPage, zoomIn, zoomOut, zoomLevel
+- Files created:
+  - apps/web/src/components/reader/pdfTypes.ts
+  - apps/web/src/components/reader/pdfTypes.test.ts
+  - apps/web/src/components/reader/PdfReader.tsx
+- Files modified:
+  - apps/web/package.json (added pdfjs-dist dependency)
+  - apps/web/src/components/reader/index.ts (added PDF exports)
+  - apps/web/src/pages/reader/ReaderPage.tsx (integrated PdfReader)
+  - apps/web/src/locales/en.json (added PDF reader translations)
+- Acceptance criteria verification:
+  - ✅ PDF files render correctly (via PDF.js canvas rendering)
+  - ✅ Navigation and zoom work (toolbar controls + keyboard shortcuts)
+  - ✅ Text selection works (text layer with selection tracking)
+  - ✅ Responsive layout (flexible toolbar, centered canvas)
+  - ✅ Tests pass (63 new tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4506 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

@@ -21,9 +21,27 @@ import {
 } from "@mui/icons-material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { EpubReader } from "@/components/reader";
-import type { EpubLocation, TocItem, TextSelection } from "@/components/reader";
+import { EpubReader, PdfReader } from "@/components/reader";
+import type {
+  EpubLocation,
+  TocItem,
+  TextSelection,
+  PdfLocation,
+  PdfTextSelection,
+} from "@/components/reader";
 import { useReaderStore } from "@/stores/readerStore";
+
+/**
+ * Book data type for the reader
+ */
+interface BookData {
+  id: string;
+  title: string;
+  format: "epub" | "pdf" | "txt";
+  contentUrl: string;
+  initialCfi?: string | undefined;
+  initialPage?: number | undefined;
+}
 
 /**
  * Mock function to get book data (will be replaced with React Query)
@@ -31,13 +49,7 @@ import { useReaderStore } from "@/stores/readerStore";
 function useMockBookData(bookId: string | undefined) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [book, setBook] = useState<{
-    id: string;
-    title: string;
-    format: "epub" | "pdf" | "txt";
-    contentUrl: string;
-    initialCfi?: string | undefined;
-  } | null>(null);
+  const [book, setBook] = useState<BookData | null>(null);
 
   useEffect(() => {
     if (!bookId) {
@@ -49,10 +61,12 @@ function useMockBookData(bookId: string | undefined) {
     // Simulate loading
     const timer = setTimeout(() => {
       // Mock book data - in production, this comes from the API
+      // Determine format based on bookId for testing (in production, comes from DB)
+      const isPdf = bookId.endsWith("-pdf") || bookId.includes("pdf");
       setBook({
         id: bookId,
         title: "Sample Book",
-        format: "epub",
+        format: isPdf ? "pdf" : "epub",
         // This would be a real URL to the book content
         contentUrl: `/api/books/${bookId}/content`,
       });
@@ -84,8 +98,8 @@ export function ReaderPage(): React.ReactElement {
   // Mock book data (will be React Query in production)
   const { book, isLoading, error } = useMockBookData(bookId);
 
-  // Handle location change from reader
-  const handleLocationChange = useCallback(
+  // Handle EPUB location change from reader
+  const handleEpubLocationChange = useCallback(
     (location: EpubLocation) => {
       // Update store position (uses percentage * 100 as position)
       updatePosition(Math.round(location.percentage * 100), location.cfi);
@@ -95,8 +109,22 @@ export function ReaderPage(): React.ReactElement {
     [updatePosition]
   );
 
-  // Handle text selection
-  const handleTextSelect = useCallback(
+  // Handle PDF location change from reader
+  const handlePdfLocationChange = useCallback(
+    (location: PdfLocation) => {
+      // Update store position (uses percentage * 100 as position)
+      updatePosition(
+        Math.round(location.percentage * 100),
+        `page:${location.pageNumber}`
+      );
+
+      // TODO: Sync to backend with debounce
+    },
+    [updatePosition]
+  );
+
+  // Handle EPUB text selection
+  const handleEpubTextSelect = useCallback(
     (selection: TextSelection) => {
       setSelectedText(selection.text);
       // TODO: Show annotation toolbar
@@ -104,9 +132,25 @@ export function ReaderPage(): React.ReactElement {
     [setSelectedText]
   );
 
-  // Handle book load
-  const handleLoad = useCallback((loadedToc: TocItem[]) => {
+  // Handle PDF text selection
+  const handlePdfTextSelect = useCallback(
+    (selection: PdfTextSelection) => {
+      setSelectedText(selection.text);
+      // TODO: Show annotation toolbar
+    },
+    [setSelectedText]
+  );
+
+  // Handle EPUB book load
+  const handleEpubLoad = useCallback((loadedToc: TocItem[]) => {
     setToc(loadedToc);
+  }, []);
+
+  // Handle PDF book load
+  const handlePdfLoad = useCallback((_totalPages: number) => {
+    // PDFs don't have a TOC in the same way as EPUBs
+    // We could potentially extract bookmarks/outlines in the future
+    setToc([]);
   }, []);
 
   // Handle reader error
@@ -309,16 +353,27 @@ export function ReaderPage(): React.ReactElement {
 
         {/* Reader content */}
         <Box sx={{ flex: 1, overflow: "hidden" }}>
-          {book.format === "epub" ? (
+          {book.format === "epub" && (
             <EpubReader
               url={book.contentUrl}
               initialCfi={book.initialCfi}
-              onLocationChange={handleLocationChange}
-              onTextSelect={handleTextSelect}
-              onLoad={handleLoad}
+              onLocationChange={handleEpubLocationChange}
+              onTextSelect={handleEpubTextSelect}
+              onLoad={handleEpubLoad}
               onError={handleError}
             />
-          ) : (
+          )}
+          {book.format === "pdf" && (
+            <PdfReader
+              url={book.contentUrl}
+              initialPage={book.initialPage}
+              onLocationChange={handlePdfLocationChange}
+              onTextSelect={handlePdfTextSelect}
+              onLoad={handlePdfLoad}
+              onError={handleError}
+            />
+          )}
+          {book.format === "txt" && (
             <Box
               sx={{
                 display: "flex",
