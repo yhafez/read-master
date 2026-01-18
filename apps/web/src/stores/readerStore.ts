@@ -21,6 +21,43 @@ export type BookFormat = "epub" | "pdf" | "txt" | "doc" | "docx" | "html";
 export type ReadingMode = "paginated" | "scroll" | "spread";
 
 /**
+ * Available font families for reading
+ */
+export type FontFamily =
+  | "system"
+  | "serif"
+  | "sans-serif"
+  | "monospace"
+  | "openDyslexic";
+
+/**
+ * Font family display names and CSS values
+ */
+export const FONT_FAMILIES: Record<FontFamily, { name: string; css: string }> =
+  {
+    system: {
+      name: "System Default",
+      css: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    },
+    serif: {
+      name: "Serif (Georgia)",
+      css: 'Georgia, "Times New Roman", Times, serif',
+    },
+    "sans-serif": {
+      name: "Sans-Serif (Arial)",
+      css: 'Arial, "Helvetica Neue", Helvetica, sans-serif',
+    },
+    monospace: {
+      name: "Monospace (Courier)",
+      css: '"Courier New", Courier, monospace',
+    },
+    openDyslexic: {
+      name: "OpenDyslexic",
+      css: '"OpenDyslexic", sans-serif',
+    },
+  } as const;
+
+/**
  * Current book info for reader
  */
 export interface CurrentBook {
@@ -51,6 +88,26 @@ export interface ReadingPosition {
 }
 
 /**
+ * Typography settings for reading
+ */
+export interface TypographySettings {
+  /** Font family for reading content */
+  fontFamily: FontFamily;
+  /** Font size in pixels (12-32) */
+  fontSize: number;
+  /** Line height multiplier (1.0-3.0) */
+  lineHeight: number;
+  /** Letter spacing in em units (-0.05 to 0.2) */
+  letterSpacing: number;
+  /** Word spacing in em units (0 to 0.5) */
+  wordSpacing: number;
+  /** Paragraph spacing multiplier (0.5-3.0) */
+  paragraphSpacing: number;
+  /** Text alignment */
+  textAlign: "left" | "justify" | "center";
+}
+
+/**
  * Reader display settings
  */
 export interface ReaderSettings {
@@ -72,7 +129,22 @@ export interface ReaderSettings {
   margins: number;
   /** Maximum content width in pixels (0 = full width) */
   maxWidth: number;
+  /** Typography settings */
+  typography: TypographySettings;
 }
+
+/**
+ * Default typography settings
+ */
+export const DEFAULT_TYPOGRAPHY_SETTINGS: TypographySettings = {
+  fontFamily: "system",
+  fontSize: 18,
+  lineHeight: 1.6,
+  letterSpacing: 0,
+  wordSpacing: 0,
+  paragraphSpacing: 1.5,
+  textAlign: "left",
+};
 
 /**
  * Default reader settings
@@ -87,6 +159,7 @@ export const DEFAULT_READER_SETTINGS: ReaderSettings = {
   highlightCurrentParagraph: false,
   margins: 5,
   maxWidth: 800,
+  typography: DEFAULT_TYPOGRAPHY_SETTINGS,
 };
 
 /**
@@ -115,6 +188,56 @@ export const MAX_WIDTH_RANGE = {
   max: 1200,
   step: 50,
 } as const;
+
+/**
+ * Font size range (in pixels)
+ */
+export const FONT_SIZE_RANGE = {
+  min: 12,
+  max: 32,
+  step: 1,
+} as const;
+
+/**
+ * Line height range (multiplier)
+ */
+export const LINE_HEIGHT_RANGE = {
+  min: 1.0,
+  max: 3.0,
+  step: 0.1,
+} as const;
+
+/**
+ * Letter spacing range (in em)
+ */
+export const LETTER_SPACING_RANGE = {
+  min: -0.05,
+  max: 0.2,
+  step: 0.01,
+} as const;
+
+/**
+ * Word spacing range (in em)
+ */
+export const WORD_SPACING_RANGE = {
+  min: 0,
+  max: 0.5,
+  step: 0.05,
+} as const;
+
+/**
+ * Paragraph spacing range (multiplier)
+ */
+export const PARAGRAPH_SPACING_RANGE = {
+  min: 0.5,
+  max: 3.0,
+  step: 0.1,
+} as const;
+
+/**
+ * Valid text alignment values
+ */
+export const VALID_TEXT_ALIGNMENTS = ["left", "justify", "center"] as const;
 
 /**
  * Clamp a value between min and max
@@ -148,6 +271,94 @@ export function validateBookFormat(format: string): BookFormat {
   return validFormats.includes(format as BookFormat)
     ? (format as BookFormat)
     : "txt";
+}
+
+/**
+ * Validate font family
+ */
+export function validateFontFamily(fontFamily: string): FontFamily {
+  const validFonts: FontFamily[] = [
+    "system",
+    "serif",
+    "sans-serif",
+    "monospace",
+    "openDyslexic",
+  ];
+  return validFonts.includes(fontFamily as FontFamily)
+    ? (fontFamily as FontFamily)
+    : "system";
+}
+
+/**
+ * Validate text alignment
+ */
+export function validateTextAlign(
+  textAlign: string
+): "left" | "justify" | "center" {
+  return VALID_TEXT_ALIGNMENTS.includes(
+    textAlign as "left" | "justify" | "center"
+  )
+    ? (textAlign as "left" | "justify" | "center")
+    : "left";
+}
+
+/**
+ * Sanitize typography settings
+ */
+export function sanitizeTypographySettings(
+  settings: Partial<TypographySettings>
+): Partial<TypographySettings> {
+  const sanitized: Partial<TypographySettings> = {};
+
+  if (settings.fontFamily !== undefined) {
+    sanitized.fontFamily = validateFontFamily(settings.fontFamily);
+  }
+
+  if (typeof settings.fontSize === "number") {
+    sanitized.fontSize = clampValue(
+      settings.fontSize,
+      FONT_SIZE_RANGE.min,
+      FONT_SIZE_RANGE.max
+    );
+  }
+
+  if (typeof settings.lineHeight === "number") {
+    sanitized.lineHeight = clampValue(
+      settings.lineHeight,
+      LINE_HEIGHT_RANGE.min,
+      LINE_HEIGHT_RANGE.max
+    );
+  }
+
+  if (typeof settings.letterSpacing === "number") {
+    sanitized.letterSpacing = clampValue(
+      settings.letterSpacing,
+      LETTER_SPACING_RANGE.min,
+      LETTER_SPACING_RANGE.max
+    );
+  }
+
+  if (typeof settings.wordSpacing === "number") {
+    sanitized.wordSpacing = clampValue(
+      settings.wordSpacing,
+      WORD_SPACING_RANGE.min,
+      WORD_SPACING_RANGE.max
+    );
+  }
+
+  if (typeof settings.paragraphSpacing === "number") {
+    sanitized.paragraphSpacing = clampValue(
+      settings.paragraphSpacing,
+      PARAGRAPH_SPACING_RANGE.min,
+      PARAGRAPH_SPACING_RANGE.max
+    );
+  }
+
+  if (settings.textAlign !== undefined) {
+    sanitized.textAlign = validateTextAlign(settings.textAlign);
+  }
+
+  return sanitized;
 }
 
 /**
@@ -204,6 +415,13 @@ export function sanitizeReaderSettings(
       MAX_WIDTH_RANGE.min,
       MAX_WIDTH_RANGE.max
     );
+  }
+
+  if (settings.typography !== undefined) {
+    sanitized.typography = {
+      ...DEFAULT_TYPOGRAPHY_SETTINGS,
+      ...sanitizeTypographySettings(settings.typography),
+    };
   }
 
   return sanitized;
@@ -271,8 +489,12 @@ interface ReaderActions {
   goToPercentage: (percentage: number) => void;
   /** Update reader settings */
   updateSettings: (settings: Partial<ReaderSettings>) => void;
+  /** Update typography settings */
+  updateTypography: (typography: Partial<TypographySettings>) => void;
   /** Reset reader settings to defaults */
   resetSettings: () => void;
+  /** Reset typography settings to defaults */
+  resetTypography: () => void;
   /** Toggle fullscreen mode */
   toggleFullscreen: () => void;
   /** Set fullscreen mode */
@@ -394,9 +616,28 @@ export const useReaderStore = create<ReaderStore>()(
           },
         })),
 
+      updateTypography: (newTypography) =>
+        set((state) => ({
+          settings: {
+            ...state.settings,
+            typography: {
+              ...state.settings.typography,
+              ...sanitizeTypographySettings(newTypography),
+            },
+          },
+        })),
+
       resetSettings: () =>
         set(() => ({
           settings: DEFAULT_READER_SETTINGS,
+        })),
+
+      resetTypography: () =>
+        set((state) => ({
+          settings: {
+            ...state.settings,
+            typography: DEFAULT_TYPOGRAPHY_SETTINGS,
+          },
         })),
 
       toggleFullscreen: () =>

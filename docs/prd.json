@@ -1526,7 +1526,7 @@
         "Applied to all readers",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-013",

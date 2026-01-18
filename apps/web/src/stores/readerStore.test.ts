@@ -9,13 +9,24 @@ import {
   clampValue,
   createReadingPosition,
   DEFAULT_READER_SETTINGS,
+  DEFAULT_TYPOGRAPHY_SETTINGS,
+  FONT_FAMILIES,
+  FONT_SIZE_RANGE,
+  LETTER_SPACING_RANGE,
+  LINE_HEIGHT_RANGE,
   MARGINS_RANGE,
   MAX_WIDTH_RANGE,
+  PARAGRAPH_SPACING_RANGE,
   READER_STORAGE_KEY,
   sanitizeReaderSettings,
+  sanitizeTypographySettings,
   useReaderStore,
   validateBookFormat,
+  validateFontFamily,
   validateReadingMode,
+  validateTextAlign,
+  VALID_TEXT_ALIGNMENTS,
+  WORD_SPACING_RANGE,
 } from "./readerStore";
 
 // Mock Date.now for consistent tests
@@ -56,7 +67,50 @@ describe("readerStore", () => {
         highlightCurrentParagraph: false,
         margins: 5,
         maxWidth: 800,
+        typography: DEFAULT_TYPOGRAPHY_SETTINGS,
       });
+    });
+
+    it("should export DEFAULT_TYPOGRAPHY_SETTINGS", () => {
+      expect(DEFAULT_TYPOGRAPHY_SETTINGS).toEqual({
+        fontFamily: "system",
+        fontSize: 18,
+        lineHeight: 1.6,
+        letterSpacing: 0,
+        wordSpacing: 0,
+        paragraphSpacing: 1.5,
+        textAlign: "left",
+      });
+    });
+
+    it("should export FONT_FAMILIES with all font options", () => {
+      expect(FONT_FAMILIES).toHaveProperty("system");
+      expect(FONT_FAMILIES).toHaveProperty("serif");
+      expect(FONT_FAMILIES).toHaveProperty("sans-serif");
+      expect(FONT_FAMILIES).toHaveProperty("monospace");
+      expect(FONT_FAMILIES).toHaveProperty("openDyslexic");
+      expect(FONT_FAMILIES.system.name).toBe("System Default");
+      expect(FONT_FAMILIES.openDyslexic.name).toBe("OpenDyslexic");
+    });
+
+    it("should export typography range constants", () => {
+      expect(FONT_SIZE_RANGE).toEqual({ min: 12, max: 32, step: 1 });
+      expect(LINE_HEIGHT_RANGE).toEqual({ min: 1.0, max: 3.0, step: 0.1 });
+      expect(LETTER_SPACING_RANGE).toEqual({
+        min: -0.05,
+        max: 0.2,
+        step: 0.01,
+      });
+      expect(WORD_SPACING_RANGE).toEqual({ min: 0, max: 0.5, step: 0.05 });
+      expect(PARAGRAPH_SPACING_RANGE).toEqual({
+        min: 0.5,
+        max: 3.0,
+        step: 0.1,
+      });
+    });
+
+    it("should export VALID_TEXT_ALIGNMENTS", () => {
+      expect(VALID_TEXT_ALIGNMENTS).toEqual(["left", "justify", "center"]);
     });
 
     it("should export AUTO_SCROLL_WPM_RANGE", () => {
@@ -133,6 +187,217 @@ describe("readerStore", () => {
       expect(validateBookFormat("invalid")).toBe("txt");
       expect(validateBookFormat("")).toBe("txt");
       expect(validateBookFormat("mobi")).toBe("txt");
+    });
+  });
+
+  describe("validateFontFamily", () => {
+    it("should accept valid font families", () => {
+      expect(validateFontFamily("system")).toBe("system");
+      expect(validateFontFamily("serif")).toBe("serif");
+      expect(validateFontFamily("sans-serif")).toBe("sans-serif");
+      expect(validateFontFamily("monospace")).toBe("monospace");
+      expect(validateFontFamily("openDyslexic")).toBe("openDyslexic");
+    });
+
+    it("should default to system for invalid font family", () => {
+      expect(validateFontFamily("invalid")).toBe("system");
+      expect(validateFontFamily("")).toBe("system");
+      expect(validateFontFamily("Arial")).toBe("system");
+    });
+  });
+
+  describe("validateTextAlign", () => {
+    it("should accept valid text alignments", () => {
+      expect(validateTextAlign("left")).toBe("left");
+      expect(validateTextAlign("justify")).toBe("justify");
+      expect(validateTextAlign("center")).toBe("center");
+    });
+
+    it("should default to left for invalid alignment", () => {
+      expect(validateTextAlign("invalid")).toBe("left");
+      expect(validateTextAlign("")).toBe("left");
+      expect(validateTextAlign("right")).toBe("left");
+    });
+  });
+
+  describe("sanitizeTypographySettings", () => {
+    describe("fontFamily validation", () => {
+      it("should accept valid font families", () => {
+        expect(sanitizeTypographySettings({ fontFamily: "serif" })).toEqual({
+          fontFamily: "serif",
+        });
+        expect(
+          sanitizeTypographySettings({ fontFamily: "openDyslexic" })
+        ).toEqual({
+          fontFamily: "openDyslexic",
+        });
+      });
+
+      it("should default invalid font family to system", () => {
+        expect(
+          sanitizeTypographySettings({ fontFamily: "invalid" as never })
+        ).toEqual({
+          fontFamily: "system",
+        });
+      });
+    });
+
+    describe("fontSize validation", () => {
+      it("should accept valid font sizes", () => {
+        expect(sanitizeTypographySettings({ fontSize: 16 })).toEqual({
+          fontSize: 16,
+        });
+        expect(sanitizeTypographySettings({ fontSize: 12 })).toEqual({
+          fontSize: 12,
+        });
+        expect(sanitizeTypographySettings({ fontSize: 32 })).toEqual({
+          fontSize: 32,
+        });
+      });
+
+      it("should clamp font size to valid range", () => {
+        expect(sanitizeTypographySettings({ fontSize: 8 })).toEqual({
+          fontSize: 12,
+        });
+        expect(sanitizeTypographySettings({ fontSize: 50 })).toEqual({
+          fontSize: 32,
+        });
+      });
+    });
+
+    describe("lineHeight validation", () => {
+      it("should accept valid line heights", () => {
+        expect(sanitizeTypographySettings({ lineHeight: 1.5 })).toEqual({
+          lineHeight: 1.5,
+        });
+        expect(sanitizeTypographySettings({ lineHeight: 1.0 })).toEqual({
+          lineHeight: 1.0,
+        });
+        expect(sanitizeTypographySettings({ lineHeight: 3.0 })).toEqual({
+          lineHeight: 3.0,
+        });
+      });
+
+      it("should clamp line height to valid range", () => {
+        expect(sanitizeTypographySettings({ lineHeight: 0.5 })).toEqual({
+          lineHeight: 1.0,
+        });
+        expect(sanitizeTypographySettings({ lineHeight: 5.0 })).toEqual({
+          lineHeight: 3.0,
+        });
+      });
+    });
+
+    describe("letterSpacing validation", () => {
+      it("should accept valid letter spacing", () => {
+        expect(sanitizeTypographySettings({ letterSpacing: 0 })).toEqual({
+          letterSpacing: 0,
+        });
+        expect(sanitizeTypographySettings({ letterSpacing: -0.05 })).toEqual({
+          letterSpacing: -0.05,
+        });
+        expect(sanitizeTypographySettings({ letterSpacing: 0.2 })).toEqual({
+          letterSpacing: 0.2,
+        });
+      });
+
+      it("should clamp letter spacing to valid range", () => {
+        expect(sanitizeTypographySettings({ letterSpacing: -0.1 })).toEqual({
+          letterSpacing: -0.05,
+        });
+        expect(sanitizeTypographySettings({ letterSpacing: 0.5 })).toEqual({
+          letterSpacing: 0.2,
+        });
+      });
+    });
+
+    describe("wordSpacing validation", () => {
+      it("should accept valid word spacing", () => {
+        expect(sanitizeTypographySettings({ wordSpacing: 0 })).toEqual({
+          wordSpacing: 0,
+        });
+        expect(sanitizeTypographySettings({ wordSpacing: 0.25 })).toEqual({
+          wordSpacing: 0.25,
+        });
+        expect(sanitizeTypographySettings({ wordSpacing: 0.5 })).toEqual({
+          wordSpacing: 0.5,
+        });
+      });
+
+      it("should clamp word spacing to valid range", () => {
+        expect(sanitizeTypographySettings({ wordSpacing: -0.1 })).toEqual({
+          wordSpacing: 0,
+        });
+        expect(sanitizeTypographySettings({ wordSpacing: 1.0 })).toEqual({
+          wordSpacing: 0.5,
+        });
+      });
+    });
+
+    describe("paragraphSpacing validation", () => {
+      it("should accept valid paragraph spacing", () => {
+        expect(sanitizeTypographySettings({ paragraphSpacing: 1.5 })).toEqual({
+          paragraphSpacing: 1.5,
+        });
+        expect(sanitizeTypographySettings({ paragraphSpacing: 0.5 })).toEqual({
+          paragraphSpacing: 0.5,
+        });
+        expect(sanitizeTypographySettings({ paragraphSpacing: 3.0 })).toEqual({
+          paragraphSpacing: 3.0,
+        });
+      });
+
+      it("should clamp paragraph spacing to valid range", () => {
+        expect(sanitizeTypographySettings({ paragraphSpacing: 0.1 })).toEqual({
+          paragraphSpacing: 0.5,
+        });
+        expect(sanitizeTypographySettings({ paragraphSpacing: 5.0 })).toEqual({
+          paragraphSpacing: 3.0,
+        });
+      });
+    });
+
+    describe("textAlign validation", () => {
+      it("should accept valid text alignments", () => {
+        expect(sanitizeTypographySettings({ textAlign: "left" })).toEqual({
+          textAlign: "left",
+        });
+        expect(sanitizeTypographySettings({ textAlign: "justify" })).toEqual({
+          textAlign: "justify",
+        });
+        expect(sanitizeTypographySettings({ textAlign: "center" })).toEqual({
+          textAlign: "center",
+        });
+      });
+
+      it("should default invalid text align to left", () => {
+        expect(
+          sanitizeTypographySettings({ textAlign: "right" as never })
+        ).toEqual({
+          textAlign: "left",
+        });
+      });
+    });
+
+    describe("multiple settings", () => {
+      it("should handle empty object", () => {
+        expect(sanitizeTypographySettings({})).toEqual({});
+      });
+
+      it("should handle multiple settings at once", () => {
+        const result = sanitizeTypographySettings({
+          fontFamily: "serif",
+          fontSize: 20,
+          lineHeight: 2.0,
+          textAlign: "justify",
+        });
+        expect(result).toEqual({
+          fontFamily: "serif",
+          fontSize: 20,
+          lineHeight: 2.0,
+          textAlign: "justify",
+        });
+      });
     });
   });
 
@@ -250,6 +515,62 @@ describe("readerStore", () => {
         expect(sanitizeReaderSettings({ maxWidth: 2000 })).toEqual({
           maxWidth: 1200,
         });
+      });
+    });
+
+    describe("typography validation", () => {
+      it("should sanitize typography settings when provided", () => {
+        const result = sanitizeReaderSettings({
+          typography: {
+            fontFamily: "serif",
+            fontSize: 20,
+            lineHeight: 2.0,
+            letterSpacing: 0.05,
+            wordSpacing: 0.1,
+            paragraphSpacing: 2.0,
+            textAlign: "justify",
+          },
+        });
+        expect(result.typography).toEqual({
+          ...DEFAULT_TYPOGRAPHY_SETTINGS,
+          fontFamily: "serif",
+          fontSize: 20,
+          lineHeight: 2.0,
+          letterSpacing: 0.05,
+          wordSpacing: 0.1,
+          paragraphSpacing: 2.0,
+          textAlign: "justify",
+        });
+      });
+
+      it("should fill missing typography settings with defaults", () => {
+        const result = sanitizeReaderSettings({
+          typography: {
+            fontSize: 22,
+          } as never,
+        });
+        expect(result.typography?.fontFamily).toBe("system");
+        expect(result.typography?.fontSize).toBe(22);
+        expect(result.typography?.lineHeight).toBe(1.6);
+      });
+
+      it("should clamp invalid typography values", () => {
+        const result = sanitizeReaderSettings({
+          typography: {
+            fontFamily: "system",
+            fontSize: 100, // Over max
+            lineHeight: 10, // Over max
+            letterSpacing: 1, // Over max
+            wordSpacing: 2, // Over max
+            paragraphSpacing: 10, // Over max
+            textAlign: "left",
+          },
+        });
+        expect(result.typography?.fontSize).toBe(32);
+        expect(result.typography?.lineHeight).toBe(3.0);
+        expect(result.typography?.letterSpacing).toBe(0.2);
+        expect(result.typography?.wordSpacing).toBe(0.5);
+        expect(result.typography?.paragraphSpacing).toBe(3.0);
       });
     });
 
@@ -663,6 +984,86 @@ describe("readerStore", () => {
         expect(useReaderStore.getState().settings).toEqual(
           DEFAULT_READER_SETTINGS
         );
+      });
+    });
+
+    describe("updateTypography", () => {
+      it("should update single typography setting", () => {
+        useReaderStore.getState().updateTypography({ fontFamily: "serif" });
+        expect(useReaderStore.getState().settings.typography.fontFamily).toBe(
+          "serif"
+        );
+      });
+
+      it("should update multiple typography settings", () => {
+        useReaderStore.getState().updateTypography({
+          fontFamily: "serif",
+          fontSize: 24,
+          lineHeight: 2.0,
+        });
+        const typography = useReaderStore.getState().settings.typography;
+        expect(typography.fontFamily).toBe("serif");
+        expect(typography.fontSize).toBe(24);
+        expect(typography.lineHeight).toBe(2.0);
+      });
+
+      it("should preserve other typography settings", () => {
+        useReaderStore.getState().updateTypography({ fontFamily: "serif" });
+        const typography = useReaderStore.getState().settings.typography;
+        expect(typography.fontFamily).toBe("serif");
+        expect(typography.fontSize).toBe(18); // Default preserved
+        expect(typography.lineHeight).toBe(1.6); // Default preserved
+      });
+
+      it("should validate typography settings", () => {
+        useReaderStore.getState().updateTypography({
+          fontSize: 100, // Over max
+          lineHeight: 10, // Over max
+          letterSpacing: 1, // Over max
+        });
+        const typography = useReaderStore.getState().settings.typography;
+        expect(typography.fontSize).toBe(32); // Clamped to max
+        expect(typography.lineHeight).toBe(3.0); // Clamped to max
+        expect(typography.letterSpacing).toBe(0.2); // Clamped to max
+      });
+
+      it("should not affect other reader settings", () => {
+        useReaderStore.getState().updateSettings({
+          readingMode: "scroll",
+          margins: 10,
+        });
+        useReaderStore.getState().updateTypography({ fontFamily: "serif" });
+        const settings = useReaderStore.getState().settings;
+        expect(settings.readingMode).toBe("scroll");
+        expect(settings.margins).toBe(10);
+        expect(settings.typography.fontFamily).toBe("serif");
+      });
+    });
+
+    describe("resetTypography", () => {
+      it("should reset only typography settings to defaults", () => {
+        // Modify both reader and typography settings
+        useReaderStore.getState().updateSettings({
+          readingMode: "scroll",
+          margins: 15,
+        });
+        useReaderStore.getState().updateTypography({
+          fontFamily: "serif",
+          fontSize: 24,
+          lineHeight: 2.0,
+        });
+
+        // Reset only typography
+        useReaderStore.getState().resetTypography();
+
+        // Verify typography is reset
+        expect(useReaderStore.getState().settings.typography).toEqual(
+          DEFAULT_TYPOGRAPHY_SETTINGS
+        );
+
+        // Verify other settings are preserved
+        expect(useReaderStore.getState().settings.readingMode).toBe("scroll");
+        expect(useReaderStore.getState().settings.margins).toBe(15);
       });
     });
 
