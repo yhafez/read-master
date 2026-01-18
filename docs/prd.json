@@ -305,7 +305,7 @@
         "Relations are properly defined",
         "Indexes are in place"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-005",

@@ -405,3 +405,33 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (105 tests total: 47 api + 34 shared + 12 web + 12 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 14
+
+[2026-01-17] db-004: Create ReadingProgress and Annotation models
+- Created ReadingProgress model with all fields from specification:
+  - id (cuid), userId and bookId with relations to User and Book
+  - Position tracking: currentPosition (character offset), percentage (0-100)
+  - Time tracking: totalReadTime (seconds), lastReadAt, startedAt, completedAt
+  - Speed tracking: averageWpm (words per minute)
+  - Timestamps: createdAt, updatedAt
+  - @@unique([userId, bookId]) constraint for one progress record per user per book
+  - Indexes on userId, bookId, userId+lastReadAt
+- Created Annotation model with all fields from specification:
+  - id (cuid), userId and bookId with relations to User and Book
+  - type (AnnotationType enum: HIGHLIGHT, NOTE, BOOKMARK)
+  - Position in text: startOffset, endOffset (character offsets)
+  - Content: selectedText (Text), note (Text, max 5000 chars at app level), color (VarChar(7) for hex)
+  - Visibility: isPublic (default false)
+  - Timestamps: createdAt, updatedAt, deletedAt (soft delete)
+  - Indexes on userId, bookId, userId+bookId, userId+type, deletedAt, bookId+startOffset
+- Created AnnotationType enum: HIGHLIGHT, NOTE, BOOKMARK
+- Added User relations: readingProgress[], annotations[]
+- Added Book relations: readingProgress[], annotations[]
+- Added onDelete: Cascade to all relations
+- Updated packages/database/src/index.ts with examples for ReadingProgress upsert and Annotation create
+- Added 4 new tests for ReadingProgress and Annotation model accessors
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (109 tests total: 47 api + 34 shared + 12 web + 16 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

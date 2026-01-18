@@ -83,6 +83,47 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.chapter.count).toBe("function");
       expect(typeof prisma.chapter.aggregate).toBe("function");
     });
+
+    it("should have readingProgress model accessor", () => {
+      expect(prisma.readingProgress).toBeDefined();
+      expect(typeof prisma.readingProgress.findMany).toBe("function");
+      expect(typeof prisma.readingProgress.findUnique).toBe("function");
+      expect(typeof prisma.readingProgress.create).toBe("function");
+      expect(typeof prisma.readingProgress.update).toBe("function");
+      expect(typeof prisma.readingProgress.delete).toBe("function");
+      expect(typeof prisma.readingProgress.upsert).toBe("function");
+    });
+
+    it("should have readingProgress model with expected query methods", () => {
+      expect(typeof prisma.readingProgress.findFirst).toBe("function");
+      expect(typeof prisma.readingProgress.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.readingProgress.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.readingProgress.createMany).toBe("function");
+      expect(typeof prisma.readingProgress.updateMany).toBe("function");
+      expect(typeof prisma.readingProgress.deleteMany).toBe("function");
+      expect(typeof prisma.readingProgress.count).toBe("function");
+      expect(typeof prisma.readingProgress.aggregate).toBe("function");
+    });
+
+    it("should have annotation model accessor", () => {
+      expect(prisma.annotation).toBeDefined();
+      expect(typeof prisma.annotation.findMany).toBe("function");
+      expect(typeof prisma.annotation.findUnique).toBe("function");
+      expect(typeof prisma.annotation.create).toBe("function");
+      expect(typeof prisma.annotation.update).toBe("function");
+      expect(typeof prisma.annotation.delete).toBe("function");
+    });
+
+    it("should have annotation model with expected query methods", () => {
+      expect(typeof prisma.annotation.findFirst).toBe("function");
+      expect(typeof prisma.annotation.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.annotation.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.annotation.createMany).toBe("function");
+      expect(typeof prisma.annotation.updateMany).toBe("function");
+      expect(typeof prisma.annotation.deleteMany).toBe("function");
+      expect(typeof prisma.annotation.count).toBe("function");
+      expect(typeof prisma.annotation.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

@@ -55,7 +55,9 @@ model User {
   deletedAt DateTime? // Soft delete
 
   // Relations
-  books Book[]
+  books           Book[]
+  readingProgress ReadingProgress[]
+  annotations     Annotation[]
 
   // Indexes for common queries
   @@index([clerkId])
@@ -121,7 +123,9 @@ model Book {
   deletedAt DateTime? // Soft delete
 
   // Relations
-  chapters Chapter[]
+  chapters        Chapter[]
+  readingProgress ReadingProgress[]
+  annotations     Annotation[]
 
   // Indexes for common queries
   @@index([userId])
@@ -181,4 +185,87 @@ enum ReadingStatus {
   READING
   COMPLETED
   ABANDONED
+}
+
+/// AnnotationType - Type of annotation a user can create
+enum AnnotationType {
+  HIGHLIGHT
+  NOTE
+  BOOKMARK
+}
+
+// =============================================================================
+// READING PROGRESS & ANNOTATIONS
+// =============================================================================
+
+/// ReadingProgress - Tracks user's reading progress for each book
+/// Unique per user+book combination
+model ReadingProgress {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Position tracking
+  currentPosition Int   @default(0) // Character offset in the text
+  percentage      Float @default(0) // 0-100 percentage complete
+
+  // Time tracking
+  totalReadTime Int       @default(0) // Total reading time in seconds
+  lastReadAt    DateTime?
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime? // Set when percentage reaches 100
+
+  // Speed tracking
+  averageWpm Int? // Average words per minute for this book
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraint: one progress record per user per book
+  @@unique([userId, bookId])
+  // Indexes for common queries
+  @@index([userId])
+  @@index([bookId])
+  @@index([userId, lastReadAt])
+}
+
+/// Annotation - User annotations on books (highlights, notes, bookmarks)
+/// Stores position as character offsets for portability across formats
+model Annotation {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Annotation type
+  type AnnotationType
+
+  // Position in text (character offsets)
+  startOffset Int
+  endOffset   Int
+
+  // Content
+  selectedText String? @db.Text // The text that was highlighted/annotated
+  note         String? @db.Text // User's note (max 5000 chars enforced at app level)
+  color        String? @db.VarChar(7) // Hex color code for highlights (e.g., "#FFFF00")
+
+  // Visibility
+  isPublic Boolean @default(false) // Can be shared with others
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Indexes for common queries
+  @@index([userId])
+  @@index([bookId])
+  @@index([userId, bookId])
+  @@index([userId, type])
+  @@index([deletedAt])
+  @@index([bookId, startOffset]) // For finding annotations by position
 }
