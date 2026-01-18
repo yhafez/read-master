@@ -4558,3 +4558,83 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests cover all scenarios (61 tests for all rating scenarios, status transitions, edge cases)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5071 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 82
+
+[2026-01-18] api-srs-004: Implement GET /api/flashcards/stats endpoint
+- Created flashcard statistics endpoint in apps/api/api/flashcards/stats.ts:
+  - GET /api/flashcards/stats - Comprehensive flashcard statistics:
+    - Returns retention rate (percentage of correct reviews, ratings 3-4)
+    - Status counts: NEW, LEARNING, REVIEW, SUSPENDED, and total
+    - Review history for configurable time period (default 30 days, max 365)
+    - Streak information: current, longest, and last review date
+    - Aggregate statistics: average ease factor, average interval
+    - Mastered card count (5+ repetitions and 21+ day interval)
+    - Due and overdue card counts
+  - Query parameters:
+    - bookId: Filter stats to specific book (optional)
+    - days: Number of days for review history (1-365, default 30)
+  - Helper functions exported for testing:
+    - getStartOfDayUTC: Get UTC midnight for a date
+    - formatDateString: Format date as YYYY-MM-DD
+    - calculateRetentionRate: Calculate percentage from correct/total
+    - calculateStreak: Calculate current and longest consecutive review days
+    - isMastered: Check if card meets mastery criteria (5 reps, 21+ day interval)
+    - buildReviewHistory: Build daily review history from review records
+  - Constants exported:
+    - DEFAULT_HISTORY_DAYS (30), MAX_HISTORY_DAYS (365), MIN_HISTORY_DAYS (1)
+    - FLASHCARD_STATUSES array
+- Created comprehensive test suite with 59 tests in stats.test.ts:
+  - Constants tests (4 tests):
+    - Correct default, min, max history days
+    - All flashcard statuses defined
+  - getStartOfDayUTC tests (5 tests):
+    - Midnight, midday, end of day handling
+    - Month and year boundaries
+  - formatDateString tests (3 tests):
+    - YYYY-MM-DD formatting
+    - Single digit month/day padding
+  - calculateRetentionRate tests (7 tests):
+    - Zero reviews handling
+    - 100% and 0% retention
+    - Mixed reviews with rounding
+    - Large numbers and small percentages
+  - isMastered tests (7 tests):
+    - Threshold boundaries
+    - Below threshold cases
+  - calculateStreak tests (10 tests):
+    - Empty reviews
+    - Single review today/yesterday
+    - Consecutive days
+    - Gap in streak
+    - Multiple reviews same day
+    - Longest streak in past
+    - Unsorted dates handling
+    - Long streaks (30 days)
+  - buildReviewHistory tests (9 tests):
+    - Zero days handling
+    - No reviews (all zeros)
+    - Correct/incorrect classification
+    - Multi-day distribution
+    - Out of range reviews
+    - 30 day history
+    - Ascending date order
+  - statsQuerySchema tests (11 tests):
+    - Default values
+    - Valid/invalid bookId
+    - Days coercion and constraints
+    - Combined parameters
+  - Integration tests (3 tests):
+    - Realistic scenario with multiple reviews
+    - Single review edge case
+    - Broken streak scenario
+- Files created:
+  - apps/api/api/flashcards/stats.ts
+  - apps/api/api/flashcards/stats.test.ts
+- Acceptance criteria verification:
+  - ✅ All statistics are accurate (retention, counts, streaks, aggregates)
+  - ✅ Retention rate is calculated correctly (correct/total * 100, rounded to 2 decimals)
+  - ✅ Tests pass (59 tests covering all functionality)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5130 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
