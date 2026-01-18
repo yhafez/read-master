@@ -735,3 +735,76 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (143 tests total: 47 api + 34 shared + 12 web + 50 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 21
+
+[2026-01-17] db-010: Create forum models: ForumCategory, ForumPost, ForumReply, ForumVote
+- Created ForumCategory model for organizing forum posts:
+  - id (cuid), slug with @unique constraint for URL-friendly identifiers
+  - Metadata: name (VarChar 100), description (Text), icon, color (VarChar 7 for hex)
+  - Settings: sortOrder, isActive, isLocked, minTierToPost (UserTier)
+  - Statistics (denormalized): postsCount, lastPostAt, lastPostId, lastPostAuthorId
+  - Timestamps: createdAt, updatedAt
+  - Relation to ForumPost[]
+  - Indexes on slug, sortOrder, isActive, lastPostAt
+- Created ForumPost model with voting and view tracking:
+  - id (cuid), categoryId and userId with relations to ForumCategory and User
+  - Content: title (VarChar 200), content (Text)
+  - Optional bookId reference for book-specific discussions
+  - Post metadata: isPinned, isLocked, isFeatured, isAnswered (for Q&A posts)
+  - Voting fields: upvotes, downvotes, voteScore (denormalized for sorting)
+  - Statistics: viewCount, repliesCount, lastReplyAt, lastReplyId
+  - Soft delete support via deletedAt
+  - Relation to ForumReply[] and ForumVote[]
+  - Indexes on categoryId, userId, bookId, categoryId+isPinned, categoryId+voteScore, categoryId+createdAt, categoryId+lastReplyAt, voteScore, viewCount, deletedAt, createdAt
+- Created ForumReply model with nested replies and voting support:
+  - id (cuid), postId and userId with relations to ForumPost and User
+  - Content: content (Text)
+  - Nested reply support via parentReplyId self-reference ("NestedForumReplies" relation)
+  - childReplies[] relation for accessing nested replies
+  - Reply metadata: isBestAnswer, isEdited
+  - Voting fields: upvotes, downvotes, voteScore
+  - Soft delete support via deletedAt
+  - onDelete: Cascade for post and parent reply relations
+  - Relation to ForumVote[]
+  - Indexes on postId, userId, parentReplyId, postId+createdAt, postId+voteScore, voteScore, isBestAnswer, deletedAt
+- Created ForumVote model for upvote/downvote system:
+  - id (cuid), userId with relation to User
+  - Vote target: postId (optional) and replyId (optional) - one must be set
+  - Relations to ForumPost and ForumReply with named relations "PostVotes" and "ReplyVotes"
+  - value field: 1 for upvote, -1 for downvote
+  - @@unique([userId, postId]) constraint for one vote per user per post
+  - @@unique([userId, replyId]) constraint for one vote per user per reply
+  - onDelete: Cascade for all relations
+  - Timestamps: createdAt, updatedAt
+  - Indexes on userId, postId, replyId, value
+- Added User relations: forumPosts[], forumReplies[], forumVotes[]
+- Added Book relation: forumPosts[] for book-specific forum discussions
+- Updated packages/database/src/index.ts with:
+  - Import examples for ForumCategory, ForumPost, ForumReply, ForumVote types
+  - Example for creating a forum category
+  - Example for listing active forum categories
+  - Example for creating a forum post with optional book reference
+  - Example for listing posts in a category with sorting options
+  - Example for incrementing view count
+  - Example for getting a post with nested replies
+  - Example for creating top-level and nested replies
+  - Example for marking a reply as best answer
+  - Example for upvoting a post and updating vote counts
+  - Example for downvoting a reply
+  - Example for changing a vote
+  - Example for removing a vote
+  - Example for getting popular posts sorted by vote score
+  - Example for getting unanswered posts
+  - Example for searching posts by title or content
+  - Example for soft deleting a post
+  - Added type exports for ForumCategory, ForumPost, ForumReply, ForumVote
+- Added 8 new tests for forum model accessors:
+  - ForumCategory model accessor and query methods
+  - ForumPost model accessor and query methods
+  - ForumReply model accessor and query methods
+  - ForumVote model accessor and query methods
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (151 tests total: 47 api + 34 shared + 12 web + 58 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

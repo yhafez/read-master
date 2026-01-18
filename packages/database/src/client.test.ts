@@ -433,6 +433,88 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.discussionReply.aggregate).toBe("function");
     });
 
+    // Forum Models - ForumCategory, ForumPost, ForumReply, ForumVote
+
+    it("should have forumCategory model accessor", () => {
+      expect(prisma.forumCategory).toBeDefined();
+      expect(typeof prisma.forumCategory.findMany).toBe("function");
+      expect(typeof prisma.forumCategory.findUnique).toBe("function");
+      expect(typeof prisma.forumCategory.create).toBe("function");
+      expect(typeof prisma.forumCategory.update).toBe("function");
+      expect(typeof prisma.forumCategory.delete).toBe("function");
+    });
+
+    it("should have forumCategory model with expected query methods", () => {
+      expect(typeof prisma.forumCategory.findFirst).toBe("function");
+      expect(typeof prisma.forumCategory.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.forumCategory.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.forumCategory.createMany).toBe("function");
+      expect(typeof prisma.forumCategory.updateMany).toBe("function");
+      expect(typeof prisma.forumCategory.deleteMany).toBe("function");
+      expect(typeof prisma.forumCategory.count).toBe("function");
+      expect(typeof prisma.forumCategory.aggregate).toBe("function");
+    });
+
+    it("should have forumPost model accessor", () => {
+      expect(prisma.forumPost).toBeDefined();
+      expect(typeof prisma.forumPost.findMany).toBe("function");
+      expect(typeof prisma.forumPost.findUnique).toBe("function");
+      expect(typeof prisma.forumPost.create).toBe("function");
+      expect(typeof prisma.forumPost.update).toBe("function");
+      expect(typeof prisma.forumPost.delete).toBe("function");
+    });
+
+    it("should have forumPost model with expected query methods", () => {
+      expect(typeof prisma.forumPost.findFirst).toBe("function");
+      expect(typeof prisma.forumPost.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.forumPost.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.forumPost.createMany).toBe("function");
+      expect(typeof prisma.forumPost.updateMany).toBe("function");
+      expect(typeof prisma.forumPost.deleteMany).toBe("function");
+      expect(typeof prisma.forumPost.count).toBe("function");
+      expect(typeof prisma.forumPost.aggregate).toBe("function");
+    });
+
+    it("should have forumReply model accessor", () => {
+      expect(prisma.forumReply).toBeDefined();
+      expect(typeof prisma.forumReply.findMany).toBe("function");
+      expect(typeof prisma.forumReply.findUnique).toBe("function");
+      expect(typeof prisma.forumReply.create).toBe("function");
+      expect(typeof prisma.forumReply.update).toBe("function");
+      expect(typeof prisma.forumReply.delete).toBe("function");
+    });
+
+    it("should have forumReply model with expected query methods", () => {
+      expect(typeof prisma.forumReply.findFirst).toBe("function");
+      expect(typeof prisma.forumReply.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.forumReply.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.forumReply.createMany).toBe("function");
+      expect(typeof prisma.forumReply.updateMany).toBe("function");
+      expect(typeof prisma.forumReply.deleteMany).toBe("function");
+      expect(typeof prisma.forumReply.count).toBe("function");
+      expect(typeof prisma.forumReply.aggregate).toBe("function");
+    });
+
+    it("should have forumVote model accessor", () => {
+      expect(prisma.forumVote).toBeDefined();
+      expect(typeof prisma.forumVote.findMany).toBe("function");
+      expect(typeof prisma.forumVote.findUnique).toBe("function");
+      expect(typeof prisma.forumVote.create).toBe("function");
+      expect(typeof prisma.forumVote.update).toBe("function");
+      expect(typeof prisma.forumVote.delete).toBe("function");
+    });
+
+    it("should have forumVote model with expected query methods", () => {
+      expect(typeof prisma.forumVote.findFirst).toBe("function");
+      expect(typeof prisma.forumVote.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.forumVote.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.forumVote.createMany).toBe("function");
+      expect(typeof prisma.forumVote.updateMany).toBe("function");
+      expect(typeof prisma.forumVote.deleteMany).toBe("function");
+      expect(typeof prisma.forumVote.count).toBe("function");
+      expect(typeof prisma.forumVote.aggregate).toBe("function");
+    });
+
     // System Models - AIUsageLog, AuditLog
 
     it("should have aIUsageLog model accessor", () => {

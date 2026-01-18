@@ -447,7 +447,7 @@
         "Forum supports nested replies",
         "Voting system is properly modeled"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-011",

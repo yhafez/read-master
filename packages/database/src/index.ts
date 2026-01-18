@@ -14,6 +14,7 @@
  * import type { Curriculum, CurriculumItem, CurriculumFollow, Visibility } from '@read-master/database';
  * import type { Follow, ReadingGroup, ReadingGroupMember, GroupRole } from '@read-master/database';
  * import type { GroupDiscussion, DiscussionReply } from '@read-master/database';
+ * import type { ForumCategory, ForumPost, ForumReply, ForumVote } from '@read-master/database';
  * import type { AIUsageLog, AuditLog } from '@read-master/database';
  * import type { BookSource, FileType, ReadingStatus, AnnotationType } from '@read-master/database';
  *
@@ -388,6 +389,182 @@
  * });
  *
  * // ========================================================================
+ * // FORUM - Community Discussion Forum
+ * // ========================================================================
+ *
+ * // Create a forum category
+ * const category = await prisma.forumCategory.create({
+ *   data: {
+ *     slug: 'general-discussion',
+ *     name: 'General Discussion',
+ *     description: 'A place for general book-related discussions',
+ *     icon: 'chat-bubble',
+ *     color: '#4CAF50',
+ *     sortOrder: 0
+ *   }
+ * });
+ *
+ * // List all active forum categories
+ * const categories = await prisma.forumCategory.findMany({
+ *   where: { isActive: true },
+ *   orderBy: { sortOrder: 'asc' }
+ * });
+ *
+ * // Create a forum post
+ * const post = await prisma.forumPost.create({
+ *   data: {
+ *     categoryId: 'category_123',
+ *     userId: 'user_123',
+ *     title: 'What are your favorite philosophy books?',
+ *     content: 'I am looking for recommendations on philosophy books that are accessible to beginners...',
+ *     bookId: 'book_123' // Optional: link to a specific book
+ *   }
+ * });
+ *
+ * // List posts in a category (with sorting options)
+ * const posts = await prisma.forumPost.findMany({
+ *   where: { categoryId: 'category_123', deletedAt: null },
+ *   include: {
+ *     user: { select: { username: true, displayName: true, avatarUrl: true } },
+ *     category: { select: { name: true, slug: true } }
+ *   },
+ *   orderBy: [{ isPinned: 'desc' }, { voteScore: 'desc' }]
+ * });
+ *
+ * // Increment view count when viewing a post
+ * await prisma.forumPost.update({
+ *   where: { id: 'post_123' },
+ *   data: { viewCount: { increment: 1 } }
+ * });
+ *
+ * // Get a post with replies
+ * const postWithReplies = await prisma.forumPost.findUnique({
+ *   where: { id: 'post_123' },
+ *   include: {
+ *     user: { select: { username: true, displayName: true, avatarUrl: true } },
+ *     category: true,
+ *     replies: {
+ *       where: { parentReplyId: null, deletedAt: null },
+ *       include: {
+ *         user: { select: { username: true, displayName: true, avatarUrl: true } },
+ *         childReplies: {
+ *           where: { deletedAt: null },
+ *           include: { user: { select: { username: true, displayName: true, avatarUrl: true } } },
+ *           orderBy: { createdAt: 'asc' }
+ *         }
+ *       },
+ *       orderBy: { createdAt: 'asc' }
+ *     }
+ *   }
+ * });
+ *
+ * // Create a reply to a post (top-level)
+ * const reply = await prisma.forumReply.create({
+ *   data: {
+ *     postId: 'post_123',
+ *     userId: 'user_456',
+ *     content: 'I highly recommend starting with "Sophie\'s World" by Jostein Gaarder...'
+ *   }
+ * });
+ *
+ * // Create a nested reply
+ * const nestedReply = await prisma.forumReply.create({
+ *   data: {
+ *     postId: 'post_123',
+ *     userId: 'user_789',
+ *     parentReplyId: 'reply_123',
+ *     content: 'Great suggestion! I also loved that book.'
+ *   }
+ * });
+ *
+ * // Mark a reply as best answer (only OP can do this)
+ * await prisma.forumReply.update({
+ *   where: { id: 'reply_123' },
+ *   data: { isBestAnswer: true }
+ * });
+ * // Also update the post to mark it as answered
+ * await prisma.forumPost.update({
+ *   where: { id: 'post_123' },
+ *   data: { isAnswered: true }
+ * });
+ *
+ * // Upvote a post
+ * const upvote = await prisma.forumVote.create({
+ *   data: {
+ *     userId: 'user_456',
+ *     postId: 'post_123',
+ *     value: 1 // 1 for upvote, -1 for downvote
+ *   }
+ * });
+ * // Update the post's vote counts
+ * await prisma.forumPost.update({
+ *   where: { id: 'post_123' },
+ *   data: {
+ *     upvotes: { increment: 1 },
+ *     voteScore: { increment: 1 }
+ *   }
+ * });
+ *
+ * // Downvote a reply
+ * const downvote = await prisma.forumVote.create({
+ *   data: {
+ *     userId: 'user_789',
+ *     replyId: 'reply_123',
+ *     value: -1
+ *   }
+ * });
+ * // Update the reply's vote counts
+ * await prisma.forumReply.update({
+ *   where: { id: 'reply_123' },
+ *   data: {
+ *     downvotes: { increment: 1 },
+ *     voteScore: { decrement: 1 }
+ *   }
+ * });
+ *
+ * // Change a vote (e.g., from upvote to downvote)
+ * await prisma.forumVote.update({
+ *   where: { userId_postId: { userId: 'user_456', postId: 'post_123' } },
+ *   data: { value: -1 }
+ * });
+ *
+ * // Remove a vote
+ * await prisma.forumVote.delete({
+ *   where: { userId_postId: { userId: 'user_456', postId: 'post_123' } }
+ * });
+ *
+ * // Get posts sorted by popularity (most upvoted)
+ * const popularPosts = await prisma.forumPost.findMany({
+ *   where: { deletedAt: null },
+ *   orderBy: { voteScore: 'desc' },
+ *   take: 20
+ * });
+ *
+ * // Get unanswered posts (for Q&A moderation)
+ * const unansweredPosts = await prisma.forumPost.findMany({
+ *   where: { isAnswered: false, deletedAt: null },
+ *   orderBy: { createdAt: 'desc' }
+ * });
+ *
+ * // Search posts by title or content (basic search)
+ * const searchResults = await prisma.forumPost.findMany({
+ *   where: {
+ *     deletedAt: null,
+ *     OR: [
+ *       { title: { contains: 'philosophy', mode: 'insensitive' } },
+ *       { content: { contains: 'philosophy', mode: 'insensitive' } }
+ *     ]
+ *   },
+ *   orderBy: { voteScore: 'desc' }
+ * });
+ *
+ * // Soft delete a post
+ * await prisma.forumPost.update({
+ *   where: { id: 'post_123' },
+ *   data: { deletedAt: new Date() }
+ * });
+ *
+ * // ========================================================================
  * // SYSTEM LOGGING - AI Usage & Audit Logs
  * // ========================================================================
  *
@@ -530,6 +707,10 @@ export type {
   ReadingGroupMember,
   GroupDiscussion,
   DiscussionReply,
+  ForumCategory,
+  ForumPost,
+  ForumReply,
+  ForumVote,
   AIUsageLog,
   AuditLog,
 } from "@prisma/client";

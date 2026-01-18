@@ -73,6 +73,11 @@ model User {
   groupDiscussions  GroupDiscussion[]    @relation("GroupDiscussions") // Discussions created by this user
   discussionReplies DiscussionReply[]    @relation("DiscussionReplies") // Replies created by this user
 
+  // Forum relations
+  forumPosts   ForumPost[]  @relation("ForumPosts") // Forum posts created by this user
+  forumReplies ForumReply[] @relation("ForumReplies") // Forum replies created by this user
+  forumVotes   ForumVote[]  @relation("ForumVotes") // Forum votes cast by this user
+
   // Indexes for common queries
   @@index([clerkId])
   @@index([email])
@@ -148,6 +153,9 @@ model Book {
   // Social relations
   readingGroups    ReadingGroup[]    @relation("CurrentGroupBook") // Reading groups currently reading this book
   groupDiscussions GroupDiscussion[] @relation("GroupBookDiscussions") // Discussions about this book
+
+  // Forum relations
+  forumPosts ForumPost[] @relation("ForumBookPosts") // Forum posts about this book
 
   // Indexes for common queries
   @@index([userId])
@@ -913,6 +921,180 @@ model DiscussionReply {
   @@index([parentReplyId])
   @@index([discussionId, createdAt])
   @@index([deletedAt])
+}
+
+// =============================================================================
+// FORUM - Community Discussion Forum
+// =============================================================================
+
+/// ForumCategory - Categories for organizing forum posts
+/// Provides structure for community discussions
+model ForumCategory {
+  id   String @id @default(cuid())
+  slug String @unique // URL-friendly identifier (e.g., "general-discussion")
+
+  // Category metadata
+  name        String  @db.VarChar(100) // Display name
+  description String? @db.Text // Category description
+  icon        String? // Icon identifier or URL
+  color       String? @db.VarChar(7) // Hex color for category badge
+
+  // Category settings
+  sortOrder     Int      @default(0) // Order in category list
+  isActive      Boolean  @default(true) // Can posts be created here?
+  isLocked      Boolean  @default(false) // Prevent new posts
+  minTierToPost UserTier @default(FREE) // Minimum tier to post in this category
+
+  // Statistics (denormalized)
+  postsCount       Int       @default(0)
+  lastPostAt       DateTime?
+  lastPostId       String?
+  lastPostAuthorId String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  posts ForumPost[]
+
+  // Indexes
+  @@index([slug])
+  @@index([sortOrder])
+  @@index([isActive])
+  @@index([lastPostAt])
+}
+
+/// ForumPost - A post/topic in the forum
+/// Supports voting, view tracking, and soft delete
+model ForumPost {
+  id         String        @id @default(cuid())
+  categoryId String
+  category   ForumCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User          @relation("ForumPosts", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Post content
+  title   String @db.VarChar(200) // Post title (3-200 chars enforced at app level)
+  content String @db.Text // Post content (10-50000 chars enforced at app level)
+
+  // Optional book reference (for book-specific discussions)
+  bookId String?
+  book   Book?   @relation("ForumBookPosts", fields: [bookId], references: [id], onDelete: SetNull)
+
+  // Post metadata
+  isPinned   Boolean @default(false) // Pinned at top of category
+  isLocked   Boolean @default(false) // Prevent new replies
+  isFeatured Boolean @default(false) // Featured post
+  isAnswered Boolean @default(false) // Has accepted answer (for Q&A posts)
+
+  // Voting fields
+  upvotes   Int @default(0)
+  downvotes Int @default(0)
+  voteScore Int @default(0) // upvotes - downvotes (denormalized for sorting)
+
+  // Statistics
+  viewCount    Int       @default(0)
+  repliesCount Int       @default(0)
+  lastReplyAt  DateTime?
+  lastReplyId  String? // ID of last reply for quick access
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  replies ForumReply[]
+  votes   ForumVote[]  @relation("PostVotes")
+
+  // Indexes
+  @@index([categoryId])
+  @@index([userId])
+  @@index([bookId])
+  @@index([categoryId, isPinned])
+  @@index([categoryId, voteScore])
+  @@index([categoryId, createdAt])
+  @@index([categoryId, lastReplyAt])
+  @@index([voteScore])
+  @@index([viewCount])
+  @@index([deletedAt])
+  @@index([createdAt])
+}
+
+/// ForumReply - A reply to a forum post
+/// Supports nested replies and voting
+model ForumReply {
+  id     String    @id @default(cuid())
+  postId String
+  post   ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId String
+  user   User      @relation("ForumReplies", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Reply content
+  content String @db.Text // Reply content
+
+  // Nested reply support
+  parentReplyId String? // For nested replies (null = top-level reply)
+  parentReply   ForumReply?  @relation("NestedForumReplies", fields: [parentReplyId], references: [id], onDelete: Cascade)
+  childReplies  ForumReply[] @relation("NestedForumReplies")
+
+  // Reply metadata
+  isBestAnswer Boolean @default(false) // Marked as best answer by OP
+  isEdited     Boolean @default(false) // Has been edited
+
+  // Voting fields
+  upvotes   Int @default(0)
+  downvotes Int @default(0)
+  voteScore Int @default(0) // upvotes - downvotes
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  votes ForumVote[] @relation("ReplyVotes")
+
+  // Indexes
+  @@index([postId])
+  @@index([userId])
+  @@index([parentReplyId])
+  @@index([postId, createdAt])
+  @@index([postId, voteScore])
+  @@index([voteScore])
+  @@index([isBestAnswer])
+  @@index([deletedAt])
+}
+
+/// ForumVote - Vote on a post or reply
+/// Supports upvote (+1) and downvote (-1)
+model ForumVote {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("ForumVotes", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Vote target (one of these must be set)
+  postId  String?
+  post    ForumPost?  @relation("PostVotes", fields: [postId], references: [id], onDelete: Cascade)
+  replyId String?
+  reply   ForumReply? @relation("ReplyVotes", fields: [replyId], references: [id], onDelete: Cascade)
+
+  // Vote value: 1 for upvote, -1 for downvote
+  value Int // 1 or -1
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraints: one vote per user per post/reply
+  @@unique([userId, postId])
+  @@unique([userId, replyId])
+  // Indexes
+  @@index([userId])
+  @@index([postId])
+  @@index([replyId])
+  @@index([value])
 }
 
 // =============================================================================
