@@ -3,3 +3,4 @@ export * from "./moderation";
 export * from "./srs";
 export * from "./dates";
 export * from "./blooms";
+export * from "./lexile";

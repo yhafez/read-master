@@ -770,7 +770,7 @@
         "Text difficulty estimation works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-012",

@@ -1411,3 +1411,65 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Full assessment flow integration test
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1451 tests total: 47 api + 172 database + 12 web + 1220 shared)
 - Files: packages/shared/src/utils/blooms.ts, packages/shared/src/utils/blooms.test.ts, packages/shared/src/utils/index.ts
+
+## Iteration 33
+
+[2026-01-17] shared-011: Create reading level (Lexile) utilities
+- Created packages/shared/src/utils/lexile.ts with comprehensive reading level analysis
+- Implemented types and interfaces:
+  - ReadingLevelCategory: BEGINNING_READER through ADVANCED (7 categories)
+  - TextDifficultyResult: Complete analysis result with lexile, grade, label, category, confidence, metrics
+  - TextMetrics: Word count, sentence count, syllable count, averages, complexity percentage
+  - GradeLevelInfo: Grade level to Lexile mapping with descriptions
+  - ReadingLevelRecommendation: Min/max Lexile range with grade range and description
+- Defined grade level constants:
+  - GRADE_LEVEL_LEXILE_MAP: 16 grade levels (1-16) with Lexile ranges based on MetaMetrics research
+  - READING_LEVEL_CATEGORIES: 7 categories with names, descriptions, and Lexile ranges
+  - COMMON_WORDS: Dale-Chall inspired common words list for frequency analysis
+- Implemented text analysis helpers:
+  - countSyllables: Heuristic syllable counting with silent-e and suffix handling
+  - isComplexWord: Identifies words with 3+ syllables that aren't common
+  - isCommonWord: Checks against Dale-Chall common words list
+  - extractWords: Parse words from text handling punctuation and contractions
+  - extractSentences: Split text into sentences
+  - calculateTextMetrics: Full text analysis with all metrics
+- Implemented readability formulas:
+  - calculateFleschKincaidGradeLevel: FK grade level formula
+  - calculateFleschReadingEase: FK reading ease (0-100 scale)
+  - calculateGunningFog: Gunning Fog Index
+  - calculateSmogIndex: Simple Measure of Gobbledygook
+  - calculateColemanLiauIndex: Coleman-Liau Index
+  - calculateAri: Automated Readability Index
+- Implemented Lexile estimation:
+  - gradeLevelToLexile: Convert grade to Lexile score
+  - lexileToGradeLevel: Convert Lexile to grade level
+  - estimateLexileFromMetrics: Weighted average of multiple formulas
+  - getLexileCategory: Get reading level category from Lexile
+  - getReadingLevelLabel: Human-readable label for Lexile
+  - formatLexileScore: Format as "850L" or "BR"
+  - estimateTextDifficulty: Full analysis with confidence scoring
+  - quickLexileEstimate: Fast Lexile-only estimation
+- Implemented comparison and recommendation functions:
+  - isTextAppropriate: Check if text is within reader's range
+  - compareLexileScores: Compare two Lexile values
+  - calculateLexileDifference: Calculate difference with direction
+  - getReadingLevelRecommendation: Get recommended reading range with stretch option
+  - getGradeLevelInfo: Get grade level details
+  - getGradeLevelsInRange: Get all grades within a Lexile range
+  - isValidLexile: Validate Lexile score (0-2000)
+  - parseLexileString: Parse "850L" format strings
+- Exported lexileUtils object with all functions for convenient importing
+- Updated packages/shared/src/utils/index.ts to export lexile module
+- Created comprehensive test suite with 118 tests in lexile.test.ts:
+  - Constants tests (GRADE_LEVEL_LEXILE_MAP, READING_LEVEL_CATEGORIES)
+  - Text analysis helper tests (syllables, complex words, extraction)
+  - Readability formula tests (all 6 formulas)
+  - Lexile estimation tests (conversion, categorization, formatting)
+  - Main estimation function tests with confidence
+  - Comparison and recommendation tests
+  - Real-world text analysis tests (children's book, academic, newspaper)
+  - Edge cases (short text, no sentences, unicode, long text, empty)
+  - Type safety tests
+  - lexileUtils export verification
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1569 tests total: 47 api + 172 database + 12 web + 1338 shared)
+- Files: packages/shared/src/utils/lexile.ts, packages/shared/src/utils/lexile.test.ts, packages/shared/src/utils/index.ts
