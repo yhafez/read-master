@@ -8,6 +8,7 @@
  * import { prisma } from '@read-master/database';
  * import type { User, Book, Chapter, ReadingProgress, Annotation } from '@read-master/database';
  * import type { PreReadingGuide, Assessment, AssessmentType } from '@read-master/database';
+ * import type { Flashcard, FlashcardReview, FlashcardType, FlashcardStatus } from '@read-master/database';
  * import type { BookSource, FileType, ReadingStatus, AnnotationType } from '@read-master/database';
  *
  * // Fetch user with books
@@ -69,6 +70,48 @@
  *     bloomsBreakdown: { remember: 20, understand: 30, apply: 20, analyze: 15, evaluate: 10, create: 5 }
  *   }
  * });
+ *
+ * // Create flashcard with SM-2 algorithm defaults
+ * const flashcard = await prisma.flashcard.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     bookId: 'book_123',
+ *     front: 'What is the main argument of Chapter 1?',
+ *     back: 'The author argues that knowledge is inherently contextual...',
+ *     type: 'COMPREHENSION',
+ *     status: 'NEW',
+ *     easeFactor: 2.5, // SM-2 default
+ *     interval: 0,
+ *     repetitions: 0,
+ *     dueDate: new Date()
+ *   }
+ * });
+ *
+ * // Fetch due flashcards for review
+ * const dueCards = await prisma.flashcard.findMany({
+ *   where: {
+ *     userId: 'user_123',
+ *     dueDate: { lte: new Date() },
+ *     status: { not: 'SUSPENDED' },
+ *     deletedAt: null
+ *   },
+ *   orderBy: { dueDate: 'asc' }
+ * });
+ *
+ * // Record a flashcard review
+ * const review = await prisma.flashcardReview.create({
+ *   data: {
+ *     flashcardId: 'card_123',
+ *     rating: 3, // 1=Again, 2=Hard, 3=Good, 4=Easy
+ *     responseTimeMs: 3500,
+ *     previousEaseFactor: 2.5,
+ *     previousInterval: 1,
+ *     previousRepetitions: 1,
+ *     newEaseFactor: 2.5,
+ *     newInterval: 6,
+ *     newRepetitions: 2
+ *   }
+ * });
  * ```
  */
 
@@ -87,4 +130,6 @@ export type {
   Annotation,
   PreReadingGuide,
   Assessment,
+  Flashcard,
+  FlashcardReview,
 } from "@prisma/client";

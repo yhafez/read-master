@@ -59,6 +59,7 @@ model User {
   readingProgress ReadingProgress[]
   annotations     Annotation[]
   assessments     Assessment[]
+  flashcards      Flashcard[]
 
   // Indexes for common queries
   @@index([clerkId])
@@ -129,6 +130,7 @@ model Book {
   annotations     Annotation[]
   preReadingGuide PreReadingGuide?
   assessments     Assessment[]
+  flashcards      Flashcard[]
 
   // Indexes for common queries
   @@index([userId])
@@ -364,4 +366,107 @@ enum AssessmentType {
   CHAPTER_CHECK // Quick check after reading a chapter
   BOOK_ASSESSMENT // Full book comprehension assessment
   CUSTOM // User-created or teacher-created assessment
+}
+
+// =============================================================================
+// SPACED REPETITION SYSTEM (SRS) - Flashcards
+// =============================================================================
+
+/// FlashcardType - Categories of flashcards
+enum FlashcardType {
+  VOCABULARY // Word definitions and usage
+  CONCEPT // Key concepts from the text
+  COMPREHENSION // Understanding-based questions
+  QUOTE // Important quotes to remember
+  CUSTOM // User-created cards
+}
+
+/// FlashcardStatus - Current state in the SRS system
+enum FlashcardStatus {
+  NEW // Never reviewed
+  LEARNING // In initial learning phase
+  REVIEW // In regular review cycle
+  SUSPENDED // Temporarily removed from rotation
+}
+
+/// Flashcard - Spaced repetition flashcard for learning
+/// Uses SM-2 algorithm fields for scheduling
+model Flashcard {
+  id     String  @id @default(cuid())
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId String?
+  book   Book?   @relation(fields: [bookId], references: [id], onDelete: SetNull)
+
+  // Card content
+  front String @db.VarChar(1000) // Question/prompt (max 1000 chars)
+  back  String @db.Text // Answer/content (max 5000 chars enforced at app level)
+
+  // Card metadata
+  type   FlashcardType   @default(CUSTOM)
+  status FlashcardStatus @default(NEW)
+  tags   String[]        @default([])
+
+  // Source reference (for auto-generated cards)
+  sourceChapterId String? // Chapter the card was generated from
+  sourceOffset    Int? // Character offset in the text
+
+  // SM-2 Algorithm fields
+  easeFactor  Float    @default(2.5) // Ease factor (minimum 1.3)
+  interval    Int      @default(0) // Current interval in days
+  repetitions Int      @default(0) // Number of successful repetitions
+  dueDate     DateTime @default(now()) // Next review date
+
+  // Statistics
+  totalReviews   Int @default(0)
+  correctReviews Int @default(0)
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete (suspended cards use status, this is for permanent removal)
+
+  // Relations
+  reviews FlashcardReview[]
+
+  // Indexes for common queries
+  @@index([userId])
+  @@index([userId, status])
+  @@index([userId, dueDate]) // For fetching due cards
+  @@index([userId, bookId])
+  @@index([bookId])
+  @@index([status])
+  @@index([dueDate])
+  @@index([deletedAt])
+  @@index([tags])
+}
+
+/// FlashcardReview - Individual review record for a flashcard
+/// Tracks each review session for analytics and history
+model FlashcardReview {
+  id          String    @id @default(cuid())
+  flashcardId String
+  flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+
+  // Review data
+  rating         Int // User rating: 1 (Again), 2 (Hard), 3 (Good), 4 (Easy)
+  responseTimeMs Int? // Time taken to respond in milliseconds
+
+  // SM-2 state before review (for history/debugging)
+  previousEaseFactor  Float
+  previousInterval    Int
+  previousRepetitions Int
+
+  // SM-2 state after review
+  newEaseFactor  Float
+  newInterval    Int
+  newRepetitions Int
+
+  // Timestamp
+  reviewedAt DateTime @default(now())
+
+  // Indexes
+  @@index([flashcardId])
+  @@index([flashcardId, reviewedAt])
+  @@index([reviewedAt])
 }

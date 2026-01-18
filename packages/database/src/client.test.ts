@@ -165,6 +165,46 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.assessment.count).toBe("function");
       expect(typeof prisma.assessment.aggregate).toBe("function");
     });
+
+    it("should have flashcard model accessor", () => {
+      expect(prisma.flashcard).toBeDefined();
+      expect(typeof prisma.flashcard.findMany).toBe("function");
+      expect(typeof prisma.flashcard.findUnique).toBe("function");
+      expect(typeof prisma.flashcard.create).toBe("function");
+      expect(typeof prisma.flashcard.update).toBe("function");
+      expect(typeof prisma.flashcard.delete).toBe("function");
+    });
+
+    it("should have flashcard model with expected query methods", () => {
+      expect(typeof prisma.flashcard.findFirst).toBe("function");
+      expect(typeof prisma.flashcard.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.flashcard.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.flashcard.createMany).toBe("function");
+      expect(typeof prisma.flashcard.updateMany).toBe("function");
+      expect(typeof prisma.flashcard.deleteMany).toBe("function");
+      expect(typeof prisma.flashcard.count).toBe("function");
+      expect(typeof prisma.flashcard.aggregate).toBe("function");
+    });
+
+    it("should have flashcardReview model accessor", () => {
+      expect(prisma.flashcardReview).toBeDefined();
+      expect(typeof prisma.flashcardReview.findMany).toBe("function");
+      expect(typeof prisma.flashcardReview.findUnique).toBe("function");
+      expect(typeof prisma.flashcardReview.create).toBe("function");
+      expect(typeof prisma.flashcardReview.update).toBe("function");
+      expect(typeof prisma.flashcardReview.delete).toBe("function");
+    });
+
+    it("should have flashcardReview model with expected query methods", () => {
+      expect(typeof prisma.flashcardReview.findFirst).toBe("function");
+      expect(typeof prisma.flashcardReview.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.flashcardReview.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.flashcardReview.createMany).toBe("function");
+      expect(typeof prisma.flashcardReview.updateMany).toBe("function");
+      expect(typeof prisma.flashcardReview.deleteMany).toBe("function");
+      expect(typeof prisma.flashcardReview.count).toBe("function");
+      expect(typeof prisma.flashcardReview.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

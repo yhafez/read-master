@@ -352,7 +352,7 @@
         "Enums are properly defined",
         "Indexes support efficient due card queries"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-007",

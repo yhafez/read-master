@@ -479,3 +479,44 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (113 tests total: 47 api + 34 shared + 12 web + 20 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 16
+
+[2026-01-17] db-006: Create Flashcard and FlashcardReview models with SRS fields
+- Created FlashcardType enum: VOCABULARY, CONCEPT, COMPREHENSION, QUOTE, CUSTOM
+  - Covers all card types for vocabulary, concepts, reading comprehension, quotes, and user-created cards
+- Created FlashcardStatus enum: NEW, LEARNING, REVIEW, SUSPENDED
+  - Tracks card state through the SRS lifecycle
+- Created Flashcard model with all SM-2 algorithm fields:
+  - id (cuid), userId and bookId (optional) with relations to User and Book
+  - Card content: front (VarChar 1000), back (Text for up to 5000 chars)
+  - Card metadata: type (FlashcardType), status (FlashcardStatus), tags (String[])
+  - Source reference: sourceChapterId, sourceOffset (for auto-generated cards)
+  - SM-2 Algorithm fields:
+    - easeFactor (Float, default 2.5, minimum 1.3 enforced at app level)
+    - interval (Int, current interval in days)
+    - repetitions (Int, number of successful repetitions)
+    - dueDate (DateTime, next review date)
+  - Statistics: totalReviews, correctReviews
+  - Soft delete support via deletedAt
+  - Relation to FlashcardReview[]
+  - Indexes on userId, userId+status, userId+dueDate, userId+bookId, bookId, status, dueDate, deletedAt, tags
+- Created FlashcardReview model for tracking each review:
+  - id (cuid), flashcardId with relation to Flashcard
+  - Review data: rating (1-4), responseTimeMs
+  - SM-2 state before review: previousEaseFactor, previousInterval, previousRepetitions
+  - SM-2 state after review: newEaseFactor, newInterval, newRepetitions
+  - Timestamp: reviewedAt
+  - Indexes on flashcardId, flashcardId+reviewedAt, reviewedAt
+- Added User.flashcards relation for User -> Flashcard one-to-many
+- Added Book.flashcards relation for Book -> Flashcard one-to-many (optional, with SetNull on delete)
+- Updated packages/database/src/index.ts with:
+  - Import examples for Flashcard, FlashcardReview, FlashcardType, FlashcardStatus types
+  - Example for creating flashcard with SM-2 defaults
+  - Example for fetching due flashcards for review
+  - Example for recording a flashcard review
+- Added 4 new tests for Flashcard and FlashcardReview model accessors
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (117 tests total: 47 api + 34 shared + 12 web + 24 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
