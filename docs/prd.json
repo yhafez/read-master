@@ -936,7 +936,7 @@
         "Log levels work correctly",
         "Request logging captures important info"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-006",

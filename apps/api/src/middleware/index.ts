@@ -95,3 +95,33 @@ export {
   createRateLimitChecker,
   rateLimitUtils,
 } from "./rateLimit.js";
+
+export {
+  // Types
+  type LogLevel,
+  type RequestContext,
+  type RequestWithLogger,
+  type AIUsageLogData,
+  type PerformanceLogData,
+  type AuditLogData,
+  // Logger class and instances
+  Logger,
+  logger,
+  baseLogger,
+  // Request utilities
+  generateRequestId,
+  extractRequestContext,
+  createRequestLogger,
+  // Logging functions
+  logRequest,
+  logResponse,
+  logError,
+  logAIUsage,
+  logPerformance,
+  logAudit,
+  logSecurity,
+  // Higher-order middleware
+  withRequestLogging,
+  // Utilities bundle
+  loggerUtils,
+} from "./logger.js";

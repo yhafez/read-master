@@ -6,8 +6,18 @@
  * used by the API endpoints in the api/ directory.
  */
 
-// Re-export utilities
-export * from "./utils/index.js";
+// Re-export response utilities (non-conflicting)
+export {
+  sendSuccess,
+  sendPaginated,
+  sendError,
+  ErrorCodes,
+  type ApiSuccessResponse,
+  type ApiErrorResponse,
+  type ApiResponse,
+  type PaginatedData,
+  type ErrorCode,
+} from "./utils/index.js";
 
-// Re-export middleware
+// Re-export all middleware (includes comprehensive logger middleware)
 export * from "./middleware/index.js";

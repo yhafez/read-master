@@ -1791,3 +1791,58 @@ No discoveries added during this sprint (foundational infrastructure work)
   - rateLimitUtils export verification (9 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2111 tests total: 257 api + 172 database + 12 web + 1670 shared)
 - Files: apps/api/src/middleware/rateLimit.ts, apps/api/src/middleware/rateLimit.test.ts, apps/api/src/middleware/index.ts, apps/api/package.json
+
+## Iteration 40
+
+[2026-01-17] api-infra-005: Set up Winston logging
+- Created apps/api/src/middleware/logger.ts with comprehensive logging middleware
+- Implemented Winston logger with environment-aware configuration:
+  - Production: JSON format for log aggregation tools
+  - Development: Colorized, human-readable format with timestamps
+  - Configurable log level via LOG_LEVEL environment variable
+  - Default: info in production, debug in development
+- Created Logger class with request context:
+  - RequestContext type: requestId, userId, method, path, userAgent, ip, sessionId
+  - child() method for creating child loggers with merged context
+  - All log levels: error(), warn(), info(), http(), debug()
+  - logError() method for structured error logging with stack traces
+  - getContext() method for retrieving current context
+- Implemented request utilities:
+  - generateRequestId(): Generates unique request IDs (req_{timestamp}_{random})
+  - extractRequestContext(): Extracts context from VercelRequest
+  - createRequestLogger(): Creates Logger instance from request
+- Implemented specialized logging functions:
+  - logRequest(): Log incoming API requests
+  - logResponse(): Log API responses with status codes and duration
+  - logError(): Log errors with context
+  - logAIUsage(): Log AI API calls with tokens, cost, duration, success
+  - logPerformance(): Log performance metrics
+  - logAudit(): Log audit events for compliance tracking
+  - logSecurity(): Log security events (auth failures, rate limits)
+- Implemented withRequestLogging() higher-order middleware:
+  - Automatically generates requestId for each request
+  - Attaches requestId and Logger instance to request
+  - Sets X-Request-ID response header
+  - Logs request start with method, path, query
+  - Logs request completion with status code and duration
+  - Logs errors if handler throws
+  - Works with async handlers
+- Created loggerUtils object bundling all utilities
+- Updated src/middleware/index.ts to export all logger types and functions
+- Updated src/index.ts to resolve export conflicts:
+  - Response utilities exported from utils (no conflict)
+  - Logger middleware exports take precedence (more comprehensive)
+- Created comprehensive test suite with 81 tests in logger.test.ts:
+  - Type export tests (5 tests)
+  - Logger class tests (7 tests)
+  - Global logger tests (2 tests)
+  - generateRequestId tests (4 tests)
+  - extractRequestContext tests (7 tests)
+  - createRequestLogger tests (2 tests)
+  - Logging helper function tests (15 tests)
+  - withRequestLogging middleware tests (6 tests)
+  - loggerUtils export tests (13 tests)
+  - Edge case tests (7 tests)
+  - Integration tests (2 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2192 tests total: 338 api + 172 database + 12 web + 1670 shared)
+- Files: apps/api/src/middleware/logger.ts, apps/api/src/middleware/logger.test.ts, apps/api/src/middleware/index.ts, apps/api/src/index.ts
