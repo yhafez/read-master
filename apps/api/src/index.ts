@@ -8,3 +8,6 @@
 
 // Re-export utilities
 export * from "./utils/index.js";
+
+// Re-export middleware
+export * from "./middleware/index.js";

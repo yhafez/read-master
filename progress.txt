@@ -1577,3 +1577,49 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1901 tests total: 47 api + 172 database + 12 web + 1670 shared)
 - Files: packages/shared/src/index.ts, packages/shared/src/index.test.ts
 
+
+## Iteration 36
+
+[2026-01-17] api-infra-001: Set up Clerk authentication middleware
+- Created apps/api/src/middleware/ directory structure
+- Added @clerk/backend ^1.21.0 dependency to apps/api
+- Created src/middleware/auth.ts with comprehensive authentication utilities:
+  - AuthenticatedUser type: userId, email, firstName, lastName, imageUrl, username, sessionId, orgId, orgRole
+  - AuthenticatedRequest type: extends VercelRequest with auth property
+  - AuthResult type: success/error discriminated union
+  - ClerkWebhookEvent type: for webhook payloads
+  - verifyClerkToken function: verifies JWT token using Clerk's verifyToken
+    - Returns user info on success
+    - Handles expired/invalid tokens with appropriate error codes
+    - Returns 500 if CLERK_SECRET_KEY not configured
+  - getClerkUser function: fetches full user details from Clerk API
+    - Returns userId, email, names, imageUrl, metadata, timestamps
+  - authenticateRequest function: extracts Bearer token and verifies
+    - Supports case-insensitive Bearer keyword
+    - Returns 401 for missing/invalid tokens
+  - verifyWebhookSignature function: validates Clerk webhook signatures
+    - Uses Svix HMAC-SHA256 signature verification
+    - Supports whsec_ prefixed secrets
+    - Validates timestamp within 5-minute tolerance
+    - Constant-time comparison to prevent timing attacks
+    - Handles multiple signature versions
+  - withAuth higher-order function: wraps handlers with authentication
+    - Attaches authenticated user to request.auth
+    - Returns 401 JSON response for unauthenticated requests
+  - withWebhook higher-order function: wraps webhook handlers
+    - Validates POST method
+    - Verifies webhook signature
+    - Parses event payload (handles string and object body)
+  - optionalAuth function: returns user if authenticated, null otherwise
+- Created src/middleware/index.ts with organized re-exports
+- Updated src/index.ts to export middleware
+- Created comprehensive test suite with 36 tests in src/middleware/auth.test.ts:
+  - verifyClerkToken tests: secret not configured, valid token with org, without optional fields, expired/invalid/generic errors
+  - authenticateRequest tests: no header, invalid format, missing Bearer, extra parts, valid token, case-insensitive Bearer
+  - verifyWebhookSignature tests: missing secret, missing headers, old/future timestamps, invalid signature, non-v1 version, valid signatures with/without whsec_ prefix, multiple signatures
+  - withAuth tests: unauthenticated request, invalid token, valid token with user attached, async handlers
+  - withWebhook tests: non-POST request, invalid signature, valid signature with parsed event, object body handling
+  - optionalAuth tests: no header, invalid token, valid token, invalid bearer format
+- Uses Winston logger for error logging (no console statements)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1937 tests total: 83 api + 172 database + 12 web + 1670 shared)
+- Files: apps/api/src/middleware/auth.ts, apps/api/src/middleware/auth.test.ts, apps/api/src/middleware/index.ts, apps/api/src/index.ts, apps/api/package.json

@@ -840,7 +840,7 @@
         "User info is properly extracted",
         "Tests cover auth scenarios"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-002",
