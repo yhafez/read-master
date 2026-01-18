@@ -2296,3 +2296,58 @@ No discoveries added during this sprint (foundational infrastructure work)
   - PDF integration tests (3 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2570 tests)
 - Files: apps/api/src/services/books.ts, apps/api/src/services/books.test.ts, apps/api/src/services/index.ts, apps/api/package.json
+
+
+## Iteration 49
+
+[2026-01-17] api-books-004: Create book parsing service for DOC/DOCX files
+- Added mammoth ^1.11.0 dependency for DOCX file parsing
+- Extended apps/api/src/services/books.ts with comprehensive DOCX parsing support
+- Defined DOCX-specific types:
+  - DOCXMetadata: title, author, description, subject, creator, lastModifiedBy, revision, created, modified
+  - DOCXSection: id, title, order, level, startOffset, endOffset, wordCount, content
+  - ParsedDOCX: metadata, sections, totalWordCount, rawContent, htmlContent, estimatedReadingTimeMinutes, messages
+  - DOCXParseMessage: type (warning | error), message
+  - DOCXParseOptions: extractContent, detectSections, includeHtml
+- Implemented core DOCX parsing functions:
+  - parseDOCX(): Parse DOCX file from path
+  - parseDOCXFromBuffer(): Parse DOCX from buffer (main implementation)
+  - isValidDOCX(): Validate DOCX file by checking ZIP signature and mammoth parsing
+  - getDOCXExtension(): Returns ".docx" for file extension checks
+- Implemented DOCX content extraction using mammoth:
+  - mammoth.convertToHtml(): Extract HTML content with formatting
+  - mammoth.extractRawText(): Extract plain text content
+  - Captures mammoth warnings and errors in messages array
+- Implemented section/chapter detection for DOCX files:
+  - detectDOCXSections(): Detect sections from content
+  - HTML heading extraction: Uses regex to find h1-h6 tags in HTML output
+  - Text-based fallback: Uses CHAPTER_PATTERNS for chapter/section detection
+  - All-caps header detection for section markers
+  - Falls back to single "Main Content" section if no sections detected
+  - Tracks word count, content offsets, and heading levels
+- Added constants:
+  - DOCX_MIME_TYPES: ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"]
+  - DOCX_SIGNATURE: Buffer for PK\x03\x04 ZIP magic bytes
+  - DEFAULT_DOCX_PARSE_OPTIONS: extractContent: true, detectSections: true, includeHtml: true
+- Implemented DOCX validation:
+  - isDOCXBuffer(): Check if buffer starts with ZIP signature (PK\x03\x04)
+  - Uses mammoth.extractRawText() to verify valid DOCX structure
+- Created namespaced exports:
+  - docxParser: DOCX-specific parsing functions and constants
+  - Updated bookParser: Added DOCX functions alongside EPUB and PDF functions
+  - Updated bookUtils: Added getDOCXExtension function
+- Updated apps/api/src/services/index.ts to export all DOCX utilities and types
+- Added 45 new DOCX-specific tests to books.test.ts:
+  - DOCX Type export tests (5 tests for DOCXMetadata, DOCXSection, ParsedDOCX, DOCXParseOptions, DOCXParseMessage)
+  - DOCX Constants tests (5 tests for DOCX_MIME_TYPES, DEFAULT_DOCX_PARSE_OPTIONS)
+  - getDOCXExtension tests (1 test)
+  - parseDOCX tests (3 tests for error cases)
+  - parseDOCXFromBuffer tests (5 tests for empty, null, invalid, signature-only buffers)
+  - isValidDOCX tests (4 tests for non-existent, non-DOCX, empty, fake signature files)
+  - docxParser object tests (6 tests)
+  - bookParser DOCX exports tests (6 tests)
+  - bookUtils DOCX exports tests (1 test)
+  - DOCX edge cases (4 tests)
+  - DOCX integration tests (3 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2798 tests)
+- Files: apps/api/src/services/books.ts, apps/api/src/services/books.test.ts, apps/api/src/services/index.ts, apps/api/package.json

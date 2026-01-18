@@ -176,6 +176,12 @@ export {
   isValidPDF,
   getPDFExtension,
 
+  // DOCX parsing functions
+  parseDOCX,
+  parseDOCXFromBuffer,
+  isValidDOCX,
+  getDOCXExtension,
+
   // Utility functions
   countWords,
   stripHtmlTags,
@@ -186,13 +192,16 @@ export {
   bookParser,
   bookUtils,
   pdfParser,
+  docxParser,
 
   // Constants
   AVERAGE_READING_WPM,
   EPUB_MIME_TYPES,
   PDF_MIME_TYPES,
+  DOCX_MIME_TYPES,
   DEFAULT_PARSE_OPTIONS,
   DEFAULT_PDF_PARSE_OPTIONS,
+  DEFAULT_DOCX_PARSE_OPTIONS,
 
   // Types
   type BookMetadata,
@@ -205,4 +214,9 @@ export {
   type PDFSection,
   type ParsedPDF,
   type PDFParseOptions,
+  type DOCXMetadata,
+  type DOCXSection,
+  type ParsedDOCX,
+  type DOCXParseOptions,
+  type DOCXParseMessage,
 } from "./books.js";

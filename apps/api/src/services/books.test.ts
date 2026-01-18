@@ -20,6 +20,11 @@ import {
   type PDFSection,
   type ParsedPDF,
   type PDFParseOptions,
+  type DOCXMetadata,
+  type DOCXSection,
+  type ParsedDOCX,
+  type DOCXParseOptions,
+  type DOCXParseMessage,
 
   // EPUB Functions
   parseEPUB,
@@ -33,6 +38,12 @@ import {
   isValidPDF,
   getPDFExtension,
 
+  // DOCX Functions
+  parseDOCX,
+  parseDOCXFromBuffer,
+  isValidDOCX,
+  getDOCXExtension,
+
   // Utility Functions
   countWords,
   stripHtmlTags,
@@ -43,13 +54,16 @@ import {
   AVERAGE_READING_WPM,
   EPUB_MIME_TYPES,
   PDF_MIME_TYPES,
+  DOCX_MIME_TYPES,
   DEFAULT_PARSE_OPTIONS,
   DEFAULT_PDF_PARSE_OPTIONS,
+  DEFAULT_DOCX_PARSE_OPTIONS,
 
   // Namespaced exports
   bookParser,
   bookUtils,
   pdfParser,
+  docxParser,
 } from "./books.js";
 
 // =============================================================================
@@ -1017,5 +1031,437 @@ describe("PDF Integration tests", () => {
     // PDF MIME types
     expect(bookParser.PDF_MIME_TYPES).toContain("application/pdf");
     expect(bookParser.PDF_MIME_TYPES).not.toContain("application/epub+zip");
+  });
+});
+
+// =============================================================================
+// DOCX Type Export Tests
+// =============================================================================
+
+describe("DOCX Type exports", () => {
+  it("exports DOCXMetadata type", () => {
+    const metadata: DOCXMetadata = {
+      title: "Test Document",
+      author: "Test Author",
+      description: "Test Description",
+      subject: "Test Subject",
+      creator: "Test Creator",
+      lastModifiedBy: "Test User",
+      revision: "1",
+      created: "2024-01-01T00:00:00Z",
+      modified: "2024-01-02T00:00:00Z",
+    };
+    expect(metadata.title).toBe("Test Document");
+  });
+
+  it("exports DOCXSection type", () => {
+    const section: DOCXSection = {
+      id: "section-1",
+      title: "Chapter 1",
+      order: 1,
+      level: 0,
+      startOffset: 0,
+      endOffset: 1000,
+      wordCount: 500,
+      content: "Section content here",
+    };
+    expect(section.id).toBe("section-1");
+  });
+
+  it("exports ParsedDOCX type", () => {
+    const docx: ParsedDOCX = {
+      metadata: {
+        title: "Test",
+        author: "Author",
+        description: "",
+        subject: "",
+        creator: "",
+        lastModifiedBy: "",
+        revision: "",
+        created: "",
+        modified: "",
+      },
+      sections: [],
+      totalWordCount: 1000,
+      rawContent: "Test content",
+      htmlContent: "<p>Test content</p>",
+      estimatedReadingTimeMinutes: 4,
+      messages: [],
+    };
+    expect(docx.totalWordCount).toBe(1000);
+  });
+
+  it("exports DOCXParseOptions type", () => {
+    const options: DOCXParseOptions = {
+      extractContent: true,
+      detectSections: true,
+      includeHtml: true,
+    };
+    expect(options.extractContent).toBe(true);
+  });
+
+  it("exports DOCXParseMessage type", () => {
+    const message: DOCXParseMessage = {
+      type: "warning",
+      message: "Test warning message",
+    };
+    expect(message.type).toBe("warning");
+  });
+});
+
+// =============================================================================
+// DOCX Constants Tests
+// =============================================================================
+
+describe("DOCX Constants", () => {
+  describe("DOCX_MIME_TYPES", () => {
+    it("includes application/vnd.openxmlformats-officedocument.wordprocessingml.document", () => {
+      expect(DOCX_MIME_TYPES).toContain(
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      );
+    });
+
+    it("includes application/msword", () => {
+      expect(DOCX_MIME_TYPES).toContain("application/msword");
+    });
+
+    it("has exactly 2 MIME types", () => {
+      expect(DOCX_MIME_TYPES.length).toBe(2);
+    });
+  });
+
+  describe("DEFAULT_DOCX_PARSE_OPTIONS", () => {
+    it("has extractContent set to true", () => {
+      expect(DEFAULT_DOCX_PARSE_OPTIONS.extractContent).toBe(true);
+    });
+
+    it("has detectSections set to true", () => {
+      expect(DEFAULT_DOCX_PARSE_OPTIONS.detectSections).toBe(true);
+    });
+
+    it("has includeHtml set to true", () => {
+      expect(DEFAULT_DOCX_PARSE_OPTIONS.includeHtml).toBe(true);
+    });
+  });
+});
+
+// =============================================================================
+// getDOCXExtension Tests
+// =============================================================================
+
+describe("getDOCXExtension", () => {
+  it("returns .docx", () => {
+    expect(getDOCXExtension()).toBe(".docx");
+  });
+});
+
+// =============================================================================
+// parseDOCX Tests
+// =============================================================================
+
+describe("parseDOCX", () => {
+  it("returns error for non-existent file", async () => {
+    const result = await parseDOCX("/non/existent/file.docx");
+    expect(result.success).toBe(false);
+    expect(result.error).toContain("Failed to parse DOCX");
+  });
+
+  it("returns error for empty file path", async () => {
+    const result = await parseDOCX("");
+    expect(result.success).toBe(false);
+  });
+
+  it("returns error for non-DOCX file", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "docx-test-"));
+    const tempFile = path.join(tempDir, "notdocx.docx");
+    await fs.writeFile(tempFile, "This is not a DOCX file");
+
+    try {
+      const result = await parseDOCX(tempFile);
+      expect(result.success).toBe(false);
+      expect(result.error).toContain("Invalid DOCX format");
+    } finally {
+      await fs.unlink(tempFile);
+      await fs.rmdir(tempDir);
+    }
+  });
+});
+
+// =============================================================================
+// parseDOCXFromBuffer Tests
+// =============================================================================
+
+describe("parseDOCXFromBuffer", () => {
+  it("returns error for empty buffer", async () => {
+    const emptyBuffer = Buffer.alloc(0);
+    const result = await parseDOCXFromBuffer(emptyBuffer);
+    expect(result.success).toBe(false);
+    expect(result.error).toBe("Empty buffer provided");
+  });
+
+  it("returns error for null-like buffer", async () => {
+    const result = await parseDOCXFromBuffer(null as unknown as Buffer);
+    expect(result.success).toBe(false);
+    expect(result.error).toBe("Empty buffer provided");
+  });
+
+  it("returns error for invalid DOCX content", async () => {
+    const invalidBuffer = Buffer.from("not a docx file");
+    const result = await parseDOCXFromBuffer(invalidBuffer);
+    expect(result.success).toBe(false);
+    expect(result.error).toBe("Invalid DOCX format: missing ZIP signature");
+  });
+
+  it("returns error for buffer with ZIP-like start but invalid content", async () => {
+    // Start with ZIP signature (PK\x03\x04) but invalid structure
+    const fakeBuffer = Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x00, 0x00, 0x00]);
+    const result = await parseDOCXFromBuffer(fakeBuffer);
+    expect(result.success).toBe(false);
+    expect(result.error).toContain("Failed to parse DOCX");
+  });
+
+  it("respects extractContent option", async () => {
+    // Create a buffer that starts with ZIP signature for testing options handling
+    const fakeBuffer = Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x00, 0x00]);
+    const result = await parseDOCXFromBuffer(fakeBuffer, {
+      extractContent: false,
+    });
+    // Will fail parsing but verifies option is accepted
+    expect(result.success).toBe(false);
+  });
+});
+
+// =============================================================================
+// isValidDOCX Tests
+// =============================================================================
+
+describe("isValidDOCX", () => {
+  it("returns false for non-existent file", async () => {
+    const result = await isValidDOCX("/non/existent/file.docx");
+    expect(result).toBe(false);
+  });
+
+  it("returns false for non-DOCX file", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "docx-test-"));
+    const tempFile = path.join(tempDir, "notdocx.docx");
+    await fs.writeFile(tempFile, "This is not a DOCX file");
+
+    try {
+      const result = await isValidDOCX(tempFile);
+      expect(result).toBe(false);
+    } finally {
+      await fs.unlink(tempFile);
+      await fs.rmdir(tempDir);
+    }
+  });
+
+  it("returns false for empty file", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "docx-test-"));
+    const tempFile = path.join(tempDir, "empty.docx");
+    await fs.writeFile(tempFile, "");
+
+    try {
+      const result = await isValidDOCX(tempFile);
+      expect(result).toBe(false);
+    } finally {
+      await fs.unlink(tempFile);
+      await fs.rmdir(tempDir);
+    }
+  });
+
+  it("returns false for file with ZIP signature but invalid structure", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "docx-test-"));
+    const tempFile = path.join(tempDir, "fake.docx");
+    // Create file with ZIP signature but invalid content
+    await fs.writeFile(tempFile, Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x00]));
+
+    try {
+      const result = await isValidDOCX(tempFile);
+      expect(result).toBe(false);
+    } finally {
+      await fs.unlink(tempFile);
+      await fs.rmdir(tempDir);
+    }
+  });
+});
+
+// =============================================================================
+// docxParser Object Tests
+// =============================================================================
+
+describe("docxParser object", () => {
+  it("exports parseDOCX function", () => {
+    expect(typeof docxParser.parseDOCX).toBe("function");
+  });
+
+  it("exports parseDOCXFromBuffer function", () => {
+    expect(typeof docxParser.parseDOCXFromBuffer).toBe("function");
+  });
+
+  it("exports isValidDOCX function", () => {
+    expect(typeof docxParser.isValidDOCX).toBe("function");
+  });
+
+  it("exports getDOCXExtension function", () => {
+    expect(typeof docxParser.getDOCXExtension).toBe("function");
+    expect(docxParser.getDOCXExtension()).toBe(".docx");
+  });
+
+  it("exports DOCX_MIME_TYPES constant", () => {
+    expect(docxParser.DOCX_MIME_TYPES).toContain(
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+  });
+
+  it("exports DEFAULT_DOCX_PARSE_OPTIONS constant", () => {
+    expect(docxParser.DEFAULT_DOCX_PARSE_OPTIONS.extractContent).toBe(true);
+    expect(docxParser.DEFAULT_DOCX_PARSE_OPTIONS.detectSections).toBe(true);
+    expect(docxParser.DEFAULT_DOCX_PARSE_OPTIONS.includeHtml).toBe(true);
+  });
+});
+
+// =============================================================================
+// bookParser Object DOCX Tests
+// =============================================================================
+
+describe("bookParser object - DOCX exports", () => {
+  it("exports parseDOCX function", () => {
+    expect(typeof bookParser.parseDOCX).toBe("function");
+  });
+
+  it("exports parseDOCXFromBuffer function", () => {
+    expect(typeof bookParser.parseDOCXFromBuffer).toBe("function");
+  });
+
+  it("exports isValidDOCX function", () => {
+    expect(typeof bookParser.isValidDOCX).toBe("function");
+  });
+
+  it("exports getDOCXExtension function", () => {
+    expect(typeof bookParser.getDOCXExtension).toBe("function");
+  });
+
+  it("exports DOCX_MIME_TYPES constant", () => {
+    expect(bookParser.DOCX_MIME_TYPES).toContain(
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+  });
+
+  it("exports DEFAULT_DOCX_PARSE_OPTIONS constant", () => {
+    expect(bookParser.DEFAULT_DOCX_PARSE_OPTIONS.extractContent).toBe(true);
+  });
+});
+
+// =============================================================================
+// bookUtils Object DOCX Tests
+// =============================================================================
+
+describe("bookUtils object - DOCX exports", () => {
+  it("exports getDOCXExtension function", () => {
+    expect(typeof bookUtils.getDOCXExtension).toBe("function");
+    expect(bookUtils.getDOCXExtension()).toBe(".docx");
+  });
+});
+
+// =============================================================================
+// DOCX Edge Cases
+// =============================================================================
+
+describe("DOCX Edge cases", () => {
+  describe("parseDOCXFromBuffer edge cases", () => {
+    it("handles buffer with only ZIP signature", async () => {
+      // Just the ZIP signature, no actual content
+      const signatureOnly = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
+      const result = await parseDOCXFromBuffer(signatureOnly);
+      expect(result.success).toBe(false);
+    });
+
+    it("handles very small buffer", async () => {
+      const smallBuffer = Buffer.from("AB");
+      const result = await parseDOCXFromBuffer(smallBuffer);
+      expect(result.success).toBe(false);
+      expect(result.error).toBe("Invalid DOCX format: missing ZIP signature");
+    });
+  });
+
+  describe("DOCX options handling", () => {
+    it("accepts all DOCX parse options", async () => {
+      const options: DOCXParseOptions = {
+        extractContent: false,
+        detectSections: false,
+        includeHtml: false,
+      };
+
+      // Options should be accepted even if parsing fails
+      const fakeBuffer = Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x00]);
+      const result = await parseDOCXFromBuffer(fakeBuffer, options);
+      expect(result.success).toBe(false); // Will fail, but options were accepted
+    });
+
+    it("uses default options when none provided", async () => {
+      const emptyBuffer = Buffer.alloc(0);
+      // Should use DEFAULT_DOCX_PARSE_OPTIONS internally
+      const result = await parseDOCXFromBuffer(emptyBuffer);
+      expect(result.success).toBe(false);
+    });
+  });
+});
+
+// =============================================================================
+// DOCX Integration Tests
+// =============================================================================
+
+describe("DOCX Integration tests", () => {
+  it("default DOCX options are complete", () => {
+    const options = DEFAULT_DOCX_PARSE_OPTIONS;
+    expect(options.extractContent).toBeDefined();
+    expect(options.detectSections).toBeDefined();
+    expect(options.includeHtml).toBeDefined();
+  });
+
+  it("DOCX, PDF, and EPUB parsers coexist correctly", () => {
+    // Ensure all parser functions are available
+    expect(typeof bookParser.parseEPUB).toBe("function");
+    expect(typeof bookParser.parsePDF).toBe("function");
+    expect(typeof bookParser.parseDOCX).toBe("function");
+    expect(typeof bookParser.isValidEPUB).toBe("function");
+    expect(typeof bookParser.isValidPDF).toBe("function");
+    expect(typeof bookParser.isValidDOCX).toBe("function");
+
+    // Extensions should all be different
+    expect(bookParser.getEPUBExtension()).toBe(".epub");
+    expect(bookParser.getPDFExtension()).toBe(".pdf");
+    expect(bookParser.getDOCXExtension()).toBe(".docx");
+
+    const extensions = [
+      bookParser.getEPUBExtension(),
+      bookParser.getPDFExtension(),
+      bookParser.getDOCXExtension(),
+    ];
+    const uniqueExtensions = [...new Set(extensions)];
+    expect(uniqueExtensions.length).toBe(3);
+  });
+
+  it("MIME types are properly separated for all formats", () => {
+    // EPUB MIME types
+    expect(bookParser.EPUB_MIME_TYPES).toContain("application/epub+zip");
+    expect(bookParser.EPUB_MIME_TYPES).not.toContain("application/pdf");
+    expect(bookParser.EPUB_MIME_TYPES).not.toContain(
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+
+    // PDF MIME types
+    expect(bookParser.PDF_MIME_TYPES).toContain("application/pdf");
+    expect(bookParser.PDF_MIME_TYPES).not.toContain("application/epub+zip");
+    expect(bookParser.PDF_MIME_TYPES).not.toContain(
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+
+    // DOCX MIME types
+    expect(bookParser.DOCX_MIME_TYPES).toContain(
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+    expect(bookParser.DOCX_MIME_TYPES).not.toContain("application/pdf");
+    expect(bookParser.DOCX_MIME_TYPES).not.toContain("application/epub+zip");
   });
 });

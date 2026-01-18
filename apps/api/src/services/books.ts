@@ -8,6 +8,7 @@
 
 import EPub from "epub";
 import { PDFParse, type InfoResult } from "pdf-parse";
+import mammoth from "mammoth";
 import { createHash } from "crypto";
 import fs from "fs/promises";
 import path from "path";
@@ -146,6 +147,74 @@ export const DEFAULT_PDF_PARSE_OPTIONS: Required<PDFParseOptions> = {
   maxPages: 5000,
 };
 
+/**
+ * DOCX-specific metadata
+ */
+export type DOCXMetadata = {
+  title: string;
+  author: string;
+  description: string;
+  subject: string;
+  creator: string;
+  lastModifiedBy: string;
+  revision: string;
+  created: string;
+  modified: string;
+};
+
+/**
+ * Detected section in DOCX content
+ */
+export type DOCXSection = {
+  id: string;
+  title: string;
+  order: number;
+  level: number;
+  startOffset: number;
+  endOffset: number;
+  wordCount: number;
+  content: string;
+};
+
+/**
+ * Result of parsing a DOCX file
+ */
+export type ParsedDOCX = {
+  metadata: DOCXMetadata;
+  sections: DOCXSection[];
+  totalWordCount: number;
+  rawContent: string;
+  htmlContent: string;
+  estimatedReadingTimeMinutes: number;
+  messages: DOCXParseMessage[];
+};
+
+/**
+ * Message from DOCX parsing (warnings or errors)
+ */
+export type DOCXParseMessage = {
+  type: "warning" | "error";
+  message: string;
+};
+
+/**
+ * Options for parsing a DOCX
+ */
+export type DOCXParseOptions = {
+  extractContent?: boolean;
+  detectSections?: boolean;
+  includeHtml?: boolean;
+};
+
+/**
+ * Default DOCX parsing options
+ */
+export const DEFAULT_DOCX_PARSE_OPTIONS: Required<DOCXParseOptions> = {
+  extractContent: true,
+  detectSections: true,
+  includeHtml: true,
+};
+
 // =============================================================================
 // Constants
 // =============================================================================
@@ -178,10 +247,24 @@ export const EPUB_MIME_TYPES = [
 export const PDF_MIME_TYPES = ["application/pdf"] as const;
 
 /**
+ * Supported DOCX MIME types
+ */
+export const DOCX_MIME_TYPES = [
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/msword",
+] as const;
+
+/**
  * PDF file signature (magic bytes)
  * PDF files start with "%PDF-"
  */
 const PDF_SIGNATURE = Buffer.from([0x25, 0x50, 0x44, 0x46, 0x2d]); // %PDF-
+
+/**
+ * DOCX/ZIP file signature (magic bytes)
+ * DOCX files are ZIP archives starting with "PK\x03\x04"
+ */
+const DOCX_SIGNATURE = Buffer.from([0x50, 0x4b, 0x03, 0x04]); // PK\x03\x04
 
 /**
  * Patterns for detecting chapter/section headings in PDF text
@@ -1013,6 +1096,378 @@ export function getPDFExtension(): string {
 }
 
 // =============================================================================
+// DOCX Parsing
+// =============================================================================
+
+/**
+ * Parse a DOCX file and extract all content
+ *
+ * @param filePath - Path to the DOCX file
+ * @param options - Parsing options
+ * @returns Parsed DOCX data or error
+ */
+export async function parseDOCX(
+  filePath: string,
+  options: DOCXParseOptions = {}
+): Promise<ParseResult<ParsedDOCX>> {
+  const opts = { ...DEFAULT_DOCX_PARSE_OPTIONS, ...options };
+
+  try {
+    // Verify file exists
+    await fs.access(filePath);
+
+    // Read the file
+    const dataBuffer = await fs.readFile(filePath);
+
+    // Parse using the buffer function
+    return parseDOCXFromBuffer(dataBuffer, opts);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown parsing error";
+    return {
+      success: false,
+      error: `Failed to parse DOCX: ${message}`,
+    };
+  }
+}
+
+/**
+ * Parse DOCX from a buffer instead of a file path
+ *
+ * @param buffer - DOCX file content as a buffer
+ * @param options - Parsing options
+ * @returns Parsed DOCX data or error
+ */
+export async function parseDOCXFromBuffer(
+  buffer: Buffer,
+  options: DOCXParseOptions = {}
+): Promise<ParseResult<ParsedDOCX>> {
+  const opts = { ...DEFAULT_DOCX_PARSE_OPTIONS, ...options };
+
+  try {
+    // Validate buffer
+    if (!buffer || buffer.length === 0) {
+      return {
+        success: false,
+        error: "Empty buffer provided",
+      };
+    }
+
+    // Check DOCX signature (ZIP archive)
+    if (!isDOCXBuffer(buffer)) {
+      return {
+        success: false,
+        error: "Invalid DOCX format: missing ZIP signature",
+      };
+    }
+
+    // Use mammoth to extract text and HTML
+    let htmlResult: {
+      value: string;
+      messages: Array<{ type: string; message: string }>;
+    };
+    let textResult: {
+      value: string;
+      messages: Array<{ type: string; message: string }>;
+    };
+
+    try {
+      // Extract HTML content
+      htmlResult = await mammoth.convertToHtml({ buffer });
+
+      // Extract raw text
+      textResult = await mammoth.extractRawText({ buffer });
+    } catch (mammothError) {
+      const errorMsg =
+        mammothError instanceof Error
+          ? mammothError.message
+          : "Unknown mammoth error";
+      return {
+        success: false,
+        error: `Failed to parse DOCX content: ${errorMsg}`,
+      };
+    }
+
+    // Get raw text content
+    const rawContent = opts.extractContent ? textResult.value || "" : "";
+
+    // Get HTML content
+    const htmlContent = opts.includeHtml ? htmlResult.value || "" : "";
+
+    // Convert mammoth messages to our format
+    const messages: DOCXParseMessage[] = [
+      ...htmlResult.messages,
+      ...textResult.messages,
+    ].map((msg) => ({
+      type: msg.type as "warning" | "error",
+      message: msg.message,
+    }));
+
+    // Calculate word count
+    const totalWordCount = countWords(rawContent);
+
+    // Detect sections if requested
+    const sections = opts.detectSections
+      ? detectDOCXSections(rawContent, htmlContent)
+      : [];
+
+    // Calculate reading time
+    const estimatedReadingTimeMinutes = calculateReadingTime(totalWordCount);
+
+    // Create empty metadata (DOCX doesn't expose metadata easily through mammoth)
+    const metadata: DOCXMetadata = {
+      title: "",
+      author: "",
+      description: "",
+      subject: "",
+      creator: "",
+      lastModifiedBy: "",
+      revision: "",
+      created: "",
+      modified: "",
+    };
+
+    return {
+      success: true,
+      data: {
+        metadata,
+        sections,
+        totalWordCount,
+        rawContent,
+        htmlContent,
+        estimatedReadingTimeMinutes,
+        messages,
+      },
+    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown parsing error";
+    return {
+      success: false,
+      error: `Failed to parse DOCX: ${message}`,
+    };
+  }
+}
+
+/**
+ * Detect sections/headings in DOCX content
+ * Uses both raw text patterns and HTML heading tags
+ */
+function detectDOCXSections(text: string, htmlContent: string): DOCXSection[] {
+  if (!text || text.trim().length === 0) {
+    return [];
+  }
+
+  const sections: DOCXSection[] = [];
+
+  // Try to extract headings from HTML first (more reliable)
+  const headingPattern = /<h([1-6])[^>]*>([^<]+)<\/h[1-6]>/gi;
+  const headings: Array<{ level: number; title: string; index: number }> = [];
+
+  let match: RegExpExecArray | null;
+  while ((match = headingPattern.exec(htmlContent)) !== null) {
+    const levelStr = match[1];
+    const titleStr = match[2];
+    if (levelStr && titleStr) {
+      headings.push({
+        level: parseInt(levelStr, 10),
+        title: stripHtmlTags(titleStr).trim(),
+        index: match.index,
+      });
+    }
+  }
+
+  // If we found headings in HTML, use them to create sections
+  if (headings.length > 0) {
+    const textLines = text.split("\n");
+    let currentLineIndex = 0;
+    let currentOffset = 0;
+
+    for (let i = 0; i < headings.length; i++) {
+      const heading = headings[i];
+      const nextHeading = headings[i + 1];
+
+      // Skip if heading is undefined (should not happen, but TypeScript requires this check)
+      if (!heading) {
+        continue;
+      }
+
+      // Find where this heading appears in the text
+      let headingOffset = currentOffset;
+      for (let j = currentLineIndex; j < textLines.length; j++) {
+        const currentLine = textLines[j];
+        if (currentLine !== undefined && currentLine.trim() === heading.title) {
+          headingOffset = currentOffset;
+          currentLineIndex = j + 1;
+          break;
+        }
+        currentOffset += (currentLine?.length ?? 0) + 1;
+      }
+
+      // Find end offset (start of next heading or end of text)
+      let endOffset = text.length;
+      if (nextHeading) {
+        // Search for next heading in remaining text
+        const remainingText = text.substring(headingOffset);
+        const nextIdx = remainingText.indexOf(nextHeading.title);
+        if (nextIdx !== -1) {
+          endOffset = headingOffset + nextIdx;
+        }
+      }
+
+      // Extract content between this heading and next
+      const sectionContent = text.substring(headingOffset, endOffset).trim();
+
+      sections.push({
+        id: `section-${i + 1}`,
+        title: heading.title.substring(0, 200),
+        order: i + 1,
+        level: heading.level - 1,
+        startOffset: headingOffset,
+        endOffset,
+        wordCount: countWords(sectionContent),
+        content: sectionContent,
+      });
+    }
+
+    return sections;
+  }
+
+  // Fallback: Use text-based pattern detection (similar to PDF)
+  const lines = text.split("\n");
+  let currentSection: DOCXSection | null = null;
+  let currentContent: string[] = [];
+  let sectionOrder = 0;
+  let currentOffset = 0;
+
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+
+    // Check for potential section headers
+    const isChapterHeading = CHAPTER_PATTERNS.some((pattern) =>
+      pattern.test(trimmedLine)
+    );
+
+    // All caps lines that aren't too long
+    const isAllCaps =
+      trimmedLine.length > 3 &&
+      trimmedLine.length < 100 &&
+      trimmedLine === trimmedLine.toUpperCase() &&
+      /[A-Z]/.test(trimmedLine);
+
+    const isPotentialHeader = isChapterHeading || isAllCaps;
+
+    if (isPotentialHeader && trimmedLine.length > 0) {
+      // Save the previous section
+      if (currentSection) {
+        currentSection.endOffset = currentOffset;
+        currentSection.content = currentContent.join("\n").trim();
+        currentSection.wordCount = countWords(currentSection.content);
+        sections.push(currentSection);
+      }
+
+      // Start a new section
+      sectionOrder++;
+      currentSection = {
+        id: `section-${sectionOrder}`,
+        title: trimmedLine.substring(0, 200),
+        order: sectionOrder,
+        level: isAllCaps && !isChapterHeading ? 1 : 0,
+        startOffset: currentOffset,
+        endOffset: currentOffset,
+        wordCount: 0,
+        content: "",
+      };
+      currentContent = [];
+    } else if (currentSection) {
+      currentContent.push(line);
+    }
+
+    currentOffset += line.length + 1;
+  }
+
+  // Save the last section
+  if (currentSection) {
+    currentSection.endOffset = currentOffset;
+    currentSection.content = currentContent.join("\n").trim();
+    currentSection.wordCount = countWords(currentSection.content);
+    sections.push(currentSection);
+  }
+
+  // If no sections were detected, create a single section from all content
+  if (sections.length === 0 && text.trim().length > 0) {
+    sections.push({
+      id: "section-1",
+      title: "Main Content",
+      order: 1,
+      level: 0,
+      startOffset: 0,
+      endOffset: text.length,
+      wordCount: countWords(text),
+      content: text.trim(),
+    });
+  }
+
+  return sections;
+}
+
+/**
+ * Check if a buffer starts with DOCX/ZIP signature
+ */
+function isDOCXBuffer(buffer: Buffer): boolean {
+  if (buffer.length < DOCX_SIGNATURE.length) {
+    return false;
+  }
+
+  for (let i = 0; i < DOCX_SIGNATURE.length; i++) {
+    if (buffer[i] !== DOCX_SIGNATURE[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Validate that a file is a valid DOCX
+ */
+export async function isValidDOCX(filePath: string): Promise<boolean> {
+  try {
+    await fs.access(filePath);
+
+    // Read the first few bytes to check for ZIP signature
+    const fd = await fs.open(filePath, "r");
+    const buffer = Buffer.alloc(DOCX_SIGNATURE.length);
+    await fd.read(buffer, 0, DOCX_SIGNATURE.length, 0);
+    await fd.close();
+
+    if (!isDOCXBuffer(buffer)) {
+      return false;
+    }
+
+    // Try to parse it to verify it's a valid DOCX
+    const dataBuffer = await fs.readFile(filePath);
+
+    try {
+      // If mammoth can extract text, it's a valid DOCX
+      await mammoth.extractRawText({ buffer: dataBuffer });
+      return true;
+    } catch {
+      return false;
+    }
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Get file extension from DOCX (should be .docx)
+ */
+export function getDOCXExtension(): string {
+  return ".docx";
+}
+
+// =============================================================================
 // Exports (Namespaced)
 // =============================================================================
 
@@ -1032,6 +1487,12 @@ export const bookParser = {
   isValidPDF,
   getPDFExtension,
 
+  // DOCX parsing functions
+  parseDOCX,
+  parseDOCXFromBuffer,
+  isValidDOCX,
+  getDOCXExtension,
+
   // Utility functions
   countWords,
   stripHtmlTags,
@@ -1042,8 +1503,10 @@ export const bookParser = {
   AVERAGE_READING_WPM,
   EPUB_MIME_TYPES,
   PDF_MIME_TYPES,
+  DOCX_MIME_TYPES,
   DEFAULT_PARSE_OPTIONS,
   DEFAULT_PDF_PARSE_OPTIONS,
+  DEFAULT_DOCX_PARSE_OPTIONS,
 };
 
 /**
@@ -1056,6 +1519,7 @@ export const bookUtils = {
   generateContentHash,
   getEPUBExtension,
   getPDFExtension,
+  getDOCXExtension,
 };
 
 /**
@@ -1068,4 +1532,16 @@ export const pdfParser = {
   getPDFExtension,
   PDF_MIME_TYPES,
   DEFAULT_PDF_PARSE_OPTIONS,
+};
+
+/**
+ * DOCX-specific parsing utilities
+ */
+export const docxParser = {
+  parseDOCX,
+  parseDOCXFromBuffer,
+  isValidDOCX,
+  getDOCXExtension,
+  DOCX_MIME_TYPES,
+  DEFAULT_DOCX_PARSE_OPTIONS,
 };
