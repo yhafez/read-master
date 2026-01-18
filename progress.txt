@@ -692,3 +692,46 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (139 tests total: 47 api + 34 shared + 12 web + 46 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 20
+
+[2026-01-17] db-011: Create system models: AIUsageLog and AuditLog
+- Created AIUsageLog model for tracking AI API operations:
+  - id (cuid), userId (optional for system-level operations)
+  - Operation details: operation, model, provider
+  - Token usage: promptTokens, completionTokens, totalTokens
+  - Cost tracking: cost (Decimal(10, 6) for precision in USD)
+  - Performance metrics: durationMs, success
+  - Request context: bookId, requestId
+  - Error tracking: errorCode, errorMessage (Text)
+  - Metadata (JSON) for additional operation-specific data
+  - Timestamp: createdAt
+  - Indexes on userId, createdAt, userId+createdAt, operation, provider, success, bookId
+- Created AuditLog model for security and compliance tracking:
+  - id (cuid), userId (optional for system actions)
+  - Action details: action (CREATE, UPDATE, DELETE, LOGIN, EXPORT, etc.)
+  - Entity tracking: entityType, entityId
+  - Change details: previousValue (JSON), newValue (JSON)
+  - Request context: ipAddress, userAgent (Text), requestId, sessionId
+  - Metadata (JSON) for additional context
+  - Timestamp: createdAt
+  - Indexes on userId, createdAt, userId+createdAt, entityType, entityType+entityId, action, entityType+action
+- Updated packages/database/src/index.ts with:
+  - Import examples for AIUsageLog, AuditLog types
+  - Example for logging successful AI API calls with cost tracking
+  - Example for logging failed AI calls with error details
+  - Example for counting user's AI usage today (for rate limiting)
+  - Example for aggregating monthly AI costs
+  - Example for creating audit log entries for updates
+  - Example for logging delete actions with previous state
+  - Example for querying entity history
+  - Example for querying recent user actions (security review)
+  - Example for compliance auditing (all DELETE actions)
+  - Added type exports for AIUsageLog, AuditLog
+- Added 4 new tests for system model accessors:
+  - AIUsageLog model accessor and query methods
+  - AuditLog model accessor and query methods
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (143 tests total: 47 api + 34 shared + 12 web + 50 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

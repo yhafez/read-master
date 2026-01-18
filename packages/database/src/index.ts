@@ -14,6 +14,7 @@
  * import type { Curriculum, CurriculumItem, CurriculumFollow, Visibility } from '@read-master/database';
  * import type { Follow, ReadingGroup, ReadingGroupMember, GroupRole } from '@read-master/database';
  * import type { GroupDiscussion, DiscussionReply } from '@read-master/database';
+ * import type { AIUsageLog, AuditLog } from '@read-master/database';
  * import type { BookSource, FileType, ReadingStatus, AnnotationType } from '@read-master/database';
  *
  * // Fetch user with books
@@ -385,6 +386,119 @@
  *   },
  *   orderBy: { membersCount: 'desc' }
  * });
+ *
+ * // ========================================================================
+ * // SYSTEM LOGGING - AI Usage & Audit Logs
+ * // ========================================================================
+ *
+ * // Log an AI API call (for cost monitoring and rate limiting)
+ * const aiLog = await prisma.aIUsageLog.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     operation: 'pre_reading_guide',
+ *     model: 'claude-3-5-sonnet-20241022',
+ *     provider: 'anthropic',
+ *     promptTokens: 1500,
+ *     completionTokens: 2000,
+ *     totalTokens: 3500,
+ *     cost: 0.0105, // Decimal type for precision
+ *     durationMs: 3200,
+ *     success: true,
+ *     bookId: 'book_123',
+ *     requestId: 'req_abc123'
+ *   }
+ * });
+ *
+ * // Log a failed AI call
+ * const failedLog = await prisma.aIUsageLog.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     operation: 'explain',
+ *     model: 'claude-3-5-sonnet-20241022',
+ *     provider: 'anthropic',
+ *     promptTokens: 500,
+ *     completionTokens: 0,
+ *     totalTokens: 500,
+ *     cost: 0.0015,
+ *     durationMs: 1500,
+ *     success: false,
+ *     errorCode: 'RATE_LIMIT_EXCEEDED',
+ *     errorMessage: 'Too many requests'
+ *   }
+ * });
+ *
+ * // Get user's AI usage for today (for rate limiting)
+ * const today = new Date();
+ * today.setHours(0, 0, 0, 0);
+ * const todayUsage = await prisma.aIUsageLog.count({
+ *   where: {
+ *     userId: 'user_123',
+ *     createdAt: { gte: today },
+ *     success: true
+ *   }
+ * });
+ *
+ * // Get total AI costs for a user this month
+ * const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+ * const monthlyCost = await prisma.aIUsageLog.aggregate({
+ *   where: {
+ *     userId: 'user_123',
+ *     createdAt: { gte: monthStart },
+ *     success: true
+ *   },
+ *   _sum: { cost: true }
+ * });
+ *
+ * // Create an audit log entry (for security and compliance)
+ * const auditLog = await prisma.auditLog.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     action: 'UPDATE',
+ *     entityType: 'Book',
+ *     entityId: 'book_123',
+ *     previousValue: { title: 'Old Title' },
+ *     newValue: { title: 'New Title' },
+ *     ipAddress: '192.168.1.1',
+ *     userAgent: 'Mozilla/5.0...',
+ *     requestId: 'req_abc123'
+ *   }
+ * });
+ *
+ * // Log a delete action with previous state
+ * const deleteLog = await prisma.auditLog.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     action: 'DELETE',
+ *     entityType: 'Flashcard',
+ *     entityId: 'card_123',
+ *     previousValue: { front: 'Question?', back: 'Answer' }
+ *   }
+ * });
+ *
+ * // Query audit logs for a specific entity
+ * const entityHistory = await prisma.auditLog.findMany({
+ *   where: {
+ *     entityType: 'Book',
+ *     entityId: 'book_123'
+ *   },
+ *   orderBy: { createdAt: 'desc' }
+ * });
+ *
+ * // Query recent user actions (for security review)
+ * const recentActions = await prisma.auditLog.findMany({
+ *   where: {
+ *     userId: 'user_123',
+ *     createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } // Last 24 hours
+ *   },
+ *   orderBy: { createdAt: 'desc' }
+ * });
+ *
+ * // Get all DELETE actions (for compliance auditing)
+ * const deletions = await prisma.auditLog.findMany({
+ *   where: { action: 'DELETE' },
+ *   orderBy: { createdAt: 'desc' },
+ *   take: 100
+ * });
  * ```
  */
 
@@ -416,4 +530,6 @@ export type {
   ReadingGroupMember,
   GroupDiscussion,
   DiscussionReply,
+  AIUsageLog,
+  AuditLog,
 } from "@prisma/client";

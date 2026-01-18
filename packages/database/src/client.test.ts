@@ -432,6 +432,48 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.discussionReply.count).toBe("function");
       expect(typeof prisma.discussionReply.aggregate).toBe("function");
     });
+
+    // System Models - AIUsageLog, AuditLog
+
+    it("should have aIUsageLog model accessor", () => {
+      expect(prisma.aIUsageLog).toBeDefined();
+      expect(typeof prisma.aIUsageLog.findMany).toBe("function");
+      expect(typeof prisma.aIUsageLog.findUnique).toBe("function");
+      expect(typeof prisma.aIUsageLog.create).toBe("function");
+      expect(typeof prisma.aIUsageLog.update).toBe("function");
+      expect(typeof prisma.aIUsageLog.delete).toBe("function");
+    });
+
+    it("should have aIUsageLog model with expected query methods", () => {
+      expect(typeof prisma.aIUsageLog.findFirst).toBe("function");
+      expect(typeof prisma.aIUsageLog.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.aIUsageLog.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.aIUsageLog.createMany).toBe("function");
+      expect(typeof prisma.aIUsageLog.updateMany).toBe("function");
+      expect(typeof prisma.aIUsageLog.deleteMany).toBe("function");
+      expect(typeof prisma.aIUsageLog.count).toBe("function");
+      expect(typeof prisma.aIUsageLog.aggregate).toBe("function");
+    });
+
+    it("should have auditLog model accessor", () => {
+      expect(prisma.auditLog).toBeDefined();
+      expect(typeof prisma.auditLog.findMany).toBe("function");
+      expect(typeof prisma.auditLog.findUnique).toBe("function");
+      expect(typeof prisma.auditLog.create).toBe("function");
+      expect(typeof prisma.auditLog.update).toBe("function");
+      expect(typeof prisma.auditLog.delete).toBe("function");
+    });
+
+    it("should have auditLog model with expected query methods", () => {
+      expect(typeof prisma.auditLog.findFirst).toBe("function");
+      expect(typeof prisma.auditLog.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.auditLog.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.auditLog.createMany).toBe("function");
+      expect(typeof prisma.auditLog.updateMany).toBe("function");
+      expect(typeof prisma.auditLog.deleteMany).toBe("function");
+      expect(typeof prisma.auditLog.count).toBe("function");
+      expect(typeof prisma.auditLog.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

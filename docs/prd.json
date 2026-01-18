@@ -469,7 +469,7 @@
         "AuditLog has proper indexes",
         "Both models have appropriate fields"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-012",

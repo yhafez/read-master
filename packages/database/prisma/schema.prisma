@@ -914,3 +914,91 @@ model DiscussionReply {
   @@index([discussionId, createdAt])
   @@index([deletedAt])
 }
+
+// =============================================================================
+// SYSTEM MODELS - AI Usage & Audit Logging
+// =============================================================================
+
+/// AIUsageLog - Tracks all AI API operations for cost monitoring and quota enforcement
+/// Essential for billing, analytics, and rate limiting
+model AIUsageLog {
+  id     String  @id @default(cuid())
+  userId String? // Optional: some operations may be system-level
+
+  // Operation details
+  operation String // e.g., "pre_reading_guide", "explain", "assessment", "flashcards", "grade_answer"
+  model     String // e.g., "claude-3-5-sonnet-20241022", "gpt-4o"
+  provider  String // e.g., "anthropic", "openai"
+
+  // Token usage
+  promptTokens     Int // Tokens in the prompt
+  completionTokens Int // Tokens in the response
+  totalTokens      Int // Total tokens (prompt + completion)
+
+  // Cost tracking (using Decimal for precision)
+  cost Decimal @db.Decimal(10, 6) // Cost in USD (e.g., 0.001234)
+
+  // Performance metrics
+  durationMs Int // Time taken for the API call in milliseconds
+  success    Boolean @default(true) // Whether the operation succeeded
+
+  // Request context
+  bookId    String? // Optional: related book if applicable
+  requestId String? // Optional: for correlating with logs
+
+  // Error tracking (if failed)
+  errorCode    String? // Error code if failed
+  errorMessage String? @db.Text // Error message if failed
+
+  // Metadata (for additional context)
+  metadata Json @default("{}") // Additional operation-specific data
+
+  // Timestamp
+  createdAt DateTime @default(now())
+
+  // Indexes for analytics and billing queries
+  @@index([userId])
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([operation])
+  @@index([provider])
+  @@index([success])
+  @@index([bookId])
+}
+
+/// AuditLog - Tracks important user and system actions for security and compliance
+/// Used for change history, security auditing, and debugging
+model AuditLog {
+  id     String  @id @default(cuid())
+  userId String? // Optional: system actions may not have a user
+
+  // Action details
+  action     String // e.g., "CREATE", "UPDATE", "DELETE", "LOGIN", "EXPORT"
+  entityType String // e.g., "Book", "User", "Flashcard", "Assessment"
+  entityId   String? // ID of the affected entity
+
+  // Change details
+  previousValue Json? // Previous state (for updates/deletes)
+  newValue      Json? // New state (for creates/updates)
+
+  // Request context
+  ipAddress String? // Client IP address
+  userAgent String? @db.Text // Browser/client info
+  requestId String? // For correlating with logs
+  sessionId String? // Clerk session ID if applicable
+
+  // Metadata
+  metadata Json @default("{}") // Additional context (e.g., bulk operation details)
+
+  // Timestamp
+  createdAt DateTime @default(now())
+
+  // Indexes for security auditing and queries
+  @@index([userId])
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([entityType])
+  @@index([entityType, entityId])
+  @@index([action])
+  @@index([entityType, action])
+}
