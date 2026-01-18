@@ -3454,3 +3454,71 @@ No discoveries added during this sprint (foundational infrastructure work)
   - OAuth providers must be enabled in Clerk dashboard
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4017 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 67
+
+[2026-01-18] frontend-004: Set up React Query with proper configuration
+- Installed @tanstack/react-query-devtools for development tooling
+- Created comprehensive React Query configuration module in apps/web/src/lib/:
+  - queryClient.ts: Core configuration with:
+    - Constants: DEFAULT_STALE_TIME (5min), DEFAULT_GC_TIME (30min), DEFAULT_RETRY_COUNT (1)
+    - queryKeys factory for consistent key generation across all domains:
+      - books (all, lists, list, details, detail, content, search)
+      - readingProgress, annotations, flashcards, user, ai
+      - leaderboard, social, groups, curriculums, forum, assessments, tts
+    - createQueryClient() factory with sensible defaults
+    - Global error handler with setGlobalErrorHandler()
+  - QueryProvider.tsx: Provider component with:
+    - QueryProvider: Main provider with integrated DevTools support
+    - TestQueryProvider: Isolated client for test environments
+    - useTestQueryClient hook for test isolation
+  - index.ts: Clean module exports
+- Created example query hooks in apps/web/src/hooks/:
+  - useBooks.ts with:
+    - Book, BookListFilters, PaginatedResponse types
+    - booksApi object with getBooks, getBook, updateBook, deleteBook methods
+    - useBooks() hook for listing books with filters
+    - useBook() hook for single book fetch
+    - useUpdateBook() mutation with cache updates
+    - useDeleteBook() mutation with cache invalidation
+    - usePrefetchBook() for hover prefetching
+  - index.ts: Module exports
+- Updated main.tsx to use new QueryProvider
+- Updated vitest.config.ts to merge with vite config for path aliases
+- Created comprehensive tests (49 new tests):
+  - queryClient.test.ts (59 tests):
+    - Constants verification
+    - createQueryClient configuration tests
+    - All queryKeys factory methods tested
+    - Query key structure validation
+  - QueryProvider.test.tsx (16 tests):
+    - Test client configuration options
+    - Cache operations (set, get, remove, clear)
+    - Client isolation verification
+  - useBooks.test.ts (26 tests):
+    - Book type validation
+    - BookListFilters interface tests
+    - All queryKeys.books methods
+    - API URL construction
+    - Query key relationships
+- Configuration features:
+  - refetchOnWindowFocus: false for better reading UX
+  - Mutation retry: 0 (fail fast)
+  - DevTools auto-enabled in development
+  - Customizable error handling
+- Files created:
+  - apps/web/src/lib/queryClient.ts
+  - apps/web/src/lib/QueryProvider.tsx
+  - apps/web/src/lib/index.ts
+  - apps/web/src/lib/queryClient.test.ts
+  - apps/web/src/lib/QueryProvider.test.tsx
+  - apps/web/src/hooks/useBooks.ts
+  - apps/web/src/hooks/useBooks.test.ts
+  - apps/web/src/hooks/index.ts
+- Files modified:
+  - apps/web/src/main.tsx
+  - apps/web/vitest.config.ts
+  - apps/web/package.json (added @tanstack/react-query-devtools)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4124 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
