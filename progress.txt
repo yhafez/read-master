@@ -2697,3 +2697,79 @@ No discoveries added during this sprint (foundational infrastructure work)
     - Code content as text
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (78 new tests)
 - Files: apps/api/api/books/paste.ts, apps/api/api/books/paste.test.ts
+
+## Iteration 55
+
+[2026-01-18] api-books-010: Implement GET /api/books/search endpoint
+- Created apps/api/api/books/search.ts with comprehensive book search functionality
+- Implemented combined search across Google Books and Open Library APIs:
+  - searchBothSources() executes parallel requests to both APIs
+  - Graceful error handling - if one API fails, results from the other are still returned
+  - Source tracking shows which APIs returned results and how many
+- Implemented result normalization:
+  - normalizeGoogleBook() converts Google Books metadata to common format
+  - normalizeOpenLibraryBook() converts Open Library metadata to common format
+  - Common SearchResultItem type with id, source, title, authors, description, etc.
+  - Cover images use best available quality from each source
+- Implemented result deduplication:
+  - getDeduplicationKey() generates key from ISBN-13, ISBN-10, or title+author
+  - deduplicateResults() removes duplicates, keeping items with more complete data
+  - scoreItem() calculates completeness score for comparison
+  - Prioritizes items with descriptions, covers, ISBNs, etc.
+- Implemented result sorting:
+  - sortResults() prioritizes items with cover images
+  - Secondary sort by completeness score
+  - Tertiary sort by ratings count (popularity)
+- Implemented Redis caching:
+  - buildCombinedSearchCacheKey() creates consistent cache keys
+  - Cache TTL of 15 minutes for combined search results
+  - Cache keys include query, offset, limit, language, and source
+- Added Zod validation for query parameters:
+  - q: required search query (1-500 chars)
+  - limit: optional, 1-40, default 10
+  - offset: optional, min 0, default 0
+  - language: optional 2-char ISO code
+  - source: optional enum "all" | "google" | "openlib", default "all"
+- Created comprehensive tests in apps/api/api/books/search.test.ts (73 tests):
+  - Schema validation tests:
+    - Query validation (required, min, max, empty)
+    - Limit validation (valid, default, min, max)
+    - Offset validation (valid, default, negative)
+    - Language validation (2-char code)
+    - Source validation (enum values)
+    - Combined validation scenarios
+  - Normalization tests:
+    - Google Books basic and complete metadata
+    - Open Library basic and complete metadata
+    - Year parsing from publish date
+    - Empty authors/categories handling
+    - Optional field handling
+    - First value selection from arrays
+  - Deduplication tests:
+    - ISBN-13 based deduplication
+    - ISBN-10 based deduplication
+    - Title+author based deduplication
+    - ISBN hyphen stripping
+    - Whitespace normalization
+    - Empty authors handling
+    - Multiple duplicates
+  - Scoring tests:
+    - Complete vs minimal items
+    - Field weight priority (description, cover > ISBN)
+    - hasFullText bonus
+  - Sorting tests:
+    - Cover image prioritization
+    - Score-based sorting
+    - Ratings count sorting
+  - Cache key tests:
+    - Consistency, normalization
+    - All parameters included
+  - Constants tests
+  - Edge cases:
+    - Special characters in titles
+    - Unicode characters
+    - Invalid publish dates
+    - Long author lists
+    - Empty strings in arrays
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (73 new tests)
+- Files: apps/api/api/books/search.ts, apps/api/api/books/search.test.ts
