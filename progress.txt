@@ -2912,3 +2912,63 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (91 new tests)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/books/add-from-library.ts, apps/api/api/books/add-from-library.test.ts
+
+## Iteration 58
+
+[2026-01-18] api-books-013: Implement GET /api/books/:id endpoint
+- Created apps/api/api/books/[id].ts for fetching single book by ID
+- Implemented request validation with Zod schema using transform().pipe() pattern:
+  - Transform: Trims whitespace first
+  - Validation: Min 1 character, max 30 characters
+  - Properly rejects empty string and whitespace-only strings
+- Implemented book fetching with comprehensive data:
+  - Book details with all metadata fields
+  - Chapters ordered by orderIndex (id, title, orderIndex, startPosition, endPosition, wordCount)
+  - Reading progress for the current user (percentage, currentPosition, totalReadTime, averageWpm, lastReadAt, startedAt, completedAt)
+- Implemented access control:
+  - Verifies user exists in database
+  - Excludes soft-deleted books (deletedAt is null)
+  - User can access their own books OR public books (isPublic: true)
+  - Returns 403 Forbidden if user has no access
+  - Returns 404 Not Found if book doesn't exist
+- Implemented helper functions with full test coverage:
+  - formatChapter(): Formats chapter data for API response
+  - formatProgress(): Formats reading progress, handles null values and date formatting
+  - formatBookDetailResponse(): Combines book, chapters, and progress into response format
+- Created comprehensive tests in apps/api/api/books/[id].test.ts (99 tests):
+  - Book ID schema validation tests:
+    - Valid CUIDs, single character, max length, numeric, alphanumeric
+    - ID with underscores, hyphens
+    - Trimming behavior (leading, trailing, both, preserving internal whitespace)
+    - Rejection: empty string, whitespace-only, exceeds max length, non-string types
+    - Edge cases: Unicode, emoji, special characters, newline
+  - formatChapter tests:
+    - Basic formatting with all fields
+    - Null title and wordCount handling
+    - orderIndex preservation (0 and high values)
+    - Position values (zero start, large values)
+    - Edge cases: empty string title, Unicode, zero wordCount
+  - formatProgress tests:
+    - Basic formatting with all fields
+    - Null progress returns null
+    - Completed book with completedAt
+    - Null field handling (lastReadAt, averageWpm, completedAt)
+    - Date formatting as ISO strings
+    - Edge cases: zero percentage, 100%, zero position/time, high WPM, decimal percentage
+  - formatBookDetailResponse tests:
+    - Complete book formatting
+    - No reading progress (returns null)
+    - No chapters (empty array)
+    - All nullable fields handling
+    - Source types: UPLOAD, URL, GOOGLE_BOOKS, OPEN_LIBRARY, PASTE
+    - File types: PDF, EPUB, DOC, DOCX, TXT, HTML
+    - Reading status: WANT_TO_READ, READING, COMPLETED, ABANDONED
+    - Multiple chapters formatting
+    - Tags formatting (empty, single, multiple)
+    - Visibility (public/private)
+    - Date formatting
+    - Edge cases: Unicode, special characters, long description, zero values, negative lexile
+  - Constants tests (MIN_ID_LENGTH, MAX_ID_LENGTH)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (99 new tests)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/books/[id].ts, apps/api/api/books/[id].test.ts
