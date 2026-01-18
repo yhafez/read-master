@@ -1352,3 +1352,62 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Edge case tests (leap years, DST, old/future dates)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1355 tests total: 47 api + 172 database + 12 web + 1124 shared)
 - Files: packages/shared/src/utils/dates.ts, packages/shared/src/utils/dates.test.ts, packages/shared/src/utils/index.ts
+
+## Iteration 32
+
+[2026-01-17] shared-010: Create Bloom's Taxonomy utilities
+- Created packages/shared/src/utils/blooms.ts with comprehensive Bloom's taxonomy implementation
+- Defined all six Bloom's taxonomy levels (REMEMBER through CREATE):
+  - Each level includes: name, description, cognitive level (1-6), keywords, question stems, color
+  - REMEMBER (1): Recall facts, define, list, identify, name, state
+  - UNDERSTAND (2): Explain ideas, summarize, paraphrase, compare, interpret
+  - APPLY (3): Use knowledge, demonstrate, solve, implement, calculate
+  - ANALYZE (4): Break down information, examine, differentiate, categorize
+  - EVALUATE (5): Make judgments, critique, assess, justify, recommend
+  - CREATE (6): Produce new work, design, develop, formulate, invent
+- Implemented validation functions:
+  - isValidBloomsLevel: Check if value is a valid Bloom's level
+  - isHigherOrderLevel: Check if level is ANALYZE, EVALUATE, or CREATE
+  - isLowerOrderLevel: Check if level is REMEMBER, UNDERSTAND, or APPLY
+- Implemented level info functions:
+  - getBloomsLevelInfo: Get complete info for a level
+  - getCognitiveLevel: Get numeric level (1-6)
+  - getBloomsLevelName, getBloomsLevelDescription, getBloomsLevelColor
+  - getBloomsKeywords, getBloomsQuestionStems: Get keywords/stems for a level
+- Implemented comparison functions:
+  - compareBloomsLevels: Compare two levels by cognitive complexity
+  - getNextHigherLevel, getNextLowerLevel: Navigate the hierarchy
+  - getLevelsAtOrAbove, getLevelsAtOrBelow: Get level ranges
+- Implemented question categorization:
+  - categorizeQuestion: Analyze question text to determine Bloom's level
+  - categorizeQuestions: Batch categorization
+  - Uses keyword and question stem matching with weighted scoring
+  - Prefers higher-order levels on tie (promotes deeper thinking)
+  - suggestKeywordsForLevel, getExampleStemsForLevel: Helpers for question creation
+- Implemented breakdown calculation functions:
+  - createEmptyBreakdown: Create zeroed breakdown object
+  - calculateBloomsBreakdown: Calculate percentages from question list
+  - calculateCountsFromBreakdown: Convert percentages to counts
+  - getRecommendedDistribution: Get balanced question distribution
+  - calculateAverageCognitiveLevel: Weighted average of cognitive levels
+  - calculateHigherOrderPercentage: Percentage of higher-order questions
+  - isBalancedBreakdown, getBalanceSuggestions: Check/improve balance
+- Defined constants:
+  - BLOOMS_LEVELS: Array of all six levels in order
+  - BLOOMS_LEVEL_INFO: Complete info record for each level
+  - DEFAULT_BLOOMS_DISTRIBUTION: Recommended percentages (15/20/20/20/15/10)
+  - HIGHER_ORDER_LEVELS, LOWER_ORDER_LEVELS: Level groupings
+- Exported bloomsUtils object with all functions for convenient importing
+- Updated packages/shared/src/utils/index.ts to export blooms module
+- Created comprehensive test suite with 96 tests in blooms.test.ts:
+  - Constants tests (BLOOMS_LEVELS, BLOOMS_LEVEL_INFO, DEFAULT_DISTRIBUTION)
+  - Validation function tests
+  - Level info function tests
+  - Comparison function tests
+  - Question categorization tests (all six levels, edge cases)
+  - Breakdown calculation tests
+  - bloomsUtils object export verification
+  - Edge cases (unicode, special characters, long questions)
+  - Full assessment flow integration test
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1451 tests total: 47 api + 172 database + 12 web + 1220 shared)
+- Files: packages/shared/src/utils/blooms.ts, packages/shared/src/utils/blooms.test.ts, packages/shared/src/utils/index.ts
