@@ -5,9 +5,16 @@
   "description": "Read Master - AI prompt templates",
   "type": "module",
   "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "lint": "echo 'ai lint placeholder'",
-    "typecheck": "echo 'ai typecheck placeholder'",
+    "typecheck": "tsc --noEmit",
     "test": "echo 'ai test placeholder'"
+  },
+  "devDependencies": {
+    "@read-master/config": "workspace:*",
+    "typescript": "^5.7.3"
   }
 }

@@ -8,7 +8,11 @@
     "dev": "echo 'api dev placeholder'",
     "build": "echo 'api build placeholder'",
     "lint": "echo 'api lint placeholder'",
-    "typecheck": "echo 'api typecheck placeholder'",
+    "typecheck": "tsc --noEmit",
     "test": "echo 'api test placeholder'"
+  },
+  "devDependencies": {
+    "@read-master/config": "workspace:*",
+    "typescript": "^5.7.3"
   }
 }

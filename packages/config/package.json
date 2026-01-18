@@ -4,9 +4,18 @@
   "private": true,
   "description": "Read Master - Shared ESLint, Prettier, TypeScript configs",
   "type": "module",
+  "exports": {
+    "./tsconfig/base": "./tsconfig/base.json",
+    "./tsconfig/react": "./tsconfig/react.json",
+    "./tsconfig/node": "./tsconfig/node.json",
+    "./tsconfig/library": "./tsconfig/library.json"
+  },
   "scripts": {
     "lint": "echo 'config lint placeholder'",
-    "typecheck": "echo 'config typecheck placeholder'",
+    "typecheck": "tsc --noEmit",
     "test": "echo 'config test placeholder'"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
   }
 }

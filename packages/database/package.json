@@ -5,9 +5,16 @@
   "description": "Read Master - Prisma ORM",
   "type": "module",
   "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "lint": "echo 'database lint placeholder'",
-    "typecheck": "echo 'database typecheck placeholder'",
+    "typecheck": "tsc --noEmit",
     "test": "echo 'database test placeholder'"
+  },
+  "devDependencies": {
+    "@read-master/config": "workspace:*",
+    "typescript": "^5.7.3"
   }
 }

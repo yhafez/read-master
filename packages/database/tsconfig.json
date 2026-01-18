@@ -1,0 +1,10 @@
+{
+  "extends": "@read-master/config/tsconfig/library",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

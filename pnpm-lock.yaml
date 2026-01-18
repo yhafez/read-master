@@ -18,17 +18,56 @@ importers:
         specifier: ^5.7.3
         version: 5.9.3
 
-  apps/api: {}
+  apps/api:
+    devDependencies:
+      '@read-master/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
-  apps/web: {}
+  apps/web:
+    devDependencies:
+      '@read-master/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
-  packages/ai: {}
+  packages/ai:
+    devDependencies:
+      '@read-master/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
-  packages/config: {}
+  packages/config:
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
-  packages/database: {}
+  packages/database:
+    devDependencies:
+      '@read-master/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
-  packages/shared: {}
+  packages/shared:
+    devDependencies:
+      '@read-master/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
 packages:
 

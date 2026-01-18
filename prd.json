@@ -53,7 +53,7 @@
         "packages/config exists with shared TS configs",
         "pnpm typecheck passes with no errors"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "infra-003",

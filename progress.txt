@@ -14,3 +14,22 @@ Started: 2026-01-17
 - All 7 workspace projects recognized by pnpm
 - Feedback loops pass (typecheck, lint, test - placeholders)
 - Files: pnpm-workspace.yaml, package.json, .npmrc, apps/*/package.json, packages/*/package.json
+
+## Iteration 2
+
+[2026-01-17] infra-002: Set up TypeScript configuration with strict mode for monorepo
+- Created root tsconfig.json with strict mode and project references
+- Created packages/config/tsconfig/ with shared TypeScript configurations:
+  - base.json: Core strict TypeScript settings (strict: true, noUnusedLocals, noUncheckedIndexedAccess, etc.)
+  - react.json: Extends base with React JSX support
+  - node.json: Extends base for Node.js/serverless packages
+  - library.json: Extends base for shared library packages
+- Created tsconfig.json for all 6 workspace packages extending shared configs
+- Configured path aliases (@/* -> ./src/*) for apps/web and apps/api
+- Added typescript as devDependency to all packages
+- Added @read-master/config workspace dependency to packages needing shared configs
+- Created placeholder TypeScript source files (src/index.ts) for all packages
+- Updated typecheck scripts to use real `tsc --noEmit` instead of placeholders
+- pnpm typecheck passes with no errors across all 6 packages
+- All feedback loops pass (typecheck, lint, test)
+- Files: tsconfig.json, packages/config/tsconfig/*.json, */tsconfig.json, */src/index.ts
