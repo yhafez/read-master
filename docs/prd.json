@@ -586,7 +586,7 @@
         "Tests pass",
         "Profanity filter works on notes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-004",

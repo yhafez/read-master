@@ -1010,3 +1010,56 @@ No discoveries added during this sprint (foundational infrastructure work)
     - Reading progress schema validation
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (195 tests in shared)
 - Files: packages/shared/src/utils/moderation.ts, packages/shared/src/utils/moderation.test.ts, packages/shared/src/utils/index.ts, packages/shared/src/schemas/books.ts, packages/shared/src/schemas/books.test.ts, packages/shared/src/schemas/index.ts, packages/shared/package.json
+
+## Iteration 26
+
+[2026-01-17] shared-003: Create Zod schemas for Annotations
+- Created packages/shared/src/schemas/annotations.ts with comprehensive annotation validation
+- Implemented AnnotationType enum: HIGHLIGHT, NOTE, BOOKMARK (matching Prisma schema)
+- Created field schemas with proper validation:
+  - annotationIdSchema: CUID format validation
+  - startOffsetSchema/endOffsetSchema: Non-negative integers for character positions
+  - selectedTextSchema: Optional text with min 1 char when provided
+  - annotationNoteSchema: Max 5,000 characters, trimmed, optional/nullable
+  - annotationNotePublicSchema: Same as above with profanity filter for public annotations
+  - colorSchema: 7-character hex code (e.g., #FFFF00), normalized to uppercase
+  - isPublicSchema: Boolean with default false
+- Created type-specific creation schemas:
+  - createHighlightSchema: Requires selectedText, optional color and note
+  - createNoteSchema: Requires note content, optional selectedText
+  - createBookmarkSchema: Minimal - just position, optional note
+  - Public variants with profanity filtering for all types
+- Created discriminated union schemas:
+  - createAnnotationSchema: Validates any annotation type with offset consistency
+  - createAnnotationPublicSchema: Same with profanity filtering
+- Created update schemas:
+  - updateAnnotationSchema: Partial updates with "at least one field" validation
+  - updateAnnotationPublicSchema: Same with profanity filtering
+  - Validates offset consistency when both start and end are provided
+- Created query schema:
+  - annotationQuerySchema: Pagination (page, limit max 100), sorting (4 fields), filtering (type, isPublic, hasNote), search in notes
+  - Default sort: by startOffset ascending (document order)
+- Created ID params schemas:
+  - annotationIdParamsSchema: For single annotation routes
+  - bookAnnotationIdParamsSchema: For nested routes (/books/:bookId/annotations/:annotationId)
+- Created bulk operations schemas:
+  - bulkDeleteAnnotationsSchema: Array of IDs (1-100)
+  - exportAnnotationsSchema: Format (json, markdown, csv), type filter, includeSelectedText option
+- Exported annotationSchemas object with all schemas for convenient importing
+- Updated packages/shared/src/schemas/index.ts to export annotation schemas
+- Created comprehensive test suite with 80 tests in annotations.test.ts:
+  - Enum validation tests
+  - ID schema tests (CUID format)
+  - Offset validation tests (non-negative integers)
+  - Text field validation (selectedText, note with 5000 char max)
+  - Profanity filter integration tests
+  - Color validation (hex format, uppercase normalization)
+  - Type-specific create schema tests (highlight, note, bookmark)
+  - Public schema profanity rejection tests
+  - Update schema validation (partial updates, offset consistency)
+  - Query schema with defaults and coercion
+  - Bulk operation schema tests (1-100 IDs)
+  - Export schema tests (format options)
+  - Edge cases (boundary lengths, unicode, whitespace)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (506 tests total: 47 api + 172 database + 12 web + 275 shared)
+- Files: packages/shared/src/schemas/annotations.ts, packages/shared/src/schemas/annotations.test.ts, packages/shared/src/schemas/index.ts
