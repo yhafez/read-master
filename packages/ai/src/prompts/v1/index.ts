@@ -24,6 +24,16 @@ export {
   type ExplainOutput,
 } from "./explain.js";
 
+// Ask Question
+export {
+  askPrompt,
+  generateAskPrompt,
+  parseAskResponse,
+  validateAskInput,
+  type AskInput,
+  type AskOutput,
+} from "./ask.js";
+
 // Comprehension Check
 export {
   comprehensionCheckPrompt,
