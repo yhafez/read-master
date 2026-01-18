@@ -2178,3 +2178,67 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Integration tests (2 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2629 tests)
 - Files: apps/api/src/services/storage.ts, apps/api/src/services/storage.test.ts, apps/api/src/services/index.ts
+
+
+## Iteration 47
+
+[2026-01-17] api-books-002: Create book parsing service for EPUB files
+- Created comprehensive apps/api/src/services/books.ts with full EPUB parsing support
+- Added epub ^1.3.0 dependency for EPUB file parsing
+- Implemented core parsing functions:
+  - parseEPUB(): Parse EPUB file from path with full extraction
+  - parseEPUBFromBuffer(): Parse EPUB from buffer (creates temp file)
+  - isValidEPUB(): Validate EPUB file by checking ZIP signature and structure
+- Defined comprehensive types:
+  - BookMetadata: title, author, language, description, publisher, publicationDate, isbn, subjects, rights, identifier
+  - ChapterInfo: id, title, order, level, href, wordCount, content
+  - CoverImage: data (Buffer), mimeType, filename
+  - ParsedBook: Complete parsed book with metadata, chapters, totalWordCount, coverImage, rawContent, estimatedReadingTimeMinutes, hasDRM
+  - ParseOptions: extractCover, extractContent, maxChapters
+  - ParseResult<T>: Generic result wrapper with success, data, error
+- Implemented metadata extraction:
+  - extractMetadata(): Extract all book metadata from EPUB
+  - extractISBN(): Extract ISBN-10 or ISBN-13 from identifier
+  - extractIdentifier(): Extract unique book identifier
+  - Handles subject as string or array
+- Implemented chapter extraction:
+  - extractChapters(): Extract all chapters with content and word count
+  - Uses table of contents or spine flow
+  - Strips HTML from content for plain text
+  - Limits chapters based on maxChapters option
+- Implemented cover image extraction:
+  - extractCoverImage(): Find and extract cover image
+  - Searches common cover IDs: cover, cover-image, coverimage, etc.
+  - Falls back to searching manifest by filename patterns
+  - Returns Buffer with mimeType and filename
+- Implemented utility functions:
+  - countWords(): Count words in text (strips HTML first)
+  - stripHtmlTags(): Remove HTML tags, script/style content, decode entities
+  - calculateReadingTime(): Calculate reading time in minutes from word count
+  - generateContentHash(): Generate SHA-256 hash for deduplication
+  - getEPUBExtension(): Returns ".epub" for file extension checks
+- Defined constants:
+  - AVERAGE_READING_WPM: 250 words per minute
+  - EPUB_MIME_TYPES: ["application/epub+zip", "application/epub"]
+  - DEFAULT_PARSE_OPTIONS: extractCover: true, extractContent: true, maxChapters: 500
+- Created namespaced exports:
+  - bookParser: All parsing functions and constants
+  - bookUtils: Utility functions for word counting, HTML stripping, etc.
+- Updated apps/api/src/services/index.ts to export all book parsing utilities
+- Created comprehensive test suite with 83 tests in books.test.ts:
+  - Type export tests (6 tests)
+  - Constants tests (AVERAGE_READING_WPM: 1, EPUB_MIME_TYPES: 3, DEFAULT_PARSE_OPTIONS: 3)
+  - countWords tests (12 tests including empty, whitespace, HTML, unicode)
+  - stripHtmlTags tests (11 tests including script/style removal, entities)
+  - calculateReadingTime tests (9 tests including edge cases)
+  - generateContentHash tests (5 tests)
+  - getEPUBExtension tests (1 test)
+  - parseEPUB tests (2 tests for error cases)
+  - parseEPUBFromBuffer tests (2 tests for invalid input)
+  - isValidEPUB tests (3 tests for non-existent, non-zip, empty files)
+  - bookParser object tests (10 tests)
+  - bookUtils object tests (5 tests)
+  - Integration tests (2 tests)
+  - Edge cases (8 tests: very long text, unicode, emoji, malformed HTML, etc.)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2712 tests)
+- Files: apps/api/src/services/books.ts, apps/api/src/services/books.test.ts, apps/api/src/services/index.ts, apps/api/package.json

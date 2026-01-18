@@ -161,3 +161,37 @@ export {
   type ListResult,
   type StorageNamespaceType,
 } from "./storage.js";
+
+// Book parsing service
+export {
+  // Parsing functions
+  parseEPUB,
+  parseEPUBFromBuffer,
+
+  // Validation
+  isValidEPUB,
+
+  // Utility functions
+  countWords,
+  stripHtmlTags,
+  calculateReadingTime,
+  generateContentHash,
+  getEPUBExtension,
+
+  // Namespaced exports
+  bookParser,
+  bookUtils,
+
+  // Constants
+  AVERAGE_READING_WPM,
+  EPUB_MIME_TYPES,
+  DEFAULT_PARSE_OPTIONS,
+
+  // Types
+  type BookMetadata,
+  type ChapterInfo,
+  type CoverImage,
+  type ParsedBook,
+  type ParseOptions,
+  type ParseResult,
+} from "./books.js";
