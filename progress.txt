@@ -2773,3 +2773,73 @@ No discoveries added during this sprint (foundational infrastructure work)
     - Empty strings in arrays
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (73 new tests)
 - Files: apps/api/api/books/search.ts, apps/api/api/books/search.test.ts
+
+## Iteration 56
+
+[2026-01-18] api-books-012: Implement GET /api/books endpoint with filtering and pagination
+- Created apps/api/api/books/index.ts with comprehensive book listing functionality
+- Implemented query parameter validation with Zod schema:
+  - status: Filter by ReadingStatus enum (WANT_TO_READ, READING, COMPLETED, ABANDONED)
+  - genre: Filter by genre (case-insensitive matching)
+  - tags: Filter by tags (comma-separated string, converts to array, uses hasEvery for all must match)
+  - search: Full-text search across title, author, and description (case-insensitive)
+  - sort: Multiple sort options (createdAt, updatedAt, title, author, recentlyRead, progress, wordCount)
+  - order: Sort direction (asc, desc, defaults to desc)
+  - page: Page number with validation (min 1, coerced from string)
+  - limit: Items per page (min 1, max 100, default 20, coerced from string)
+- Implemented buildWhereClause helper for Prisma query construction:
+  - Always includes userId filter for user's books only
+  - Always excludes soft-deleted books (deletedAt: null)
+  - Adds status filter when provided
+  - Adds case-insensitive genre filter
+  - Adds tags filter with hasEvery for array matching
+  - Adds OR conditions for search across title, author, description
+- Implemented buildOrderByClause helper for sorting:
+  - Standard fields: createdAt, updatedAt, title
+  - Author sorting with null handling (nulls last, secondary sort by title)
+  - WordCount sorting with null handling (nulls last, secondary sort by createdAt)
+  - RecentlyRead sorting by reading progress count
+  - Progress sorting falls back to updatedAt
+- Implemented formatBookResponse helper for consistent response format:
+  - Includes all book metadata fields
+  - Includes reading progress with percentage, position, time, dates
+  - Includes chapters count
+  - Formats all dates as ISO strings
+- Uses sendPaginated response helper for proper pagination metadata
+- Created comprehensive tests in apps/api/api/books/index.test.ts (105 tests):
+  - Schema validation tests:
+    - Status validation (all enum values, invalid values, undefined)
+    - Genre validation (valid, max length, undefined)
+    - Tags validation (comma-separated parsing, trimming, max count, max length, empty)
+    - Search validation (valid, max length, special characters, undefined)
+    - Sort validation (all options, default value, invalid)
+    - Order validation (asc, desc, default)
+    - Page validation (coercion, min value, negative, non-integer, large values)
+    - Limit validation (coercion, min/max bounds, default)
+    - Combined validation scenarios
+  - buildWhereClause tests:
+    - Base filters (userId, soft delete exclusion)
+    - Status filter addition
+    - Genre case-insensitive filter
+    - Tags hasEvery filter
+    - Search OR conditions
+    - Combined filters
+  - buildOrderByClause tests:
+    - All sort options (createdAt, updatedAt, title, author, wordCount, recentlyRead, progress)
+    - Both sort directions
+    - Null handling for author and wordCount
+  - formatBookResponse tests:
+    - Complete book with all fields
+    - Book with progress
+    - Book without progress (empty readingProgress array)
+    - Completed book with completedAt
+    - Minimal book with null optional fields
+    - Progress with null lastReadAt
+  - Constants tests (all limits and valid values)
+  - Edge cases:
+    - Unicode in search and genre
+    - Special characters in search
+    - String coercion for page and limit
+    - Empty string behavior
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (105 new tests)
+- Files: apps/api/api/books/index.ts, apps/api/api/books/index.test.ts

@@ -180,7 +180,7 @@
         "Sorting works",
         "Tests verify all scenarios"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-013",
