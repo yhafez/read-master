@@ -43,6 +43,46 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.user.count).toBe("function");
       expect(typeof prisma.user.aggregate).toBe("function");
     });
+
+    it("should have book model accessor", () => {
+      expect(prisma.book).toBeDefined();
+      expect(typeof prisma.book.findMany).toBe("function");
+      expect(typeof prisma.book.findUnique).toBe("function");
+      expect(typeof prisma.book.create).toBe("function");
+      expect(typeof prisma.book.update).toBe("function");
+      expect(typeof prisma.book.delete).toBe("function");
+    });
+
+    it("should have book model with expected query methods", () => {
+      expect(typeof prisma.book.findFirst).toBe("function");
+      expect(typeof prisma.book.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.book.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.book.createMany).toBe("function");
+      expect(typeof prisma.book.updateMany).toBe("function");
+      expect(typeof prisma.book.deleteMany).toBe("function");
+      expect(typeof prisma.book.count).toBe("function");
+      expect(typeof prisma.book.aggregate).toBe("function");
+    });
+
+    it("should have chapter model accessor", () => {
+      expect(prisma.chapter).toBeDefined();
+      expect(typeof prisma.chapter.findMany).toBe("function");
+      expect(typeof prisma.chapter.findUnique).toBe("function");
+      expect(typeof prisma.chapter.create).toBe("function");
+      expect(typeof prisma.chapter.update).toBe("function");
+      expect(typeof prisma.chapter.delete).toBe("function");
+    });
+
+    it("should have chapter model with expected query methods", () => {
+      expect(typeof prisma.chapter.findFirst).toBe("function");
+      expect(typeof prisma.chapter.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.chapter.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.chapter.createMany).toBe("function");
+      expect(typeof prisma.chapter.updateMany).toBe("function");
+      expect(typeof prisma.chapter.deleteMany).toBe("function");
+      expect(typeof prisma.chapter.count).toBe("function");
+      expect(typeof prisma.chapter.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

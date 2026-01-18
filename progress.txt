@@ -372,3 +372,36 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (101 tests total: 47 api + 34 shared + 12 web + 8 database)
 - Files: packages/database/prisma/schema.prisma
+
+## Iteration 13
+
+[2026-01-17] db-003: Create Book, Chapter, and content models in Prisma schema
+- Created Book model with all fields from specification:
+  - id (cuid), userId with relation to User
+  - Metadata: title, author, description, coverImage
+  - Source information: source (BookSource enum), sourceId, sourceUrl
+  - File storage: filePath (R2 path), fileType (FileType enum)
+  - Content metadata: language, wordCount, estimatedReadTime, lexileScore
+  - Organization: genre, tags (String array)
+  - Status: status (ReadingStatus enum), isPublic
+  - Timestamps: createdAt, updatedAt, deletedAt (soft delete)
+  - Relation to chapters
+  - Indexes on userId, userId+status, userId+deletedAt, deletedAt, source, tags
+- Created Chapter model with all fields from specification:
+  - id (cuid), bookId with relation to Book
+  - title, orderIndex (for ordering)
+  - startPosition, endPosition (character offsets)
+  - wordCount
+  - createdAt timestamp
+  - Indexes on bookId, bookId+orderIndex
+- Created BookSource enum: UPLOAD, URL, PASTE, GOOGLE_BOOKS, OPEN_LIBRARY
+- Created FileType enum: PDF, EPUB, DOC, DOCX, TXT, HTML
+- Created ReadingStatus enum: WANT_TO_READ, READING, COMPLETED, ABANDONED
+- Added User.books relation for User -> Book one-to-many relationship
+- Added onDelete: Cascade to Book.user and Chapter.book relations
+- Updated packages/database/src/index.ts with improved examples showing Book and Chapter usage
+- Added 4 new tests for Book and Chapter model accessors
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (105 tests total: 47 api + 34 shared + 12 web + 12 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

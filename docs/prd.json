@@ -282,7 +282,7 @@
         "Relations are properly set up",
         "Indexes are in place"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-004",

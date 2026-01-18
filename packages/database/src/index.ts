@@ -6,10 +6,16 @@
  * @example
  * ```typescript
  * import { prisma } from '@read-master/database';
- * import type { User, UserTier } from '@read-master/database';
+ * import type { User, Book, Chapter, BookSource, FileType, ReadingStatus } from '@read-master/database';
  *
  * const user = await prisma.user.findUnique({
- *   where: { clerkId: 'user_123' }
+ *   where: { clerkId: 'user_123' },
+ *   include: { books: true }
+ * });
+ *
+ * const book = await prisma.book.findUnique({
+ *   where: { id: 'book_123' },
+ *   include: { chapters: true }
  * });
  * ```
  */
@@ -21,4 +27,4 @@ export { prisma, disconnect, connect, PrismaClient } from "./client";
 export * from "@prisma/client";
 
 // Export common type aliases for convenience
-export type { User } from "@prisma/client";
+export type { User, Book, Chapter } from "@prisma/client";

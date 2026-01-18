@@ -54,6 +54,9 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime? // Soft delete
 
+  // Relations
+  books Book[]
+
   // Indexes for common queries
   @@index([clerkId])
   @@index([email])
@@ -70,4 +73,112 @@ enum UserTier {
   FREE
   PRO
   SCHOLAR
+}
+
+// =============================================================================
+// CONTENT MODELS - Books & Chapters
+// =============================================================================
+
+/// Book model - Stores user's books/documents
+/// Supports multiple sources: uploads, URLs, paste, external APIs
+model Book {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Book metadata
+  title       String  @db.VarChar(500)
+  author      String? @db.VarChar(200)
+  description String? @db.Text
+  coverImage  String? // URL or R2 path
+
+  // Source information
+  source    BookSource
+  sourceId  String? // External API ID (Google Books, Open Library)
+  sourceUrl String? // Original URL for URL imports
+
+  // File storage
+  filePath String? // R2 path for uploaded files
+  fileType FileType?
+
+  // Content metadata
+  language          String @default("en")
+  wordCount         Int?
+  estimatedReadTime Int? // minutes
+  lexileScore       Float?
+
+  // Organization
+  genre String?
+  tags  String[] @default([])
+
+  // Status
+  status   ReadingStatus @default(WANT_TO_READ)
+  isPublic Boolean       @default(false)
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  chapters Chapter[]
+
+  // Indexes for common queries
+  @@index([userId])
+  @@index([userId, status])
+  @@index([userId, deletedAt])
+  @@index([deletedAt])
+  @@index([source])
+  @@index([tags])
+}
+
+/// Chapter model - Stores chapter/section information for books
+/// Used for navigation and progress tracking
+model Chapter {
+  id     String @id @default(cuid())
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  title         String? @db.VarChar(500)
+  orderIndex    Int // Order within the book (0-indexed)
+  startPosition Int // Character offset where chapter starts
+  endPosition   Int // Character offset where chapter ends
+  wordCount     Int?
+
+  createdAt DateTime @default(now())
+
+  // Indexes
+  @@index([bookId])
+  @@index([bookId, orderIndex])
+}
+
+// =============================================================================
+// CONTENT ENUMS
+// =============================================================================
+
+/// BookSource - How the book was added to the library
+enum BookSource {
+  UPLOAD // File uploaded by user
+  URL // Imported from URL
+  PASTE // Text pasted directly
+  GOOGLE_BOOKS // Added from Google Books API
+  OPEN_LIBRARY // Added from Open Library API
+}
+
+/// FileType - Supported file formats
+enum FileType {
+  PDF
+  EPUB
+  DOC
+  DOCX
+  TXT
+  HTML
+}
+
+/// ReadingStatus - User's reading status for a book
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  COMPLETED
+  ABANDONED
 }
