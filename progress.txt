@@ -1236,3 +1236,60 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Edge cases: unicode, RTL content, boundary conditions, whitespace
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (814 tests total: 47 api + 172 database + 12 web + 582 shared)
 - Files: packages/shared/src/schemas/forum.ts, packages/shared/src/schemas/forum.test.ts, packages/shared/src/schemas/index.ts
+
+## Iteration 30
+
+[2026-01-17] shared-006: Create Zod schemas for Assessments, Curriculums, Social features, and Users
+- Created packages/shared/src/schemas/assessments.ts with comprehensive assessment validation:
+  - AssessmentType enum: CHAPTER_CHECK, BOOK_ASSESSMENT, CUSTOM
+  - BloomsLevel enum: REMEMBER, UNDERSTAND, APPLY, ANALYZE, EVALUATE, CREATE
+  - QuestionType enum: MULTIPLE_CHOICE, TRUE_FALSE, SHORT_ANSWER, ESSAY, FILL_IN_BLANK
+  - Question and answer schemas with proper validation
+  - Bloom's taxonomy distribution schemas for balanced assessments
+  - Generate assessment schema with question configuration
+  - Submit assessment and grade answer schemas
+  - Query schema with pagination, sorting, and filtering
+  - Comprehension check schemas for during-reading checks
+  - Statistics schema for assessment analytics
+  - Exported assessmentSchemas collection object
+- Created packages/shared/src/schemas/curriculums.ts with curriculum validation:
+  - Visibility enum: PRIVATE, UNLISTED, PUBLIC
+  - Difficulty levels: beginner, intermediate, advanced, expert
+  - Create/update curriculum schemas with profanity filtering for public content
+  - Curriculum item schemas for both internal books and external resources
+  - Follow and progress tracking schemas
+  - Query schema with pagination, sorting, and filtering
+  - Browse schema for public curriculum discovery
+  - Exported curriculumSchemas collection object
+- Created packages/shared/src/schemas/social.ts with social feature validation:
+  - GroupRole enum: OWNER, ADMIN, MEMBER
+  - ActivityType enum: COMPLETED_BOOK, EARNED_ACHIEVEMENT, JOINED_GROUP, etc.
+  - Follow/unfollow schemas
+  - Reading group create/update schemas with profanity filtering
+  - Group membership management schemas
+  - Discussion and reply schemas with nested reply support
+  - Activity feed schemas
+  - Recursive discussionReplyResponseSchema for nested replies (with proper Zod typing)
+  - Exported socialSchemas collection object
+- Created packages/shared/src/schemas/users.ts with user validation:
+  - UserTier enum: FREE, PRO, SCHOLAR
+  - User profile schemas with profanity filtering for public content
+  - Preferences schema (theme, font, notifications, reading settings)
+  - Privacy settings schema (profilePublic, showStats, showActivity)
+  - GDPR-compliant data export and deletion request schemas
+  - Clerk webhook schemas (user.created, user.updated, user.deleted)
+  - Query and ID params schemas
+  - Exported userSchemas collection object
+- Updated packages/shared/src/schemas/index.ts:
+  - Fixed export conflicts with forum.ts by using explicit named exports with aliasing
+  - Social schemas exported with prefixes (e.g., socialUserIdSchema, socialReplyIdSchema)
+  - Users schemas exported with prefixes (e.g., userUserTierSchema)
+  - All new schemas properly re-exported
+- Created comprehensive test suites:
+  - assessments.test.ts: Tests for enums, IDs, questions, answers, Bloom's taxonomy, generate/submit, queries, statistics
+  - curriculums.test.ts: Tests for visibility, difficulty, create/update with profanity filtering, items, progress
+  - social.test.ts: Tests for following, groups, discussions, replies, activity types, profanity filtering
+  - users.test.ts: Tests for profiles, preferences, privacy, GDPR, Clerk webhooks
+- Fixed recursive schema type issue in social.ts by defining base schema first, then explicit type with optional childReplies
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (997 tests total: 47 api + 172 database + 12 web + 766 shared)
+- Files: packages/shared/src/schemas/assessments.ts, packages/shared/src/schemas/assessments.test.ts, packages/shared/src/schemas/curriculums.ts, packages/shared/src/schemas/curriculums.test.ts, packages/shared/src/schemas/social.ts, packages/shared/src/schemas/social.test.ts, packages/shared/src/schemas/users.ts, packages/shared/src/schemas/users.test.ts, packages/shared/src/schemas/index.ts

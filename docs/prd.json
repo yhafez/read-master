@@ -655,7 +655,7 @@
         "Validation rules match spec",
         "Tests pass for all schemas"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-007",
