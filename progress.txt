@@ -5196,3 +5196,59 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (33 new tests, 5637 total)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5637 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 90
+
+[2026-01-18] api-tts-001: Implement POST /api/tts/speak endpoint with tier-based providers
+- Created apps/api/api/tts/speak.ts with tier-based TTS provider logic:
+  - Constants: MIN_TEXT_LENGTH (1), MAX_TEXT_LENGTH (4096), DEFAULT_SPEED (1.0), MIN_SPEED (0.25), MAX_SPEED (4.0)
+  - OpenAI voices: alloy, echo, fable, onyx, nova, shimmer (6 voices)
+  - ElevenLabs voices: rachel, drew, clyde, paul, etc. (40 voices)
+  - Type definitions: TTSProvider, OpenAIVoice, ElevenLabsVoice, TTSRequest
+  - Response types: WebSpeechConfig, OpenAITTSResponse, ElevenLabsTTSResponse, TTSResponse
+- Implemented tier-based provider selection:
+  - FREE tier: Returns Web Speech API configuration (browser-based, client-side TTS)
+  - PRO tier: Returns OpenAI TTS configuration (server-side, mp3 format)
+  - SCHOLAR tier: Returns ElevenLabs configuration (premium voices, stability/similarity settings)
+- Helper functions implemented:
+  - isValidOpenAIVoice: Validates OpenAI voice names
+  - isValidElevenLabsVoice: Validates ElevenLabs voice names
+  - getDefaultVoice: Returns default voice per provider (alloy/rachel/null)
+  - normalizeVoice: Validates and normalizes voice for provider, falls back to defaults
+  - buildWebSpeechConfig: Builds Web Speech API config with rate, pitch, volume
+  - buildOpenAIResponse: Builds OpenAI TTS response with voice, speed, format
+  - buildElevenLabsResponse: Builds ElevenLabs response with stability, similarityBoost
+  - buildTTSResponse: Main dispatcher that routes to appropriate builder based on provider
+  - logTTSUsage: Logs TTS usage to AIUsageLog table
+  - calculateTTSCost: Calculates cost per provider (web_speech=free, openai=$15/1M chars, elevenlabs=$0.30/1K chars)
+- Endpoint features:
+  - POST method only, authenticated with withAuth middleware
+  - Validates request body with Zod schema (text, voice, speed, language)
+  - Checks user tier via getTierLimits to determine TTS provider
+  - Enforces TTS rate limits via checkRateLimit("tts", ...)
+  - Logs all TTS usage to database for tracking and billing
+  - Returns provider-specific configuration to frontend
+  - Includes rate limit info in response (remaining, limit, reset)
+- Created comprehensive test suite with 86 tests in speak.test.ts:
+  - Constants tests (14 tests): text limits, speed limits, voices, defaults
+  - Schema validation tests (17 tests): text, voice, speed, language, full request
+  - Voice validation tests (5 tests): isValidOpenAIVoice, isValidElevenLabsVoice
+  - Voice default/normalization tests (11 tests): getDefaultVoice, normalizeVoice per provider
+  - Response builder tests (11 tests): buildWebSpeechConfig, buildOpenAIResponse, buildElevenLabsResponse, buildTTSResponse
+  - Cost calculation tests (7 tests): per provider costs, comparisons
+  - Type export tests (7 tests): OpenAIVoice, ElevenLabsVoice, TTSProvider, responses
+  - Edge cases tests (10 tests): special characters, unicode, boundary values, provider mismatches
+  - Integration scenarios tests (4 tests): free/pro/scholar flows, complete validation
+- Files created:
+  - apps/api/api/tts/speak.ts
+  - apps/api/api/tts/speak.test.ts
+- Acceptance criteria verification:
+  - ✅ Free tier returns browser config (WebSpeechConfig with rate, pitch, volume)
+  - ✅ Pro tier returns OpenAI config (OpenAITTSResponse with voice, speed, format)
+  - ✅ Scholar tier returns ElevenLabs config (ElevenLabsTTSResponse with stability, similarityBoost)
+  - ✅ Usage is tracked (logTTSUsage writes to AIUsageLog)
+  - ✅ Tests cover all tiers (86 tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5723 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Discovery: Actual audio streaming for OpenAI/ElevenLabs will be in api-tts-002 (TTS service)

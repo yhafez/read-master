@@ -1012,7 +1012,7 @@
         "Usage is tracked",
         "Tests cover all tiers"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-tts-002",
