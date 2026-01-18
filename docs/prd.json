@@ -1046,7 +1046,7 @@
         "Returns proper status codes",
         "Works in local and deployed environments"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-001",

@@ -1953,3 +1953,40 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Error handling tests (7 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (506 api tests)
 - Files: apps/api/src/services/redis.ts, apps/api/src/services/redis.test.ts, apps/api/src/services/index.ts
+
+## Iteration 43
+
+[2026-01-17] api-infra-010: Create health check endpoint
+- Enhanced apps/api/api/health.ts with comprehensive service health checks
+- Implemented database health check using Prisma $queryRaw:
+  - Executes SELECT 1 to verify database connectivity
+  - Captures latency for performance monitoring
+  - Handles errors gracefully with descriptive messages
+- Implemented Redis health check using Upstash Redis ping:
+  - Verifies Redis is available via isRedisAvailable()
+  - Executes ping command expecting "PONG" response
+  - Handles unconfigured Redis gracefully (not an error)
+  - Captures latency for performance monitoring
+- Defined health check response types:
+  - ServiceCheck: status ("ok" | "error"), latency?, error?
+  - HealthResponse: status ("healthy" | "degraded" | "unhealthy"), timestamp, version, environment, checks
+- Implemented determineOverallStatus() logic:
+  - "healthy": All services OK
+  - "degraded": Database OK but Redis has issues (non-critical, caching disabled)
+  - "unhealthy": Database down (critical service failure)
+- Proper HTTP status codes:
+  - 200: healthy or degraded (service is operational)
+  - 503: unhealthy (critical service unavailable)
+- Health checks run in parallel using Promise.all for efficiency
+- Created comprehensive test suite with 29 tests in health.test.ts:
+  - Used vi.hoisted() pattern for proper mock hoisting with Vitest
+  - Tests for healthy scenario (9 tests): status code, response format, timestamps, versions
+  - Tests for database unhealthy (4 tests): 503 status, unhealthy response, error messages
+  - Tests for Redis unhealthy (4 tests): 200 status (degraded), error messages
+  - Tests for Redis not configured (3 tests): treated as healthy (caching optional)
+  - Tests for Redis client null (2 tests): graceful handling
+  - Tests for unexpected ping response (2 tests): descriptive error messages
+  - Tests for both services unhealthy (3 tests): 503 status, error details
+  - Error handling edge cases (2 tests): non-Error exceptions
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (529 api tests, 2383 total)
+- Files: apps/api/api/health.ts, apps/api/api/health.test.ts
