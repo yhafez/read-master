@@ -2034,3 +2034,63 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (562 api tests)
 - Files: apps/api/src/utils/response.ts, apps/api/src/utils/response.test.ts, apps/api/src/utils/index.ts
 
+
+## Iteration 45
+
+[2026-01-17] api-infra-009: Create pagination utilities
+- Created comprehensive apps/api/src/utils/pagination.ts with full pagination support
+- Implemented PaginationDefaults constants:
+  - DEFAULT_PAGE: 1, DEFAULT_LIMIT: 20, MAX_LIMIT: 100
+  - MIN_PAGE: 1, MIN_LIMIT: 1
+- Defined comprehensive types:
+  - PaginationParams: page, limit, offset
+  - PrismaPagination: skip, take
+  - ParsePaginationOptions: defaultLimit, maxLimit, defaultPage
+  - RawPaginationQuery: supports multiple parameter name conventions
+  - CursorPaginationParams: cursor, limit, direction
+  - CursorPaginationResult<T>: items, nextCursor, previousCursor, hasMore
+  - PaginationResult: comprehensive metadata (page, limit, total, totalPages, offset, skip, take, hasNext, hasPrevious, firstPage, lastPage, startItem, endItem)
+- Created Zod validation schemas:
+  - paginationQuerySchema: page-based pagination with coercion
+  - offsetPaginationSchema: offset-based pagination
+  - cursorPaginationSchema: cursor-based with direction support
+- Implemented core parsing functions:
+  - parseQueryNumber(): Parse query param values to numbers
+  - parsePaginationParams(): Parse with alternative param names (per_page, perPage, pageSize)
+- Implemented Prisma-compatible functions:
+  - calculatePrismaPagination(): Convert page/limit to skip/take
+  - calculatePrismaPaginationFromOffset(): Convert offset/limit to skip/take
+- Implemented calculation functions:
+  - calculatePagination(): Full pagination result with all metadata
+  - calculatePaginationFromOffset(): Full result from offset-based params
+- Implemented cursor-based pagination helpers:
+  - encodeCursor(): Base64url encode cursor from string/number/Date
+  - decodeCursor(): Decode cursor back to original value
+  - parseCursorPaginationParams(): Parse cursor pagination query
+  - buildCursorPaginationResult<T>(): Build cursor result with hasMore detection
+- Implemented utility functions:
+  - isValidPage(): Check if page number is valid for total
+  - getLastPage(): Get last valid page number
+  - clampPage(): Clamp page to valid range
+  - getPageNumbers(): Generate page numbers for pagination UI (with ellipsis support)
+  - getItemRange(): Calculate displayed item range (1-indexed)
+- Created namespaced exports for clean imports:
+  - pagination: Object with all functions
+  - paginationSchemas: Object with all Zod schemas
+- Updated apps/api/src/utils/index.ts to export all pagination utilities and types
+- Created comprehensive test suite with 98 tests in pagination.test.ts:
+  - PaginationDefaults tests (2 tests)
+  - parseQueryNumber tests (8 tests)
+  - parsePaginationParams tests (12 tests)
+  - calculatePrismaPagination tests (4 tests)
+  - calculatePrismaPaginationFromOffset tests (3 tests)
+  - calculatePagination tests (7 tests)
+  - calculatePaginationFromOffset tests (3 tests)
+  - Cursor pagination tests (encodeCursor: 3, decodeCursor: 3, parseCursorPaginationParams: 5, buildCursorPaginationResult: 3)
+  - Utility function tests (isValidPage: 4, getLastPage: 3, clampPage: 4, getPageNumbers: 5, getItemRange: 3)
+  - Zod schema tests (paginationQuerySchema: 5, offsetPaginationSchema: 3, cursorPaginationSchema: 3)
+  - Namespace export tests (2 tests)
+  - Type export tests (7 tests)
+  - Integration tests (2 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2502 tests)
+- Files: apps/api/src/utils/pagination.ts, apps/api/src/utils/pagination.test.ts, apps/api/src/utils/index.ts

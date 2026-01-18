@@ -42,3 +42,62 @@ export type {
   PaginationMeta,
   ErrorCode,
 } from "./response.js";
+
+// ============================================================================
+// Pagination Utilities
+// ============================================================================
+
+// Pagination constants
+export { PaginationDefaults } from "./pagination.js";
+
+// Pagination parsing functions
+export {
+  parseQueryNumber,
+  parsePaginationParams,
+  parseCursorPaginationParams,
+} from "./pagination.js";
+
+// Pagination calculation functions
+export {
+  calculatePrismaPagination,
+  calculatePrismaPaginationFromOffset,
+  calculatePagination,
+  calculatePaginationFromOffset,
+} from "./pagination.js";
+
+// Cursor pagination functions
+export {
+  encodeCursor,
+  decodeCursor,
+  buildCursorPaginationResult,
+} from "./pagination.js";
+
+// Pagination utility functions
+export {
+  isValidPage,
+  getLastPage,
+  clampPage,
+  getPageNumbers,
+  getItemRange,
+} from "./pagination.js";
+
+// Pagination Zod schemas
+export {
+  paginationQuerySchema,
+  offsetPaginationSchema,
+  cursorPaginationSchema,
+} from "./pagination.js";
+
+// Pagination namespaced exports
+export { pagination, paginationSchemas } from "./pagination.js";
+
+// Pagination types
+export type {
+  PaginationParams,
+  PrismaPagination,
+  ParsePaginationOptions,
+  RawPaginationQuery,
+  CursorPaginationParams,
+  CursorPaginationResult,
+  PaginationResult,
+} from "./pagination.js";

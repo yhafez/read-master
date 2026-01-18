@@ -1024,7 +1024,7 @@
         "Works with Prisma queries",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-010",
