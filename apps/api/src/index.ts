@@ -21,3 +21,6 @@ export {
 
 // Re-export all middleware (includes comprehensive logger middleware)
 export * from "./middleware/index.js";
+
+// Re-export all services (database, cache, etc.)
+export * from "./services/index.js";

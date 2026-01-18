@@ -1846,3 +1846,51 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Integration tests (2 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2192 tests total: 338 api + 172 database + 12 web + 1670 shared)
 - Files: apps/api/src/middleware/logger.ts, apps/api/src/middleware/logger.test.ts, apps/api/src/middleware/index.ts, apps/api/src/index.ts
+
+## Iteration 41
+
+[2026-01-17] api-infra-006: Create Prisma database service
+- Created apps/api/src/services/db.ts with comprehensive database service
+- Implemented singleton Prisma client pattern:
+  - Re-exports prisma client from @read-master/database package
+  - db constant for direct Prisma access
+  - getDb() function as alias for explicit usage
+- Implemented connection management for Vercel serverless:
+  - ensureConnection(): Lazy connection with deduplication
+  - gracefulShutdown(): Safe disconnection for shutdown handlers
+  - isDbConnected(): Check current connection state
+  - Internal state tracking to prevent duplicate connections
+  - Re-exports connect/disconnect from @read-master/database
+- Implemented query helpers for common operations:
+  - getUserByClerkId(): Find user by Clerk ID with options
+  - getUserById(): Find user by internal ID with options
+  - getBookById(): Find book by ID with options
+  - getBookWithChapters(): Convenience function for book with chapters
+  - getReadingProgress(): Get progress by userId and bookId
+  - upsertReadingProgress(): Create or update reading progress
+  - GetUserOptions type: includeBooks, includeStats, includeAchievements
+  - GetBookOptions type: includeChapters, includePreReadingGuide, includeAnnotations
+- Implemented soft delete helpers:
+  - withSoftDeleteFilter(): Add deletedAt: null to where clause
+  - softDeleteUser(): Soft delete user by setting deletedAt
+  - softDeleteBook(): Soft delete book by setting deletedAt
+  - SoftDeletableModel type for all soft-deletable models
+- Implemented transaction helpers:
+  - withTransaction(): Interactive transaction with callback
+  - batchTransaction(): Execute multiple operations in batch
+  - TransactionClient type for transaction context
+- Created dbUtils object bundling all utilities
+- Created apps/api/src/services/index.ts for clean exports
+- Updated apps/api/src/index.ts to export all services
+- Created comprehensive test suite with 46 tests in db.test.ts:
+  - Used vi.hoisted() pattern for proper mock hoisting with Vitest
+  - Singleton client tests (2 tests)
+  - Connection management tests (7 tests)
+  - Query helper tests (18 tests)
+  - Soft delete helper tests (5 tests)
+  - Transaction helper tests (3 tests)
+  - dbUtils export tests (4 tests)
+  - Type export tests (4 tests)
+  - Edge case tests (3 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (384 api tests)
+- Files: apps/api/src/services/db.ts, apps/api/src/services/db.test.ts, apps/api/src/services/index.ts, apps/api/src/index.ts

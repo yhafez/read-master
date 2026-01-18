@@ -959,7 +959,7 @@
         "Can be imported in API routes",
         "No connection leaks"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-007",
