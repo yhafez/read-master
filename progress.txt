@@ -4485,3 +4485,76 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (57 tests covering all functionality)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5010 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 81
+
+[2026-01-18] api-srs-003: Implement POST /api/flashcards/:id/review endpoint with SM-2
+- Created flashcard review endpoint in apps/api/api/flashcards/[id]/review.ts:
+  - POST /api/flashcards/:id/review - Submit a review for a flashcard:
+    - Accepts rating (1-4): Again, Hard, Good, Easy
+    - Accepts optional responseTimeMs for analytics
+    - Uses SM-2 algorithm from @read-master/shared to calculate next review state
+    - Updates flashcard SRS state: easeFactor, interval, repetitions, dueDate
+    - Updates flashcard status (NEW -> LEARNING -> REVIEW) based on progress
+    - Handles lapse detection (rating 1-2 resets to LEARNING)
+    - Creates FlashcardReview record with before/after SRS state
+    - Awards XP based on rating:
+      - Rating 1 (Again): 0 XP
+      - Rating 2 (Hard): Half of base XP
+      - Rating 3 (Good): Base XP (5)
+      - Rating 4 (Easy): 1.5x base XP
+    - Updates UserStats (totalXP, totalCardsReviewed, level)
+    - Recalculates user level based on new XP
+    - Tracks mastery (5+ repetitions with 21+ day interval)
+    - Returns comprehensive response with previous/new state, XP, level info
+  - Helper functions exported for testing:
+    - determineNewStatus: Status transition logic (NEW -> LEARNING -> REVIEW)
+    - isMastered: Check if card meets mastery criteria
+    - formatReviewResponse: Format API response with all review data
+    - reviewParamsSchema: Validate flashcard ID parameter
+  - Constants exported:
+    - XP_BY_RATING: XP values for each rating
+    - MASTERY_REPETITIONS (5), MASTERY_INTERVAL_DAYS (21)
+- Created comprehensive test suite with 61 tests in review.test.ts:
+  - XP_BY_RATING tests (5 tests):
+    - Correct XP for each rating
+    - Increasing XP for higher ratings
+  - MASTERY_CONSTANTS tests (2 tests)
+  - determineNewStatus tests (11 tests):
+    - Transitions from NEW, LEARNING, REVIEW statuses
+    - Lapse handling (always returns LEARNING)
+  - isMastered tests (7 tests):
+    - Various repetition/interval combinations
+    - Boundary conditions
+  - formatReviewResponse tests (7 tests):
+    - All field formatting
+    - Previous/new state inclusion
+    - Level calculation
+    - Mastery detection
+    - Date ISO formatting
+  - reviewParamsSchema tests (4 tests):
+    - Valid CUID acceptance
+    - Invalid ID rejection
+  - reviewFlashcardSchema tests (13 tests):
+    - Rating validation (1-4 required)
+    - responseTimeMs validation (optional, positive integer)
+  - Integration tests (6 tests):
+    - Full review cycle scenarios
+    - Lapse handling
+    - XP award verification
+  - Edge case tests (4 tests):
+    - Maximum/minimum ease factor
+    - Zero XP handling
+    - High level user handling
+- Files created:
+  - apps/api/api/flashcards/[id]/review.ts
+  - apps/api/api/flashcards/[id]/review.test.ts
+- Acceptance criteria verification:
+  - ✅ SM-2 calculations are correct for all ratings (uses shared package implementation)
+  - ✅ Card state updates properly (easeFactor, interval, repetitions, dueDate, status)
+  - ✅ XP is awarded (based on rating, 0 for Again to 1.5x for Easy)
+  - ✅ Review is logged (FlashcardReview record with full before/after state)
+  - ✅ Tests cover all scenarios (61 tests for all rating scenarios, status transitions, edge cases)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5071 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
