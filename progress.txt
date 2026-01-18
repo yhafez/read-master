@@ -2417,3 +2417,84 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Rate limiting tests (1 test)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2862 tests)
 - Files: apps/api/src/services/googleBooks.ts, apps/api/src/services/googleBooks.test.ts, apps/api/src/services/index.ts
+
+
+## Iteration 51
+
+[2026-01-18] api-books-006: Create Open Library API service
+- Created apps/api/src/services/openLibrary.ts with comprehensive Open Library API integration
+- Defined Open Library-specific types:
+  - OpenLibraryBookMetadata: Normalized book metadata with workId, editionId, title, subtitle, authors (with id/name), firstPublishYear, publishYear, publishers, ISBN-10/13, pageCount, subjects, description, coverIds, languages, editionCount, isPublicDomain, hasFullText, iaIds, averageRating, ratingsCount, reading counts
+  - OpenLibrarySearchOptions: limit, offset, sort (relevance, new, old, rating, editions), language, fields (title, author, subject, publisher, isbn, firstPublishYear), useCache
+  - OpenLibrarySearchResult: totalItems, items, hasMore, offset, query
+  - OpenLibraryBookContent: editionId, title, iaId, formats (epub, pdf, text, mobi), textContent, hasTextContent
+  - OpenLibraryError: Custom error class with statusCode, code, retryable properties
+- Implemented core search functions:
+  - searchOpenLibrary(): Full-featured search with pagination, filters, caching, rate limiting
+  - searchOpenLibraryByISBN(): Search by ISBN-10 or ISBN-13 (cleans hyphens/spaces)
+  - searchOpenLibraryByAuthor(): Search by author name using author: field
+  - searchOpenLibraryByTitle(): Search by title using title: field
+- Implemented details functions:
+  - getOpenLibraryWork(): Fetch detailed work info by Open Library Work ID (e.g., "OL123456W")
+  - getOpenLibraryEdition(): Fetch detailed edition info by Edition ID (e.g., "OL123456M")
+  - getOpenLibraryBookContent(): Access public domain book content from Internet Archive
+- Implemented API response normalization:
+  - Extracts and normalizes authors from search results (handles missing author_key)
+  - Filters ISBN-10 and ISBN-13 from mixed ISBN arrays
+  - Extracts most recent publish year from publish_year arrays
+  - Handles description as string or { value: string } object
+  - Extracts language codes from language objects
+- Implemented caching using Redis:
+  - Search results cached for 15 minutes (OL_SEARCH_CACHE_TTL)
+  - Work details cached for 1 hour (OL_DETAILS_CACHE_TTL)
+  - Edition details cached for 1 hour (OL_DETAILS_CACHE_TTL)
+  - Author details cached for 1 hour (OL_AUTHOR_CACHE_TTL)
+  - Cache key builders for search, work, edition, author
+  - invalidateOpenLibrarySearchCache(), invalidateOpenLibraryWorkCache(), invalidateOpenLibraryEditionCache() helpers
+- Implemented rate limiting:
+  - Request queue with 1 request per second limit
+  - Exponential backoff retry on 429 responses (up to 3 retries)
+  - fetchWithRetry() handles transient failures
+- Implemented error handling:
+  - OpenLibraryError class with statusCode, code, retryable properties
+  - Graceful handling of 404 (returns null instead of throwing)
+  - Author fetch failures don't crash work/edition retrieval
+- Implemented public domain content access:
+  - Integrates with Internet Archive API to fetch book files
+  - Detects available formats: epub, pdf, text, mobi
+  - Generates download URLs for each format
+- Added utility functions:
+  - getOpenLibraryCoverUrl(): Build cover URL from cover ID and size (S, M, L)
+  - getBestOpenLibraryCoverUrl(): Get best cover URL from metadata
+  - extractIdFromKey(): Extract ID from full Open Library key paths
+  - parseYear(): Parse year from various date formats
+- Added constants:
+  - OPEN_LIBRARY_API_BASE: "https://openlibrary.org"
+  - INTERNET_ARCHIVE_BASE: "https://archive.org"
+  - COVER_IMAGE_BASE: "https://covers.openlibrary.org"
+  - DEFAULT_OL_SEARCH_OPTIONS: limit: 10, offset: 0, sort: "relevance", useCache: true
+  - MAX_OL_RESULTS_LIMIT: 100
+- Created namespaced exports:
+  - openLibrary: All functions and utilities
+  - openLibraryUtils: Utility functions for external use
+- Updated apps/api/src/services/index.ts with all Open Library exports
+- Added 77 new Open Library tests to openLibrary.test.ts:
+  - Type export tests (4 tests)
+  - Constants tests (7 tests)
+  - OpenLibraryError tests (4 tests)
+  - getOpenLibraryCoverUrl tests (3 tests)
+  - getBestOpenLibraryCoverUrl tests (4 tests)
+  - searchOpenLibrary tests (11 tests)
+  - getOpenLibraryWork tests (5 tests)
+  - getOpenLibraryEdition tests (4 tests)
+  - getOpenLibraryBookContent tests (4 tests)
+  - searchOpenLibraryByISBN tests (5 tests)
+  - searchOpenLibraryByAuthor tests (1 test)
+  - searchOpenLibraryByTitle tests (1 test)
+  - openLibrary object tests (4 tests)
+  - openLibraryUtils object tests (4 tests)
+  - Index exports tests (8 tests)
+  - Open Library normalization edge cases (6 tests)
+  - Rate limiting tests (1 test)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2939 tests)
+- Files: apps/api/src/services/openLibrary.ts, apps/api/src/services/openLibrary.test.ts, apps/api/src/services/index.ts

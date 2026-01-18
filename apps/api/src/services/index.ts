@@ -259,3 +259,48 @@ export {
   type GoogleBooksSearchOptions,
   type GoogleBooksSearchResult,
 } from "./googleBooks.js";
+
+// Open Library API service
+export {
+  // Search functions
+  searchOpenLibrary,
+  searchOpenLibraryByISBN,
+  searchOpenLibraryByAuthor,
+  searchOpenLibraryByTitle,
+
+  // Details functions
+  getOpenLibraryWork,
+  getOpenLibraryEdition,
+  getOpenLibraryBookContent,
+
+  // Utility functions
+  getOpenLibraryCoverUrl,
+  getBestOpenLibraryCoverUrl,
+
+  // Cache invalidation
+  invalidateOpenLibrarySearchCache,
+  invalidateOpenLibraryWorkCache,
+  invalidateOpenLibraryEditionCache,
+
+  // Service objects
+  openLibrary,
+  openLibraryUtils,
+
+  // Error class
+  OpenLibraryError,
+
+  // Constants
+  OPEN_LIBRARY_API_BASE,
+  INTERNET_ARCHIVE_BASE,
+  COVER_IMAGE_BASE,
+  DEFAULT_OL_SEARCH_OPTIONS,
+  MAX_OL_RESULTS_LIMIT,
+  OL_SEARCH_CACHE_TTL,
+  OL_DETAILS_CACHE_TTL,
+
+  // Types
+  type OpenLibraryBookMetadata,
+  type OpenLibrarySearchOptions,
+  type OpenLibrarySearchResult,
+  type OpenLibraryBookContent,
+} from "./openLibrary.js";

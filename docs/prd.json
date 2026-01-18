@@ -1187,7 +1187,7 @@
         "Can access public domain content",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-007",
