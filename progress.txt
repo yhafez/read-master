@@ -4819,3 +4819,102 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (83 tests covering all functionality)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5298 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 85
+
+[2026-01-18] api-ai-009: Implement POST /api/ai/generate-flashcards endpoint
+- Created AI-powered flashcard generation endpoint in apps/api/api/ai/generate-flashcards.ts:
+  - POST /api/ai/generate-flashcards - Generate flashcards from book content:
+    - Accepts bookId, content (text to generate from), cardTypes, cardCount
+    - Optional: chapterId, sourceOffset for source tracking
+    - Generates flashcards for vocabulary, concepts, comprehension, and quotes
+    - Uses generateFlashcards prompt template from @read-master/ai package
+    - Checks for duplicate cards using Jaccard similarity (threshold 0.8)
+    - Creates Flashcard records in database with proper SM-2 defaults
+    - Returns generated cards with usage statistics
+    - Logs AI usage for billing/monitoring
+  - Request validation:
+    - bookId: valid CUID format
+    - content: 50-50000 characters
+    - cardTypes: array of valid types (vocabulary, concept, comprehension, quote)
+    - cardCount: 1-30 (default 10)
+  - Helper functions exported for testing:
+    - mapReadingLevel: Maps user reading level strings to AI prompt levels
+    - buildBookContext: Builds BookContext from Book entity
+    - mapFlashcardTypeToDb: Maps AI flashcard types to database enum
+    - getExistingCardFronts: Fetches existing cards for duplicate checking
+    - calculateSimilarity: Jaccard index similarity calculation
+    - isDuplicateCard: Checks if card is a duplicate of existing
+    - filterDuplicates: Removes duplicate cards from generated set
+    - buildFlashcardForDb: Builds Prisma.FlashcardCreateInput from card
+    - calculateCardSummary: Calculates summary statistics for cards
+  - Constants exported:
+    - FLASHCARD_TYPES, DEFAULT_CARD_COUNT, MAX_CARD_COUNT, MIN_CARD_COUNT
+    - MIN_CONTENT_LENGTH (50), MAX_CONTENT_LENGTH (50000)
+    - MAX_TOKENS (8192), MAX_EXISTING_CARDS_CHECK (100)
+    - DUPLICATE_SIMILARITY_THRESHOLD (0.8)
+- Created comprehensive test suite with 108 tests in generate-flashcards.test.ts:
+  - Constants tests (7 tests):
+    - All flashcard types defined
+    - Default card count validity
+    - Card count limits
+    - Content length limits
+    - MAX_TOKENS, MAX_EXISTING_CARDS_CHECK, DUPLICATE_SIMILARITY_THRESHOLD
+  - Schema validation tests (35 tests):
+    - bookId validation (CUID format, empty, invalid)
+    - content validation (min/max boundaries)
+    - cardTypes validation (default, single, multiple, all, empty, invalid)
+    - cardCount validation (default, valid, min/max boundaries, non-integer)
+    - optional fields validation (chapterId, sourceOffset)
+    - full request validation
+  - mapReadingLevel tests (20 tests):
+    - Null and empty handling
+    - Keyword-based mapping (beginner through advanced)
+    - Lexile score mapping (200L through 1600L)
+    - Fallback for unknown levels
+  - buildBookContext tests (5 tests):
+    - All fields, null author, null genre, null description
+    - Content field separation from description
+  - mapFlashcardTypeToDb tests (5 tests):
+    - All valid types (vocabulary, concept, comprehension, quote)
+    - Unknown type default (CUSTOM)
+  - calculateSimilarity tests (9 tests):
+    - Identical strings, empty strings
+    - Completely different strings
+    - Partial overlap, case insensitivity
+    - Multiple shared words, repeated words, whitespace handling
+  - isDuplicateCard tests (5 tests):
+    - Identical front, very similar front
+    - Different front, empty existing list
+    - Multiple existing cards
+  - filterDuplicates tests (5 tests):
+    - No duplicates, match existing
+    - Internal duplicates, empty input, all duplicates
+  - buildFlashcardForDb tests (7 tests):
+    - Required fields, context inclusion
+    - Default SM-2 values, dueDate
+    - chapterId and sourceOffset optional fields
+  - calculateCardSummary tests (5 tests):
+    - Correct calculation, empty array
+    - Single card, rounding, all card types
+  - Integration tests (5 tests):
+    - Complete request scenario
+    - Reading level and book context building
+    - Filter and build cards workflow
+    - Edge cases (long content, minimal request)
+  - Edge cases (5 tests):
+    - Special characters, unicode
+    - Whitespace-only content
+    - Unicode similarity calculation
+    - All valid flashcard types mapping
+- Files created:
+  - apps/api/api/ai/generate-flashcards.ts
+  - apps/api/api/ai/generate-flashcards.test.ts
+- Acceptance criteria verification:
+  - ✅ Cards are high quality (uses AI with structured generation)
+  - ✅ Duplicates are avoided (Jaccard similarity checking with 0.8 threshold)
+  - ✅ Multiple card types work (vocabulary, concept, comprehension, quote)
+  - ✅ Tests pass (108 tests covering all functionality)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5406 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

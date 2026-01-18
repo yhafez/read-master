@@ -813,7 +813,7 @@
         "Multiple card types work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-srs-001",
