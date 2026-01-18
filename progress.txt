@@ -3522,3 +3522,46 @@ No discoveries added during this sprint (foundational infrastructure work)
   - apps/web/package.json (added @tanstack/react-query-devtools)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4124 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 68
+
+[2026-01-18] frontend-005: Create Zustand stores for UI and reader state
+- Created comprehensive UI store in apps/web/src/stores/uiStore.ts:
+  - SidebarState type: "open" | "closed" | "collapsed"
+  - ReaderNavPanel type: "none" | "toc" | "notes" | "search" | "settings"
+  - UIPreferences interface with showWelcomeModal, showReadingTips, enableKeyboardShortcuts, showProgressInSidebar, compactLibraryView
+  - SupportedLanguage type duplicated from i18n to avoid circular dependency
+  - validateLanguage, validateSidebarState, validateReaderNavPanel helper functions
+  - sanitizePreferences for boolean validation
+  - Actions: setLanguage, setSidebarState, toggleSidebar, setReaderNavPanel, toggleReaderNavPanel, updatePreferences, resetPreferences, setMobileMenuOpen, toggleMobileMenu
+  - localStorage persistence via Zustand persist middleware for language, sidebarState, preferences
+- Created comprehensive reader store in apps/web/src/stores/readerStore.ts:
+  - BookFormat type: "epub" | "pdf" | "txt" | "doc" | "docx" | "html"
+  - ReadingMode type: "paginated" | "scroll" | "spread"
+  - CurrentBook interface with id, title, format, totalPositions, contentUrl
+  - ReadingPosition interface with position, cfi (EPUB), percentage, lastUpdated
+  - ReaderSettings interface with readingMode, showPageNumbers, showProgressBar, showEstimatedTime, autoScrollWpm, bionicReadingEnabled, highlightCurrentParagraph, margins, maxWidth
+  - Range constants: AUTO_SCROLL_WPM_RANGE, MARGINS_RANGE, MAX_WIDTH_RANGE
+  - Helper functions: clampValue, validateReadingMode, validateBookFormat, sanitizeReaderSettings, createReadingPosition
+  - State: currentBook, currentPosition, settings, isFullscreen, isTTSPlaying, selectedText
+  - Actions: openBook, closeBook, updatePosition, setPosition, nextPage, previousPage, goToPercentage, updateSettings, resetSettings, toggleFullscreen, setFullscreen, setTTSPlaying, setSelectedText, clearSelectedText
+  - localStorage persistence for settings only (book/position come from server)
+- Created comprehensive tests (177 new tests total):
+  - uiStore.test.ts (48 tests): constants, validation functions, all store actions, real-world scenarios
+  - readerStore.test.ts (84 tests): constants, validation functions, createReadingPosition, all store actions, navigation, real-world scenarios
+- Updated stores/index.ts to export all new types, functions, and stores
+- Files created:
+  - apps/web/src/stores/uiStore.ts
+  - apps/web/src/stores/uiStore.test.ts
+  - apps/web/src/stores/readerStore.ts
+  - apps/web/src/stores/readerStore.test.ts
+- Files modified:
+  - apps/web/src/stores/index.ts
+- Design decisions:
+  - Duplicated supportedLanguages in uiStore to avoid importing i18n which has DOM side effects
+  - Session-only state (readerNavPanel, mobileMenuOpen, currentBook, currentPosition) not persisted
+  - Reader settings persist; book state comes from server on navigation
+  - Used exactOptionalPropertyTypes-compatible patterns for CFI field
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4256 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
