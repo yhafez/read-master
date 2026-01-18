@@ -4993,3 +4993,80 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5468 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 
+
+
+## Iteration 87
+
+[2026-01-18] api-gamification-002: Implement achievements system endpoints
+- Created achievements API endpoints in apps/api/api/achievements/:
+  - GET /api/achievements - Lists all achievements with user unlock status:
+    - Returns all 27 achievements from shared constants
+    - Includes unlock status (isUnlocked, unlockedAt) per user
+    - Calculates category statistics (total/unlocked per category)
+    - Auto-seeds achievements into database if not exist
+    - Response includes totalCount, unlockedCount, and category breakdown
+  - POST /api/achievements/check - Checks and awards new achievements:
+    - Builds user stats from database for criteria evaluation
+    - Checks all active achievements against user stats
+    - Awards XP when unlocking (updates UserStats)
+    - Creates UserAchievement records for unlocked achievements
+    - Returns newlyUnlocked array, XP awarded, level up info
+    - Supports multiple achievements unlocking at once
+- Helper functions exported for testing:
+  - mapAchievementToResponse: Maps AchievementDefinition to API format
+  - buildAchievementCheckStats: Aggregates user stats for criteria checking
+  - calculateLevelFromXP: Calculates level from XP (1-10 thresholds, 11+ dynamic)
+  - getOrCreateAchievement: Upserts achievement in database
+  - seedAchievements: Seeds all achievements into database
+- Stats aggregation queries:
+  - booksCompleted, currentStreak, cardsReviewed from UserStats
+  - cardsMastered: Flashcards with interval >= 21 days
+  - highlightsCreated: Annotations with type HIGHLIGHT
+  - annotationsCreated: All annotations
+  - groupsCreated: ReadingGroups owned by user
+  - publicCurriculumsCreated: Public visibility curriculums
+  - bestAnswers: ForumReplies marked as best answer
+  - assessments80Plus: Assessments with score >= 80
+  - latestAssessmentScore: Most recent assessment score
+- Created comprehensive test suite with 55 tests in index.test.ts:
+  - Type export tests (4 tests):
+    - AchievementWithStatus, AchievementsListResponse, AchievementsCheckResponse
+    - Category structure validation
+  - mapAchievementToResponse tests (5 tests):
+    - Unlocked/locked achievement mapping
+    - Date formatting as ISO string
+    - All properties preserved
+    - Inactive achievements handling
+  - calculateLevelFromXP tests (25 tests):
+    - Levels 1-10 predefined thresholds (12 tests)
+    - Levels 11+ dynamic calculation (6 tests)
+    - Edge cases: negative XP, exact thresholds, just below thresholds (7 tests)
+  - Achievement response building tests (4 tests):
+    - Complete list response
+    - Check response with/without level up
+    - Multiple achievements unlocked at once
+  - Category statistics tests (4 tests):
+    - Category calculation, empty list, all unlocked, none unlocked
+  - XP awarding logic tests (5 tests):
+    - Single/multiple achievement XP calculation
+    - Level up detection
+    - Multiple level ups
+    - Level up past level 10
+  - Integration tests (3 tests):
+    - Full achievement check flow simulation
+    - Response building for newly unlocked
+    - Sorting by sortOrder
+  - Edge cases (5 tests):
+    - Zero XP reward, very high XP, empty fields
+    - Special characters, epoch date, future date
+- Files created:
+  - apps/api/api/achievements/index.ts
+  - apps/api/api/achievements/check.ts
+  - apps/api/api/achievements/index.test.ts
+- Acceptance criteria verification:
+  - ✅ All achievements are checkable (uses checkAchievementCriteria from shared)
+  - ✅ Unlocking works correctly (creates UserAchievement records)
+  - ✅ XP is awarded (updates UserStats.totalXP and level)
+  - ✅ Tests verify all achievement types (55 tests covering all scenarios)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5523 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

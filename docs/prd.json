@@ -959,7 +959,7 @@
         "XP is awarded",
         "Tests verify all achievement types"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-gamification-003",
