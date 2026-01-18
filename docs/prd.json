@@ -861,7 +861,7 @@
         "Daily limit is respected",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-srs-003",

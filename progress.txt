@@ -4419,3 +4419,69 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (65+ tests covering all functionality)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4953 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 80
+
+[2026-01-18] api-srs-002: Implement GET /api/flashcards/due endpoint
+- Created due flashcards endpoint in apps/api/api/flashcards/due.ts:
+  - GET /api/flashcards/due - Fetch flashcards due for review:
+    - Returns cards where dueDate <= now (due or overdue)
+    - Excludes SUSPENDED cards
+    - Orders by dueDate ascending (most overdue first)
+    - Respects user's daily limit setting from preferences.reading.dailyCardLimit
+    - Optional query parameters: limit, includeBook, bookId
+    - limit: Override daily limit for request (1-200)
+    - includeBook: Include book context (id, title, author, coverImage)
+    - bookId: Filter to cards from specific book
+  - Response includes meta information:
+    - totalDue: Total cards currently due
+    - returned: Number of cards returned in response
+    - dailyLimit: User's daily card limit setting
+    - overdueCount: Number of overdue cards returned
+    - reviewedToday: Cards already reviewed today
+    - remainingToday: Cards remaining in daily quota
+  - Helper functions:
+    - getDailyCardLimit: Parse user preferences JSON for dailyCardLimit
+    - calculateOverdueInfo: Calculate if card is overdue and by how many days
+    - getStartOfTodayUTC: Get UTC midnight for counting today's reviews
+    - formatDueFlashcard: Format flashcard with isOverdue and overdueBy fields
+- Created comprehensive test suite with 57 tests in due.test.ts:
+  - getDailyCardLimit tests (10 tests):
+    - Null/undefined preferences handling
+    - Valid preferences parsing (object and JSON string)
+    - Schema validation for reading preferences
+    - Deeply nested valid preferences
+    - Invalid structure fallback to default
+  - calculateOverdueInfo tests (8 tests):
+    - Future/exact/past due date handling
+    - Multiple days overdue calculation
+    - Partial day overdue (less than 24 hours)
+    - Very old due dates
+  - getStartOfTodayUTC tests (5 tests):
+    - Midnight, end of day, month/year boundaries
+    - UTC time zone handling
+  - formatDueFlashcard tests (12 tests):
+    - All field formatting
+    - Date conversion to ISO strings
+    - isOverdue/overdueBy calculation
+    - Book context inclusion/exclusion
+    - Null handling for optional fields
+  - dueFlashcardsQuerySchema tests (15 tests):
+    - Default values
+    - Limit coercion and constraints
+    - includeBook boolean parsing (true/false strings)
+    - bookId CUID validation
+    - Combined parameter validation
+  - Constants tests (4 tests)
+  - Integration tests (3 tests)
+- Files created:
+  - apps/api/api/flashcards/due.ts
+  - apps/api/api/flashcards/due.test.ts
+- Acceptance criteria verification:
+  - ✅ Due cards are returned correctly (dueDate <= now, excluding SUSPENDED)
+  - ✅ Ordering is correct (by dueDate ascending, most overdue first)
+  - ✅ Daily limit is respected (from user preferences or query override)
+  - ✅ Tests pass (57 tests covering all functionality)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5010 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
