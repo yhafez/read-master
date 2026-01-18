@@ -4918,3 +4918,78 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (108 tests covering all functionality)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5406 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 86
+
+[2026-01-18] api-gamification-001: Implement GET /api/stats endpoint
+- Created gamification stats endpoint in apps/api/api/stats/index.ts:
+  - GET /api/stats - Returns comprehensive gamification statistics:
+    - userId: User identifier
+    - levelInfo: Complete level progression details
+      - level: Current level (1-N)
+      - title: Level title (e.g., "Novice Reader", "Grand Master")
+      - currentXP: Total XP earned
+      - xpForCurrentLevel: XP threshold for current level
+      - xpForNextLevel: XP needed for next level
+      - progressToNextLevel: Percentage progress (0-100)
+      - xpNeededForNextLevel: Remaining XP to level up
+    - streak: Current and longest streaks with last activity date
+    - reading: Books completed, total reading time, words read, average WPM
+    - flashcards: Cards reviewed, created, and retention rate
+    - assessments: Assessments completed and average score
+    - social: Followers and following counts
+  - Level calculation based on SPECIFICATIONS.md thresholds:
+    - Levels 1-10: Predefined XP thresholds (0, 100, 300, 600, 1000, 1500, 2500, 4000, 6000, 10000)
+    - Levels 11+: +5000 XP per level beyond level 10
+    - Titles: "Novice Reader" through "Master Reader" for 1-10, "Grand Master" for 11+
+  - Auto-creates UserStats record if not exists
+  - Auto-updates stored level if calculated level differs from stored
+- Helper functions exported for testing:
+  - getXPRequiredForLevel: Calculate XP needed for any level
+  - getTitleForLevel: Get title string for any level
+  - calculateLevelFromXP: Full level calculation with progress info
+  - formatDateOrNull: Safe date formatting helper
+- Constants exported:
+  - LEVEL_THRESHOLDS: 10 predefined level thresholds
+  - XP_PER_LEVEL_AFTER_10 (5000)
+  - GRAND_MASTER_TITLE
+  - MAX_DEFINED_LEVEL (10)
+- Created comprehensive test suite with 62 tests in index.test.ts:
+  - Constants tests (10 tests):
+    - LEVEL_THRESHOLDS validation (uniqueness, ordering, completeness)
+    - XP_PER_LEVEL_AFTER_10, GRAND_MASTER_TITLE, MAX_DEFINED_LEVEL
+  - getXPRequiredForLevel tests (11 tests):
+    - Levels 0-10 predefined thresholds
+    - Levels 11+ dynamic calculation
+    - Edge cases (negative, very high levels)
+  - getTitleForLevel tests (10 tests):
+    - All predefined titles for levels 1-10
+    - Grand Master for levels 11+
+    - Edge cases (negative, zero)
+  - calculateLevelFromXP tests (22 tests):
+    - Level 1 boundary (0-99 XP)
+    - Level 2 boundary (100-299 XP)
+    - Level 5 calculation (1000-1499 XP)
+    - Level 10 boundary (10000-14999 XP)
+    - Levels 11+ dynamic calculation
+    - All level boundary transitions
+    - Progress percentage validation
+    - xpNeededForNextLevel validation
+    - Negative XP handling
+  - formatDateOrNull tests (5 tests):
+    - Null input, valid dates, edge cases
+  - Integration tests (4 tests):
+    - Full level progression simulation (0 to level 15)
+    - XP requirements consistency checks
+    - Boundary threshold validation
+- Files created:
+  - apps/api/api/stats/index.ts
+  - apps/api/api/stats/index.test.ts
+- Acceptance criteria verification:
+  - ✅ Stats are returned correctly (all UserStats fields mapped to response)
+  - ✅ Level calculation works (calculateLevelFromXP with full progression info)
+  - ✅ Tests pass (62 tests covering all level calculations and edge cases)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5468 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
