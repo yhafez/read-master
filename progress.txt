@@ -345,3 +345,30 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Tests for singleton behavior
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (101 tests total: 47 api + 34 shared + 12 web + 8 database)
 - Files: packages/database/package.json, packages/database/prisma/schema.prisma, packages/database/src/client.ts, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 12
+
+[2026-01-17] db-002: Create User and authentication models in Prisma schema
+- Enhanced User model with additional fields from specification:
+  - Added displayName (String?) for public display name
+  - Added bio (String? @db.Text) for user profile bio
+  - Added timezone (String @default("UTC")) for user timezone for notifications/reminders
+  - Added index on tier for tier-based queries
+- Verified existing fields already match specification:
+  - clerkId with @unique constraint for Clerk auth integration
+  - email and username with @unique constraints
+  - firstName, lastName, avatarUrl for profile data
+  - UserTier enum (FREE, PRO, SCHOLAR) for subscription management
+  - preferences as Json field for flexible user preferences
+  - readingLevel (String?) for Lexile score tracking
+  - preferredLang with @default("en") for language preference
+  - Privacy settings: profilePublic, showStats, showActivity
+  - AI preferences: aiEnabled @default(true)
+  - Soft delete support via deletedAt (DateTime?)
+  - Proper indexes on clerkId, email, username, deletedAt
+  - stripeCustomerId for payment integration
+  - tierExpiresAt for subscription expiry tracking
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (101 tests total: 47 api + 34 shared + 12 web + 8 database)
+- Files: packages/database/prisma/schema.prisma

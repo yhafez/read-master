@@ -18,33 +18,36 @@ datasource db {
 /// User model - Core authentication and profile data
 /// Uses Clerk for authentication, stores additional profile info
 model User {
-  id        String   @id @default(cuid())
-  clerkId   String   @unique
-  email     String   @unique
-  username  String?  @unique
-  firstName String?
-  lastName  String?
-  avatarUrl String?
+  id          String  @id @default(cuid())
+  clerkId     String  @unique
+  email       String  @unique
+  username    String? @unique
+  firstName   String?
+  lastName    String?
+  displayName String? // Public display name
+  avatarUrl   String?
+  bio         String? @db.Text // User bio for profile
 
   // Subscription & Tier
-  tier            UserTier  @default(FREE)
-  tierExpiresAt   DateTime?
-  stripeCustomerId String?  @unique
+  tier             UserTier  @default(FREE)
+  tierExpiresAt    DateTime?
+  stripeCustomerId String?   @unique
 
   // Preferences stored as JSON for flexibility
   preferences Json @default("{}")
 
   // Reading level tracking
-  readingLevel    String?  // e.g., "1200L" for Lexile
-  preferredLang   String   @default("en")
+  readingLevel  String? // e.g., "1200L" for Lexile
+  preferredLang String  @default("en")
+  timezone      String  @default("UTC") // User's timezone for notifications/reminders
 
   // Privacy settings
-  profilePublic   Boolean @default(false)
-  showStats       Boolean @default(false)
-  showActivity    Boolean @default(false)
+  profilePublic Boolean @default(false)
+  showStats     Boolean @default(false)
+  showActivity  Boolean @default(false)
 
   // AI preferences
-  aiEnabled       Boolean @default(true)
+  aiEnabled Boolean @default(true)
 
   // Timestamps
   createdAt DateTime  @default(now())
@@ -56,6 +59,7 @@ model User {
   @@index([email])
   @@index([username])
   @@index([deletedAt])
+  @@index([tier]) // For tier-based queries
 }
 
 // =============================================================================

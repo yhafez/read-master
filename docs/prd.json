@@ -257,7 +257,7 @@
         "Indexes are properly defined",
         "prisma format succeeds"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-003",
