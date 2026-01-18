@@ -2843,3 +2843,72 @@ No discoveries added during this sprint (foundational infrastructure work)
     - Empty string behavior
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (105 new tests)
 - Files: apps/api/api/books/index.ts, apps/api/api/books/index.test.ts
+
+## Iteration 57
+
+[2026-01-18] api-books-011: Implement POST /api/books/add-from-library endpoint
+- Created apps/api/api/books/add-from-library.ts with comprehensive external library integration
+- Implemented request validation with Zod schema:
+  - bookId: required, trimmed, max 200 characters
+  - source: required enum ("google" | "openlib")
+  - fetchContent: optional boolean, defaults to false (for public domain content)
+- Implemented metadata fetching from both external sources:
+  - fetchGoogleBook(): Retrieves book metadata from Google Books API
+  - fetchOpenLibraryBook(): Retrieves work metadata from Open Library API
+  - Both use existing service functions with caching and rate limiting
+- Implemented metadata normalization:
+  - normalizeGoogleMetadata(): Converts GoogleBookMetadata to database format
+  - normalizeOpenLibraryMetadata(): Converts OpenLibraryBookMetadata to database format
+  - Both include: title, author, description, coverImage, pageCount, wordCount, estimatedReadTime, genre, language, ISBN-10/13, publishYear, publisher
+  - Open Library includes public domain and full text availability flags
+- Implemented helper functions:
+  - extractPublishYear(): Extracts 4-digit year from various date formats (string or number)
+  - estimateWordCount(): Calculates words from page count (250 words/page)
+  - calculateReadingTime(): Calculates minutes from word count (250 WPM)
+  - buildSourceUrl(): Generates external source URL for book reference
+  - getBookSource(): Maps source string to BookSource enum
+- Tier limit checking:
+  - Gets user's current book count
+  - Checks against tier limits using shared isWithinLimit function
+  - Returns 403 with upgrade message if limit exceeded
+- Duplicate detection:
+  - Checks if book with same sourceUrl already exists in user's library
+  - Returns 409 Conflict if duplicate found
+- Public domain content support:
+  - For Open Library books with isPublicDomain and hasFullText flags
+  - Optionally fetches content info from Internet Archive when fetchContent=true
+  - Returns available content formats (epub, pdf, mobi, text)
+- Created comprehensive tests in apps/api/api/books/add-from-library.test.ts (91 tests):
+  - Schema validation tests:
+    - bookId: valid, empty, missing, max length, trim whitespace
+    - source: google, openlib, invalid, missing, case-sensitive
+    - fetchContent: default, true, false, invalid type
+    - Combined validation scenarios
+  - Helper function tests:
+    - extractPublishYear: undefined, number, various date formats, edge cases
+    - estimateWordCount: undefined, calculation, zero, large values
+    - calculateReadingTime: undefined, calculation, ceiling, edge cases
+  - Normalization tests for Google Books:
+    - Basic metadata, multiple authors joined
+    - Categories as genre, description, page count
+    - Language default and specified, ISBN values
+    - Publish year extraction, publisher, image URLs
+  - Normalization tests for Open Library:
+    - Basic metadata, authors from objects
+    - Subjects as genre, description, page count
+    - Language from array with default, ISBN from arrays
+    - Publish year preference, publishers, public domain flags
+  - URL and source helper tests:
+    - buildSourceUrl for Google and Open Library
+    - getBookSource enum mapping
+  - Constants tests
+  - Edge cases:
+    - Unicode in metadata, HTML entities
+    - Special characters in author names
+    - Empty arrays and null values
+    - Boundary values for book ID length
+    - Whitespace handling
+    - Publish year edge cases (old dates, future, ranges)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (91 new tests)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/books/add-from-library.ts, apps/api/api/books/add-from-library.test.ts

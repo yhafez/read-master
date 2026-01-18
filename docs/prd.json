@@ -154,7 +154,7 @@
         "Tier limits are enforced",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-012",
