@@ -1538,3 +1538,42 @@ No discoveries added during this sprint (foundational infrastructure work)
   - src/constants/languages.test.ts: 91 tests for language definitions, RTL, formatting functions
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1619 tests total: 47 api + 172 database + 12 web + 1388 shared)
 - Files: packages/shared/src/constants/limits.ts, packages/shared/src/constants/limits.test.ts, packages/shared/src/constants/achievements.ts, packages/shared/src/constants/achievements.test.ts, packages/shared/src/constants/languages.ts, packages/shared/src/constants/languages.test.ts, packages/shared/src/constants/index.ts, packages/shared/package.json
+## Iteration 35
+
+[2026-01-17] shared-013: Create main index.ts with clean exports
+- Rewrote packages/shared/src/index.ts as comprehensive main entry point
+- Organized exports into clear sections with documentation:
+  - UTILITIES: All utility functions from string, moderation, SRS, dates, blooms, lexile
+  - TYPE RE-EXPORTS: Database types (26 models, 12 enums) and API types (request/response)
+  - SCHEMA RE-EXPORTS: Key schemas from books, annotations, flashcards, forum, assessments, curriculums
+  - CONSTANTS RE-EXPORTS: Tier limits, achievements (30 definitions), language configuration (6 languages)
+- Added comprehensive JSDoc documentation with usage examples
+- Documented the dual import pattern:
+  - Main entry point for common utilities: `import { truncate, containsProfanity } from '@read-master/shared'`
+  - Subpath imports for organized access: `import type { User } from '@read-master/shared/types'`
+- Re-exports include:
+  - String utilities: truncate, toTitleCase, slugify, stripHtml
+  - Moderation utilities: containsProfanity, validateNoProfanity, validateFieldsNoProfanity, cleanProfanity
+  - SRS utilities: calculateNextReview, createDefaultSrsState, formatInterval, SM2_CONSTANTS, srsUtils
+  - Date utilities: formatRelativeTime, timeAgo, formatDuration, nowUTC, dateUtils, and more
+  - Bloom's utilities: categorizeQuestion, calculateBloomsBreakdown, BLOOMS_LEVELS, bloomsUtils
+  - Lexile utilities: estimateTextDifficulty, getReadingLevelRecommendation, lexileUtils
+  - All database model and enum types (User, Book, ReadingStatus, etc.)
+  - All API request/response types (ApiResponse, BookDetailResponse, etc.)
+  - Key Zod schemas from all modules (createBookUploadSchema, reviewFlashcardSchema, etc.)
+  - All constants: TIER_LIMITS, ACHIEVEMENTS, SUPPORTED_LANGUAGES, XP_REWARDS, etc.
+  - All helper functions: getTierLimits, calculateLevel, isRtlLanguage, etc.
+- Created comprehensive test suite with 51 tests in src/index.test.ts:
+  - String utility export verification
+  - Moderation utility export verification
+  - SRS utility export verification with functional tests
+  - Date utility export verification
+  - Bloom's taxonomy utility export verification
+  - Lexile utility export verification
+  - Schema exports verification (books, annotations, flashcards, forum, assessments, curriculums)
+  - Constants exports verification (tier limits, achievements, languages)
+  - Circular dependency check (verifies no import issues)
+  - Export counts validation (100+ exports verified)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1901 tests total: 47 api + 172 database + 12 web + 1670 shared)
+- Files: packages/shared/src/index.ts, packages/shared/src/index.test.ts
+

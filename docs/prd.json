@@ -817,7 +817,7 @@
         "No circular dependencies",
         "TypeScript is happy"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-001",
