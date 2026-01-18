@@ -679,7 +679,7 @@
         "Ease factor minimum is enforced",
         "Tests achieve 100% coverage of algorithm logic"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-008",
