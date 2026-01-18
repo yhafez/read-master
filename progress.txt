@@ -1731,3 +1731,63 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Type inference tests: body type preservation
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2036 tests total: 182 api + 172 database + 12 web + 1670 shared)
 - Files: apps/api/src/middleware/validation.ts, apps/api/src/middleware/validation.test.ts, apps/api/src/middleware/index.ts
+
+## Iteration 39
+
+[2026-01-17] api-infra-004: Implement rate limiting by tier
+- Added Upstash dependencies to apps/api:
+  - @upstash/redis ^1.36.1 (Redis REST client for serverless)
+  - @upstash/ratelimit ^2.0.8 (Rate limiting library)
+  - @read-master/database workspace dependency (for UserTier type)
+- Created apps/api/src/middleware/rateLimit.ts with comprehensive rate limiting:
+  - RateLimitOperation type: ai, tts, ttsDownload, upload, api
+  - RateLimitConfig type: limit, windowSeconds, isDaily
+  - RateLimitResult type: success, remaining, limit, reset, error
+  - RateLimitHeaders type for response headers
+  - RateLimitedRequest type: extends AuthenticatedRequest with rateLimit
+- Implemented tier-based rate limits matching specification:
+  - AI operations (daily):
+    - FREE: 5/day, PRO: 100/day, SCHOLAR: 10000/day (effectively unlimited)
+  - TTS requests (per-minute):
+    - FREE: 10/min, PRO: 30/min, SCHOLAR: 60/min
+  - TTS downloads (monthly):
+    - FREE: 0 (not available), PRO: 5/month, SCHOLAR: 10000/month (unlimited)
+  - File uploads (hourly):
+    - FREE: 5/hour, PRO: 20/hour, SCHOLAR: 50/hour
+  - General API (per-minute):
+    - FREE: 60/min, PRO: 300/min, SCHOLAR: 1000/min
+- Implemented core functions:
+  - getRateLimitConfig: Get limit configuration for operation and tier
+  - checkRateLimit: Check and consume rate limit for user
+  - getRateLimitStatus: Check rate limit without consuming
+  - resetRateLimit: Reset rate limit for user (for testing/tier upgrades)
+  - createRateLimitKey: Generate Redis key with daily date for daily limits
+- Implemented response helpers:
+  - createRateLimitHeaders: Generate X-RateLimit-* headers
+  - applyRateLimitHeaders: Apply headers to VercelResponse
+  - createRateLimitResponse: Generate 429 response body with retryAfter
+- Implemented higher-order middleware:
+  - withRateLimit: Wrap handler with rate limiting, requires withAuth
+  - createRateLimitChecker: Create operation-specific checker function
+- Features:
+  - Uses Upstash Redis with sliding window algorithm
+  - Fail-open design: if Redis unavailable, requests are allowed
+  - Daily limits reset at midnight UTC with date in key
+  - Rate limit info attached to request.rateLimit
+  - Proper X-RateLimit-* headers on all responses
+  - Retry-After header on 429 responses
+  - Operation name included in rate limit response
+- Exported rateLimitUtils object with all functions
+- Updated src/middleware/index.ts to export all rate limit utilities
+- Created comprehensive test suite with 75 tests in rateLimit.test.ts:
+  - getRateLimitConfig tests for all operations and tiers (27 tests)
+  - Tier hierarchy tests (higher tiers have higher/equal limits)
+  - createRateLimitHeaders tests (7 tests)
+  - createRateLimitResponse tests (10 tests)
+  - Type export tests
+  - Edge case tests (unknown operations, all tier values)
+  - Daily vs non-daily limit behavior tests (5 tests)
+  - Window duration validation tests (5 tests)
+  - rateLimitUtils export verification (9 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2111 tests total: 257 api + 172 database + 12 web + 1670 shared)
+- Files: apps/api/src/middleware/rateLimit.ts, apps/api/src/middleware/rateLimit.test.ts, apps/api/src/middleware/index.ts, apps/api/package.json

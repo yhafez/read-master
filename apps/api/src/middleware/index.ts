@@ -72,3 +72,26 @@ export {
   CommonSchemas,
   createQuerySchema,
 } from "./validation.js";
+
+export {
+  // Types
+  type RateLimitOperation,
+  type RateLimitConfig,
+  type RateLimitResult,
+  type RateLimitHeaders,
+  type RateLimitedRequest,
+  // Rate limit functions
+  getRateLimitConfig,
+  checkRateLimit,
+  getRateLimitStatus,
+  resetRateLimit,
+  // Response helpers
+  createRateLimitHeaders,
+  applyRateLimitHeaders,
+  createRateLimitResponse,
+  // Higher-order middleware
+  withRateLimit,
+  // Utilities
+  createRateLimitChecker,
+  rateLimitUtils,
+} from "./rateLimit.js";

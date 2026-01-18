@@ -15,8 +15,11 @@
   },
   "dependencies": {
     "@clerk/backend": "^1.21.0",
-    "zod": "^3.24.0",
-    "winston": "^3.17.0"
+    "@read-master/database": "workspace:^",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.36.1",
+    "winston": "^3.17.0",
+    "zod": "^3.24.0"
   },
   "devDependencies": {
     "@read-master/config": "workspace:*",

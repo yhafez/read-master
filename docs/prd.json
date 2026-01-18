@@ -912,7 +912,7 @@
         "Headers show remaining calls",
         "Tests verify limits"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-005",
