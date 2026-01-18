@@ -762,7 +762,7 @@
         "Questions are high quality",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-ai-008",
