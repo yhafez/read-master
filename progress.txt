@@ -949,3 +949,64 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Types can now be imported from '@read-master/shared/types' in apps/web and apps/api
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (332 tests total: 47 api + 101 shared + 12 web + 172 database)
 - Files: packages/shared/package.json, packages/shared/src/types/database.ts, packages/shared/src/types/api.ts, packages/shared/src/types/index.ts, packages/shared/src/types/index.test.ts, packages/shared/src/index.ts
+
+## Iteration 25
+
+[2026-01-17] shared-002 & shared-008: Create Zod schemas for Book operations and profanity filter utility
+- Created packages/shared/src/schemas/ directory structure for Zod validation schemas
+- Created packages/shared/src/utils/moderation.ts: Comprehensive profanity filter utility
+  - containsProfanity: Checks if text contains profanity with whole-word matching
+  - getProfaneWords: Returns array of profane words found in text
+  - validateNoProfanity: Returns validation result for single field
+  - validateFieldsNoProfanity: Batch validation for multiple fields
+  - cleanProfanity: Replaces profanity with asterisks (use cautiously)
+  - Handles homoglyphs (f@ck, fvck, etc.) via character replacement
+  - Handles repeated character evasion (fuuuuck -> fuck)
+  - Uses whole-word matching to avoid false positives (class, assistant, cocktail)
+  - Separate word list and compound profanity list for accurate detection
+- Created packages/shared/src/schemas/books.ts: Complete Zod schemas for book operations
+  - Enum schemas: bookSourceSchema, fileTypeSchema, readingStatusSchema
+  - Field schemas: bookTitleSchema (1-500 chars), bookAuthorSchema (1-200 chars), bookDescriptionSchema (max 50k chars)
+  - bookTitlePublicSchema and bookDescriptionPublicSchema with integrated profanity filter
+  - Tag validation: alphanumeric with hyphens/underscores, max 50 chars each, max 20 tags
+  - Genre schema: max 100 characters
+  - Language code schema: ISO 639-1 (2 chars), defaults to 'en'
+  - URL schema for imports with 2000 char max
+  - Cover image URL schema with 2000 char max
+  - Create schemas with discriminated union for 5 book sources:
+    - createBookUploadSchema: File upload with fileType
+    - createBookUrlSchema: URL import with sourceUrl
+    - createBookPasteSchema: Pasted text with content (10-5M chars)
+    - createBookGoogleBooksSchema: Google Books with sourceId
+    - createBookOpenLibrarySchema: Open Library with sourceId
+  - updateBookSchema and updateBookPublicSchema with "at least one field" validation
+  - bookQuerySchema: Pagination (page, limit max 100), sorting (7 sort fields), filtering (status, source, genre, language, tags), search, includeDeleted
+  - Book ID validation: CUID format (/^c[a-z0-9]+$/)
+  - External book search schema: query, maxResults (max 40), startIndex
+  - Add from library schema with optional metadata overrides
+  - Reading progress update schema with position and percentage tracking
+  - bookSchemas object with all schemas for convenient importing
+- Created packages/shared/src/schemas/index.ts: Re-exports all book schemas
+- Updated packages/shared/package.json: Added "./schemas" export path
+- Updated packages/shared/src/utils/index.ts: Added moderation export
+- Created comprehensive test suites:
+  - src/utils/moderation.test.ts: 26 tests covering all profanity detection scenarios
+    - Clean text detection, profanity detection, case-insensitivity
+    - Compound profanity (bullshit, motherfucker)
+    - Repeated character evasion (fuuuuck, shiiiit)
+    - False positive prevention (class, assistant, cocktail, scunthorpe)
+    - Slurs detection (retarded, faggot)
+    - Empty/invalid input handling
+    - validateNoProfanity and validateFieldsNoProfanity batch validation
+    - cleanProfanity replacement
+  - src/schemas/books.test.ts: 68 tests covering all book schemas
+    - Enum validation tests
+    - Field schema validation with boundary cases
+    - Create schema validation for all 5 sources
+    - Update schema validation
+    - Query schema validation with defaults
+    - Book ID format validation
+    - External search schema validation
+    - Reading progress schema validation
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (195 tests in shared)
+- Files: packages/shared/src/utils/moderation.ts, packages/shared/src/utils/moderation.test.ts, packages/shared/src/utils/index.ts, packages/shared/src/schemas/books.ts, packages/shared/src/schemas/books.test.ts, packages/shared/src/schemas/index.ts, packages/shared/package.json

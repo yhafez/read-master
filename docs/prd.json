@@ -563,7 +563,7 @@
         "Tests verify schema validation works",
         "Profanity filter is integrated"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-003",
@@ -705,7 +705,7 @@
         "Tests achieve 100% coverage",
         "Edge cases are handled"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-009",
