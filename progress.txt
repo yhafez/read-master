@@ -2094,3 +2094,87 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Integration tests (2 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2502 tests)
 - Files: apps/api/src/utils/pagination.ts, apps/api/src/utils/pagination.test.ts, apps/api/src/utils/index.ts
+
+
+## Iteration 46
+
+[2026-01-17] api-books-001: Create Cloudflare R2 storage service
+- Created comprehensive apps/api/src/services/storage.ts with full R2 storage support
+- Added AWS S3 SDK dependencies (@aws-sdk/client-s3, @aws-sdk/s3-request-presigner)
+- Implemented R2 client singleton with lazy initialization:
+  - getStorageClient(): Get or create R2 S3 client
+  - isStorageAvailable(): Check if R2 is configured
+  - resetStorageClient(): Reset for testing
+  - getBucketName(): Get configured bucket name
+  - getPublicUrlBase(): Get public CDN URL if configured
+- Defined comprehensive types:
+  - UploadOptions: contentType, cacheControl, metadata, contentDisposition
+  - SignedUrlOptions: expiresIn, contentDisposition, responseContentType
+  - ListOptions: maxKeys, continuationToken, delimiter
+  - UploadResult: success, key, bucket, publicUrl, error
+  - GetFileResult: success, data, contentType, contentLength, metadata, error
+  - FileInfo: exists, contentType, contentLength, lastModified, etag, metadata
+  - ListResult: success, keys, prefixes, isTruncated, nextContinuationToken, error
+- Implemented core storage operations:
+  - uploadFile(): Upload file with options (contentType, cacheControl, metadata)
+  - getFile(): Download file as Buffer with metadata
+  - deleteFile(): Delete single file
+  - deleteFiles(): Bulk delete multiple files
+  - getFileInfo(): Get file metadata without downloading (HEAD request)
+  - fileExists(): Check if file exists
+  - listFiles(): List files with prefix and pagination support
+  - copyFile(): Copy file within bucket
+- Implemented signed URL generation:
+  - getSignedDownloadUrl(): Generate presigned download URL
+  - getSignedUploadUrl(): Generate presigned upload URL
+  - getSignedUrl(): Alias for download URL (convenience)
+- Implemented storage key builders for organized namespacing:
+  - buildBookKey(): users/{userId}/books/{bookId}/{filename}
+  - buildCoverKey(): covers/{bookId}/{filename}
+  - buildAudioKey(): users/{userId}/audio/{bookId}/{filename}
+  - buildAvatarKey(): users/{userId}/avatars/{filename}
+  - buildTempKey(): temp/{uniqueId}/{filename}
+  - getFilenameFromKey(): Extract filename from path
+  - getExtension(): Get file extension (lowercase)
+  - inferContentType(): Auto-detect content type from extension
+- Defined constants for namespacing and validation:
+  - StorageNamespace: BOOKS, COVERS, AUDIO, AVATARS, TEMP
+  - MaxFileSize: BOOK (50MB), COVER (5MB), AUDIO (500MB), AVATAR (2MB)
+  - ContentTypes: PDF, EPUB, DOC, DOCX, TXT, HTML, MP3, WAV, OGG, M4A, JPEG, PNG, WEBP, GIF
+  - BookExtensions, ImageExtensions, AudioExtensions: Arrays for validation
+- Implemented validation helpers:
+  - isValidFileSize(): Validate file size against limits
+  - hasAllowedExtension(): Check if file extension is allowed
+- Created namespaced exports for clean imports:
+  - storage: Object with all core operations
+  - storageUtils: Object with client management, validation, and constants
+- Updated apps/api/src/services/index.ts to export all storage utilities and types
+- Created comprehensive test suite with 115 tests in storage.test.ts:
+  - Type export tests (8 tests)
+  - StorageNamespace tests (5 tests)
+  - MaxFileSize tests (4 tests)
+  - ContentTypes tests (4 tests)
+  - File extensions tests (3 tests)
+  - Client management tests (11 tests)
+  - uploadFile tests (7 tests)
+  - getFile tests (5 tests)
+  - deleteFile tests (3 tests)
+  - deleteFiles tests (3 tests)
+  - getFileInfo tests (4 tests)
+  - fileExists tests (2 tests)
+  - listFiles tests (7 tests)
+  - copyFile tests (3 tests)
+  - getSignedDownloadUrl tests (4 tests)
+  - getSignedUploadUrl tests (3 tests)
+  - getSignedUrl tests (1 test)
+  - Key builder tests (buildBookKey: 1, buildCoverKey: 1, buildAudioKey: 1, buildAvatarKey: 1, buildTempKey: 1)
+  - getFilenameFromKey tests (3 tests)
+  - getExtension tests (4 tests)
+  - inferContentType tests (9 tests)
+  - isValidFileSize tests (5 tests)
+  - hasAllowedExtension tests (4 tests)
+  - storage object tests (3 tests)
+  - storageUtils object tests (3 tests)
+  - Integration tests (2 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2629 tests)
+- Files: apps/api/src/services/storage.ts, apps/api/src/services/storage.test.ts, apps/api/src/services/index.ts

@@ -1070,7 +1070,7 @@
         "Signed URLs are generated correctly",
         "Tests verify functionality"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-002",

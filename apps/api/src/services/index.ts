@@ -100,3 +100,64 @@ export {
   type CacheKeyPrefixType,
   type CacheTTLType,
 } from "./redis.js";
+
+// R2 Storage service
+export {
+  // Core storage operations
+  storage,
+  uploadFile,
+  getFile,
+  deleteFile,
+  deleteFiles,
+  getFileInfo,
+  fileExists,
+  listFiles,
+  copyFile,
+
+  // Signed URL generation
+  getSignedDownloadUrl,
+  getSignedUploadUrl,
+  getSignedUrl,
+
+  // Key builders
+  buildBookKey,
+  buildCoverKey,
+  buildAudioKey,
+  buildAvatarKey,
+  buildTempKey,
+  getFilenameFromKey,
+  getExtension,
+  inferContentType,
+
+  // Client management
+  getStorageClient,
+  getBucketName,
+  getPublicUrlBase,
+  isStorageAvailable,
+  resetStorageClient,
+
+  // Validation helpers
+  isValidFileSize,
+  hasAllowedExtension,
+
+  // Utilities object
+  storageUtils,
+
+  // Constants
+  StorageNamespace,
+  MaxFileSize,
+  ContentTypes,
+  BookExtensions,
+  ImageExtensions,
+  AudioExtensions,
+
+  // Types
+  type UploadOptions,
+  type SignedUrlOptions,
+  type ListOptions,
+  type UploadResult,
+  type GetFileResult,
+  type FileInfo,
+  type ListResult,
+  type StorageNamespaceType,
+} from "./storage.js";
