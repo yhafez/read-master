@@ -7,13 +7,16 @@ I've built a **comprehensive, production-ready PRD** for autonomous AI developme
 ### 📦 Files Created
 
 #### 1. **`prd.json`** (2,353 lines, 135+ tasks)
+
 The heart of your autonomous development system. Each task is:
+
 - ✅ Small and focused (1 logical feature)
 - ✅ Verifiable with explicit acceptance criteria
 - ✅ Prioritized by criticality and dependencies
 - ✅ Has a `passes: false` field Ralph marks `true` when complete
 
 **Phases covered:**
+
 - ✅ Phase 1: Infrastructure (9 tasks)
 - ✅ Phase 2: Database Schema (13 tasks)
 - ✅ Phase 3: Shared Package (13 tasks)
@@ -28,6 +31,7 @@ The heart of your autonomous development system. Each task is:
 **⚠️ Note:** Frontend, PWA, Testing, and Deployment phases still need to be added (~120+ more tasks)
 
 #### 2. **`ralph-prd.sh`** (executable)
+
 **Human-in-the-loop (HITL) script** - You watch Ralph work, intervene when needed.
 
 ```bash
@@ -35,12 +39,14 @@ The heart of your autonomous development system. Each task is:
 ```
 
 Best for:
+
 - Learning how Ralph works
 - Refining your prompt
 - Testing the PRD structure
 - Watching architectural decisions
 
 #### 3. **`ralph-prd-afk.sh`** (executable)
+
 **Away-from-keyboard (AFK) script** - Ralph runs autonomously for N iterations.
 
 ```bash
@@ -48,6 +54,7 @@ Best for:
 ```
 
 Best for:
+
 - Bulk implementation work
 - When foundation is solid
 - After you trust the prompt
@@ -56,7 +63,9 @@ Best for:
 **Safety:** Always run in Docker sandbox for AFK mode!
 
 #### 4. **`PRD_GUIDE.md`** (comprehensive guide)
+
 Complete documentation on:
+
 - How the PRD is structured
 - All phases and task breakdown
 - How to use Ralph with this PRD
@@ -65,6 +74,7 @@ Complete documentation on:
 - Cost considerations
 
 #### 5. **`PROGRESS.md`** (you'll create)
+
 Ralph maintains this file automatically:
 
 ```
@@ -81,24 +91,31 @@ Ralph maintains this file automatically:
 ## How This PRD Follows Ralph Wiggum Best Practices
 
 ### ✅ 1. Ralph Is A Loop
+
 Each script runs the same prompt repeatedly. Ralph picks the next task, not you.
 
 ### ✅ 2. Start With HITL, Then Go AFK
+
 - Use `ralph-prd.sh` first to learn and refine
 - Switch to `ralph-prd-afk.sh` once confident
 
 ### ✅ 3. Define The Scope
+
 Every task has:
+
 - Clear description
 - Concrete verification steps
 - Explicit acceptance criteria
 - A `passes` field for tracking
 
 ### ✅ 4. Track Ralph's Progress
+
 `progress.txt` provides context between iterations without re-exploring the repo.
 
 ### ✅ 5. Use Feedback Loops
+
 **Enforced before every commit:**
+
 - `pnpm typecheck` - No type errors
 - `pnpm lint` - No linting errors
 - `pnpm vitest run` - All tests pass
@@ -106,28 +123,36 @@ Every task has:
 **Ralph cannot commit if these fail.**
 
 ### ✅ 6. Take Small Steps
+
 Each task is focused on ONE logical feature. Small commits compound into big progress.
 
 ### ✅ 7. Prioritize Risky Tasks
+
 Tasks are prioritized:
+
 1. **critical** - Architectural decisions, core abstractions
 2. **high** - Integration points, essential features
 3. **medium** - Standard features
 4. **low** - Polish, cleanup
 
 ### ✅ 8. Explicitly Define Software Quality
+
 From the PRD:
 
 > **Production code. Must be maintainable, testable, and follow best practices. This codebase will outlive you - fight entropy, leave it better than you found it.**
 
 ### ✅ 9. Use Docker Sandboxes
+
 AFK script includes Docker sandboxing for safety.
 
 ### ✅ 10. Pay To Play
+
 This is a large project (~550-800 iterations estimated). Budget accordingly.
 
 ### ✅ 11. Make It Your Own
+
 The PRD is flexible. You can:
+
 - Add more tasks
 - Adjust priorities
 - Change acceptance criteria
@@ -136,7 +161,9 @@ The PRD is flexible. You can:
 ## What Makes This PRD Production-Ready
 
 ### 🎯 Comprehensive Coverage
+
 Based on your SPECIFICATIONS.md and RALPH_PROMPTS.md, covering:
+
 - Complete monorepo infrastructure
 - Full database schema (15+ models)
 - Shared utilities (SM-2 algorithm, profanity filter)
@@ -152,9 +179,11 @@ Based on your SPECIFICATIONS.md and RALPH_PROMPTS.md, covering:
 - Cron jobs
 
 ### 📏 Small, Verifiable Tasks
+
 Each task follows the principle: **one logical change per commit**.
 
 Example task structure:
+
 ```json
 {
   "id": "shared-007",
@@ -179,7 +208,9 @@ Example task structure:
 ```
 
 ### 🔒 Quality Gates
+
 Three-layer validation on every commit:
+
 1. **TypeScript** - Type safety
 2. **ESLint** - Code quality
 3. **Vitest** - Functional correctness
@@ -187,14 +218,18 @@ Three-layer validation on every commit:
 Ralph **cannot bypass these** (no `--no-verify` allowed).
 
 ### 📊 Progress Tracking
+
 Two sources of truth:
+
 1. **prd.json** - Which tasks are done (`passes: true`)
 2. **progress.txt** - What changed and why
 
 Plus git history shows exactly what was implemented.
 
 ### 🧠 Context-Aware
+
 Each task includes:
+
 - **Steps** - What to do
 - **Acceptance criteria** - How to verify
 - **Priority** - When to tackle it
@@ -203,6 +238,7 @@ Each task includes:
 ## Getting Started
 
 ### Step 1: Review the PRD
+
 ```bash
 cat prd.json | jq '.tasks[] | select(.passes == false) | {id, category, priority, description}'
 ```
@@ -210,6 +246,7 @@ cat prd.json | jq '.tasks[] | select(.passes == false) | {id, category, priority
 This shows all incomplete tasks sorted by how they appear in the PRD.
 
 ### Step 2: Initialize Progress Tracking
+
 ```bash
 echo "# Read Master - Development Progress" > progress.txt
 echo "" >> progress.txt
@@ -218,11 +255,13 @@ echo "" >> progress.txt
 ```
 
 ### Step 3: Run Your First HITL Iteration
+
 ```bash
 ./ralph-prd.sh
 ```
 
 Watch what Ralph does:
+
 - ✅ Reads the PRD
 - ✅ Picks a task (probably `infra-001` first)
 - ✅ Implements it
@@ -231,17 +270,20 @@ Watch what Ralph does:
 - ✅ Commits
 
 ### Step 4: Review and Iterate
+
 ```bash
 git log -1 --stat              # See what changed
 cat progress.txt | tail -10    # See latest progress
 ```
 
 If it looks good, run again:
+
 ```bash
 ./ralph-prd.sh
 ```
 
 ### Step 5: Go AFK When Ready
+
 Once you trust the prompt (after 5-10 HITL iterations):
 
 ```bash
@@ -258,6 +300,7 @@ Go do something else. Come back in 30-45 minutes. Review the commits.
 The current PRD covers all backend work. You should extend it with frontend tasks following the same structure. Estimated additions:
 
 **Phase 5: Frontend Foundation** (~80 tasks)
+
 - App shell and routing
 - MUI theme setup
 - Clerk auth UI
@@ -272,18 +315,21 @@ The current PRD covers all backend work. You should extend it with frontend task
 - Settings & accessibility (WCAG 2.2 AAA)
 
 **Phase 6: Offline & PWA** (~10 tasks)
+
 - Service worker setup
 - IndexedDB storage
 - Background sync
 - Install prompt
 
 **Phase 7: Testing & Polish** (~20 tasks)
+
 - E2E tests (Playwright)
 - Accessibility audit
 - Performance optimization
 - Loading states & error handling
 
 **Phase 8: Deployment** (~10 tasks)
+
 - Vercel configuration
 - Environment setup
 - Database migrations
@@ -322,6 +368,7 @@ The current PRD covers all backend work. You should extend it with frontend task
 ## Monitoring Progress
 
 ### Check Overall Progress
+
 ```bash
 # Count completed tasks
 jq '[.tasks[] | select(.passes == true)] | length' prd.json
@@ -334,12 +381,14 @@ echo "scale=2; $(jq '[.tasks[] | select(.passes == true)] | length' prd.json) * 
 ```
 
 ### View Next Tasks
+
 ```bash
 # Next 5 incomplete tasks
 jq '.tasks[] | select(.passes == false) | {id, priority, description}' prd.json | head -20
 ```
 
 ### Check Phase Completion
+
 ```bash
 # Tasks by phase
 jq '.tasks | group_by(.phase) | map({phase: .[0].phase, total: length, completed: [.[] | select(.passes == true)] | length})' prd.json
@@ -348,23 +397,27 @@ jq '.tasks | group_by(.phase) | map({phase: .[0].phase, total: length, completed
 ## Troubleshooting
 
 ### Ralph Keeps Failing Same Task
+
 1. Check `progress.txt` for error patterns
 2. Review git commits to see what's being attempted
 3. The task might be too large - break it into subtasks
 4. Run HITL mode to watch and intervene
 
 ### Feedback Loops Keep Failing
+
 1. Check which loop fails: typecheck, lint, or test
 2. Review the specific errors
 3. May need to adjust project configuration
 4. Ensure dependencies are installed
 
 ### Ralph Picks Wrong Tasks
+
 1. Adjust task priorities in prd.json
 2. Add explicit dependencies in task descriptions
 3. Reorder tasks within same priority level
 
 ### Too Expensive
+
 1. Use HITL mode more (lower token usage)
 2. Reduce iterations per AFK session
 3. Review and clean up progress.txt periodically
@@ -373,15 +426,19 @@ jq '.tasks | group_by(.phase) | map({phase: .[0].phase, total: length, completed
 ## Tips for Success
 
 ### 1. Start Small
+
 Run 1-3 HITL iterations first. Get comfortable. Then try a 10-iteration AFK run.
 
 ### 2. Review Regularly
+
 Don't let Ralph run for 100 iterations unsupervised on your first try. Check progress every 20-30 iterations.
 
 ### 3. Git Is Your Friend
+
 Every task is a commit. If something goes wrong, you can always revert.
 
 ### 4. Clean Up Progress
+
 After completing a phase, archive the old progress:
 
 ```bash
@@ -390,9 +447,11 @@ echo "# Read Master - Phase 2 Progress" > progress.txt
 ```
 
 ### 5. Adjust Quality Standards
+
 If Ralph is being too perfectionist (or not enough), adjust the quality standards in prd.json.
 
 ### 6. Extend As You Go
+
 Don't wait to add all 300+ tasks upfront. Add frontend tasks after backend is working.
 
 ## Cost Estimate
@@ -405,6 +464,7 @@ Based on the Ralph article and this PRD size:
 - **Total estimate**: $300-1,600 for complete project
 
 **Strategies to reduce cost:**
+
 - Use HITL mode for risky architectural work
 - AFK mode for straightforward implementations
 - Break into smaller Ralph sessions (20-30 iterations)

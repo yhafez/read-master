@@ -123,19 +123,24 @@ For user-generated content that is **publicly visible** (forum posts, reading gr
 
 1. **Basic profanity filtering** should be applied
 2. **Implementation pattern**:
+
    ```typescript
    // Zod schema validation
    const Schema = z.object({
-     content: z.string()
+     content: z
+       .string()
        .min(1)
        .max(5000)
-       .refine((val) => !containsProfanity(val), "Content contains inappropriate language")
+       .refine(
+         (val) => !containsProfanity(val),
+         "Content contains inappropriate language"
+       ),
    });
 
    // Backend validation
    import { validateFieldsNoProfanity } from "@read-master/shared/utils";
    const check = validateFieldsNoProfanity([
-     { value: data.content, name: "Content" }
+     { value: data.content, name: "Content" },
    ]);
    if (!check.valid) {
      return res.status(400).json({ error: check.errors[0] });
@@ -461,7 +466,7 @@ const generatePreReadingGuide = async (bookId: string) => {
     userId: user.id,
     operation: "pre_reading_guide",
     tokens: guide.usage.totalTokens,
-    cost: calculateCost(guide.usage)
+    cost: calculateCost(guide.usage),
   });
 
   return guide;
@@ -478,12 +483,12 @@ try {
   logger.error("Operation failed", {
     userId: req.userId,
     error: error.message,
-    stack: error.stack
+    stack: error.stack,
   });
 
   return res.status(500).json({
     error: "Failed to complete operation",
-    message: getPublicErrorMessage(error)
+    message: getPublicErrorMessage(error),
   });
 }
 ```

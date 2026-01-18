@@ -2149,33 +2149,33 @@ ACCEPTANCE CRITERIA:
 
 Run these prompts sequentially with your Ralph loop script:
 
-| Phase | Prompt | Description | Est. Iterations |
-|-------|--------|-------------|-----------------|
-| 1 | 1A | Project scaffolding | 20-30 |
-| 2 | 2A | Database schema | 15-25 |
-| 3 | 3A | Shared types & utils | 15-20 |
-| 4 | 4A | API infrastructure | 15-20 |
-| 4 | 4B | Books & Library API | 20-30 |
-| 4 | 4C | AI Features API | 25-35 |
-| 4 | 4D | SRS & Gamification API | 20-30 |
-| 4 | 4E | TTS API | 15-20 |
-| 4 | 4F | Social & Forum API | 25-35 |
-| 4 | 4G | Curriculum API | 15-20 |
-| 5 | 5A | App shell & routing | 20-30 |
-| 5 | 5B | Library UI | 25-35 |
-| 5 | 5C | Reading interface | 40-60 |
-| 5 | 5D | TTS UI | 20-30 |
-| 5 | 5E | AI Features UI | 30-40 |
-| 5 | 5F | SRS Flashcards UI | 25-35 |
-| 5 | 5G | Social Features UI | 25-35 |
-| 5 | 5H | Forum UI | 25-35 |
-| 5 | 5I | Curriculum UI | 20-30 |
-| 5 | 5J | Analytics Dashboard | 25-35 |
-| 5 | 5K | Settings & Accessibility | 20-30 |
-| 6 | 6A | Offline & PWA | 25-35 |
-| 7 | 7A | Testing | 30-40 |
-| 7 | 7B | Performance & Polish | 20-30 |
-| 8 | 8A | Production deployment | 15-20 |
+| Phase | Prompt | Description              | Est. Iterations |
+| ----- | ------ | ------------------------ | --------------- |
+| 1     | 1A     | Project scaffolding      | 20-30           |
+| 2     | 2A     | Database schema          | 15-25           |
+| 3     | 3A     | Shared types & utils     | 15-20           |
+| 4     | 4A     | API infrastructure       | 15-20           |
+| 4     | 4B     | Books & Library API      | 20-30           |
+| 4     | 4C     | AI Features API          | 25-35           |
+| 4     | 4D     | SRS & Gamification API   | 20-30           |
+| 4     | 4E     | TTS API                  | 15-20           |
+| 4     | 4F     | Social & Forum API       | 25-35           |
+| 4     | 4G     | Curriculum API           | 15-20           |
+| 5     | 5A     | App shell & routing      | 20-30           |
+| 5     | 5B     | Library UI               | 25-35           |
+| 5     | 5C     | Reading interface        | 40-60           |
+| 5     | 5D     | TTS UI                   | 20-30           |
+| 5     | 5E     | AI Features UI           | 30-40           |
+| 5     | 5F     | SRS Flashcards UI        | 25-35           |
+| 5     | 5G     | Social Features UI       | 25-35           |
+| 5     | 5H     | Forum UI                 | 25-35           |
+| 5     | 5I     | Curriculum UI            | 20-30           |
+| 5     | 5J     | Analytics Dashboard      | 25-35           |
+| 5     | 5K     | Settings & Accessibility | 20-30           |
+| 6     | 6A     | Offline & PWA            | 25-35           |
+| 7     | 7A     | Testing                  | 30-40           |
+| 7     | 7B     | Performance & Polish     | 20-30           |
+| 8     | 8A     | Production deployment    | 15-20           |
 
 **Total estimated iterations: 550-800**
 

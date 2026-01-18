@@ -8,7 +8,7 @@ A **production-ready, comprehensive PRD** for autonomous AI development using Ra
 
 ```
 ✅ Phase 1: Infrastructure      -  9 tasks
-✅ Phase 2: Database Schema     - 13 tasks  
+✅ Phase 2: Database Schema     - 13 tasks
 ✅ Phase 3: Shared Package      - 13 tasks
 ✅ Phase 4A: API Infrastructure - 10 tasks
 ✅ Phase 4B: Books & Library    - 18 tasks
@@ -31,16 +31,19 @@ A **production-ready, comprehensive PRD** for autonomous AI development using Ra
 ## 🚀 Quick Start (3 Steps)
 
 ### 1. Review the PRD
+
 ```bash
 cat prd.json | jq '.tasks[] | {id, category, priority, description}' | less
 ```
 
 ### 2. Run First Iteration (HITL)
+
 ```bash
 ./ralph-prd.sh
 ```
 
 Watch Ralph:
+
 - Pick a task (starts with `infra-001`)
 - Implement it
 - Run tests
@@ -48,6 +51,7 @@ Watch Ralph:
 - Update progress
 
 ### 3. Go Autonomous (AFK)
+
 ```bash
 ./ralph-prd-afk.sh 30  # Run 30 iterations
 ```
@@ -56,14 +60,14 @@ Come back in 30-45 minutes. Review commits.
 
 ## 📁 Files Created
 
-| File | Purpose | Size |
-|------|---------|------|
-| **prd.json** | Complete task list with 99 backend tasks | 2,353 lines |
-| **ralph-prd.sh** | HITL script (watch & intervene) | Executable |
-| **ralph-prd-afk.sh** | AFK script (autonomous) | Executable |
-| **PRD_GUIDE.md** | Complete documentation | Comprehensive |
-| **README_PRD.md** | Getting started guide | Detailed |
-| **PRD_SUMMARY.md** | This file - quick reference | You are here |
+| File                 | Purpose                                  | Size          |
+| -------------------- | ---------------------------------------- | ------------- |
+| **prd.json**         | Complete task list with 99 backend tasks | 2,353 lines   |
+| **ralph-prd.sh**     | HITL script (watch & intervene)          | Executable    |
+| **ralph-prd-afk.sh** | AFK script (autonomous)                  | Executable    |
+| **PRD_GUIDE.md**     | Complete documentation                   | Comprehensive |
+| **README_PRD.md**    | Getting started guide                    | Detailed      |
+| **PRD_SUMMARY.md**   | This file - quick reference              | You are here  |
 
 ## 🎯 Each Task Has
 
@@ -74,16 +78,9 @@ Come back in 30-45 minutes. Review commits.
   "phase": "1-infrastructure|2-database|...",
   "priority": "critical|high|medium|low",
   "description": "Clear description",
-  "steps": [
-    "Concrete step 1",
-    "Concrete step 2",
-    "Write tests"
-  ],
-  "acceptance_criteria": [
-    "Verifiable criterion 1",
-    "Verifiable criterion 2"
-  ],
-  "passes": false  // Ralph marks true when done
+  "steps": ["Concrete step 1", "Concrete step 2", "Write tests"],
+  "acceptance_criteria": ["Verifiable criterion 1", "Verifiable criterion 2"],
+  "passes": false // Ralph marks true when done
 }
 ```
 
@@ -92,7 +89,7 @@ Come back in 30-45 minutes. Review commits.
 Before EVERY commit, Ralph must run:
 
 1. **`pnpm typecheck`** - No type errors
-2. **`pnpm lint`** - No linting errors  
+2. **`pnpm lint`** - No linting errors
 3. **`pnpm vitest run`** - All tests pass
 
 **Ralph cannot bypass these** (no `--no-verify`).
@@ -100,6 +97,7 @@ Before EVERY commit, Ralph must run:
 ## 🧬 What's Included (Backend Complete)
 
 ### Infrastructure ✅
+
 - pnpm monorepo with workspaces
 - TypeScript strict mode
 - ESLint + Prettier + Husky
@@ -109,12 +107,14 @@ Before EVERY commit, Ralph must run:
 - Environment configuration
 
 ### Database ✅
+
 - Complete Prisma schema (15+ models)
 - All enums and relations
 - Proper indexes and constraints
 - Seed script with sample data
 
 ### Shared Package ✅
+
 - TypeScript types
 - Zod validation schemas
 - **SM-2 spaced repetition algorithm**
@@ -124,6 +124,7 @@ Before EVERY commit, Ralph must run:
 - Tier limits and achievements
 
 ### API Infrastructure ✅
+
 - Clerk authentication
 - Error handling
 - Zod validation middleware
@@ -133,6 +134,7 @@ Before EVERY commit, Ralph must run:
 - Health check
 
 ### Books & Library API ✅
+
 - File parsing: EPUB, PDF, DOC/DOCX
 - Google Books + Open Library integration
 - Cloudflare R2 storage
@@ -142,6 +144,7 @@ Before EVERY commit, Ralph must run:
 - Full CRUD with filtering
 
 ### AI Features API ✅
+
 - Vercel AI SDK + Claude streaming
 - Token tracking and cost calculation
 - Pre-reading guide generation
@@ -152,6 +155,7 @@ Before EVERY commit, Ralph must run:
 - Auto-generate flashcards
 
 ### SRS & Gamification API ✅
+
 - Flashcard CRUD
 - Due cards query
 - **Review with SM-2 algorithm** (4 ratings)
@@ -160,6 +164,7 @@ Before EVERY commit, Ralph must run:
 - Leaderboard (opt-in)
 
 ### TTS API ✅
+
 - Free: Web Speech API
 - Pro: OpenAI TTS streaming
 - Scholar: ElevenLabs premium
@@ -167,6 +172,7 @@ Before EVERY commit, Ralph must run:
 - Full book audio download (quota limits)
 
 ### Social & Forum API ✅
+
 - User profiles (public/private)
 - Follow/unfollow system
 - Activity feed
@@ -176,6 +182,7 @@ Before EVERY commit, Ralph must run:
 - Content moderation
 
 ### Curriculums API ✅
+
 - CRUD (Pro/Scholar only)
 - Browse/search public curriculums
 - Follow/progress tracking
@@ -184,6 +191,7 @@ Before EVERY commit, Ralph must run:
 ## ⚠️ What's Missing (TODO)
 
 ### Frontend (~80 tasks needed)
+
 - App shell & routing
 - MUI theme + Clerk auth UI
 - Library management UI
@@ -197,16 +205,19 @@ Before EVERY commit, Ralph must run:
 - Settings & WCAG 2.2 AAA accessibility
 
 ### PWA (~10 tasks)
+
 - Service worker
 - IndexedDB
 - Background sync
 
 ### Testing (~20 tasks)
+
 - E2E tests
 - Accessibility audit
 - Performance optimization
 
 ### Deployment (~10 tasks)
+
 - Vercel config
 - Environment setup
 - Monitoring
@@ -235,6 +246,7 @@ git log --oneline -10
 - **Full project**: ~$300-1,600
 
 **Reduce cost:**
+
 - HITL for risky work
 - AFK for standard implementations
 - 20-30 iterations per session
@@ -242,6 +254,7 @@ git log --oneline -10
 ## 🎬 Workflow
 
 ### HITL Mode (Learning)
+
 ```bash
 # Run once, watch, intervene
 ./ralph-prd.sh
@@ -255,6 +268,7 @@ cat progress.txt | tail -10
 ```
 
 ### AFK Mode (Autonomous)
+
 ```bash
 # Run 30 iterations
 ./ralph-prd-afk.sh 30
@@ -320,7 +334,7 @@ jq '.tasks[0].passes = true' prd.json > tmp.json && mv tmp.json prd.json
 ✅ **8. Define Quality** - "Fight entropy, leave it better"  
 ✅ **9. Docker Sandbox** - AFK script uses Docker  
 ✅ **10. Pay To Play** - Cost estimates provided  
-✅ **11. Make It Your Own** - Extend and customize PRD  
+✅ **11. Make It Your Own** - Extend and customize PRD
 
 ## 🎉 You're Ready!
 

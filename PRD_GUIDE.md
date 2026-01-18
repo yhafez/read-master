@@ -36,13 +36,14 @@ Each task follows this format:
     "Specific testable criterion 1",
     "Specific testable criterion 2"
   ],
-  "passes": false  // Ralph marks true when complete
+  "passes": false // Ralph marks true when complete
 }
 ```
 
 ## Phases Breakdown
 
 ### ✅ Phase 1: Infrastructure (9 tasks - ~20-30 iterations)
+
 - Monorepo setup with pnpm workspaces
 - TypeScript strict mode configuration
 - ESLint + Prettier + Husky pre-commit hooks
@@ -52,6 +53,7 @@ Each task follows this format:
 - Environment configuration
 
 ### ✅ Phase 2: Database (13 tasks - ~15-25 iterations)
+
 - Complete Prisma schema (15+ models)
 - All enums and relations
 - Indexes and constraints
@@ -59,6 +61,7 @@ Each task follows this format:
 - Seed script with sample data
 
 ### ✅ Phase 3: Shared Package (13 tasks - ~15-20 iterations)
+
 - TypeScript types and re-exports
 - Zod validation schemas for all operations
 - **SM-2 spaced repetition algorithm** (critical)
@@ -69,6 +72,7 @@ Each task follows this format:
 - Tier limits and achievement constants
 
 ### ✅ Phase 4A: API Infrastructure (10 tasks - ~15-20 iterations)
+
 - Clerk authentication middleware
 - Error handling with consistent responses
 - Zod validation middleware
@@ -79,6 +83,7 @@ Each task follows this format:
 - Health check endpoint
 
 ### ✅ Phase 4B: Books & Library API (16 tasks - ~20-30 iterations)
+
 - Cloudflare R2 storage service
 - Book parsing: EPUB (epub.js), PDF (pdf-parse), DOC/DOCX (mammoth)
 - Google Books API integration
@@ -91,6 +96,7 @@ Each task follows this format:
 - Content streaming with range requests
 
 ### ✅ Phase 4C: AI Features API (9 tasks - ~25-35 iterations)
+
 - Vercel AI SDK setup with Anthropic Claude
 - **Streaming AI responses**
 - Token tracking and cost calculation
@@ -103,6 +109,7 @@ Each task follows this format:
 - Auto-generate flashcards
 
 ### ✅ Phase 4D: SRS & Gamification API (7 tasks - ~20-30 iterations)
+
 - Flashcard CRUD
 - Due cards query (ordered by priority)
 - **Review with SM-2 algorithm** (all 4 ratings)
@@ -111,6 +118,7 @@ Each task follows this format:
 - Leaderboard (opt-in, global/friends)
 
 ### ✅ Phase 4E: TTS API (4 tasks - ~15-20 iterations)
+
 - Tier-based TTS:
   - Free: Web Speech API config
   - Pro: OpenAI TTS streaming
@@ -120,6 +128,7 @@ Each task follows this format:
 - Download management
 
 ### ✅ Phase 4F: Social & Forum API (13 tasks - ~25-35 iterations)
+
 - User profiles (public/private)
 - Follow/unfollow system
 - Activity feed
@@ -130,6 +139,7 @@ Each task follows this format:
 - Content moderation and reporting
 
 ### ✅ Phase 4G: Curriculums & Cron API (5 tasks - ~15-20 iterations)
+
 - Curriculum CRUD (Pro/Scholar only)
 - Browse/search public curriculums
 - Curriculum items with ordering
@@ -143,6 +153,7 @@ Each task follows this format:
 **⚠️ TODO: Frontend UI tasks need to be added**
 
 The PRD currently covers all backend work. Frontend tasks should be added for:
+
 - Phase 5: Frontend Foundation (~80+ tasks)
   - App shell, routing, MUI theme
   - Clerk auth integration
@@ -209,7 +220,7 @@ fi
 
 for ((i=1; i<=$1; i++)); do
   echo "==== Iteration $i/$1 ===="
-  
+
   result=$(docker sandbox run claude -p "@prd.json @progress.txt
   1. Read prd.json and find the highest priority incomplete task (passes: false)
   2. Prioritize by: critical > high > medium > low
@@ -221,14 +232,14 @@ for ((i=1; i<=$1; i++)); do
   8. Git commit with message: '<task-id>: <description>'
   9. If all tasks done, output <promise>COMPLETE</promise>
   ")
-  
+
   echo "$result"
-  
+
   if [[ "$result" == *"<promise>COMPLETE</promise>"* ]]; then
     echo "✅ All PRD tasks complete!"
     exit 0
   fi
-  
+
   sleep 5  # Rate limit between iterations
 done
 
@@ -246,7 +257,7 @@ From the PRD:
 Before ANY commit, Ralph must run:
 
 1. **TypeScript**: `pnpm typecheck` - No errors allowed
-2. **Lint**: `pnpm lint` - No errors allowed  
+2. **Lint**: `pnpm lint` - No errors allowed
 3. **Tests**: `pnpm vitest run` - All tests must pass
 
 **❌ NEVER use `--no-verify` to bypass pre-commit hooks** unless explicitly told by user.
@@ -339,6 +350,7 @@ docker sandbox run claude
 ```
 
 This prevents Ralph from accessing:
+
 - Your home directory
 - SSH keys
 - System files outside the project
@@ -353,6 +365,7 @@ This prevents Ralph from accessing:
 ## Contact
 
 This PRD was generated for autonomous AI development. For questions or issues:
+
 - Check `progress.txt` for current status
 - Review git commits for completed work
 - Consult SPECIFICATIONS.md for requirements clarification

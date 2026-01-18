@@ -3,12 +3,15 @@
 ## Project Overview
 
 ### App Name
+
 Read Master
 
 ### Purpose
+
 An AI-powered reading platform that dramatically improves reading comprehension and retention through intelligent pre-reading guides, contextual support during reading, adaptive post-reading assessments, and spaced repetition review. The platform serves as a smart reading companion that learns and adapts to each user's comprehension level across all their reading.
 
 ### Target Users
+
 - Leisurely readers who want to get more from their reading
 - Students at all levels (high school, university, graduate)
 - Lifelong learners and autodidacts
@@ -18,6 +21,7 @@ An AI-powered reading platform that dramatically improves reading comprehension 
 - Educators creating reading curriculums
 
 ### Unique Value Proposition
+
 Unlike static reading apps, Read Master uses AI to create a personalized, adaptive learning experience. It generates contextual guides tailored to each text, tracks comprehension across all reading, and uses proven pedagogical methods (Bloom's Taxonomy, SRS) to ensure lasting retention. All AI features can be disabled for users who prefer traditional reading.
 
 ---
@@ -33,6 +37,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to easily add books and articles from various sources so that I can read everything in one place with AI-powered comprehension support.
 
 **Acceptance Criteria:**
+
 - [ ] Upload support for: PDF, EPUB, DOC/DOCX, plain text files
 - [ ] Import from URL (articles, web pages)
 - [ ] Paste text directly
@@ -52,6 +57,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] File storage on Cloudflare R2
 
 **Content Handling:**
+
 - Store uploaded content for personal use only
 - URL imports: extract and store text for personal use
 - Respect copyright: only provide access to public domain or user-owned content
@@ -66,6 +72,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to understand the context and key concepts before I start reading so that I can comprehend and retain more from the text.
 
 **Acceptance Criteria:**
+
 - [ ] Generate pre-reading guide on demand (button click)
 - [ ] Guide components (adaptive based on text type):
   - [ ] **Vocabulary Preview:** Key terms, definitions, pronunciation
@@ -96,6 +103,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want a comfortable, feature-rich reading interface so that I can focus on reading while having tools available when I need them.
 
 **Core Reading Features:**
+
 - [ ] Clean, distraction-free reading view
 - [ ] Adjustable typography:
   - [ ] Font family (including dyslexia-friendly options like OpenDyslexic)
@@ -116,6 +124,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
   - [ ] Reading speed calculation
 
 **Annotation Features:**
+
 - [ ] Highlighting (multiple colors)
 - [ ] Inline notes/annotations
 - [ ] Bookmarks
@@ -123,12 +132,14 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Export annotations (Markdown, PDF)
 
 **Reference Features:**
+
 - [ ] Dictionary lookup (tap word)
 - [ ] Translation (configurable target language)
 - [ ] Wikipedia quick lookup
 - [ ] "Explain this" AI feature (contextual explanation)
 
 **Advanced Features:**
+
 - [ ] Speed reading mode (RSVP - Rapid Serial Visual Presentation)
 - [ ] Focus mode (hide UI, dim surroundings)
 - [ ] Bionic reading option (bold first letters)
@@ -136,6 +147,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Two-page spread view (desktop)
 
 **Configurable Interface:**
+
 - [ ] Show/hide any feature via settings
 - [ ] Customizable toolbar
 - [ ] Keyboard shortcuts
@@ -143,6 +155,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Remember settings per user
 
 **Offline Support:**
+
 - [ ] Download books for offline reading
 - [ ] Sync progress when back online
 - [ ] Offline annotations (sync later)
@@ -156,6 +169,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to get help understanding difficult passages without leaving the reading interface so that I can maintain my reading momentum.
 
 **Acceptance Criteria:**
+
 - [ ] Tap/select word or passage for AI context
 - [ ] "Explain this" button - plain language explanation
 - [ ] "Why is this important?" - significance in context
@@ -178,6 +192,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to listen to my books with natural-sounding voices so that I can read while commuting, exercising, or resting my eyes.
 
 **Acceptance Criteria:**
+
 - [ ] **Free Tier:** Browser Web Speech API (basic quality)
 - [ ] **Pro Tier:** OpenAI TTS (natural quality)
 - [ ] **Scholar Tier:** ElevenLabs (premium quality)
@@ -203,6 +218,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to test my understanding after reading so that I can identify gaps and reinforce what I learned.
 
 **Assessment Framework (Bloom's Taxonomy):**
+
 - [ ] **Remember:** Recall facts and basic concepts
 - [ ] **Understand:** Explain ideas, summarize
 - [ ] **Apply:** Use information in new situations
@@ -211,6 +227,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] **Create:** Produce new work based on reading
 
 **Question Types:**
+
 - [ ] Multiple choice (4 options)
 - [ ] Short answer (AI-graded with feedback)
 - [ ] Passage identification ("Where did the author say X?")
@@ -219,6 +236,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Summary writing (AI-graded)
 
 **Adaptive Difficulty:**
+
 - [ ] Start at estimated user level
 - [ ] Increase difficulty on correct answers
 - [ ] Decrease on incorrect
@@ -226,6 +244,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Personalize based on past performance
 
 **Feedback:**
+
 - [ ] Immediate feedback on answers
 - [ ] Explanations for correct answers
 - [ ] Links back to relevant passages
@@ -233,6 +252,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Breakdown by skill area
 
 **Lexile/Reading Level Integration:**
+
 - [ ] Estimate text difficulty
 - [ ] Track user's reading level over time
 - [ ] Recommend appropriately challenging texts
@@ -246,12 +266,14 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to review key concepts at optimal intervals so that I remember what I've read long after finishing a book.
 
 **Card Types (Auto-generated from reading):**
+
 - [ ] Vocabulary cards (word, definition, context sentence)
 - [ ] Key concept cards (concept, explanation, source)
 - [ ] Comprehension cards (question, answer, passage reference)
 - [ ] Quote cards (quote, significance, source)
 
 **SRS Algorithm:**
+
 - [ ] Based on SM-2 algorithm (proven effective)
 - [ ] Intervals increase with correct recalls
 - [ ] Intervals decrease with incorrect recalls
@@ -260,6 +282,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Configurable daily card limit
 
 **Gamification:**
+
 - [ ] XP for completing reviews
 - [ ] Streak tracking (daily reviews)
 - [ ] Levels and progression
@@ -274,6 +297,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Visual progress indicators
 
 **Management:**
+
 - [ ] Browse all cards
 - [ ] Edit/delete cards
 - [ ] Create manual cards
@@ -290,6 +314,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to see my reading statistics and progress so that I can understand my habits and improvement over time.
 
 **Metrics:**
+
 - [ ] Books/articles completed
 - [ ] Pages/words read (daily, weekly, monthly, all-time)
 - [ ] Reading time (with breakdown by day/week)
@@ -306,12 +331,14 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Reading level progression
 
 **Customization:**
+
 - [ ] Drag-and-drop dashboard layout
 - [ ] Show/hide individual widgets
 - [ ] Date range filters
 - [ ] Export data (CSV, JSON)
 
 **Visualizations:**
+
 - [ ] Reading calendar heatmap
 - [ ] Progress charts
 - [ ] Skill radar chart
@@ -326,12 +353,14 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to customize how the AI interacts with me so that it feels supportive and matches my learning style.
 
 **Personality Options:**
+
 - [ ] Encouraging Tutor (default) - supportive, celebratory
 - [ ] Neutral Assistant - factual, minimal personality
 - [ ] Socratic Guide - asks questions, promotes thinking
 - [ ] Custom tone (user-defined prompt addition)
 
 **AI Behavior Settings:**
+
 - [ ] Verbosity level (concise to detailed)
 - [ ] Language complexity (match my level, challenge me, simplify)
 - [ ] Proactive suggestions (on/off)
@@ -348,6 +377,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As an educator or avid reader, I want to create themed reading lists with structure so that I can guide others through a topic systematically.
 
 **Acceptance Criteria:**
+
 - [ ] Create curriculum with:
   - [ ] Title, description, cover image
   - [ ] Target audience / difficulty level
@@ -378,6 +408,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a reader, I want to connect with others reading the same books so that I can discuss ideas and stay motivated.
 
 **Profiles:**
+
 - [ ] User profiles (public/private toggle)
 - [ ] Display: username, avatar, bio, reading stats (opt-in)
 - [ ] Currently reading
@@ -387,6 +418,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Badges/achievements
 
 **Reading Groups:**
+
 - [ ] Create reading groups (book clubs)
 - [ ] Invite members
 - [ ] Shared reading progress
@@ -396,6 +428,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Public vs. private groups
 
 **Social Interactions:**
+
 - [ ] Follow other users
 - [ ] Activity feed (friends' reading activity)
 - [ ] Like/comment on shared highlights
@@ -403,6 +436,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Reading recommendations from friends
 
 **Privacy:**
+
 - [ ] All social features opt-in
 - [ ] Reading activity private by default
 - [ ] Granular privacy controls
@@ -417,6 +451,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a user, I want a place to discuss books, get help, suggest features, and connect with other readers outside of reading groups.
 
 **Forum Categories:**
+
 - [ ] **Book Discussions** - organized by genre/topic
 - [ ] **Reading Strategies** - tips and techniques
 - [ ] **Feature Requests** - suggest and vote on new features
@@ -427,6 +462,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] **Off-Topic** - general discussion
 
 **Forum Features:**
+
 - [ ] Create threads
 - [ ] Reply with rich text formatting
 - [ ] Upvote/downvote posts
@@ -438,6 +474,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Pin important threads (moderators)
 
 **Moderation:**
+
 - [ ] Report posts
 - [ ] Moderator roles
 - [ ] Profanity filter
@@ -454,6 +491,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a non-English speaker, I want to use the app in my native language so that I can navigate easily and focus on reading.
 
 **Supported Languages (Launch):**
+
 - [ ] English (default)
 - [ ] Arabic (RTL support)
 - [ ] Spanish
@@ -462,6 +500,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - [ ] Tagalog
 
 **Implementation:**
+
 - [ ] All UI strings externalized
 - [ ] Language switcher in settings
 - [ ] RTL layout support
@@ -479,6 +518,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **User Story:** As a user, I want secure access to my account and reading data across all my devices.
 
 **Acceptance Criteria:**
+
 - [ ] Clerk authentication
 - [ ] Sign up / Sign in (email, Google, Apple)
 - [ ] Password reset
@@ -497,6 +537,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 **Description:** Comprehensive settings for customizing the app experience.
 
 **Categories:**
+
 - [ ] **Account:** Profile, password, connected accounts, data export, delete account
 - [ ] **Reading:** Default font, theme, speed reading settings, TTS preferences
 - [ ] **AI:** Personality, verbosity, disable AI, comprehension check frequency
@@ -534,6 +575,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 ### Platform/Technology Stack
 
 **Frontend:**
+
 - React 18 + TypeScript
 - Vite (build tool)
 - Material-UI (MUI) for components
@@ -547,6 +589,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - IndexedDB (local storage)
 
 **Backend:**
+
 - Vercel Serverless Functions
 - TypeScript
 - Zod (validation)
@@ -554,30 +597,37 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - Compression middleware
 
 **Database & Cache:**
+
 - Prisma ORM
 - Vercel Postgres (Neon)
 - Upstash Redis
 
 **File Storage:**
+
 - Cloudflare R2 (books, audio files)
 
 **Authentication:**
+
 - Clerk
 
 **AI:**
+
 - Vercel AI SDK
 - Anthropic Claude API
 
 **Text-to-Speech:**
+
 - Web Speech API (free tier)
 - OpenAI TTS API (Pro tier)
 - ElevenLabs API (Scholar tier)
 
 **External APIs:**
+
 - Google Books API
 - Open Library API
 
 **Development:**
+
 - pnpm workspaces (monorepo)
 - Vitest (testing)
 - ESLint + Prettier
@@ -585,6 +635,7 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - TypeScript strict mode
 
 **Deployment:**
+
 - Vercel (frontend + API)
 - Vercel Cron Jobs
 - Cloudflare R2
@@ -647,7 +698,7 @@ model User {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   // Relations
   books             Book[]
   readingProgress   ReadingProgress[]
@@ -666,7 +717,7 @@ model Book {
   id                String    @id @default(uuid())
   userId            String
   user              User      @relation(fields: [userId], references: [id])
-  
+
   title             String
   author            String?
   description       String?
@@ -682,14 +733,14 @@ model Book {
   lexileScore       Float?
   genre             String?
   tags              String[]
-  
+
   status            ReadingStatus @default(WANT_TO_READ)
   isPublic          Boolean   @default(false)
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   // Relations
   chapters          Chapter[]
   readingProgress   ReadingProgress[]
@@ -728,13 +779,13 @@ model Chapter {
   id                String    @id @default(uuid())
   bookId            String
   book              Book      @relation(fields: [bookId], references: [id])
-  
+
   title             String?
   orderIndex        Int
   startPosition     Int       // Character offset
   endPosition       Int
   wordCount         Int?
-  
+
   createdAt         DateTime  @default(now())
 }
 
@@ -745,14 +796,14 @@ model ReadingProgress {
   user              User      @relation(fields: [userId], references: [id])
   bookId            String
   book              Book      @relation(fields: [bookId], references: [id])
-  
+
   currentPosition   Int       @default(0)
   percentage        Float     @default(0)
   totalReadTime     Int       @default(0) // seconds
   lastReadAt        DateTime  @default(now())
   startedAt         DateTime  @default(now())
   completedAt       DateTime?
-  
+
   @@unique([userId, bookId])
 }
 
@@ -763,7 +814,7 @@ model Annotation {
   user              User      @relation(fields: [userId], references: [id])
   bookId            String
   book              Book      @relation(fields: [bookId], references: [id])
-  
+
   type              AnnotationType
   startOffset       Int
   endOffset         Int
@@ -771,7 +822,7 @@ model Annotation {
   note              String?
   color             String?   // For highlights
   isPublic          Boolean   @default(false)
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
@@ -788,7 +839,7 @@ model PreReadingGuide {
   id                String    @id @default(uuid())
   bookId            String    @unique
   book              Book      @relation(fields: [bookId], references: [id])
-  
+
   vocabulary        Json      // Array of {word, definition, pronunciation}
   keyArguments      Json      // Main thesis/arguments
   chapterSummaries  Json      // Per-chapter summaries
@@ -798,7 +849,7 @@ model PreReadingGuide {
   relatedWorks      Json?     // Array of related texts
   keyThemes         String[]
   readingObjectives String[]
-  
+
   generatedAt       DateTime  @default(now())
   version           Int       @default(1)
 }
@@ -810,14 +861,14 @@ model Assessment {
   user              User      @relation(fields: [userId], references: [id])
   bookId            String
   book              Book      @relation(fields: [bookId], references: [id])
-  
+
   type              AssessmentType
   questions         Json      // Array of questions
   answers           Json      // User's answers
   score             Float?
   bloomsBreakdown   Json?     // Score per Bloom's level
   feedback          String?   @db.Text
-  
+
   startedAt         DateTime  @default(now())
   completedAt       DateTime?
 }
@@ -835,22 +886,22 @@ model Flashcard {
   user              User      @relation(fields: [userId], references: [id])
   bookId            String?
   book              Book?     @relation(fields: [bookId], references: [id])
-  
+
   type              FlashcardType
   front             String    @db.Text
   back              String    @db.Text
   context           String?   // Source passage
   tags              String[]
-  
+
   // SRS fields (SM-2)
   easeFactor        Float     @default(2.5)
   interval          Int       @default(0)    // days
   repetitions       Int       @default(0)
   dueDate           DateTime  @default(now())
   lastReviewedAt    DateTime?
-  
+
   status            FlashcardStatus @default(NEW)
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
@@ -876,10 +927,10 @@ model FlashcardReview {
   flashcardId       String
   flashcard         Flashcard @relation(fields: [flashcardId], references: [id])
   userId            String
-  
+
   rating            Int       // 1=Again, 2=Hard, 3=Good, 4=Easy
   responseTime      Int       // milliseconds
-  
+
   reviewedAt        DateTime  @default(now())
 }
 
@@ -887,19 +938,19 @@ model FlashcardReview {
 model UserStats {
   id                String    @id @default(uuid())
   userId            String    @unique
-  
+
   totalXP           Int       @default(0)
   level             Int       @default(1)
   currentStreak     Int       @default(0)
   longestStreak     Int       @default(0)
   lastActiveDate    DateTime?
-  
+
   booksCompleted    Int       @default(0)
   totalWordsRead    Int       @default(0)
   totalReadTime     Int       @default(0) // seconds
   cardsReviewed     Int       @default(0)
   cardsMastered     Int       @default(0)
-  
+
   updatedAt         DateTime  @updatedAt
 }
 
@@ -918,9 +969,9 @@ model UserAchievement {
   userId            String
   achievementId     String
   achievement       Achievement @relation(fields: [achievementId], references: [id])
-  
+
   unlockedAt        DateTime  @default(now())
-  
+
   @@unique([userId, achievementId])
 }
 
@@ -929,7 +980,7 @@ model Curriculum {
   id                String    @id @default(uuid())
   userId            String
   user              User      @relation(fields: [userId], references: [id])
-  
+
   title             String
   description       String?   @db.Text
   coverImage        String?
@@ -937,14 +988,14 @@ model Curriculum {
   difficulty        String?
   estimatedTime     String?
   learningObjectives String[]
-  
+
   visibility        Visibility @default(PRIVATE)
   followCount       Int       @default(0)
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   items             CurriculumItem[]
   followers         CurriculumFollow[]
 }
@@ -961,12 +1012,12 @@ model CurriculumItem {
   curriculum        Curriculum @relation(fields: [curriculumId], references: [id])
   bookId            String?
   book              Book?     @relation(fields: [bookId], references: [id])
-  
+
   orderIndex        Int
   title             String    // Can be book title or custom
   externalUrl       String?   // For books not in system
   notes             String?   @db.Text
-  
+
   createdAt         DateTime  @default(now())
 }
 
@@ -975,10 +1026,10 @@ model CurriculumFollow {
   userId            String
   curriculumId      String
   curriculum        Curriculum @relation(fields: [curriculumId], references: [id])
-  
+
   currentItemIndex  Int       @default(0)
   followedAt        DateTime  @default(now())
-  
+
   @@unique([userId, curriculumId])
 }
 
@@ -989,9 +1040,9 @@ model Follow {
   follower          User      @relation("followers", fields: [followerId], references: [id])
   followingId       String
   following         User      @relation("following", fields: [followingId], references: [id])
-  
+
   createdAt         DateTime  @default(now())
-  
+
   @@unique([followerId, followingId])
 }
 
@@ -1002,11 +1053,11 @@ model ReadingGroup {
   coverImage        String?
   isPublic          Boolean   @default(false)
   createdById       String
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   members           ReadingGroupMember[]
   discussions       GroupDiscussion[]
 }
@@ -1017,10 +1068,10 @@ model ReadingGroupMember {
   group             ReadingGroup @relation(fields: [groupId], references: [id])
   userId            String
   user              User      @relation(fields: [userId], references: [id])
-  
+
   role              GroupRole @default(MEMBER)
   joinedAt          DateTime  @default(now())
-  
+
   @@unique([groupId, userId])
 }
 
@@ -1035,16 +1086,16 @@ model GroupDiscussion {
   groupId           String
   group             ReadingGroup @relation(fields: [groupId], references: [id])
   userId            String
-  
+
   title             String
   content           String    @db.Text
   bookId            String?
   chapterId         String?
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   replies           DiscussionReply[]
 }
 
@@ -1054,9 +1105,9 @@ model DiscussionReply {
   discussion        GroupDiscussion @relation(fields: [discussionId], references: [id])
   userId            String
   parentReplyId     String?
-  
+
   content           String    @db.Text
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
@@ -1070,7 +1121,7 @@ model ForumCategory {
   description       String?
   orderIndex        Int
   icon              String?
-  
+
   posts             ForumPost[]
 }
 
@@ -1080,7 +1131,7 @@ model ForumPost {
   category          ForumCategory @relation(fields: [categoryId], references: [id])
   userId            String
   user              User      @relation(fields: [userId], references: [id])
-  
+
   title             String
   content           String    @db.Text
   isPinned          Boolean   @default(false)
@@ -1088,11 +1139,11 @@ model ForumPost {
   viewCount         Int       @default(0)
   upvotes           Int       @default(0)
   downvotes         Int       @default(0)
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   replies           ForumReply[]
   votes             ForumVote[]
 }
@@ -1103,16 +1154,16 @@ model ForumReply {
   post              ForumPost @relation(fields: [postId], references: [id])
   userId            String
   parentReplyId     String?
-  
+
   content           String    @db.Text
   isBestAnswer      Boolean   @default(false)
   upvotes           Int       @default(0)
   downvotes         Int       @default(0)
-  
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  
+
   votes             ForumVote[]
 }
 
@@ -1123,11 +1174,11 @@ model ForumVote {
   post              ForumPost? @relation(fields: [postId], references: [id])
   replyId           String?
   reply             ForumReply? @relation(fields: [replyId], references: [id])
-  
+
   value             Int       // 1 or -1
-  
+
   createdAt         DateTime  @default(now())
-  
+
   @@unique([userId, postId])
   @@unique([userId, replyId])
 }
@@ -1144,7 +1195,7 @@ model AIUsageLog {
   duration          Int       // ms
   success           Boolean
   errorMessage      String?
-  
+
   createdAt         DateTime  @default(now())
 }
 
@@ -1156,9 +1207,9 @@ model AuditLog {
   entityId          String
   action            String
   changes           Json
-  
+
   timestamp         DateTime  @default(now())
-  
+
   @@index([userId])
   @@index([entityType, entityId])
 }
@@ -1167,12 +1218,14 @@ model AuditLog {
 ### External APIs
 
 **Google Books API:**
+
 - Search books by title, author, ISBN
 - Get book metadata (title, author, description, cover)
 - Access public domain full text
 - Endpoints: `volumes.list`, `volumes.get`
 
 **Open Library API:**
+
 - Search and retrieve book data
 - Access to full texts (public domain)
 - Endpoints: `/search.json`, `/works/{id}.json`, `/isbn/{isbn}.json`
@@ -1203,6 +1256,7 @@ model AuditLog {
 ## Monetization Model
 
 ### Free Tier
+
 - 3 books in library
 - Basic pre/post reading guides (shorter)
 - 5 AI interactions/day
@@ -1214,6 +1268,7 @@ model AuditLog {
 - Ads shown
 
 ### Pro Tier ($9.99/month or $79.99/year)
+
 - Unlimited library
 - Full AI guides (comprehensive)
 - 100 AI interactions/day
@@ -1226,6 +1281,7 @@ model AuditLog {
 - Priority support
 
 ### Scholar Tier ($19.99/month or $149.99/year)
+
 - Everything in Pro
 - Unlimited AI interactions
 - Best TTS (ElevenLabs)
@@ -1237,6 +1293,7 @@ model AuditLog {
 - White-label curriculum sharing
 
 ### Additional Revenue
+
 - **Institutional Licenses:** Schools, universities, libraries (custom pricing)
 - **AI Credits:** Pay-as-you-go for free users ($5 = 100 credits)
 - **Curriculum Marketplace:** (Future) Creators sell premium curriculums (70/30 split)
@@ -1246,6 +1303,7 @@ model AuditLog {
 ## Accessibility (WCAG 2.2 AAA)
 
 ### Requirements
+
 - [ ] Screen reader full support (ARIA labels, roles)
 - [ ] Keyboard navigation for all features
 - [ ] Focus indicators clearly visible
@@ -1270,6 +1328,7 @@ model AuditLog {
 ## Privacy & Legal
 
 ### GDPR Compliance
+
 - [ ] Privacy policy
 - [ ] Cookie consent banner
 - [ ] Data processing transparency
@@ -1281,6 +1340,7 @@ model AuditLog {
 - [ ] Data breach notification plan
 
 ### Data Handling
+
 - [ ] All data collection opt-in
 - [ ] Reading activity private by default
 - [ ] Clear data retention policies
@@ -1291,6 +1351,7 @@ model AuditLog {
 - [ ] AI training data opt-in only
 
 ### Copyright
+
 - [ ] Only store content for personal use
 - [ ] Public domain books via APIs
 - [ ] User-owned content uploads
@@ -1299,6 +1360,7 @@ model AuditLog {
 - [ ] Clear content ownership terms
 
 ### Content Moderation
+
 - [ ] Profanity filter for public content
 - [ ] Report system for inappropriate content
 - [ ] Moderator tools
@@ -1310,6 +1372,7 @@ model AuditLog {
 ## Success Criteria
 
 ### The app is successful if:
+
 1. Users show measurable comprehension improvement (pre/post assessment scores)
 2. SRS retention rate >80% after 30 days
 3. Daily active users return for SRS reviews (DAU/MAU >0.4)
@@ -1320,6 +1383,7 @@ model AuditLog {
 8. Accessibility audit passes WCAG 2.2 AAA
 
 ### Definition of Done (MVP)
+
 - [ ] All must-have features implemented
 - [ ] Responsive design (mobile, tablet, desktop)
 - [ ] Offline reading functional
@@ -1376,7 +1440,9 @@ NODE_ENV=development
 ## Development Notes
 
 ### Ralph Wiggum Compatibility
+
 This spec is designed for iterative AI development:
+
 - Clear acceptance criteria with checkboxes
 - Phased feature breakdown
 - Testable success criteria
@@ -1384,6 +1450,7 @@ This spec is designed for iterative AI development:
 - Explicit validation rules
 
 ### Recommended Build Order
+
 1. Project infrastructure & database
 2. Authentication (Clerk)
 3. Book upload/import & library
@@ -1423,66 +1490,72 @@ This spec is designed for iterative AI development:
 ## Achievement Definitions
 
 ### Reading Achievements
-| Code | Name | Description | Criteria | XP |
-|------|------|-------------|----------|-----|
-| first_book | First Chapter | Complete your first book | booksCompleted >= 1 | 100 |
-| bookworm | Bookworm | Complete 10 books | booksCompleted >= 10 | 500 |
-| bibliophile | Bibliophile | Complete 50 books | booksCompleted >= 50 | 2000 |
-| scholar | Scholar | Complete 100 books | booksCompleted >= 100 | 5000 |
-| speed_reader | Speed Reader | Read 500 WPM average | avgReadingSpeed >= 500 | 300 |
-| marathon | Marathon Reader | Read for 5 hours in one day | dailyReadTime >= 18000 | 250 |
-| night_owl | Night Owl | Read past midnight | readingSession after midnight | 50 |
-| early_bird | Early Bird | Read before 6 AM | readingSession before 6am | 50 |
+
+| Code         | Name            | Description                 | Criteria                      | XP   |
+| ------------ | --------------- | --------------------------- | ----------------------------- | ---- |
+| first_book   | First Chapter   | Complete your first book    | booksCompleted >= 1           | 100  |
+| bookworm     | Bookworm        | Complete 10 books           | booksCompleted >= 10          | 500  |
+| bibliophile  | Bibliophile     | Complete 50 books           | booksCompleted >= 50          | 2000 |
+| scholar      | Scholar         | Complete 100 books          | booksCompleted >= 100         | 5000 |
+| speed_reader | Speed Reader    | Read 500 WPM average        | avgReadingSpeed >= 500        | 300  |
+| marathon     | Marathon Reader | Read for 5 hours in one day | dailyReadTime >= 18000        | 250  |
+| night_owl    | Night Owl       | Read past midnight          | readingSession after midnight | 50   |
+| early_bird   | Early Bird      | Read before 6 AM            | readingSession before 6am     | 50   |
 
 ### Streak Achievements
-| Code | Name | Description | Criteria | XP |
-|------|------|-------------|----------|-----|
-| streak_7 | On Fire | 7-day reading streak | currentStreak >= 7 | 100 |
-| streak_30 | Dedicated | 30-day reading streak | currentStreak >= 30 | 500 |
-| streak_100 | Unstoppable | 100-day reading streak | currentStreak >= 100 | 2000 |
-| streak_365 | Legendary | 365-day reading streak | currentStreak >= 365 | 10000 |
+
+| Code       | Name        | Description            | Criteria             | XP    |
+| ---------- | ----------- | ---------------------- | -------------------- | ----- |
+| streak_7   | On Fire     | 7-day reading streak   | currentStreak >= 7   | 100   |
+| streak_30  | Dedicated   | 30-day reading streak  | currentStreak >= 30  | 500   |
+| streak_100 | Unstoppable | 100-day reading streak | currentStreak >= 100 | 2000  |
+| streak_365 | Legendary   | 365-day reading streak | currentStreak >= 365 | 10000 |
 
 ### SRS Achievements
-| Code | Name | Description | Criteria | XP |
-|------|------|-------------|----------|-----|
-| first_review | Memory Spark | Complete first SRS review | cardsReviewed >= 1 | 25 |
-| cards_100 | Card Collector | Review 100 cards | cardsReviewed >= 100 | 200 |
-| cards_1000 | Memory Master | Review 1000 cards | cardsReviewed >= 1000 | 1000 |
-| mastered_50 | Getting Sharp | Master 50 cards | cardsMastered >= 50 | 300 |
-| mastered_500 | Steel Trap | Master 500 cards | cardsMastered >= 500 | 1500 |
-| retention_90 | Excellent Recall | 90%+ retention rate | retentionRate >= 0.9 | 500 |
-| perfect_day | Perfect Day | 100% correct in a review session (10+ cards) | sessionAccuracy == 1.0 && sessionCards >= 10 | 150 |
+
+| Code         | Name             | Description                                  | Criteria                                     | XP   |
+| ------------ | ---------------- | -------------------------------------------- | -------------------------------------------- | ---- |
+| first_review | Memory Spark     | Complete first SRS review                    | cardsReviewed >= 1                           | 25   |
+| cards_100    | Card Collector   | Review 100 cards                             | cardsReviewed >= 100                         | 200  |
+| cards_1000   | Memory Master    | Review 1000 cards                            | cardsReviewed >= 1000                        | 1000 |
+| mastered_50  | Getting Sharp    | Master 50 cards                              | cardsMastered >= 50                          | 300  |
+| mastered_500 | Steel Trap       | Master 500 cards                             | cardsMastered >= 500                         | 1500 |
+| retention_90 | Excellent Recall | 90%+ retention rate                          | retentionRate >= 0.9                         | 500  |
+| perfect_day  | Perfect Day      | 100% correct in a review session (10+ cards) | sessionAccuracy == 1.0 && sessionCards >= 10 | 150  |
 
 ### Social Achievements
-| Code | Name | Description | Criteria | XP |
-|------|------|-------------|----------|-----|
-| first_highlight | Highlighter | Create first highlight | highlightsCreated >= 1 | 25 |
-| annotator | Annotator | Create 100 annotations | annotationsCreated >= 100 | 300 |
-| social_butterfly | Social Butterfly | Gain 10 followers | followersCount >= 10 | 200 |
-| influencer | Influencer | Gain 100 followers | followersCount >= 100 | 1000 |
-| group_founder | Group Founder | Create a reading group | groupsCreated >= 1 | 150 |
-| curriculum_creator | Curriculum Creator | Create a public curriculum | publicCurriculumsCreated >= 1 | 200 |
-| helpful | Helpful | Get 10 best answers in forum | bestAnswers >= 10 | 500 |
+
+| Code               | Name               | Description                  | Criteria                      | XP   |
+| ------------------ | ------------------ | ---------------------------- | ----------------------------- | ---- |
+| first_highlight    | Highlighter        | Create first highlight       | highlightsCreated >= 1        | 25   |
+| annotator          | Annotator          | Create 100 annotations       | annotationsCreated >= 100     | 300  |
+| social_butterfly   | Social Butterfly   | Gain 10 followers            | followersCount >= 10          | 200  |
+| influencer         | Influencer         | Gain 100 followers           | followersCount >= 100         | 1000 |
+| group_founder      | Group Founder      | Create a reading group       | groupsCreated >= 1            | 150  |
+| curriculum_creator | Curriculum Creator | Create a public curriculum   | publicCurriculumsCreated >= 1 | 200  |
+| helpful            | Helpful            | Get 10 best answers in forum | bestAnswers >= 10             | 500  |
 
 ### Comprehension Achievements
-| Code | Name | Description | Criteria | XP |
-|------|------|-------------|----------|-----|
-| first_assessment | Pop Quiz | Complete first assessment | assessmentsCompleted >= 1 | 50 |
-| ace | Ace | Score 100% on an assessment | assessmentScore == 1.0 | 200 |
-| consistent | Consistent | Score 80%+ on 10 assessments | assessments80Plus >= 10 | 400 |
-| blooms_master | Deep Thinker | Score 90%+ on all Bloom's levels | allBloomsLevels >= 0.9 | 1000 |
+
+| Code             | Name         | Description                      | Criteria                  | XP   |
+| ---------------- | ------------ | -------------------------------- | ------------------------- | ---- |
+| first_assessment | Pop Quiz     | Complete first assessment        | assessmentsCompleted >= 1 | 50   |
+| ace              | Ace          | Score 100% on an assessment      | assessmentScore == 1.0    | 200  |
+| consistent       | Consistent   | Score 80%+ on 10 assessments     | assessments80Plus >= 10   | 400  |
+| blooms_master    | Deep Thinker | Score 90%+ on all Bloom's levels | allBloomsLevels >= 0.9    | 1000 |
 
 ### Level Thresholds
-| Level | XP Required | Title |
-|-------|-------------|-------|
-| 1 | 0 | Novice Reader |
-| 2 | 100 | Apprentice |
-| 3 | 300 | Page Turner |
-| 4 | 600 | Bookworm |
-| 5 | 1000 | Avid Reader |
-| 6 | 1500 | Literature Lover |
-| 7 | 2500 | Scholar |
-| 8 | 4000 | Bibliophile |
-| 9 | 6000 | Sage |
-| 10 | 10000 | Master Reader |
-| 11+ | +5000 per level | Grand Master |
+
+| Level | XP Required     | Title            |
+| ----- | --------------- | ---------------- |
+| 1     | 0               | Novice Reader    |
+| 2     | 100             | Apprentice       |
+| 3     | 300             | Page Turner      |
+| 4     | 600             | Bookworm         |
+| 5     | 1000            | Avid Reader      |
+| 6     | 1500            | Literature Lover |
+| 7     | 2500            | Scholar          |
+| 8     | 4000            | Bibliophile      |
+| 9     | 6000            | Sage             |
+| 10    | 10000           | Master Reader    |
+| 11+   | +5000 per level | Grand Master     |

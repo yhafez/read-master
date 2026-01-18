@@ -75,7 +75,7 @@
         "pnpm lint runs without errors",
         "pnpm format works"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "infra-004",

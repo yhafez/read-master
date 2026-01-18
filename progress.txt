@@ -33,3 +33,26 @@ Started: 2026-01-17
 - pnpm typecheck passes with no errors across all 6 packages
 - All feedback loops pass (typecheck, lint, test)
 - Files: tsconfig.json, packages/config/tsconfig/*.json, */tsconfig.json, */src/index.ts
+
+## Iteration 3
+
+[2026-01-17] infra-003: Configure ESLint and Prettier with shared configs
+- Installed ESLint dependencies in root package.json (@eslint/js, eslint, globals, typescript-eslint)
+- Created packages/config/eslint/ with shared ESLint configurations:
+  - base.js: Core TypeScript rules with strict settings (no-console, consistent-type-imports, no-unused-vars, etc.)
+  - react.js: Extends base with React/JSX support and browser globals
+  - node.js: Extends base with Node.js globals for backend packages
+  - library.js: Extends base for shared packages (browser + node globals)
+  - index.js: Re-exports all configurations
+- Created packages/config/prettier/ with shared Prettier configuration:
+  - index.js: Consistent formatting (semi, double quotes, 2-space indent, trailing commas, etc.)
+- Updated packages/config/package.json with exports for eslint/* and prettier
+- Updated root eslint.config.js to use shared config from @read-master/config
+- Updated root prettier.config.js to use shared config from @read-master/config
+- Created eslint.config.js for all workspace packages (web: react, api: node, database: node, shared: library, ai: library)
+- Updated lint scripts in all packages from placeholders to `eslint .`
+- Added `type: module` to root package.json to fix ESM module warning
+- Added @read-master/config as workspace dependency to root package.json
+- Ran pnpm format to fix formatting issues in markdown files
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test
+- Files: packages/config/eslint/*.js, packages/config/prettier/index.js, */eslint.config.js, */package.json

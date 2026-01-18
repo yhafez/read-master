@@ -408,6 +408,7 @@ Use this template to extend the PRD with frontend tasks. Copy these structures i
 ## Phase 5G-5K: Social, Forum, Curriculums, Analytics, Settings
 
 Continue this pattern for remaining frontend features:
+
 - **5G**: Social profiles, follow/unfollow, groups
 - **5H**: Forum UI (categories, posts, replies, voting)
 - **5I**: Curriculum builder with drag-and-drop
@@ -477,6 +478,7 @@ Each section needs ~8-12 tasks.
 **Total Frontend: ~105 tasks**
 
 Plus:
+
 - **Phase 6 (PWA)**: ~10 tasks
 - **Phase 7 (Testing)**: ~20 tasks
 - **Phase 8 (Deployment)**: ~10 tasks

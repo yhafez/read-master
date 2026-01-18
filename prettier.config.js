@@ -1,12 +1,9 @@
+import { prettierConfig } from "@read-master/config/prettier";
+
+/**
+ * Root Prettier configuration for Read Master.
+ * Uses shared configuration from packages/config.
+ */
+
 /** @type {import('prettier').Config} */
-export default {
-  semi: true,
-  singleQuote: false,
-  tabWidth: 2,
-  trailingComma: "es5",
-  printWidth: 80,
-  useTabs: false,
-  bracketSpacing: true,
-  arrowParens: "always",
-  endOfLine: "lf",
-};
+export default prettierConfig;

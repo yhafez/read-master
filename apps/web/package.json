@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "echo 'web dev placeholder'",
     "build": "echo 'web build placeholder'",
-    "lint": "echo 'web lint placeholder'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "test": "echo 'web test placeholder'"
   },
