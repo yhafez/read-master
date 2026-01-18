@@ -2549,3 +2549,80 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Response structure tests (correct fields in response)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1112 tests in apps/api)
 - Files: apps/api/api/books/upload.ts, apps/api/api/books/upload.test.ts, apps/api/package.json
+
+## Iteration 53
+
+[2026-01-18] api-books-008: Implement POST /api/books/import-url endpoint
+- Created apps/api/api/books/import-url.ts with comprehensive URL import handling
+- Implemented URL validation:
+  - Zod schema validation with importUrlSchema
+  - Validates URL format with z.url()
+  - Rejects non-http(s) protocols for security
+  - Accepts optional metadata (title, author, description, genre, tags, language, isPublic)
+- Implemented URL fetching:
+  - fetchUrl() with configurable timeout (30s) and size limit (10MB)
+  - Custom User-Agent for bot identification
+  - Follows redirects automatically
+  - Validates content-length before and after fetch
+  - AbortController for timeout handling
+- Implemented HTML article extraction (extractArticleFromHtml):
+  - extractMetaContent() for name/property meta tags
+  - extractTitle() for <title> tag extraction
+  - extractFirstHeading() for <h1> fallback
+  - extractMainContent() with priority-based content detection
+  - Supports <article>, <main>, and content-class divs
+  - Removes scripts, styles, and noscript tags
+  - extractJsonLdAuthor() and extractJsonLdDate() for structured data
+  - getDomainFromUrl() for fallback title
+  - cleanTitle() to remove site name suffixes
+  - decodeHtmlEntities() for HTML entity handling
+- Implemented content type detection:
+  - isHtmlContentType() for text/html, application/xhtml+xml, application/xml
+  - isTextContentType() for text/plain, text/markdown
+  - Rejects unsupported content types with descriptive error
+- Implemented tier limit checking:
+  - Uses getTierLimits() and isWithinLimit() from @read-master/shared
+  - Counts existing non-deleted books for user
+  - Returns 403 with upgrade message when limit reached
+- Implemented Book record creation:
+  - Uses Prisma db.book.create() with extracted metadata
+  - Sets source as "URL" with sourceUrl field
+  - Sets fileType as "HTML" for URL imports
+  - User-provided metadata takes precedence over extracted
+  - Returns book data with extraction metadata
+- Added comprehensive error handling:
+  - Fetch errors with descriptive messages
+  - Timeout handling with AbortController
+  - Content validation (minimum 10 characters)
+  - Proper HTTP status codes (400, 403, 404, 405, 500)
+- Created comprehensive tests in apps/api/api/books/import-url.test.ts (89 tests):
+  - Schema validation tests:
+    - URL validation (https, http, empty, invalid, protocols)
+    - Title validation (valid, trim, max length)
+    - Author validation (valid, max length, null)
+    - Tags validation (array, max count, max length)
+    - Language validation (2-char code)
+    - isPublic validation (boolean)
+  - HTML extraction tests:
+    - extractMetaContent (name, property, content ordering, entities)
+    - extractTitle (tag, whitespace, entities)
+    - extractFirstHeading (h1, attributes, nested, null)
+    - extractMainContent (article, main, content class, scripts, styles)
+    - getDomainFromUrl (domain, www, subdomain, invalid)
+    - cleanTitle (pipe, dash, en dash separators)
+    - decodeHtmlEntities (amp, lt, gt, quot, numeric, hex, nbsp)
+    - extractArticleFromHtml (complete data, fallbacks, JSON-LD)
+  - Content type detection tests:
+    - isHtmlContentType (html, xhtml, xml, charset)
+    - isTextContentType (plain, markdown)
+  - Constants tests (MAX_CONTENT_SIZE, FETCH_TIMEOUT_MS, USER_AGENT)
+  - Edge cases:
+    - Empty HTML, scripts only, nested entities, malformed HTML
+    - Very long content (10k words)
+    - URL with port, auth, localhost, IP address
+  - Integration tests:
+    - Wikipedia-style article extraction
+    - Medium-style article extraction
+    - News article with JSON-LD
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (89 new tests)
+- Files: apps/api/api/books/import-url.ts, apps/api/api/books/import-url.test.ts
