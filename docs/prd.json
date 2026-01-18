@@ -794,7 +794,7 @@
         "Language constants exist",
         "Constants can be imported in other packages"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-013",

@@ -1473,3 +1473,68 @@ No discoveries added during this sprint (foundational infrastructure work)
   - lexileUtils export verification
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1569 tests total: 47 api + 172 database + 12 web + 1338 shared)
 - Files: packages/shared/src/utils/lexile.ts, packages/shared/src/utils/lexile.test.ts, packages/shared/src/utils/index.ts
+
+## Iteration 34
+
+[2026-01-17] shared-012: Define tier limits and achievement constants
+- Created packages/shared/src/constants/ directory structure
+- Created src/constants/limits.ts with comprehensive tier limit definitions:
+  - TierLimits type with all limit fields (maxBooks, maxAiInteractionsPerDay, maxActiveFlashcards, etc.)
+  - TierAction type for checkable actions
+  - FREE_TIER_LIMITS: 3 books, 5 AI/day, 50 cards, web_speech TTS, no TTS downloads
+  - PRO_TIER_LIMITS: Unlimited books, 100 AI/day, unlimited cards, openai TTS, 5 downloads/month
+  - SCHOLAR_TIER_LIMITS: Unlimited everything, elevenlabs TTS, unlimited downloads
+  - TIER_LIMITS record indexed by UserTier
+  - SUBSCRIPTION_PRICING: PRO $9.99/month, SCHOLAR $19.99/month
+  - AI_CREDITS_PRICING: 50 credits $4.99, 150 credits $9.99, 500 credits $24.99
+  - Helper functions: getTierLimits, canPerformAction, isWithinLimit, getRemainingQuota
+  - Tier comparison: isTierHigherOrEqual, getMinimumTierForAction
+  - limitUtils object with all functions for convenient importing
+- Created src/constants/achievements.ts with all 30 achievements from spec:
+  - AchievementCriteriaType for criteria types (booksCompleted, currentStreak, etc.)
+  - AchievementCriterion with operator and value, optional time-based window
+  - AchievementDefinition with code, name, description, category, tier, criteria, xpReward
+  - READING_ACHIEVEMENTS (8): first_book, bookworm, bibliophile, scholar, speed_reader, marathon, night_owl, early_bird
+  - STREAK_ACHIEVEMENTS (4): streak_7, streak_30, streak_100, streak_365
+  - LEARNING_ACHIEVEMENTS (7): first_review, cards_100, cards_1000, mastered_50, mastered_500, retention_90, perfect_day
+  - SOCIAL_ACHIEVEMENTS (7): first_highlight, annotator, social_butterfly, influencer, group_founder, curriculum_creator, helpful
+  - MILESTONE_ACHIEVEMENTS (4): first_assessment, ace, consistent, blooms_master
+  - LEVEL_THRESHOLDS: 10 levels with XP requirements (0-10000) and titles (Novice Reader to Master Reader)
+  - XP_PER_LEVEL_AFTER_10: 5000 XP per level for levels 11+
+  - GRAND_MASTER_TITLE: "Grand Master" for levels 11+
+  - XP_REWARDS for actions: BOOK_COMPLETED (100), FLASHCARD_CORRECT (5), ASSESSMENT_COMPLETED (50), etc.
+  - Helper functions: getAchievementByCode, getAchievementsByCategory, getAchievementsByTier
+  - Level functions: calculateLevel, getXPForLevel, getTitleForLevel
+  - Criteria checking: checkAchievementCriteria with all criteria types including time-based (night_owl, early_bird)
+  - getUnlockableAchievements: Find achievements user can unlock based on stats
+  - calculateTotalXP: Calculate XP from earned achievement codes
+  - achievementUtils object with all functions
+- Created src/constants/languages.ts with i18n configuration:
+  - SupportedLanguageCode type: "en" | "ar" | "es" | "ja" | "zh" | "tl"
+  - LanguageInfo type with code, englishName, nativeName, isRtl, isEnabled, sortOrder, primaryRegion, fullLocale
+  - TextDirection type: "ltr" | "rtl"
+  - Individual language definitions: ENGLISH, ARABIC (RTL), SPANISH, JAPANESE, CHINESE, TAGALOG
+  - SUPPORTED_LANGUAGES array, SUPPORTED_LANGUAGE_CODES array
+  - LANGUAGES_BY_CODE record, RTL_LANGUAGE_CODES array
+  - DEFAULT_LANGUAGE_CODE ("en"), DEFAULT_LOCALE ("en-US")
+  - DATE_FORMAT_STYLES and TIME_FORMAT_STYLES per language
+  - NUMBER_LOCALES for number formatting per language
+  - FONT_STACKS for language-specific fonts (Noto Sans Arabic, Noto Sans JP, etc.)
+  - DYSLEXIA_FONT configuration for accessibility
+  - Helper functions: isSupportedLanguage, getLanguageInfo, isRtlLanguage, getTextDirection
+  - Locale functions: getFullLocale, getEnabledLanguages, getLanguageOptions, parseLanguageCode
+  - Font function: getFontStack with dyslexia font support
+  - Formatting functions: formatNumber, formatLocalizedDate, formatLocalizedTime
+  - languageUtils object with all functions
+- Created src/constants/index.ts with organized re-exports:
+  - All limits types, constants, and functions
+  - All achievements types, constants, and functions
+  - All languages types, constants, and functions
+- Updated packages/shared/package.json:
+  - Added "./constants": "./src/constants/index.ts" export path
+- Created comprehensive test suites:
+  - src/constants/limits.test.ts: 85 tests for tier limits, pricing, helper functions
+  - src/constants/achievements.test.ts: 105 tests for all 30 achievements, level system, criteria checking
+  - src/constants/languages.test.ts: 91 tests for language definitions, RTL, formatting functions
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1619 tests total: 47 api + 172 database + 12 web + 1388 shared)
+- Files: packages/shared/src/constants/limits.ts, packages/shared/src/constants/limits.test.ts, packages/shared/src/constants/achievements.ts, packages/shared/src/constants/achievements.test.ts, packages/shared/src/constants/languages.ts, packages/shared/src/constants/languages.test.ts, packages/shared/src/constants/index.ts, packages/shared/package.json
