@@ -40,8 +40,9 @@ export interface BookCardProps {
 
 /**
  * Get status color based on book status
+ * Exported for testing
  */
-function getStatusColor(status: Book["status"]) {
+export function getStatusColor(status: Book["status"]) {
   switch (status) {
     case "reading":
       return "info";
@@ -57,8 +58,9 @@ function getStatusColor(status: Book["status"]) {
 
 /**
  * Get status translation key
+ * Exported for testing
  */
-function getStatusKey(status: Book["status"]) {
+export function getStatusKey(status: Book["status"]) {
   switch (status) {
     case "reading":
       return "library.filters.reading";
