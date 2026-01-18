@@ -3059,3 +3059,75 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3573 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/books/[id].ts, apps/api/api/books/[id].test.ts
+
+## Iteration 61
+
+[2026-01-18] api-books-016: Implement GET /api/books/:id/content endpoint
+- Created apps/api/api/books/[id]/content.ts for streaming book content
+- Implemented comprehensive content streaming with range request support:
+  - Validates book ID using Zod schema
+  - Checks user exists in database
+  - Verifies user has access to book (owner OR public book)
+  - Returns 404 if book not found or no downloadable content
+  - Returns 403 if user doesn't have access
+  - Returns 503 if R2 storage is unavailable
+- Implemented R2 storage integration:
+  - Uses getFileInfo() to check file existence and get size
+  - Uses getFile() to retrieve file content
+  - Proper error handling for storage operations
+- Implemented HTTP Range requests (RFC 7233):
+  - Parses Range header (bytes=start-end format)
+  - Supports open-ended ranges (bytes=start-)
+  - Validates range values (start < end, within file bounds)
+  - Limits max range size to 10MB for safety
+  - Returns 206 Partial Content for range requests
+  - Returns 200 OK for full content requests
+- Set appropriate response headers:
+  - Content-Type: Inferred from file extension
+  - Accept-Ranges: bytes (indicates range support)
+  - Content-Disposition: inline with encoded filename
+  - Content-Range: bytes start-end/total (for partial content)
+  - Content-Length: Size of response body
+  - Cache-Control: private, max-age=3600
+- Created helper functions with full test coverage:
+  - parseRangeHeader(): Parse HTTP Range header with validation
+  - extractFilename(): Extract filename from file path
+  - buildContentMetadata(): Build content metadata from book and file info
+  - setContentHeaders(): Set common response headers
+  - formatContentRange(): Format Content-Range header value
+  - extractRangeFromBuffer(): Extract byte range from buffer
+- Added types:
+  - ParsedRange: Range request result type
+  - ContentMetadata: Content response metadata type
+- Created comprehensive tests in apps/api/api/books/[id]/content.test.ts (89 new tests):
+  - Constants tests: MAX_ID_LENGTH, MIN_ID_LENGTH, DEFAULT_CHUNK_SIZE, MAX_RANGE_SIZE
+  - bookIdSchema tests: valid IDs, trimming, invalid IDs, max length
+  - parseRangeHeader tests:
+    - Valid ranges: standard, open-ended, single byte, boundary
+    - Range size limiting: MAX_RANGE_SIZE enforcement
+    - Invalid ranges: undefined, empty, no prefix, wrong format, negative, inverted
+    - Edge cases: zero total size, large files
+  - extractFilename tests:
+    - Standard paths: simple, nested, deeply nested, single filename
+    - Special characters: spaces, unicode, parentheses
+    - Edge cases: empty string, only slashes, multiple dots, hidden files
+  - buildContentMetadata tests:
+    - All file types: PDF, EPUB, DOCX, DOC, TXT, HTML
+    - Null file type handling
+    - Content length variations: zero, large, very large
+    - File path variations: nested, with spaces
+    - acceptRanges always true
+  - formatContentRange tests:
+    - Standard ranges, full file, single byte
+    - Large values, edge cases
+  - extractRangeFromBuffer tests:
+    - Standard ranges: first, middle, last, single, entire
+    - Buffer length verification
+    - Binary data handling
+    - Edge cases: zero-length, at end, large buffers
+  - Type exports verification
+  - Integration tests: parseRangeHeader + extractRangeFromBuffer
+  - Real-world scenarios: PDF streaming, EPUB loading, resume download
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3662 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/books/[id]/content.ts, apps/api/api/books/[id]/content.test.ts

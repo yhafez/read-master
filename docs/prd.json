@@ -278,7 +278,7 @@
         "Access control is enforced",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-reading-001",
