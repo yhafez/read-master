@@ -220,3 +220,42 @@ export {
   type DOCXParseOptions,
   type DOCXParseMessage,
 } from "./books.js";
+
+// Google Books API service
+export {
+  // Search functions
+  searchBooks,
+  searchByISBN,
+  searchByAuthor,
+  searchByTitle,
+
+  // Details function
+  getBookDetails,
+
+  // Utility functions
+  getBestImageUrl,
+  isGoogleBooksConfigured,
+
+  // Cache invalidation
+  invalidateSearchCache,
+  invalidateDetailsCache,
+
+  // Service objects
+  googleBooks,
+  googleBooksUtils,
+
+  // Error class
+  GoogleBooksError,
+
+  // Constants
+  GOOGLE_BOOKS_API_BASE,
+  DEFAULT_SEARCH_OPTIONS,
+  MAX_RESULTS_LIMIT,
+  SEARCH_CACHE_TTL,
+  DETAILS_CACHE_TTL,
+
+  // Types
+  type GoogleBookMetadata,
+  type GoogleBooksSearchOptions,
+  type GoogleBooksSearchResult,
+} from "./googleBooks.js";

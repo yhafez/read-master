@@ -2351,3 +2351,69 @@ No discoveries added during this sprint (foundational infrastructure work)
   - DOCX integration tests (3 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2798 tests)
 - Files: apps/api/src/services/books.ts, apps/api/src/services/books.test.ts, apps/api/src/services/index.ts, apps/api/package.json
+
+
+## Iteration 50
+
+[2026-01-18] api-books-005: Create Google Books API service
+- Created apps/api/src/services/googleBooks.ts with comprehensive Google Books API integration
+- Defined Google Books-specific types:
+  - GoogleBookMetadata: Normalized book metadata with id, title, subtitle, authors, publisher, publishedDate, description, ISBN-10/13, pageCount, categories, ratings, imageLinks, saleInfo, accessInfo
+  - GoogleBooksSearchOptions: maxResults, startIndex, langRestrict, orderBy, printType, filter, inField (title, author, publisher, subject, isbn), useCache
+  - GoogleBooksSearchResult: totalItems, items, hasMore, startIndex, query
+  - GoogleBooksError: Custom error class with statusCode, code, retryable properties
+- Implemented core search functions:
+  - searchBooks(): Full-featured search with pagination, filters, caching, rate limiting
+  - searchByISBN(): Search by ISBN-10 or ISBN-13 (cleans hyphens/spaces)
+  - searchByAuthor(): Search by author name using inauthor: operator
+  - searchByTitle(): Search by title using intitle: operator
+- Implemented details function:
+  - getBookDetails(): Fetch detailed book info by Google Books volume ID
+- Implemented API response normalization:
+  - Extracts ISBN-10 and ISBN-13 from industryIdentifiers
+  - Upgrades HTTP image URLs to HTTPS
+  - Normalizes imageLinks with proper optional property handling
+  - Extracts sale info (price, saleability, isEbook)
+  - Extracts access info (isTextReadable, isPdfAvailable, isEpubAvailable)
+- Implemented caching using Redis:
+  - Search results cached for 15 minutes (SEARCH_CACHE_TTL)
+  - Book details cached for 1 hour (DETAILS_CACHE_TTL)
+  - Cache key builders for search and details
+  - invalidateSearchCache() and invalidateDetailsCache() helpers
+- Implemented rate limiting:
+  - Request queue with 1 request per second limit
+  - Exponential backoff retry on 429 responses (up to 3 retries)
+  - fetchWithRetry() handles transient failures
+- Implemented error handling:
+  - GoogleBooksError class with statusCode, code, retryable properties
+  - Parses API error responses for detailed messages
+  - Graceful handling of 404 (returns null instead of throwing)
+- Added utility functions:
+  - getBestImageUrl(): Get best available image for preferred size (small/medium/large)
+  - isGoogleBooksConfigured(): Check if API key is set
+- Added constants:
+  - GOOGLE_BOOKS_API_BASE: "https://www.googleapis.com/books/v1"
+  - DEFAULT_SEARCH_OPTIONS: maxResults: 10, startIndex: 0, orderBy: "relevance", printType: "books", useCache: true
+  - MAX_RESULTS_LIMIT: 40 (API limit)
+- Created namespaced exports:
+  - googleBooks: All functions and utilities
+  - googleBooksUtils: Utility functions for external use
+- Updated apps/api/src/services/index.ts with all Google Books exports
+- Added 64 new Google Books tests to googleBooks.test.ts:
+  - Type export tests (3 tests)
+  - Constants tests (5 tests)
+  - GoogleBooksError tests (4 tests)
+  - isGoogleBooksConfigured tests (3 tests)
+  - getBestImageUrl tests (7 tests)
+  - searchBooks tests (10 tests)
+  - getBookDetails tests (5 tests)
+  - searchByISBN tests (5 tests)
+  - searchByAuthor tests (1 test)
+  - searchByTitle tests (1 test)
+  - googleBooks object tests (4 tests)
+  - googleBooksUtils object tests (2 tests)
+  - Index exports tests (6 tests)
+  - Volume normalization edge cases (6 tests)
+  - Rate limiting tests (1 test)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2862 tests)
+- Files: apps/api/src/services/googleBooks.ts, apps/api/src/services/googleBooks.test.ts, apps/api/src/services/index.ts
