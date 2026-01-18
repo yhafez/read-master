@@ -545,14 +545,14 @@ describe("book schemas", () => {
       expect(() => updateReadingProgressSchema.parse(data)).toThrow();
     });
 
-    it("should accept read time in seconds", () => {
+    it("should accept session duration in seconds", () => {
       const data = {
         bookId: "clxyz1234567890abcdef",
         currentPosition: 5000,
-        readTimeSeconds: 600,
+        sessionDuration: 600,
       };
       const result = updateReadingProgressSchema.parse(data);
-      expect(result.readTimeSeconds).toBe(600);
+      expect(result.sessionDuration).toBe(600);
     });
   });
 

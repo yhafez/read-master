@@ -455,24 +455,44 @@ export type AddFromLibraryInput = z.infer<typeof addFromLibrarySchema>;
 
 /**
  * Update reading progress
+ * Supports partial updates - at least one of currentPosition, percentage, or sessionDuration must be provided
  */
-export const updateReadingProgressSchema = z.object({
-  bookId: bookIdSchema,
-  currentPosition: z
-    .number()
-    .int()
-    .nonnegative("Position must be non-negative"),
-  percentage: z
-    .number()
-    .min(0)
-    .max(100, "Percentage must be between 0 and 100")
-    .optional(),
-  readTimeSeconds: z
-    .number()
-    .int()
-    .nonnegative("Read time must be non-negative")
-    .optional(),
-});
+export const updateReadingProgressSchema = z
+  .object({
+    bookId: bookIdSchema,
+    currentPosition: z
+      .number()
+      .int()
+      .nonnegative("Position must be non-negative")
+      .optional(),
+    percentage: z
+      .number()
+      .min(0)
+      .max(100, "Percentage must be between 0 and 100")
+      .optional(),
+    sessionDuration: z
+      .number()
+      .int("Session duration must be an integer")
+      .nonnegative("Session duration cannot be negative")
+      .max(3600, "Session duration cannot exceed 1 hour")
+      .optional(),
+    averageWpm: z
+      .number()
+      .int("WPM must be an integer")
+      .min(1, "WPM must be at least 1")
+      .max(2000, "WPM cannot exceed 2000")
+      .optional(),
+  })
+  .refine(
+    (data) =>
+      data.currentPosition !== undefined ||
+      data.percentage !== undefined ||
+      data.sessionDuration !== undefined,
+    {
+      message:
+        "At least one of currentPosition, percentage, or sessionDuration must be provided",
+    }
+  );
 export type UpdateReadingProgressInput = z.infer<
   typeof updateReadingProgressSchema
 >;

@@ -3131,3 +3131,64 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3662 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/books/[id]/content.ts, apps/api/api/books/[id]/content.test.ts
+
+## Iteration 62
+
+[2026-01-18] api-reading-001: Implement reading progress tracking endpoints
+- Created apps/api/api/reading/progress.ts for reading progress GET/PUT operations
+- Implemented GET /api/reading/progress endpoint:
+  - Validates bookId query parameter using Zod schema (CUID format)
+  - Checks user exists and has access to the book
+  - Returns 404 if book not found or no progress exists
+  - Returns comprehensive progress data with calculated readTime
+- Implemented PUT /api/reading/progress endpoint:
+  - Validates request body with updateReadingProgressSchema
+  - Supports partial updates (position, percentage, sessionDuration, averageWpm)
+  - Requires at least one progress field to be provided
+  - Uses Prisma upsert to create or update progress
+  - Auto-updates book status to READING on first progress
+  - Detects first-time completion (percentage = 100)
+  - Awards completion XP (100 XP) on book completion
+  - Checks and awards achievements on completion
+  - Returns progress with XP awarded and new achievements
+- Implemented gamification features:
+  - BOOK_COMPLETION_XP constant (100 XP)
+  - COMPLETION_THRESHOLD constant (100%)
+  - checkAndAwardAchievements(): Checks for new achievements on completion
+  - calculateAchievementXp(): Calculates XP from achievement rewards
+- Created helper functions with full test coverage:
+  - formatReadTime(): Converts seconds to human-readable format (Xh Ym)
+  - formatProgressResponse(): Builds progress response with optional fields
+- Updated packages/shared/src/schemas/books.ts:
+  - Enhanced updateReadingProgressSchema with sessionDuration, averageWpm
+  - Made currentPosition optional to support partial updates
+  - Added .refine() to require at least one progress field
+  - Schema now validates CUID format for bookId
+- Created comprehensive tests in apps/api/api/reading/progress.test.ts (67 tests):
+  - Constants tests: BOOK_COMPLETION_XP, COMPLETION_THRESHOLD, SUPPORTED_METHODS
+  - formatReadTime tests:
+    - Standard cases: hours and minutes, only minutes, only hours
+    - Edge cases: zero seconds, less than 1 minute, negative values
+    - Large values, exact hour boundaries
+    - Minute boundary handling
+  - formatProgressResponse tests:
+    - Required fields: bookId, percentage, currentPosition
+    - Optional fields: readTime formatting, averageWpm, lastReadAt
+    - Edge cases: zero values, null WPM, no read time
+  - calculateAchievementXp tests:
+    - Single/multiple/no achievements, large XP values
+    - Zero XP rewards, undefined rewards
+  - getReadingProgressSchema tests:
+    - Valid bookId (CUID format), invalid/missing bookId
+  - updateReadingProgressSchema tests:
+    - Full update, partial updates (position/percentage/sessionDuration only)
+    - All field types: integers, edge values
+    - Validation failures: empty object, no progress fields
+    - Invalid values: negative position, out-of-range percentage
+    - Invalid WPM: zero, non-integer, exceeds max
+    - Invalid sessionDuration: non-integer, exceeds 1 hour
+- Fixed packages/shared/src/schemas/books.test.ts:
+  - Updated test from readTimeSeconds to sessionDuration
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3729 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/reading/progress.ts, apps/api/api/reading/progress.test.ts, packages/shared/src/schemas/books.ts, packages/shared/src/schemas/books.test.ts

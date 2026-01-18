@@ -305,7 +305,7 @@
         "XP and achievements are awarded",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-annotations-001",
