@@ -304,3 +304,46 @@ export {
   type OpenLibrarySearchResult,
   type OpenLibraryBookContent,
 } from "./openLibrary.js";
+
+// AI service (Vercel AI SDK with Anthropic Claude)
+export {
+  // Core functions
+  completion,
+  streamCompletion,
+  complete,
+  stream,
+
+  // Client management
+  getAnthropicClient,
+  getModel,
+  isAIAvailable,
+  resetClient,
+
+  // Token and cost utilities
+  extractUsage,
+  calculateCost,
+  estimateTokens,
+
+  // Logging
+  logAIOperation,
+  logAIError,
+
+  // Utility functions
+  buildSystemPrompt,
+  formatBookContext,
+
+  // Service objects
+  ai,
+
+  // Constants
+  CLAUDE_PRICING,
+
+  // Types
+  type AIOperation,
+  type ReadingLevel,
+  type AICompletionOptions,
+  type TokenUsage,
+  type CostCalculation,
+  type AICompletionResult,
+  type AIStreamResult,
+} from "./ai.js";

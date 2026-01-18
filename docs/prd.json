@@ -611,7 +611,7 @@
         "Costs are calculated",
         "All calls are logged"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-ai-002",

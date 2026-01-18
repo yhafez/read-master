@@ -3932,3 +3932,67 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (63 new tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4506 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+
+## Iteration 74
+
+[2026-01-18] api-ai-001: Set up Vercel AI SDK with Anthropic Claude
+- Installed Vercel AI SDK and Anthropic provider:
+  - ai v6.0.39
+  - @ai-sdk/anthropic v3.0.15
+- Created comprehensive AI service in apps/api/src/services/ai.ts:
+  - Types and interfaces:
+    - AIOperation type for tracking different AI operations
+    - ReadingLevel type for adapting responses
+    - AICompletionOptions interface for configuration
+    - TokenUsage interface for usage tracking
+    - CostCalculation interface for cost tracking
+    - AICompletionResult and AIStreamResult interfaces
+  - Client management:
+    - getAnthropicClient(): singleton pattern for Anthropic client
+    - getModel(): get LanguageModel instance
+    - isAIAvailable(): check if AI is configured
+    - resetClient(): reset for testing
+  - Token and cost utilities:
+    - extractUsage(): extract tokens from AI SDK response
+    - calculateCost(): calculate USD cost based on model pricing
+    - estimateTokens(): rough token estimation (4 chars/token)
+    - CLAUDE_PRICING constant with all Claude model prices
+  - Core AI functions:
+    - completion(): non-streaming completion with full result
+    - streamCompletion(): streaming with usage/cost promises
+    - complete(): simple string -> string helper
+    - stream(): simple string -> async iterable helper
+  - Logging wrappers:
+    - logAIOperation(): comprehensive operation logging
+    - logAIError(): error logging with context
+  - Utility functions:
+    - buildSystemPrompt(): adapt prompts to reading level
+    - formatBookContext(): truncate book content intelligently
+- Created comprehensive test suite with 51 tests in ai.test.ts:
+  - extractUsage tests (6 tests)
+  - calculateCost tests (8 tests)
+  - estimateTokens tests (5 tests)
+  - CLAUDE_PRICING tests (4 tests)
+  - buildSystemPrompt tests (7 tests)
+  - formatBookContext tests (7 tests)
+  - isAIAvailable tests (3 tests)
+  - getAnthropicClient tests (4 tests)
+  - resetClient tests (2 tests)
+  - Type definition tests (5 tests)
+- Updated services/index.ts to export AI service
+- Files created:
+  - apps/api/src/services/ai.ts
+  - apps/api/src/services/ai.test.ts
+- Files modified:
+  - apps/api/package.json (added ai, @ai-sdk/anthropic dependencies)
+  - apps/api/src/services/index.ts (added AI service exports)
+- Acceptance criteria verification:
+  - ✅ AI SDK is configured correctly (Vercel AI SDK with Anthropic provider)
+  - ✅ Streaming works (streamCompletion and stream functions)
+  - ✅ Token usage is tracked (extractUsage function)
+  - ✅ Costs are calculated (calculateCost with CLAUDE_PRICING)
+  - ✅ All calls are logged (logAIOperation and logAIError)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4557 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
