@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Check for console.log statements in staged files
+if git diff --cached --name-only | xargs grep -l 'console\.log' 2>/dev/null | grep -E '\.(ts|tsx|js|jsx)$'; then
+  echo "Error: console.log statements found in staged files"
+  echo "Please remove console.log statements before committing"
+  exit 1
+fi
+
+# Run lint-staged
+pnpm exec lint-staged
+
+# Run TypeScript type check
+pnpm typecheck
