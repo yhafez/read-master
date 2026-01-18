@@ -91,7 +91,7 @@
       "priority": 6,
       "category": "infrastructure",
       "defer_to_next_sprint": false,
-      "passes": false,
+      "passes": true,
       "dependencies": ["infra-003"],
       "acceptance_criteria": [
         ".env.example created with all variables",
