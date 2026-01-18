@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+// =============================================================================
+// CORE MODELS - User & Authentication
+// =============================================================================
+
+/// User model - Core authentication and profile data
+/// Uses Clerk for authentication, stores additional profile info
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  username  String?  @unique
+  firstName String?
+  lastName  String?
+  avatarUrl String?
+
+  // Subscription & Tier
+  tier            UserTier  @default(FREE)
+  tierExpiresAt   DateTime?
+  stripeCustomerId String?  @unique
+
+  // Preferences stored as JSON for flexibility
+  preferences Json @default("{}")
+
+  // Reading level tracking
+  readingLevel    String?  // e.g., "1200L" for Lexile
+  preferredLang   String   @default("en")
+
+  // Privacy settings
+  profilePublic   Boolean @default(false)
+  showStats       Boolean @default(false)
+  showActivity    Boolean @default(false)
+
+  // AI preferences
+  aiEnabled       Boolean @default(true)
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Indexes for common queries
+  @@index([clerkId])
+  @@index([email])
+  @@index([username])
+  @@index([deletedAt])
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum UserTier {
+  FREE
+  PRO
+  SCHOLAR
+}

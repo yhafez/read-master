@@ -300,3 +300,48 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Added CRON_SECRET to .env.example with generation instructions
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (93 tests total: 47 api + 34 shared + 12 web)
 - Files: vercel.json, apps/api/api/cron/srs-reminders.ts, apps/api/api/cron/streak-check.ts, apps/api/api/cron/cleanup-expired.ts, apps/api/api/cron/*.test.ts, .env.example
+
+## Iteration 11
+
+[2026-01-17] db-001: Set up Prisma in packages/database with initial configuration
+- Transformed packages/database from placeholder to full Prisma ORM package
+- Updated package.json with Prisma dependencies:
+  - @prisma/client ^6.2.0 (runtime client)
+  - prisma ^6.2.0 (development CLI)
+  - tsx ^4.19.2 (for running seed scripts)
+- Added database scripts to package.json:
+  - db:generate: prisma generate
+  - db:push: prisma db push
+  - db:migrate: prisma migrate dev
+  - db:migrate:deploy: prisma migrate deploy
+  - db:studio: prisma studio
+  - db:seed: tsx prisma/seed.ts
+  - postinstall: prisma generate (auto-generate on install)
+- Created prisma/ directory structure:
+  - prisma/schema.prisma: Initial Prisma schema with PostgreSQL datasource
+- Created initial schema with:
+  - User model with all specified fields from spec
+  - clerkId as unique identifier for Clerk auth
+  - email and username unique constraints
+  - UserTier enum (FREE, PRO, SCHOLAR)
+  - Preferences as JSON field for flexibility
+  - Privacy settings (profilePublic, showStats, showActivity)
+  - AI preferences (aiEnabled)
+  - Soft delete support (deletedAt)
+  - Proper indexes on clerkId, email, username, deletedAt
+- Created src/client.ts: Prisma client singleton
+  - Prevents multiple instances during hot reloading
+  - Configurable logging (verbose in development)
+  - Exports connect/disconnect utilities
+- Created src/index.ts: Clean exports
+  - Re-exports prisma client and utilities
+  - Re-exports all Prisma generated types
+- Verified Prisma client generates successfully (prisma generate runs on postinstall)
+- Created comprehensive test suite (8 tests) in src/client.test.ts:
+  - Tests for prisma client export
+  - Tests for common Prisma methods ($connect, $disconnect, $transaction)
+  - Tests for user model accessor (findMany, findUnique, create, etc.)
+  - Tests for utility functions (connect, disconnect)
+  - Tests for singleton behavior
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (101 tests total: 47 api + 34 shared + 12 web + 8 database)
+- Files: packages/database/package.json, packages/database/prisma/schema.prisma, packages/database/src/client.ts, packages/database/src/index.ts, packages/database/src/client.test.ts

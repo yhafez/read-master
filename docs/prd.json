@@ -234,7 +234,7 @@
         "Prisma client can be generated",
         "packages/database/src/db.ts exports Prisma client"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-002",
