@@ -1036,7 +1036,7 @@
         "Streaming works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-tts-003",

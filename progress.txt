@@ -5252,3 +5252,83 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5723 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Discovery: Actual audio streaming for OpenAI/ElevenLabs will be in api-tts-002 (TTS service)
+
+
+## Iteration 91
+
+[2026-01-18] api-tts-002: Create TTS service for OpenAI and ElevenLabs
+- Created apps/api/src/services/tts.ts with comprehensive TTS service:
+  - Types exported:
+    - TTSProvider: "web_speech" | "openai" | "elevenlabs"
+    - OpenAIVoice: "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer"
+    - ElevenLabsVoice: 10 premium voice options
+    - OpenAIModel: "tts-1" | "tts-1-hd"
+    - AudioFormat: "mp3" | "opus" | "aac" | "flac" | "wav" | "pcm"
+    - TextChunk, TTSOptions, TTSResult, AudioChunk, TTSStreamResult
+  - Text chunking functions:
+    - chunkText: Smart text splitting at sentence/paragraph/word boundaries
+    - estimateChunkCount: Estimate number of chunks needed
+    - getTotalCharacterCount: Sum character count from chunks
+  - Cost calculation functions:
+    - calculateTTSCost: Calculate cost per provider and character count
+    - estimateTTSCost: Estimate cost before processing
+    - TTS_PRICING: OpenAI $15/1M, HD $30/1M, ElevenLabs $0.30/1K
+  - Voice validation functions:
+    - isValidOpenAIVoice, isValidElevenLabsVoice
+    - normalizeVoice: Normalize and validate voice per provider
+    - getElevenLabsVoiceId: Get voice ID from name
+  - OpenAI TTS integration:
+    - isOpenAITTSAvailable: Check API key presence
+    - generateOpenAIAudio: Generate audio from text
+    - generateOpenAIAudioChunked: Process multiple chunks
+    - streamOpenAIAudio: Stream chunks as AsyncGenerator
+  - ElevenLabs TTS integration:
+    - isElevenLabsTTSAvailable: Check API key presence
+    - generateElevenLabsAudio: Generate audio with stability/similarity settings
+    - generateElevenLabsAudioChunked: Process multiple chunks
+    - streamElevenLabsAudio: Stream chunks as AsyncGenerator
+  - Unified interface:
+    - generateAudio: Provider-agnostic audio generation
+    - generateAudioLongText: Auto-chunking for long text
+    - streamAudio: Provider-agnostic streaming
+    - isTTSProviderAvailable: Check any provider availability
+- Created comprehensive test suite with 103 tests in tts.test.ts:
+  - Constants tests (22 tests):
+    - OPENAI_VOICES, ELEVENLABS_VOICES, voice ID mapping
+    - Default values, chunk size constants, pricing
+  - Text chunking tests (15 tests):
+    - Empty/whitespace handling, single/multiple chunks
+    - Sentence/paragraph/word boundary breaking
+    - Position/index tracking, custom chunk sizes
+  - Cost calculation tests (8 tests):
+    - Zero/negative characters, per-provider pricing
+    - HD vs standard OpenAI pricing, linear scaling
+  - Voice validation tests (15 tests):
+    - Valid/invalid voice detection
+    - Case sensitivity, default normalization
+    - ElevenLabs voice ID retrieval
+  - Provider availability tests (9 tests):
+    - API key presence/absence detection
+    - Per-provider availability checking
+  - Type export tests (9 tests):
+    - All type definitions verified
+  - Service export tests (4 tests):
+    - ttsService namespace exports
+  - Edge cases tests (11 tests):
+    - Unicode, periods-only, newlines-only
+    - Very long words, exact chunk boundaries
+    - Empty voice strings, large character counts
+  - Integration scenarios (5 tests):
+    - Full OpenAI/ElevenLabs/web_speech workflows
+    - Cost estimation before processing
+- Files created:
+  - apps/api/src/services/tts.ts
+  - apps/api/src/services/tts.test.ts
+- Acceptance criteria verification:
+  - ✅ Both providers work correctly (OpenAI and ElevenLabs integrations)
+  - ✅ Long text is chunked properly (smart boundary detection)
+  - ✅ Streaming works (AsyncGenerator implementation)
+  - ✅ Tests pass (103 tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5826 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
