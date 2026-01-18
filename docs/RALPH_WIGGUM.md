@@ -26,6 +26,25 @@ Ralph Wiggum is an autonomous development workflow that enables consistent, high
 
 4. **Discover & Document**
    - While working, note high-value discoveries
+   - Discoveries can include:
+     - Performance improvements
+     - UX improvements
+     - Bug fixes
+     - Code cleanup
+     - Documentation improvements
+     - Test coverage improvements
+     - Security improvements
+     - Monetization opportunities
+     - New features
+     - New APIs
+     - New libraries
+     - New tools
+     - New patterns
+     - New best practices
+     - New documentation
+     - New tests
+     - New code
+     - More
    - Add discoveries to `prd.json` with `defer_to_next_sprint: true`
 
 5. **Run Feedback Loops**
@@ -47,6 +66,7 @@ Ralph Wiggum is an autonomous development workflow that enables consistent, high
 ## Sprint Completion
 
 When ALL tasks with `defer_to_next_sprint: false` have `passes: true`:
+
 - Emit `<promise>COMPLETE</promise>` in `progress.txt`
 - Include summary:
   - Tasks completed count

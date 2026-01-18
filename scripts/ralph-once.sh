@@ -1,12 +1,17 @@
 #!/bin/bash
 # Ralph Wiggum HITL Mode - Single Iteration
-# Usage: ./ralph-once.sh
+# Usage: ./ralph-once.sh [timeout_minutes]
+# Default: 30 minutes timeout
 
 set -e
+
+TIMEOUT_MINUTES=${1:-30}  # Default 30 minutes
+TIMEOUT_SECONDS=$((TIMEOUT_MINUTES * 60))
 
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║    Ralph Wiggum HITL Mode - Single Iteration              ║"
 echo "║    (Human-In-The-Loop for learning and supervision)       ║"
+echo "║    Timeout: ${TIMEOUT_MINUTES} minutes per iteration                   ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -61,6 +66,10 @@ PROMPT="$PROMPT
 
 Ralph Wiggum - HITL Iteration $ITERATION_NUM
 
+⏱️  TIMEOUT WARNING: You have ${TIMEOUT_MINUTES} minutes to complete this iteration.
+The script will automatically terminate if you don't finish and run /exit within this time.
+Plan your work accordingly - focus on completing ONE task with high quality.
+
 Follow the per-iteration workflow:
 
 1. Read Context
@@ -68,8 +77,9 @@ Follow the per-iteration workflow:
    - See what needs doing (prd.json tasks with defer_to_next_sprint: false, passes: false)
 
 2. Choose Task Strategically
-   - Pick highest priority/risk task, not necessarily first in list
+   - Pick highest priority/risk task that fits within ${TIMEOUT_MINUTES} minutes
    - Explain your reasoning for the choice
+   - Consider task complexity vs available time
 
 3. Implement ONE Task
    - Follow all standards in CLAUDE.md
@@ -82,9 +92,9 @@ Follow the per-iteration workflow:
    - Include rationale, priority, risk, acceptance criteria
 
 5. Run Feedback Loops (Non-Negotiable)
-   - cd apps/web && pnpm typecheck (must pass)
-   - cd apps/web && pnpm vitest run (must pass)
-   - cd apps/web && pnpm lint (must pass)
+   - pnpm typecheck (must pass)
+   - pnpm lint (must pass)
+   - pnpm vitest run (must pass)
    - Do NOT commit if any fail
 
 6. Update Tracking
@@ -94,11 +104,18 @@ Follow the per-iteration workflow:
 
 7. Commit Cleanly
    - Clear message with PRD ID reference
-   - Example: \"test: add comprehensive tests for useDashboard hook\n\nCloses #test-coverage-1\"
+   - Example: \"infra-001: set up pnpm monorepo with workspaces\"
 
 Quality over speed. Fight entropy. Leave codebase better than you found it.
 
-When you're finished with the iteration, run /exit in Claude code so that the next iteration can start.
+⚠️ CRITICAL: When you're finished with the iteration, run /exit in Claude Code to allow script to continue.
+If you don't run /exit within ${TIMEOUT_MINUTES} minutes, the iteration will be terminated automatically.
+
+Time management tips:
+- Choose a task you can complete within ${TIMEOUT_MINUTES} minutes
+- If a task seems too large, break it down or add discoveries for next sprint
+- Save complex refactoring for separate iterations
+- Always reserve time for tests and commit at the end
 
 If ALL current sprint tasks complete, emit <promise>COMPLETE</promise> with summary."
 
@@ -109,12 +126,38 @@ echo "   - Watch what Ralph does and learn the patterns"
 echo "   - Ask questions if something seems off"
 echo "   - Review code before it commits"
 echo "   - Check progress.txt after completion"
+echo "   - Don't forget to run /exit when finished!"
 echo ""
 echo "Press Enter to launch Claude..."
 read -r
 
-# Launch Claude
-claude "$PROMPT"
+# Launch Claude with timeout
+if command -v gtimeout &> /dev/null; then
+  gtimeout "${TIMEOUT_SECONDS}s" claude "$PROMPT" || {
+    exit_code=$?
+    if [ $exit_code -eq 124 ]; then
+      echo ""
+      echo "⏱️  TIMEOUT: Claude Code did not exit within ${TIMEOUT_MINUTES} minutes"
+      echo "💡 Remember to run /exit in Claude Code when iteration is complete"
+      exit 1
+    fi
+  }
+elif command -v timeout &> /dev/null; then
+  timeout "${TIMEOUT_SECONDS}s" claude "$PROMPT" || {
+    exit_code=$?
+    if [ $exit_code -eq 124 ]; then
+      echo ""
+      echo "⏱️  TIMEOUT: Claude Code did not exit within ${TIMEOUT_MINUTES} minutes"
+      echo "💡 Remember to run /exit in Claude Code when iteration is complete"
+      exit 1
+    fi
+  }
+else
+  echo "⚠️  Warning: timeout command not found. Install with: brew install coreutils"
+  echo "⚠️  Running without timeout protection - you'll need to manually close Claude Code"
+  echo ""
+  claude "$PROMPT"
+fi
 
 echo ""
 echo "✅ Iteration $ITERATION_NUM complete"
@@ -123,8 +166,8 @@ echo "📋 Next Steps:"
 echo "   1. Review progress.txt - what did Ralph do?"
 echo "   2. Check docs/prd.json - any discoveries added?"
 echo "   3. Review git log - is the commit clean?"
-echo "   4. Run tests yourself: cd apps/web && pnpm vitest run"
+echo "   4. Run tests yourself: pnpm vitest run"
 echo ""
-echo "🔄 To continue: ./ralph-once.sh (run another HITL iteration)"
-echo "🚀 To go AFK: ./ralph-loop.sh 15 (run 15 autonomous iterations)"
+echo "🔄 To continue: ./scripts/ralph-once.sh (run another HITL iteration)"
+echo "🚀 To go AFK: ./scripts/ralph-loop.sh 15 (run 15 autonomous iterations)"
 echo ""

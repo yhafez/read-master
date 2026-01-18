@@ -324,16 +324,16 @@ jq '.tasks[0].passes = true' prd.json > tmp.json && mv tmp.json prd.json
 
 ## 🤓 Ralph Wiggum Principles Applied
 
-✅ **1. Ralph Is A Loop** - Same prompt, different tasks  
-✅ **2. HITL Then AFK** - Two scripts for two modes  
-✅ **3. Define The Scope** - 99 tasks with clear criteria  
-✅ **4. Track Progress** - progress.txt + git commits  
-✅ **5. Feedback Loops** - typecheck/lint/test enforced  
-✅ **6. Small Steps** - One feature per commit  
-✅ **7. Prioritize Risk** - Critical > High > Medium > Low  
-✅ **8. Define Quality** - "Fight entropy, leave it better"  
-✅ **9. Docker Sandbox** - AFK script uses Docker  
-✅ **10. Pay To Play** - Cost estimates provided  
+✅ **1. Ralph Is A Loop** - Same prompt, different tasks
+✅ **2. HITL Then AFK** - Two scripts for two modes
+✅ **3. Define The Scope** - 99 tasks with clear criteria
+✅ **4. Track Progress** - progress.txt + git commits
+✅ **5. Feedback Loops** - typecheck/lint/test enforced
+✅ **6. Small Steps** - One feature per commit
+✅ **7. Prioritize Risk** - Critical > High > Medium > Low
+✅ **8. Define Quality** - "Fight entropy, leave it better"
+✅ **9. Docker Sandbox** - AFK script uses Docker
+✅ **10. Pay To Play** - Cost estimates provided
 ✅ **11. Make It Your Own** - Extend and customize PRD
 
 ## 🎉 You're Ready!
