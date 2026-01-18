@@ -136,7 +136,37 @@ Started: 2026-01-17
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (34 tests total)
 - Files: .env.example, packages/shared/src/env/*.ts, packages/shared/package.json
 
-<promise>COMPLETE</promise>
+## Iteration 7
+
+[2026-01-17] infra-005: Create apps/web React + Vite + TypeScript app with dependencies
+- Updated prd.json to mark infra-004 (Husky pre-commit hooks) as passes: true
+- Transformed apps/web from placeholder to full React + Vite + TypeScript application
+- Added production dependencies:
+  - react ^18.3.1, react-dom ^18.3.1 (core React)
+  - @mui/material ^6.4.0 (component library)
+  - @emotion/react, @emotion/styled ^11.14.0 (MUI styling engine)
+  - @tanstack/react-query ^5.64.0 (server state management)
+  - zustand ^5.0.3 (client state management)
+- Added dev dependencies:
+  - vite ^6.0.7, @vitejs/plugin-react ^4.3.4 (build tooling)
+  - @types/react, @types/react-dom ^18.3.x (type definitions)
+- Created vite.config.ts with:
+  - React plugin configured
+  - Path alias (@/ -> ./src)
+  - Dev server on port 3000
+  - Production sourcemaps enabled
+- Created tsconfig.node.json for Vite/Vitest config files
+- Created index.html entry point with proper meta tags
+- Created src/main.tsx with:
+  - React 18 createRoot API
+  - QueryClientProvider for React Query
+  - ThemeProvider with basic MUI theme
+  - CssBaseline for CSS normalization
+- Created src/App.tsx with basic landing page using MUI components
+- Verified: pnpm --filter web dev starts server at http://localhost:3000
+- Verified: pnpm --filter web build produces dist/ (268KB gzipped: 88KB)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (34 tests)
+- Files: apps/web/package.json, vite.config.ts, tsconfig.node.json, index.html, src/main.tsx, src/App.tsx
 
 ## Sprint 1 Summary
 
