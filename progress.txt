@@ -5070,3 +5070,81 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests verify all achievement types (55 tests covering all scenarios)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5523 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+
+## Iteration 88
+
+[2026-01-18] api-gamification-003: Implement GET /api/leaderboard endpoint
+- Created leaderboard API endpoint in apps/api/api/leaderboard/:
+  - GET /api/leaderboard - Returns leaderboard rankings with full functionality:
+    - Query parameters:
+      - timeframe: "weekly" | "monthly" | "all_time" (default: "weekly")
+      - metric: "xp" | "books" | "streak" | "reading_time" (default: "xp")
+      - friendsOnly: boolean (default: false) - Only show followed users
+      - page: number (default: 1) - Pagination
+      - limit: number (default: 50, max: 100) - Results per page
+    - Privacy: Only includes users who have opted in (showStats: true)
+    - Returns:
+      - entries: Array of LeaderboardEntry with rank, user info, value, isCurrentUser
+      - currentUserRank: User's position in the full leaderboard
+      - timeframe: The queried timeframe
+      - metric: The queried metric
+      - pagination: Full pagination metadata
+- Helper functions exported for testing:
+  - parseQueryParams: Validates and normalizes query parameters
+  - getMetricColumn: Maps metric names to database column names
+  - getTimeframeStartDate: Calculates date filters for timeframes
+  - buildLeaderboardCacheKey: Generates unique cache keys
+  - mapRowToEntry: Transforms database rows to API response format
+  - buildPagination: Creates pagination metadata
+- Features implemented:
+  - Global leaderboard (all users who opted in)
+  - Friends leaderboard (users you follow + yourself)
+  - Weekly/monthly/all-time timeframes
+  - Sorting by XP, books completed, streak, reading time
+  - Pagination with configurable limit (1-100)
+  - Redis caching with TTL based on timeframe:
+    - Weekly: 5 minutes
+    - Monthly: 15 minutes
+    - All-time: 1 hour
+  - Current user rank calculation
+  - Current user highlighting in results
+- Created comprehensive test suite with 81 tests in index.test.ts:
+  - Type export tests (3 tests):
+    - LeaderboardQueryParams, LeaderboardRow, FullLeaderboardResponse
+  - Constants tests (4 tests):
+    - Valid timeframes, valid metrics, pagination defaults, cache TTLs
+  - parseQueryParams tests (23 tests):
+    - Timeframe parsing (6 tests): default, valid values, invalid fallback
+    - Metric parsing (6 tests): default, valid values, invalid fallback
+    - friendsOnly parsing (4 tests): default, true, false, other values
+    - Page parsing (5 tests): default, valid, invalid, negative, zero
+    - Limit parsing (6 tests): default, valid, max cap, invalid, negative, zero
+  - getMetricColumn tests (5 tests):
+    - All four metrics and unknown fallback
+  - getTimeframeStartDate tests (5 tests):
+    - weekly (7 days ago), monthly (30 days ago), all_time (null), midnight setting
+  - buildLeaderboardCacheKey tests (5 tests):
+    - Global key, friends key with userId, page/limit inclusion, metric/timeframe differentiation
+  - mapRowToEntry tests (8 tests):
+    - Basic mapping, isCurrentUser true/false, null username/displayName/avatar, zero/large values
+  - buildPagination tests (7 tests):
+    - First/last/middle page, single page, empty results, partial pages, exact division
+  - Response structure tests (3 tests):
+    - LeaderboardEntry structure, FullLeaderboardResponse structure, null currentUserRank
+  - Edge cases tests (6 tests):
+    - Empty query, undefined values, numeric strings with spaces, float truncation
+  - Integration scenarios tests (4 tests):
+    - Full global XP workflow, friends books workflow, all_time streak, reading_time metric
+- Files created:
+  - apps/api/api/leaderboard/index.ts
+  - apps/api/api/leaderboard/index.test.ts
+- Acceptance criteria verification:
+  - ✅ Leaderboard filtering works (global, friends, timeframe, metric)
+  - ✅ Privacy is respected (opt-in only via showStats: true)
+  - ✅ Current user is highlighted (isCurrentUser flag)
+  - ✅ Caching works (Redis with TTL based on timeframe)
+  - ✅ Tests pass (81 tests covering all functionality)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5604 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
