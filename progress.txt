@@ -3192,3 +3192,76 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3729 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/reading/progress.ts, apps/api/api/reading/progress.test.ts, packages/shared/src/schemas/books.ts, packages/shared/src/schemas/books.test.ts
+
+## Iteration 63
+
+[2026-01-18] api-annotations-001: Implement annotation CRUD endpoints
+- Created apps/api/api/annotations/index.ts for annotation CRUD operations
+- Implemented POST /api/annotations endpoint:
+  - Validates request body using discriminated union schema (HIGHLIGHT, NOTE, BOOKMARK)
+  - Uses createAnnotationPublicSchema for public annotations (with profanity filtering)
+  - Uses createAnnotationSchema for private annotations
+  - Checks book exists and user owns the book
+  - Sets type-specific fields (selectedText, color, note) based on annotation type
+  - Sets default highlight color (#FFFF00) when not provided
+  - Creates annotation in database
+  - Returns formatted annotation response (201 Created)
+- Implemented GET /api/annotations endpoint:
+  - Validates query parameters using annotationQuerySchema
+  - Supports filtering by: type, isPublic, hasNote, search
+  - Supports sorting by: createdAt, updatedAt, startOffset, type
+  - Supports pagination (page, limit)
+  - Book owners see all their annotations
+  - Non-owners only see public annotations
+  - Excludes soft-deleted annotations by default (includeDeleted option)
+  - Returns paginated response with annotations
+- Implemented PUT /api/annotations endpoint:
+  - Validates annotation ID from query parameter
+  - Validates update data using updateAnnotationSchema
+  - Uses updateAnnotationPublicSchema when annotation is/will be public
+  - Checks ownership before allowing update
+  - Additional profanity check when making annotation public
+  - Supports updating: note, color, isPublic, startOffset, endOffset, selectedText
+  - Returns updated annotation
+- Implemented DELETE /api/annotations endpoint:
+  - Validates annotation ID from query parameter
+  - Checks ownership before allowing delete
+  - Soft deletes annotation (sets deletedAt)
+  - Returns confirmation with deleted timestamp
+- Created helper functions with full test coverage:
+  - formatAnnotationResponse(): Formats annotation for API response with ISO dates
+  - buildAnnotationWhereClause(): Builds Prisma where clause from query parameters
+  - buildAnnotationOrderBy(): Builds Prisma orderBy from sort parameters
+  - checkAnnotationProfanity(): Validates public annotation content for profanity
+- Exported constants:
+  - DEFAULT_HIGHLIGHT_COLOR: "#FFFF00" (yellow)
+  - SUPPORTED_METHODS: ["GET", "POST", "PUT", "DELETE"]
+- Created comprehensive tests in apps/api/api/annotations/index.test.ts (70 tests):
+  - Constants tests: DEFAULT_HIGHLIGHT_COLOR, SUPPORTED_METHODS
+  - formatAnnotationResponse tests:
+    - Basic formatting: all required fields, ISO date formatting
+    - Null handling: selectedText, note, color, all nullable fields
+    - Annotation types: HIGHLIGHT, NOTE, BOOKMARK
+    - Edge cases: zero offsets, large offsets, empty text, long note, unicode
+  - buildAnnotationWhereClause tests:
+    - Required fields: userId, bookId, deletedAt filter
+    - Type filter: HIGHLIGHT, NOTE, BOOKMARK, not specified
+    - Visibility filter: isPublic true/false, not specified
+    - Has note filter: with/without notes
+    - Search filter: case-insensitive note search
+    - Include deleted filter
+    - Combined filters
+  - buildAnnotationOrderBy tests:
+    - Sort by: createdAt, updatedAt, startOffset, type
+    - Sort direction: asc, desc
+    - Default sort for unknown field
+  - checkAnnotationProfanity tests:
+    - Private annotations: any content allowed, undefined isPublic, empty/null note
+    - Public clean content: clean note, empty/null/undefined note
+    - Public profane content: profane note, mixed case, start/end of note
+    - Edge cases: long clean note, unicode, words with profane substrings
+  - Response structure tests
+  - Real-world scenarios: study highlights, bookmarks, notes, filtering, sorting
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3799 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/annotations/index.ts, apps/api/api/annotations/index.test.ts
