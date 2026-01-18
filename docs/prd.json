@@ -229,7 +229,7 @@
         "Audit log is created",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-015",

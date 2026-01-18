@@ -1,24 +1,41 @@
 /**
- * GET /api/books/:id
+ * GET /api/books/:id - Fetch a single book by ID
+ * PUT /api/books/:id - Update book metadata
  *
- * Fetch a single book by ID with chapters and reading progress.
- *
- * This endpoint:
+ * GET endpoint:
  * - Returns book details for the authenticated user
  * - Includes chapters with their metadata
  * - Includes reading progress for the current user
  * - Verifies user has access to the book
  * - Excludes soft-deleted books
  *
+ * PUT endpoint:
+ * - Updates book metadata (title, author, description, status, etc.)
+ * - Only book owner can update
+ * - Validates with Zod schema
+ * - Logs audit trail
+ * - Handles status changes
+ *
  * @example
  * ```bash
+ * # GET
  * curl -X GET /api/books/clxxxxxxxxxx \
  *   -H "Authorization: Bearer <token>"
+ *
+ * # PUT
+ * curl -X PUT /api/books/clxxxxxxxxxx \
+ *   -H "Authorization: Bearer <token>" \
+ *   -H "Content-Type: application/json" \
+ *   -d '{"title": "Updated Title", "status": "READING"}'
  * ```
  */
 
 import type { VercelResponse } from "@vercel/node";
 import { z } from "zod";
+import {
+  updateBookSchema,
+  updateBookPublicSchema,
+} from "@read-master/shared/schemas";
 
 import {
   withAuth,
@@ -31,6 +48,7 @@ import {
 } from "../../src/utils/response.js";
 import { logger } from "../../src/utils/logger.js";
 import { db, getUserByClerkId } from "../../src/services/db.js";
+import type { Prisma } from "@read-master/database";
 
 // ============================================================================
 // Constants
@@ -117,6 +135,23 @@ type BookDetailResponse = {
   chapters: ChapterResponse[];
   progress: ProgressResponse | null;
   createdAt: string;
+  updatedAt: string;
+};
+
+/**
+ * Updated book response type (simpler than detail response)
+ */
+type BookUpdateResponse = {
+  id: string;
+  title: string;
+  author: string | null;
+  description: string | null;
+  coverImage: string | null;
+  genre: string | null;
+  tags: string[];
+  status: string;
+  isPublic: boolean;
+  language: string;
   updatedAt: string;
 };
 
@@ -244,6 +279,103 @@ function formatBookDetailResponse(book: {
   };
 }
 
+/**
+ * Format updated book for API response
+ */
+function formatBookUpdateResponse(book: {
+  id: string;
+  title: string;
+  author: string | null;
+  description: string | null;
+  coverImage: string | null;
+  genre: string | null;
+  tags: string[];
+  status: string;
+  isPublic: boolean;
+  language: string;
+  updatedAt: Date;
+}): BookUpdateResponse {
+  return {
+    id: book.id,
+    title: book.title,
+    author: book.author,
+    description: book.description,
+    coverImage: book.coverImage,
+    genre: book.genre,
+    tags: book.tags,
+    status: book.status,
+    isPublic: book.isPublic,
+    language: book.language,
+    updatedAt: book.updatedAt.toISOString(),
+  };
+}
+
+/**
+ * Build Prisma update data from validated input
+ * Filters out undefined values to only update provided fields
+ */
+function buildUpdateData(
+  input: z.infer<typeof updateBookSchema>
+): Prisma.BookUpdateInput {
+  const updateData: Prisma.BookUpdateInput = {};
+
+  if (input.title !== undefined) {
+    updateData.title = input.title;
+  }
+  if (input.author !== undefined) {
+    updateData.author = input.author;
+  }
+  if (input.description !== undefined) {
+    updateData.description = input.description;
+  }
+  if (input.status !== undefined) {
+    updateData.status = input.status;
+  }
+  if (input.genre !== undefined) {
+    updateData.genre = input.genre;
+  }
+  if (input.tags !== undefined) {
+    updateData.tags = input.tags;
+  }
+  if (input.coverImage !== undefined) {
+    updateData.coverImage = input.coverImage;
+  }
+  if (input.isPublic !== undefined) {
+    updateData.isPublic = input.isPublic;
+  }
+  if (input.language !== undefined) {
+    updateData.language = input.language;
+  }
+
+  return updateData;
+}
+
+/**
+ * Get fields that changed between previous and new values
+ */
+function getChangedFields(
+  previous: Record<string, unknown>,
+  updated: Record<string, unknown>
+): string[] {
+  const changed: string[] = [];
+
+  for (const key of Object.keys(updated)) {
+    const prevValue = previous[key];
+    const newValue = updated[key];
+
+    // Handle arrays (like tags)
+    if (Array.isArray(prevValue) && Array.isArray(newValue)) {
+      if (JSON.stringify(prevValue) !== JSON.stringify(newValue)) {
+        changed.push(key);
+      }
+    } else if (prevValue !== newValue) {
+      changed.push(key);
+    }
+  }
+
+  return changed;
+}
+
 // ============================================================================
 // Main Handler
 // ============================================================================
@@ -251,16 +383,265 @@ function formatBookDetailResponse(book: {
 /**
  * Handle GET /api/books/:id request
  */
+async function handleGet(
+  _req: AuthenticatedRequest,
+  res: VercelResponse,
+  validatedBookId: string,
+  userId: string
+): Promise<void> {
+  // Get user from database
+  const user = await getUserByClerkId(userId);
+  if (!user) {
+    sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
+    return;
+  }
+
+  // Fetch book with chapters and reading progress
+  const book = await db.book.findFirst({
+    where: {
+      id: validatedBookId,
+      deletedAt: null, // Exclude soft-deleted books
+    },
+    include: {
+      chapters: {
+        orderBy: { orderIndex: "asc" },
+        select: {
+          id: true,
+          title: true,
+          orderIndex: true,
+          startPosition: true,
+          endPosition: true,
+          wordCount: true,
+        },
+      },
+      readingProgress: {
+        where: { userId: user.id },
+        take: 1,
+        select: {
+          percentage: true,
+          currentPosition: true,
+          totalReadTime: true,
+          averageWpm: true,
+          lastReadAt: true,
+          startedAt: true,
+          completedAt: true,
+        },
+      },
+    },
+  });
+
+  // Check if book exists
+  if (!book) {
+    sendError(res, ErrorCodes.NOT_FOUND, "Book not found", 404);
+    return;
+  }
+
+  // Check user has access to the book
+  // Users can access their own books OR public books
+  const hasAccess = book.userId === user.id || book.isPublic;
+  if (!hasAccess) {
+    sendError(
+      res,
+      ErrorCodes.FORBIDDEN,
+      "You do not have access to this book",
+      403
+    );
+    return;
+  }
+
+  // Format response
+  const response = formatBookDetailResponse(book);
+
+  // Log the request
+  logger.info("Book fetched", {
+    userId: user.id,
+    bookId: validatedBookId,
+    chaptersCount: book.chapters.length,
+    hasProgress: book.readingProgress.length > 0,
+  });
+
+  // Return book details
+  sendSuccess(res, response);
+}
+
+/**
+ * Handle PUT /api/books/:id request
+ */
+async function handlePut(
+  req: AuthenticatedRequest,
+  res: VercelResponse,
+  validatedBookId: string,
+  userId: string
+): Promise<void> {
+  // Get user from database
+  const user = await getUserByClerkId(userId);
+  if (!user) {
+    sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
+    return;
+  }
+
+  // Fetch existing book to check ownership
+  const existingBook = await db.book.findFirst({
+    where: {
+      id: validatedBookId,
+      deletedAt: null,
+    },
+    select: {
+      id: true,
+      userId: true,
+      title: true,
+      author: true,
+      description: true,
+      coverImage: true,
+      genre: true,
+      tags: true,
+      status: true,
+      isPublic: true,
+      language: true,
+    },
+  });
+
+  // Check if book exists
+  if (!existingBook) {
+    sendError(res, ErrorCodes.NOT_FOUND, "Book not found", 404);
+    return;
+  }
+
+  // Check user owns the book (only owner can update)
+  if (existingBook.userId !== user.id) {
+    sendError(
+      res,
+      ErrorCodes.FORBIDDEN,
+      "You do not have permission to update this book",
+      403
+    );
+    return;
+  }
+
+  // Determine if book will be public after update
+  const willBePublic =
+    req.body?.isPublic !== undefined
+      ? req.body.isPublic
+      : existingBook.isPublic;
+
+  // Use appropriate schema based on whether book will be public
+  const schema = willBePublic ? updateBookPublicSchema : updateBookSchema;
+
+  // Validate request body
+  const validationResult = schema.safeParse(req.body);
+  if (!validationResult.success) {
+    sendError(
+      res,
+      ErrorCodes.VALIDATION_ERROR,
+      "Invalid update data",
+      400,
+      validationResult.error.flatten()
+    );
+    return;
+  }
+
+  const validatedData = validationResult.data;
+
+  // Build update data
+  const updateData = buildUpdateData(validatedData);
+
+  // Track previous values for audit log
+  const previousValues: Record<string, unknown> = {
+    title: existingBook.title,
+    author: existingBook.author,
+    description: existingBook.description,
+    coverImage: existingBook.coverImage,
+    genre: existingBook.genre,
+    tags: existingBook.tags,
+    status: existingBook.status,
+    isPublic: existingBook.isPublic,
+    language: existingBook.language,
+  };
+
+  // Update the book
+  const updatedBook = await db.book.update({
+    where: { id: validatedBookId },
+    data: updateData,
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      description: true,
+      coverImage: true,
+      genre: true,
+      tags: true,
+      status: true,
+      isPublic: true,
+      language: true,
+      updatedAt: true,
+    },
+  });
+
+  // Build new values for audit log
+  const newValues: Record<string, unknown> = {
+    title: updatedBook.title,
+    author: updatedBook.author,
+    description: updatedBook.description,
+    coverImage: updatedBook.coverImage,
+    genre: updatedBook.genre,
+    tags: updatedBook.tags,
+    status: updatedBook.status,
+    isPublic: updatedBook.isPublic,
+    language: updatedBook.language,
+  };
+
+  // Get which fields actually changed
+  const changedFields = getChangedFields(previousValues, newValues);
+
+  // Create audit log entry in database
+  const ipAddress =
+    (req.headers["x-forwarded-for"] as string | undefined)
+      ?.split(",")[0]
+      ?.trim() ?? null;
+  const userAgent = (req.headers["user-agent"] as string | undefined) ?? null;
+
+  await db.auditLog.create({
+    data: {
+      userId: user.id,
+      action: "UPDATE",
+      entityType: "Book",
+      entityId: validatedBookId,
+      previousValue: previousValues as Prisma.InputJsonValue,
+      newValue: newValues as Prisma.InputJsonValue,
+      metadata: {
+        changedFields,
+        requestId: req.headers["x-request-id"] as string | null,
+      } as Prisma.InputJsonValue,
+      ipAddress,
+      userAgent,
+    },
+  });
+
+  // Log the update
+  logger.info("Book updated", {
+    userId: user.id,
+    bookId: validatedBookId,
+    changedFields,
+  });
+
+  // Format and return response
+  const response = formatBookUpdateResponse(updatedBook);
+  sendSuccess(res, response);
+}
+
+/**
+ * Main request handler - routes to GET or PUT handler
+ */
 async function handler(
   req: AuthenticatedRequest,
   res: VercelResponse
 ): Promise<void> {
-  // Only allow GET
-  if (req.method !== "GET") {
+  // Only allow GET and PUT
+  if (req.method !== "GET" && req.method !== "PUT") {
     sendError(
       res,
       ErrorCodes.VALIDATION_ERROR,
-      "Method not allowed. Use GET.",
+      "Method not allowed. Use GET or PUT.",
       405
     );
     return;
@@ -288,89 +669,23 @@ async function handler(
 
     const validatedBookId = validationResult.data;
 
-    // Get user from database
-    const user = await getUserByClerkId(userId);
-    if (!user) {
-      sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
-      return;
+    // Route to appropriate handler
+    if (req.method === "GET") {
+      await handleGet(req, res, validatedBookId, userId);
+    } else if (req.method === "PUT") {
+      await handlePut(req, res, validatedBookId, userId);
     }
-
-    // Fetch book with chapters and reading progress
-    const book = await db.book.findFirst({
-      where: {
-        id: validatedBookId,
-        deletedAt: null, // Exclude soft-deleted books
-      },
-      include: {
-        chapters: {
-          orderBy: { orderIndex: "asc" },
-          select: {
-            id: true,
-            title: true,
-            orderIndex: true,
-            startPosition: true,
-            endPosition: true,
-            wordCount: true,
-          },
-        },
-        readingProgress: {
-          where: { userId: user.id },
-          take: 1,
-          select: {
-            percentage: true,
-            currentPosition: true,
-            totalReadTime: true,
-            averageWpm: true,
-            lastReadAt: true,
-            startedAt: true,
-            completedAt: true,
-          },
-        },
-      },
-    });
-
-    // Check if book exists
-    if (!book) {
-      sendError(res, ErrorCodes.NOT_FOUND, "Book not found", 404);
-      return;
-    }
-
-    // Check user has access to the book
-    // Users can access their own books OR public books
-    const hasAccess = book.userId === user.id || book.isPublic;
-    if (!hasAccess) {
-      sendError(
-        res,
-        ErrorCodes.FORBIDDEN,
-        "You do not have access to this book",
-        403
-      );
-      return;
-    }
-
-    // Format response
-    const response = formatBookDetailResponse(book);
-
-    // Log the request
-    logger.info("Book fetched", {
-      userId: user.id,
-      bookId: validatedBookId,
-      chaptersCount: book.chapters.length,
-      hasProgress: book.readingProgress.length > 0,
-    });
-
-    // Return book details
-    sendSuccess(res, response);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    logger.error("Error fetching book", {
+    const operation = req.method === "GET" ? "fetching" : "updating";
+    logger.error(`Error ${operation} book`, {
       userId,
       error: message,
     });
     sendError(
       res,
       ErrorCodes.INTERNAL_ERROR,
-      "Failed to fetch book. Please try again.",
+      `Failed to ${req.method === "GET" ? "fetch" : "update"} book. Please try again.`,
       500
     );
   }
@@ -383,13 +698,22 @@ export default withAuth(handler);
 // ============================================================================
 
 export {
+  // Constants
+  MAX_ID_LENGTH,
+  MIN_ID_LENGTH,
+  // Schemas
   bookIdSchema,
+  // GET helper functions
   formatChapter,
   formatProgress,
   formatBookDetailResponse,
-  MAX_ID_LENGTH,
-  MIN_ID_LENGTH,
+  // PUT helper functions
+  formatBookUpdateResponse,
+  buildUpdateData,
+  getChangedFields,
+  // Types
   type ChapterResponse,
   type ProgressResponse,
   type BookDetailResponse,
+  type BookUpdateResponse,
 };

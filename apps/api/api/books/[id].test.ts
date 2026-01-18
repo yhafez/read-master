@@ -1,11 +1,10 @@
 /**
- * Tests for GET /api/books/:id endpoint
+ * Tests for GET /api/books/:id and PUT /api/books/:id endpoints
  *
  * Tests cover:
  * - Book ID validation (format, length, edge cases)
- * - formatChapter helper function
- * - formatProgress helper function
- * - formatBookDetailResponse helper function
+ * - GET helpers: formatChapter, formatProgress, formatBookDetailResponse
+ * - PUT helpers: formatBookUpdateResponse, buildUpdateData, getChangedFields
  * - Constants (ID length limits)
  * - Edge cases (Unicode, special characters, null handling)
  */
@@ -16,6 +15,9 @@ import {
   formatChapter,
   formatProgress,
   formatBookDetailResponse,
+  formatBookUpdateResponse,
+  buildUpdateData,
+  getChangedFields,
   MAX_ID_LENGTH,
   MIN_ID_LENGTH,
 } from "./[id].js";
@@ -991,5 +993,495 @@ describe("constants", () => {
 
   it("should have MAX_ID_LENGTH greater than MIN_ID_LENGTH", () => {
     expect(MAX_ID_LENGTH).toBeGreaterThan(MIN_ID_LENGTH);
+  });
+});
+
+// ============================================================================
+// PUT /api/books/:id Tests
+// ============================================================================
+
+// ============================================================================
+// formatBookUpdateResponse Tests
+// ============================================================================
+
+/**
+ * Create a mock updated book for testing
+ */
+function createMockUpdatedBook(
+  overrides: Partial<{
+    id: string;
+    title: string;
+    author: string | null;
+    description: string | null;
+    coverImage: string | null;
+    genre: string | null;
+    tags: string[];
+    status: string;
+    isPublic: boolean;
+    language: string;
+    updatedAt: Date;
+  }> = {}
+) {
+  return {
+    id: "book_123",
+    title: "Updated Book Title",
+    author: "John Doe",
+    description: "A great book description",
+    coverImage: "https://example.com/cover.jpg",
+    genre: "Fiction",
+    tags: ["science-fiction", "adventure"],
+    status: "READING",
+    isPublic: false,
+    language: "en",
+    updatedAt: new Date("2024-01-20T15:00:00Z"),
+    ...overrides,
+  };
+}
+
+describe("formatBookUpdateResponse", () => {
+  it("should format a complete book update response", () => {
+    const book = createMockUpdatedBook();
+    const result = formatBookUpdateResponse(book);
+
+    expect(result.id).toBe("book_123");
+    expect(result.title).toBe("Updated Book Title");
+    expect(result.author).toBe("John Doe");
+    expect(result.description).toBe("A great book description");
+    expect(result.coverImage).toBe("https://example.com/cover.jpg");
+    expect(result.genre).toBe("Fiction");
+    expect(result.tags).toEqual(["science-fiction", "adventure"]);
+    expect(result.status).toBe("READING");
+    expect(result.isPublic).toBe(false);
+    expect(result.language).toBe("en");
+    expect(result.updatedAt).toBe("2024-01-20T15:00:00.000Z");
+  });
+
+  it("should handle null author", () => {
+    const book = createMockUpdatedBook({ author: null });
+    const result = formatBookUpdateResponse(book);
+    expect(result.author).toBeNull();
+  });
+
+  it("should handle null description", () => {
+    const book = createMockUpdatedBook({ description: null });
+    const result = formatBookUpdateResponse(book);
+    expect(result.description).toBeNull();
+  });
+
+  it("should handle null coverImage", () => {
+    const book = createMockUpdatedBook({ coverImage: null });
+    const result = formatBookUpdateResponse(book);
+    expect(result.coverImage).toBeNull();
+  });
+
+  it("should handle null genre", () => {
+    const book = createMockUpdatedBook({ genre: null });
+    const result = formatBookUpdateResponse(book);
+    expect(result.genre).toBeNull();
+  });
+
+  it("should handle empty tags array", () => {
+    const book = createMockUpdatedBook({ tags: [] });
+    const result = formatBookUpdateResponse(book);
+    expect(result.tags).toEqual([]);
+  });
+
+  it("should handle all reading statuses", () => {
+    const statuses = ["WANT_TO_READ", "READING", "COMPLETED", "ABANDONED"];
+    for (const status of statuses) {
+      const book = createMockUpdatedBook({ status });
+      const result = formatBookUpdateResponse(book);
+      expect(result.status).toBe(status);
+    }
+  });
+
+  it("should handle public book", () => {
+    const book = createMockUpdatedBook({ isPublic: true });
+    const result = formatBookUpdateResponse(book);
+    expect(result.isPublic).toBe(true);
+  });
+
+  it("should handle different language codes", () => {
+    const languages = ["en", "es", "ar", "ja", "zh"];
+    for (const lang of languages) {
+      const book = createMockUpdatedBook({ language: lang });
+      const result = formatBookUpdateResponse(book);
+      expect(result.language).toBe(lang);
+    }
+  });
+
+  it("should format updatedAt as ISO string", () => {
+    const book = createMockUpdatedBook({
+      updatedAt: new Date("2024-06-15T12:30:45.123Z"),
+    });
+    const result = formatBookUpdateResponse(book);
+    expect(result.updatedAt).toBe("2024-06-15T12:30:45.123Z");
+  });
+
+  it("should handle Unicode in title", () => {
+    const book = createMockUpdatedBook({ title: "日本語のタイトル" });
+    const result = formatBookUpdateResponse(book);
+    expect(result.title).toBe("日本語のタイトル");
+  });
+
+  it("should handle Unicode in author", () => {
+    const book = createMockUpdatedBook({ author: "村上春樹" });
+    const result = formatBookUpdateResponse(book);
+    expect(result.author).toBe("村上春樹");
+  });
+
+  it("should handle special characters in description", () => {
+    const book = createMockUpdatedBook({
+      description: 'A book with "quotes" and <special> & characters',
+    });
+    const result = formatBookUpdateResponse(book);
+    expect(result.description).toBe(
+      'A book with "quotes" and <special> & characters'
+    );
+  });
+
+  it("should handle tags with Unicode", () => {
+    const book = createMockUpdatedBook({ tags: ["فلسفة", "哲学"] });
+    const result = formatBookUpdateResponse(book);
+    expect(result.tags).toEqual(["فلسفة", "哲学"]);
+  });
+
+  it("should handle minimal book with all nullable fields as null", () => {
+    const book = createMockUpdatedBook({
+      author: null,
+      description: null,
+      coverImage: null,
+      genre: null,
+      tags: [],
+    });
+    const result = formatBookUpdateResponse(book);
+    expect(result.author).toBeNull();
+    expect(result.description).toBeNull();
+    expect(result.coverImage).toBeNull();
+    expect(result.genre).toBeNull();
+    expect(result.tags).toEqual([]);
+  });
+});
+
+// ============================================================================
+// buildUpdateData Tests
+// ============================================================================
+
+describe("buildUpdateData", () => {
+  it("should build update data with title only", () => {
+    const result = buildUpdateData({ title: "New Title" });
+    expect(result).toEqual({ title: "New Title" });
+  });
+
+  it("should build update data with author only", () => {
+    const result = buildUpdateData({ author: "New Author" });
+    expect(result).toEqual({ author: "New Author" });
+  });
+
+  it("should build update data with null author", () => {
+    const result = buildUpdateData({ author: null });
+    expect(result).toEqual({ author: null });
+  });
+
+  it("should build update data with description only", () => {
+    const result = buildUpdateData({ description: "New description" });
+    expect(result).toEqual({ description: "New description" });
+  });
+
+  it("should build update data with null description", () => {
+    const result = buildUpdateData({ description: null });
+    expect(result).toEqual({ description: null });
+  });
+
+  it("should build update data with status only", () => {
+    const result = buildUpdateData({ status: "READING" });
+    expect(result).toEqual({ status: "READING" });
+  });
+
+  it("should build update data with genre only", () => {
+    const result = buildUpdateData({ genre: "Fiction" });
+    expect(result).toEqual({ genre: "Fiction" });
+  });
+
+  it("should build update data with null genre", () => {
+    const result = buildUpdateData({ genre: null });
+    expect(result).toEqual({ genre: null });
+  });
+
+  it("should build update data with tags only", () => {
+    const result = buildUpdateData({ tags: ["tag1", "tag2"] });
+    expect(result).toEqual({ tags: ["tag1", "tag2"] });
+  });
+
+  it("should build update data with empty tags", () => {
+    const result = buildUpdateData({ tags: [] });
+    expect(result).toEqual({ tags: [] });
+  });
+
+  it("should build update data with coverImage only", () => {
+    const result = buildUpdateData({
+      coverImage: "https://example.com/new-cover.jpg",
+    });
+    expect(result).toEqual({ coverImage: "https://example.com/new-cover.jpg" });
+  });
+
+  it("should build update data with null coverImage", () => {
+    const result = buildUpdateData({ coverImage: null });
+    expect(result).toEqual({ coverImage: null });
+  });
+
+  it("should build update data with isPublic true", () => {
+    const result = buildUpdateData({ isPublic: true });
+    expect(result).toEqual({ isPublic: true });
+  });
+
+  it("should build update data with isPublic false", () => {
+    const result = buildUpdateData({ isPublic: false });
+    expect(result).toEqual({ isPublic: false });
+  });
+
+  it("should build update data with language only", () => {
+    const result = buildUpdateData({ language: "es" });
+    expect(result).toEqual({ language: "es" });
+  });
+
+  it("should build update data with multiple fields", () => {
+    const result = buildUpdateData({
+      title: "New Title",
+      author: "New Author",
+      status: "COMPLETED",
+      isPublic: true,
+    });
+    expect(result).toEqual({
+      title: "New Title",
+      author: "New Author",
+      status: "COMPLETED",
+      isPublic: true,
+    });
+  });
+
+  it("should build update data with all fields", () => {
+    const result = buildUpdateData({
+      title: "New Title",
+      author: "New Author",
+      description: "New description",
+      status: "READING",
+      genre: "Science Fiction",
+      tags: ["sci-fi", "space"],
+      coverImage: "https://example.com/cover.jpg",
+      isPublic: true,
+      language: "en",
+    });
+    expect(result).toEqual({
+      title: "New Title",
+      author: "New Author",
+      description: "New description",
+      status: "READING",
+      genre: "Science Fiction",
+      tags: ["sci-fi", "space"],
+      coverImage: "https://example.com/cover.jpg",
+      isPublic: true,
+      language: "en",
+    });
+  });
+
+  it("should not include undefined fields", () => {
+    const result = buildUpdateData({ title: "New Title" });
+    expect(result).not.toHaveProperty("author");
+    expect(result).not.toHaveProperty("description");
+    expect(result).not.toHaveProperty("status");
+    expect(result).not.toHaveProperty("genre");
+    expect(result).not.toHaveProperty("tags");
+    expect(result).not.toHaveProperty("coverImage");
+    expect(result).not.toHaveProperty("isPublic");
+    expect(result).not.toHaveProperty("language");
+  });
+
+  it("should handle Unicode in title", () => {
+    const result = buildUpdateData({ title: "日本語のタイトル" });
+    expect(result).toEqual({ title: "日本語のタイトル" });
+  });
+
+  it("should handle all reading statuses", () => {
+    const statuses = [
+      "WANT_TO_READ",
+      "READING",
+      "COMPLETED",
+      "ABANDONED",
+    ] as const;
+    for (const status of statuses) {
+      const result = buildUpdateData({ status });
+      expect(result).toEqual({ status });
+    }
+  });
+});
+
+// ============================================================================
+// getChangedFields Tests
+// ============================================================================
+
+describe("getChangedFields", () => {
+  it("should return empty array when no fields changed", () => {
+    const previous = { title: "Book", author: "Author" };
+    const updated = { title: "Book", author: "Author" };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual([]);
+  });
+
+  it("should detect single field change", () => {
+    const previous = { title: "Old Title", author: "Author" };
+    const updated = { title: "New Title", author: "Author" };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["title"]);
+  });
+
+  it("should detect multiple field changes", () => {
+    const previous = { title: "Old Title", author: "Old Author" };
+    const updated = { title: "New Title", author: "New Author" };
+    const result = getChangedFields(previous, updated);
+    expect(result).toContain("title");
+    expect(result).toContain("author");
+    expect(result).toHaveLength(2);
+  });
+
+  it("should detect null to value change", () => {
+    const previous = { title: "Title", author: null };
+    const updated = { title: "Title", author: "New Author" };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["author"]);
+  });
+
+  it("should detect value to null change", () => {
+    const previous = { title: "Title", author: "Author" };
+    const updated = { title: "Title", author: null };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["author"]);
+  });
+
+  it("should detect boolean change", () => {
+    const previous = { isPublic: false };
+    const updated = { isPublic: true };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["isPublic"]);
+  });
+
+  it("should not detect boolean when unchanged", () => {
+    const previous = { isPublic: true };
+    const updated = { isPublic: true };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual([]);
+  });
+
+  it("should detect array change - different content", () => {
+    const previous = { tags: ["tag1", "tag2"] };
+    const updated = { tags: ["tag1", "tag3"] };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["tags"]);
+  });
+
+  it("should detect array change - different length", () => {
+    const previous = { tags: ["tag1"] };
+    const updated = { tags: ["tag1", "tag2"] };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["tags"]);
+  });
+
+  it("should detect array change - empty to populated", () => {
+    const previous = { tags: [] as string[] };
+    const updated = { tags: ["tag1"] };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["tags"]);
+  });
+
+  it("should detect array change - populated to empty", () => {
+    const previous = { tags: ["tag1"] };
+    const updated = { tags: [] as string[] };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["tags"]);
+  });
+
+  it("should not detect array change when same content", () => {
+    const previous = { tags: ["tag1", "tag2"] };
+    const updated = { tags: ["tag1", "tag2"] };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual([]);
+  });
+
+  it("should not detect array change when both empty", () => {
+    const previous = { tags: [] as string[] };
+    const updated = { tags: [] as string[] };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual([]);
+  });
+
+  it("should handle status change", () => {
+    const previous = { status: "WANT_TO_READ" };
+    const updated = { status: "READING" };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["status"]);
+  });
+
+  it("should handle complete book update scenario", () => {
+    const previous = {
+      title: "Old Book",
+      author: "Old Author",
+      description: "Old description",
+      coverImage: null,
+      genre: "Fiction",
+      tags: ["tag1"],
+      status: "WANT_TO_READ",
+      isPublic: false,
+      language: "en",
+    };
+    const updated = {
+      title: "New Book",
+      author: "Old Author",
+      description: "New description",
+      coverImage: "https://example.com/cover.jpg",
+      genre: "Fiction",
+      tags: ["tag1", "tag2"],
+      status: "READING",
+      isPublic: true,
+      language: "en",
+    };
+    const result = getChangedFields(previous, updated);
+    expect(result).toContain("title");
+    expect(result).toContain("description");
+    expect(result).toContain("coverImage");
+    expect(result).toContain("tags");
+    expect(result).toContain("status");
+    expect(result).toContain("isPublic");
+    expect(result).not.toContain("author");
+    expect(result).not.toContain("genre");
+    expect(result).not.toContain("language");
+  });
+
+  it("should only check keys from updated object", () => {
+    const previous = { title: "Title", author: "Author", extra: "value" };
+    const updated = { title: "Title", author: "New Author" };
+    const result = getChangedFields(previous, updated);
+    // Should only check title and author, not extra
+    expect(result).toEqual(["author"]);
+  });
+
+  it("should handle number fields", () => {
+    const previous = { count: 5 };
+    const updated = { count: 10 };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["count"]);
+  });
+
+  it("should handle number fields unchanged", () => {
+    const previous = { count: 5 };
+    const updated = { count: 5 };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual([]);
+  });
+
+  it("should handle undefined in previous (new field)", () => {
+    const previous = { title: "Title" } as Record<string, unknown>;
+    const updated = { title: "Title", author: "Author" };
+    const result = getChangedFields(previous, updated);
+    expect(result).toEqual(["author"]);
   });
 });

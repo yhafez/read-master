@@ -2972,3 +2972,48 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (99 new tests)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/books/[id].ts, apps/api/api/books/[id].test.ts
+
+## Iteration 59
+
+[2026-01-18] api-books-014: Implement PUT /api/books/:id endpoint
+- Extended apps/api/api/books/[id].ts to handle both GET and PUT methods
+- Implemented request routing based on HTTP method:
+  - GET: Fetches book details with chapters and reading progress
+  - PUT: Updates book metadata with ownership verification
+- Implemented PUT functionality with comprehensive features:
+  - Validates request body using shared Zod schemas (updateBookSchema, updateBookPublicSchema)
+  - Uses appropriate schema based on whether book will be public (profanity filtering)
+  - Checks user owns the book (only owner can update)
+  - Builds update data dynamically from validated input
+  - Updates book metadata: title, author, description, status, genre, tags, coverImage, isPublic, language
+- Implemented audit logging:
+  - Creates AuditLog record in database with full previous/new values
+  - Tracks which specific fields changed for each update
+  - Captures request context (ipAddress, userAgent, requestId)
+  - Uses Prisma.InputJsonValue for proper JSON type handling
+- Created helper functions with full test coverage:
+  - formatBookUpdateResponse(): Formats updated book for API response
+  - buildUpdateData(): Builds Prisma update input from validated data, only including provided fields
+  - getChangedFields(): Compares previous/new values to identify what changed
+- Created comprehensive tests (68 new tests) for PUT functionality:
+  - formatBookUpdateResponse tests:
+    - Complete book formatting, null handling for all nullable fields
+    - All reading statuses, different language codes
+    - Unicode in title/author/tags, special characters
+    - Date formatting as ISO string
+  - buildUpdateData tests:
+    - Single field updates (title, author, description, status, genre, tags, coverImage, isPublic, language)
+    - Null value handling, empty arrays
+    - Multiple fields, all fields
+    - Undefined fields not included in output
+    - All reading statuses
+  - getChangedFields tests:
+    - No changes detection, single/multiple field changes
+    - Null to value and value to null changes
+    - Boolean change detection
+    - Array change detection (different content, length, empty/populated)
+    - Complete book update scenario
+    - Number field handling
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3543 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/books/[id].ts, apps/api/api/books/[id].test.ts
