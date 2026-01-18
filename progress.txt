@@ -3996,3 +3996,96 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ All calls are logged (logAIOperation and logAIError)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4557 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+
+## Iteration 75
+
+[2026-01-18] api-ai-002: Create AI prompt templates package
+- Created comprehensive prompt templates in packages/ai/src/prompts/:
+  - types.ts: Shared types and utilities
+    - ReadingLevel type (beginner, elementary, middle_school, high_school, college, advanced)
+    - BloomLevel type (remember, understand, apply, analyze, evaluate, create)
+    - QuestionType type (multiple_choice, true_false, short_answer, essay, fill_blank)
+    - FlashcardType type (vocabulary, concept, comprehension, quote)
+    - BookContext and UserContext interfaces
+    - PromptTemplate<TInput, TOutput> generic interface
+    - READING_LEVEL_DESCRIPTIONS constant with grade-appropriate descriptions
+    - BLOOM_LEVEL_DESCRIPTIONS constant with action verbs
+    - getReadingLevelDescription() and getBloomLevelDescription() functions
+    - truncateContent(), formatBookContext(), validateRequired(), validateLength() utilities
+  - v1/preReadingGuide.ts: Pre-reading guide generation
+    - PreReadingGuideInput and PreReadingGuideOutput types
+    - preReadingGuidePrompt template with system/user prompts
+    - Generates: overview (summary, themes, audience), key concepts, context, guiding questions, vocabulary, reading tips
+    - generatePreReadingGuidePrompt(), parsePreReadingGuideResponse(), validatePreReadingGuideInput() helpers
+  - v1/explain.ts: Text explanation during reading
+    - ExplainInput and ExplainOutput types
+    - explainPrompt template for contextual explanations
+    - Generates: explanation, key terms, significance, related concepts, follow-up questions
+    - generateExplainPrompt(), parseExplainResponse(), validateExplainInput() helpers
+  - v1/comprehensionCheck.ts: Quick comprehension checks
+    - ComprehensionCheckInput and ComprehensionCheckOutput types
+    - comprehensionCheckPrompt template for quick questions
+    - Supports multiple_choice, true_false, short_answer types
+    - Includes options, correct answer, explanation, difficulty, text reference
+  - v1/assessment.ts: Post-reading assessments
+    - AssessmentInput, AssessmentOutput, AssessmentQuestion types
+    - assessmentPrompt template covering all Bloom's Taxonomy levels
+    - Supports quick (5), standard (10), comprehensive (20) question counts
+    - Generates questions with Bloom's level, difficulty, rubrics for essays
+  - v1/gradeAnswer.ts: AI-powered answer grading
+    - GradeAnswerInput and GradeAnswerOutput types
+    - gradeAnswerPrompt template for fair grading with feedback
+    - Returns points, percentage, feedback, strengths, improvements, rubric scores
+    - percentageToLetterGrade() utility function
+  - v1/generateFlashcards.ts: Flashcard generation from content
+    - GenerateFlashcardsInput, GenerateFlashcardsOutput, GeneratedFlashcard types
+    - generateFlashcardsPrompt template for SRS cards
+    - Supports vocabulary, concept, comprehension, quote card types
+    - Avoids duplicates via existing cards check
+    - FLASHCARD_TYPE_DESCRIPTIONS constant
+  - v1/index.ts: Exports all v1 prompt templates
+  - index.ts: Main export file for prompts
+- Updated packages/ai/src/index.ts to export all prompts
+- Created comprehensive test suite with 86 tests:
+  - types.test.ts (33 tests):
+    - READING_LEVEL_DESCRIPTIONS tests (2 tests)
+    - getReadingLevelDescription tests (2 tests)
+    - BLOOM_LEVEL_DESCRIPTIONS tests (2 tests)
+    - getBloomLevelDescription tests (1 test)
+    - truncateContent tests (5 tests)
+    - formatBookContext tests (5 tests)
+    - validateRequired tests (6 tests)
+    - validateLength tests (6 tests)
+    - Type definition tests (4 tests)
+  - v1/prompts.test.ts (53 tests):
+    - preReadingGuidePrompt tests (9 tests)
+    - explainPrompt tests (10 tests)
+    - comprehensionCheckPrompt tests (6 tests)
+    - assessmentPrompt tests (7 tests)
+    - gradeAnswerPrompt tests (8 tests)
+    - generateFlashcardsPrompt tests (10 tests)
+    - Edge case tests (5 tests)
+- Files created:
+  - packages/ai/src/prompts/types.ts
+  - packages/ai/src/prompts/types.test.ts
+  - packages/ai/src/prompts/index.ts
+  - packages/ai/src/prompts/v1/preReadingGuide.ts
+  - packages/ai/src/prompts/v1/explain.ts
+  - packages/ai/src/prompts/v1/comprehensionCheck.ts
+  - packages/ai/src/prompts/v1/assessment.ts
+  - packages/ai/src/prompts/v1/gradeAnswer.ts
+  - packages/ai/src/prompts/v1/generateFlashcards.ts
+  - packages/ai/src/prompts/v1/index.ts
+  - packages/ai/src/prompts/v1/prompts.test.ts
+- Files modified:
+  - packages/ai/src/index.ts (exports prompts)
+- Acceptance criteria verification:
+  - ✅ All prompt templates exist (6 templates: preReadingGuide, explain, comprehensionCheck, assessment, gradeAnswer, generateFlashcards)
+  - ✅ Prompts adapt to user level (READING_LEVEL_DESCRIPTIONS included in system prompts)
+  - ✅ Prompts can be imported in API (exported via @read-master/ai package)
+  - ✅ Templates are well-structured (PromptTemplate interface with getSystemPrompt, getUserPrompt, parseResponse, validateInput)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4643 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+

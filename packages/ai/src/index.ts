@@ -1,6 +1,7 @@
 /**
  * @read-master/ai
- * AI prompt templates and utilities
+ * AI prompt templates and utilities for Read Master
  */
 
-export {};
+// Export all prompts and types
+export * from "./prompts/index.js";

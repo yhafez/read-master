@@ -637,7 +637,7 @@
         "Prompts can be imported in API",
         "Templates are well-structured"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-ai-003",
