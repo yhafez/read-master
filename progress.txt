@@ -3265,3 +3265,60 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3799 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/annotations/index.ts, apps/api/api/annotations/index.test.ts
+
+## Iteration 64
+
+[2026-01-18] frontend-001: Set up MUI theme with multiple modes (light/dark/sepia/high-contrast)
+- Created comprehensive theme system in apps/web/src/theme/
+- Implemented theme types and constants:
+  - ThemeMode type: "light" | "dark" | "sepia" | "high-contrast"
+  - FontFamily type: "system" | "serif" | "opendyslexic"
+  - ThemeSettings interface with mode, fontFamily, fontSize, lineHeight, letterSpacing
+  - Default settings and configurable ranges for all typography options
+- Created color palettes for all four modes:
+  - Light: WCAG AA compliant colors with 4.5:1+ contrast ratios
+  - Dark: Proper dark mode with light text on dark backgrounds
+  - Sepia: Warm cream tones optimized for extended reading
+  - High Contrast: WCAG AAA compliant (7:1+) with pure black/white
+- Implemented typography configuration:
+  - fontStacks object with system, serif, and OpenDyslexic font stacks
+  - createTypography() function that applies fontSize, lineHeight, letterSpacing
+  - All standard MUI typography variants (h1-h6, body1/2, subtitle1/2, etc.)
+  - Lowercase button text for better readability
+- Created createAppTheme factory function:
+  - Merges partial settings with defaults
+  - Applies palette, typography, and component overrides
+  - Pre-built themes object for quick access
+- Implemented component overrides for accessibility:
+  - 44px minimum touch targets for buttons and icon buttons
+  - Focus-visible outlines for keyboard navigation
+  - 2px borders on high-contrast mode components
+  - Rounded corners (8px default, 12px cards, 16px dialogs)
+  - Arrow tooltips for better UX
+- Created Zustand theme store with persistence:
+  - useThemeStore with all settings management actions
+  - localStorage persistence via zustand/middleware persist
+  - clamp() helper for value range validation
+  - sanitizeSettings() for input validation
+- Created AppThemeProvider React component:
+  - Integrates with theme store for dynamic theming
+  - Memoized theme creation to prevent re-renders
+  - Updated main.tsx to use new ThemeProvider
+- Created comprehensive test suites (167 new tests):
+  - types.test.ts: Constants, ranges, default settings validation
+  - palettes.test.ts: All palette colors, hex format, contrast text
+  - typography.test.ts: Font stacks, size/height/spacing scaling
+  - createAppTheme.test.ts: Theme creation, modes, overrides, accessibility
+  - themeStore.test.ts: clamp, sanitizeSettings, all store actions
+- Files created:
+  - apps/web/src/theme/types.ts
+  - apps/web/src/theme/palettes.ts
+  - apps/web/src/theme/typography.ts
+  - apps/web/src/theme/createAppTheme.ts
+  - apps/web/src/theme/ThemeProvider.tsx
+  - apps/web/src/theme/index.ts
+  - apps/web/src/stores/themeStore.ts
+  - apps/web/src/stores/index.ts
+  - All corresponding test files
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3966 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
