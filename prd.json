@@ -33,7 +33,7 @@
         "Root package.json has workspaces configured",
         "pnpm install runs without errors"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "infra-002",

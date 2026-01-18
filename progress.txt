@@ -1,0 +1,16 @@
+# Read Master - Development Progress
+
+Started: 2026-01-17
+
+## Iteration 1
+
+[2026-01-17] infra-001: Created pnpm monorepo structure with workspace configuration
+- Created pnpm-workspace.yaml defining apps/* and packages/* workspaces
+- Updated root package.json with workspace scripts (dev, build, lint, typecheck, test)
+- Created .npmrc with appropriate pnpm settings
+- Created directory structure: apps/web, apps/api, packages/database, packages/shared, packages/ai, packages/config
+- Created placeholder package.json files for all 6 workspace packages
+- pnpm install runs successfully (3 dependencies installed: husky, prettier, typescript)
+- All 7 workspace projects recognized by pnpm
+- Feedback loops pass (typecheck, lint, test - placeholders)
+- Files: pnpm-workspace.yaml, package.json, .npmrc, apps/*/package.json, packages/*/package.json

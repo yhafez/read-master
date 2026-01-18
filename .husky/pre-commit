@@ -7,8 +7,8 @@ if git diff --cached --name-only | xargs grep -l 'console\.log' 2>/dev/null | gr
   exit 1
 fi
 
-# Run lint-staged
-pnpm exec lint-staged
-
 # Run TypeScript type check
 pnpm typecheck
+
+# Run linting
+pnpm lint

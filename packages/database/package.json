@@ -1,0 +1,13 @@
+{
+  "name": "@read-master/database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read Master - Prisma ORM",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "echo 'database lint placeholder'",
+    "typecheck": "echo 'database typecheck placeholder'",
+    "test": "echo 'database test placeholder'"
+  }
+}

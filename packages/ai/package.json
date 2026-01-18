@@ -1,0 +1,13 @@
+{
+  "name": "@read-master/ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read Master - AI prompt templates",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "echo 'ai lint placeholder'",
+    "typecheck": "echo 'ai typecheck placeholder'",
+    "test": "echo 'ai test placeholder'"
+  }
+}

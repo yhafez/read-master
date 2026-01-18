@@ -1,0 +1,12 @@
+{
+  "name": "@read-master/config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read Master - Shared ESLint, Prettier, TypeScript configs",
+  "type": "module",
+  "scripts": {
+    "lint": "echo 'config lint placeholder'",
+    "typecheck": "echo 'config typecheck placeholder'",
+    "test": "echo 'config test placeholder'"
+  }
+}

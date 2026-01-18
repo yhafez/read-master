@@ -1,0 +1,14 @@
+{
+  "name": "@read-master/api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read Master - Vercel serverless API",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'api dev placeholder'",
+    "build": "echo 'api build placeholder'",
+    "lint": "echo 'api lint placeholder'",
+    "typecheck": "echo 'api typecheck placeholder'",
+    "test": "echo 'api test placeholder'"
+  }
+}
