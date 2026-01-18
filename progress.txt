@@ -84,3 +84,20 @@ Started: 2026-01-17
 - Created comprehensive tests in packages/shared/src/utils/string.test.ts (19 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test
 - Files: docs/RALPH_WIGGUM.md, docs/prd.json, packages/config/vitest/*.js, */vitest.config.ts, packages/shared/src/utils/*
+
+## Iteration 5
+
+[2026-01-17] infra-005: Configure Husky pre-commit hooks
+- Husky was already installed (v9.1.7) and initialized with .husky directory
+- Installed lint-staged v16.2.7 as dev dependency at workspace root
+- Configured lint-staged in package.json:
+  - *.{ts,tsx,js,jsx}: eslint --fix, prettier --write
+  - *.{json,md}: prettier --write
+- Updated .husky/pre-commit hook with comprehensive checks:
+  - Console.log detection in staged TypeScript/JavaScript files
+  - lint-staged for efficient linting/formatting of staged files only
+  - Full TypeScript type check (required for cross-file type safety)
+  - Test execution to prevent committing breaking changes
+- Hook prevents commits when any check fails (non-zero exit codes)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test
+- Files: package.json, .husky/pre-commit

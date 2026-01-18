@@ -75,7 +75,7 @@
       "priority": 5,
       "category": "infrastructure",
       "defer_to_next_sprint": false,
-      "passes": false,
+      "passes": true,
       "dependencies": ["infra-004"],
       "acceptance_criteria": [
         "Husky installed and configured",
