@@ -188,7 +188,7 @@
         "API routes are properly configured",
         "Build commands are set for web and api"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "infra-009",

@@ -266,3 +266,37 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Tests for locale file key consistency across all 6 languages
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (75 tests total: 29 api + 34 shared + 12 web)
 - Files: apps/web/package.json, apps/web/src/locales/*.json, apps/web/src/i18n/index.ts, apps/web/src/components/common/LanguageSwitcher.tsx, apps/web/src/App.tsx, apps/web/src/main.tsx, apps/web/tsconfig.json
+
+## Iteration 10
+
+[2026-01-17] infra-008: Create vercel.json with deployment and cron job configuration
+- Created vercel.json in root with comprehensive Vercel deployment configuration:
+  - Schema reference for IDE support
+  - Version 2 configuration
+  - pnpm install command for dependencies
+  - Build configuration for apps/web (Vite static build) and apps/api (Vercel Node functions)
+  - Route rewrites: /api/* -> apps/api/api/*, /* -> apps/web/dist/*
+  - Cron jobs configured:
+    - srs-reminders: Daily at 8:00 AM UTC (0 8 * * *)
+    - streak-check: Daily at midnight UTC (0 0 * * *)
+    - cleanup-expired: Weekly on Sundays at 3:00 AM UTC (0 3 * * 0)
+  - Function configuration: 1024MB memory, 30s max duration
+  - Region: iad1 (US East)
+- Created apps/api/api/cron/ directory with three cron job endpoints:
+  - srs-reminders.ts: Sends email reminders to users with due flashcards
+  - streak-check.ts: Checks and updates user streaks, awards achievements
+  - cleanup-expired.ts: Cleans up expired downloads, old audit logs, orphaned data
+- All cron endpoints include:
+  - CRON_SECRET authentication for security
+  - Method validation (GET only for Vercel Cron)
+  - Structured logging with Winston
+  - Duration tracking
+  - Comprehensive error handling
+  - TODO placeholders for actual implementation when database is ready
+- Created comprehensive test suites for each cron endpoint (18 new tests):
+  - srs-reminders.test.ts: 6 tests
+  - streak-check.test.ts: 6 tests
+  - cleanup-expired.test.ts: 6 tests
+- Added CRON_SECRET to .env.example with generation instructions
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (93 tests total: 47 api + 34 shared + 12 web)
+- Files: vercel.json, apps/api/api/cron/srs-reminders.ts, apps/api/api/cron/streak-check.ts, apps/api/api/cron/cleanup-expired.ts, apps/api/api/cron/*.test.ts, .env.example
