@@ -982,7 +982,7 @@
         "TTL is properly managed",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-infra-008",

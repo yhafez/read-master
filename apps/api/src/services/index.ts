@@ -43,3 +43,60 @@ export {
   type TransactionClient,
   type SoftDeletableModel,
 } from "./db.js";
+
+// Redis cache service
+export {
+  // Core cache operations
+  cache,
+  get as cacheGet,
+  set as cacheSet,
+  del as cacheDel,
+  delMany as cacheDelMany,
+  exists as cacheExists,
+  expire as cacheExpire,
+  ttl as cacheTtl,
+
+  // Advanced cache operations
+  getOrSet,
+  mget,
+  mset,
+  incr,
+  decr,
+
+  // Cache invalidation
+  invalidatePattern,
+  invalidateUserCache,
+  invalidateBookCache,
+
+  // Cache key builders
+  buildKey,
+  userKey,
+  bookKey,
+  progressKey,
+  guideKey,
+  searchKey,
+  leaderboardKey,
+
+  // Client management
+  getRedisClient,
+  isRedisAvailable,
+  resetRedisClient,
+
+  // Higher-order utilities
+  withCache,
+  withInvalidation,
+
+  // Utilities object
+  cacheUtils,
+
+  // Constants
+  CacheKeyPrefix,
+  CacheTTL,
+
+  // Types
+  type CacheSetOptions,
+  type CacheGetOptions,
+  type CacheResult,
+  type CacheKeyPrefixType,
+  type CacheTTLType,
+} from "./redis.js";

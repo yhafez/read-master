@@ -1894,3 +1894,62 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Edge case tests (3 tests)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (384 api tests)
 - Files: apps/api/src/services/db.ts, apps/api/src/services/db.test.ts, apps/api/src/services/index.ts, apps/api/src/index.ts
+
+## Iteration 42
+
+[2026-01-17] api-infra-007: Create Redis cache service
+- Created apps/api/src/services/redis.ts with comprehensive caching functionality
+- Implemented Upstash Redis client singleton with proper initialization:
+  - getRedisClient(): Get the Redis client instance (returns null if not configured)
+  - isRedisAvailable(): Check if Redis is available
+  - resetRedisClient(): Reset client for testing
+  - Fail-gracefully pattern: returns null/false when Redis unavailable
+- Implemented core cache operations:
+  - get<T>(): Get value from cache with optional TTL refresh
+  - set<T>(): Set value with TTL, NX, XX options
+  - del(): Delete single key
+  - delMany(): Delete multiple keys
+  - exists(): Check if key exists
+  - expire(): Set TTL on existing key
+  - ttl(): Get remaining TTL of a key
+- Implemented advanced cache operations:
+  - getOrSet<T>(): Get from cache or fetch and cache if missing
+  - mget<T>(): Get multiple values at once
+  - mset<T>(): Set multiple key-value pairs with optional TTL
+  - incr(): Increment numeric value
+  - decr(): Decrement numeric value
+- Implemented cache invalidation helpers:
+  - invalidatePattern(): Delete keys matching glob pattern using SCAN
+  - invalidateUserCache(): Invalidate all cache for a user
+  - invalidateBookCache(): Invalidate all cache for a book
+- Implemented cache key builders for organized namespacing:
+  - buildKey(): Generic key builder with prefix
+  - userKey(): User-specific keys
+  - bookKey(): Book-specific keys
+  - progressKey(): Reading progress keys
+  - guideKey(): Pre-reading guide keys
+  - searchKey(): Search result keys with normalization
+  - leaderboardKey(): Leaderboard keys with pagination
+- Defined cache constants:
+  - CacheKeyPrefix: USER, BOOK, PROGRESS, GUIDE, FLASHCARD, ASSESSMENT, SEARCH, API, LEADERBOARD, FORUM, SESSION
+  - CacheTTL: VERY_SHORT (60s), SHORT (5m), MEDIUM (15m), LONG (1h), VERY_LONG (6h), DAY, WEEK, MONTH
+- Implemented higher-order utility functions:
+  - withCache(): Create cached version of async function
+  - withInvalidation(): Wrap function with cache invalidation
+- Created cache and cacheUtils export objects for clean imports
+- Updated apps/api/src/services/index.ts to export all Redis cache exports
+- Created comprehensive test suite with 122 tests in redis.test.ts:
+  - Type export tests (5 tests)
+  - CacheKeyPrefix constant tests (11 tests)
+  - CacheTTL constant tests (8 tests)
+  - Client management tests (7 tests)
+  - Core cache operation tests (get: 6, set: 8, del: 4, delMany: 4, exists: 4, expire: 3, ttl: 4)
+  - Advanced operation tests (getOrSet: 3, mget: 3, mset: 3, incr: 3, decr: 3)
+  - Cache invalidation tests (7 tests)
+  - Cache key builder tests (13 tests)
+  - Higher-order utility tests (4 tests)
+  - cache/cacheUtils object tests (7 tests)
+  - Edge case tests (5 tests)
+  - Error handling tests (7 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (506 api tests)
+- Files: apps/api/src/services/redis.ts, apps/api/src/services/redis.test.ts, apps/api/src/services/index.ts
