@@ -7,6 +7,7 @@
  */
 
 import EPub from "epub";
+import { PDFParse, type InfoResult } from "pdf-parse";
 import { createHash } from "crypto";
 import fs from "fs/promises";
 import path from "path";
@@ -85,6 +86,66 @@ export type ParseResult<T> = {
   error?: string;
 };
 
+/**
+ * PDF-specific metadata
+ */
+export type PDFMetadata = {
+  title: string;
+  author: string;
+  subject: string;
+  creator: string;
+  producer: string;
+  creationDate: string;
+  modificationDate: string;
+  pageCount: number;
+  pdfVersion: string;
+  isEncrypted: boolean;
+};
+
+/**
+ * Detected section in PDF content
+ */
+export type PDFSection = {
+  id: string;
+  title: string;
+  order: number;
+  level: number;
+  startOffset: number;
+  endOffset: number;
+  wordCount: number;
+  content: string;
+};
+
+/**
+ * Result of parsing a PDF file
+ */
+export type ParsedPDF = {
+  metadata: PDFMetadata;
+  sections: PDFSection[];
+  totalWordCount: number;
+  rawContent: string;
+  estimatedReadingTimeMinutes: number;
+  pageCount: number;
+};
+
+/**
+ * Options for parsing a PDF
+ */
+export type PDFParseOptions = {
+  extractContent?: boolean;
+  detectSections?: boolean;
+  maxPages?: number;
+};
+
+/**
+ * Default PDF parsing options
+ */
+export const DEFAULT_PDF_PARSE_OPTIONS: Required<PDFParseOptions> = {
+  extractContent: true,
+  detectSections: true,
+  maxPages: 5000,
+};
+
 // =============================================================================
 // Constants
 // =============================================================================
@@ -110,6 +171,29 @@ export const EPUB_MIME_TYPES = [
   "application/epub+zip",
   "application/epub",
 ] as const;
+
+/**
+ * Supported PDF MIME types
+ */
+export const PDF_MIME_TYPES = ["application/pdf"] as const;
+
+/**
+ * PDF file signature (magic bytes)
+ * PDF files start with "%PDF-"
+ */
+const PDF_SIGNATURE = Buffer.from([0x25, 0x50, 0x44, 0x46, 0x2d]); // %PDF-
+
+/**
+ * Patterns for detecting chapter/section headings in PDF text
+ */
+const CHAPTER_PATTERNS = [
+  /^(?:chapter|ch\.?)\s*(\d+|[ivxlcdm]+)/i,
+  /^(?:part|pt\.?)\s*(\d+|[ivxlcdm]+)/i,
+  /^(?:section|sec\.?)\s*(\d+\.?\d*)/i,
+  /^(?:unit)\s*(\d+)/i,
+  /^(\d+)\.?\s+[A-Z][a-z]/,
+  /^(?:prologue|epilogue|introduction|preface|foreword|afterword|appendix|conclusion)/i,
+];
 
 /**
  * Common cover image IDs in EPUB files
@@ -604,6 +688,331 @@ export function getEPUBExtension(): string {
 }
 
 // =============================================================================
+// PDF Parsing
+// =============================================================================
+
+/**
+ * Parse a PDF file and extract all content
+ *
+ * @param filePath - Path to the PDF file
+ * @param options - Parsing options
+ * @returns Parsed PDF data or error
+ */
+export async function parsePDF(
+  filePath: string,
+  options: PDFParseOptions = {}
+): Promise<ParseResult<ParsedPDF>> {
+  const opts = { ...DEFAULT_PDF_PARSE_OPTIONS, ...options };
+
+  try {
+    // Verify file exists
+    await fs.access(filePath);
+
+    // Read the file
+    const dataBuffer = await fs.readFile(filePath);
+
+    // Parse using the buffer function
+    return parsePDFFromBuffer(dataBuffer, opts);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown parsing error";
+    return {
+      success: false,
+      error: `Failed to parse PDF: ${message}`,
+    };
+  }
+}
+
+/**
+ * Parse PDF from a buffer instead of a file path
+ *
+ * @param buffer - PDF file content as a buffer
+ * @param options - Parsing options
+ * @returns Parsed PDF data or error
+ */
+export async function parsePDFFromBuffer(
+  buffer: Buffer,
+  options: PDFParseOptions = {}
+): Promise<ParseResult<ParsedPDF>> {
+  const opts = { ...DEFAULT_PDF_PARSE_OPTIONS, ...options };
+
+  let parser: PDFParse | null = null;
+
+  try {
+    // Validate buffer
+    if (!buffer || buffer.length === 0) {
+      return {
+        success: false,
+        error: "Empty buffer provided",
+      };
+    }
+
+    // Check PDF signature
+    if (!isPDFBuffer(buffer)) {
+      return {
+        success: false,
+        error: "Invalid PDF format: missing PDF signature",
+      };
+    }
+
+    // Create PDF parser with buffer data
+    parser = new PDFParse({ data: buffer });
+
+    // Get document info (metadata)
+    const infoResult = await parser.getInfo();
+
+    // Get text content
+    const textResult = await parser.getText({
+      last: opts.maxPages,
+    });
+
+    // Check for encryption (if we can't get text but have pages)
+    const isEncrypted =
+      infoResult.total > 0 && textResult.text.trim().length === 0;
+
+    if (isEncrypted) {
+      return {
+        success: false,
+        error: "PDF appears to be encrypted or password protected",
+      };
+    }
+
+    // Extract metadata
+    const metadata = extractPDFMetadata(infoResult);
+
+    // Extract text content
+    const rawContent = opts.extractContent ? textResult.text || "" : "";
+
+    // Calculate word count
+    const totalWordCount = countWords(rawContent);
+
+    // Detect sections if requested
+    const sections = opts.detectSections ? detectPDFSections(rawContent) : [];
+
+    // Calculate reading time
+    const estimatedReadingTimeMinutes = calculateReadingTime(totalWordCount);
+
+    return {
+      success: true,
+      data: {
+        metadata,
+        sections,
+        totalWordCount,
+        rawContent,
+        estimatedReadingTimeMinutes,
+        pageCount: infoResult.total || 0,
+      },
+    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown parsing error";
+    return {
+      success: false,
+      error: `Failed to parse PDF: ${message}`,
+    };
+  } finally {
+    // Clean up parser resources
+    if (parser) {
+      await parser.destroy().catch(() => {
+        // Ignore cleanup errors
+      });
+    }
+  }
+}
+
+/**
+ * Extract metadata from parsed PDF InfoResult
+ */
+function extractPDFMetadata(infoResult: InfoResult): PDFMetadata {
+  const info = infoResult.info || {};
+
+  // Get XMP/XAP metadata if available
+  const metadata = infoResult.metadata;
+  const metadataObj = metadata
+    ? (metadata as unknown as Record<string, unknown>)
+    : {};
+
+  // Get date information
+  const dateNode = infoResult.getDateNode();
+
+  return {
+    title:
+      cleanMetadataString(info.Title) ||
+      cleanMetadataString(metadataObj?.["dc:title"]) ||
+      "",
+    author:
+      cleanMetadataString(info.Author) ||
+      cleanMetadataString(metadataObj?.["dc:creator"]) ||
+      "",
+    subject:
+      cleanMetadataString(info.Subject) ||
+      cleanMetadataString(metadataObj?.["dc:subject"]) ||
+      "",
+    creator: cleanMetadataString(info.Creator) || "",
+    producer: cleanMetadataString(info.Producer) || "",
+    creationDate: dateNode.CreationDate
+      ? dateNode.CreationDate.toISOString()
+      : "",
+    modificationDate: dateNode.ModDate ? dateNode.ModDate.toISOString() : "",
+    pageCount: infoResult.total || 0,
+    pdfVersion: cleanMetadataString(info.PDFFormatVersion) || "",
+    isEncrypted: Boolean(info.IsAcroFormPresent),
+  };
+}
+
+/**
+ * Detect sections/chapters in PDF text content
+ */
+function detectPDFSections(text: string): PDFSection[] {
+  if (!text || text.trim().length === 0) {
+    return [];
+  }
+
+  const sections: PDFSection[] = [];
+  const lines = text.split("\n");
+
+  let currentSection: PDFSection | null = null;
+  let currentContent: string[] = [];
+  let sectionOrder = 0;
+  let currentOffset = 0;
+
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+
+    // Check if this line matches a chapter/section pattern
+    const isChapterHeading = CHAPTER_PATTERNS.some((pattern) =>
+      pattern.test(trimmedLine)
+    );
+
+    // Also check for potential section headers:
+    // - All caps lines that aren't too long
+    // - Lines that look like titles (capitalized words)
+    const isAllCaps =
+      trimmedLine.length > 3 &&
+      trimmedLine.length < 100 &&
+      trimmedLine === trimmedLine.toUpperCase() &&
+      /[A-Z]/.test(trimmedLine);
+
+    const isPotentialHeader = isChapterHeading || isAllCaps;
+
+    if (isPotentialHeader && trimmedLine.length > 0) {
+      // Save the previous section
+      if (currentSection) {
+        currentSection.endOffset = currentOffset;
+        currentSection.content = currentContent.join("\n").trim();
+        currentSection.wordCount = countWords(currentSection.content);
+        sections.push(currentSection);
+      }
+
+      // Start a new section
+      sectionOrder++;
+      currentSection = {
+        id: `section-${sectionOrder}`,
+        title: trimmedLine.substring(0, 200), // Limit title length
+        order: sectionOrder,
+        level: isAllCaps && !isChapterHeading ? 1 : 0,
+        startOffset: currentOffset,
+        endOffset: currentOffset,
+        wordCount: 0,
+        content: "",
+      };
+      currentContent = [];
+    } else if (currentSection) {
+      // Add line to current section content
+      currentContent.push(line);
+    }
+
+    currentOffset += line.length + 1; // +1 for newline
+  }
+
+  // Save the last section
+  if (currentSection) {
+    currentSection.endOffset = currentOffset;
+    currentSection.content = currentContent.join("\n").trim();
+    currentSection.wordCount = countWords(currentSection.content);
+    sections.push(currentSection);
+  }
+
+  // If no sections were detected, create a single section from all content
+  if (sections.length === 0 && text.trim().length > 0) {
+    sections.push({
+      id: "section-1",
+      title: "Main Content",
+      order: 1,
+      level: 0,
+      startOffset: 0,
+      endOffset: text.length,
+      wordCount: countWords(text),
+      content: text.trim(),
+    });
+  }
+
+  return sections;
+}
+
+/**
+ * Check if a buffer starts with PDF signature
+ */
+function isPDFBuffer(buffer: Buffer): boolean {
+  if (buffer.length < PDF_SIGNATURE.length) {
+    return false;
+  }
+
+  for (let i = 0; i < PDF_SIGNATURE.length; i++) {
+    if (buffer[i] !== PDF_SIGNATURE[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Validate that a file is a valid PDF
+ */
+export async function isValidPDF(filePath: string): Promise<boolean> {
+  let parser: PDFParse | null = null;
+
+  try {
+    await fs.access(filePath);
+
+    // Read the first few bytes to check for PDF signature
+    const fd = await fs.open(filePath, "r");
+    const buffer = Buffer.alloc(PDF_SIGNATURE.length);
+    await fd.read(buffer, 0, PDF_SIGNATURE.length, 0);
+    await fd.close();
+
+    if (!isPDFBuffer(buffer)) {
+      return false;
+    }
+
+    // Try to parse it to verify it's a valid PDF
+    const dataBuffer = await fs.readFile(filePath);
+    parser = new PDFParse({ data: dataBuffer });
+
+    // Try to get info to verify the PDF is valid
+    await parser.getInfo();
+
+    return true;
+  } catch {
+    return false;
+  } finally {
+    if (parser) {
+      await parser.destroy().catch(() => {
+        // Ignore cleanup errors
+      });
+    }
+  }
+}
+
+/**
+ * Get file extension from PDF (should be .pdf)
+ */
+export function getPDFExtension(): string {
+  return ".pdf";
+}
+
+// =============================================================================
 // Exports (Namespaced)
 // =============================================================================
 
@@ -611,12 +1020,17 @@ export function getEPUBExtension(): string {
  * Book parsing utilities object
  */
 export const bookParser = {
-  // Parsing functions
+  // EPUB parsing functions
   parseEPUB,
   parseEPUBFromBuffer,
-
-  // Validation
   isValidEPUB,
+  getEPUBExtension,
+
+  // PDF parsing functions
+  parsePDF,
+  parsePDFFromBuffer,
+  isValidPDF,
+  getPDFExtension,
 
   // Utility functions
   countWords,
@@ -627,7 +1041,9 @@ export const bookParser = {
   // Constants
   AVERAGE_READING_WPM,
   EPUB_MIME_TYPES,
+  PDF_MIME_TYPES,
   DEFAULT_PARSE_OPTIONS,
+  DEFAULT_PDF_PARSE_OPTIONS,
 };
 
 /**
@@ -639,4 +1055,17 @@ export const bookUtils = {
   calculateReadingTime,
   generateContentHash,
   getEPUBExtension,
+  getPDFExtension,
+};
+
+/**
+ * PDF-specific parsing utilities
+ */
+export const pdfParser = {
+  parsePDF,
+  parsePDFFromBuffer,
+  isValidPDF,
+  getPDFExtension,
+  PDF_MIME_TYPES,
+  DEFAULT_PDF_PARSE_OPTIONS,
 };

@@ -164,28 +164,35 @@ export {
 
 // Book parsing service
 export {
-  // Parsing functions
+  // EPUB parsing functions
   parseEPUB,
   parseEPUBFromBuffer,
-
-  // Validation
   isValidEPUB,
+  getEPUBExtension,
+
+  // PDF parsing functions
+  parsePDF,
+  parsePDFFromBuffer,
+  isValidPDF,
+  getPDFExtension,
 
   // Utility functions
   countWords,
   stripHtmlTags,
   calculateReadingTime,
   generateContentHash,
-  getEPUBExtension,
 
   // Namespaced exports
   bookParser,
   bookUtils,
+  pdfParser,
 
   // Constants
   AVERAGE_READING_WPM,
   EPUB_MIME_TYPES,
+  PDF_MIME_TYPES,
   DEFAULT_PARSE_OPTIONS,
+  DEFAULT_PDF_PARSE_OPTIONS,
 
   // Types
   type BookMetadata,
@@ -194,4 +201,8 @@ export {
   type ParsedBook,
   type ParseOptions,
   type ParseResult,
+  type PDFMetadata,
+  type PDFSection,
+  type ParsedPDF,
+  type PDFParseOptions,
 } from "./books.js";

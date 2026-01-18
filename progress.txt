@@ -2242,3 +2242,57 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Edge cases (8 tests: very long text, unicode, emoji, malformed HTML, etc.)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2712 tests)
 - Files: apps/api/src/services/books.ts, apps/api/src/services/books.test.ts, apps/api/src/services/index.ts, apps/api/package.json
+
+
+## Iteration 48
+
+[2026-01-17] api-books-003: Create book parsing service for PDF files
+- Added pdf-parse ^2.4.5 dependency for PDF file parsing (new 2.x API with class-based approach)
+- Extended apps/api/src/services/books.ts with comprehensive PDF parsing support
+- Defined PDF-specific types:
+  - PDFMetadata: title, author, subject, creator, producer, creationDate, modificationDate, pageCount, pdfVersion, isEncrypted
+  - PDFSection: id, title, order, level, startOffset, endOffset, wordCount, content
+  - ParsedPDF: metadata, sections, totalWordCount, rawContent, estimatedReadingTimeMinutes, pageCount
+  - PDFParseOptions: extractContent, detectSections, maxPages
+- Implemented core PDF parsing functions:
+  - parsePDF(): Parse PDF file from path
+  - parsePDFFromBuffer(): Parse PDF from buffer (main implementation)
+  - isValidPDF(): Validate PDF file by checking signature and structure
+  - getPDFExtension(): Returns ".pdf" for file extension checks
+- Implemented metadata extraction from PDFParse InfoResult:
+  - Extracts title, author, subject, creator, producer
+  - Uses DateNode for proper date handling (CreationDate, ModDate)
+  - Detects encryption state and PDF version
+- Implemented section/chapter detection for PDFs:
+  - detectPDFSections(): Detect sections from text content
+  - Pattern matching for chapter headings (Chapter X, Part X, Section X, etc.)
+  - Detection of all-caps headers as section markers
+  - Falls back to single "Main Content" section if no sections detected
+  - Tracks word count and content offsets for each section
+- Added constants:
+  - PDF_MIME_TYPES: ["application/pdf"]
+  - PDF_SIGNATURE: Buffer for %PDF- magic bytes
+  - CHAPTER_PATTERNS: Array of regex patterns for chapter detection
+  - DEFAULT_PDF_PARSE_OPTIONS: extractContent: true, detectSections: true, maxPages: 5000
+- Implemented PDF validation:
+  - isPDFBuffer(): Check if buffer starts with PDF signature (%PDF-)
+  - Proper resource cleanup with parser.destroy() in finally blocks
+- Created namespaced exports:
+  - pdfParser: PDF-specific parsing functions and constants
+  - Updated bookParser: Added PDF functions alongside EPUB functions
+  - Updated bookUtils: Added getPDFExtension function
+- Updated apps/api/src/services/index.ts to export all PDF utilities and types
+- Added 42 new PDF-specific tests to books.test.ts:
+  - PDF Type export tests (4 tests)
+  - PDF Constants tests (4 tests for PDF_MIME_TYPES, DEFAULT_PDF_PARSE_OPTIONS)
+  - getPDFExtension tests (1 test)
+  - parsePDF tests (3 tests for error cases)
+  - parsePDFFromBuffer tests (5 tests for empty, invalid, signature-only buffers)
+  - isValidPDF tests (4 tests for non-existent, non-PDF, empty, fake signature files)
+  - pdfParser object tests (6 tests)
+  - bookParser PDF exports tests (6 tests)
+  - bookUtils PDF exports tests (1 test)
+  - PDF edge cases (4 tests)
+  - PDF integration tests (3 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2570 tests)
+- Files: apps/api/src/services/books.ts, apps/api/src/services/books.test.ts, apps/api/src/services/index.ts, apps/api/package.json

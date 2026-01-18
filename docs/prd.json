@@ -1118,7 +1118,7 @@
         "Word count is accurate",
         "Tests pass with real PDF"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-books-004",
