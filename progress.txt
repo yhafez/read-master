@@ -1293,3 +1293,62 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Fixed recursive schema type issue in social.ts by defining base schema first, then explicit type with optional childReplies
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (997 tests total: 47 api + 172 database + 12 web + 766 shared)
 - Files: packages/shared/src/schemas/assessments.ts, packages/shared/src/schemas/assessments.test.ts, packages/shared/src/schemas/curriculums.ts, packages/shared/src/schemas/curriculums.test.ts, packages/shared/src/schemas/social.ts, packages/shared/src/schemas/social.test.ts, packages/shared/src/schemas/users.ts, packages/shared/src/schemas/users.test.ts, packages/shared/src/schemas/index.ts
+
+## Iteration 31
+
+[2026-01-17] shared-009: Create date and timezone utilities
+- Created packages/shared/src/utils/dates.ts with comprehensive date/time handling
+- Implemented validation functions:
+  - isValidDate: Check if value is a valid Date object
+  - isValidTimezone: Check if string is a valid IANA timezone identifier
+  - parseDate: Parse date from various input formats (Date, string, number, null)
+- Implemented UTC functions for database storage:
+  - nowUTC: Get current date/time in UTC
+  - toUTC: Convert a local date to UTC
+  - startOfDayUTC, endOfDayUTC: Get start/end of day in UTC
+  - startOfWeekUTC, startOfMonthUTC: Get start of week/month in UTC
+  - addDays, addHours, addMinutes, addMonths, addYears: Date arithmetic
+- Implemented timezone conversion functions:
+  - getLocalTimezone: Get user's local timezone
+  - getTimezoneOffset: Get timezone offset in minutes
+  - convertTimezone: Convert date between timezones
+  - nowInTimezone: Get current time in specific timezone
+- Implemented date formatting functions:
+  - formatDate: Format with Intl.DateTimeFormat and custom options
+  - formatISO: Format as ISO string for database storage
+  - formatShortDate, formatTime, formatDateTime: Common format helpers
+- Implemented relative time formatting:
+  - getTimeDifference: Calculate time difference with appropriate unit
+  - formatRelativeTime: Format as relative time (e.g., "2 hours ago")
+  - timeAgo, timeUntil: Convenience functions for past/future dates
+- Implemented date comparison functions:
+  - isSameDay, isToday, isYesterday, isTomorrow: Day comparisons
+  - isPast, isFuture: Time comparisons
+  - isThisWeek, isThisMonth, isThisYear: Period comparisons
+- Implemented duration functions:
+  - formatDuration: Format seconds as "1h 30m 45s"
+  - formatDurationLong: Format with full unit names
+  - parseDuration: Parse duration strings (HH:MM:SS, "1h 30m", etc.)
+- Implemented reading time estimation:
+  - calculateReadingTime: Calculate reading time in seconds
+  - formatReadingTime: Format as "5 min read" or "2h 30m read"
+- Implemented streak calculation functions:
+  - areConsecutiveDays: Check if two dates are consecutive
+  - calculateStreak: Calculate streak from activity dates
+- Exported dateUtils object with all functions and constants
+- Defined COMMON_TIMEZONES array with 12 major timezones
+- Defined time unit constants (MS_PER_SECOND, MS_PER_MINUTE, etc.)
+- Updated packages/shared/src/utils/index.ts to export dates module
+- Created comprehensive test suite with 127 tests in dates.test.ts:
+  - Constants tests
+  - Validation function tests
+  - UTC function tests
+  - Timezone conversion tests
+  - Formatting tests (date, time, relative)
+  - Comparison function tests
+  - Duration formatting and parsing tests
+  - Reading time calculation tests
+  - Streak calculation tests with mocked time
+  - Edge case tests (leap years, DST, old/future dates)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1355 tests total: 47 api + 172 database + 12 web + 1124 shared)
+- Files: packages/shared/src/utils/dates.ts, packages/shared/src/utils/dates.test.ts, packages/shared/src/utils/index.ts

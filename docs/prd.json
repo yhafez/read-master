@@ -728,7 +728,7 @@
         "Relative time formatting works",
         "Tests cover edge cases"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-010",
