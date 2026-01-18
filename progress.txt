@@ -895,3 +895,57 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Sample data completeness tests
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (265 tests total: 47 api + 34 shared + 12 web + 172 database)
 - Files: packages/database/prisma/seed.ts, packages/database/prisma/seed.test.ts, packages/database/package.json
+
+## Iteration 24
+
+[2026-01-17] shared-001: Set up packages/shared structure and export Prisma types
+- Created packages/shared/src/types/ directory structure for shared types
+- Created src/types/database.ts: Re-exports all Prisma types from @read-master/database
+  - 26 model types: User, Book, Chapter, ReadingProgress, Annotation, PreReadingGuide, Assessment,
+    Flashcard, FlashcardReview, UserStats, Achievement, UserAchievement, Curriculum, CurriculumItem,
+    CurriculumFollow, Follow, ReadingGroup, ReadingGroupMember, GroupDiscussion, DiscussionReply,
+    ForumCategory, ForumPost, ForumReply, ForumVote, AIUsageLog, AuditLog
+  - 12 enum types: UserTier, BookSource, FileType, ReadingStatus, AnnotationType, AssessmentType,
+    FlashcardType, FlashcardStatus, AchievementCategory, AchievementTier, Visibility, GroupRole
+- Created src/types/api.ts: Comprehensive API request/response type definitions
+  - Common API types: ApiResponse, ApiError, PaginatedResponse, PaginationMeta, PaginationParams, SortParams
+  - User API types: UserProfileResponse, UserStatsResponse, UserAchievementResponse, UserActivityItem, UpdateUserPreferencesRequest
+  - Book API types: BookListParams, BookSummaryResponse, BookDetailResponse, ChapterResponse, ReadingProgressResponse,
+    PreReadingGuideResponse, VocabularyItem, KeyArgumentItem, ChapterSummaryItem, BookUploadRequest, BookImportUrlRequest,
+    BookPasteRequest, BookUpdateRequest
+  - Annotation API types: AnnotationResponse, CreateAnnotationRequest, UpdateAnnotationRequest
+  - Flashcard API types: FlashcardResponse, CreateFlashcardRequest, UpdateFlashcardRequest, ReviewFlashcardRequest,
+    ReviewFlashcardResponse, FlashcardStatsResponse
+  - Assessment API types: AssessmentQuestion, AssessmentAnswer, AssessmentResponse, BloomsBreakdown,
+    GenerateAssessmentRequest, SubmitAssessmentRequest
+  - AI API types: AiExplainRequest, AiAskRequest, AiComprehensionCheckRequest, AiGenerateFlashcardsRequest,
+    AiGradeAnswerRequest, AiGradeAnswerResponse
+  - Social API types: FollowUserRequest, UserFollowResponse, ActivityFeedItem, ReadingGroupResponse,
+    CreateReadingGroupRequest, GroupDiscussionResponse
+  - Forum API types: ForumCategoryResponse, ForumPostResponse, ForumReplyResponse, CreateForumPostRequest,
+    CreateForumReplyRequest, ForumVoteRequest
+  - Curriculum API types: CurriculumResponse, CurriculumItemResponse, CurriculumProgressResponse,
+    CreateCurriculumRequest, AddCurriculumItemRequest
+  - Leaderboard API types: LeaderboardEntry, LeaderboardResponse, LeaderboardParams
+  - TTS API types: TtsSpeakRequest, TtsVoicesResponse, TtsVoice, TtsDownloadRequest, TtsDownloadStatusResponse
+- Created src/types/index.ts: Clean re-exports of all database and API types
+- Updated packages/shared/package.json:
+  - Added @read-master/database as workspace dependency
+  - Added "./types" export pointing to src/types/index.ts
+- Updated packages/shared/src/index.ts with improved documentation
+- Created comprehensive test suite (67 tests) in src/types/index.test.ts:
+  - Database model type tests (26 model types verified)
+  - Database enum type tests (12 enum types verified)
+  - API common type tests (ApiResponse, ApiError, PaginatedResponse, etc.)
+  - User API type tests
+  - Book API type tests
+  - Flashcard API type tests
+  - Assessment API type tests
+  - AI API type tests
+  - Social API type tests
+  - TTS API type tests
+  - Leaderboard API type tests
+  - Index re-export verification
+- Types can now be imported from '@read-master/shared/types' in apps/web and apps/api
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (332 tests total: 47 api + 101 shared + 12 web + 172 database)
+- Files: packages/shared/package.json, packages/shared/src/types/database.ts, packages/shared/src/types/api.ts, packages/shared/src/types/index.ts, packages/shared/src/types/index.test.ts, packages/shared/src/index.ts

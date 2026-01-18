@@ -539,7 +539,7 @@
         "Can import types in apps/web and apps/api",
         "TypeScript compilation works"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-002",
