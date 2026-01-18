@@ -187,3 +187,27 @@ No discoveries added during this sprint (foundational infrastructure work)
 3. API route scaffolding for apps/api
 4. React + Vite setup for apps/web
 5. Core shared types and Zod schemas
+
+## Iteration 8
+
+[2026-01-17] infra-006: Create apps/api Vercel serverless functions structure
+- Transformed apps/api from placeholder to full Vercel serverless API structure
+- Updated package.json with required dependencies:
+  - zod ^3.24.0 (runtime validation)
+  - winston ^3.17.0 (structured logging)
+  - @vercel/node ^5.0.0 (Vercel function types)
+  - @types/node ^22.10.0 (Node.js types)
+- Created api/ directory for Vercel serverless functions:
+  - api/health.ts: Health check endpoint returning service status, timestamp, version
+- Created src/utils/ directory for shared API utilities:
+  - src/utils/logger.ts: Winston-based structured logging with request/error/AI usage helpers
+  - src/utils/response.ts: Standardized API response utilities (sendSuccess, sendPaginated, sendError)
+  - src/utils/index.ts: Clean re-exports of all utilities
+- Updated src/index.ts to export all utilities
+- Updated vitest.config.ts to include api/**/*.test.ts files
+- Created comprehensive test suites:
+  - api/health.test.ts: 6 tests for health endpoint
+  - src/utils/response.test.ts: 15 tests for response utilities
+  - src/utils/logger.test.ts: 8 tests for logging utilities
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (63 tests total: 29 api + 34 shared)
+- Files: apps/api/package.json, api/health.ts, src/utils/*.ts, vitest.config.ts

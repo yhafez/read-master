@@ -5,16 +5,22 @@
   "description": "Read Master - Vercel serverless API",
   "type": "module",
   "scripts": {
-    "dev": "echo 'api dev placeholder'",
-    "build": "echo 'api build placeholder'",
+    "dev": "vercel dev",
+    "build": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "dependencies": {
+    "zod": "^3.24.0",
+    "winston": "^3.17.0"
+  },
   "devDependencies": {
     "@read-master/config": "workspace:*",
+    "@types/node": "^22.10.0",
+    "@vercel/node": "^5.0.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.0"
   }
