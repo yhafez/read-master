@@ -851,3 +851,47 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (219 tests total: 47 api + 34 shared + 12 web + 126 database)
 - Files: packages/database/prisma/migrations/00000000000000_initial_schema/migration.sql, packages/database/prisma/migrations.test.ts, packages/database/vitest.config.ts
+
+## Iteration 23
+
+[2026-01-17] db-013: Create seed script with sample data
+- Created comprehensive prisma/seed.ts file with all sample data
+- Implemented 30 achievement definitions matching SPECIFICATIONS.md:
+  - Reading Achievements (8): first_book, bookworm, bibliophile, scholar, speed_reader, marathon, night_owl, early_bird
+  - Streak Achievements (4): streak_7, streak_30, streak_100, streak_365
+  - SRS/Learning Achievements (7): first_review, cards_100, cards_1000, mastered_50, mastered_500, retention_90, perfect_day
+  - Social Achievements (7): first_highlight, annotator, social_butterfly, influencer, group_founder, curriculum_creator, helpful
+  - Comprehension Achievements (4): first_assessment, ace, consistent, blooms_master
+- Each achievement includes: code, name, description, category, criteria (JSON), xpReward, tier, sortOrder, badgeIcon, badgeColor
+- Created 8 forum categories:
+  - general-discussion, book-recommendations, reading-strategies, flashcard-tips
+  - study-groups, feature-requests, help-support, pro-scholar-lounge (PRO tier minimum)
+- Created 5 sample users across all tiers:
+  - Free tier: freereader (en, public profile)
+  - Pro tier: proreader (en), arabicreader (ar, RTL)
+  - Scholar tier: masterreader (en)
+  - Free tier: lectorespa (es, private profile)
+- Created 5 sample books with various sources and statuses:
+  - OPEN_LIBRARY: The Great Gatsby (COMPLETED), Don Quixote (READING)
+  - GOOGLE_BOOKS: 1984 (READING)
+  - UPLOAD: Sapiens (WANT_TO_READ) with EPUB file type
+  - PASTE: Atomic Habits (COMPLETED)
+- Seed script is fully idempotent:
+  - Uses upsert pattern for achievements (by code)
+  - Uses upsert pattern for forum categories (by slug)
+  - Uses upsert pattern for users (by clerkId)
+  - Uses upsert pattern for user stats (by userId)
+  - Uses findFirst-then-create pattern for books
+- Configured Prisma seed in package.json: "prisma": { "seed": "tsx prisma/seed.ts" }
+- Created comprehensive test suite (46 tests) in prisma/seed.test.ts:
+  - Achievement structure tests (all 30 achievements from spec)
+  - Forum category tests (8 categories, URL-friendly slugs)
+  - User tier tests (FREE, PRO, SCHOLAR)
+  - Book source tests (5 sources)
+  - File type tests (6 file types)
+  - Reading status tests (4 statuses)
+  - Seed script structure tests
+  - Idempotency pattern tests
+  - Sample data completeness tests
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (265 tests total: 47 api + 34 shared + 12 web + 172 database)
+- Files: packages/database/prisma/seed.ts, packages/database/prisma/seed.test.ts, packages/database/package.json

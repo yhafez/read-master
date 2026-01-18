@@ -516,7 +516,7 @@
         "Achievement definitions match spec",
         "Can run seed multiple times safely"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "shared-001",
