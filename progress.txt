@@ -2498,3 +2498,54 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Rate limiting tests (1 test)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (2939 tests)
 - Files: apps/api/src/services/openLibrary.ts, apps/api/src/services/openLibrary.test.ts, apps/api/src/services/index.ts
+## Iteration 52
+
+[2026-01-18] api-books-007: Implement POST /api/books/upload endpoint
+- Created apps/api/api/books/upload.ts with comprehensive file upload handling
+- Implemented multipart/form-data parsing:
+  - Handles file data from various sources (files object, base64 data URI, Buffer)
+  - Extracts metadata fields (title, author, description, genre, tags, language, isPublic)
+  - Uses parseMultipartForm() to handle Vercel's request body structure
+- Added file type detection:
+  - ALLOWED_MIME_TYPES maps MIME types to FileType enum (PDF, EPUB, DOCX, DOC, TXT, HTML)
+  - EXTENSION_TO_FILE_TYPE provides fallback via file extension
+  - getFileType() tries MIME type first, then falls back to extension
+- Implemented file validation:
+  - Size limit enforced via storageUtils.isValidFileSize() (max 50MB)
+  - Type validation against supported file types
+  - Zod schema for metadata validation (uploadMetadataSchema)
+- Added tier limit checking:
+  - Uses getTierLimits() and isWithinLimit() from @read-master/shared
+  - Counts existing non-deleted books for user
+  - Returns 403 with upgrade message when limit reached
+- Implemented file parsing by type:
+  - PDF: parsePDFFromBuffer() extracts content, metadata, word count
+  - EPUB: parseEPUBFromBuffer() extracts content, metadata, cover image
+  - DOCX/DOC: parseDOCXFromBuffer() extracts content, metadata
+  - TXT/HTML: Direct string parsing with countWords() and calculateReadingTime()
+- Implemented R2 storage:
+  - storage.buildBookKey() generates unique storage path
+  - storage.uploadFile() uploads to R2 with metadata
+  - Cover images uploaded separately with buildCoverKey()
+- Created Book record in database:
+  - Uses Prisma db.book.create() with all extracted metadata
+  - Supports user-provided metadata overrides
+  - Includes chapters relation in response
+- Added comprehensive error handling:
+  - Validation errors with Zod error details
+  - Parse failures with descriptive messages
+  - Storage upload failures with retry suggestion
+  - Proper HTTP status codes (400, 403, 404, 405, 500)
+- Added @read-master/shared dependency to apps/api/package.json
+- Created comprehensive tests in apps/api/api/books/upload.test.ts:
+  - Method validation tests (405 for non-POST)
+  - User validation tests (404 for missing user)
+  - File validation tests (missing file, invalid type, size limit)
+  - Tier limit tests (403 when limit exceeded)
+  - Parsing tests (PDF, EPUB, DOCX success and failure cases)
+  - Storage tests (upload success, upload failure)
+  - Database creation tests (Book record created correctly)
+  - Metadata override tests (user metadata takes precedence)
+  - Response structure tests (correct fields in response)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (1112 tests in apps/api)
+- Files: apps/api/api/books/upload.ts, apps/api/api/books/upload.test.ts, apps/api/package.json

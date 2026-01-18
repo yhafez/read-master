@@ -53,6 +53,9 @@ importers:
       '@read-master/database':
         specifier: workspace:^
         version: link:../../packages/database
+      '@read-master/shared':
+        specifier: workspace:^
+        version: link:../../packages/shared
       '@upstash/ratelimit':
         specifier: ^2.0.8
         version: 2.0.8(@upstash/redis@1.36.1)
