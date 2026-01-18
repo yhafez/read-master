@@ -808,3 +808,46 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (151 tests total: 47 api + 34 shared + 12 web + 58 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 22
+
+[2026-01-17] db-012: Create and run initial Prisma migration
+- Created initial Prisma migration using `prisma migrate diff` command
+- Created prisma/migrations/00000000000000_initial_schema/migration.sql (37KB)
+- Migration creates all 26 database tables:
+  - User, Book, Chapter, ReadingProgress, Annotation
+  - PreReadingGuide, Assessment, Flashcard, FlashcardReview
+  - UserStats, Achievement, UserAchievement
+  - Curriculum, CurriculumItem, CurriculumFollow
+  - Follow, ReadingGroup, ReadingGroupMember
+  - GroupDiscussion, DiscussionReply
+  - ForumCategory, ForumPost, ForumReply, ForumVote
+  - AIUsageLog, AuditLog
+- Migration creates all 12 enums:
+  - UserTier (FREE, PRO, SCHOLAR)
+  - BookSource (UPLOAD, URL, PASTE, GOOGLE_BOOKS, OPEN_LIBRARY)
+  - FileType (PDF, EPUB, DOC, DOCX, TXT, HTML)
+  - ReadingStatus (WANT_TO_READ, READING, COMPLETED, ABANDONED)
+  - AnnotationType (HIGHLIGHT, NOTE, BOOKMARK)
+  - AssessmentType (CHAPTER_CHECK, BOOK_ASSESSMENT, CUSTOM)
+  - FlashcardType (VOCABULARY, CONCEPT, COMPREHENSION, QUOTE, CUSTOM)
+  - FlashcardStatus (NEW, LEARNING, REVIEW, SUSPENDED)
+  - AchievementCategory (READING, LEARNING, SOCIAL, STREAK, MILESTONE, SPECIAL)
+  - AchievementTier (COMMON, UNCOMMON, RARE, EPIC, LEGENDARY)
+  - Visibility (PRIVATE, UNLISTED, PUBLIC)
+  - GroupRole (OWNER, ADMIN, MEMBER)
+- Migration creates 140+ indexes for optimal query performance
+- Migration creates 15+ unique constraints for data integrity
+- Migration creates 45+ foreign key constraints with appropriate ON DELETE actions
+- Created comprehensive test suite for migration validation (68 tests):
+  - Tests for migration directory structure
+  - Tests for all 12 enum creation statements
+  - Tests for all 26 table creation statements
+  - Tests for unique constraints
+  - Tests for indexes on frequently queried fields
+  - Tests for foreign key relationships
+- Updated vitest.config.ts to include prisma/**/*.test.ts
+- Ran prisma format to validate schema
+- Ran prisma generate to verify client generation
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (219 tests total: 47 api + 34 shared + 12 web + 126 database)
+- Files: packages/database/prisma/migrations/00000000000000_initial_schema/migration.sql, packages/database/prisma/migrations.test.ts, packages/database/vitest.config.ts

@@ -492,7 +492,7 @@
         "Prisma client generates without errors",
         "Can import and use Prisma client"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-013",
