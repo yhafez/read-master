@@ -375,7 +375,7 @@
         "UserAchievement has @@unique([userId, achievementId])",
         "All gamification fields are present"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-008",

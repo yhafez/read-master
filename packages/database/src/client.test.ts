@@ -205,6 +205,67 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.flashcardReview.count).toBe("function");
       expect(typeof prisma.flashcardReview.aggregate).toBe("function");
     });
+
+    it("should have userStats model accessor", () => {
+      expect(prisma.userStats).toBeDefined();
+      expect(typeof prisma.userStats.findMany).toBe("function");
+      expect(typeof prisma.userStats.findUnique).toBe("function");
+      expect(typeof prisma.userStats.create).toBe("function");
+      expect(typeof prisma.userStats.update).toBe("function");
+      expect(typeof prisma.userStats.delete).toBe("function");
+      expect(typeof prisma.userStats.upsert).toBe("function");
+    });
+
+    it("should have userStats model with expected query methods", () => {
+      expect(typeof prisma.userStats.findFirst).toBe("function");
+      expect(typeof prisma.userStats.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.userStats.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.userStats.createMany).toBe("function");
+      expect(typeof prisma.userStats.updateMany).toBe("function");
+      expect(typeof prisma.userStats.deleteMany).toBe("function");
+      expect(typeof prisma.userStats.count).toBe("function");
+      expect(typeof prisma.userStats.aggregate).toBe("function");
+    });
+
+    it("should have achievement model accessor", () => {
+      expect(prisma.achievement).toBeDefined();
+      expect(typeof prisma.achievement.findMany).toBe("function");
+      expect(typeof prisma.achievement.findUnique).toBe("function");
+      expect(typeof prisma.achievement.create).toBe("function");
+      expect(typeof prisma.achievement.update).toBe("function");
+      expect(typeof prisma.achievement.delete).toBe("function");
+    });
+
+    it("should have achievement model with expected query methods", () => {
+      expect(typeof prisma.achievement.findFirst).toBe("function");
+      expect(typeof prisma.achievement.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.achievement.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.achievement.createMany).toBe("function");
+      expect(typeof prisma.achievement.updateMany).toBe("function");
+      expect(typeof prisma.achievement.deleteMany).toBe("function");
+      expect(typeof prisma.achievement.count).toBe("function");
+      expect(typeof prisma.achievement.aggregate).toBe("function");
+    });
+
+    it("should have userAchievement model accessor", () => {
+      expect(prisma.userAchievement).toBeDefined();
+      expect(typeof prisma.userAchievement.findMany).toBe("function");
+      expect(typeof prisma.userAchievement.findUnique).toBe("function");
+      expect(typeof prisma.userAchievement.create).toBe("function");
+      expect(typeof prisma.userAchievement.update).toBe("function");
+      expect(typeof prisma.userAchievement.delete).toBe("function");
+    });
+
+    it("should have userAchievement model with expected query methods", () => {
+      expect(typeof prisma.userAchievement.findFirst).toBe("function");
+      expect(typeof prisma.userAchievement.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.userAchievement.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.userAchievement.createMany).toBe("function");
+      expect(typeof prisma.userAchievement.updateMany).toBe("function");
+      expect(typeof prisma.userAchievement.deleteMany).toBe("function");
+      expect(typeof prisma.userAchievement.count).toBe("function");
+      expect(typeof prisma.userAchievement.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

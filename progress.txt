@@ -520,3 +520,51 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (117 tests total: 47 api + 34 shared + 12 web + 24 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 17
+
+[2026-01-17] db-007: Create UserStats, Achievement, and UserAchievement models
+- Created UserStats model with all gamification fields from specification:
+  - id (cuid), userId with @unique constraint (one stats record per user)
+  - Relation to User with onDelete: Cascade
+  - XP and Level: totalXP (Int), level (Int, default 1)
+  - Streak tracking: currentStreak, longestStreak, lastActivityDate
+  - Reading statistics: booksCompleted, totalReadingTime, totalWordsRead, averageWpm
+  - Flashcard statistics: totalCardsReviewed, totalCardsCreated, averageRetention
+  - Assessment statistics: assessmentsCompleted, averageScore
+  - Social statistics: followersCount, followingCount
+  - Timestamps: createdAt, updatedAt
+  - Leaderboard indexes: totalXP, booksCompleted, currentStreak, longestStreak, totalReadingTime
+- Created AchievementCategory enum: READING, LEARNING, SOCIAL, STREAK, MILESTONE, SPECIAL
+- Created AchievementTier enum: COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
+- Created Achievement model with all fields from specification:
+  - id (cuid), code with @unique constraint for identifying achievements
+  - Metadata: name, description (Text), category (AchievementCategory)
+  - Requirements: criteria (JSON) for flexible achievement conditions
+  - Rewards: xpReward (Int), badgeIcon (String?), badgeColor (VarChar(7))
+  - Rarity: tier (AchievementTier), sortOrder (Int)
+  - Status: isActive (Boolean, default true)
+  - Timestamps: createdAt, updatedAt
+  - Relation to UserAchievement[]
+  - Indexes on category, tier, isActive, sortOrder
+- Created UserAchievement junction table:
+  - id (cuid), userId and achievementId with relations to User and Achievement
+  - onDelete: Cascade for both relations
+  - Earning metadata: earnedAt, notified (Boolean), displayedAt (DateTime?)
+  - @@unique([userId, achievementId]) constraint
+  - Indexes on userId, achievementId, earnedAt, userId+earnedAt
+- Added User relations: stats (UserStats?), achievements (UserAchievement[])
+- Updated packages/database/src/index.ts with:
+  - Import examples for UserStats, Achievement, UserAchievement types
+  - Import examples for AchievementCategory, AchievementTier enums
+  - Example for upserting user stats with XP increment
+  - Example for fetching XP leaderboard with user privacy filter
+  - Example for creating achievement definition
+  - Example for awarding achievement to user
+  - Example for fetching user's achievements with details
+  - Added type exports for UserStats, Achievement, UserAchievement
+- Added 6 new tests for UserStats, Achievement, and UserAchievement model accessors
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (123 tests total: 47 api + 34 shared + 12 web + 30 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

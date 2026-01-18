@@ -9,6 +9,8 @@
  * import type { User, Book, Chapter, ReadingProgress, Annotation } from '@read-master/database';
  * import type { PreReadingGuide, Assessment, AssessmentType } from '@read-master/database';
  * import type { Flashcard, FlashcardReview, FlashcardType, FlashcardStatus } from '@read-master/database';
+ * import type { UserStats, Achievement, UserAchievement } from '@read-master/database';
+ * import type { AchievementCategory, AchievementTier } from '@read-master/database';
  * import type { BookSource, FileType, ReadingStatus, AnnotationType } from '@read-master/database';
  *
  * // Fetch user with books
@@ -112,6 +114,61 @@
  *     newRepetitions: 2
  *   }
  * });
+ *
+ * // Upsert user stats (unique per user)
+ * const stats = await prisma.userStats.upsert({
+ *   where: { userId: 'user_123' },
+ *   update: {
+ *     totalXP: { increment: 100 },
+ *     booksCompleted: { increment: 1 },
+ *     currentStreak: 5,
+ *     lastActivityDate: new Date()
+ *   },
+ *   create: {
+ *     userId: 'user_123',
+ *     totalXP: 100,
+ *     level: 1
+ *   }
+ * });
+ *
+ * // Fetch XP leaderboard (top users by XP)
+ * const leaderboard = await prisma.userStats.findMany({
+ *   where: { user: { profilePublic: true, showStats: true, deletedAt: null } },
+ *   orderBy: { totalXP: 'desc' },
+ *   take: 100,
+ *   include: { user: { select: { username: true, displayName: true, avatarUrl: true } } }
+ * });
+ *
+ * // Create an achievement definition
+ * const achievement = await prisma.achievement.create({
+ *   data: {
+ *     code: 'FIRST_BOOK',
+ *     name: 'First Steps',
+ *     description: 'Complete your first book',
+ *     category: 'READING',
+ *     tier: 'COMMON',
+ *     xpReward: 50,
+ *     criteria: { booksCompleted: 1 },
+ *     badgeIcon: 'book-open',
+ *     badgeColor: '#4CAF50'
+ *   }
+ * });
+ *
+ * // Award an achievement to a user
+ * const userAchievement = await prisma.userAchievement.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     achievementId: 'achievement_123',
+ *     earnedAt: new Date()
+ *   }
+ * });
+ *
+ * // Fetch user's achievements with details
+ * const userAchievements = await prisma.userAchievement.findMany({
+ *   where: { userId: 'user_123' },
+ *   include: { achievement: true },
+ *   orderBy: { earnedAt: 'desc' }
+ * });
  * ```
  */
 
@@ -132,4 +189,7 @@ export type {
   Assessment,
   Flashcard,
   FlashcardReview,
+  UserStats,
+  Achievement,
+  UserAchievement,
 } from "@prisma/client";

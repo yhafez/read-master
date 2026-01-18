@@ -60,6 +60,8 @@ model User {
   annotations     Annotation[]
   assessments     Assessment[]
   flashcards      Flashcard[]
+  stats           UserStats?
+  achievements    UserAchievement[]
 
   // Indexes for common queries
   @@index([clerkId])
@@ -469,4 +471,137 @@ model FlashcardReview {
   @@index([flashcardId])
   @@index([flashcardId, reviewedAt])
   @@index([reviewedAt])
+}
+
+// =============================================================================
+// GAMIFICATION - Stats, Achievements, Leaderboards
+// =============================================================================
+
+/// UserStats - Aggregated statistics and gamification data for a user
+/// One record per user, updated as they use the platform
+model UserStats {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // XP and Level
+  totalXP Int @default(0) // Total experience points earned
+  level   Int @default(1) // Current level (calculated from XP)
+
+  // Streak tracking
+  currentStreak    Int       @default(0) // Current consecutive days
+  longestStreak    Int       @default(0) // Longest streak ever achieved
+  lastActivityDate DateTime? // Last date user was active (for streak calculation)
+
+  // Reading statistics
+  booksCompleted   Int  @default(0) // Total books finished
+  totalReadingTime Int  @default(0) // Total reading time in seconds
+  totalWordsRead   Int  @default(0) // Estimated total words read
+  averageWpm       Int? // Average reading speed
+
+  // Flashcard statistics
+  totalCardsReviewed Int    @default(0) // Total flashcard reviews
+  totalCardsCreated  Int    @default(0) // Total flashcards created
+  averageRetention   Float? // Average retention rate (0-1)
+
+  // Assessment statistics
+  assessmentsCompleted Int    @default(0) // Total assessments taken
+  averageScore         Float? // Average assessment score (0-100)
+
+  // Social statistics
+  followersCount Int @default(0) // Number of followers
+  followingCount Int @default(0) // Number of users being followed
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes for leaderboard queries
+  @@index([totalXP]) // XP leaderboard
+  @@index([booksCompleted]) // Books completed leaderboard
+  @@index([currentStreak]) // Streak leaderboard
+  @@index([longestStreak]) // All-time streak leaderboard
+  @@index([totalReadingTime]) // Reading time leaderboard
+}
+
+/// Achievement - Definition of an achievement that can be earned
+/// System-defined achievements with unique codes
+model Achievement {
+  id   String @id @default(cuid())
+  code String @unique // Unique identifier (e.g., "FIRST_BOOK", "STREAK_7")
+
+  // Achievement metadata
+  name        String // Display name
+  description String              @db.Text // Description of how to earn it
+  category    AchievementCategory
+
+  // Requirements (stored as JSON for flexibility)
+  criteria Json @default("{}") // e.g., { "booksCompleted": 1 } or { "currentStreak": 7 }
+
+  // Rewards
+  xpReward   Int     @default(0) // XP awarded when earned
+  badgeIcon  String? // Icon identifier or URL
+  badgeColor String? @db.VarChar(7) // Hex color for badge
+
+  // Rarity/ordering
+  tier      AchievementTier @default(COMMON)
+  sortOrder Int             @default(0)
+
+  // Status
+  isActive Boolean @default(true) // Can be disabled without deletion
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userAchievements UserAchievement[]
+
+  // Indexes
+  @@index([category])
+  @@index([tier])
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+/// UserAchievement - Junction table tracking which achievements a user has earned
+/// Records the timestamp of earning for display and history
+model UserAchievement {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  // Earning metadata
+  earnedAt    DateTime  @default(now())
+  notified    Boolean   @default(false) // Has user been notified?
+  displayedAt DateTime? // When user first viewed the achievement
+
+  // Unique constraint: each user can only earn each achievement once
+  @@unique([userId, achievementId])
+  // Indexes
+  @@index([userId])
+  @@index([achievementId])
+  @@index([earnedAt])
+  @@index([userId, earnedAt]) // For user's achievement history
+}
+
+/// AchievementCategory - Categories for organizing achievements
+enum AchievementCategory {
+  READING // Reading-related achievements
+  LEARNING // Flashcards and learning achievements
+  SOCIAL // Social features achievements
+  STREAK // Streak-related achievements
+  MILESTONE // Major milestones
+  SPECIAL // Special/seasonal achievements
+}
+
+/// AchievementTier - Rarity tiers for achievements
+enum AchievementTier {
+  COMMON // Easy to earn
+  UNCOMMON // Moderate effort required
+  RARE // Significant effort required
+  EPIC // Major accomplishment
+  LEGENDARY // Exceptional achievement
 }
