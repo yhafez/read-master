@@ -326,6 +326,112 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.curriculumFollow.count).toBe("function");
       expect(typeof prisma.curriculumFollow.aggregate).toBe("function");
     });
+
+    // Social Models - Follow, ReadingGroup, ReadingGroupMember, GroupDiscussion, DiscussionReply
+
+    it("should have follow model accessor", () => {
+      expect(prisma.follow).toBeDefined();
+      expect(typeof prisma.follow.findMany).toBe("function");
+      expect(typeof prisma.follow.findUnique).toBe("function");
+      expect(typeof prisma.follow.create).toBe("function");
+      expect(typeof prisma.follow.update).toBe("function");
+      expect(typeof prisma.follow.delete).toBe("function");
+    });
+
+    it("should have follow model with expected query methods", () => {
+      expect(typeof prisma.follow.findFirst).toBe("function");
+      expect(typeof prisma.follow.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.follow.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.follow.createMany).toBe("function");
+      expect(typeof prisma.follow.updateMany).toBe("function");
+      expect(typeof prisma.follow.deleteMany).toBe("function");
+      expect(typeof prisma.follow.count).toBe("function");
+      expect(typeof prisma.follow.aggregate).toBe("function");
+    });
+
+    it("should have readingGroup model accessor", () => {
+      expect(prisma.readingGroup).toBeDefined();
+      expect(typeof prisma.readingGroup.findMany).toBe("function");
+      expect(typeof prisma.readingGroup.findUnique).toBe("function");
+      expect(typeof prisma.readingGroup.create).toBe("function");
+      expect(typeof prisma.readingGroup.update).toBe("function");
+      expect(typeof prisma.readingGroup.delete).toBe("function");
+    });
+
+    it("should have readingGroup model with expected query methods", () => {
+      expect(typeof prisma.readingGroup.findFirst).toBe("function");
+      expect(typeof prisma.readingGroup.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.readingGroup.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.readingGroup.createMany).toBe("function");
+      expect(typeof prisma.readingGroup.updateMany).toBe("function");
+      expect(typeof prisma.readingGroup.deleteMany).toBe("function");
+      expect(typeof prisma.readingGroup.count).toBe("function");
+      expect(typeof prisma.readingGroup.aggregate).toBe("function");
+    });
+
+    it("should have readingGroupMember model accessor", () => {
+      expect(prisma.readingGroupMember).toBeDefined();
+      expect(typeof prisma.readingGroupMember.findMany).toBe("function");
+      expect(typeof prisma.readingGroupMember.findUnique).toBe("function");
+      expect(typeof prisma.readingGroupMember.create).toBe("function");
+      expect(typeof prisma.readingGroupMember.update).toBe("function");
+      expect(typeof prisma.readingGroupMember.delete).toBe("function");
+    });
+
+    it("should have readingGroupMember model with expected query methods", () => {
+      expect(typeof prisma.readingGroupMember.findFirst).toBe("function");
+      expect(typeof prisma.readingGroupMember.findFirstOrThrow).toBe(
+        "function"
+      );
+      expect(typeof prisma.readingGroupMember.findUniqueOrThrow).toBe(
+        "function"
+      );
+      expect(typeof prisma.readingGroupMember.createMany).toBe("function");
+      expect(typeof prisma.readingGroupMember.updateMany).toBe("function");
+      expect(typeof prisma.readingGroupMember.deleteMany).toBe("function");
+      expect(typeof prisma.readingGroupMember.count).toBe("function");
+      expect(typeof prisma.readingGroupMember.aggregate).toBe("function");
+    });
+
+    it("should have groupDiscussion model accessor", () => {
+      expect(prisma.groupDiscussion).toBeDefined();
+      expect(typeof prisma.groupDiscussion.findMany).toBe("function");
+      expect(typeof prisma.groupDiscussion.findUnique).toBe("function");
+      expect(typeof prisma.groupDiscussion.create).toBe("function");
+      expect(typeof prisma.groupDiscussion.update).toBe("function");
+      expect(typeof prisma.groupDiscussion.delete).toBe("function");
+    });
+
+    it("should have groupDiscussion model with expected query methods", () => {
+      expect(typeof prisma.groupDiscussion.findFirst).toBe("function");
+      expect(typeof prisma.groupDiscussion.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.groupDiscussion.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.groupDiscussion.createMany).toBe("function");
+      expect(typeof prisma.groupDiscussion.updateMany).toBe("function");
+      expect(typeof prisma.groupDiscussion.deleteMany).toBe("function");
+      expect(typeof prisma.groupDiscussion.count).toBe("function");
+      expect(typeof prisma.groupDiscussion.aggregate).toBe("function");
+    });
+
+    it("should have discussionReply model accessor", () => {
+      expect(prisma.discussionReply).toBeDefined();
+      expect(typeof prisma.discussionReply.findMany).toBe("function");
+      expect(typeof prisma.discussionReply.findUnique).toBe("function");
+      expect(typeof prisma.discussionReply.create).toBe("function");
+      expect(typeof prisma.discussionReply.update).toBe("function");
+      expect(typeof prisma.discussionReply.delete).toBe("function");
+    });
+
+    it("should have discussionReply model with expected query methods", () => {
+      expect(typeof prisma.discussionReply.findFirst).toBe("function");
+      expect(typeof prisma.discussionReply.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.discussionReply.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.discussionReply.createMany).toBe("function");
+      expect(typeof prisma.discussionReply.updateMany).toBe("function");
+      expect(typeof prisma.discussionReply.deleteMany).toBe("function");
+      expect(typeof prisma.discussionReply.count).toBe("function");
+      expect(typeof prisma.discussionReply.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

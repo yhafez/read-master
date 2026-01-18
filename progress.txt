@@ -616,3 +616,79 @@ No discoveries added during this sprint (foundational infrastructure work)
 - Ran prisma generate to verify client generation (succeeded)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (129 tests total: 47 api + 34 shared + 12 web + 36 database)
 - Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts
+
+## Iteration 19
+
+[2026-01-17] db-009: Create social models (Follow, ReadingGroup, GroupMember, GroupDiscussion)
+- Created GroupRole enum: OWNER, ADMIN, MEMBER
+  - Supports hierarchical permissions in reading groups
+- Created Follow model with all fields from specification:
+  - id (cuid), followerId and followingId with relations to User
+  - Named relations: "Following" and "Followers" for bidirectional access
+  - @@unique([followerId, followingId]) constraint to prevent duplicate follows
+  - onDelete: Cascade for both relations
+  - Indexes on followerId, followingId, createdAt
+- Created ReadingGroup model with all fields from specification:
+  - id (cuid), userId with relation to User (group owner)
+  - Metadata: name (VarChar 200), description (Text), coverImage
+  - Visibility: isPublic (Boolean), maxMembers (Int, default 50)
+  - inviteCode: unique String for private group invitations
+  - currentBookId: optional reference to Book being read (SetNull on delete)
+  - Statistics (denormalized): membersCount, discussionsCount
+  - Soft delete support via deletedAt
+  - Indexes on userId, isPublic, deletedAt, membersCount, createdAt
+- Created ReadingGroupMember junction table with all fields:
+  - id (cuid), groupId and userId with relations
+  - role (GroupRole enum, default MEMBER)
+  - joinedAt timestamp
+  - notificationsEnabled setting (Boolean, default true)
+  - @@unique([groupId, userId]) constraint
+  - onDelete: Cascade for both relations
+  - Indexes on groupId, userId, groupId+role
+- Created GroupDiscussion model with all fields:
+  - id (cuid), groupId and userId with relations
+  - Content: title (VarChar 300), content (Text)
+  - Optional bookId reference (SetNull on delete)
+  - Metadata: isPinned, isLocked flags
+  - Statistics (denormalized): repliesCount, lastReplyAt
+  - Soft delete support via deletedAt
+  - Indexes on groupId, userId, bookId, groupId+isPinned, groupId+lastReplyAt, deletedAt
+- Created DiscussionReply model with nested reply support:
+  - id (cuid), discussionId and userId with relations
+  - content (Text)
+  - Nested replies via parentReplyId self-reference ("NestedReplies" relation)
+  - childReplies[] relation for accessing nested replies
+  - Soft delete support via deletedAt
+  - onDelete: Cascade for discussion and parent reply relations
+  - Indexes on discussionId, userId, parentReplyId, discussionId+createdAt, deletedAt
+- Added User social relations:
+  - following[] and followers[] for Follow relationship
+  - ownedGroups[] for groups created by user
+  - groupMemberships[] for groups user is member of
+  - groupDiscussions[] for discussions created by user
+  - discussionReplies[] for replies created by user
+- Added Book social relations:
+  - readingGroups[] for groups currently reading this book
+  - groupDiscussions[] for discussions about this book
+- Updated packages/database/src/index.ts with:
+  - Import examples for Follow, ReadingGroup, ReadingGroupMember, GroupRole types
+  - Import examples for GroupDiscussion, DiscussionReply types
+  - Example for following/unfollowing users
+  - Example for getting followers and following lists
+  - Example for creating public and private reading groups
+  - Example for managing group membership and roles
+  - Example for creating and pinning discussions
+  - Example for creating top-level and nested replies
+  - Example for fetching replies with nested structure
+  - Example for browsing public reading groups
+  - Added type exports for all new social models
+- Added 10 new tests for social model accessors:
+  - Follow model accessor and query methods
+  - ReadingGroup model accessor and query methods
+  - ReadingGroupMember model accessor and query methods
+  - GroupDiscussion model accessor and query methods
+  - DiscussionReply model accessor and query methods
+- Ran prisma format to validate schema (succeeded)
+- Ran prisma generate to verify client generation (succeeded)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test (139 tests total: 47 api + 34 shared + 12 web + 46 database)
+- Files: packages/database/prisma/schema.prisma, packages/database/src/index.ts, packages/database/src/client.test.ts

@@ -65,6 +65,14 @@ model User {
   curriculums       Curriculum[] // Curriculums created by this user
   curriculumFollows CurriculumFollow[] // Curriculums this user is following
 
+  // Social relations
+  following         Follow[]             @relation("Following") // Users this user follows
+  followers         Follow[]             @relation("Followers") // Users who follow this user
+  ownedGroups       ReadingGroup[]       @relation("OwnedGroups") // Reading groups created by this user
+  groupMemberships  ReadingGroupMember[] @relation("GroupMemberships") // Reading groups this user is a member of
+  groupDiscussions  GroupDiscussion[]    @relation("GroupDiscussions") // Discussions created by this user
+  discussionReplies DiscussionReply[]    @relation("DiscussionReplies") // Replies created by this user
+
   // Indexes for common queries
   @@index([clerkId])
   @@index([email])
@@ -136,6 +144,10 @@ model Book {
   assessments     Assessment[]
   flashcards      Flashcard[]
   curriculumItems CurriculumItem[] // Curriculum items that reference this book
+
+  // Social relations
+  readingGroups    ReadingGroup[]    @relation("CurrentGroupBook") // Reading groups currently reading this book
+  groupDiscussions GroupDiscussion[] @relation("GroupBookDiscussions") // Discussions about this book
 
   // Indexes for common queries
   @@index([userId])
@@ -728,4 +740,177 @@ model CurriculumFollow {
   @@index([userId])
   @@index([curriculumId])
   @@index([userId, completedAt]) // For finding completed/in-progress curriculums
+}
+
+// =============================================================================
+// SOCIAL FEATURES - Following, Reading Groups, Discussions
+// =============================================================================
+
+/// Follow - User following relationship
+/// Allows users to follow other users' public activity
+model Follow {
+  id          String @id @default(cuid())
+  followerId  String // The user who is following
+  follower    User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String // The user being followed
+  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  // Unique constraint: prevent duplicate follows
+  @@unique([followerId, followingId])
+  // Indexes for efficient queries
+  @@index([followerId])
+  @@index([followingId])
+  @@index([createdAt])
+}
+
+/// GroupRole - Role of a member within a reading group
+enum GroupRole {
+  OWNER // Creator of the group, full permissions
+  ADMIN // Can manage members and discussions
+  MEMBER // Regular member
+}
+
+/// ReadingGroup - Book clubs and reading groups
+/// Allows users to form groups around shared reading interests
+model ReadingGroup {
+  id     String @id @default(cuid())
+  userId String // Creator/owner of the group
+  user   User   @relation("OwnedGroups", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Group metadata
+  name        String  @db.VarChar(200) // Group name
+  description String? @db.Text // Group description
+  coverImage  String? // Optional cover image URL
+
+  // Visibility and settings
+  isPublic   Boolean @default(true) // Can anyone join, or invite-only
+  maxMembers Int?    @default(50) // Maximum number of members (null = unlimited)
+  inviteCode String? @unique // Unique invite code for private groups
+
+  // Current book being read (optional)
+  currentBookId String?
+  currentBook   Book?   @relation("CurrentGroupBook", fields: [currentBookId], references: [id], onDelete: SetNull)
+
+  // Statistics (denormalized)
+  membersCount     Int @default(1) // Includes owner
+  discussionsCount Int @default(0)
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  members     ReadingGroupMember[]
+  discussions GroupDiscussion[]
+
+  // Indexes
+  @@index([userId])
+  @@index([isPublic])
+  @@index([deletedAt])
+  @@index([membersCount])
+  @@index([createdAt])
+}
+
+/// ReadingGroupMember - Membership in a reading group
+/// Junction table with role information
+model ReadingGroupMember {
+  id      String       @id @default(cuid())
+  groupId String
+  group   ReadingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId  String
+  user    User         @relation("GroupMemberships", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Membership details
+  role     GroupRole @default(MEMBER)
+  joinedAt DateTime  @default(now())
+
+  // Member settings
+  notificationsEnabled Boolean @default(true)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraint: each user can only be in a group once
+  @@unique([groupId, userId])
+  // Indexes
+  @@index([groupId])
+  @@index([userId])
+  @@index([groupId, role])
+}
+
+/// GroupDiscussion - Discussion thread within a reading group
+/// Supports book-specific or general discussions
+model GroupDiscussion {
+  id      String       @id @default(cuid())
+  groupId String
+  group   ReadingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId  String // Author of the discussion
+  user    User         @relation("GroupDiscussions", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Discussion content
+  title   String @db.VarChar(300) // Discussion title
+  content String @db.Text // Initial post content
+
+  // Optional book reference
+  bookId String?
+  book   Book?   @relation("GroupBookDiscussions", fields: [bookId], references: [id], onDelete: SetNull)
+
+  // Discussion metadata
+  isPinned Boolean @default(false) // Pinned at top of group
+  isLocked Boolean @default(false) // Prevent new replies
+
+  // Statistics (denormalized)
+  repliesCount Int       @default(0)
+  lastReplyAt  DateTime?
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  replies DiscussionReply[]
+
+  // Indexes
+  @@index([groupId])
+  @@index([userId])
+  @@index([bookId])
+  @@index([groupId, isPinned])
+  @@index([groupId, lastReplyAt])
+  @@index([deletedAt])
+}
+
+/// DiscussionReply - Reply to a group discussion
+/// Supports nested replies for threaded discussions
+model DiscussionReply {
+  id           String          @id @default(cuid())
+  discussionId String
+  discussion   GroupDiscussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  userId       String // Author of the reply
+  user         User            @relation("DiscussionReplies", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Reply content
+  content String @db.Text
+
+  // Nested reply support
+  parentReplyId String? // For nested replies (null = top-level reply)
+  parentReply   DiscussionReply?  @relation("NestedReplies", fields: [parentReplyId], references: [id], onDelete: Cascade)
+  childReplies  DiscussionReply[] @relation("NestedReplies")
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Indexes
+  @@index([discussionId])
+  @@index([userId])
+  @@index([parentReplyId])
+  @@index([discussionId, createdAt])
+  @@index([deletedAt])
 }

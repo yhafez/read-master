@@ -423,7 +423,7 @@
         "GroupRole enum supports OWNER, ADMIN, MEMBER",
         "Discussion replies support nesting"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-010",

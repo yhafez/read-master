@@ -12,6 +12,8 @@
  * import type { UserStats, Achievement, UserAchievement } from '@read-master/database';
  * import type { AchievementCategory, AchievementTier } from '@read-master/database';
  * import type { Curriculum, CurriculumItem, CurriculumFollow, Visibility } from '@read-master/database';
+ * import type { Follow, ReadingGroup, ReadingGroupMember, GroupRole } from '@read-master/database';
+ * import type { GroupDiscussion, DiscussionReply } from '@read-master/database';
  * import type { BookSource, FileType, ReadingStatus, AnnotationType } from '@read-master/database';
  *
  * // Fetch user with books
@@ -242,6 +244,147 @@
  *   },
  *   orderBy: { followersCount: 'desc' }
  * });
+ *
+ * // ========================================================================
+ * // SOCIAL FEATURES - Following, Reading Groups, Discussions
+ * // ========================================================================
+ *
+ * // Follow another user
+ * const follow = await prisma.follow.create({
+ *   data: {
+ *     followerId: 'user_123', // The user who is following
+ *     followingId: 'user_456' // The user being followed
+ *   }
+ * });
+ *
+ * // Get a user's followers
+ * const followers = await prisma.follow.findMany({
+ *   where: { followingId: 'user_123' },
+ *   include: { follower: { select: { username: true, displayName: true, avatarUrl: true } } }
+ * });
+ *
+ * // Get users that a user is following
+ * const following = await prisma.follow.findMany({
+ *   where: { followerId: 'user_123' },
+ *   include: { following: { select: { username: true, displayName: true, avatarUrl: true } } }
+ * });
+ *
+ * // Unfollow a user
+ * await prisma.follow.delete({
+ *   where: { followerId_followingId: { followerId: 'user_123', followingId: 'user_456' } }
+ * });
+ *
+ * // Create a reading group
+ * const group = await prisma.readingGroup.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     name: 'Philosophy Book Club',
+ *     description: 'Weekly discussions of classic and modern philosophy',
+ *     isPublic: true,
+ *     maxMembers: 25
+ *   }
+ * });
+ *
+ * // Create a private group with invite code
+ * const privateGroup = await prisma.readingGroup.create({
+ *   data: {
+ *     userId: 'user_123',
+ *     name: 'Private Study Group',
+ *     isPublic: false,
+ *     inviteCode: 'ABC123XYZ' // Generated unique code
+ *   }
+ * });
+ *
+ * // Add a member to a group (member joins)
+ * const membership = await prisma.readingGroupMember.create({
+ *   data: {
+ *     groupId: 'group_123',
+ *     userId: 'user_456',
+ *     role: 'MEMBER'
+ *   }
+ * });
+ *
+ * // Promote member to admin
+ * await prisma.readingGroupMember.update({
+ *   where: { groupId_userId: { groupId: 'group_123', userId: 'user_456' } },
+ *   data: { role: 'ADMIN' }
+ * });
+ *
+ * // List members of a group by role
+ * const admins = await prisma.readingGroupMember.findMany({
+ *   where: { groupId: 'group_123', role: { in: ['OWNER', 'ADMIN'] } },
+ *   include: { user: { select: { username: true, displayName: true, avatarUrl: true } } }
+ * });
+ *
+ * // Create a discussion in a group
+ * const discussion = await prisma.groupDiscussion.create({
+ *   data: {
+ *     groupId: 'group_123',
+ *     userId: 'user_123',
+ *     title: 'What did everyone think of Chapter 5?',
+ *     content: 'I found the argument about knowledge to be fascinating...',
+ *     bookId: 'book_123' // Optional: link to specific book
+ *   }
+ * });
+ *
+ * // Pin a discussion to the top of the group
+ * await prisma.groupDiscussion.update({
+ *   where: { id: 'discussion_123' },
+ *   data: { isPinned: true }
+ * });
+ *
+ * // Fetch discussions in a group (pinned first, then by recent activity)
+ * const discussions = await prisma.groupDiscussion.findMany({
+ *   where: { groupId: 'group_123', deletedAt: null },
+ *   include: {
+ *     user: { select: { username: true, displayName: true, avatarUrl: true } },
+ *     book: { select: { title: true, author: true } }
+ *   },
+ *   orderBy: [{ isPinned: 'desc' }, { lastReplyAt: 'desc' }]
+ * });
+ *
+ * // Reply to a discussion (top-level reply)
+ * const reply = await prisma.discussionReply.create({
+ *   data: {
+ *     discussionId: 'discussion_123',
+ *     userId: 'user_456',
+ *     content: 'I agree! The author makes a compelling case...'
+ *   }
+ * });
+ *
+ * // Reply to another reply (nested reply)
+ * const nestedReply = await prisma.discussionReply.create({
+ *   data: {
+ *     discussionId: 'discussion_123',
+ *     userId: 'user_789',
+ *     parentReplyId: 'reply_123', // Creates nested thread
+ *     content: 'Great point! Have you considered...'
+ *   }
+ * });
+ *
+ * // Fetch replies with nested structure
+ * const replies = await prisma.discussionReply.findMany({
+ *   where: { discussionId: 'discussion_123', parentReplyId: null, deletedAt: null },
+ *   include: {
+ *     user: { select: { username: true, displayName: true, avatarUrl: true } },
+ *     childReplies: {
+ *       where: { deletedAt: null },
+ *       include: { user: { select: { username: true, displayName: true, avatarUrl: true } } },
+ *       orderBy: { createdAt: 'asc' }
+ *     }
+ *   },
+ *   orderBy: { createdAt: 'asc' }
+ * });
+ *
+ * // Browse public reading groups
+ * const publicGroups = await prisma.readingGroup.findMany({
+ *   where: { isPublic: true, deletedAt: null },
+ *   include: {
+ *     user: { select: { displayName: true, username: true } },
+ *     currentBook: { select: { title: true, author: true, coverImage: true } }
+ *   },
+ *   orderBy: { membersCount: 'desc' }
+ * });
  * ```
  */
 
@@ -268,4 +411,9 @@ export type {
   Curriculum,
   CurriculumItem,
   CurriculumFollow,
+  Follow,
+  ReadingGroup,
+  ReadingGroupMember,
+  GroupDiscussion,
+  DiscussionReply,
 } from "@prisma/client";
