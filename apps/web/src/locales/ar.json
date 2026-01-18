@@ -28,7 +28,19 @@
     "profile": "الملف الشخصي",
     "settings": "الإعدادات",
     "signIn": "تسجيل الدخول",
-    "signOut": "تسجيل الخروج"
+    "signOut": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "assessments": "التقييمات",
+    "groups": "المجموعات",
+    "curriculums": "المناهج",
+    "leaderboard": "لوحة المتصدرين",
+    "openMenu": "فتح القائمة"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signInPlaceholder": "سيتم دمج مصادقة Clerk هنا.",
+    "signUpPlaceholder": "سيتم دمج مصادقة Clerk هنا."
   },
   "home": {
     "welcome": "مرحباً بك في ريد ماستر",
@@ -54,6 +66,30 @@
       }
     }
   },
+  "pages": {
+    "dashboardPlaceholder": "ستظهر إحصائيات القراءة والنشاط الأخير والإجراءات السريعة هنا.",
+    "libraryPlaceholder": "ستظهر مجموعة كتبك هنا.",
+    "flashcardsPlaceholder": "ستظهر مجموعات البطاقات وحالة المراجعة هنا.",
+    "flashcardsReviewPlaceholder": "ستظهر واجهة مراجعة SRS هنا.",
+    "flashcardsCreatePlaceholder": "سيظهر نموذج إنشاء البطاقة هنا.",
+    "assessmentsPlaceholder": "سيظهر سجل التقييمات هنا.",
+    "profilePlaceholder": "ستظهر معلومات الملف الشخصي هنا.",
+    "feedPlaceholder": "سيظهر نشاط المستخدمين الذين تتابعهم هنا.",
+    "leaderboardPlaceholder": "ستظهر لوحات المتصدرين العالمية والأصدقاء هنا.",
+    "groupsPlaceholder": "ستظهر مجموعات القراءة هنا.",
+    "forumPlaceholder": "ستظهر فئات المنتدى والمواضيع الأخيرة هنا.",
+    "forumCreatePlaceholder": "أنشئ موضوعاً جديداً في المنتدى هنا.",
+    "curriculumsPlaceholder": "ستظهر مناهجك هنا.",
+    "curriculumCreatePlaceholder": "أنشئ منهجاً جديداً هنا.",
+    "curriculumBrowsePlaceholder": "تصفح المناهج العامة هنا.",
+    "settingsPlaceholder": "ستظهر إعداداتك هنا.",
+    "settingsProfilePlaceholder": "عدّل ملفك الشخصي هنا.",
+    "settingsReadingPlaceholder": "اضبط تفضيلات القراءة هنا.",
+    "settingsAIPlaceholder": "اضبط تفضيلات الذكاء الاصطناعي هنا.",
+    "settingsNotificationsPlaceholder": "اضبط تفضيلات الإشعارات هنا.",
+    "settingsPrivacyPlaceholder": "اضبط إعدادات الخصوصية هنا.",
+    "settingsSubscriptionPlaceholder": "أدِر اشتراكك هنا."
+  },
   "library": {
     "title": "مكتبتي",
     "addBook": "إضافة كتاب",
@@ -76,6 +112,11 @@
     }
   },
   "reader": {
+    "title": "القارئ",
+    "placeholder": "سيظهر محتوى الكتاب {{bookId}} هنا.",
+    "backToLibrary": "العودة إلى المكتبة",
+    "settings": "إعدادات القارئ",
+    "progress": "{{percent}}% مكتمل",
     "tableOfContents": "جدول المحتويات",
     "preReadingGuide": "دليل ما قبل القراءة",
     "generateGuide": "إنشاء دليل ما قبل القراءة",
@@ -93,38 +134,28 @@
       "highlight": "تمييز",
       "note": "إضافة ملاحظة",
       "bookmark": "إشارة مرجعية"
-    },
-    "progress": {
-      "title": "تقدم القراءة",
-      "wordsRead": "الكلمات المقروءة",
-      "timeSpent": "الوقت المستغرق",
-      "percentComplete": "مكتمل"
     }
   },
   "flashcards": {
     "title": "البطاقات التعليمية",
+    "review": "مراجعة",
+    "create": "إنشاء بطاقة",
     "dueToday": "مستحقة اليوم",
     "totalCards": "إجمالي البطاقات",
     "studyNow": "ادرس الآن",
     "createCard": "إنشاء بطاقة",
     "noCards": "لا توجد بطاقات تعليمية بعد",
     "generateFromBook": "أنشئ بطاقات من قراءتك",
-    "review": {
-      "showAnswer": "إظهار الإجابة",
-      "again": "مجدداً",
-      "hard": "صعب",
-      "good": "جيد",
-      "easy": "سهل",
-      "cardsRemaining": "{{count}} بطاقات متبقية"
-    },
     "stats": {
       "retention": "معدل الاحتفاظ",
       "streak": "أيام متتالية",
       "reviewed": "البطاقات المراجعة"
     }
   },
-  "assessment": {
-    "title": "التقييم",
+  "assessments": {
+    "title": "التقييمات",
+    "take": "خوض التقييم",
+    "placeholder": "سيظهر التقييم {{assessmentId}} هنا.",
     "startAssessment": "بدء التقييم",
     "question": "السؤال {{current}} من {{total}}",
     "submitAnswer": "إرسال الإجابة",
@@ -135,21 +166,49 @@
       "recommendations": "التوصيات"
     }
   },
+  "profile": {
+    "my": "ملفي الشخصي",
+    "user": "ملف {{username}} الشخصي"
+  },
+  "social": {
+    "feed": "موجز النشاط"
+  },
+  "groups": {
+    "detail": "تفاصيل المجموعة",
+    "placeholder": "ستظهر تفاصيل المجموعة {{groupId}} هنا.",
+    "discussions": "المناقشات",
+    "discussionsPlaceholder": "ستظهر مناقشات المجموعة {{groupId}} هنا."
+  },
   "forum": {
     "title": "المنتدى",
+    "category": "فئة المنتدى",
+    "categoryPlaceholder": "ستظهر المواضيع في {{category}} هنا.",
+    "post": "موضوع المنتدى",
+    "postPlaceholder": "سيظهر الموضوع {{postId}} هنا.",
+    "create": "إنشاء موضوع",
     "newPost": "موضوع جديد",
     "categories": "الفئات",
     "recentPosts": "المواضيع الأخيرة",
-    "post": {
-      "replies": "{{count}} ردود",
-      "views": "{{count}} مشاهدات",
-      "postedBy": "بواسطة {{author}}",
-      "reply": "رد",
-      "vote": "تصويت"
-    }
+    "replies": "{{count}} ردود",
+    "views": "{{count}} مشاهدات",
+    "postedBy": "بواسطة {{author}}",
+    "reply": "رد",
+    "vote": "تصويت"
+  },
+  "curriculums": {
+    "detail": "تفاصيل المنهج",
+    "placeholder": "سيظهر المنهج {{curriculumId}} هنا.",
+    "create": "إنشاء منهج",
+    "browse": "تصفح المناهج"
   },
   "settings": {
     "title": "الإعدادات",
+    "profile": "إعدادات الملف الشخصي",
+    "reading": "إعدادات القراءة",
+    "ai": "إعدادات الذكاء الاصطناعي",
+    "notifications": "إعدادات الإشعارات",
+    "privacy": "إعدادات الخصوصية",
+    "subscription": "الاشتراك",
     "appearance": {
       "title": "المظهر",
       "theme": "السمة",
@@ -163,27 +222,9 @@
       "fontFamily": "نوع الخط",
       "dyslexiaFont": "خط صديق لعسر القراءة"
     },
-    "reading": {
-      "title": "تفضيلات القراءة",
-      "wordsPerMinute": "سرعة القراءة (كلمة/دقيقة)",
-      "enableAI": "تفعيل ميزات الذكاء الاصطناعي",
-      "comprehensionChecks": "تكرار فحوصات الفهم"
-    },
     "language": {
       "title": "اللغة",
       "select": "اختر اللغة"
-    },
-    "privacy": {
-      "title": "الخصوصية",
-      "shareProgress": "مشاركة تقدم القراءة",
-      "showOnLeaderboard": "الظهور في لوحة المتصدرين",
-      "publicProfile": "ملف شخصي عام"
-    },
-    "notifications": {
-      "title": "الإشعارات",
-      "emailReminders": "تذكيرات البريد الإلكتروني",
-      "flashcardReminders": "تذكيرات البطاقات",
-      "streakAlerts": "تنبيهات الأيام المتتالية"
     }
   },
   "languages": {
@@ -196,6 +237,10 @@
   },
   "errors": {
     "notFound": "الصفحة غير موجودة",
+    "pageNotFound": "الصفحة غير موجودة",
+    "pageNotFoundDescription": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+    "goHome": "العودة للرئيسية",
+    "goBack": "رجوع",
     "unauthorized": "غير مصرح لك بعرض هذه الصفحة",
     "serverError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
     "networkError": "تعذر الاتصال. تحقق من اتصالك بالإنترنت.",

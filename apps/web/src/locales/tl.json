@@ -1,211 +1,256 @@
 {
   "common": {
     "appName": "Read Master",
-    "loading": "Naglo-load...",
-    "error": "May naganap na error",
-    "save": "I-save",
-    "cancel": "Kanselahin",
-    "delete": "Tanggalin",
-    "edit": "I-edit",
-    "close": "Isara",
-    "back": "Bumalik",
-    "next": "Susunod",
-    "previous": "Nakaraan",
-    "search": "Maghanap",
-    "filter": "Salain",
-    "sort": "Ayusin",
-    "submit": "Isumite",
-    "confirm": "Kumpirmahin",
-    "yes": "Oo",
-    "no": "Hindi"
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
   },
   "nav": {
     "home": "Home",
-    "library": "Aklatan",
-    "reading": "Pagbabasa",
-    "flashcards": "Mga Flashcard",
+    "library": "Library",
+    "reading": "Reading",
+    "flashcards": "Flashcards",
     "forum": "Forum",
     "profile": "Profile",
-    "settings": "Mga Setting",
-    "signIn": "Mag-sign In",
-    "signOut": "Mag-sign Out"
+    "settings": "Settings",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "dashboard": "Dashboard",
+    "assessments": "Assessments",
+    "groups": "Groups",
+    "curriculums": "Curriculums",
+    "leaderboard": "Leaderboard",
+    "openMenu": "Open menu"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signInPlaceholder": "Clerk authentication will be integrated here.",
+    "signUpPlaceholder": "Clerk authentication will be integrated here."
   },
   "home": {
-    "welcome": "Maligayang pagdating sa Read Master",
-    "tagline": "I-master ang iyong pag-unawa sa pagbabasa gamit ang mga AI-powered na tool",
-    "getStarted": "Magsimula",
+    "welcome": "Welcome to Read Master",
+    "tagline": "Master your reading comprehension with AI-powered tools",
+    "getStarted": "Get Started",
     "features": {
-      "title": "Mga Tampok",
+      "title": "Features",
       "preReading": {
-        "title": "Mga Gabay Bago Magbasa",
-        "description": "AI-generated na konteksto, bokabularyo, at mga buod ng kabanata bago ka magbasa"
+        "title": "Pre-Reading Guides",
+        "description": "AI-generated context, vocabulary, and chapter summaries before you read"
       },
       "duringReading": {
-        "title": "Tulong sa Pagbabasa",
-        "description": "Makakuha ng instant na mga paliwanag, magtanong, at subaybayan ang iyong progreso"
+        "title": "Reading Assistance",
+        "description": "Get instant explanations, ask questions, and track your progress"
       },
       "postReading": {
-        "title": "Mga Pagsusulit",
-        "description": "Adaptive na mga pagsusulit na sumasaklaw sa lahat ng antas ng Bloom's taxonomy"
+        "title": "Assessments",
+        "description": "Adaptive tests covering all Bloom's taxonomy levels"
       },
       "srs": {
         "title": "Spaced Repetition",
-        "description": "Huwag kalimutan ang iyong natutunan gamit ang matalinong pag-schedule ng card"
+        "description": "Never forget what you learn with smart flashcard scheduling"
       }
     }
   },
+  "pages": {
+    "dashboardPlaceholder": "Your reading stats, recent activity, and quick actions will appear here.",
+    "libraryPlaceholder": "Your book collection will appear here.",
+    "flashcardsPlaceholder": "Your flashcard decks and review status will appear here.",
+    "flashcardsReviewPlaceholder": "The SRS review interface will appear here.",
+    "flashcardsCreatePlaceholder": "The flashcard creation form will appear here.",
+    "assessmentsPlaceholder": "Your assessment history will appear here.",
+    "profilePlaceholder": "User profile information will appear here.",
+    "feedPlaceholder": "Activity from users you follow will appear here.",
+    "leaderboardPlaceholder": "Global and friends leaderboards will appear here.",
+    "groupsPlaceholder": "Your reading groups will appear here.",
+    "forumPlaceholder": "Forum categories and recent posts will appear here.",
+    "forumCreatePlaceholder": "Create a new forum post here.",
+    "curriculumsPlaceholder": "Your curriculums will appear here.",
+    "curriculumCreatePlaceholder": "Create a new curriculum here.",
+    "curriculumBrowsePlaceholder": "Browse public curriculums here.",
+    "settingsPlaceholder": "Your settings will appear here.",
+    "settingsProfilePlaceholder": "Edit your profile here.",
+    "settingsReadingPlaceholder": "Configure your reading preferences here.",
+    "settingsAIPlaceholder": "Configure your AI preferences here.",
+    "settingsNotificationsPlaceholder": "Configure your notification preferences here.",
+    "settingsPrivacyPlaceholder": "Configure your privacy settings here.",
+    "settingsSubscriptionPlaceholder": "Manage your subscription here."
+  },
   "library": {
-    "title": "Aking Aklatan",
-    "addBook": "Magdagdag ng Libro",
-    "upload": "Mag-upload ng File",
-    "importUrl": "Mag-import mula sa URL",
-    "pasteText": "Mag-paste ng Teksto",
-    "searchBooks": "Maghanap ng Libro",
-    "noBooks": "Wala pang libro sa iyong aklatan",
-    "startReading": "Magsimulang magdagdag ng mga libro para simulan ang iyong paglalakbay sa pagbabasa",
+    "title": "My Library",
+    "addBook": "Add Book",
+    "upload": "Upload File",
+    "importUrl": "Import from URL",
+    "pasteText": "Paste Text",
+    "searchBooks": "Search Books",
+    "noBooks": "No books in your library yet",
+    "startReading": "Start adding books to begin your reading journey",
     "filters": {
-      "all": "Lahat",
-      "reading": "Kasalukuyang Binabasa",
-      "completed": "Nakumpleto",
-      "wantToRead": "Gustong Basahin"
+      "all": "All",
+      "reading": "Currently Reading",
+      "completed": "Completed",
+      "wantToRead": "Want to Read"
     },
     "bookCard": {
-      "progress": "{{percent}}% kumpleto",
-      "continueReading": "Magpatuloy sa Pagbabasa",
-      "startReading": "Simulan ang Pagbabasa"
+      "progress": "{{percent}}% complete",
+      "continueReading": "Continue Reading",
+      "startReading": "Start Reading"
     }
   },
   "reader": {
-    "tableOfContents": "Talaan ng mga Nilalaman",
-    "preReadingGuide": "Gabay Bago Magbasa",
-    "generateGuide": "Gumawa ng Gabay Bago Magbasa",
-    "vocabulary": "Bokabularyo",
-    "keyArguments": "Mga Pangunahing Argumento",
-    "chapterSummaries": "Mga Buod ng Kabanata",
+    "title": "Reader",
+    "placeholder": "Book content for {{bookId}} will appear here.",
+    "backToLibrary": "Back to Library",
+    "settings": "Reader Settings",
+    "progress": "{{percent}}% complete",
+    "tableOfContents": "Table of Contents",
+    "preReadingGuide": "Pre-Reading Guide",
+    "generateGuide": "Generate Pre-Reading Guide",
+    "vocabulary": "Vocabulary",
+    "keyArguments": "Key Arguments",
+    "chapterSummaries": "Chapter Summaries",
     "context": {
-      "historical": "Makasaysayang Konteksto",
-      "author": "Tungkol sa May-akda",
-      "intellectual": "Intelektwal na Background"
+      "historical": "Historical Context",
+      "author": "About the Author",
+      "intellectual": "Intellectual Background"
     },
     "toolbar": {
-      "explain": "Ipaliwanag Ito",
-      "ask": "Magtanong",
-      "highlight": "I-highlight",
-      "note": "Magdagdag ng Tala",
+      "explain": "Explain This",
+      "ask": "Ask a Question",
+      "highlight": "Highlight",
+      "note": "Add Note",
       "bookmark": "Bookmark"
-    },
-    "progress": {
-      "title": "Progreso sa Pagbabasa",
-      "wordsRead": "Mga Salitang Nabasa",
-      "timeSpent": "Oras na Ginugol",
-      "percentComplete": "Kumpleto"
     }
   },
   "flashcards": {
-    "title": "Mga Flashcard",
-    "dueToday": "Dapat Gawin Ngayon",
-    "totalCards": "Kabuuang Cards",
-    "studyNow": "Mag-aral Ngayon",
-    "createCard": "Gumawa ng Card",
-    "noCards": "Wala pang mga flashcard",
-    "generateFromBook": "Gumawa ng mga card mula sa iyong binabasa",
-    "review": {
-      "showAnswer": "Ipakita ang Sagot",
-      "again": "Ulit",
-      "hard": "Mahirap",
-      "good": "Maganda",
-      "easy": "Madali",
-      "cardsRemaining": "{{count}} (na) card ang natitira"
-    },
+    "title": "Flashcards",
+    "review": "Review",
+    "create": "Create Flashcard",
+    "dueToday": "Due Today",
+    "totalCards": "Total Cards",
+    "studyNow": "Study Now",
+    "createCard": "Create Card",
+    "noCards": "No flashcards yet",
+    "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "Rate ng Pagkakaalala",
-      "streak": "Mga Araw na Sunod-sunod",
-      "reviewed": "Mga Na-review na Card"
+      "retention": "Retention Rate",
+      "streak": "Day Streak",
+      "reviewed": "Cards Reviewed"
     }
   },
-  "assessment": {
-    "title": "Pagsusulit",
-    "startAssessment": "Simulan ang Pagsusulit",
-    "question": "Tanong {{current}} sa {{total}}",
-    "submitAnswer": "Isumite ang Sagot",
+  "assessments": {
+    "title": "Assessments",
+    "take": "Take Assessment",
+    "placeholder": "Assessment {{assessmentId}} will appear here.",
+    "startAssessment": "Start Assessment",
+    "question": "Question {{current}} of {{total}}",
+    "submitAnswer": "Submit Answer",
     "results": {
-      "title": "Mga Resulta ng Pagsusulit",
-      "score": "Iskor: {{score}}%",
-      "bloomsBreakdown": "Breakdown ng Bloom's Taxonomy",
-      "recommendations": "Mga Rekomendasyon"
+      "title": "Assessment Results",
+      "score": "Score: {{score}}%",
+      "bloomsBreakdown": "Bloom's Taxonomy Breakdown",
+      "recommendations": "Recommendations"
     }
+  },
+  "profile": {
+    "my": "My Profile",
+    "user": "{{username}}'s Profile"
+  },
+  "social": {
+    "feed": "Activity Feed"
+  },
+  "groups": {
+    "detail": "Group Details",
+    "placeholder": "Group {{groupId}} details will appear here.",
+    "discussions": "Discussions",
+    "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here."
   },
   "forum": {
     "title": "Forum",
-    "newPost": "Bagong Post",
-    "categories": "Mga Kategorya",
-    "recentPosts": "Kamakailang mga Post",
-    "post": {
-      "replies": "{{count}} (na) tugon",
-      "views": "{{count}} (na) view",
-      "postedBy": "Ni-post ni {{author}}",
-      "reply": "Tumugon",
-      "vote": "Bumoto"
-    }
+    "category": "Forum Category",
+    "categoryPlaceholder": "Posts in {{category}} will appear here.",
+    "post": "Forum Post",
+    "postPlaceholder": "Post {{postId}} will appear here.",
+    "create": "Create Post",
+    "newPost": "New Post",
+    "categories": "Categories",
+    "recentPosts": "Recent Posts",
+    "replies": "{{count}} replies",
+    "views": "{{count}} views",
+    "postedBy": "Posted by {{author}}",
+    "reply": "Reply",
+    "vote": "Vote"
+  },
+  "curriculums": {
+    "detail": "Curriculum Details",
+    "placeholder": "Curriculum {{curriculumId}} will appear here.",
+    "create": "Create Curriculum",
+    "browse": "Browse Curriculums"
   },
   "settings": {
-    "title": "Mga Setting",
+    "title": "Settings",
+    "profile": "Profile Settings",
+    "reading": "Reading Settings",
+    "ai": "AI Settings",
+    "notifications": "Notification Settings",
+    "privacy": "Privacy Settings",
+    "subscription": "Subscription",
     "appearance": {
-      "title": "Hitsura",
-      "theme": "Tema",
+      "title": "Appearance",
+      "theme": "Theme",
       "themes": {
-        "light": "Maliwanag",
-        "dark": "Madilim",
+        "light": "Light",
+        "dark": "Dark",
         "sepia": "Sepia",
-        "highContrast": "Mataas na Contrast"
+        "highContrast": "High Contrast"
       },
-      "fontSize": "Laki ng Font",
-      "fontFamily": "Uri ng Font",
+      "fontSize": "Font Size",
+      "fontFamily": "Font Family",
       "dyslexiaFont": "Dyslexia-Friendly Font"
     },
-    "reading": {
-      "title": "Mga Kagustuhan sa Pagbabasa",
-      "wordsPerMinute": "Bilis ng Pagbabasa (WPM)",
-      "enableAI": "I-enable ang mga AI Feature",
-      "comprehensionChecks": "Dalas ng Pag-check ng Pag-unawa"
-    },
     "language": {
-      "title": "Wika",
-      "select": "Pumili ng Wika"
-    },
-    "privacy": {
-      "title": "Privacy",
-      "shareProgress": "I-share ang Progreso sa Pagbabasa",
-      "showOnLeaderboard": "Ipakita sa Leaderboard",
-      "publicProfile": "Pampublikong Profile"
-    },
-    "notifications": {
-      "title": "Mga Notifikasyon",
-      "emailReminders": "Mga Email Reminder",
-      "flashcardReminders": "Mga Flashcard Reminder",
-      "streakAlerts": "Mga Streak Alert"
+      "title": "Language",
+      "select": "Select Language"
     }
   },
   "languages": {
-    "en": "Ingles",
-    "ar": "Arabik",
-    "es": "Espanyol",
-    "ja": "Hapon",
-    "zh": "Tsino (Simplified)",
+    "en": "English",
+    "ar": "Arabic",
+    "es": "Spanish",
+    "ja": "Japanese",
+    "zh": "Chinese (Simplified)",
     "tl": "Tagalog"
   },
   "errors": {
-    "notFound": "Hindi natagpuan ang pahina",
-    "unauthorized": "Hindi ka awtorisadong tingnan ang pahinang ito",
-    "serverError": "May nangyaring mali. Subukan ulit.",
-    "networkError": "Hindi makakonekta. Suriin ang iyong koneksyon sa internet.",
-    "validationError": "Suriin ang iyong input at subukan ulit."
+    "notFound": "Page not found",
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
+    "unauthorized": "You are not authorized to view this page",
+    "serverError": "Something went wrong. Please try again.",
+    "networkError": "Unable to connect. Check your internet connection.",
+    "validationError": "Please check your input and try again."
   },
   "accessibility": {
-    "skipToContent": "Lumaktaw sa pangunahing nilalaman",
-    "openMenu": "Buksan ang navigation menu",
-    "closeMenu": "Isara ang navigation menu",
-    "expandSection": "Palawakin ang seksyon",
-    "collapseSection": "I-collapse ang seksyon"
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "expandSection": "Expand section",
+    "collapseSection": "Collapse section"
   }
 }

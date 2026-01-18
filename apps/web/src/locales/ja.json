@@ -1,211 +1,256 @@
 {
   "common": {
-    "appName": "リードマスター",
-    "loading": "読み込み中...",
-    "error": "エラーが発生しました",
-    "save": "保存",
-    "cancel": "キャンセル",
-    "delete": "削除",
-    "edit": "編集",
-    "close": "閉じる",
-    "back": "戻る",
-    "next": "次へ",
-    "previous": "前へ",
-    "search": "検索",
-    "filter": "フィルター",
-    "sort": "並べ替え",
-    "submit": "送信",
-    "confirm": "確認",
-    "yes": "はい",
-    "no": "いいえ"
+    "appName": "Read Master",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
   },
   "nav": {
-    "home": "ホーム",
-    "library": "ライブラリ",
-    "reading": "読書",
-    "flashcards": "フラッシュカード",
-    "forum": "フォーラム",
-    "profile": "プロフィール",
-    "settings": "設定",
-    "signIn": "ログイン",
-    "signOut": "ログアウト"
+    "home": "Home",
+    "library": "Library",
+    "reading": "Reading",
+    "flashcards": "Flashcards",
+    "forum": "Forum",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "dashboard": "Dashboard",
+    "assessments": "Assessments",
+    "groups": "Groups",
+    "curriculums": "Curriculums",
+    "leaderboard": "Leaderboard",
+    "openMenu": "Open menu"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signInPlaceholder": "Clerk authentication will be integrated here.",
+    "signUpPlaceholder": "Clerk authentication will be integrated here."
   },
   "home": {
-    "welcome": "リードマスターへようこそ",
-    "tagline": "AIパワードツールで読解力をマスター",
-    "getStarted": "始める",
+    "welcome": "Welcome to Read Master",
+    "tagline": "Master your reading comprehension with AI-powered tools",
+    "getStarted": "Get Started",
     "features": {
-      "title": "機能",
+      "title": "Features",
       "preReading": {
-        "title": "読前ガイド",
-        "description": "読む前にAIが生成する文脈、語彙、章の要約"
+        "title": "Pre-Reading Guides",
+        "description": "AI-generated context, vocabulary, and chapter summaries before you read"
       },
       "duringReading": {
-        "title": "読書アシスタント",
-        "description": "即座に説明を得て、質問をし、進捗を追跡"
+        "title": "Reading Assistance",
+        "description": "Get instant explanations, ask questions, and track your progress"
       },
       "postReading": {
-        "title": "アセスメント",
-        "description": "ブルームの分類学のすべてのレベルをカバーする適応テスト"
+        "title": "Assessments",
+        "description": "Adaptive tests covering all Bloom's taxonomy levels"
       },
       "srs": {
-        "title": "間隔反復",
-        "description": "スマートなカードスケジューリングで学んだことを忘れない"
+        "title": "Spaced Repetition",
+        "description": "Never forget what you learn with smart flashcard scheduling"
       }
     }
   },
+  "pages": {
+    "dashboardPlaceholder": "Your reading stats, recent activity, and quick actions will appear here.",
+    "libraryPlaceholder": "Your book collection will appear here.",
+    "flashcardsPlaceholder": "Your flashcard decks and review status will appear here.",
+    "flashcardsReviewPlaceholder": "The SRS review interface will appear here.",
+    "flashcardsCreatePlaceholder": "The flashcard creation form will appear here.",
+    "assessmentsPlaceholder": "Your assessment history will appear here.",
+    "profilePlaceholder": "User profile information will appear here.",
+    "feedPlaceholder": "Activity from users you follow will appear here.",
+    "leaderboardPlaceholder": "Global and friends leaderboards will appear here.",
+    "groupsPlaceholder": "Your reading groups will appear here.",
+    "forumPlaceholder": "Forum categories and recent posts will appear here.",
+    "forumCreatePlaceholder": "Create a new forum post here.",
+    "curriculumsPlaceholder": "Your curriculums will appear here.",
+    "curriculumCreatePlaceholder": "Create a new curriculum here.",
+    "curriculumBrowsePlaceholder": "Browse public curriculums here.",
+    "settingsPlaceholder": "Your settings will appear here.",
+    "settingsProfilePlaceholder": "Edit your profile here.",
+    "settingsReadingPlaceholder": "Configure your reading preferences here.",
+    "settingsAIPlaceholder": "Configure your AI preferences here.",
+    "settingsNotificationsPlaceholder": "Configure your notification preferences here.",
+    "settingsPrivacyPlaceholder": "Configure your privacy settings here.",
+    "settingsSubscriptionPlaceholder": "Manage your subscription here."
+  },
   "library": {
-    "title": "マイライブラリ",
-    "addBook": "本を追加",
-    "upload": "ファイルをアップロード",
-    "importUrl": "URLからインポート",
-    "pasteText": "テキストを貼り付け",
-    "searchBooks": "本を検索",
-    "noBooks": "ライブラリにはまだ本がありません",
-    "startReading": "本を追加して読書の旅を始めましょう",
+    "title": "My Library",
+    "addBook": "Add Book",
+    "upload": "Upload File",
+    "importUrl": "Import from URL",
+    "pasteText": "Paste Text",
+    "searchBooks": "Search Books",
+    "noBooks": "No books in your library yet",
+    "startReading": "Start adding books to begin your reading journey",
     "filters": {
-      "all": "すべて",
-      "reading": "読書中",
-      "completed": "完了",
-      "wantToRead": "読みたい"
+      "all": "All",
+      "reading": "Currently Reading",
+      "completed": "Completed",
+      "wantToRead": "Want to Read"
     },
     "bookCard": {
-      "progress": "{{percent}}%完了",
-      "continueReading": "続きを読む",
-      "startReading": "読み始める"
+      "progress": "{{percent}}% complete",
+      "continueReading": "Continue Reading",
+      "startReading": "Start Reading"
     }
   },
   "reader": {
-    "tableOfContents": "目次",
-    "preReadingGuide": "読前ガイド",
-    "generateGuide": "読前ガイドを生成",
-    "vocabulary": "語彙",
-    "keyArguments": "主要な論点",
-    "chapterSummaries": "章の要約",
+    "title": "Reader",
+    "placeholder": "Book content for {{bookId}} will appear here.",
+    "backToLibrary": "Back to Library",
+    "settings": "Reader Settings",
+    "progress": "{{percent}}% complete",
+    "tableOfContents": "Table of Contents",
+    "preReadingGuide": "Pre-Reading Guide",
+    "generateGuide": "Generate Pre-Reading Guide",
+    "vocabulary": "Vocabulary",
+    "keyArguments": "Key Arguments",
+    "chapterSummaries": "Chapter Summaries",
     "context": {
-      "historical": "歴史的背景",
-      "author": "著者について",
-      "intellectual": "知的背景"
+      "historical": "Historical Context",
+      "author": "About the Author",
+      "intellectual": "Intellectual Background"
     },
     "toolbar": {
-      "explain": "これを説明",
-      "ask": "質問する",
-      "highlight": "ハイライト",
-      "note": "メモを追加",
-      "bookmark": "ブックマーク"
-    },
-    "progress": {
-      "title": "読書の進捗",
-      "wordsRead": "読んだ単語数",
-      "timeSpent": "費やした時間",
-      "percentComplete": "完了"
+      "explain": "Explain This",
+      "ask": "Ask a Question",
+      "highlight": "Highlight",
+      "note": "Add Note",
+      "bookmark": "Bookmark"
     }
   },
   "flashcards": {
-    "title": "フラッシュカード",
-    "dueToday": "今日の予定",
-    "totalCards": "カード総数",
-    "studyNow": "今すぐ学習",
-    "createCard": "カードを作成",
-    "noCards": "フラッシュカードはまだありません",
-    "generateFromBook": "読書からカードを生成",
-    "review": {
-      "showAnswer": "答えを表示",
-      "again": "もう一度",
-      "hard": "難しい",
-      "good": "良い",
-      "easy": "簡単",
-      "cardsRemaining": "残り{{count}}枚"
-    },
+    "title": "Flashcards",
+    "review": "Review",
+    "create": "Create Flashcard",
+    "dueToday": "Due Today",
+    "totalCards": "Total Cards",
+    "studyNow": "Study Now",
+    "createCard": "Create Card",
+    "noCards": "No flashcards yet",
+    "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "記憶率",
-      "streak": "連続日数",
-      "reviewed": "復習したカード"
+      "retention": "Retention Rate",
+      "streak": "Day Streak",
+      "reviewed": "Cards Reviewed"
     }
   },
-  "assessment": {
-    "title": "アセスメント",
-    "startAssessment": "アセスメントを開始",
-    "question": "質問 {{current}}/{{total}}",
-    "submitAnswer": "回答を送信",
+  "assessments": {
+    "title": "Assessments",
+    "take": "Take Assessment",
+    "placeholder": "Assessment {{assessmentId}} will appear here.",
+    "startAssessment": "Start Assessment",
+    "question": "Question {{current}} of {{total}}",
+    "submitAnswer": "Submit Answer",
     "results": {
-      "title": "アセスメント結果",
-      "score": "スコア: {{score}}%",
-      "bloomsBreakdown": "ブルームの分類学の内訳",
-      "recommendations": "推奨事項"
+      "title": "Assessment Results",
+      "score": "Score: {{score}}%",
+      "bloomsBreakdown": "Bloom's Taxonomy Breakdown",
+      "recommendations": "Recommendations"
     }
+  },
+  "profile": {
+    "my": "My Profile",
+    "user": "{{username}}'s Profile"
+  },
+  "social": {
+    "feed": "Activity Feed"
+  },
+  "groups": {
+    "detail": "Group Details",
+    "placeholder": "Group {{groupId}} details will appear here.",
+    "discussions": "Discussions",
+    "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here."
   },
   "forum": {
-    "title": "フォーラム",
-    "newPost": "新規投稿",
-    "categories": "カテゴリ",
-    "recentPosts": "最近の投稿",
-    "post": {
-      "replies": "{{count}}件の返信",
-      "views": "{{count}}回閲覧",
-      "postedBy": "{{author}}による投稿",
-      "reply": "返信",
-      "vote": "投票"
-    }
+    "title": "Forum",
+    "category": "Forum Category",
+    "categoryPlaceholder": "Posts in {{category}} will appear here.",
+    "post": "Forum Post",
+    "postPlaceholder": "Post {{postId}} will appear here.",
+    "create": "Create Post",
+    "newPost": "New Post",
+    "categories": "Categories",
+    "recentPosts": "Recent Posts",
+    "replies": "{{count}} replies",
+    "views": "{{count}} views",
+    "postedBy": "Posted by {{author}}",
+    "reply": "Reply",
+    "vote": "Vote"
+  },
+  "curriculums": {
+    "detail": "Curriculum Details",
+    "placeholder": "Curriculum {{curriculumId}} will appear here.",
+    "create": "Create Curriculum",
+    "browse": "Browse Curriculums"
   },
   "settings": {
-    "title": "設定",
+    "title": "Settings",
+    "profile": "Profile Settings",
+    "reading": "Reading Settings",
+    "ai": "AI Settings",
+    "notifications": "Notification Settings",
+    "privacy": "Privacy Settings",
+    "subscription": "Subscription",
     "appearance": {
-      "title": "外観",
-      "theme": "テーマ",
+      "title": "Appearance",
+      "theme": "Theme",
       "themes": {
-        "light": "ライト",
-        "dark": "ダーク",
-        "sepia": "セピア",
-        "highContrast": "ハイコントラスト"
+        "light": "Light",
+        "dark": "Dark",
+        "sepia": "Sepia",
+        "highContrast": "High Contrast"
       },
-      "fontSize": "フォントサイズ",
-      "fontFamily": "フォント",
-      "dyslexiaFont": "ディスレクシア対応フォント"
-    },
-    "reading": {
-      "title": "読書設定",
-      "wordsPerMinute": "読書速度（WPM）",
-      "enableAI": "AI機能を有効にする",
-      "comprehensionChecks": "理解度チェックの頻度"
+      "fontSize": "Font Size",
+      "fontFamily": "Font Family",
+      "dyslexiaFont": "Dyslexia-Friendly Font"
     },
     "language": {
-      "title": "言語",
-      "select": "言語を選択"
-    },
-    "privacy": {
-      "title": "プライバシー",
-      "shareProgress": "読書の進捗を共有",
-      "showOnLeaderboard": "リーダーボードに表示",
-      "publicProfile": "公開プロフィール"
-    },
-    "notifications": {
-      "title": "通知",
-      "emailReminders": "メールリマインダー",
-      "flashcardReminders": "フラッシュカードリマインダー",
-      "streakAlerts": "連続記録アラート"
+      "title": "Language",
+      "select": "Select Language"
     }
   },
   "languages": {
-    "en": "英語",
-    "ar": "アラビア語",
-    "es": "スペイン語",
-    "ja": "日本語",
-    "zh": "中国語（簡体字）",
-    "tl": "タガログ語"
+    "en": "English",
+    "ar": "Arabic",
+    "es": "Spanish",
+    "ja": "Japanese",
+    "zh": "Chinese (Simplified)",
+    "tl": "Tagalog"
   },
   "errors": {
-    "notFound": "ページが見つかりません",
-    "unauthorized": "このページを表示する権限がありません",
-    "serverError": "問題が発生しました。もう一度お試しください。",
-    "networkError": "接続できません。インターネット接続を確認してください。",
-    "validationError": "入力内容を確認してもう一度お試しください。"
+    "notFound": "Page not found",
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
+    "unauthorized": "You are not authorized to view this page",
+    "serverError": "Something went wrong. Please try again.",
+    "networkError": "Unable to connect. Check your internet connection.",
+    "validationError": "Please check your input and try again."
   },
   "accessibility": {
-    "skipToContent": "メインコンテンツにスキップ",
-    "openMenu": "ナビゲーションメニューを開く",
-    "closeMenu": "ナビゲーションメニューを閉じる",
-    "expandSection": "セクションを展開",
-    "collapseSection": "セクションを折りたたむ"
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "expandSection": "Expand section",
+    "collapseSection": "Collapse section"
   }
 }

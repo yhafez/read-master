@@ -3322,3 +3322,77 @@ No discoveries added during this sprint (foundational infrastructure work)
   - All corresponding test files
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3966 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 65
+
+[2026-01-18] frontend-002: Set up React Router with all routes and protected route handling
+- Installed react-router-dom v7.12.0
+- Created comprehensive route system in apps/web/src/router/
+- Route constants (routes.ts):
+  - ROUTES object with all application routes
+  - Route helpers for dynamic route generation (reader, profile, assessment, etc.)
+  - PROTECTED_ROUTES and PUBLIC_ROUTES arrays
+  - isProtectedRoute() function for dynamic route checking
+  - Type exports: RouteKey, RoutePath
+- Created MainLayout component:
+  - Responsive sidebar with navigation items
+  - AppBar with hamburger menu for mobile
+  - Drawer that toggles on mobile/tablet
+  - Navigation with route selection highlighting
+  - Language switcher in header
+  - Uses react-router-dom Outlet for nested routes
+- Created ReaderLayout component:
+  - Minimal UI for distraction-free reading
+  - Back button to library
+  - Settings button for reader preferences
+  - Progress bar component
+  - Uses Outlet for reader content
+- Created ProtectedRoute wrapper:
+  - Loading state while auth is checked
+  - Redirects to sign-in if not authenticated
+  - Preserves attempted URL in location state
+  - Mock auth hook (placeholder for Clerk integration)
+- Created 38 page placeholder components across categories:
+  - Auth: SignInPage, SignUpPage
+  - Dashboard: DashboardPage
+  - Library: LibraryPage
+  - Reader: ReaderPage
+  - Flashcards: FlashcardsPage, FlashcardsReviewPage, FlashcardsCreatePage
+  - Assessments: AssessmentsPage, AssessmentTakePage
+  - Social: ProfilePage, FeedPage, LeaderboardPage, GroupsPage, GroupDetailPage, GroupDiscussionsPage
+  - Forum: ForumPage, ForumCategoryPage, ForumPostPage, ForumCreatePage
+  - Curriculums: CurriculumsPage, CurriculumDetailPage, CurriculumCreatePage, CurriculumBrowsePage
+  - Settings: SettingsPage, SettingsProfilePage, SettingsReadingPage, SettingsAIPage, SettingsNotificationsPage, SettingsPrivacyPage, SettingsSubscriptionPage
+  - 404: NotFoundPage
+  - Home: HomePage
+- Created AppRouter component:
+  - Uses createBrowserRouter for data router
+  - Organizes routes by layout (public, main, reader)
+  - Memoized router creation
+- Updated App.tsx to use AppRouter
+- Extended en.json with new translation keys:
+  - nav: dashboard, assessments, groups, curriculums, leaderboard, openMenu
+  - auth: signIn, signUp, signInPlaceholder, signUpPlaceholder
+  - pages: all placeholder messages
+  - reader: backToLibrary, settings, progress
+  - errors: pageNotFound, pageNotFoundDescription, goHome, goBack
+  - And many more for social, groups, forum, curriculums
+- Created comprehensive tests (45 tests) in routes.test.ts:
+  - ROUTES constants verification (11 tests)
+  - routeHelpers function tests (8 tests)
+  - PROTECTED_ROUTES array validation (9 tests)
+  - PUBLIC_ROUTES array validation (8 tests)
+  - isProtectedRoute() function tests (9 tests)
+- Files created:
+  - apps/web/src/router/routes.ts
+  - apps/web/src/router/ProtectedRoute.tsx
+  - apps/web/src/router/Router.tsx
+  - apps/web/src/router/index.ts
+  - apps/web/src/router/routes.test.ts
+  - apps/web/src/components/layout/MainLayout.tsx
+  - apps/web/src/components/layout/ReaderLayout.tsx
+  - apps/web/src/components/layout/index.ts
+  - apps/web/src/pages/* (38 page files + index exports)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4011 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

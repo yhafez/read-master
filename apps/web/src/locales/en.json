@@ -28,7 +28,19 @@
     "profile": "Profile",
     "settings": "Settings",
     "signIn": "Sign In",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "dashboard": "Dashboard",
+    "assessments": "Assessments",
+    "groups": "Groups",
+    "curriculums": "Curriculums",
+    "leaderboard": "Leaderboard",
+    "openMenu": "Open menu"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signInPlaceholder": "Clerk authentication will be integrated here.",
+    "signUpPlaceholder": "Clerk authentication will be integrated here."
   },
   "home": {
     "welcome": "Welcome to Read Master",
@@ -54,6 +66,30 @@
       }
     }
   },
+  "pages": {
+    "dashboardPlaceholder": "Your reading stats, recent activity, and quick actions will appear here.",
+    "libraryPlaceholder": "Your book collection will appear here.",
+    "flashcardsPlaceholder": "Your flashcard decks and review status will appear here.",
+    "flashcardsReviewPlaceholder": "The SRS review interface will appear here.",
+    "flashcardsCreatePlaceholder": "The flashcard creation form will appear here.",
+    "assessmentsPlaceholder": "Your assessment history will appear here.",
+    "profilePlaceholder": "User profile information will appear here.",
+    "feedPlaceholder": "Activity from users you follow will appear here.",
+    "leaderboardPlaceholder": "Global and friends leaderboards will appear here.",
+    "groupsPlaceholder": "Your reading groups will appear here.",
+    "forumPlaceholder": "Forum categories and recent posts will appear here.",
+    "forumCreatePlaceholder": "Create a new forum post here.",
+    "curriculumsPlaceholder": "Your curriculums will appear here.",
+    "curriculumCreatePlaceholder": "Create a new curriculum here.",
+    "curriculumBrowsePlaceholder": "Browse public curriculums here.",
+    "settingsPlaceholder": "Your settings will appear here.",
+    "settingsProfilePlaceholder": "Edit your profile here.",
+    "settingsReadingPlaceholder": "Configure your reading preferences here.",
+    "settingsAIPlaceholder": "Configure your AI preferences here.",
+    "settingsNotificationsPlaceholder": "Configure your notification preferences here.",
+    "settingsPrivacyPlaceholder": "Configure your privacy settings here.",
+    "settingsSubscriptionPlaceholder": "Manage your subscription here."
+  },
   "library": {
     "title": "My Library",
     "addBook": "Add Book",
@@ -76,6 +112,11 @@
     }
   },
   "reader": {
+    "title": "Reader",
+    "placeholder": "Book content for {{bookId}} will appear here.",
+    "backToLibrary": "Back to Library",
+    "settings": "Reader Settings",
+    "progress": "{{percent}}% complete",
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
     "generateGuide": "Generate Pre-Reading Guide",
@@ -93,38 +134,28 @@
       "highlight": "Highlight",
       "note": "Add Note",
       "bookmark": "Bookmark"
-    },
-    "progress": {
-      "title": "Reading Progress",
-      "wordsRead": "Words Read",
-      "timeSpent": "Time Spent",
-      "percentComplete": "Complete"
     }
   },
   "flashcards": {
     "title": "Flashcards",
+    "review": "Review",
+    "create": "Create Flashcard",
     "dueToday": "Due Today",
     "totalCards": "Total Cards",
     "studyNow": "Study Now",
     "createCard": "Create Card",
     "noCards": "No flashcards yet",
     "generateFromBook": "Generate cards from your reading",
-    "review": {
-      "showAnswer": "Show Answer",
-      "again": "Again",
-      "hard": "Hard",
-      "good": "Good",
-      "easy": "Easy",
-      "cardsRemaining": "{{count}} cards remaining"
-    },
     "stats": {
       "retention": "Retention Rate",
       "streak": "Day Streak",
       "reviewed": "Cards Reviewed"
     }
   },
-  "assessment": {
-    "title": "Assessment",
+  "assessments": {
+    "title": "Assessments",
+    "take": "Take Assessment",
+    "placeholder": "Assessment {{assessmentId}} will appear here.",
     "startAssessment": "Start Assessment",
     "question": "Question {{current}} of {{total}}",
     "submitAnswer": "Submit Answer",
@@ -135,21 +166,49 @@
       "recommendations": "Recommendations"
     }
   },
+  "profile": {
+    "my": "My Profile",
+    "user": "{{username}}'s Profile"
+  },
+  "social": {
+    "feed": "Activity Feed"
+  },
+  "groups": {
+    "detail": "Group Details",
+    "placeholder": "Group {{groupId}} details will appear here.",
+    "discussions": "Discussions",
+    "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here."
+  },
   "forum": {
     "title": "Forum",
+    "category": "Forum Category",
+    "categoryPlaceholder": "Posts in {{category}} will appear here.",
+    "post": "Forum Post",
+    "postPlaceholder": "Post {{postId}} will appear here.",
+    "create": "Create Post",
     "newPost": "New Post",
     "categories": "Categories",
     "recentPosts": "Recent Posts",
-    "post": {
-      "replies": "{{count}} replies",
-      "views": "{{count}} views",
-      "postedBy": "Posted by {{author}}",
-      "reply": "Reply",
-      "vote": "Vote"
-    }
+    "replies": "{{count}} replies",
+    "views": "{{count}} views",
+    "postedBy": "Posted by {{author}}",
+    "reply": "Reply",
+    "vote": "Vote"
+  },
+  "curriculums": {
+    "detail": "Curriculum Details",
+    "placeholder": "Curriculum {{curriculumId}} will appear here.",
+    "create": "Create Curriculum",
+    "browse": "Browse Curriculums"
   },
   "settings": {
     "title": "Settings",
+    "profile": "Profile Settings",
+    "reading": "Reading Settings",
+    "ai": "AI Settings",
+    "notifications": "Notification Settings",
+    "privacy": "Privacy Settings",
+    "subscription": "Subscription",
     "appearance": {
       "title": "Appearance",
       "theme": "Theme",
@@ -163,27 +222,9 @@
       "fontFamily": "Font Family",
       "dyslexiaFont": "Dyslexia-Friendly Font"
     },
-    "reading": {
-      "title": "Reading Preferences",
-      "wordsPerMinute": "Reading Speed (WPM)",
-      "enableAI": "Enable AI Features",
-      "comprehensionChecks": "Comprehension Check Frequency"
-    },
     "language": {
       "title": "Language",
       "select": "Select Language"
-    },
-    "privacy": {
-      "title": "Privacy",
-      "shareProgress": "Share Reading Progress",
-      "showOnLeaderboard": "Show on Leaderboard",
-      "publicProfile": "Public Profile"
-    },
-    "notifications": {
-      "title": "Notifications",
-      "emailReminders": "Email Reminders",
-      "flashcardReminders": "Flashcard Reminders",
-      "streakAlerts": "Streak Alerts"
     }
   },
   "languages": {
@@ -196,6 +237,10 @@
   },
   "errors": {
     "notFound": "Page not found",
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
     "unauthorized": "You are not authorized to view this page",
     "serverError": "Something went wrong. Please try again.",
     "networkError": "Unable to connect. Check your internet connection.",
