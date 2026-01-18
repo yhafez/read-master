@@ -56,3 +56,31 @@ Started: 2026-01-17
 - Ran pnpm format to fix formatting issues in markdown files
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test
 - Files: packages/config/eslint/*.js, packages/config/prettier/index.js, */eslint.config.js, */package.json
+
+## Iteration 4
+
+[2026-01-17] infra-004: Configure Vitest testing framework for monorepo
+- Created Ralph Wiggum workflow documentation (docs/RALPH_WIGGUM.md)
+- Created PRD task registry (docs/prd.json) with infrastructure sprint tasks
+- Installed Vitest ^3.0.0 as dev dependency in root package.json
+- Created packages/config/vitest/ with shared Vitest configurations:
+  - base.js: Core test settings (globals, node environment, passWithNoTests)
+  - react.js: React test settings (jsdom environment, tsx support)
+  - index.js: Re-exports createVitestConfig and createReactVitestConfig
+- Updated packages/config/package.json with exports for vitest/*
+- Created vitest.config.ts for all 5 testable packages:
+  - apps/web: Uses createReactVitestConfig (jsdom)
+  - apps/api: Uses createVitestConfig (node)
+  - packages/shared: Uses createVitestConfig (node)
+  - packages/database: Uses createVitestConfig (node)
+  - packages/ai: Uses createVitestConfig (node)
+- Updated test scripts in all packages from placeholders to `vitest run`
+- Added vitest as devDependency to all testable packages
+- Created first real utility functions in packages/shared/src/utils/string.ts:
+  - truncate: String truncation with ellipsis
+  - toTitleCase: Convert string to title case
+  - slugify: Generate URL-friendly slugs
+  - stripHtml: Remove HTML tags from string
+- Created comprehensive tests in packages/shared/src/utils/string.test.ts (19 tests)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm test
+- Files: docs/RALPH_WIGGUM.md, docs/prd.json, packages/config/vitest/*.js, */vitest.config.ts, packages/shared/src/utils/*

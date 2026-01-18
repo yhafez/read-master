@@ -1,0 +1,105 @@
+{
+  "sprint": 1,
+  "name": "Infrastructure Foundation",
+  "description": "Set up monorepo infrastructure, tooling, and development environment",
+  "tasks": [
+    {
+      "id": "infra-001",
+      "title": "Create pnpm monorepo structure with workspace configuration",
+      "description": "Set up pnpm workspaces with apps/web, apps/api, and packages/database, packages/shared, packages/ai, packages/config structure",
+      "priority": 1,
+      "category": "infrastructure",
+      "defer_to_next_sprint": false,
+      "passes": true,
+      "dependencies": [],
+      "acceptance_criteria": [
+        "pnpm-workspace.yaml created",
+        "All workspace packages have package.json",
+        "pnpm install runs successfully",
+        "All workspace projects recognized by pnpm"
+      ]
+    },
+    {
+      "id": "infra-002",
+      "title": "Set up TypeScript configuration with strict mode for monorepo",
+      "description": "Create shared TypeScript configurations in packages/config with strict mode enabled. Configure all workspace packages to extend shared configs.",
+      "priority": 2,
+      "category": "infrastructure",
+      "defer_to_next_sprint": false,
+      "passes": true,
+      "dependencies": ["infra-001"],
+      "acceptance_criteria": [
+        "Root tsconfig.json with project references",
+        "Shared configs in packages/config/tsconfig/",
+        "All packages extend shared configs",
+        "pnpm typecheck passes with no errors"
+      ]
+    },
+    {
+      "id": "infra-003",
+      "title": "Configure ESLint and Prettier with shared configs",
+      "description": "Create shared ESLint and Prettier configurations in packages/config. Configure all workspace packages to use shared configs.",
+      "priority": 3,
+      "category": "infrastructure",
+      "defer_to_next_sprint": false,
+      "passes": true,
+      "dependencies": ["infra-002"],
+      "acceptance_criteria": [
+        "Shared ESLint configs in packages/config/eslint/",
+        "Shared Prettier config in packages/config/prettier/",
+        "All packages have eslint.config.js",
+        "pnpm lint passes with no errors"
+      ]
+    },
+    {
+      "id": "infra-004",
+      "title": "Configure Vitest testing framework for monorepo",
+      "description": "Set up Vitest as the testing framework with shared configuration. Create vitest.config.ts for all packages and add test scripts.",
+      "priority": 4,
+      "category": "infrastructure",
+      "defer_to_next_sprint": false,
+      "passes": true,
+      "dependencies": ["infra-003"],
+      "acceptance_criteria": [
+        "Vitest installed as dev dependency",
+        "Shared vitest config in packages/config/vitest/",
+        "All packages have vitest.config.ts",
+        "pnpm test runs actual tests (not placeholder)",
+        "At least one real test exists and passes"
+      ]
+    },
+    {
+      "id": "infra-005",
+      "title": "Configure Husky pre-commit hooks",
+      "description": "Set up Husky with pre-commit hooks that run lint, typecheck, and test before commits. Configure lint-staged for efficient checks.",
+      "priority": 5,
+      "category": "infrastructure",
+      "defer_to_next_sprint": false,
+      "passes": false,
+      "dependencies": ["infra-004"],
+      "acceptance_criteria": [
+        "Husky installed and configured",
+        "Pre-commit hook runs lint, typecheck, test",
+        "lint-staged configured for staged files only",
+        "Hook prevents commits with failing checks"
+      ]
+    },
+    {
+      "id": "infra-006",
+      "title": "Create environment configuration and .env.example",
+      "description": "Set up environment variable handling with dotenv. Create comprehensive .env.example with all required variables documented.",
+      "priority": 6,
+      "category": "infrastructure",
+      "defer_to_next_sprint": false,
+      "passes": false,
+      "dependencies": ["infra-003"],
+      "acceptance_criteria": [
+        ".env.example created with all variables",
+        "dotenv configured for apps",
+        ".env added to .gitignore",
+        "Environment variables documented"
+      ]
+    }
+  ],
+  "discoveries": []
+}

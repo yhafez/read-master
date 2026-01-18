@@ -14,7 +14,10 @@
     "./eslint/react": "./eslint/react.js",
     "./eslint/node": "./eslint/node.js",
     "./eslint/library": "./eslint/library.js",
-    "./prettier": "./prettier/index.js"
+    "./prettier": "./prettier/index.js",
+    "./vitest": "./vitest/index.js",
+    "./vitest/base": "./vitest/base.js",
+    "./vitest/react": "./vitest/react.js"
   },
   "scripts": {
     "lint": "echo 'config package contains configs, skipping lint'",
