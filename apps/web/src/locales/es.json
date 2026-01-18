@@ -95,24 +95,57 @@
     "settingsSubscriptionPlaceholder": "Manage your subscription here."
   },
   "library": {
-    "title": "My Library",
-    "addBook": "Add Book",
-    "upload": "Upload File",
-    "importUrl": "Import from URL",
-    "pasteText": "Paste Text",
-    "searchBooks": "Search Books",
-    "noBooks": "No books in your library yet",
-    "startReading": "Start adding books to begin your reading journey",
+    "title": "Mi Biblioteca",
+    "addBook": "Agregar Libro",
+    "upload": "Subir Archivo",
+    "importUrl": "Importar desde URL",
+    "pasteText": "Pegar Texto",
+    "searchBooks": "Buscar libros...",
+    "noBooks": "Aún no tienes libros en tu biblioteca",
+    "startReading": "Comienza a agregar libros para iniciar tu viaje de lectura",
+    "noResults": "No hay libros que coincidan con tus filtros",
+    "tryDifferentFilters": "Intenta ajustar tu búsqueda o filtros",
+    "viewMode": "Modo de vista",
+    "gridView": "Vista de cuadrícula",
+    "listView": "Vista de lista",
+    "filterPanel": "Filtrar libros",
+    "clearFilters": "Limpiar filtros",
+    "status": "Estado",
+    "genre": "Género",
+    "tags": "Etiquetas",
+    "moreActions": "Más acciones",
     "filters": {
-      "all": "All",
-      "reading": "Currently Reading",
-      "completed": "Completed",
-      "wantToRead": "Want to Read"
+      "all": "Todos los Libros",
+      "reading": "Leyendo Actualmente",
+      "completed": "Completados",
+      "wantToRead": "Quiero Leer",
+      "abandoned": "Abandonados"
+    },
+    "sort": {
+      "dateAdded": "Fecha Agregado",
+      "title": "Título",
+      "author": "Autor",
+      "progress": "Progreso",
+      "ascending": "Ascendente",
+      "descending": "Descendente",
+      "toggleOrder": "Cambiar orden"
+    },
+    "genres": {
+      "fiction": "Ficción",
+      "nonFiction": "No Ficción",
+      "mystery": "Misterio",
+      "romance": "Romance",
+      "sciFi": "Ciencia Ficción",
+      "fantasy": "Fantasía",
+      "biography": "Biografía",
+      "history": "Historia",
+      "selfHelp": "Autoayuda",
+      "business": "Negocios"
     },
     "bookCard": {
-      "progress": "{{percent}}% complete",
-      "continueReading": "Continue Reading",
-      "startReading": "Start Reading"
+      "progress": "{{percent}}% completo",
+      "continueReading": "Continuar Leyendo",
+      "startReading": "Comenzar a Leer"
     }
   },
   "reader": {

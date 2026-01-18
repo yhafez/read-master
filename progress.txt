@@ -3565,3 +3565,84 @@ No discoveries added during this sprint (foundational infrastructure work)
   - Used exactOptionalPropertyTypes-compatible patterns for CFI field
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4256 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 69
+
+[2026-01-18] frontend-006: Create Library page with grid/list view and filters
+- Created comprehensive library components in apps/web/src/components/library/:
+  - types.ts: Type definitions and constants for library
+    - LibraryViewMode type ("grid" | "list")
+    - SortOption, SortOrder types from BookListFilters
+    - StatusFilter type ("all" | book status values)
+    - LibraryFilters interface with status, search, sort, order, genres, tags
+    - DEFAULT_LIBRARY_FILTERS constant with sensible defaults
+    - SORT_OPTIONS array with sort configurations
+    - STATUS_FILTERS array with status filter configurations
+  - BookCard.tsx: Book card component for grid/list views
+    - Displays cover image, title, author, status badge, progress bar
+    - Quick actions: read, delete, more menu
+    - Supports both grid (vertical card) and list (horizontal) layouts
+    - Keyboard accessible with proper ARIA labels
+    - Uses react-router-dom navigate for navigation
+  - LibraryGrid.tsx: Grid/list container component
+    - Renders books in responsive grid (xs:6, sm:4, md:3, lg:2) or list
+    - Loading state with skeleton placeholders
+    - Empty state with "Add Book" CTA
+    - No results state with filter hint
+    - MUI Grid2 for modern responsive layout
+  - LibraryToolbar.tsx: Toolbar with search, sort, filters, view toggle
+    - Search input with magnifying glass icon
+    - Sort dropdown with 4 options (date, title, author, progress)
+    - Sort order toggle (asc/desc)
+    - Filter panel toggle button
+    - View mode toggle (grid/list)
+    - Add book button
+    - Responsive: search goes full-width on mobile
+  - LibraryFilterPanel.tsx: Filter sidebar/drawer
+    - Status filter with radio-style checkboxes
+    - Genre filter with chips (10 common genres)
+    - Tags filter with chips (dynamic from user's books)
+    - Clear filters button when filters active
+    - Uses Drawer on mobile, inline panel on desktop
+    - Fully accessible with proper fieldset/legend structure
+  - index.ts: Module exports
+- Updated LibraryPage.tsx from placeholder to full implementation:
+  - Integrates all library components
+  - Uses React Query via useBooks hook for data fetching
+  - Local state for UI (viewMode, filterPanelOpen, filters, page)
+  - Converts LibraryFilters to BookListFilters for API
+  - Error handling with Alert component
+  - Pagination with MUI Pagination component
+  - Respects compactLibraryView from uiStore
+  - Placeholder for AddBookModal (frontend-008)
+- Added translation keys to en.json:
+  - library.searchBooks, noResults, tryDifferentFilters
+  - library.viewMode, gridView, listView
+  - library.filterPanel, clearFilters, status, genre, tags, moreActions
+  - library.filters.abandoned
+  - library.sort.* (dateAdded, title, author, progress, ascending, descending, toggleOrder)
+  - library.genres.* (10 genres)
+- Fixed exactOptionalPropertyTypes issues:
+  - BookCardProps: Added | undefined to optional function props
+  - LibraryGridProps: Added | undefined to optional props
+  - BookListFilters: Added | undefined to all optional props
+- Created comprehensive tests in types.test.ts (28 tests):
+  - DEFAULT_LIBRARY_FILTERS verification
+  - SORT_OPTIONS array tests
+  - STATUS_FILTERS array tests
+  - Type compatibility tests for all interfaces
+- Files created:
+  - apps/web/src/components/library/types.ts
+  - apps/web/src/components/library/types.test.ts
+  - apps/web/src/components/library/BookCard.tsx
+  - apps/web/src/components/library/LibraryGrid.tsx
+  - apps/web/src/components/library/LibraryToolbar.tsx
+  - apps/web/src/components/library/LibraryFilterPanel.tsx
+  - apps/web/src/components/library/index.ts
+- Files modified:
+  - apps/web/src/pages/library/LibraryPage.tsx
+  - apps/web/src/locales/en.json
+  - apps/web/src/hooks/useBooks.ts (added | undefined for exactOptionalPropertyTypes)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4284 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

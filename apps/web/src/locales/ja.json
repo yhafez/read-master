@@ -95,24 +95,57 @@
     "settingsSubscriptionPlaceholder": "Manage your subscription here."
   },
   "library": {
-    "title": "My Library",
-    "addBook": "Add Book",
-    "upload": "Upload File",
-    "importUrl": "Import from URL",
-    "pasteText": "Paste Text",
-    "searchBooks": "Search Books",
-    "noBooks": "No books in your library yet",
-    "startReading": "Start adding books to begin your reading journey",
+    "title": "マイライブラリ",
+    "addBook": "本を追加",
+    "upload": "ファイルをアップロード",
+    "importUrl": "URLからインポート",
+    "pasteText": "テキストを貼り付け",
+    "searchBooks": "本を検索...",
+    "noBooks": "ライブラリにはまだ本がありません",
+    "startReading": "読書の旅を始めるために本を追加しましょう",
+    "noResults": "フィルターに一致する本がありません",
+    "tryDifferentFilters": "検索やフィルターを調整してみてください",
+    "viewMode": "表示モード",
+    "gridView": "グリッド表示",
+    "listView": "リスト表示",
+    "filterPanel": "本をフィルター",
+    "clearFilters": "フィルターをクリア",
+    "status": "ステータス",
+    "genre": "ジャンル",
+    "tags": "タグ",
+    "moreActions": "その他のアクション",
     "filters": {
-      "all": "All",
-      "reading": "Currently Reading",
-      "completed": "Completed",
-      "wantToRead": "Want to Read"
+      "all": "すべての本",
+      "reading": "読書中",
+      "completed": "完了",
+      "wantToRead": "読みたい",
+      "abandoned": "中断"
+    },
+    "sort": {
+      "dateAdded": "追加日",
+      "title": "タイトル",
+      "author": "著者",
+      "progress": "進捗",
+      "ascending": "昇順",
+      "descending": "降順",
+      "toggleOrder": "並び順を切り替え"
+    },
+    "genres": {
+      "fiction": "フィクション",
+      "nonFiction": "ノンフィクション",
+      "mystery": "ミステリー",
+      "romance": "ロマンス",
+      "sciFi": "SF",
+      "fantasy": "ファンタジー",
+      "biography": "伝記",
+      "history": "歴史",
+      "selfHelp": "自己啓発",
+      "business": "ビジネス"
     },
     "bookCard": {
-      "progress": "{{percent}}% complete",
-      "continueReading": "Continue Reading",
-      "startReading": "Start Reading"
+      "progress": "{{percent}}% 完了",
+      "continueReading": "読書を続ける",
+      "startReading": "読み始める"
     }
   },
   "reader": {

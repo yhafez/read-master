@@ -25,12 +25,12 @@ export interface Book {
 }
 
 export interface BookListFilters {
-  status?: Book["status"];
-  search?: string;
-  sort?: "title" | "author" | "createdAt" | "progress";
-  order?: "asc" | "desc";
-  page?: number;
-  limit?: number;
+  status?: Book["status"] | undefined;
+  search?: string | undefined;
+  sort?: "title" | "author" | "createdAt" | "progress" | undefined;
+  order?: "asc" | "desc" | undefined;
+  page?: number | undefined;
+  limit?: number | undefined;
 }
 
 export interface PaginatedResponse<T> {

@@ -480,7 +480,7 @@
         "Responsive on all screen sizes",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-007",
