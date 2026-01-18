@@ -3017,3 +3017,45 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3543 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Files: apps/api/api/books/[id].ts, apps/api/api/books/[id].test.ts
+
+## Iteration 60
+
+[2026-01-18] api-books-015: Implement DELETE /api/books/:id endpoint
+- Extended apps/api/api/books/[id].ts to handle DELETE method
+- Implemented request routing for GET, PUT, and DELETE methods
+- Implemented DELETE functionality with comprehensive features:
+  - Validates book ID with Zod schema (same as GET/PUT)
+  - Checks user exists in database
+  - Excludes already soft-deleted books
+  - Verifies user owns the book (only owner can delete)
+  - Returns 403 Forbidden if user is not the owner
+  - Returns 404 Not Found if book doesn't exist or already deleted
+- Implemented soft delete in database transaction:
+  - Sets deletedAt timestamp on the book
+  - Soft deletes all related annotations (sets deletedAt)
+  - Soft deletes all related flashcards (sets deletedAt)
+  - Uses Prisma $transaction for atomic operation
+- Implemented audit logging:
+  - Creates AuditLog record with action "DELETE"
+  - Captures previous book values for audit trail
+  - Records related deletion counts in metadata
+  - Captures request context (ipAddress, userAgent, requestId)
+- Created helper function with full test coverage:
+  - buildDeleteResponse(): Formats delete response with book ID, message, deletedAt, and related deletions
+- Added types:
+  - BookDeleteResponse: Response type for delete operation
+- Updated main handler:
+  - Routes to handleDelete for DELETE method
+  - Improved error messages with operation-specific verbs (fetch, update, delete)
+- Updated exports for testing
+- Created comprehensive tests in apps/api/api/books/[id].test.ts (30 new tests):
+  - buildDeleteResponse tests:
+    - Basic functionality: complete response, ISO date formatting, correct book ID, success message
+    - Related deletions: zero annotations/flashcards, both zero, large counts, single items
+    - Book ID edge cases: short, long, UUID-style, CUID-style, numeric, special characters
+    - Date edge cases: start/end of year, milliseconds, current time, past/future dates
+    - Response structure validation: property count, types, nested structure
+    - Real-world scenarios: many related items, fresh book, only annotations, only flashcards
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3573 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+- Files: apps/api/api/books/[id].ts, apps/api/api/books/[id].test.ts

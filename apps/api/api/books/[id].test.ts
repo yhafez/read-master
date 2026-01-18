@@ -1,10 +1,11 @@
 /**
- * Tests for GET /api/books/:id and PUT /api/books/:id endpoints
+ * Tests for GET /api/books/:id, PUT /api/books/:id, and DELETE /api/books/:id endpoints
  *
  * Tests cover:
  * - Book ID validation (format, length, edge cases)
  * - GET helpers: formatChapter, formatProgress, formatBookDetailResponse
  * - PUT helpers: formatBookUpdateResponse, buildUpdateData, getChangedFields
+ * - DELETE helpers: buildDeleteResponse
  * - Constants (ID length limits)
  * - Edge cases (Unicode, special characters, null handling)
  */
@@ -18,6 +19,7 @@ import {
   formatBookUpdateResponse,
   buildUpdateData,
   getChangedFields,
+  buildDeleteResponse,
   MAX_ID_LENGTH,
   MIN_ID_LENGTH,
 } from "./[id].js";
@@ -1483,5 +1485,283 @@ describe("getChangedFields", () => {
     const updated = { title: "Title", author: "Author" };
     const result = getChangedFields(previous, updated);
     expect(result).toEqual(["author"]);
+  });
+});
+
+// ============================================================================
+// DELETE Helper Tests
+// ============================================================================
+
+describe("buildDeleteResponse", () => {
+  describe("basic functionality", () => {
+    it("should build complete delete response", () => {
+      const bookId = "book_123";
+      const deletedAt = new Date("2024-01-15T10:30:00Z");
+      const annotationsDeleted = 5;
+      const flashcardsDeleted = 10;
+
+      const result = buildDeleteResponse(
+        bookId,
+        deletedAt,
+        annotationsDeleted,
+        flashcardsDeleted
+      );
+
+      expect(result).toEqual({
+        id: "book_123",
+        message: "Book successfully deleted",
+        deletedAt: "2024-01-15T10:30:00.000Z",
+        relatedDeletions: {
+          annotations: 5,
+          flashcards: 10,
+        },
+      });
+    });
+
+    it("should format deletedAt as ISO string", () => {
+      const deletedAt = new Date("2024-06-20T14:45:30.123Z");
+      const result = buildDeleteResponse("book_456", deletedAt, 0, 0);
+
+      expect(result.deletedAt).toBe("2024-06-20T14:45:30.123Z");
+    });
+
+    it("should include correct book ID", () => {
+      const bookId = "cuid_abc123xyz";
+      const result = buildDeleteResponse(bookId, new Date(), 0, 0);
+
+      expect(result.id).toBe(bookId);
+    });
+
+    it("should always include success message", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 0, 0);
+
+      expect(result.message).toBe("Book successfully deleted");
+    });
+  });
+
+  describe("related deletions", () => {
+    it("should handle zero annotations deleted", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 0, 5);
+
+      expect(result.relatedDeletions.annotations).toBe(0);
+      expect(result.relatedDeletions.flashcards).toBe(5);
+    });
+
+    it("should handle zero flashcards deleted", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 3, 0);
+
+      expect(result.relatedDeletions.annotations).toBe(3);
+      expect(result.relatedDeletions.flashcards).toBe(0);
+    });
+
+    it("should handle both zero", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 0, 0);
+
+      expect(result.relatedDeletions.annotations).toBe(0);
+      expect(result.relatedDeletions.flashcards).toBe(0);
+    });
+
+    it("should handle large counts", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 1000, 5000);
+
+      expect(result.relatedDeletions.annotations).toBe(1000);
+      expect(result.relatedDeletions.flashcards).toBe(5000);
+    });
+
+    it("should handle single annotation", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 1, 0);
+
+      expect(result.relatedDeletions.annotations).toBe(1);
+    });
+
+    it("should handle single flashcard", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 0, 1);
+
+      expect(result.relatedDeletions.flashcards).toBe(1);
+    });
+  });
+
+  describe("book ID edge cases", () => {
+    it("should handle short book ID", () => {
+      const result = buildDeleteResponse("a", new Date(), 0, 0);
+
+      expect(result.id).toBe("a");
+    });
+
+    it("should handle long book ID", () => {
+      const longId = "a".repeat(30);
+      const result = buildDeleteResponse(longId, new Date(), 0, 0);
+
+      expect(result.id).toBe(longId);
+    });
+
+    it("should handle UUID-style book ID", () => {
+      const uuid = "550e8400-e29b-41d4-a716-446655440000";
+      const result = buildDeleteResponse(uuid, new Date(), 0, 0);
+
+      expect(result.id).toBe(uuid);
+    });
+
+    it("should handle CUID-style book ID", () => {
+      const cuid = "clhqz9v0p0000qwer1234asdf";
+      const result = buildDeleteResponse(cuid, new Date(), 0, 0);
+
+      expect(result.id).toBe(cuid);
+    });
+
+    it("should handle numeric string ID", () => {
+      const result = buildDeleteResponse("12345678", new Date(), 0, 0);
+
+      expect(result.id).toBe("12345678");
+    });
+
+    it("should handle ID with special characters", () => {
+      const result = buildDeleteResponse("book_123-abc", new Date(), 0, 0);
+
+      expect(result.id).toBe("book_123-abc");
+    });
+  });
+
+  describe("date edge cases", () => {
+    it("should handle date at start of year", () => {
+      const result = buildDeleteResponse(
+        "book_id",
+        new Date("2024-01-01T00:00:00.000Z"),
+        0,
+        0
+      );
+
+      expect(result.deletedAt).toBe("2024-01-01T00:00:00.000Z");
+    });
+
+    it("should handle date at end of year", () => {
+      const result = buildDeleteResponse(
+        "book_id",
+        new Date("2024-12-31T23:59:59.999Z"),
+        0,
+        0
+      );
+
+      expect(result.deletedAt).toBe("2024-12-31T23:59:59.999Z");
+    });
+
+    it("should handle date with milliseconds", () => {
+      const result = buildDeleteResponse(
+        "book_id",
+        new Date("2024-06-15T12:30:45.789Z"),
+        0,
+        0
+      );
+
+      expect(result.deletedAt).toBe("2024-06-15T12:30:45.789Z");
+    });
+
+    it("should handle current time", () => {
+      const now = new Date();
+      const result = buildDeleteResponse("book_id", now, 0, 0);
+
+      expect(result.deletedAt).toBe(now.toISOString());
+    });
+
+    it("should handle past date", () => {
+      const pastDate = new Date("2020-01-15T08:30:00.000Z");
+      const result = buildDeleteResponse("book_id", pastDate, 0, 0);
+
+      expect(result.deletedAt).toBe("2020-01-15T08:30:00.000Z");
+    });
+
+    it("should handle far future date", () => {
+      const futureDate = new Date("2050-12-25T15:00:00.000Z");
+      const result = buildDeleteResponse("book_id", futureDate, 0, 0);
+
+      expect(result.deletedAt).toBe("2050-12-25T15:00:00.000Z");
+    });
+  });
+
+  describe("response structure validation", () => {
+    it("should have exactly four properties", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 0, 0);
+
+      expect(Object.keys(result)).toHaveLength(4);
+      expect(Object.keys(result)).toContain("id");
+      expect(Object.keys(result)).toContain("message");
+      expect(Object.keys(result)).toContain("deletedAt");
+      expect(Object.keys(result)).toContain("relatedDeletions");
+    });
+
+    it("should have relatedDeletions with exactly two properties", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 0, 0);
+
+      expect(Object.keys(result.relatedDeletions)).toHaveLength(2);
+      expect(Object.keys(result.relatedDeletions)).toContain("annotations");
+      expect(Object.keys(result.relatedDeletions)).toContain("flashcards");
+    });
+
+    it("should return string types for id, message, and deletedAt", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 5, 10);
+
+      expect(typeof result.id).toBe("string");
+      expect(typeof result.message).toBe("string");
+      expect(typeof result.deletedAt).toBe("string");
+    });
+
+    it("should return number types for related deletion counts", () => {
+      const result = buildDeleteResponse("book_id", new Date(), 5, 10);
+
+      expect(typeof result.relatedDeletions.annotations).toBe("number");
+      expect(typeof result.relatedDeletions.flashcards).toBe("number");
+    });
+  });
+
+  describe("real-world scenarios", () => {
+    it("should handle book with many annotations and flashcards", () => {
+      const result = buildDeleteResponse(
+        "clhqz9v0p0000qwer1234asdf",
+        new Date("2024-03-15T09:45:00.000Z"),
+        42,
+        156
+      );
+
+      expect(result).toEqual({
+        id: "clhqz9v0p0000qwer1234asdf",
+        message: "Book successfully deleted",
+        deletedAt: "2024-03-15T09:45:00.000Z",
+        relatedDeletions: {
+          annotations: 42,
+          flashcards: 156,
+        },
+      });
+    });
+
+    it("should handle fresh book with no related data", () => {
+      const result = buildDeleteResponse(
+        "new_book_id",
+        new Date("2024-01-01T00:00:01.000Z"),
+        0,
+        0
+      );
+
+      expect(result.relatedDeletions.annotations).toBe(0);
+      expect(result.relatedDeletions.flashcards).toBe(0);
+    });
+
+    it("should handle book with only annotations", () => {
+      const result = buildDeleteResponse(
+        "book_with_highlights",
+        new Date(),
+        25,
+        0
+      );
+
+      expect(result.relatedDeletions.annotations).toBe(25);
+      expect(result.relatedDeletions.flashcards).toBe(0);
+    });
+
+    it("should handle book with only flashcards", () => {
+      const result = buildDeleteResponse("book_with_cards", new Date(), 0, 100);
+
+      expect(result.relatedDeletions.annotations).toBe(0);
+      expect(result.relatedDeletions.flashcards).toBe(100);
+    });
   });
 });

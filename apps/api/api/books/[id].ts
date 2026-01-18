@@ -1,6 +1,7 @@
 /**
  * GET /api/books/:id - Fetch a single book by ID
  * PUT /api/books/:id - Update book metadata
+ * DELETE /api/books/:id - Soft delete a book
  *
  * GET endpoint:
  * - Returns book details for the authenticated user
@@ -16,6 +17,13 @@
  * - Logs audit trail
  * - Handles status changes
  *
+ * DELETE endpoint:
+ * - Soft deletes the book (sets deletedAt timestamp)
+ * - Soft deletes related annotations
+ * - Soft deletes related flashcards
+ * - Only book owner can delete
+ * - Creates audit log
+ *
  * @example
  * ```bash
  * # GET
@@ -27,6 +35,10 @@
  *   -H "Authorization: Bearer <token>" \
  *   -H "Content-Type: application/json" \
  *   -d '{"title": "Updated Title", "status": "READING"}'
+ *
+ * # DELETE
+ * curl -X DELETE /api/books/clxxxxxxxxxx \
+ *   -H "Authorization: Bearer <token>"
  * ```
  */
 
@@ -153,6 +165,19 @@ type BookUpdateResponse = {
   isPublic: boolean;
   language: string;
   updatedAt: string;
+};
+
+/**
+ * Delete response type
+ */
+type BookDeleteResponse = {
+  id: string;
+  message: string;
+  deletedAt: string;
+  relatedDeletions: {
+    annotations: number;
+    flashcards: number;
+  };
 };
 
 // ============================================================================
@@ -374,6 +399,26 @@ function getChangedFields(
   }
 
   return changed;
+}
+
+/**
+ * Build delete response from soft delete results
+ */
+function buildDeleteResponse(
+  bookId: string,
+  deletedAt: Date,
+  annotationsDeleted: number,
+  flashcardsDeleted: number
+): BookDeleteResponse {
+  return {
+    id: bookId,
+    message: "Book successfully deleted",
+    deletedAt: deletedAt.toISOString(),
+    relatedDeletions: {
+      annotations: annotationsDeleted,
+      flashcards: flashcardsDeleted,
+    },
+  };
 }
 
 // ============================================================================
@@ -630,18 +675,165 @@ async function handlePut(
 }
 
 /**
- * Main request handler - routes to GET or PUT handler
+ * Handle DELETE /api/books/:id request
+ * Performs soft delete of the book and related annotations/flashcards
+ */
+async function handleDelete(
+  req: AuthenticatedRequest,
+  res: VercelResponse,
+  validatedBookId: string,
+  userId: string
+): Promise<void> {
+  // Get user from database
+  const user = await getUserByClerkId(userId);
+  if (!user) {
+    sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
+    return;
+  }
+
+  // Fetch existing book to check ownership
+  const existingBook = await db.book.findFirst({
+    where: {
+      id: validatedBookId,
+      deletedAt: null, // Must not already be deleted
+    },
+    select: {
+      id: true,
+      userId: true,
+      title: true,
+      author: true,
+      description: true,
+      coverImage: true,
+      genre: true,
+      tags: true,
+      status: true,
+      isPublic: true,
+      language: true,
+      source: true,
+      sourceId: true,
+      wordCount: true,
+    },
+  });
+
+  // Check if book exists
+  if (!existingBook) {
+    sendError(res, ErrorCodes.NOT_FOUND, "Book not found", 404);
+    return;
+  }
+
+  // Check user owns the book (only owner can delete)
+  if (existingBook.userId !== user.id) {
+    sendError(
+      res,
+      ErrorCodes.FORBIDDEN,
+      "You do not have permission to delete this book",
+      403
+    );
+    return;
+  }
+
+  // Use transaction to soft delete book and related data
+  const deletedAt = new Date();
+
+  const [, annotationsResult, flashcardsResult] = await db.$transaction([
+    // Soft delete the book
+    db.book.update({
+      where: { id: validatedBookId },
+      data: { deletedAt },
+    }),
+    // Soft delete related annotations
+    db.annotation.updateMany({
+      where: {
+        bookId: validatedBookId,
+        deletedAt: null, // Only delete non-deleted annotations
+      },
+      data: { deletedAt },
+    }),
+    // Soft delete related flashcards
+    db.flashcard.updateMany({
+      where: {
+        bookId: validatedBookId,
+        deletedAt: null, // Only delete non-deleted flashcards
+      },
+      data: { deletedAt },
+    }),
+  ]);
+
+  // Create audit log entry
+  const ipAddress =
+    (req.headers["x-forwarded-for"] as string | undefined)
+      ?.split(",")[0]
+      ?.trim() ?? null;
+  const userAgent = (req.headers["user-agent"] as string | undefined) ?? null;
+
+  // Build previous value object for audit log
+  const previousValue: Record<string, unknown> = {
+    id: existingBook.id,
+    title: existingBook.title,
+    author: existingBook.author,
+    description: existingBook.description,
+    coverImage: existingBook.coverImage,
+    genre: existingBook.genre,
+    tags: existingBook.tags,
+    status: existingBook.status,
+    isPublic: existingBook.isPublic,
+    language: existingBook.language,
+    source: existingBook.source,
+    sourceId: existingBook.sourceId,
+    wordCount: existingBook.wordCount,
+  };
+
+  await db.auditLog.create({
+    data: {
+      userId: user.id,
+      action: "DELETE",
+      entityType: "Book",
+      entityId: validatedBookId,
+      previousValue: previousValue as Prisma.InputJsonValue,
+      newValue: { deletedAt: deletedAt.toISOString() } as Prisma.InputJsonValue,
+      metadata: {
+        relatedDeletions: {
+          annotations: annotationsResult.count,
+          flashcards: flashcardsResult.count,
+        },
+        requestId: req.headers["x-request-id"] as string | null,
+      } as Prisma.InputJsonValue,
+      ipAddress,
+      userAgent,
+    },
+  });
+
+  // Log the deletion
+  logger.info("Book deleted", {
+    userId: user.id,
+    bookId: validatedBookId,
+    relatedAnnotationsDeleted: annotationsResult.count,
+    relatedFlashcardsDeleted: flashcardsResult.count,
+  });
+
+  // Build and return response
+  const response = buildDeleteResponse(
+    validatedBookId,
+    deletedAt,
+    annotationsResult.count,
+    flashcardsResult.count
+  );
+  sendSuccess(res, response);
+}
+
+/**
+ * Main request handler - routes to GET, PUT, or DELETE handler
  */
 async function handler(
   req: AuthenticatedRequest,
   res: VercelResponse
 ): Promise<void> {
-  // Only allow GET and PUT
-  if (req.method !== "GET" && req.method !== "PUT") {
+  // Only allow GET, PUT, and DELETE
+  if (req.method !== "GET" && req.method !== "PUT" && req.method !== "DELETE") {
     sendError(
       res,
       ErrorCodes.VALIDATION_ERROR,
-      "Method not allowed. Use GET or PUT.",
+      "Method not allowed. Use GET, PUT, or DELETE.",
       405
     );
     return;
@@ -674,18 +866,32 @@ async function handler(
       await handleGet(req, res, validatedBookId, userId);
     } else if (req.method === "PUT") {
       await handlePut(req, res, validatedBookId, userId);
+    } else if (req.method === "DELETE") {
+      await handleDelete(req, res, validatedBookId, userId);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    const operation = req.method === "GET" ? "fetching" : "updating";
+    const operationMap: Record<string, string> = {
+      GET: "fetching",
+      PUT: "updating",
+      DELETE: "deleting",
+    };
+    const operation = operationMap[req.method ?? ""] ?? "processing";
     logger.error(`Error ${operation} book`, {
       userId,
       error: message,
     });
+
+    const verbMap: Record<string, string> = {
+      GET: "fetch",
+      PUT: "update",
+      DELETE: "delete",
+    };
+    const verb = verbMap[req.method ?? ""] ?? "process";
     sendError(
       res,
       ErrorCodes.INTERNAL_ERROR,
-      `Failed to ${req.method === "GET" ? "fetch" : "update"} book. Please try again.`,
+      `Failed to ${verb} book. Please try again.`,
       500
     );
   }
@@ -711,9 +917,12 @@ export {
   formatBookUpdateResponse,
   buildUpdateData,
   getChangedFields,
+  // DELETE helper functions
+  buildDeleteResponse,
   // Types
   type ChapterResponse,
   type ProgressResponse,
   type BookDetailResponse,
   type BookUpdateResponse,
+  type BookDeleteResponse,
 };
