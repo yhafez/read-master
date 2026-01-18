@@ -40,7 +40,11 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signInPlaceholder": "Clerk authentication will be integrated here.",
-    "signUpPlaceholder": "Clerk authentication will be integrated here."
+    "signUpPlaceholder": "Clerk authentication will be integrated here.",
+    "clerkNotConfigured": "Authentication is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in your environment to enable sign-in.",
+    "signingIn": "Signing in...",
+    "signingUp": "Creating your account...",
+    "checkingAuth": "Checking authentication..."
   },
   "home": {
     "welcome": "Welcome to Read Master",

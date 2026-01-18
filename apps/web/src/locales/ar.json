@@ -40,7 +40,11 @@
     "signIn": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
     "signInPlaceholder": "سيتم دمج مصادقة Clerk هنا.",
-    "signUpPlaceholder": "سيتم دمج مصادقة Clerk هنا."
+    "signUpPlaceholder": "سيتم دمج مصادقة Clerk هنا.",
+    "clerkNotConfigured": "المصادقة غير مُعدّة. قم بتعيين VITE_CLERK_PUBLISHABLE_KEY في بيئتك لتمكين تسجيل الدخول.",
+    "signingIn": "جاري تسجيل الدخول...",
+    "signingUp": "جاري إنشاء حسابك...",
+    "checkingAuth": "جاري التحقق من المصادقة..."
   },
   "home": {
     "welcome": "مرحباً بك في ريد ماستر",

@@ -99,6 +99,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@clerk/clerk-react':
+        specifier: ^5.59.4
+        version: 5.59.4(react-dom@18.3.1)(react@18.3.1)
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@18.3.27)(react@18.3.1)
@@ -1049,7 +1052,7 @@ packages:
       svix:
         optional: true
     dependencies:
-      '@clerk/shared': 3.43.0(react@18.3.1)
+      '@clerk/shared': 3.43.0(react-dom@18.3.1)(react@18.3.1)
       '@clerk/types': 4.101.11(react@18.3.1)
       cookie: 1.0.2
       snakecase-keys: 8.0.1
@@ -1059,7 +1062,20 @@ packages:
       - react-dom
     dev: false
 
-  /@clerk/shared@3.43.0(react@18.3.1):
+  /@clerk/clerk-react@5.59.4(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-CNr9n7uJT4cRx+cc3fzWr4l4x47+3S5j32HPOP5oUGeIF8O0QHHaoIQ8BHc3lnr4zJJpZxAyrLfwYPv3krtYIw==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+      react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+    dependencies:
+      '@clerk/shared': 3.43.0(react-dom@18.3.1)(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+    dev: false
+
+  /@clerk/shared@3.43.0(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-pj8jgV5TX7l0ClHMvDLG7Ensp1BwA63LNvOE2uLwRV4bx3j9s4oGHy5bZlLBoOxdvRPCMpQksHi/O0x1Y+obdw==}
     engines: {node: '>=18.17.0'}
     requiresBuild: true
@@ -1077,6 +1093,7 @@ packages:
       glob-to-regexp: 0.4.1
       js-cookie: 3.0.5
       react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       std-env: 3.10.0
       swr: 2.3.4(react@18.3.1)
     dev: false
@@ -1085,7 +1102,7 @@ packages:
     resolution: {integrity: sha512-6m1FQSLFqb4L+ovMDxNIRSrw6I0ByVX5hs6slcevOaaD5UXNzSANWqVtKaU80AZwcm391lZqVS5fRisHt9tmXA==}
     engines: {node: '>=18.17.0'}
     dependencies:
-      '@clerk/shared': 3.43.0(react@18.3.1)
+      '@clerk/shared': 3.43.0(react-dom@18.3.1)(react@18.3.1)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -3566,7 +3583,7 @@ packages:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.1
+      vite: 6.4.1(tsx@4.21.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3595,7 +3612,7 @@ packages:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
-      vite: 7.3.1
+      vite: 7.3.1(tsx@4.21.0)
     dev: true
 
   /@vitest/pretty-format@3.2.4:
@@ -6391,7 +6408,7 @@ packages:
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 6.4.1
+      vite: 6.4.1(tsx@4.21.0)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6455,56 +6472,6 @@ packages:
       - terser
       - tsx
       - yaml
-    dev: true
-
-  /vite@6.4.1:
-    resolution: {integrity: sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g==}
-    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
-      jiti: '>=1.21.0'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      sass-embedded: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-    dependencies:
-      esbuild: 0.25.12
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.55.1
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      fsevents: 2.3.3
     dev: true
 
   /vite@6.4.1(@types/node@22.19.7):
@@ -6605,56 +6572,6 @@ packages:
       rollup: 4.55.1
       tinyglobby: 0.2.15
       tsx: 4.21.0
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
-
-  /vite@7.3.1:
-    resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^20.19.0 || >=22.12.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      lightningcss: ^1.21.0
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-    dependencies:
-      esbuild: 0.27.2
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.55.1
-      tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
@@ -6809,7 +6726,7 @@ packages:
       tinyglobby: 0.2.15
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 7.3.1
+      vite: 7.3.1(tsx@4.21.0)
       vite-node: 3.2.4
       why-is-node-running: 2.3.0
     transitivePeerDependencies:

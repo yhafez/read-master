@@ -407,7 +407,7 @@
         "Protected routes redirect correctly",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-004",

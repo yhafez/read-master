@@ -2,23 +2,8 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { Navigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import { useAuthState } from "@/auth";
 import { ROUTES } from "./routes";
-
-// Mock auth hook - will be replaced with Clerk's useAuth hook
-// This is a placeholder until Clerk is integrated
-const useAuth = (): {
-  isLoaded: boolean;
-  isSignedIn: boolean;
-  userId: string | null;
-} => {
-  // TODO: Replace with actual Clerk auth hook
-  // For now, return a mock authenticated state for development
-  return {
-    isLoaded: true,
-    isSignedIn: true, // Set to true for development
-    userId: "mock-user-id",
-  };
-};
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -33,7 +18,7 @@ export function ProtectedRoute({
   children,
 }: ProtectedRouteProps): React.ReactElement {
   const { t } = useTranslation();
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn } = useAuthState();
   const location = useLocation();
 
   // Show loading while auth state is being determined

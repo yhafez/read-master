@@ -3396,3 +3396,61 @@ No discoveries added during this sprint (foundational infrastructure work)
   - apps/web/src/pages/* (38 page files + index exports)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4011 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 66
+
+[2026-01-18] frontend-003: Integrate Clerk authentication with sign-in/sign-up UI
+- Installed @clerk/clerk-react v5.59.4
+- Created auth module in apps/web/src/auth/:
+  - ClerkProvider.tsx: Application-specific Clerk wrapper with navigation integration
+  - hooks.ts: Auth hooks including useAuthState and isClerkConfigured helper
+  - index.ts: Module exports
+- Created RootLayout component in apps/web/src/router/:
+  - Wraps all routes with ClerkProvider
+  - Necessary because ClerkProvider needs react-router-dom navigate function
+- Updated Router.tsx:
+  - Added RootLayout as top-level wrapper for all routes
+  - Restructured route hierarchy to support ClerkProvider
+- Updated SignInPage:
+  - Integrated Clerk's SignIn component
+  - Added fallback UI when Clerk is not configured
+  - Configured appearance and redirect URLs
+- Updated SignUpPage:
+  - Integrated Clerk's SignUp component
+  - Added fallback UI when Clerk is not configured
+  - Configured appearance and redirect URLs
+- Updated ProtectedRoute:
+  - Replaced mock useAuth hook with useAuthState from auth module
+  - Now uses Clerk for actual authentication (or dev fallback)
+- Updated tsconfig.json:
+  - Added "vite/client" to types for import.meta.env support
+- Updated .env.example:
+  - Changed NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY to VITE_CLERK_PUBLISHABLE_KEY
+  - Removed redundant URL configuration (handled in code)
+- Added translation keys to en.json:
+  - auth.clerkNotConfigured: Message when Clerk is not set up
+  - auth.signingIn, auth.signingUp, auth.checkingAuth: Loading states
+- Created tests in apps/web/src/auth/hooks.test.ts:
+  - Tests for isClerkConfigured function
+  - Tests environment variable detection
+- Files created:
+  - apps/web/src/auth/ClerkProvider.tsx
+  - apps/web/src/auth/hooks.ts
+  - apps/web/src/auth/hooks.test.ts
+  - apps/web/src/auth/index.ts
+  - apps/web/src/router/RootLayout.tsx
+- Files modified:
+  - apps/web/src/router/Router.tsx
+  - apps/web/src/router/index.ts
+  - apps/web/src/router/ProtectedRoute.tsx
+  - apps/web/src/pages/auth/SignInPage.tsx
+  - apps/web/src/pages/auth/SignUpPage.tsx
+  - apps/web/src/locales/en.json
+  - apps/web/tsconfig.json
+  - .env.example
+- OAuth configuration: Clerk handles Google and Apple OAuth configuration via dashboard
+  - Routes and redirect URLs are configured in ClerkProvider
+  - OAuth providers must be enabled in Clerk dashboard
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4017 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

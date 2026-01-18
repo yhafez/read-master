@@ -1,5 +1,6 @@
 export { AppRouter } from "./Router";
 export { ProtectedRoute } from "./ProtectedRoute";
+export { RootLayout } from "./RootLayout";
 export {
   ROUTES,
   routeHelpers,
