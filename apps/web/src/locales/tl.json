@@ -416,6 +416,31 @@
         "type": "Uri"
       }
     },
+    "notes": {
+      "title": "Panel ng mga Tala",
+      "togglePosition": "Ilipat ang posisyon ng panel",
+      "searchPlaceholder": "Maghanap ng mga tala...",
+      "filter": "I-filter ang mga tala",
+      "sort": "Pag-ayos ng mga tala",
+      "noNote": "Walang talang idinagdag",
+      "noAnnotations": "Wala pang mga anotasyon",
+      "noSearchResults": "Walang talang tumutugma sa iyong paghahanap",
+      "notePlaceholder": "Isulat ang iyong tala...",
+      "showing": "Nagpapakita ng {{count}} sa {{total}}",
+      "withNotes": "{{count}} na may mga tala",
+      "filters": {
+        "all": "Lahat",
+        "notesOnly": "Mga Tala Lamang",
+        "withNotes": "May mga Tala",
+        "recent": "Kamakailan"
+      },
+      "sort": {
+        "created": "Petsa ng Paglikha",
+        "updated": "Petsa ng Pag-update",
+        "position": "Posisyon",
+        "type": "Uri"
+      }
+    },
     "export": {
       "title": "I-export ang mga Anotasyon",
       "format": "Format ng Pag-export",

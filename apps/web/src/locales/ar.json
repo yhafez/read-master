@@ -416,6 +416,31 @@
         "type": "النوع"
       }
     },
+    "notes": {
+      "title": "لوحة الملاحظات",
+      "togglePosition": "تبديل موضع اللوحة",
+      "searchPlaceholder": "البحث في الملاحظات...",
+      "filter": "تصفية الملاحظات",
+      "sort": "ترتيب الملاحظات",
+      "noNote": "لم تتم إضافة ملاحظة",
+      "noAnnotations": "لا توجد تعليقات توضيحية بعد",
+      "noSearchResults": "لا توجد ملاحظات مطابقة لبحثك",
+      "notePlaceholder": "اكتب ملاحظتك...",
+      "showing": "عرض {{count}} من {{total}}",
+      "withNotes": "{{count}} مع ملاحظات",
+      "filters": {
+        "all": "الكل",
+        "notesOnly": "الملاحظات فقط",
+        "withNotes": "مع ملاحظات",
+        "recent": "الأخيرة"
+      },
+      "sort": {
+        "created": "تاريخ الإنشاء",
+        "updated": "تاريخ التحديث",
+        "position": "الموضع",
+        "type": "النوع"
+      }
+    },
     "export": {
       "title": "تصدير التعليقات التوضيحية",
       "format": "صيغة التصدير",

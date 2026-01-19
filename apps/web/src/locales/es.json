@@ -416,6 +416,31 @@
         "type": "Tipo"
       }
     },
+    "notes": {
+      "title": "Panel de Notas",
+      "togglePosition": "Cambiar posición del panel",
+      "searchPlaceholder": "Buscar notas...",
+      "filter": "Filtrar notas",
+      "sort": "Ordenar notas",
+      "noNote": "Sin nota añadida",
+      "noAnnotations": "Aún no hay anotaciones",
+      "noSearchResults": "No hay notas que coincidan con tu búsqueda",
+      "notePlaceholder": "Escribe tu nota...",
+      "showing": "Mostrando {{count}} de {{total}}",
+      "withNotes": "{{count}} con notas",
+      "filters": {
+        "all": "Todas",
+        "notesOnly": "Solo Notas",
+        "withNotes": "Con Notas",
+        "recent": "Recientes"
+      },
+      "sort": {
+        "created": "Fecha de creación",
+        "updated": "Fecha de actualización",
+        "position": "Posición",
+        "type": "Tipo"
+      }
+    },
     "export": {
       "title": "Exportar anotaciones",
       "format": "Formato de exportación",

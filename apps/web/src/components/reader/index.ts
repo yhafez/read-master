@@ -460,3 +460,39 @@ export {
 
 // TTS Controls Component
 export { TTSControls } from "./TTSControls";
+
+// Notes Panel Types and Utilities
+export type {
+  PanelPosition,
+  PanelConstraints,
+  NotesPanelState,
+  NoteFilterPreset,
+  NotesPanelSettings,
+} from "./notesPanelUtils";
+export {
+  DEFAULT_PANEL_CONSTRAINTS,
+  NOTES_PANEL_STORAGE_KEY,
+  getDefaultPanelSettings,
+  clampPanelSize,
+  clampWidth,
+  clampHeight,
+  presetToFilters,
+  getFilteredAnnotations,
+  getAnnotationEditText,
+  getAnnotationContext,
+  isAnnotationEditable,
+  getAnnotationListExcerpt,
+  calculatePanelLayout,
+  getFilterPresetLabelKey,
+  getSortFieldLabelKey,
+  getFilterPresets,
+  getSortFields,
+  validatePanelSettings,
+  savePanelSettings,
+  loadPanelSettings,
+  countByPreset,
+} from "./notesPanelUtils";
+
+// Notes Panel Component
+export { NotesPanel } from "./NotesPanel";
+export type { NotesPanelProps } from "./NotesPanel";

@@ -416,6 +416,31 @@
         "type": "種類"
       }
     },
+    "notes": {
+      "title": "メモパネル",
+      "togglePosition": "パネル位置を切り替え",
+      "searchPlaceholder": "メモを検索...",
+      "filter": "メモをフィルター",
+      "sort": "メモを並べ替え",
+      "noNote": "メモが追加されていません",
+      "noAnnotations": "まだ注釈がありません",
+      "noSearchResults": "検索に一致するメモがありません",
+      "notePlaceholder": "メモを入力...",
+      "showing": "{{total}}件中{{count}}件を表示",
+      "withNotes": "{{count}}件にメモあり",
+      "filters": {
+        "all": "すべて",
+        "notesOnly": "メモのみ",
+        "withNotes": "メモ付き",
+        "recent": "最近"
+      },
+      "sort": {
+        "created": "作成日",
+        "updated": "更新日",
+        "position": "位置",
+        "type": "種類"
+      }
+    },
     "export": {
       "title": "注釈をエクスポート",
       "format": "エクスポート形式",

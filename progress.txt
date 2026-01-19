@@ -11179,3 +11179,71 @@ Added forum.post translations to all 6 locales (en, ar, es, ja, zh, tl):
 - Mock data provided for development/testing
 
 ---
+
+## Iteration 52
+
+[2026-01-19] frontend-020: Implemented split-screen notes panel for reader
+
+### Summary
+Created a split-screen notes panel component for the reader interface that allows users to view, search, filter, and edit annotations alongside their reading content. The panel is resizable and can be positioned on the right or bottom of the reader.
+
+### Features Implemented
+- Notes panel displaying all annotations with search functionality
+- Filter presets: All, Notes only, With notes, Recent (24h)
+- Sort options: Created date, Updated date, Position, Type
+- In-panel note editing with auto-save
+- Resizable panel with drag handle
+- Position toggle (right/bottom)
+- Context excerpt display for each annotation
+- Annotation type chips (highlight, note, bookmark)
+- Full internationalization support (6 languages)
+
+### Files Created/Modified
+
+#### apps/web/src/components/reader/notesPanelUtils.ts (CREATED)
+- Core utility functions for notes panel (~340 lines)
+- Types: PanelPosition, PanelConstraints, NotesPanelState, NoteFilterPreset, NotesPanelSettings
+- Panel utilities: getDefaultPanelSettings, clampPanelSize, clampWidth, clampHeight, validatePanelSettings
+- Filter utilities: presetToFilters, getFilteredAnnotations, getFilterPresets, getSortFields
+- Annotation utilities: getAnnotationEditText, getAnnotationContext, isAnnotationEditable, getAnnotationListExcerpt
+- Layout utilities: calculatePanelLayout
+- Storage utilities: savePanelSettings, loadPanelSettings
+- Label utilities: getFilterPresetLabelKey, getSortFieldLabelKey, countByPreset
+
+#### apps/web/src/components/reader/NotesPanel.tsx (CREATED)
+- Main split-screen notes panel component (~450 lines)
+- Sub-component: NoteListItem for individual annotation display
+- Features: Search bar, filter menu, sort menu, position toggle
+- Resizable with mouse drag events
+- Settings persistence via localStorage
+
+#### apps/web/src/components/reader/notesPanelUtils.test.ts (CREATED)
+- Comprehensive tests for all utility functions (53 tests)
+- Test categories: Panel Settings, Filtering, Sorting, Text Helpers, Layout, Persistence
+
+#### apps/web/src/components/reader/index.ts (MODIFIED)
+- Added exports for NotesPanelState, NoteFilterPreset, NotesPanelSettings types
+- Added exports for notesPanelUtils functions
+- Added export for NotesPanel component
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added reader.notes translations to all 6 locales (en, ar, es, ja, zh, tl):
+- title, togglePosition, searchPlaceholder, filter, sort
+- noNote, noAnnotations, noSearchResults, notePlaceholder
+- showing, withNotes, filters (all, notesOnly, withNotes, recent)
+- sort (created, updated, position, type)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, 166 warnings - pre-existing non-null assertions)
+- pnpm vitest run: ✅ 3493 tests pass (53 new tests)
+
+### Technical Notes
+- Panel size constrained by DEFAULT_PANEL_CONSTRAINTS (min/max width/height)
+- Filter presets use type and note presence for filtering
+- Recent filter uses 24-hour threshold
+- Sort handles multiple fields with ascending/descending direction
+- Settings persist to localStorage under NOTES_PANEL_STORAGE_KEY
+- Uses MUI ListItemButton for selected state support
+
+---

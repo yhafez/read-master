@@ -416,6 +416,31 @@
         "type": "类型"
       }
     },
+    "notes": {
+      "title": "笔记面板",
+      "togglePosition": "切换面板位置",
+      "searchPlaceholder": "搜索笔记...",
+      "filter": "筛选笔记",
+      "sort": "排序笔记",
+      "noNote": "未添加笔记",
+      "noAnnotations": "暂无注释",
+      "noSearchResults": "没有匹配的笔记",
+      "notePlaceholder": "写下你的笔记...",
+      "showing": "显示 {{count}} / {{total}}",
+      "withNotes": "{{count}} 条有笔记",
+      "filters": {
+        "all": "全部",
+        "notesOnly": "仅笔记",
+        "withNotes": "有笔记",
+        "recent": "最近"
+      },
+      "sort": {
+        "created": "创建日期",
+        "updated": "更新日期",
+        "position": "位置",
+        "type": "类型"
+      }
+    },
     "export": {
       "title": "导出注释",
       "format": "导出格式",
