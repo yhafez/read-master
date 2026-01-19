@@ -5869,3 +5869,106 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Permission system (owner can delete, owner/admin can update)
   - ✅ Tests pass (170 new tests, 3857 total tests pass)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3857 tests pass)
+
+
+## Iteration 99
+
+[2026-01-18] api-groups-002: Implement group membership endpoints
+- Created POST /api/groups/:id/join endpoint (apps/api/api/groups/[id]/join.ts):
+  - Types exported:
+    - JoinGroupInput: Input type for join request (optional inviteCode)
+    - JoinUserInfo: User info type for responses
+    - JoinGroupResponse: Response type with success, message, and membership details
+    - MembershipCheckResult: Type for membership existence check
+  - Constants:
+    - INVITE_CODE_LENGTH: 8 characters for invite codes
+  - Zod validation schema:
+    - joinGroupSchema: Validates optional 8-character uppercase alphanumeric invite code
+  - Helper functions:
+    - validateGroupId: Validate and trim group ID
+    - formatDate: Format Date as ISO string
+    - isValidInviteCode: Validate invite code format (8 chars, uppercase alphanumeric)
+    - isInviteCodeMatch: Case-insensitive invite code comparison
+    - hasCapacity: Check if group has space for more members
+    - buildMembershipCacheKey: Build cache key for user-group membership
+    - buildGroupCacheKey: Build cache key for group data
+  - Database operations:
+    - getGroupForJoin: Fetch group with join-relevant fields
+    - checkExistingMembership: Check if user is already a member
+    - createMembership: Create membership and increment membersCount in transaction
+  - API handler:
+    - POST endpoint with authentication
+    - Validates group ID and request body
+    - Checks if user already a member (returns 400)
+    - Checks group capacity (returns 400 if full)
+    - For private groups: requires valid invite code (returns 403 if missing/invalid)
+    - Creates membership with MEMBER role
+    - Increments group membersCount
+    - Invalidates relevant caches
+    - Returns JoinGroupResponse with membership details
+
+- Created DELETE /api/groups/:id/leave endpoint (apps/api/api/groups/[id]/leave.ts):
+  - Types exported:
+    - LeaveGroupResponse: Response type with success and message
+    - MembershipInfo: Membership details for leave operation
+  - Helper functions:
+    - validateGroupId: Validate and trim group ID
+    - isOwner: Check if role is OWNER
+    - buildGroupCacheKey: Build cache key for group data
+    - buildMembershipCacheKey: Build cache key for user-group membership
+  - Database operations:
+    - getMembership: Fetch user's membership with group details
+    - removeMembership: Delete membership and decrement membersCount in transaction
+  - API handler:
+    - DELETE endpoint with authentication
+    - Validates group ID
+    - Checks if user is a member (returns 404 if not)
+    - Prevents owner from leaving (returns 403)
+    - Deletes membership record
+    - Decrements group membersCount
+    - Invalidates relevant caches
+    - Returns LeaveGroupResponse with success message
+
+- Created comprehensive test suites:
+  - apps/api/api/groups/[id]/join.test.ts (82 tests):
+    - Constants tests (1 test)
+    - Type Export tests (8 tests)
+    - joinGroupSchema tests (10 tests)
+    - validateGroupId tests (10 tests)
+    - formatDate tests (3 tests)
+    - isValidInviteCode tests (11 tests)
+    - isInviteCodeMatch tests (8 tests)
+    - hasCapacity tests (7 tests)
+    - buildMembershipCacheKey tests (4 tests)
+    - buildGroupCacheKey tests (3 tests)
+    - Edge Cases tests (6 tests)
+    - Response Structure tests (2 tests)
+    - Integration Scenarios tests (5 tests)
+    - MembershipCheckResult tests (4 tests)
+  - apps/api/api/groups/[id]/leave.test.ts (60 tests):
+    - Type Export tests (3 tests)
+    - validateGroupId tests (12 tests)
+    - isOwner tests (8 tests)
+    - buildGroupCacheKey tests (5 tests)
+    - buildMembershipCacheKey tests (5 tests)
+    - Edge Cases tests (5 tests)
+    - Response Structure tests (2 tests)
+    - Integration Scenarios tests (4 tests)
+    - Role Validation tests (3 tests)
+    - Cache Key Patterns tests (4 tests)
+    - Leave Scenarios tests (5 tests)
+    - Validation ID Edge Cases tests (4 tests)
+
+- Files created:
+  - apps/api/api/groups/[id]/join.ts
+  - apps/api/api/groups/[id]/join.test.ts
+  - apps/api/api/groups/[id]/leave.ts
+  - apps/api/api/groups/[id]/leave.test.ts
+
+- Acceptance criteria verification:
+  - ✅ Joining works (POST /api/groups/:id/join)
+  - ✅ Leaving works (DELETE /api/groups/:id/leave)
+  - ✅ Owner cannot leave (returns 403 error)
+  - ✅ Tests pass (142 new tests, 6667 total tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6667 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)

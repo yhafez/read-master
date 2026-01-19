@@ -1229,7 +1229,7 @@
         "Owner cannot leave",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-groups-003",
