@@ -30,8 +30,10 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 
 import { ROUTES } from "@/router/routes";
 import { LanguageSwitcher } from "@/components/common";
+import { MobileBottomNav } from "./MobileBottomNav";
 
 const DRAWER_WIDTH = 240;
+const MOBILE_BOTTOM_NAV_HEIGHT = 64;
 
 type NavItem = {
   label: string;
@@ -217,13 +219,17 @@ export function MainLayout(): React.ReactElement {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 2, sm: 3 }, // Less padding on mobile
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
           mt: "64px", // AppBar height
+          mb: { xs: `${MOBILE_BOTTOM_NAV_HEIGHT}px`, md: 0 }, // Space for bottom nav on mobile
         }}
       >
         <Outlet />
       </Box>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav />
     </Box>
   );
 }

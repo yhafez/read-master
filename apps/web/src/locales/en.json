@@ -109,7 +109,8 @@
     "groups": "Groups",
     "curriculums": "Curriculums",
     "leaderboard": "Leaderboard",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "more": "More"
   },
   "auth": {
     "signIn": "Sign In",

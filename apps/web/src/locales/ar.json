@@ -109,7 +109,8 @@
     "groups": "المجموعات",
     "curriculums": "المناهج",
     "leaderboard": "لوحة المتصدرين",
-    "openMenu": "فتح القائمة"
+    "openMenu": "فتح القائمة",
+    "more": "More"
   },
   "auth": {
     "signIn": "تسجيل الدخول",
