@@ -6742,3 +6742,104 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7655 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 14 - Ralph Wiggum
+
+### Task Completed
+- **api-curriculum-004**: Implement curriculum follow/progress endpoints
+
+### Implementation Details
+
+- Created POST/DELETE /api/curriculums/:id/follow endpoint (apps/api/api/curriculums/[id]/follow.ts):
+  - POST: Follow a curriculum
+    - Creates CurriculumFollow record with initial progress
+    - Increments followersCount on curriculum
+    - Validates user can follow (not owner, not private, not deleted)
+    - Initializes progress tracking (currentItemIndex = 0, completedItems = 0)
+    - Returns progress info with response
+  - DELETE: Unfollow curriculum
+    - Removes CurriculumFollow record
+    - Decrements followersCount (ensuring non-negative)
+    - Deletes all progress data
+  - Access control: Cannot follow own curriculum, cannot follow private curriculums
+  - Cache invalidation on mutations
+
+- Created GET/PUT /api/curriculums/:id/progress endpoint (apps/api/api/curriculums/[id]/progress.ts):
+  - GET: Fetch user's progress for curriculum
+    - Returns currentItemIndex, completedItems, totalItems
+    - Calculates percentComplete
+    - Includes startedAt, lastProgressAt, completedAt timestamps
+    - Returns isComplete flag
+    - Requires user to be following the curriculum
+  - PUT: Update progress through curriculum
+    - Validates with Zod schema
+    - Updates currentItemIndex and/or completedItems
+    - Validates indices against curriculum totalItems
+    - Automatically marks completedAt when all items completed
+    - Un-marks completedAt if user reduces completedItems
+    - Updates lastProgressAt timestamp
+  - Error handling for curriculum not found, not following, etc.
+
+- Types exported from follow.ts:
+  - CurriculumFollowResponse, CurriculumProgressInfo
+  - CurriculumBasicInfo, FollowExistsResult
+
+- Types exported from progress.ts:
+  - CurriculumProgressResponse, UpdateProgressInput
+  - FollowWithCurriculum
+
+- Helper functions exported from follow.ts:
+  - validateCurriculumId, formatDate
+  - calculatePercentComplete, canFollowCurriculum
+  - buildCurriculumCacheKey, buildBrowseCachePattern
+  - buildProgressInfo, invalidateCurriculumCaches
+
+- Helper functions exported from progress.ts:
+  - validateCurriculumId, formatDate, formatOptionalDate
+  - calculatePercentComplete, isComplete
+  - validateItemIndex, validateCompletedItems
+  - buildProgressResponse, buildCurriculumCacheKey
+
+- Comprehensive tests:
+  - apps/api/api/curriculums/[id]/follow.test.ts (40 tests):
+    - Type export tests (5 tests)
+    - validateCurriculumId tests (5 tests)
+    - formatDate tests (2 tests)
+    - calculatePercentComplete tests (7 tests)
+    - canFollowCurriculum tests (5 tests)
+    - buildCurriculumCacheKey tests (2 tests)
+    - buildBrowseCachePattern tests (1 test)
+    - buildProgressInfo tests (4 tests)
+    - Edge cases tests (5 tests)
+    - Integration-style tests (4 tests)
+  - apps/api/api/curriculums/[id]/progress.test.ts (66 tests):
+    - Constants tests (4 tests)
+    - Type export tests (3 tests)
+    - updateProgressSchema tests (12 tests)
+    - validateCurriculumId tests (4 tests)
+    - formatDate tests (2 tests)
+    - formatOptionalDate tests (2 tests)
+    - calculatePercentComplete tests (7 tests)
+    - isComplete tests (6 tests)
+    - validateItemIndex tests (6 tests)
+    - validateCompletedItems tests (5 tests)
+    - buildProgressResponse tests (4 tests)
+    - buildCurriculumCacheKey tests (2 tests)
+    - Edge cases tests (5 tests)
+    - Integration-style tests (4 tests)
+
+- Files created:
+  - apps/api/api/curriculums/[id]/follow.ts
+  - apps/api/api/curriculums/[id]/follow.test.ts
+  - apps/api/api/curriculums/[id]/progress.ts
+  - apps/api/api/curriculums/[id]/progress.test.ts
+
+### Acceptance Criteria Verification
+- ✅ Following works (POST creates follow with progress init, DELETE removes follow)
+- ✅ Progress tracking works (GET returns progress, PUT updates currentItemIndex and completedItems)
+- ✅ Tests pass (106 new tests, 7761 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7761 tests pass (pre-existing i18n test failure unrelated to this change)
