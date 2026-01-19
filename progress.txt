@@ -5787,3 +5787,85 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (98 tests pass)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6355 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+
+## Iteration 98
+
+[2026-01-18] api-groups-001: Implement reading groups CRUD endpoints
+- Created GET/POST /api/groups endpoint (apps/api/api/groups/index.ts):
+  - Types exported:
+    - GroupListQueryParams: Query params (page, limit, search, filter, sort)
+    - GroupSummary: Group summary with owner info and member count
+    - GroupListResponse: Paginated list with groups array and pagination
+    - CreateGroupInput: Input for creating groups (name, description, isPublic, etc.)
+  - Constants:
+    - DEFAULT_PAGE, DEFAULT_LIMIT, MAX_LIMIT, MIN_LIMIT
+    - MAX_NAME_LENGTH: 200, MAX_DESCRIPTION_LENGTH: 2000
+    - GROUP_CACHE_TTL: Cache TTL for groups data
+    - GroupSortOptions: RECENT, OLDEST, NAME, MEMBERS
+    - GroupFilterOptions: ALL, MY_GROUPS, PUBLIC
+  - Helper functions:
+    - parsePage, parseLimit: Parse/validate pagination params
+    - parseSearch: Parse and sanitize search query
+    - parseSort, parseFilter: Parse sort/filter options
+    - parseListGroupsQuery: Parse all query params
+    - buildGroupsListCacheKey: Build cache key for list endpoint
+    - buildGroupsWhereClause: Build Prisma WHERE clause for filtering
+    - mapToGroupSummary: Map database group to API response
+    - generateInviteCode: Generate 8-char alphanumeric invite code
+  - API handlers:
+    - GET: List groups with search, filter, sort, pagination
+    - POST: Create group (requires Pro/Scholar tier)
+    - Profanity filtering on name/description
+    - Cache invalidation on create
+- Created GET/PUT/DELETE /api/groups/:id endpoint (apps/api/api/groups/[id].ts):
+  - Types exported:
+    - GroupUserInfo, GroupMemberInfo, GroupBookInfo
+    - GroupDetailResponse: Full group detail with owner, members, book
+    - UpdateGroupInput: Partial update input
+  - Constants:
+    - MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH
+    - ADMIN_ROLES: ["OWNER", "ADMIN"]
+  - Helper functions:
+    - validateGroupId: Validate group ID format
+    - formatDate: Format Date to ISO string
+    - mapToGroupUserInfo, mapToGroupBookInfo: Map database to API types
+    - hasAdminPermission: Check if role has admin access
+    - isGroupOwner: Check if role is owner
+    - buildGroupCacheKey: Build cache key for single group
+    - canAccessGroup: Check access (public, owner, member)
+    - generateInviteCode: Generate invite code
+  - API handlers:
+    - GET: Get group details with access control
+    - PUT: Update group (owner/admin only)
+    - DELETE: Soft delete group (owner only)
+    - Profanity filtering on updates
+    - Cache invalidation on update/delete
+- Created comprehensive test suites:
+  - apps/api/api/groups/index.test.ts (90 tests):
+    - Constants, type exports, parsePage, parseLimit, parseSearch
+    - parseSort, parseFilter, parseListGroupsQuery
+    - buildGroupsListCacheKey, buildGroupsWhereClause
+    - mapToGroupSummary, generateInviteCode
+    - Response structure tests, integration scenarios
+    - Edge cases, profanity filter tests
+  - apps/api/api/groups/[id].test.ts (80 tests):
+    - Constants, type exports, updateGroupSchema
+    - validateGroupId, formatDate, hasAdminPermission, isGroupOwner
+    - mapToGroupUserInfo, mapToGroupBookInfo
+    - buildGroupCacheKey, canAccessGroup, generateInviteCode
+    - Response structure tests, integration scenarios
+    - Profanity filter tests
+- Files created:
+  - apps/api/api/groups/index.ts
+  - apps/api/api/groups/index.test.ts
+  - apps/api/api/groups/[id].ts
+  - apps/api/api/groups/[id].test.ts
+- Acceptance criteria verification:
+  - ✅ CRUD operations work (GET list, GET single, POST, PUT, DELETE)
+  - ✅ Tier-locked creation (Pro/Scholar required via getTierLimits)
+  - ✅ Profanity filtering (name and description filtered)
+  - ✅ Access control (public groups visible, private require membership)
+  - ✅ Permission system (owner can delete, owner/admin can update)
+  - ✅ Tests pass (170 new tests, 3857 total tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (3857 tests pass)
