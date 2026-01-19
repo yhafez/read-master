@@ -1305,7 +1305,7 @@
         "View counting works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-forum-003",

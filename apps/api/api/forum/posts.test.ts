@@ -11,6 +11,7 @@ import {
   POSTS_CACHE_TTL,
   PostSortOptions,
   VALID_SORT_OPTIONS,
+  TIER_ORDER,
   formatDate,
   formatDateRequired,
   truncateContent,
@@ -30,14 +31,19 @@ import {
   mapToPostCategoryInfo,
   mapToPostBookInfo,
   mapToPostSummary,
+  mapToPostDetail,
   calculatePagination,
+  meetsMinimumTier,
   type PostListQueryParams,
   type PostUserInfo,
   type PostCategoryInfo,
   type PostBookInfo,
   type ForumPostSummary,
+  type ForumPostDetail,
   type PaginationInfo,
   type ForumPostsResponse,
+  type CreatePostInput,
+  type CreatePostResponse,
 } from "./posts.js";
 
 // ============================================================================
@@ -1279,5 +1285,384 @@ describe("Response Structure", () => {
     expect(response.posts).toHaveLength(2);
     expect(response.posts[0]?.isPinned).toBe(true);
     expect(response.posts[1]?.isFeatured).toBe(true);
+  });
+});
+
+// ============================================================================
+// TIER_ORDER Tests
+// ============================================================================
+
+describe("TIER_ORDER", () => {
+  it("should have correct tier ordering", () => {
+    expect(TIER_ORDER.FREE).toBe(0);
+    expect(TIER_ORDER.PRO).toBe(1);
+    expect(TIER_ORDER.SCHOLAR).toBe(2);
+  });
+
+  it("should order tiers correctly", () => {
+    expect(TIER_ORDER.FREE).toBeLessThan(TIER_ORDER.PRO);
+    expect(TIER_ORDER.PRO).toBeLessThan(TIER_ORDER.SCHOLAR);
+  });
+});
+
+// ============================================================================
+// meetsMinimumTier Tests
+// ============================================================================
+
+describe("meetsMinimumTier", () => {
+  it("should return true when user tier equals minimum tier", () => {
+    expect(meetsMinimumTier("FREE", "FREE")).toBe(true);
+    expect(meetsMinimumTier("PRO", "PRO")).toBe(true);
+    expect(meetsMinimumTier("SCHOLAR", "SCHOLAR")).toBe(true);
+  });
+
+  it("should return true when user tier exceeds minimum tier", () => {
+    expect(meetsMinimumTier("PRO", "FREE")).toBe(true);
+    expect(meetsMinimumTier("SCHOLAR", "FREE")).toBe(true);
+    expect(meetsMinimumTier("SCHOLAR", "PRO")).toBe(true);
+  });
+
+  it("should return false when user tier is below minimum tier", () => {
+    expect(meetsMinimumTier("FREE", "PRO")).toBe(false);
+    expect(meetsMinimumTier("FREE", "SCHOLAR")).toBe(false);
+    expect(meetsMinimumTier("PRO", "SCHOLAR")).toBe(false);
+  });
+
+  it("should handle unknown tiers gracefully", () => {
+    expect(meetsMinimumTier("UNKNOWN", "FREE")).toBe(true);
+    expect(meetsMinimumTier("FREE", "UNKNOWN")).toBe(true);
+    expect(meetsMinimumTier("UNKNOWN", "PRO")).toBe(false);
+  });
+});
+
+// ============================================================================
+// mapToPostDetail Tests
+// ============================================================================
+
+describe("mapToPostDetail", () => {
+  it("should map a full post to detail response", () => {
+    const now = new Date("2026-01-18T12:00:00.000Z");
+    const post = {
+      id: "post-123",
+      title: "Test Post",
+      content: "This is a test post with full content.",
+      categoryId: "cat-1",
+      category: {
+        id: "cat-1",
+        slug: "general",
+        name: "General Discussion",
+        color: "#3B82F6",
+      },
+      userId: "user-1",
+      user: {
+        id: "user-1",
+        username: "testuser",
+        displayName: "Test User",
+        avatarUrl: "https://example.com/avatar.jpg",
+      },
+      bookId: null,
+      book: null,
+      isPinned: false,
+      isLocked: false,
+      isFeatured: false,
+      isAnswered: false,
+      upvotes: 5,
+      downvotes: 1,
+      voteScore: 4,
+      viewCount: 100,
+      repliesCount: 3,
+      lastReplyAt: now,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const result = mapToPostDetail(post);
+
+    expect(result.id).toBe("post-123");
+    expect(result.title).toBe("Test Post");
+    expect(result.content).toBe("This is a test post with full content.");
+    expect(result.category.slug).toBe("general");
+    expect(result.user.username).toBe("testuser");
+    expect(result.upvotes).toBe(5);
+    expect(result.voteScore).toBe(4);
+    expect(result.createdAt).toBe("2026-01-18T12:00:00.000Z");
+  });
+
+  it("should map post with book reference", () => {
+    const now = new Date("2026-01-18T12:00:00.000Z");
+    const post = {
+      id: "post-456",
+      title: "Book Discussion",
+      content: "Discussing a specific book.",
+      categoryId: "cat-1",
+      category: {
+        id: "cat-1",
+        slug: "books",
+        name: "Book Discussions",
+        color: "#22C55E",
+      },
+      userId: "user-1",
+      user: {
+        id: "user-1",
+        username: "reader",
+        displayName: null,
+        avatarUrl: null,
+      },
+      bookId: "book-123",
+      book: {
+        id: "book-123",
+        title: "Great Expectations",
+        author: "Charles Dickens",
+        coverImage: "https://example.com/cover.jpg",
+      },
+      isPinned: true,
+      isLocked: false,
+      isFeatured: true,
+      isAnswered: true,
+      upvotes: 10,
+      downvotes: 0,
+      voteScore: 10,
+      viewCount: 250,
+      repliesCount: 8,
+      lastReplyAt: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const result = mapToPostDetail(post);
+
+    expect(result.bookId).toBe("book-123");
+    expect(result.book).not.toBeNull();
+    expect(result.book?.title).toBe("Great Expectations");
+    expect(result.book?.author).toBe("Charles Dickens");
+    expect(result.isPinned).toBe(true);
+    expect(result.isFeatured).toBe(true);
+    expect(result.isAnswered).toBe(true);
+  });
+
+  it("should handle null lastReplyAt", () => {
+    const now = new Date("2026-01-18T12:00:00.000Z");
+    const post = {
+      id: "post-789",
+      title: "New Post",
+      content: "A brand new post.",
+      categoryId: "cat-1",
+      category: {
+        id: "cat-1",
+        slug: "general",
+        name: "General",
+        color: null,
+      },
+      userId: "user-1",
+      user: {
+        id: "user-1",
+        username: null,
+        displayName: null,
+        avatarUrl: null,
+      },
+      bookId: null,
+      book: null,
+      isPinned: false,
+      isLocked: false,
+      isFeatured: false,
+      isAnswered: false,
+      upvotes: 0,
+      downvotes: 0,
+      voteScore: 0,
+      viewCount: 1,
+      repliesCount: 0,
+      lastReplyAt: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const result = mapToPostDetail(post);
+
+    expect(result.lastReplyAt).toBeNull();
+    expect(result.repliesCount).toBe(0);
+  });
+});
+
+// ============================================================================
+// CreatePostInput Type Tests
+// ============================================================================
+
+describe("CreatePostInput Type", () => {
+  it("should accept valid create post input", () => {
+    const input: CreatePostInput = {
+      categoryId: "cat123",
+      title: "My Test Post",
+      content: "This is the content of my test post.",
+      bookId: null,
+    };
+
+    expect(input.categoryId).toBe("cat123");
+    expect(input.title).toBe("My Test Post");
+    expect(input.content).toBe("This is the content of my test post.");
+    expect(input.bookId).toBeNull();
+  });
+
+  it("should accept create post input with book reference", () => {
+    const input: CreatePostInput = {
+      categoryId: "cat456",
+      title: "Book Discussion Post",
+      content: "Let's discuss this book...",
+      bookId: "book789",
+    };
+
+    expect(input.bookId).toBe("book789");
+  });
+});
+
+// ============================================================================
+// CreatePostResponse Type Tests
+// ============================================================================
+
+describe("CreatePostResponse Type", () => {
+  it("should have correct response structure", () => {
+    const response: CreatePostResponse = {
+      post: {
+        id: "post-new",
+        title: "New Post",
+        content: "New post content here.",
+        categoryId: "cat-1",
+        category: {
+          id: "cat-1",
+          slug: "general",
+          name: "General",
+          color: "#3B82F6",
+        },
+        userId: "user-1",
+        user: {
+          id: "user-1",
+          username: "poster",
+          displayName: "Post Creator",
+          avatarUrl: null,
+        },
+        bookId: null,
+        book: null,
+        isPinned: false,
+        isLocked: false,
+        isFeatured: false,
+        isAnswered: false,
+        upvotes: 0,
+        downvotes: 0,
+        voteScore: 0,
+        viewCount: 0,
+        repliesCount: 0,
+        lastReplyAt: null,
+        createdAt: "2026-01-18T12:00:00.000Z",
+        updatedAt: "2026-01-18T12:00:00.000Z",
+      },
+    };
+
+    expect(response.post).toBeDefined();
+    expect(response.post.id).toBe("post-new");
+    expect(response.post.upvotes).toBe(0);
+    expect(response.post.viewCount).toBe(0);
+  });
+});
+
+// ============================================================================
+// ForumPostDetail Type Tests
+// ============================================================================
+
+describe("ForumPostDetail Type", () => {
+  it("should have all required fields", () => {
+    const detail: ForumPostDetail = {
+      id: "detail-1",
+      title: "Detailed Post",
+      content: "Full content of the post goes here...",
+      categoryId: "cat-1",
+      category: {
+        id: "cat-1",
+        slug: "test",
+        name: "Test Category",
+        color: "#000000",
+      },
+      userId: "user-1",
+      user: {
+        id: "user-1",
+        username: "tester",
+        displayName: "Test User",
+        avatarUrl: "https://example.com/avatar.png",
+      },
+      bookId: "book-1",
+      book: {
+        id: "book-1",
+        title: "Test Book",
+        author: "Test Author",
+        coverImage: null,
+      },
+      isPinned: true,
+      isLocked: false,
+      isFeatured: true,
+      isAnswered: false,
+      upvotes: 15,
+      downvotes: 2,
+      voteScore: 13,
+      viewCount: 500,
+      repliesCount: 25,
+      lastReplyAt: "2026-01-18T14:00:00.000Z",
+      createdAt: "2026-01-17T10:00:00.000Z",
+      updatedAt: "2026-01-18T14:00:00.000Z",
+    };
+
+    // Verify all fields are present and have correct types
+    expect(typeof detail.id).toBe("string");
+    expect(typeof detail.title).toBe("string");
+    expect(typeof detail.content).toBe("string");
+    expect(typeof detail.categoryId).toBe("string");
+    expect(typeof detail.category).toBe("object");
+    expect(typeof detail.userId).toBe("string");
+    expect(typeof detail.user).toBe("object");
+    expect(typeof detail.isPinned).toBe("boolean");
+    expect(typeof detail.isLocked).toBe("boolean");
+    expect(typeof detail.isFeatured).toBe("boolean");
+    expect(typeof detail.isAnswered).toBe("boolean");
+    expect(typeof detail.upvotes).toBe("number");
+    expect(typeof detail.downvotes).toBe("number");
+    expect(typeof detail.voteScore).toBe("number");
+    expect(typeof detail.viewCount).toBe("number");
+    expect(typeof detail.repliesCount).toBe("number");
+  });
+
+  it("should allow null book and bookId", () => {
+    const detail: ForumPostDetail = {
+      id: "detail-2",
+      title: "Post Without Book",
+      content: "No book associated.",
+      categoryId: "cat-1",
+      category: {
+        id: "cat-1",
+        slug: "general",
+        name: "General",
+        color: null,
+      },
+      userId: "user-1",
+      user: {
+        id: "user-1",
+        username: null,
+        displayName: null,
+        avatarUrl: null,
+      },
+      bookId: null,
+      book: null,
+      isPinned: false,
+      isLocked: false,
+      isFeatured: false,
+      isAnswered: false,
+      upvotes: 0,
+      downvotes: 0,
+      voteScore: 0,
+      viewCount: 1,
+      repliesCount: 0,
+      lastReplyAt: null,
+      createdAt: "2026-01-18T12:00:00.000Z",
+      updatedAt: "2026-01-18T12:00:00.000Z",
+    };
+
+    expect(detail.bookId).toBeNull();
+    expect(detail.book).toBeNull();
   });
 });
