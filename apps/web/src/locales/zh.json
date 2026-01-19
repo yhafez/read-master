@@ -225,9 +225,17 @@
     },
     "sort": {
       "dateAdded": "添加日期",
+      "dateAddedDesc": "按书籍添加时间排序",
+      "lastRead": "最近阅读",
+      "lastReadDesc": "按最后阅读时间排序",
       "title": "标题",
+      "titleDesc": "按标题字母顺序排序",
       "author": "作者",
+      "authorDesc": "按作者姓名字母顺序排序",
       "progress": "进度",
+      "progressDesc": "按阅读进度百分比排序",
+      "rating": "评分",
+      "ratingDesc": "按您的评分排序",
       "ascending": "升序",
       "descending": "降序",
       "toggleOrder": "切换排序"

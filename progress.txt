@@ -9402,3 +9402,101 @@ Added flashcards.stats translations with:
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (only pre-existing warnings)
 - pnpm vitest run: ✅ 2433/2433 tests pass
+
+
+---
+
+## Iteration 37 - frontend-046: Library sort options
+
+### Implementation Summary
+
+Implemented comprehensive library sort options with 6 sort fields (title, author, dateAdded, lastRead, progress, rating), ascending/descending order toggle, localStorage persistence, and extensive tests.
+
+### Files Created
+
+#### apps/web/src/components/library/sortTypes.ts
+Complete sort types and utilities module with:
+
+**Constants:**
+- SORT_PREFERENCES_KEY: localStorage key for persistence
+- DEFAULT_SORT_FIELD: "createdAt"
+- DEFAULT_SORT_ORDER: "desc"
+- SORT_OPTIONS: 6 sort options with labels, descriptions, default orders, and icons
+- VALID_SORT_FIELDS, VALID_SORT_ORDERS: Sets for validation
+- DEFAULT_SORT_PREFERENCES: Default preferences object
+
+**Types:**
+- SortField: "title" | "author" | "createdAt" | "lastReadAt" | "progress" | "rating"
+- SortOrder: "asc" | "desc"
+- SortOptionConfig: Configuration for each sort option
+- SortPreferences: User's current sort preferences
+- SortDropdownProps: Component props
+- SortValidationResult: Validation result with sanitized output
+
+**Validation Functions:**
+- isValidSortField: Check if value is a valid sort field
+- isValidSortOrder: Check if value is a valid sort order
+- validateSortPreferences: Validate and sanitize preferences
+
+**Persistence Functions:**
+- loadSortPreferences: Load from localStorage with fallback to defaults
+- saveSortPreferences: Save to localStorage with validation
+- clearSortPreferences: Remove from localStorage
+
+**Helper Functions:**
+- getSortOptionConfig: Get config for a field
+- getDefaultOrderForField: Get default order for a field
+- toggleSortOrder: Toggle between asc/desc
+- getSortOrderLabelKey: Get i18n label key for order
+- createSortPreferences: Create preferences object
+- sortPreferencesChanged: Check if preferences changed
+- formatSortForApi: Format for API query
+- parseSortFromSearchParams: Parse from URL params
+- serializeSortToSearchParams: Serialize to URL params
+
+#### apps/web/src/components/library/sortTypes.test.ts
+72 comprehensive tests covering:
+- Constants (11 tests): All constants have correct values
+- Validation functions (19 tests): isValidSortField, isValidSortOrder, validateSortPreferences
+- Persistence functions (8 tests): load, save, clear with various scenarios
+- Helper functions (27 tests): All helper functions with edge cases
+- SORT_OPTIONS configuration (5 tests): Structure and content verification
+
+### Files Modified
+
+#### apps/web/src/hooks/useBooks.ts
+Added "lastReadAt" and "rating" to BookListFilters sort type.
+
+#### apps/web/src/components/library/types.ts
+- Updated to import and re-export from sortTypes.ts
+- SORT_OPTIONS now includes all 6 options via mapping from extended options
+- SortOption type now uses SortField from sortTypes
+
+#### apps/web/src/components/library/index.ts
+Added explicit exports for all sortTypes utilities and types (avoiding name conflicts).
+
+#### apps/web/src/components/library/types.test.ts
+Updated tests to expect 6 sort options instead of 4.
+
+#### apps/web/src/pages/library/LibraryPage.tsx
+- Added loadSortPreferences and saveSortPreferences imports
+- Initialize filters with persisted sort preferences on mount
+- Save sort preferences to localStorage when sort changes
+
+#### i18n Translations (all 6 locales)
+Added new sort-related translations in library.sort:
+- lastRead, lastReadDesc: Last read sort option
+- rating, ratingDesc: Rating sort option
+- dateAddedDesc, titleDesc, authorDesc, progressDesc: Descriptions for existing options
+
+### Acceptance Criteria Verification
+- ✅ All sorts work - 6 sort options: title, author, dateAdded, lastRead, progress, rating
+- ✅ Persists - Sort preferences saved to localStorage and loaded on page mount
+- ✅ Tests pass - 72 new tests for sortTypes, 100 total sort-related tests pass
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (only pre-existing warnings)
+- pnpm vitest run sortTypes.test.ts types.test.ts: ✅ 100/100 tests pass
+
+

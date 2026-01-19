@@ -225,9 +225,17 @@
     },
     "sort": {
       "dateAdded": "Petsa ng Pagdagdag",
+      "dateAddedDesc": "Ayusin ayon sa petsa ng pagdagdag ng libro",
+      "lastRead": "Huling Nabasa",
+      "lastReadDesc": "Ayusin ayon sa huling nabasa",
       "title": "Pamagat",
+      "titleDesc": "Ayusin ayon sa alpabeto ng pamagat",
       "author": "May-akda",
+      "authorDesc": "Ayusin ayon sa alpabeto ng pangalan ng may-akda",
       "progress": "Progreso",
+      "progressDesc": "Ayusin ayon sa porsiyento ng progreso sa pagbabasa",
+      "rating": "Rating",
+      "ratingDesc": "Ayusin ayon sa iyong rating",
       "ascending": "Pataas",
       "descending": "Pababa",
       "toggleOrder": "Palitan ang pagkakasunod"

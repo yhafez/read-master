@@ -225,9 +225,17 @@
     },
     "sort": {
       "dateAdded": "追加日",
+      "dateAddedDesc": "追加日順に並び替え",
+      "lastRead": "最終閲覧",
+      "lastReadDesc": "最後に読んだ日時順に並び替え",
       "title": "タイトル",
+      "titleDesc": "タイトルのアルファベット順に並び替え",
       "author": "著者",
+      "authorDesc": "著者名のアルファベット順に並び替え",
       "progress": "進捗",
+      "progressDesc": "読書進捗率順に並び替え",
+      "rating": "評価",
+      "ratingDesc": "あなたの評価順に並び替え",
       "ascending": "昇順",
       "descending": "降順",
       "toggleOrder": "並び順を切り替え"

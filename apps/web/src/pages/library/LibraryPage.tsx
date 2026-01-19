@@ -22,6 +22,8 @@ import {
   LibraryGrid,
   AddBookModal,
   DEFAULT_LIBRARY_FILTERS,
+  loadSortPreferences,
+  saveSortPreferences,
   type LibraryViewMode,
   type LibraryFilters,
   type SortOption,
@@ -43,14 +45,19 @@ export function LibraryPage(): React.ReactElement {
     (state) => state.preferences.compactLibraryView
   );
 
+  // Load persisted sort preferences on mount
+  const initialSortPrefs = useMemo(() => loadSortPreferences(), []);
+
   // Local UI state
   const [viewMode, setViewMode] = useState<LibraryViewMode>(
     compactLibraryView ? "list" : "grid"
   );
   const [filterPanelOpen, setFilterPanelOpen] = useState(!isMobile);
-  const [filters, setFilters] = useState<LibraryFilters>(
-    DEFAULT_LIBRARY_FILTERS
-  );
+  const [filters, setFilters] = useState<LibraryFilters>(() => ({
+    ...DEFAULT_LIBRARY_FILTERS,
+    sort: initialSortPrefs.field,
+    order: initialSortPrefs.order,
+  }));
   const [page, setPage] = useState(1);
   const [addBookModalOpen, setAddBookModalOpen] = useState(false);
 
@@ -88,6 +95,8 @@ export function LibraryPage(): React.ReactElement {
 
   const handleSortChange = useCallback((sort: SortOption, order: SortOrder) => {
     setFilters((prev) => ({ ...prev, sort, order }));
+    // Persist sort preferences
+    saveSortPreferences({ field: sort, order });
   }, []);
 
   const handleFilterPanelToggle = useCallback(() => {

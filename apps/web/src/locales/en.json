@@ -129,9 +129,17 @@
     },
     "sort": {
       "dateAdded": "Date Added",
+      "dateAddedDesc": "Sort by when the book was added",
+      "lastRead": "Last Read",
+      "lastReadDesc": "Sort by when the book was last read",
       "title": "Title",
+      "titleDesc": "Sort alphabetically by title",
       "author": "Author",
+      "authorDesc": "Sort alphabetically by author name",
       "progress": "Progress",
+      "progressDesc": "Sort by reading progress percentage",
+      "rating": "Rating",
+      "ratingDesc": "Sort by your rating",
       "ascending": "Ascending",
       "descending": "Descending",
       "toggleOrder": "Toggle sort order"

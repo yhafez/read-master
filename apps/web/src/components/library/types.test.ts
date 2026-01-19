@@ -46,8 +46,8 @@ describe("Library Types", () => {
   });
 
   describe("SORT_OPTIONS", () => {
-    it("should have four sort options", () => {
-      expect(SORT_OPTIONS).toHaveLength(4);
+    it("should have six sort options", () => {
+      expect(SORT_OPTIONS).toHaveLength(6);
     });
 
     it("should include dateAdded option", () => {
@@ -157,9 +157,11 @@ describe("Library Types", () => {
         "title",
         "author",
         "createdAt",
+        "lastReadAt",
         "progress",
+        "rating",
       ];
-      expect(options).toHaveLength(4);
+      expect(options).toHaveLength(6);
     });
   });
 

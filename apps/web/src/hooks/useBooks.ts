@@ -27,7 +27,14 @@ export interface Book {
 export interface BookListFilters {
   status?: Book["status"] | undefined;
   search?: string | undefined;
-  sort?: "title" | "author" | "createdAt" | "progress" | undefined;
+  sort?:
+    | "title"
+    | "author"
+    | "createdAt"
+    | "lastReadAt"
+    | "progress"
+    | "rating"
+    | undefined;
   order?: "asc" | "desc" | undefined;
   page?: number | undefined;
   limit?: number | undefined;

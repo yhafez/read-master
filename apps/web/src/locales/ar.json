@@ -225,9 +225,17 @@
     },
     "sort": {
       "dateAdded": "تاريخ الإضافة",
+      "dateAddedDesc": "ترتيب حسب تاريخ إضافة الكتاب",
+      "lastRead": "آخر قراءة",
+      "lastReadDesc": "ترتيب حسب آخر وقت للقراءة",
       "title": "العنوان",
+      "titleDesc": "ترتيب أبجدي حسب العنوان",
       "author": "المؤلف",
+      "authorDesc": "ترتيب أبجدي حسب اسم المؤلف",
       "progress": "التقدم",
+      "progressDesc": "ترتيب حسب نسبة التقدم في القراءة",
+      "rating": "التقييم",
+      "ratingDesc": "ترتيب حسب تقييمك",
       "ascending": "تصاعدي",
       "descending": "تنازلي",
       "toggleOrder": "تبديل ترتيب الفرز"

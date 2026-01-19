@@ -2,7 +2,14 @@
  * Library component types
  */
 
-import type { Book, BookListFilters } from "@/hooks/useBooks";
+import type { Book } from "@/hooks/useBooks";
+
+import type { SortField, SortOrder } from "./sortTypes";
+import {
+  SORT_OPTIONS as EXTENDED_SORT_OPTIONS,
+  DEFAULT_SORT_FIELD,
+  DEFAULT_SORT_ORDER,
+} from "./sortTypes";
 
 /**
  * View mode for library display
@@ -10,10 +17,10 @@ import type { Book, BookListFilters } from "@/hooks/useBooks";
 export type LibraryViewMode = "grid" | "list";
 
 /**
- * Sort options for library
+ * Sort options for library (re-export from sortTypes for compatibility)
  */
-export type SortOption = NonNullable<BookListFilters["sort"]>;
-export type SortOrder = NonNullable<BookListFilters["order"]>;
+export type SortOption = SortField;
+export type { SortOrder } from "./sortTypes";
 
 /**
  * Book status filter options
@@ -38,14 +45,14 @@ export interface LibraryFilters {
 export const DEFAULT_LIBRARY_FILTERS: LibraryFilters = {
   status: "all",
   search: "",
-  sort: "createdAt",
-  order: "desc",
+  sort: DEFAULT_SORT_FIELD,
+  order: DEFAULT_SORT_ORDER,
   genres: [],
   tags: [],
 };
 
 /**
- * Sort option configuration
+ * Sort option configuration (simplified for backward compatibility)
  */
 export interface SortOptionConfig {
   value: SortOption;
@@ -53,14 +60,14 @@ export interface SortOptionConfig {
 }
 
 /**
- * Available sort options
+ * Available sort options (mapped from extended options for compatibility)
  */
-export const SORT_OPTIONS: SortOptionConfig[] = [
-  { value: "createdAt", labelKey: "library.sort.dateAdded" },
-  { value: "title", labelKey: "library.sort.title" },
-  { value: "author", labelKey: "library.sort.author" },
-  { value: "progress", labelKey: "library.sort.progress" },
-];
+export const SORT_OPTIONS: SortOptionConfig[] = EXTENDED_SORT_OPTIONS.map(
+  (opt) => ({
+    value: opt.value,
+    labelKey: opt.labelKey,
+  })
+);
 
 /**
  * Status filter configuration

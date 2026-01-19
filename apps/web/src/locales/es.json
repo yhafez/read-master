@@ -225,9 +225,17 @@
     },
     "sort": {
       "dateAdded": "Fecha Agregado",
+      "dateAddedDesc": "Ordenar por fecha de adición del libro",
+      "lastRead": "Última Lectura",
+      "lastReadDesc": "Ordenar por última vez que se leyó",
       "title": "Título",
+      "titleDesc": "Ordenar alfabéticamente por título",
       "author": "Autor",
+      "authorDesc": "Ordenar alfabéticamente por nombre del autor",
       "progress": "Progreso",
+      "progressDesc": "Ordenar por porcentaje de progreso de lectura",
+      "rating": "Calificación",
+      "ratingDesc": "Ordenar por tu calificación",
       "ascending": "Ascendente",
       "descending": "Descendente",
       "toggleOrder": "Cambiar orden"

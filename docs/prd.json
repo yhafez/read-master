@@ -2370,7 +2370,7 @@
         "Tests"
       ],
       "acceptance_criteria": ["All sorts work", "Persists", "Tests pass"],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-047",
