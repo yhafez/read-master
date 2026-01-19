@@ -5495,3 +5495,70 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (5975 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 - Discovery: Add database model (TTSDownload) for production persistence - defer to next sprint
+
+## Iteration 94
+
+[2026-01-18] api-social-001: Implement user profile endpoints
+- Created GET /api/users/:username endpoint (apps/api/api/users/[username].ts):
+  - Types exported:
+    - ProfileQueryParams: { includeActivity, includeAchievements }
+    - PublicUserInfo: User info always returned for public profiles
+    - LevelInfo: Level calculation data
+    - PublicStats: Stats shown if showStats: true
+    - ActivityItem: Reading activity (book_completed, achievement_earned)
+    - AchievementInfo: Achievement data with icon, rarity, earnedAt
+    - SocialStatus: Follow relationship to current user
+    - ProfileResponse: Complete profile response
+  - Constants:
+    - MAX_ACTIVITY_ITEMS: 10
+    - MAX_ACHIEVEMENTS: 50
+    - PROFILE_CACHE_TTL: 900 seconds (15 minutes)
+  - Helper functions:
+    - parseQueryParams: Parse includeActivity and includeAchievements params
+    - buildProfileCacheKey: Create cache key for profile data
+    - formatDate: Format Date as ISO string
+    - mapTierToString: Map tier enum to display string
+    - mapToPublicUserInfo: Map user to public info
+    - mapToPublicStats: Map stats with level calculation
+    - mapToAchievementInfo: Map achievement with tier to rarity
+    - createBookCompletedActivity: Create activity item for completed book
+    - createAchievementActivity: Create activity item for earned achievement
+    - getTitleForLevel: Get level title (Novice Reader -> Grand Master)
+    - calculateLevelInfo: Calculate level from XP
+  - Database queries:
+    - getUserByUsername: Case-insensitive username lookup
+    - getUserStats: Get user gamification stats
+    - getUserAchievements: Get user's unlocked achievements
+    - getCompletedBooks: Get completed books for activity feed
+    - checkFollowRelationship: Check follow status between users
+  - API handler:
+    - GET endpoint with authentication
+    - Validates username parameter
+    - Respects privacy settings (profilePublic, showStats, showActivity)
+    - Own profile always accessible with full data
+    - Caches response for 15 minutes
+    - Returns social status (isFollowing, isFollowedBy, isOwnProfile)
+- Created comprehensive test suite with 85 tests (apps/api/api/users/[username].test.ts):
+  - Type export tests (9 tests)
+  - Constants tests (3 tests)
+  - parseQueryParams tests (9 tests)
+  - buildProfileCacheKey tests (6 tests)
+  - formatDate tests (3 tests)
+  - mapTierToString tests (5 tests)
+  - mapToPublicUserInfo tests (3 tests)
+  - getTitleForLevel tests (12 tests)
+  - calculateLevelInfo tests (11 tests)
+  - mapToPublicStats tests (3 tests)
+  - mapToAchievementInfo tests (3 tests)
+  - createBookCompletedActivity tests (3 tests)
+  - createAchievementActivity tests (2 tests)
+  - Edge case tests (7 tests)
+  - Integration scenario tests (4 tests)
+  - Response structure validation tests (2 tests)
+- Acceptance criteria verification:
+  - ✅ Public profiles work (GET /api/users/:username)
+  - ✅ Privacy settings are respected (profilePublic, showStats, showActivity)
+  - ✅ Private data is hidden (403 for private profiles, stats/activity based on settings)
+  - ✅ Tests pass (85 tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6060 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
