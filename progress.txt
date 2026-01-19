@@ -6640,3 +6640,105 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7516 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 13 - Ralph Wiggum
+
+### Task Completed
+- **api-curriculum-003**: Implement curriculum items endpoints
+
+### Implementation Details
+
+- Created GET/POST/PUT /api/curriculums/:id/items endpoint (apps/api/api/curriculums/[id]/items.ts):
+  - GET: Lists curriculum items in order with book info
+  - POST: Adds item to curriculum (book reference or external resource)
+    - Validates with Zod schema
+    - Auto-assigns order index
+    - Verifies book exists when bookId provided
+    - Enforces max items limit (200)
+    - Updates curriculum totalItems count
+  - PUT: Reorders items
+    - Validates all provided IDs belong to curriculum
+    - Checks for duplicate IDs
+    - Updates order in transaction
+  - Access control: owner-only for POST/PUT, access check for GET
+  - Cache invalidation on mutations
+
+- Created PUT/DELETE /api/curriculums/:id/items/:itemId endpoint (apps/api/api/curriculums/[id]/items/[itemId].ts):
+  - PUT: Updates item metadata
+    - Validates with Zod schema
+    - Supports updating book reference, external resource details, notes, estimated time, optional flag
+    - Clears external fields when switching to book and vice versa
+    - Verifies book exists when bookId provided
+  - DELETE: Removes item from curriculum
+    - Reorders remaining items (decrements orderIndex for items after deleted)
+    - Updates curriculum totalItems count
+    - All changes in transaction for data integrity
+  - Owner-only access control
+
+- Types exported from items.ts:
+  - ItemBookInfo, CurriculumItemResponse
+  - AddItemInput, ReorderItemsInput
+
+- Types exported from [itemId].ts:
+  - ItemBookInfo, CurriculumItemResponse
+  - UpdateItemInput
+
+- Helper functions exported from items.ts:
+  - validateCurriculumId, formatDate
+  - mapToItemBookInfo, mapToItemResponse
+  - canAccessCurriculum, isOwner
+  - buildItemsCacheKey, buildCurriculumCacheKey
+
+- Helper functions exported from [itemId].ts:
+  - validateCurriculumId, validateItemId, formatDate
+  - mapToItemBookInfo, mapToItemResponse
+  - isOwner, buildItemsCacheKey, buildCurriculumCacheKey
+
+- Comprehensive tests:
+  - apps/api/api/curriculums/[id]/items.test.ts (76 tests):
+    - Constants tests (7 tests)
+    - Type export tests (4 tests)
+    - addItemSchema tests (18 tests)
+    - reorderItemsSchema tests (6 tests)
+    - validateCurriculumId tests (7 tests)
+    - formatDate tests (2 tests)
+    - mapToItemBookInfo tests (3 tests)
+    - mapToItemResponse tests (2 tests)
+    - canAccessCurriculum tests (6 tests)
+    - isOwner tests (3 tests)
+    - buildItemsCacheKey tests (2 tests)
+    - buildCurriculumCacheKey tests (2 tests)
+    - Edge cases tests (5 tests)
+    - Integration-style tests (3 tests)
+  - apps/api/api/curriculums/[id]/items/[itemId].test.ts (63 tests):
+    - Constants tests (6 tests)
+    - Type export tests (3 tests)
+    - updateItemSchema tests (22 tests)
+    - validateCurriculumId tests (7 tests)
+    - validateItemId tests (7 tests)
+    - formatDate tests (2 tests)
+    - mapToItemBookInfo tests (3 tests)
+    - mapToItemResponse tests (3 tests)
+    - isOwner tests (3 tests)
+    - buildItemsCacheKey tests (2 tests)
+    - buildCurriculumCacheKey tests (2 tests)
+    - Edge cases tests (7 tests)
+    - Integration-style tests (4 tests)
+
+- Files created:
+  - apps/api/api/curriculums/[id]/items.ts
+  - apps/api/api/curriculums/[id]/items.test.ts
+  - apps/api/api/curriculums/[id]/items/[itemId].ts
+  - apps/api/api/curriculums/[id]/items/[itemId].test.ts
+
+### Acceptance Criteria Verification
+- ✅ Items can be added (POST /api/curriculums/:id/items with book or external resource)
+- ✅ Reordering works (PUT /api/curriculums/:id/items with itemIds array)
+- ✅ CRUD operations work (GET list, POST add, PUT update, DELETE remove)
+- ✅ Order is maintained (orderIndex auto-assigned, reordering in transaction, gap-free after delete)
+- ✅ Tests pass (139 new tests, 7655 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7655 tests pass (pre-existing i18n test failure unrelated to this change)
