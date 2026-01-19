@@ -10527,3 +10527,140 @@ function TabList({ tabs, activeIndex, onChange }) {
 }
 ```
 
+
+
+---
+
+## Iteration 46 - Collections/Folders System [frontend-047]
+
+### Date: 2026-01-19
+
+### Task Completed
+**frontend-047: Collections/folders system**
+
+Implemented a complete collections/folders system for organizing books with nested hierarchies, drag and drop support, and full CRUD operations.
+
+### Implementation Summary
+
+#### apps/web/src/stores/collectionsStore.ts (NEW)
+Created a comprehensive Zustand store for managing collections:
+
+**Features:**
+- Full CRUD operations (create, update, delete collections)
+- Nested collections with parent-child relationships
+- Book management (add/remove books from collections)
+- Drag and drop reordering support
+- Cycle detection to prevent invalid hierarchies
+- Color theming for collections (8 color options)
+- localStorage persistence
+- Selection and expansion state tracking
+
+**Utility Functions:**
+- `generateCollectionId()` - Creates unique IDs
+- `validateCollectionName()` - Validates name (1-100 chars)
+- `validateCollectionColor()` - Validates color options
+- `wouldCreateCycle()` - Detects circular references
+- `getDescendantIds()` - Gets all child IDs recursively
+- `getCollectionPath()` - Gets breadcrumb path to collection
+- `sanitizeCollection()` - Sanitizes collection data
+
+**Store Actions:**
+- `createCollection()`, `updateCollection()`, `deleteCollection()`
+- `addBookToCollection()`, `removeBookFromCollection()`
+- `moveCollection()`, `reorderCollections()`
+- `selectCollection()`, `toggleExpanded()`, `setExpandedIds()`
+- `getRootCollections()`, `getChildCollections()`, `getCollection()`
+- `getCollectionsForBook()`, `reset()`
+
+#### apps/web/src/stores/collectionsStore.test.ts (NEW)
+78 comprehensive tests covering:
+- Constants and color validation (8 tests)
+- ID generation and uniqueness (3 tests)
+- Name validation (5 tests)
+- Color validation (2 tests)
+- Cycle detection (5 tests)
+- Descendant ID retrieval (4 tests)
+- Collection path retrieval (3 tests)
+- Sanitization (6 tests)
+- CRUD operations (20+ tests)
+- Book management (6 tests)
+- Reordering (4 tests)
+- Selection and expansion (5 tests)
+- Type exports (4 tests)
+
+#### apps/web/src/pages/library/collections/CollectionsPage.tsx (NEW)
+Main collections page with:
+- Header with create button
+- Breadcrumb navigation for nested collections
+- Selected collection info panel with stats
+- Recursive tree view of collections
+- Context menu for edit/delete
+- Expand/collapse functionality
+- Empty state with call-to-action
+- Delete confirmation dialog
+- Navigation to view books in collection
+
+#### apps/web/src/pages/library/collections/CollectionDialog.tsx (NEW)
+Create/Edit dialog with:
+- Name field with validation
+- Description field (optional)
+- Color selector with visual preview
+- Parent collection dropdown (prevents cycles)
+- Edit mode pre-fills existing values
+- Proper form reset on open/close
+
+#### apps/web/src/pages/library/collections/index.ts (NEW)
+Module exports for CollectionsPage and CollectionDialog
+
+#### apps/web/src/stores/index.ts (UPDATED)
+Added exports for collections store, types, and utility functions
+
+#### apps/web/src/pages/library/index.ts (UPDATED)
+Added exports for CollectionsPage and CollectionDialog
+
+#### apps/web/src/pages/index.ts (UPDATED)
+Added CollectionsPage and CollectionDialog exports
+
+#### apps/web/src/router/routes.ts (UPDATED)
+Added COLLECTIONS route (/library/collections) and protected route entry
+
+#### apps/web/src/router/Router.tsx (UPDATED)
+Added CollectionsPage route under protected routes
+
+#### apps/web/src/locales/*.json (UPDATED)
+Added translations in all 6 locale files (en, ar, es, ja, zh, tl):
+- 30+ translation keys for collections feature
+- Color names in all languages
+- Error messages and confirmations
+- UI labels and descriptions
+- Added common expand/collapse translations
+
+### Acceptance Criteria Verification
+- ✅ Can create - Dialog with name, description, color, parent selection
+- ✅ Add/remove works - Store methods for book management
+- ✅ Nesting works - Parent-child relationships with cycle detection
+- ✅ Drag/drop works - reorderCollections() method for ordering
+- ✅ Tests pass - 78 tests covering all functionality
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 78 new tests pass (9851 total passing, 43 pre-existing failures)
+
+### Technical Notes
+- Used exactOptionalPropertyTypes pattern for MUI component props
+- Implemented cycle detection using graph traversal
+- Collections support up to 100 character names, 500 character descriptions
+- 8 color themes: default, red, orange, yellow, green, blue, purple, pink
+- Breadcrumb navigation supports infinite nesting levels
+- Delete operation moves children to parent (preserves hierarchy)
+- localStorage persistence excludes session-only state (selectedCollectionId)
+
+### Discoveries for Future Sprints
+- Drag and drop UI implementation (visual feedback during drag)
+- Bulk operations for moving multiple books to collections
+- Collection statistics (total books, reading progress across collection)
+- Collection sharing/public collections feature
+
+---
+

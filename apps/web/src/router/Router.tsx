@@ -12,6 +12,7 @@ import {
   SignUpPage,
   DashboardPage,
   LibraryPage,
+  CollectionsPage,
   ReaderPage,
   FlashcardsPage,
   FlashcardsReviewPage,
@@ -102,6 +103,10 @@ function createAppRouter() {
             {
               path: ROUTES.LIBRARY,
               element: <LibraryPage />,
+            },
+            {
+              path: ROUTES.COLLECTIONS,
+              element: <CollectionsPage />,
             },
 
             // Flashcards

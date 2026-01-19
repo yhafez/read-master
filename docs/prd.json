@@ -2397,7 +2397,7 @@
         "Drag/drop works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-048",

@@ -89,3 +89,22 @@ export type {
   GeneralSettings,
   SupportedLanguage as GeneralSupportedLanguage,
 } from "./generalSettingsStore";
+
+export {
+  collectionColors,
+  COLLECTIONS_STORAGE_KEY,
+  generateCollectionId,
+  getCollectionPath,
+  getDescendantIds,
+  sanitizeCollection,
+  useCollectionsStore,
+  validateCollectionColor,
+  validateCollectionName,
+  wouldCreateCycle,
+} from "./collectionsStore";
+export type {
+  Collection,
+  CollectionColor,
+  CreateCollectionInput,
+  UpdateCollectionInput,
+} from "./collectionsStore";
