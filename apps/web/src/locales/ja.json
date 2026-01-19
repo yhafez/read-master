@@ -511,6 +511,45 @@
         "server": "サーバーエラー。再度お試しください。",
         "unknown": "予期しないエラーが発生しました"
       }
+    },
+    "edit": {
+      "title": "カード編集",
+      "front": "表面（質問）",
+      "frontPlaceholder": "質問またはプロンプトを入力",
+      "back": "裏面（回答）",
+      "backPlaceholder": "回答を入力",
+      "type": "カードタイプ",
+      "book": "本にリンク",
+      "bookPlaceholder": "本を選択（任意）",
+      "tags": "タグ",
+      "tagsPlaceholder": "タグを追加してEnterを押す",
+      "addTag": "追加",
+      "tagsCount": "{{count}}/{{max}} タグ",
+      "saveButton": "変更を保存",
+      "saving": "保存中...",
+      "success": "カードが更新されました！",
+      "errors": {
+        "missingId": "カードIDがありません",
+        "frontRequired": "表面の内容は必須です",
+        "frontTooShort": "表面は{{min}}文字以上必要です",
+        "frontTooLong": "表面は{{max}}文字以内にしてください",
+        "backRequired": "裏面の内容は必須です",
+        "backTooShort": "裏面は{{min}}文字以上必要です",
+        "backTooLong": "裏面は{{max}}文字以内にしてください",
+        "invalidType": "有効なカードタイプを選択してください",
+        "tooManyTags": "タグは{{max}}個までです",
+        "invalidTag": "タグは{{maxLength}}文字以内にしてください",
+        "validation": "フォームにエラーがあります",
+        "unauthorized": "カードを編集するにはサインインが必要です",
+        "notFound": "カードが見つかりません",
+        "rateLimit": "リクエストが多すぎます。後でお試しください。",
+        "server": "サーバーエラー。再度お試しください。",
+        "unknown": "予期しないエラーが発生しました",
+        "loadUnauthorized": "このカードを表示する権限がありません",
+        "loadNotFound": "カードが見つかりません",
+        "loadServer": "カードの読み込みに失敗しました。再度お試しください。",
+        "loadUnknown": "カードを読み込めません"
+      }
     }
   },
   "assessments": {

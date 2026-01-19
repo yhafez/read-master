@@ -511,6 +511,45 @@
         "server": "Server error. Subukan ulit.",
         "unknown": "May naganap na hindi inaasahang error"
       }
+    },
+    "edit": {
+      "title": "I-edit ang Kard",
+      "front": "Harap (Tanong)",
+      "frontPlaceholder": "Ilagay ang tanong o prompt",
+      "back": "Likod (Sagot)",
+      "backPlaceholder": "Ilagay ang sagot",
+      "type": "Uri ng Kard",
+      "book": "I-link sa Libro",
+      "bookPlaceholder": "Pumili ng libro (opsyonal)",
+      "tags": "Mga Tag",
+      "tagsPlaceholder": "Magdagdag ng tag at pindutin ang Enter",
+      "addTag": "Idagdag",
+      "tagsCount": "{{count}}/{{max}} tag",
+      "saveButton": "I-save ang mga Pagbabago",
+      "saving": "Nagse-save...",
+      "success": "Na-update na ang kard!",
+      "errors": {
+        "missingId": "Walang kard ID",
+        "frontRequired": "Kinakailangan ang nilalaman sa harap",
+        "frontTooShort": "Ang harap ay dapat may {{min}} karakter man lang",
+        "frontTooLong": "Hindi maaaring lumampas sa {{max}} karakter ang harap",
+        "backRequired": "Kinakailangan ang nilalaman sa likod",
+        "backTooShort": "Ang likod ay dapat may {{min}} karakter man lang",
+        "backTooLong": "Hindi maaaring lumampas sa {{max}} karakter ang likod",
+        "invalidType": "Pumili ng wastong uri ng kard",
+        "tooManyTags": "Hindi maaaring magdagdag ng higit sa {{max}} tag",
+        "invalidTag": "Hindi maaaring lumampas sa {{maxLength}} karakter ang tag",
+        "validation": "Suriin ang form para sa mga error",
+        "unauthorized": "Dapat naka-sign in para mag-edit ng kard",
+        "notFound": "Hindi nahanap ang kard",
+        "rateLimit": "Masyadong maraming request. Subukan mamaya.",
+        "server": "Server error. Subukan ulit.",
+        "unknown": "May naganap na hindi inaasahang error",
+        "loadUnauthorized": "Hindi ka awtorisadong tingnan ang kard na ito",
+        "loadNotFound": "Hindi nahanap ang kard",
+        "loadServer": "Hindi na-load ang kard. Subukan ulit.",
+        "loadUnknown": "Hindi ma-load ang kard"
+      }
     }
   },
   "assessments": {

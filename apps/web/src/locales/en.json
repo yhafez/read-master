@@ -512,6 +512,45 @@
         "server": "Server error. Please try again.",
         "unknown": "An unexpected error occurred"
       }
+    },
+    "edit": {
+      "title": "Edit Flashcard",
+      "front": "Front (Question)",
+      "frontPlaceholder": "Enter the question or prompt",
+      "back": "Back (Answer)",
+      "backPlaceholder": "Enter the answer",
+      "type": "Card Type",
+      "book": "Link to Book",
+      "bookPlaceholder": "Select a book (optional)",
+      "tags": "Tags",
+      "tagsPlaceholder": "Add a tag and press Enter",
+      "addTag": "Add",
+      "tagsCount": "{{count}}/{{max}} tags",
+      "saveButton": "Save Changes",
+      "saving": "Saving...",
+      "success": "Flashcard updated successfully!",
+      "errors": {
+        "missingId": "Missing flashcard ID",
+        "frontRequired": "Front content is required",
+        "frontTooShort": "Front must be at least {{min}} character",
+        "frontTooLong": "Front cannot exceed {{max}} characters",
+        "backRequired": "Back content is required",
+        "backTooShort": "Back must be at least {{min}} character",
+        "backTooLong": "Back cannot exceed {{max}} characters",
+        "invalidType": "Please select a valid card type",
+        "tooManyTags": "Cannot add more than {{max}} tags",
+        "invalidTag": "Tag cannot exceed {{maxLength}} characters",
+        "validation": "Please check the form for errors",
+        "unauthorized": "You must be signed in to edit flashcards",
+        "notFound": "Flashcard not found",
+        "rateLimit": "Too many requests. Please try again later.",
+        "server": "Server error. Please try again.",
+        "unknown": "An unexpected error occurred",
+        "loadUnauthorized": "You are not authorized to view this flashcard",
+        "loadNotFound": "Flashcard not found",
+        "loadServer": "Failed to load flashcard. Please try again.",
+        "loadUnknown": "Unable to load flashcard"
+      }
     }
   },
   "assessments": {

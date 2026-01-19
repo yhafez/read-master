@@ -511,6 +511,45 @@
         "server": "Error del servidor. Intenta de nuevo.",
         "unknown": "Ocurrió un error inesperado"
       }
+    },
+    "edit": {
+      "title": "Editar Tarjeta",
+      "front": "Frente (Pregunta)",
+      "frontPlaceholder": "Ingresa la pregunta o indicación",
+      "back": "Reverso (Respuesta)",
+      "backPlaceholder": "Ingresa la respuesta",
+      "type": "Tipo de Tarjeta",
+      "book": "Vincular a Libro",
+      "bookPlaceholder": "Selecciona un libro (opcional)",
+      "tags": "Etiquetas",
+      "tagsPlaceholder": "Agrega una etiqueta y presiona Enter",
+      "addTag": "Agregar",
+      "tagsCount": "{{count}}/{{max}} etiquetas",
+      "saveButton": "Guardar Cambios",
+      "saving": "Guardando...",
+      "success": "¡Tarjeta actualizada exitosamente!",
+      "errors": {
+        "missingId": "ID de tarjeta faltante",
+        "frontRequired": "El contenido frontal es obligatorio",
+        "frontTooShort": "El frente debe tener al menos {{min}} carácter",
+        "frontTooLong": "El frente no puede exceder {{max}} caracteres",
+        "backRequired": "El contenido del reverso es obligatorio",
+        "backTooShort": "El reverso debe tener al menos {{min}} carácter",
+        "backTooLong": "El reverso no puede exceder {{max}} caracteres",
+        "invalidType": "Por favor selecciona un tipo de tarjeta válido",
+        "tooManyTags": "No puedes agregar más de {{max}} etiquetas",
+        "invalidTag": "La etiqueta no puede exceder {{maxLength}} caracteres",
+        "validation": "Por favor revisa el formulario",
+        "unauthorized": "Debes iniciar sesión para editar tarjetas",
+        "notFound": "Tarjeta no encontrada",
+        "rateLimit": "Demasiadas solicitudes. Intenta más tarde.",
+        "server": "Error del servidor. Intenta de nuevo.",
+        "unknown": "Ocurrió un error inesperado",
+        "loadUnauthorized": "No tienes autorización para ver esta tarjeta",
+        "loadNotFound": "Tarjeta no encontrada",
+        "loadServer": "Error al cargar la tarjeta. Intenta de nuevo.",
+        "loadUnknown": "No se puede cargar la tarjeta"
+      }
     }
   },
   "assessments": {

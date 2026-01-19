@@ -22,7 +22,14 @@ export {
   default as CreateFlashcardDialogDefault,
 } from "./CreateFlashcardDialog";
 
+// Edit Flashcard Dialog
+export {
+  EditFlashcardDialog,
+  default as EditFlashcardDialogDefault,
+} from "./EditFlashcardDialog";
+
 // Types and utilities
 export * from "./flashcardDeckTypes";
 export * from "./flashcardStudyTypes";
 export * from "./createFlashcardTypes";
+export * from "./editFlashcardTypes";

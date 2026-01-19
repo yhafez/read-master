@@ -511,6 +511,45 @@
         "server": "服务器错误，请重试。",
         "unknown": "发生意外错误"
       }
+    },
+    "edit": {
+      "title": "编辑卡片",
+      "front": "正面（问题）",
+      "frontPlaceholder": "输入问题或提示",
+      "back": "背面（答案）",
+      "backPlaceholder": "输入答案",
+      "type": "卡片类型",
+      "book": "关联书籍",
+      "bookPlaceholder": "选择书籍（可选）",
+      "tags": "标签",
+      "tagsPlaceholder": "添加标签并按Enter",
+      "addTag": "添加",
+      "tagsCount": "{{count}}/{{max}} 标签",
+      "saveButton": "保存更改",
+      "saving": "保存中...",
+      "success": "卡片更新成功！",
+      "errors": {
+        "missingId": "缺少卡片ID",
+        "frontRequired": "正面内容为必填项",
+        "frontTooShort": "正面至少需要{{min}}个字符",
+        "frontTooLong": "正面不能超过{{max}}个字符",
+        "backRequired": "背面内容为必填项",
+        "backTooShort": "背面至少需要{{min}}个字符",
+        "backTooLong": "背面不能超过{{max}}个字符",
+        "invalidType": "请选择有效的卡片类型",
+        "tooManyTags": "最多添加{{max}}个标签",
+        "invalidTag": "标签不能超过{{maxLength}}个字符",
+        "validation": "请检查表单错误",
+        "unauthorized": "需要登录才能编辑卡片",
+        "notFound": "卡片未找到",
+        "rateLimit": "请求过多，请稍后重试。",
+        "server": "服务器错误，请重试。",
+        "unknown": "发生意外错误",
+        "loadUnauthorized": "您无权查看此卡片",
+        "loadNotFound": "卡片未找到",
+        "loadServer": "加载卡片失败，请重试。",
+        "loadUnknown": "无法加载卡片"
+      }
     }
   },
   "assessments": {
