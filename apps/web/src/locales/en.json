@@ -169,7 +169,60 @@
   },
   "library": {
     "title": "My Library",
-    "addBook": "Add Book",
+    "addBook": {
+      "title": "Add Book",
+      "tabsLabel": "Book import methods",
+      "tabs": {
+        "upload": "Upload",
+        "url": "URL",
+        "paste": "Paste",
+        "search": "Search"
+      },
+      "dragOrClick": "Drag & drop a file or click to browse",
+      "dropHere": "Drop file here",
+      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
+      "maxSize": "Maximum file size: {{size}}MB",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter book title",
+      "authorLabel": "Author",
+      "authorPlaceholder": "Enter author name (optional)",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Paste your text content here...",
+      "urlLabel": "URL",
+      "urlDescription": "Import an article or web page from a URL",
+      "pasteDescription": "Paste text content directly to create a book",
+      "wordCount": "{{count}} words",
+      "minLength": "Minimum 50 characters required",
+      "uploadButton": "Upload Book",
+      "uploading": "Uploading...",
+      "importButton": "Import from URL",
+      "importing": "Importing...",
+      "saveButton": "Save as Book",
+      "saving": "Saving...",
+      "addButton": "Add to Library",
+      "adding": "Adding...",
+      "success": "Book added successfully!",
+      "search": {
+        "description": "Search Google Books and Open Library to add books",
+        "label": "Search for books",
+        "placeholder": "Search by title, author, or ISBN",
+        "searchButton": "Search",
+        "searching": "Searching...",
+        "noResults": "No books found. Try a different search term.",
+        "enterQuery": "Please enter a search term",
+        "searchFailed": "Search failed. Please try again.",
+        "selectBook": "Please select a book to add",
+        "selectedBook": "Selected book:",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library",
+        "publicDomain": "Public Domain"
+      },
+      "errors": {
+        "noFile": "Please select a file to upload",
+        "invalidData": "Invalid form data",
+        "addFailed": "Failed to add book. Please try again."
+      }
+    },
     "upload": "Upload File",
     "importUrl": "Import from URL",
     "pasteText": "Paste Text",
@@ -228,60 +281,6 @@
       "continueReading": "Continue Reading",
       "startReading": "Start Reading"
     },
-    "addBook": {
-      "title": "Add Book",
-      "tabsLabel": "Book import methods",
-      "tabs": {
-        "upload": "Upload",
-        "url": "URL",
-        "paste": "Paste",
-        "search": "Search"
-      },
-      "dragOrClick": "Drag & drop a file or click to browse",
-      "dropHere": "Drop file here",
-      "supportedFormats": "EPUB, PDF, DOC, DOCX, TXT, HTML",
-      "maxSize": "Maximum file size: {{size}}MB",
-      "titleLabel": "Title",
-      "titlePlaceholder": "Enter book title",
-      "authorLabel": "Author",
-      "authorPlaceholder": "Enter author name (optional)",
-      "contentLabel": "Content",
-      "contentPlaceholder": "Paste your text content here...",
-      "urlLabel": "URL",
-      "urlDescription": "Import an article or web page from a URL",
-      "pasteDescription": "Paste text content directly to create a book",
-      "wordCount": "{{count}} words",
-      "minLength": "Minimum 50 characters required",
-      "uploadButton": "Upload Book",
-      "uploading": "Uploading...",
-      "importButton": "Import from URL",
-      "importing": "Importing...",
-      "saveButton": "Save as Book",
-      "saving": "Saving...",
-      "addButton": "Add to Library",
-      "adding": "Adding...",
-      "success": "Book added successfully!",
-      "search": {
-        "description": "Search Google Books and Open Library to add books",
-        "label": "Search for books",
-        "placeholder": "Search by title, author, or ISBN",
-        "searchButton": "Search",
-        "searching": "Searching...",
-        "noResults": "No books found. Try a different search term.",
-        "enterQuery": "Please enter a search term",
-        "searchFailed": "Search failed. Please try again.",
-        "selectBook": "Please select a book to add",
-        "selectedBook": "Selected book:",
-        "googleBooks": "Google Books",
-        "openLibrary": "Open Library",
-        "publicDomain": "Public Domain"
-      },
-      "errors": {
-        "noFile": "Please select a file to upload",
-        "invalidData": "Invalid form data",
-        "addFailed": "Failed to add book. Please try again."
-      }
-    },
     "advancedSearch": {
       "title": "Advanced Search",
       "searchPlaceholder": "Search by title, author, or content...",
@@ -331,7 +330,17 @@
     "placeholder": "Book content for {{bookId}} will appear here.",
     "backToLibrary": "Back to Library",
     "settings": "Reader Settings",
-    "progress": "{{percent}}% complete",
+    "progress": {
+      "progress": "Progress",
+      "complete": "Complete",
+      "timeRemaining": "{{time}} left",
+      "timeRemainingTooltip": "Estimated time to finish reading",
+      "readingSpeedTooltip": "Your current reading speed",
+      "clickToNavigate": "Click to jump to position",
+      "wordsRead": "{{current}} / {{total}} words",
+      "timeSpent": "Time spent: {{time}}",
+      "averageSpeed": "Avg: {{wpm}} WPM"
+    },
     "pageOf": "{{current}} / {{total}}",
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
@@ -358,17 +367,6 @@
       "highlight": "Highlight",
       "note": "Add Note",
       "bookmark": "Bookmark"
-    },
-    "progress": {
-      "progress": "Progress",
-      "complete": "Complete",
-      "timeRemaining": "{{time}} left",
-      "timeRemainingTooltip": "Estimated time to finish reading",
-      "readingSpeedTooltip": "Your current reading speed",
-      "clickToNavigate": "Click to jump to position",
-      "wordsRead": "{{current}} / {{total}} words",
-      "timeSpent": "Time spent: {{time}}",
-      "averageSpeed": "Avg: {{wpm}} WPM"
     },
     "annotations": {
       "title": "Annotations",
@@ -475,7 +473,7 @@
       "keyboard": "Keyboard",
       "touch": "Touch",
       "hint": "Press ? (Shift + /) anytime to open this help dialog.",
-      "macHint": "Using Mac keyboard shortcuts. Press ⌘ for Control key commands.",
+      "macHint": "Using Mac keyboard shortcuts. Press \u2318 for Control key commands.",
       "categories": {
         "navigation": "Navigation",
         "annotation": "Annotations",
@@ -590,7 +588,51 @@
   "flashcards": {
     "title": "Flashcards",
     "review": "Review",
-    "create": "Create Flashcard",
+    "create": {
+      "title": "Create Flashcard",
+      "front": "Front (Question)",
+      "frontPlaceholder": "Enter the question or prompt",
+      "back": "Back (Answer)",
+      "backPlaceholder": "Enter the answer",
+      "type": "Card Type",
+      "book": "Link to Book",
+      "bookPlaceholder": "Select a book (optional)",
+      "tags": "Tags",
+      "tagsPlaceholder": "Add a tag and press Enter",
+      "addTag": "Add",
+      "tagsCount": "{{count}}/{{max}} tags",
+      "createButton": "Create Flashcard",
+      "creating": "Creating...",
+      "success": "Flashcard created successfully!",
+      "types": {
+        "custom": "Custom",
+        "customDescription": "A custom flashcard you create",
+        "vocabulary": "Vocabulary",
+        "vocabularyDescription": "Learn new words and definitions",
+        "concept": "Concept",
+        "conceptDescription": "Understand key ideas and concepts",
+        "comprehension": "Comprehension",
+        "comprehensionDescription": "Test understanding of content",
+        "quote": "Quote",
+        "quoteDescription": "Memorize important quotes"
+      },
+      "errors": {
+        "frontRequired": "Front content is required",
+        "frontTooShort": "Front must be at least {{min}} character",
+        "frontTooLong": "Front cannot exceed {{max}} characters",
+        "backRequired": "Back content is required",
+        "backTooShort": "Back must be at least {{min}} character",
+        "backTooLong": "Back cannot exceed {{max}} characters",
+        "invalidType": "Please select a valid card type",
+        "tooManyTags": "Cannot add more than {{max}} tags",
+        "invalidTag": "Tag cannot exceed {{maxLength}} characters",
+        "validation": "Please check the form for errors",
+        "unauthorized": "You must be signed in to create flashcards",
+        "rateLimit": "Too many requests. Please try again later.",
+        "server": "Server error. Please try again.",
+        "unknown": "An unexpected error occurred"
+      }
+    },
     "dueToday": "Due Today",
     "totalCards": "Total Cards",
     "studyNow": "Study Now",
@@ -598,9 +640,51 @@
     "noCards": "No flashcards yet",
     "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "Retention Rate",
+      "title": "Flashcard Statistics",
+      "refresh": "Refresh statistics",
+      "studyNow": "Study Now ({{count}} due)",
+      "dueToday": "Due Today",
+      "overdue": "{{count}} overdue",
+      "retention": "Retention",
       "streak": "Day Streak",
-      "reviewed": "Cards Reviewed"
+      "bestStreak": "Best: {{count}} days",
+      "totalCards": "Total Cards",
+      "activeCards": "{{count}} active",
+      "cardsByStatus": "Cards by Status",
+      "history": "Review History",
+      "chartType": "Chart type",
+      "timeRange": {
+        "7days": "7 Days",
+        "30days": "30 Days",
+        "90days": "90 Days",
+        "year": "1 Year"
+      },
+      "studyTime": "Study Time",
+      "forecast": "Upcoming Reviews",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "next7Days": "Next 7 Days",
+      "next30Days": "Next 30 Days",
+      "averagePerDay": "Avg/Day",
+      "status": {
+        "new": "New",
+        "learning": "Learning",
+        "review": "Review",
+        "suspended": "Suspended"
+      },
+      "charts": {
+        "reviews": "Reviews",
+        "reviewsDescription": "Number of reviews per day",
+        "retention": "Retention",
+        "retentionDescription": "Retention rate over time",
+        "time": "Study Time",
+        "timeDescription": "Time spent studying"
+      },
+      "errors": {
+        "loadFailed": "Failed to load statistics. Please try again."
+      }
     },
     "deck": {
       "totalCards_one": "{{count}} card",
@@ -659,51 +743,6 @@
       "noCardsDue": "No cards are due for review right now.",
       "comeBackLater": "Come back later or add more cards to your decks."
     },
-    "create": {
-      "title": "Create Flashcard",
-      "front": "Front (Question)",
-      "frontPlaceholder": "Enter the question or prompt",
-      "back": "Back (Answer)",
-      "backPlaceholder": "Enter the answer",
-      "type": "Card Type",
-      "book": "Link to Book",
-      "bookPlaceholder": "Select a book (optional)",
-      "tags": "Tags",
-      "tagsPlaceholder": "Add a tag and press Enter",
-      "addTag": "Add",
-      "tagsCount": "{{count}}/{{max}} tags",
-      "createButton": "Create Flashcard",
-      "creating": "Creating...",
-      "success": "Flashcard created successfully!",
-      "types": {
-        "custom": "Custom",
-        "customDescription": "A custom flashcard you create",
-        "vocabulary": "Vocabulary",
-        "vocabularyDescription": "Learn new words and definitions",
-        "concept": "Concept",
-        "conceptDescription": "Understand key ideas and concepts",
-        "comprehension": "Comprehension",
-        "comprehensionDescription": "Test understanding of content",
-        "quote": "Quote",
-        "quoteDescription": "Memorize important quotes"
-      },
-      "errors": {
-        "frontRequired": "Front content is required",
-        "frontTooShort": "Front must be at least {{min}} character",
-        "frontTooLong": "Front cannot exceed {{max}} characters",
-        "backRequired": "Back content is required",
-        "backTooShort": "Back must be at least {{min}} character",
-        "backTooLong": "Back cannot exceed {{max}} characters",
-        "invalidType": "Please select a valid card type",
-        "tooManyTags": "Cannot add more than {{max}} tags",
-        "invalidTag": "Tag cannot exceed {{maxLength}} characters",
-        "validation": "Please check the form for errors",
-        "unauthorized": "You must be signed in to create flashcards",
-        "rateLimit": "Too many requests. Please try again later.",
-        "server": "Server error. Please try again.",
-        "unknown": "An unexpected error occurred"
-      }
-    },
     "edit": {
       "title": "Edit Flashcard",
       "front": "Front (Question)",
@@ -741,54 +780,6 @@
         "loadNotFound": "Flashcard not found",
         "loadServer": "Failed to load flashcard. Please try again.",
         "loadUnknown": "Unable to load flashcard"
-      }
-    },
-    "stats": {
-      "title": "Flashcard Statistics",
-      "refresh": "Refresh statistics",
-      "studyNow": "Study Now ({{count}} due)",
-      "dueToday": "Due Today",
-      "overdue": "{{count}} overdue",
-      "retention": "Retention",
-      "streak": "Day Streak",
-      "bestStreak": "Best: {{count}} days",
-      "totalCards": "Total Cards",
-      "activeCards": "{{count}} active",
-      "cardsByStatus": "Cards by Status",
-      "history": "Review History",
-      "chartType": "Chart type",
-      "timeRange": "Time range",
-      "studyTime": "Study Time",
-      "forecast": "Upcoming Reviews",
-      "today": "Today",
-      "tomorrow": "Tomorrow",
-      "thisWeek": "This Week",
-      "thisMonth": "This Month",
-      "next7Days": "Next 7 Days",
-      "next30Days": "Next 30 Days",
-      "averagePerDay": "Avg/Day",
-      "status": {
-        "new": "New",
-        "learning": "Learning",
-        "review": "Review",
-        "suspended": "Suspended"
-      },
-      "charts": {
-        "reviews": "Reviews",
-        "reviewsDescription": "Number of reviews per day",
-        "retention": "Retention",
-        "retentionDescription": "Retention rate over time",
-        "time": "Study Time",
-        "timeDescription": "Time spent studying"
-      },
-      "timeRange": {
-        "7days": "7 Days",
-        "30days": "30 Days",
-        "90days": "90 Days",
-        "year": "1 Year"
-      },
-      "errors": {
-        "loadFailed": "Failed to load statistics. Please try again."
       }
     }
   },
@@ -920,7 +911,41 @@
     "views": "{{count}} views",
     "postedBy": "Posted by {{author}}",
     "reply": "Reply",
-    "vote": "Vote"
+    "vote": "Vote",
+    "form": {
+      "createTitle": "Create New Post",
+      "editTitle": "Edit Post",
+      "category": "Category",
+      "title": "Title",
+      "titleHelp": "A clear, descriptive title helps others find your post",
+      "contentPlaceholder": "Write your post content here...",
+      "markdownSupported": "Markdown supported",
+      "formattingHelp": "Formatting",
+      "previewEmpty": "Nothing to preview yet. Start writing to see the preview.",
+      "submit": "Post",
+      "tabs": {
+        "write": "Write",
+        "preview": "Preview"
+      },
+      "toolbar": {
+        "bold": "Bold (Ctrl+B)",
+        "italic": "Italic (Ctrl+I)",
+        "code": "Code",
+        "quote": "Quote",
+        "list": "Bullet list",
+        "link": "Insert link"
+      },
+      "errors": {
+        "titleRequired": "Title is required",
+        "titleTooShort": "Title must be at least {{min}} characters",
+        "titleTooLong": "Title cannot exceed {{max}} characters",
+        "contentRequired": "Content is required",
+        "contentTooShort": "Content must be at least {{min}} characters",
+        "contentTooLong": "Content cannot exceed {{max}} characters",
+        "categoryRequired": "Please select a category",
+        "general": "Failed to submit post. Please try again."
+      }
+    }
   },
   "curriculums": {
     "detail": "Curriculum Details",

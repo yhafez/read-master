@@ -911,7 +911,41 @@
     "views": "{{count}} views",
     "postedBy": "Posted by {{author}}",
     "reply": "Reply",
-    "vote": "Vote"
+    "vote": "Vote",
+    "form": {
+      "createTitle": "Lumikha ng Bagong Post",
+      "editTitle": "I-edit ang Post",
+      "category": "Kategorya",
+      "title": "Pamagat",
+      "titleHelp": "Ang malinaw at deskriptibong pamagat ay tumutulong sa iba na mahanap ang iyong post",
+      "contentPlaceholder": "Isulat ang nilalaman ng iyong post dito...",
+      "markdownSupported": "Sinusuportahan ang Markdown",
+      "formattingHelp": "Pag-format",
+      "previewEmpty": "Wala pang mapre-preview. Magsimulang magsulat upang makita ang preview.",
+      "submit": "I-post",
+      "tabs": {
+        "write": "Sumulat",
+        "preview": "Preview"
+      },
+      "toolbar": {
+        "bold": "Bold",
+        "italic": "Italic",
+        "code": "Code",
+        "quote": "Quote",
+        "list": "Bullet list",
+        "link": "Maglagay ng link"
+      },
+      "errors": {
+        "titleRequired": "Kinakailangan ang pamagat",
+        "titleTooShort": "Ang pamagat ay dapat na hindi bababa sa {{min}} karakter",
+        "titleTooLong": "Ang pamagat ay hindi maaaring lumampas sa {{max}} karakter",
+        "contentRequired": "Kinakailangan ang nilalaman",
+        "contentTooShort": "Ang nilalaman ay dapat na hindi bababa sa {{min}} karakter",
+        "contentTooLong": "Ang nilalaman ay hindi maaaring lumampas sa {{max}} karakter",
+        "categoryRequired": "Mangyaring pumili ng kategorya",
+        "general": "Hindi nakapag-post. Pakisubukang muli."
+      }
+    }
   },
   "curriculums": {
     "detail": "Curriculum Details",

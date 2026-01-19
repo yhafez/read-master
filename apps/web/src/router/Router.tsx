@@ -189,6 +189,10 @@ function createAppRouter() {
               path: ROUTES.FORUM_POST,
               element: <ForumPostPage />,
             },
+            {
+              path: ROUTES.FORUM_EDIT,
+              element: <ForumCreatePage />,
+            },
 
             // Curriculums
             {

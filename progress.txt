@@ -11030,3 +11030,87 @@ Added achievement translations to all 6 locales (en, ar, es, ja, zh, tl):
 - checkAchievementsFromStats allows bulk unlocking from user stats
 
 ---
+
+## Iteration 50 - Forum Create/Edit Page [frontend-075]
+
+**Date:** 2026-01-19
+**Task:** Create/edit forum post with rich text editor
+**Status:** ✅ COMPLETE
+
+### Implementation Details
+
+Created a comprehensive forum post creation and editing page with:
+- Title and content form fields with validation
+- Category selector dropdown
+- Markdown toolbar with formatting options (bold, italic, code, link, quote, list)
+- Write/Preview tabs for markdown content
+- Character counting with limits
+- Edit mode support via route parameter
+- Full internationalization support
+
+### Files Created/Modified
+
+#### apps/web/src/pages/forum/ForumCreatePage.tsx (CREATED)
+- Main forum create/edit page component (~300 lines)
+- Uses extracted utility functions from forumFormUtils.ts
+- Features:
+  - Title field with 3-200 character limit
+  - Content field with 10-50,000 character limit
+  - Category dropdown selector
+  - Markdown toolbar with 6 formatting options
+  - Write/Preview tabs
+  - Real-time character counting
+  - Edit mode detection via useParams
+
+#### apps/web/src/pages/forum/forumFormUtils.ts (CREATED)
+- Extracted utility functions for testing (~180 lines)
+- Functions:
+  - validateForumPostForm: Validates title, content, category
+  - hasFormErrors: Checks for any errors
+  - getCharacterCount: Returns count with display formatting
+  - insertMarkdownFormat: Handles markdown insertion/wrapping
+  - renderMarkdownPreview: Simple markdown to HTML renderer
+
+#### apps/web/src/pages/forum/ForumCreatePage.test.ts (CREATED)
+- Comprehensive tests for utility functions (58 tests)
+- Test coverage:
+  - Form validation (title, content, category)
+  - Error checking
+  - Character counting
+  - Markdown format insertion
+  - Markdown preview rendering
+
+#### apps/web/src/router/routes.ts (MODIFIED)
+- Added `FORUM_EDIT: "/forum/edit/:postId"` route
+- Added `forumEdit(postId: string)` helper function
+- Added route to PROTECTED_ROUTES array
+
+#### apps/web/src/router/Router.tsx (MODIFIED)
+- Added ForumCreatePage import
+- Added route configuration for /forum/edit/:postId
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added forum.form translations to all 6 locales (en, ar, es, ja, zh, tl):
+- Page titles (create/edit modes)
+- Form field labels and placeholders
+- Validation error messages
+- Toolbar button labels
+- Tab labels (write/preview)
+- Character count labels
+- Submit/cancel buttons
+- Category labels
+- Preview empty state
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: 58 new tests pass (pre-existing localStorage failures unrelated)
+
+### Technical Notes
+- Used MUI components throughout (TextField, Select, Tabs, IconButton)
+- Markdown preview escapes HTML for XSS prevention
+- Preview renders bold, italic, code, links, blockquotes, lists
+- Form preserves cursor position after markdown insertion
+- TranslateFn type created for i18next compatibility with strict TypeScript
+
+---

@@ -911,7 +911,41 @@
     "views": "{{count}} مشاهدات",
     "postedBy": "بواسطة {{author}}",
     "reply": "رد",
-    "vote": "تصويت"
+    "vote": "تصويت",
+    "form": {
+      "createTitle": "إنشاء منشور جديد",
+      "editTitle": "تعديل المنشور",
+      "category": "الفئة",
+      "title": "العنوان",
+      "titleHelp": "عنوان واضح ووصفي يساعد الآخرين على إيجاد منشورك",
+      "contentPlaceholder": "اكتب محتوى منشورك هنا...",
+      "markdownSupported": "يدعم Markdown",
+      "formattingHelp": "التنسيق",
+      "previewEmpty": "لا شيء للمعاينة بعد. ابدأ الكتابة لرؤية المعاينة.",
+      "submit": "نشر",
+      "tabs": {
+        "write": "كتابة",
+        "preview": "معاينة"
+      },
+      "toolbar": {
+        "bold": "غامق",
+        "italic": "مائل",
+        "code": "كود",
+        "quote": "اقتباس",
+        "list": "قائمة نقطية",
+        "link": "إدراج رابط"
+      },
+      "errors": {
+        "titleRequired": "العنوان مطلوب",
+        "titleTooShort": "يجب أن يكون العنوان {{min}} أحرف على الأقل",
+        "titleTooLong": "لا يمكن أن يتجاوز العنوان {{max}} حرفًا",
+        "contentRequired": "المحتوى مطلوب",
+        "contentTooShort": "يجب أن يكون المحتوى {{min}} أحرف على الأقل",
+        "contentTooLong": "لا يمكن أن يتجاوز المحتوى {{max}} حرفًا",
+        "categoryRequired": "يرجى اختيار فئة",
+        "general": "فشل في نشر المنشور. يرجى المحاولة مرة أخرى."
+      }
+    }
   },
   "curriculums": {
     "detail": "تفاصيل المنهج",

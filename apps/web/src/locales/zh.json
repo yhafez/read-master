@@ -911,7 +911,41 @@
     "views": "{{count}} views",
     "postedBy": "Posted by {{author}}",
     "reply": "Reply",
-    "vote": "Vote"
+    "vote": "Vote",
+    "form": {
+      "createTitle": "创建新帖子",
+      "editTitle": "编辑帖子",
+      "category": "分类",
+      "title": "标题",
+      "titleHelp": "清晰、描述性的标题有助于其他人找到您的帖子",
+      "contentPlaceholder": "在这里写下你的帖子内容...",
+      "markdownSupported": "支持Markdown",
+      "formattingHelp": "格式",
+      "previewEmpty": "暂无预览内容。开始写作以查看预览。",
+      "submit": "发布",
+      "tabs": {
+        "write": "编写",
+        "preview": "预览"
+      },
+      "toolbar": {
+        "bold": "粗体",
+        "italic": "斜体",
+        "code": "代码",
+        "quote": "引用",
+        "list": "列表",
+        "link": "插入链接"
+      },
+      "errors": {
+        "titleRequired": "标题是必填项",
+        "titleTooShort": "标题至少需要{{min}}个字符",
+        "titleTooLong": "标题不能超过{{max}}个字符",
+        "contentRequired": "内容是必填项",
+        "contentTooShort": "内容至少需要{{min}}个字符",
+        "contentTooLong": "内容不能超过{{max}}个字符",
+        "categoryRequired": "请选择一个分类",
+        "general": "发布失败，请重试。"
+      }
+    }
   },
   "curriculums": {
     "detail": "Curriculum Details",

@@ -911,7 +911,41 @@
     "views": "{{count}} views",
     "postedBy": "Posted by {{author}}",
     "reply": "Reply",
-    "vote": "Vote"
+    "vote": "Vote",
+    "form": {
+      "createTitle": "新規投稿を作成",
+      "editTitle": "投稿を編集",
+      "category": "カテゴリ",
+      "title": "タイトル",
+      "titleHelp": "明確で説明的なタイトルは、他の人があなたの投稿を見つけるのに役立ちます",
+      "contentPlaceholder": "ここに投稿内容を書いてください...",
+      "markdownSupported": "Markdownをサポート",
+      "formattingHelp": "フォーマット",
+      "previewEmpty": "まだプレビューするものがありません。書き始めるとプレビューが表示されます。",
+      "submit": "投稿",
+      "tabs": {
+        "write": "書く",
+        "preview": "プレビュー"
+      },
+      "toolbar": {
+        "bold": "太字",
+        "italic": "斜体",
+        "code": "コード",
+        "quote": "引用",
+        "list": "箇条書き",
+        "link": "リンクを挿入"
+      },
+      "errors": {
+        "titleRequired": "タイトルは必須です",
+        "titleTooShort": "タイトルは{{min}}文字以上必要です",
+        "titleTooLong": "タイトルは{{max}}文字を超えることはできません",
+        "contentRequired": "内容は必須です",
+        "contentTooShort": "内容は{{min}}文字以上必要です",
+        "contentTooLong": "内容は{{max}}文字を超えることはできません",
+        "categoryRequired": "カテゴリを選択してください",
+        "general": "投稿に失敗しました。もう一度お試しください。"
+      }
+    }
   },
   "curriculums": {
     "detail": "Curriculum Details",

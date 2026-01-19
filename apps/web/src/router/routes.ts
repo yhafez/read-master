@@ -38,6 +38,7 @@ export const ROUTES = {
   FORUM_CATEGORY: "/forum/:categorySlug",
   FORUM_POST: "/forum/post/:postId",
   FORUM_CREATE: "/forum/create",
+  FORUM_EDIT: "/forum/edit/:postId",
 
   // Curriculums
   CURRICULUMS: "/curriculums",
@@ -80,6 +81,7 @@ export const routeHelpers = {
     `/groups/${groupId}/discussions`,
   forumCategory: (categorySlug: string): string => `/forum/${categorySlug}`,
   forumPost: (postId: string): string => `/forum/post/${postId}`,
+  forumEdit: (postId: string): string => `/forum/edit/${postId}`,
   curriculum: (curriculumId: string): string => `/curriculums/${curriculumId}`,
 } as const;
 
@@ -103,6 +105,7 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.GROUP_DETAIL,
   ROUTES.GROUP_DISCUSSIONS,
   ROUTES.FORUM_CREATE,
+  ROUTES.FORUM_EDIT,
   ROUTES.CURRICULUMS,
   ROUTES.CURRICULUM_DETAIL,
   ROUTES.CURRICULUM_CREATE,

@@ -911,7 +911,41 @@
     "views": "{{count}} views",
     "postedBy": "Posted by {{author}}",
     "reply": "Reply",
-    "vote": "Vote"
+    "vote": "Vote",
+    "form": {
+      "createTitle": "Crear Nueva Publicación",
+      "editTitle": "Editar Publicación",
+      "category": "Categoría",
+      "title": "Título",
+      "titleHelp": "Un título claro y descriptivo ayuda a otros a encontrar tu publicación",
+      "contentPlaceholder": "Escribe el contenido de tu publicación aquí...",
+      "markdownSupported": "Se admite Markdown",
+      "formattingHelp": "Formato",
+      "previewEmpty": "Nada que previsualizar todavía. Empieza a escribir para ver la vista previa.",
+      "submit": "Publicar",
+      "tabs": {
+        "write": "Escribir",
+        "preview": "Vista previa"
+      },
+      "toolbar": {
+        "bold": "Negrita",
+        "italic": "Cursiva",
+        "code": "Código",
+        "quote": "Cita",
+        "list": "Lista con viñetas",
+        "link": "Insertar enlace"
+      },
+      "errors": {
+        "titleRequired": "El título es obligatorio",
+        "titleTooShort": "El título debe tener al menos {{min}} caracteres",
+        "titleTooLong": "El título no puede exceder {{max}} caracteres",
+        "contentRequired": "El contenido es obligatorio",
+        "contentTooShort": "El contenido debe tener al menos {{min}} caracteres",
+        "contentTooLong": "El contenido no puede exceder {{max}} caracteres",
+        "categoryRequired": "Por favor selecciona una categoría",
+        "general": "Error al publicar. Por favor intenta de nuevo."
+      }
+    }
   },
   "curriculums": {
     "detail": "Curriculum Details",
