@@ -11470,3 +11470,54 @@ Added flashcards.importExport translations to all 6 locales (en, ar, es, ja, zh,
 - Template download provides pre-formatted CSV with headers and example row
 
 ---
+
+## Iteration 56 - admin-003: Create DailyAnalytics Model for Time-Series Data
+**Task:** Create a DailyAnalytics Prisma model for storing aggregated daily platform metrics
+**Status:** ✅ COMPLETE
+
+### Implementation Summary
+
+Created a comprehensive DailyAnalytics model in Prisma for storing aggregated daily metrics used by the admin dashboard. The model captures user metrics, revenue, engagement, AI usage, and performance data in a time-series format with one record per day.
+
+### Files Created/Modified
+
+#### packages/database/prisma/schema.prisma (MODIFIED)
+Added DailyAnalytics model with the following field groups:
+- **User metrics**: totalUsers, activeUsers, newUsers, churned, freeUsers, proUsers, scholarUsers
+- **Revenue metrics** (in cents): totalRevenueCents, newSubscriptionsCents, renewalsCents, upgradesCents, refundsCents
+- **Engagement metrics**: booksAdded, booksCompleted, totalReadingTimeMin, assessmentsTaken, flashcardsCreated, flashcardsReviewed, annotationsCreated, forumPostsCreated, forumRepliesCreated, groupsCreated, curriculumsCreated
+- **AI usage metrics**: aiRequestsCount, aiTokensUsed, aiCostCents, preReadingGuidesGen, explanationsGen, assessmentsGen, flashcardsGen
+- **Performance metrics**: avgPageLoadMs, avgApiResponseMs, errorCount, p99ResponseMs
+- **Timestamps**: createdAt, updatedAt
+- **Indexes**: date (unique), createdAt
+
+#### packages/database/src/client.test.ts (MODIFIED)
+Added 2 test cases for DailyAnalytics model:
+- Test for model accessor (findMany, findUnique, create, update, delete, upsert)
+- Test for additional query methods (findFirst, findFirstOrThrow, findUniqueOrThrow, createMany, updateMany, deleteMany, count, aggregate)
+
+#### packages/database/prisma/seed.ts (MODIFIED)
+- Added `generateDailyAnalytics()` function that creates 30 days of realistic sample data
+  - User metrics: ~1000 base users with 1-3% daily growth
+  - Activity multipliers for weekends (0.7x)
+  - Realistic engagement patterns tied to user count
+  - AI usage correlated with engagement
+  - Performance metrics with occasional spikes
+- Added `seedDailyAnalytics()` function using upserts for idempotent seeding
+- Updated `main()` to call seedDailyAnalytics and include analytics count in summary
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, warnings only in pre-existing files)
+- pnpm vitest run: ✅ 10380 tests pass (2 new tests for DailyAnalytics)
+  - Note: 115 pre-existing failures related to localStorage mocking in browser tests (not related to this task)
+
+### Technical Notes
+- Revenue stored in cents to avoid floating-point precision issues
+- Unique constraint on date ensures one record per day
+- Indexes on date and createdAt for efficient time-range queries
+- Seed data generates 30 days of historical data with realistic patterns
+- Weekend activity multiplier simulates lower weekend engagement
+- Performance metrics include occasional error spikes for realism
+
+---

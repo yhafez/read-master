@@ -556,6 +556,29 @@ describe("Prisma Client Singleton", () => {
       expect(typeof prisma.auditLog.count).toBe("function");
       expect(typeof prisma.auditLog.aggregate).toBe("function");
     });
+
+    // Analytics Models - DailyAnalytics
+
+    it("should have dailyAnalytics model accessor", () => {
+      expect(prisma.dailyAnalytics).toBeDefined();
+      expect(typeof prisma.dailyAnalytics.findMany).toBe("function");
+      expect(typeof prisma.dailyAnalytics.findUnique).toBe("function");
+      expect(typeof prisma.dailyAnalytics.create).toBe("function");
+      expect(typeof prisma.dailyAnalytics.update).toBe("function");
+      expect(typeof prisma.dailyAnalytics.delete).toBe("function");
+      expect(typeof prisma.dailyAnalytics.upsert).toBe("function");
+    });
+
+    it("should have dailyAnalytics model with expected query methods", () => {
+      expect(typeof prisma.dailyAnalytics.findFirst).toBe("function");
+      expect(typeof prisma.dailyAnalytics.findFirstOrThrow).toBe("function");
+      expect(typeof prisma.dailyAnalytics.findUniqueOrThrow).toBe("function");
+      expect(typeof prisma.dailyAnalytics.createMany).toBe("function");
+      expect(typeof prisma.dailyAnalytics.updateMany).toBe("function");
+      expect(typeof prisma.dailyAnalytics.deleteMany).toBe("function");
+      expect(typeof prisma.dailyAnalytics.count).toBe("function");
+      expect(typeof prisma.dailyAnalytics.aggregate).toBe("function");
+    });
   });
 
   describe("utility functions", () => {

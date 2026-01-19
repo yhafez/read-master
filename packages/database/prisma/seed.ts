@@ -635,6 +635,197 @@ const SAMPLE_BOOKS = [
 ];
 
 // =============================================================================
+// SAMPLE DAILY ANALYTICS
+// Time-series data for admin dashboard testing
+// =============================================================================
+
+/**
+ * Generate sample daily analytics for the past 30 days
+ * This creates realistic-looking time-series data with:
+ * - Growing user base
+ * - Varying engagement metrics
+ * - Weekend dips in activity
+ * - AI usage patterns
+ */
+function generateDailyAnalytics(): Array<{
+  date: Date;
+  totalUsers: number;
+  activeUsers: number;
+  newUsers: number;
+  churned: number;
+  freeUsers: number;
+  proUsers: number;
+  scholarUsers: number;
+  totalRevenueCents: number;
+  newSubscriptionsCents: number;
+  renewalsCents: number;
+  upgradesCents: number;
+  refundsCents: number;
+  booksAdded: number;
+  booksCompleted: number;
+  totalReadingTimeMin: number;
+  assessmentsTaken: number;
+  flashcardsCreated: number;
+  flashcardsReviewed: number;
+  annotationsCreated: number;
+  forumPostsCreated: number;
+  forumRepliesCreated: number;
+  groupsCreated: number;
+  curriculumsCreated: number;
+  aiRequestsCount: number;
+  aiTokensUsed: number;
+  aiCostCents: number;
+  preReadingGuidesGen: number;
+  explanationsGen: number;
+  assessmentsGen: number;
+  flashcardsGen: number;
+  avgPageLoadMs: number;
+  avgApiResponseMs: number;
+  errorCount: number;
+  p99ResponseMs: number;
+}> {
+  const analytics = [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Base metrics that grow over time
+  let baseUsers = 1000;
+  let baseFreeUsers = 750;
+  let baseProUsers = 200;
+  let baseScholarUsers = 50;
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+
+    // Check if weekend (lower activity)
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const activityMultiplier = isWeekend ? 0.6 : 1.0;
+
+    // Daily growth
+    const dailyGrowth = Math.floor(Math.random() * 15) + 5;
+    baseUsers += dailyGrowth;
+    baseFreeUsers += Math.floor(dailyGrowth * 0.75);
+    baseProUsers += Math.floor(dailyGrowth * 0.2);
+    baseScholarUsers += Math.floor(dailyGrowth * 0.05);
+
+    // Calculate metrics with some randomness
+    const activeUsers = Math.floor(
+      baseUsers * (0.15 + Math.random() * 0.1) * activityMultiplier
+    );
+    const newUsers = Math.floor(Math.random() * 20) + 5;
+    const churned = Math.floor(Math.random() * 5);
+
+    // Revenue (in cents)
+    const newSubs = Math.floor(Math.random() * 5) * 999; // $9.99 plans
+    const renewals = Math.floor(Math.random() * 10) * 999;
+    const upgrades = Math.floor(Math.random() * 3) * 1000; // $10 upgrade difference
+    const refunds = Math.floor(Math.random() * 2) * 999;
+
+    // Engagement
+    const booksAdded = Math.floor(
+      (Math.random() * 30 + 10) * activityMultiplier
+    );
+    const booksCompleted = Math.floor(
+      (Math.random() * 10 + 2) * activityMultiplier
+    );
+    const readingTime = Math.floor(
+      (Math.random() * 5000 + 2000) * activityMultiplier
+    );
+    const assessments = Math.floor(
+      (Math.random() * 20 + 5) * activityMultiplier
+    );
+    const flashcardsCreated = Math.floor(
+      (Math.random() * 100 + 30) * activityMultiplier
+    );
+    const flashcardsReviewed = Math.floor(
+      (Math.random() * 500 + 100) * activityMultiplier
+    );
+    const annotations = Math.floor(
+      (Math.random() * 80 + 20) * activityMultiplier
+    );
+    const forumPosts = Math.floor(
+      (Math.random() * 15 + 2) * activityMultiplier
+    );
+    const forumReplies = Math.floor(
+      (Math.random() * 40 + 10) * activityMultiplier
+    );
+    const groups = Math.floor(Math.random() * 3);
+    const curriculums = Math.floor(Math.random() * 2);
+
+    // AI usage
+    const aiRequests = Math.floor(
+      (Math.random() * 200 + 50) * activityMultiplier
+    );
+    const aiTokens = aiRequests * (Math.floor(Math.random() * 1000) + 500);
+    const aiCost = Math.floor(aiTokens * 0.002); // ~$0.002 per 1k tokens
+
+    // Pre-reading guides (most expensive, less frequent)
+    const preReadingGuides = Math.floor(
+      (Math.random() * 10 + 2) * activityMultiplier
+    );
+    // Explanations (moderate usage)
+    const explanations = Math.floor(
+      (Math.random() * 50 + 10) * activityMultiplier
+    );
+    // AI assessments
+    const aiAssessments = Math.floor(
+      (Math.random() * 15 + 3) * activityMultiplier
+    );
+    // AI flashcards
+    const aiFlashcards = Math.floor(
+      (Math.random() * 40 + 10) * activityMultiplier
+    );
+
+    // Performance
+    const avgPageLoad = Math.floor(Math.random() * 500) + 300;
+    const avgApiResponse = Math.floor(Math.random() * 100) + 50;
+    const errors = Math.floor(Math.random() * 10);
+    const p99Response = avgApiResponse * 3 + Math.floor(Math.random() * 200);
+
+    analytics.push({
+      date,
+      totalUsers: baseUsers,
+      activeUsers,
+      newUsers,
+      churned,
+      freeUsers: baseFreeUsers,
+      proUsers: baseProUsers,
+      scholarUsers: baseScholarUsers,
+      totalRevenueCents: newSubs + renewals + upgrades - refunds,
+      newSubscriptionsCents: newSubs,
+      renewalsCents: renewals,
+      upgradesCents: upgrades,
+      refundsCents: refunds,
+      booksAdded,
+      booksCompleted,
+      totalReadingTimeMin: readingTime,
+      assessmentsTaken: assessments,
+      flashcardsCreated,
+      flashcardsReviewed,
+      annotationsCreated: annotations,
+      forumPostsCreated: forumPosts,
+      forumRepliesCreated: forumReplies,
+      groupsCreated: groups,
+      curriculumsCreated: curriculums,
+      aiRequestsCount: aiRequests,
+      aiTokensUsed: aiTokens,
+      aiCostCents: aiCost,
+      preReadingGuidesGen: preReadingGuides,
+      explanationsGen: explanations,
+      assessmentsGen: aiAssessments,
+      flashcardsGen: aiFlashcards,
+      avgPageLoadMs: avgPageLoad,
+      avgApiResponseMs: avgApiResponse,
+      errorCount: errors,
+      p99ResponseMs: p99Response,
+    });
+  }
+
+  return analytics;
+}
+
+// =============================================================================
 // SEED FUNCTIONS
 // =============================================================================
 
@@ -776,6 +967,95 @@ async function seedUsers() {
   return createdUsers;
 }
 
+async function seedDailyAnalytics() {
+  console.log("📊 Seeding daily analytics...");
+
+  const analyticsData = generateDailyAnalytics();
+  let seededCount = 0;
+
+  for (const data of analyticsData) {
+    await prisma.dailyAnalytics.upsert({
+      where: { date: data.date },
+      update: {
+        totalUsers: data.totalUsers,
+        activeUsers: data.activeUsers,
+        newUsers: data.newUsers,
+        churned: data.churned,
+        freeUsers: data.freeUsers,
+        proUsers: data.proUsers,
+        scholarUsers: data.scholarUsers,
+        totalRevenueCents: data.totalRevenueCents,
+        newSubscriptionsCents: data.newSubscriptionsCents,
+        renewalsCents: data.renewalsCents,
+        upgradesCents: data.upgradesCents,
+        refundsCents: data.refundsCents,
+        booksAdded: data.booksAdded,
+        booksCompleted: data.booksCompleted,
+        totalReadingTimeMin: data.totalReadingTimeMin,
+        assessmentsTaken: data.assessmentsTaken,
+        flashcardsCreated: data.flashcardsCreated,
+        flashcardsReviewed: data.flashcardsReviewed,
+        annotationsCreated: data.annotationsCreated,
+        forumPostsCreated: data.forumPostsCreated,
+        forumRepliesCreated: data.forumRepliesCreated,
+        groupsCreated: data.groupsCreated,
+        curriculumsCreated: data.curriculumsCreated,
+        aiRequestsCount: data.aiRequestsCount,
+        aiTokensUsed: data.aiTokensUsed,
+        aiCostCents: data.aiCostCents,
+        preReadingGuidesGen: data.preReadingGuidesGen,
+        explanationsGen: data.explanationsGen,
+        assessmentsGen: data.assessmentsGen,
+        flashcardsGen: data.flashcardsGen,
+        avgPageLoadMs: data.avgPageLoadMs,
+        avgApiResponseMs: data.avgApiResponseMs,
+        errorCount: data.errorCount,
+        p99ResponseMs: data.p99ResponseMs,
+      },
+      create: {
+        date: data.date,
+        totalUsers: data.totalUsers,
+        activeUsers: data.activeUsers,
+        newUsers: data.newUsers,
+        churned: data.churned,
+        freeUsers: data.freeUsers,
+        proUsers: data.proUsers,
+        scholarUsers: data.scholarUsers,
+        totalRevenueCents: data.totalRevenueCents,
+        newSubscriptionsCents: data.newSubscriptionsCents,
+        renewalsCents: data.renewalsCents,
+        upgradesCents: data.upgradesCents,
+        refundsCents: data.refundsCents,
+        booksAdded: data.booksAdded,
+        booksCompleted: data.booksCompleted,
+        totalReadingTimeMin: data.totalReadingTimeMin,
+        assessmentsTaken: data.assessmentsTaken,
+        flashcardsCreated: data.flashcardsCreated,
+        flashcardsReviewed: data.flashcardsReviewed,
+        annotationsCreated: data.annotationsCreated,
+        forumPostsCreated: data.forumPostsCreated,
+        forumRepliesCreated: data.forumRepliesCreated,
+        groupsCreated: data.groupsCreated,
+        curriculumsCreated: data.curriculumsCreated,
+        aiRequestsCount: data.aiRequestsCount,
+        aiTokensUsed: data.aiTokensUsed,
+        aiCostCents: data.aiCostCents,
+        preReadingGuidesGen: data.preReadingGuidesGen,
+        explanationsGen: data.explanationsGen,
+        assessmentsGen: data.assessmentsGen,
+        flashcardsGen: data.flashcardsGen,
+        avgPageLoadMs: data.avgPageLoadMs,
+        avgApiResponseMs: data.avgApiResponseMs,
+        errorCount: data.errorCount,
+        p99ResponseMs: data.p99ResponseMs,
+      },
+    });
+    seededCount++;
+  }
+
+  console.log(`   ✓ Seeded ${seededCount} days of analytics data`);
+}
+
 async function seedBooks(users: Array<{ id: string }>) {
   console.log("📚 Seeding books...");
 
@@ -832,6 +1112,7 @@ async function main() {
     await seedForumCategories();
     const users = await seedUsers();
     await seedBooks(users);
+    await seedDailyAnalytics();
 
     console.log("");
     console.log("✅ Database seeded successfully!");
@@ -841,6 +1122,7 @@ async function main() {
     console.log(`  - ${FORUM_CATEGORIES.length} forum categories`);
     console.log(`  - ${SAMPLE_USERS.length} sample users`);
     console.log(`  - ${SAMPLE_BOOKS.length} sample books`);
+    console.log(`  - 30 days of analytics data`);
     console.log("");
   } catch (error) {
     console.error("");

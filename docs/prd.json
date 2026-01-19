@@ -4817,7 +4817,7 @@
         "Seed data includes sample analytics",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-004",

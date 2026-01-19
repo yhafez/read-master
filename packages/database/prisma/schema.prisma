@@ -1148,6 +1148,65 @@ model AIUsageLog {
   @@index([bookId])
 }
 
+/// DailyAnalytics - Time-series data for platform analytics
+/// Stores aggregated daily metrics for admin dashboard and reporting
+model DailyAnalytics {
+  id   String   @id @default(cuid())
+  date DateTime @unique @db.Date // Unique date for analytics (one record per day)
+
+  // User metrics
+  totalUsers   Int @default(0) // Total registered users (cumulative)
+  activeUsers  Int @default(0) // Users active on this day
+  newUsers     Int @default(0) // New registrations on this day
+  churned      Int @default(0) // Users who churned on this day
+  freeUsers    Int @default(0) // Total free tier users
+  proUsers     Int @default(0) // Total pro tier users
+  scholarUsers Int @default(0) // Total scholar tier users
+
+  // Revenue metrics (in cents to avoid floating point issues)
+  totalRevenueCents     Int @default(0) // Total revenue on this day in cents
+  newSubscriptionsCents Int @default(0) // Revenue from new subscriptions
+  renewalsCents         Int @default(0) // Revenue from renewals
+  upgradesCents         Int @default(0) // Revenue from upgrades
+  refundsCents          Int @default(0) // Refunds issued
+
+  // Engagement metrics
+  booksAdded          Int @default(0) // Books added on this day
+  booksCompleted      Int @default(0) // Books marked completed
+  totalReadingTimeMin Int @default(0) // Total reading time in minutes across all users
+  assessmentsTaken    Int @default(0) // Assessments completed
+  flashcardsCreated   Int @default(0) // New flashcards created
+  flashcardsReviewed  Int @default(0) // Flashcard reviews on this day
+  annotationsCreated  Int @default(0) // New annotations created
+  forumPostsCreated   Int @default(0) // New forum posts
+  forumRepliesCreated Int @default(0) // New forum replies
+  groupsCreated       Int @default(0) // New reading groups created
+  curriculumsCreated  Int @default(0) // New curriculums created
+
+  // AI usage metrics
+  aiRequestsCount     Int @default(0) // Total AI API requests
+  aiTokensUsed        Int @default(0) // Total tokens used
+  aiCostCents         Int @default(0) // Total AI cost in cents
+  preReadingGuidesGen Int @default(0) // Pre-reading guides generated
+  explanationsGen     Int @default(0) // Explanations generated
+  assessmentsGen      Int @default(0) // AI assessments generated
+  flashcardsGen       Int @default(0) // AI flashcards generated
+
+  // Performance metrics
+  avgPageLoadMs    Int? // Average page load time in milliseconds
+  avgApiResponseMs Int? // Average API response time
+  errorCount       Int  @default(0) // Number of errors logged
+  p99ResponseMs    Int? // 99th percentile response time
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes for efficient date range queries
+  @@index([date])
+  @@index([createdAt])
+}
+
 /// AuditLog - Tracks important user and system actions for security and compliance
 /// Used for change history, security auditing, and debugging
 model AuditLog {
