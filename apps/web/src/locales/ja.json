@@ -423,7 +423,12 @@
       "togglePosition": "パネル位置を切り替え",
       "searchPlaceholder": "メモを検索...",
       "filter": "メモをフィルター",
-      "sort": "メモを並べ替え",
+      "sort": {
+        "created": "作成日",
+        "updated": "更新日",
+        "position": "位置",
+        "type": "種類"
+      },
       "noNote": "メモが追加されていません",
       "noAnnotations": "まだ注釈がありません",
       "noSearchResults": "検索に一致するメモがありません",
@@ -435,12 +440,6 @@
         "notesOnly": "メモのみ",
         "withNotes": "メモ付き",
         "recent": "最近"
-      },
-      "sort": {
-        "created": "作成日",
-        "updated": "更新日",
-        "position": "位置",
-        "type": "種類"
       }
     },
     "export": {
@@ -1070,7 +1069,46 @@
     "title": "Forum",
     "category": "Forum Category",
     "categoryPlaceholder": "Posts in {{category}} will appear here.",
-    "post": "Forum Post",
+    "post": {
+      "loadError": "投稿の読み込みに失敗しました。もう一度お試しください。",
+      "notFound": "投稿が見つかりません。",
+      "upvote": "賛成",
+      "downvote": "反対",
+      "bestAnswer": "ベストアンサー",
+      "markBestAnswer": "ベストアンサーに設定",
+      "op": "投稿者",
+      "noReplies": "まだ返信がありません。",
+      "beFirstToReply": "最初に返信する",
+      "showReplies": "{{count}}件の返信を表示",
+      "hideReplies": "返信を非表示",
+      "justNow": "たった今",
+      "timeAgo": "{{time}}前",
+      "inTime": "{{time}}後",
+      "time": {
+        "seconds": "{{count}}秒",
+        "minutes": "{{count}}分",
+        "hours": "{{count}}時間",
+        "days": "{{count}}日",
+        "weeks": "{{count}}週間",
+        "months": "{{count}}ヶ月",
+        "years": "{{count}}年"
+      },
+      "sort": {
+        "best": "ベスト",
+        "newest": "新着順",
+        "oldest": "古い順",
+        "controversial": "議論中"
+      },
+      "reply": {
+        "action": "返信",
+        "placeholder": "返信を入力...",
+        "replyTo": "{{name}}に返信...",
+        "writeReply": "返信を書く",
+        "submit": "返信する",
+        "contentRequired": "返信内容は必須です",
+        "submitError": "返信の送信に失敗しました。もう一度お試しください。"
+      }
+    },
     "postPlaceholder": "Post {{postId}} will appear here.",
     "create": "Create Post",
     "newPost": "New Post",
@@ -1113,46 +1151,6 @@
         "contentTooLong": "内容は{{max}}文字を超えることはできません",
         "categoryRequired": "カテゴリを選択してください",
         "general": "投稿に失敗しました。もう一度お試しください。"
-      }
-    },
-    "post": {
-      "loadError": "投稿の読み込みに失敗しました。もう一度お試しください。",
-      "notFound": "投稿が見つかりません。",
-      "upvote": "賛成",
-      "downvote": "反対",
-      "bestAnswer": "ベストアンサー",
-      "markBestAnswer": "ベストアンサーに設定",
-      "op": "投稿者",
-      "noReplies": "まだ返信がありません。",
-      "beFirstToReply": "最初に返信する",
-      "showReplies": "{{count}}件の返信を表示",
-      "hideReplies": "返信を非表示",
-      "justNow": "たった今",
-      "timeAgo": "{{time}}前",
-      "inTime": "{{time}}後",
-      "time": {
-        "seconds": "{{count}}秒",
-        "minutes": "{{count}}分",
-        "hours": "{{count}}時間",
-        "days": "{{count}}日",
-        "weeks": "{{count}}週間",
-        "months": "{{count}}ヶ月",
-        "years": "{{count}}年"
-      },
-      "sort": {
-        "best": "ベスト",
-        "newest": "新着順",
-        "oldest": "古い順",
-        "controversial": "議論中"
-      },
-      "reply": {
-        "action": "返信",
-        "placeholder": "返信を入力...",
-        "replyTo": "{{name}}に返信...",
-        "writeReply": "返信を書く",
-        "submit": "返信する",
-        "contentRequired": "返信内容は必須です",
-        "submitError": "返信の送信に失敗しました。もう一度お試しください。"
       }
     }
   },
@@ -1414,6 +1412,58 @@
       "resetSettings": "デフォルトにリセット",
       "resetConfirm": "すべての読書設定をデフォルトにリセットしてもよろしいですか？",
       "saved": "読書設定を保存しました"
+    },
+    "reader": {
+      "title": "Reader Preferences",
+      "description": "Configure default settings that apply when you open new books.",
+      "generalPreferences": "General Preferences",
+      "autoSaveProgress": "Auto-save reading progress",
+      "autoSaveProgressDescription": "Automatically save your reading position as you read",
+      "pageTurnAnimation": "Page Turn Animation",
+      "pageTurnAnimationDescription": "Choose the animation style for turning pages",
+      "defaultReaderSettings": "Default Reader Settings",
+      "defaultReaderSettingsDescription": "These settings will be applied when you open a new book",
+      "readingMode": "Reading Mode",
+      "showPageNumbers": "Show page numbers",
+      "showProgressBar": "Show progress bar",
+      "showEstimatedTime": "Show estimated reading time",
+      "bionicReading": "Bionic reading mode",
+      "highlightParagraph": "Highlight current paragraph",
+      "autoScrollSpeed": "Auto-scroll speed",
+      "typography": "Typography",
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "visual": "Visual Preferences",
+      "margins": "Page margins",
+      "maxWidth": "Maximum content width",
+      "maxWidthDescription": "Set to 0 for full width",
+      "fullWidth": "Full Width",
+      "reset": "Reset to Defaults",
+      "resetDescription": "Reset all reader preferences to default values",
+      "resetButton": "Reset Preferences",
+      "resetSuccess": "Reader preferences reset to defaults",
+      "infoMessage": "These preferences will be applied as defaults when you open new books. You can change settings for individual books in the reader.",
+      "settings": {
+        "readingMode": {
+          "paginated": "Paginated",
+          "scroll": "Scroll",
+          "spread": "Spread"
+        },
+        "pageTurnAnimation": {
+          "none": "None",
+          "slide": "Slide",
+          "fade": "Fade",
+          "flip": "Flip (3D)"
+        },
+        "fontFamily": {
+          "system": "System Default",
+          "serif": "Serif",
+          "sansSerif": "Sans-Serif",
+          "monospace": "Monospace",
+          "openDyslexic": "OpenDyslexic"
+        }
+      }
     }
   },
   "languages": {

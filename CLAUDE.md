@@ -145,7 +145,12 @@ read-master/
 
 1. Always use TypeScript with strict mode enabled
 2. Prefer `type` over `interface` unless extending
-3. Use `unknown` over `any` - if `any` is necessary, add a comment explaining why
+3. **NEVER use `any` type in production code** - Use `unknown` instead and narrow the type
+   - ❌ **FORBIDDEN**: `any` or `// eslint-disable-next-line @typescript-eslint/no-explicit-any` in production code (components, pages, utils, API routes, stores, hooks, etc.)
+   - ✅ **Exception**: Test files (`.test.ts`, `.spec.ts`) may use `any` when absolutely necessary for mocking or testing complex types
+   - ✅ **Better approach**: Even in tests, prefer `unknown` or proper typing when possible
+   - If you must use `any` in a test file, add a comment explaining why it's unavoidable
+   - **Rationale**: `any` defeats TypeScript's type safety and leads to runtime errors. Use `unknown` and narrow with type guards instead.
 4. All function parameters and return types must be explicitly typed
 5. Use `as const` assertions for literal types
 
@@ -187,7 +192,12 @@ read-master/
 
 ### ESLint
 
-1. Fix ESLint errors and warnings before committing rather than ignoring them with `// eslint-disable-next-line`.
+1. **NEVER use `// eslint-disable-next-line` to bypass linting errors** - Fix the underlying issue instead
+   - ❌ **FORBIDDEN**: `// eslint-disable-next-line` in production code (especially `@typescript-eslint/no-explicit-any`)
+   - ✅ **Exception**: Test files (`.test.ts`, `.spec.ts`) may use `// eslint-disable-next-line` sparingly when testing error conditions or edge cases that intentionally violate rules
+   - If you must disable a rule in a test file, add a comment explaining why it's necessary for that specific test case
+   - When committing, all ESLint errors must be resolved by fixing the code, not by disabling the linter
+   - **Rationale**: ESLint catches real problems. Disabling it hides bugs and technical debt.
 
 ### Imports
 

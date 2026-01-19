@@ -1414,6 +1414,58 @@
       "resetSettings": "Reset to Defaults",
       "resetConfirm": "Are you sure you want to reset all reading settings to defaults?",
       "saved": "Reading settings saved"
+    },
+    "reader": {
+      "title": "Reader Preferences",
+      "description": "Configure default settings that apply when you open new books.",
+      "generalPreferences": "General Preferences",
+      "autoSaveProgress": "Auto-save reading progress",
+      "autoSaveProgressDescription": "Automatically save your reading position as you read",
+      "pageTurnAnimation": "Page Turn Animation",
+      "pageTurnAnimationDescription": "Choose the animation style for turning pages",
+      "defaultReaderSettings": "Default Reader Settings",
+      "defaultReaderSettingsDescription": "These settings will be applied when you open a new book",
+      "readingMode": "Reading Mode",
+      "showPageNumbers": "Show page numbers",
+      "showProgressBar": "Show progress bar",
+      "showEstimatedTime": "Show estimated reading time",
+      "bionicReading": "Bionic reading mode",
+      "highlightParagraph": "Highlight current paragraph",
+      "autoScrollSpeed": "Auto-scroll speed",
+      "typography": "Typography",
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "visual": "Visual Preferences",
+      "margins": "Page margins",
+      "maxWidth": "Maximum content width",
+      "maxWidthDescription": "Set to 0 for full width",
+      "fullWidth": "Full Width",
+      "reset": "Reset to Defaults",
+      "resetDescription": "Reset all reader preferences to default values",
+      "resetButton": "Reset Preferences",
+      "resetSuccess": "Reader preferences reset to defaults",
+      "infoMessage": "These preferences will be applied as defaults when you open new books. You can change settings for individual books in the reader.",
+      "settings": {
+        "readingMode": {
+          "paginated": "Paginated",
+          "scroll": "Scroll",
+          "spread": "Spread"
+        },
+        "pageTurnAnimation": {
+          "none": "None",
+          "slide": "Slide",
+          "fade": "Fade",
+          "flip": "Flip (3D)"
+        },
+        "fontFamily": {
+          "system": "System Default",
+          "serif": "Serif",
+          "sansSerif": "Sans-Serif",
+          "monospace": "Monospace",
+          "openDyslexic": "OpenDyslexic"
+        }
+      }
     }
   },
   "languages": {

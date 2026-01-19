@@ -423,7 +423,12 @@
       "togglePosition": "Cambiar posición del panel",
       "searchPlaceholder": "Buscar notas...",
       "filter": "Filtrar notas",
-      "sort": "Ordenar notas",
+      "sort": {
+        "created": "Fecha de creación",
+        "updated": "Fecha de actualización",
+        "position": "Posición",
+        "type": "Tipo"
+      },
       "noNote": "Sin nota añadida",
       "noAnnotations": "Aún no hay anotaciones",
       "noSearchResults": "No hay notas que coincidan con tu búsqueda",
@@ -435,12 +440,6 @@
         "notesOnly": "Solo Notas",
         "withNotes": "Con Notas",
         "recent": "Recientes"
-      },
-      "sort": {
-        "created": "Fecha de creación",
-        "updated": "Fecha de actualización",
-        "position": "Posición",
-        "type": "Tipo"
       }
     },
     "export": {
@@ -1070,7 +1069,46 @@
     "title": "Forum",
     "category": "Forum Category",
     "categoryPlaceholder": "Posts in {{category}} will appear here.",
-    "post": "Forum Post",
+    "post": {
+      "loadError": "Error al cargar la publicación. Por favor intenta de nuevo.",
+      "notFound": "Publicación no encontrada.",
+      "upvote": "Votar a favor",
+      "downvote": "Votar en contra",
+      "bestAnswer": "Mejor respuesta",
+      "markBestAnswer": "Marcar como mejor respuesta",
+      "op": "OP",
+      "noReplies": "Aún no hay respuestas.",
+      "beFirstToReply": "Sé el primero en responder",
+      "showReplies": "Mostrar {{count}} respuestas",
+      "hideReplies": "Ocultar respuestas",
+      "justNow": "ahora mismo",
+      "timeAgo": "hace {{time}}",
+      "inTime": "en {{time}}",
+      "time": {
+        "seconds": "{{count}} segundos",
+        "minutes": "{{count}} minutos",
+        "hours": "{{count}} horas",
+        "days": "{{count}} días",
+        "weeks": "{{count}} semanas",
+        "months": "{{count}} meses",
+        "years": "{{count}} años"
+      },
+      "sort": {
+        "best": "Mejor",
+        "newest": "Más reciente",
+        "oldest": "Más antiguo",
+        "controversial": "Controversial"
+      },
+      "reply": {
+        "action": "Responder",
+        "placeholder": "Escribe tu respuesta...",
+        "replyTo": "Responder a {{name}}...",
+        "writeReply": "Escribir una respuesta",
+        "submit": "Responder",
+        "contentRequired": "El contenido de la respuesta es obligatorio",
+        "submitError": "Error al enviar respuesta. Por favor intenta de nuevo."
+      }
+    },
     "postPlaceholder": "Post {{postId}} will appear here.",
     "create": "Create Post",
     "newPost": "New Post",
@@ -1113,46 +1151,6 @@
         "contentTooLong": "El contenido no puede exceder {{max}} caracteres",
         "categoryRequired": "Por favor selecciona una categoría",
         "general": "Error al publicar. Por favor intenta de nuevo."
-      }
-    },
-    "post": {
-      "loadError": "Error al cargar la publicación. Por favor intenta de nuevo.",
-      "notFound": "Publicación no encontrada.",
-      "upvote": "Votar a favor",
-      "downvote": "Votar en contra",
-      "bestAnswer": "Mejor respuesta",
-      "markBestAnswer": "Marcar como mejor respuesta",
-      "op": "OP",
-      "noReplies": "Aún no hay respuestas.",
-      "beFirstToReply": "Sé el primero en responder",
-      "showReplies": "Mostrar {{count}} respuestas",
-      "hideReplies": "Ocultar respuestas",
-      "justNow": "ahora mismo",
-      "timeAgo": "hace {{time}}",
-      "inTime": "en {{time}}",
-      "time": {
-        "seconds": "{{count}} segundos",
-        "minutes": "{{count}} minutos",
-        "hours": "{{count}} horas",
-        "days": "{{count}} días",
-        "weeks": "{{count}} semanas",
-        "months": "{{count}} meses",
-        "years": "{{count}} años"
-      },
-      "sort": {
-        "best": "Mejor",
-        "newest": "Más reciente",
-        "oldest": "Más antiguo",
-        "controversial": "Controversial"
-      },
-      "reply": {
-        "action": "Responder",
-        "placeholder": "Escribe tu respuesta...",
-        "replyTo": "Responder a {{name}}...",
-        "writeReply": "Escribir una respuesta",
-        "submit": "Responder",
-        "contentRequired": "El contenido de la respuesta es obligatorio",
-        "submitError": "Error al enviar respuesta. Por favor intenta de nuevo."
       }
     }
   },
@@ -1414,6 +1412,58 @@
       "resetSettings": "Restablecer Valores",
       "resetConfirm": "¿Estás seguro de que quieres restablecer toda la configuración de lectura a los valores predeterminados?",
       "saved": "Configuración de lectura guardada"
+    },
+    "reader": {
+      "title": "Reader Preferences",
+      "description": "Configure default settings that apply when you open new books.",
+      "generalPreferences": "General Preferences",
+      "autoSaveProgress": "Auto-save reading progress",
+      "autoSaveProgressDescription": "Automatically save your reading position as you read",
+      "pageTurnAnimation": "Page Turn Animation",
+      "pageTurnAnimationDescription": "Choose the animation style for turning pages",
+      "defaultReaderSettings": "Default Reader Settings",
+      "defaultReaderSettingsDescription": "These settings will be applied when you open a new book",
+      "readingMode": "Reading Mode",
+      "showPageNumbers": "Show page numbers",
+      "showProgressBar": "Show progress bar",
+      "showEstimatedTime": "Show estimated reading time",
+      "bionicReading": "Bionic reading mode",
+      "highlightParagraph": "Highlight current paragraph",
+      "autoScrollSpeed": "Auto-scroll speed",
+      "typography": "Typography",
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "visual": "Visual Preferences",
+      "margins": "Page margins",
+      "maxWidth": "Maximum content width",
+      "maxWidthDescription": "Set to 0 for full width",
+      "fullWidth": "Full Width",
+      "reset": "Reset to Defaults",
+      "resetDescription": "Reset all reader preferences to default values",
+      "resetButton": "Reset Preferences",
+      "resetSuccess": "Reader preferences reset to defaults",
+      "infoMessage": "These preferences will be applied as defaults when you open new books. You can change settings for individual books in the reader.",
+      "settings": {
+        "readingMode": {
+          "paginated": "Paginated",
+          "scroll": "Scroll",
+          "spread": "Spread"
+        },
+        "pageTurnAnimation": {
+          "none": "None",
+          "slide": "Slide",
+          "fade": "Fade",
+          "flip": "Flip (3D)"
+        },
+        "fontFamily": {
+          "system": "System Default",
+          "serif": "Serif",
+          "sansSerif": "Sans-Serif",
+          "monospace": "Monospace",
+          "openDyslexic": "OpenDyslexic"
+        }
+      }
     }
   },
   "languages": {

@@ -3,6 +3,86 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19 - 14:40]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: frontend-090 - Reader preferences page
+
+WHAT WAS DONE:
+- Created `apps/web/src/stores/readerPreferencesStore.ts` (190 lines)
+  - New Zustand store for reader preferences with localStorage persistence
+  - Settings: autoSaveProgress, pageTurnAnimation, defaultReaderSettings
+  - Page turn animations: none, slide, fade, flip (3D)
+  - Default reader settings applied when opening new books
+  - Validation and sanitization functions
+  - Full TypeScript types and exports
+- Created `apps/web/src/pages/settings/SettingsReaderPage.tsx` (657 lines)
+  - Comprehensive reader preferences UI with MUI components
+  - General preferences: auto-save progress, page turn animation
+  - Default reader settings: reading mode, display toggles, auto-scroll
+  - Typography settings: font family, size, line height
+  - Visual preferences: margins, max width
+  - Reset to defaults button with confirmation
+  - All settings persist to localStorage
+  - Fully responsive and accessible
+- Added routes and navigation:
+  - Route: /settings/reader (SETTINGS_READER)
+  - Also added missing SETTINGS_SRS route
+  - Exported from pages/settings/index.ts and pages/index.ts
+  - Added to Router.tsx with proper routing
+- Added i18n translations for all 6 languages (en, ar, es, ja, zh, tl):
+  - settings.reader.* keys for all UI labels
+  - Nested translations for reading modes, animations, font families
+  - Consistent translations across all locales
+- Wrote comprehensive tests (29 tests, 100% pass rate):
+  - `apps/web/src/stores/readerPreferencesStore.test.ts` (420 lines)
+  - Tests for all store actions and state management
+  - Tests for validation and sanitization functions
+  - Tests for default values and reset functionality
+  - All edge cases covered
+
+CROSS-PLATFORM COMPATIBILITY:
+✅ **Web**: Fully implemented with MUI and localStorage persistence
+✅ **Desktop**: Same React components work in Electron
+✅ **Mobile**: Responsive design adapts to mobile screens
+- Preferences stored in localStorage sync across sessions
+- Settings apply when opening new books on any platform
+- All platforms share the same readerPreferencesStore
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all packages)
+✅ pnpm lint - Passed (0 errors, 188 warnings pre-existing)
+✅ pnpm vitest run - Passed (4013/4013 tests, including 29 new tests)
+
+FILES CREATED/MODIFIED:
+- Created: apps/web/src/stores/readerPreferencesStore.ts (190 lines)
+- Created: apps/web/src/stores/readerPreferencesStore.test.ts (420 lines)
+- Created: apps/web/src/pages/settings/SettingsReaderPage.tsx (657 lines)
+- Modified: apps/web/src/stores/index.ts (exported readerPreferencesStore)
+- Modified: apps/web/src/pages/settings/index.ts (exported SettingsReaderPage)
+- Modified: apps/web/src/pages/index.ts (exported SettingsReaderPage, SettingsSRSPage)
+- Modified: apps/web/src/router/routes.ts (added SETTINGS_READER, SETTINGS_SRS)
+- Modified: apps/web/src/router/Router.tsx (added routes)
+- Modified: apps/web/src/locales/en.json (added settings.reader translations)
+- Modified: apps/web/src/locales/ar.json (added settings.reader translations)
+- Modified: apps/web/src/locales/es.json (added settings.reader translations)
+- Modified: apps/web/src/locales/ja.json (added settings.reader translations)
+- Modified: apps/web/src/locales/zh.json (added settings.reader translations)
+- Modified: apps/web/src/locales/tl.json (added settings.reader translations)
+- Modified: docs/prd.json (marked frontend-090 as complete)
+
+DISCOVERIES:
+None - task completed as specified
+
+COMMIT: feat(settings): implement reader preferences page with default settings (frontend-090)
+
+NEXT RECOMMENDED:
+- frontend-084: Create/edit curriculum (Pro/Scholar) (high priority)
+- frontend-098: Screen reader announcements (high priority, accessibility)
+- frontend-103: Mobile navigation & menu (high priority, mobile UX)
+- frontend-049: Reading lists (medium priority, library feature)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-19 - 14:20]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -42,10 +42,25 @@ export {
 export type {
   BookFormat,
   CurrentBook,
+  FontFamily,
   ReaderSettings,
   ReadingMode,
   ReadingPosition,
+  TypographySettings,
 } from "./readerStore";
+
+export {
+  DEFAULT_READER_PREFERENCES,
+  READER_PREFERENCES_STORAGE_KEY,
+  sanitizeReaderPreferences,
+  useReaderPreferencesStore,
+  validatePageTurnAnimation,
+} from "./readerPreferencesStore";
+export type {
+  PageTurnAnimation,
+  ReaderPreferences,
+  ReaderPreferencesStore,
+} from "./readerPreferencesStore";
 
 export {
   AI_SETTINGS_STORAGE_KEY,

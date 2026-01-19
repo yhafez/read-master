@@ -423,7 +423,12 @@
       "togglePosition": "تبديل موضع اللوحة",
       "searchPlaceholder": "البحث في الملاحظات...",
       "filter": "تصفية الملاحظات",
-      "sort": "ترتيب الملاحظات",
+      "sort": {
+        "created": "تاريخ الإنشاء",
+        "updated": "تاريخ التحديث",
+        "position": "الموضع",
+        "type": "النوع"
+      },
       "noNote": "لم تتم إضافة ملاحظة",
       "noAnnotations": "لا توجد تعليقات توضيحية بعد",
       "noSearchResults": "لا توجد ملاحظات مطابقة لبحثك",
@@ -435,12 +440,6 @@
         "notesOnly": "الملاحظات فقط",
         "withNotes": "مع ملاحظات",
         "recent": "الأخيرة"
-      },
-      "sort": {
-        "created": "تاريخ الإنشاء",
-        "updated": "تاريخ التحديث",
-        "position": "الموضع",
-        "type": "النوع"
       }
     },
     "export": {
@@ -1070,7 +1069,46 @@
     "title": "المنتدى",
     "category": "فئة المنتدى",
     "categoryPlaceholder": "ستظهر المواضيع في {{category}} هنا.",
-    "post": "موضوع المنتدى",
+    "post": {
+      "loadError": "فشل في تحميل الموضوع. يرجى المحاولة مرة أخرى.",
+      "notFound": "الموضوع غير موجود.",
+      "upvote": "تصويت إيجابي",
+      "downvote": "تصويت سلبي",
+      "bestAnswer": "أفضل إجابة",
+      "markBestAnswer": "تحديد كأفضل إجابة",
+      "op": "الكاتب",
+      "noReplies": "لا توجد ردود بعد.",
+      "beFirstToReply": "كن أول من يرد",
+      "showReplies": "إظهار {{count}} ردود",
+      "hideReplies": "إخفاء الردود",
+      "justNow": "الآن",
+      "timeAgo": "منذ {{time}}",
+      "inTime": "خلال {{time}}",
+      "time": {
+        "seconds": "{{count}} ثواني",
+        "minutes": "{{count}} دقائق",
+        "hours": "{{count}} ساعات",
+        "days": "{{count}} أيام",
+        "weeks": "{{count}} أسابيع",
+        "months": "{{count}} أشهر",
+        "years": "{{count}} سنوات"
+      },
+      "sort": {
+        "best": "الأفضل",
+        "newest": "الأحدث",
+        "oldest": "الأقدم",
+        "controversial": "الأكثر جدلاً"
+      },
+      "reply": {
+        "action": "رد",
+        "placeholder": "اكتب ردك...",
+        "replyTo": "الرد على {{name}}...",
+        "writeReply": "اكتب رداً",
+        "submit": "إرسال الرد",
+        "contentRequired": "محتوى الرد مطلوب",
+        "submitError": "فشل في إرسال الرد. يرجى المحاولة مرة أخرى."
+      }
+    },
     "postPlaceholder": "سيظهر الموضوع {{postId}} هنا.",
     "create": "إنشاء موضوع",
     "newPost": "موضوع جديد",
@@ -1113,46 +1151,6 @@
         "contentTooLong": "لا يمكن أن يتجاوز المحتوى {{max}} حرفًا",
         "categoryRequired": "يرجى اختيار فئة",
         "general": "فشل في نشر المنشور. يرجى المحاولة مرة أخرى."
-      }
-    },
-    "post": {
-      "loadError": "فشل في تحميل الموضوع. يرجى المحاولة مرة أخرى.",
-      "notFound": "الموضوع غير موجود.",
-      "upvote": "تصويت إيجابي",
-      "downvote": "تصويت سلبي",
-      "bestAnswer": "أفضل إجابة",
-      "markBestAnswer": "تحديد كأفضل إجابة",
-      "op": "الكاتب",
-      "noReplies": "لا توجد ردود بعد.",
-      "beFirstToReply": "كن أول من يرد",
-      "showReplies": "إظهار {{count}} ردود",
-      "hideReplies": "إخفاء الردود",
-      "justNow": "الآن",
-      "timeAgo": "منذ {{time}}",
-      "inTime": "خلال {{time}}",
-      "time": {
-        "seconds": "{{count}} ثواني",
-        "minutes": "{{count}} دقائق",
-        "hours": "{{count}} ساعات",
-        "days": "{{count}} أيام",
-        "weeks": "{{count}} أسابيع",
-        "months": "{{count}} أشهر",
-        "years": "{{count}} سنوات"
-      },
-      "sort": {
-        "best": "الأفضل",
-        "newest": "الأحدث",
-        "oldest": "الأقدم",
-        "controversial": "الأكثر جدلاً"
-      },
-      "reply": {
-        "action": "رد",
-        "placeholder": "اكتب ردك...",
-        "replyTo": "الرد على {{name}}...",
-        "writeReply": "اكتب رداً",
-        "submit": "إرسال الرد",
-        "contentRequired": "محتوى الرد مطلوب",
-        "submitError": "فشل في إرسال الرد. يرجى المحاولة مرة أخرى."
       }
     }
   },
@@ -1414,6 +1412,58 @@
       "resetSettings": "إعادة التعيين إلى الافتراضي",
       "resetConfirm": "هل أنت متأكد من أنك تريد إعادة تعيين جميع إعدادات القراءة إلى الافتراضي؟",
       "saved": "تم حفظ إعدادات القراءة"
+    },
+    "reader": {
+      "title": "Reader Preferences",
+      "description": "Configure default settings that apply when you open new books.",
+      "generalPreferences": "General Preferences",
+      "autoSaveProgress": "Auto-save reading progress",
+      "autoSaveProgressDescription": "Automatically save your reading position as you read",
+      "pageTurnAnimation": "Page Turn Animation",
+      "pageTurnAnimationDescription": "Choose the animation style for turning pages",
+      "defaultReaderSettings": "Default Reader Settings",
+      "defaultReaderSettingsDescription": "These settings will be applied when you open a new book",
+      "readingMode": "Reading Mode",
+      "showPageNumbers": "Show page numbers",
+      "showProgressBar": "Show progress bar",
+      "showEstimatedTime": "Show estimated reading time",
+      "bionicReading": "Bionic reading mode",
+      "highlightParagraph": "Highlight current paragraph",
+      "autoScrollSpeed": "Auto-scroll speed",
+      "typography": "Typography",
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "visual": "Visual Preferences",
+      "margins": "Page margins",
+      "maxWidth": "Maximum content width",
+      "maxWidthDescription": "Set to 0 for full width",
+      "fullWidth": "Full Width",
+      "reset": "Reset to Defaults",
+      "resetDescription": "Reset all reader preferences to default values",
+      "resetButton": "Reset Preferences",
+      "resetSuccess": "Reader preferences reset to defaults",
+      "infoMessage": "These preferences will be applied as defaults when you open new books. You can change settings for individual books in the reader.",
+      "settings": {
+        "readingMode": {
+          "paginated": "Paginated",
+          "scroll": "Scroll",
+          "spread": "Spread"
+        },
+        "pageTurnAnimation": {
+          "none": "None",
+          "slide": "Slide",
+          "fade": "Fade",
+          "flip": "Flip (3D)"
+        },
+        "fontFamily": {
+          "system": "System Default",
+          "serif": "Serif",
+          "sansSerif": "Sans-Serif",
+          "monospace": "Monospace",
+          "openDyslexic": "OpenDyslexic"
+        }
+      }
     }
   },
   "languages": {

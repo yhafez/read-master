@@ -37,8 +37,10 @@ import {
   SettingsPage,
   SettingsProfilePage,
   SettingsReadingPage,
+  SettingsReaderPage,
   SettingsAIPage,
   SettingsTTSPage,
+  SettingsSRSPage,
   SettingsNotificationsPage,
   SettingsPrivacyPage,
   SettingsSubscriptionPage,
@@ -229,12 +231,20 @@ function createAppRouter() {
               element: <SettingsReadingPage />,
             },
             {
+              path: ROUTES.SETTINGS_READER,
+              element: <SettingsReaderPage />,
+            },
+            {
               path: ROUTES.SETTINGS_AI,
               element: <SettingsAIPage />,
             },
             {
               path: ROUTES.SETTINGS_TTS,
               element: <SettingsTTSPage />,
+            },
+            {
+              path: ROUTES.SETTINGS_SRS,
+              element: <SettingsSRSPage />,
             },
             {
               path: ROUTES.SETTINGS_NOTIFICATIONS,

@@ -423,7 +423,12 @@
       "togglePosition": "Ilipat ang posisyon ng panel",
       "searchPlaceholder": "Maghanap ng mga tala...",
       "filter": "I-filter ang mga tala",
-      "sort": "Pag-ayos ng mga tala",
+      "sort": {
+        "created": "Petsa ng Paglikha",
+        "updated": "Petsa ng Pag-update",
+        "position": "Posisyon",
+        "type": "Uri"
+      },
       "noNote": "Walang talang idinagdag",
       "noAnnotations": "Wala pang mga anotasyon",
       "noSearchResults": "Walang talang tumutugma sa iyong paghahanap",
@@ -435,12 +440,6 @@
         "notesOnly": "Mga Tala Lamang",
         "withNotes": "May mga Tala",
         "recent": "Kamakailan"
-      },
-      "sort": {
-        "created": "Petsa ng Paglikha",
-        "updated": "Petsa ng Pag-update",
-        "position": "Posisyon",
-        "type": "Uri"
       }
     },
     "export": {
@@ -1413,6 +1412,58 @@
       "resetSettings": "I-reset sa Default",
       "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng setting ng pagbabasa sa default?",
       "saved": "Na-save ang mga setting ng pagbabasa"
+    },
+    "reader": {
+      "title": "Reader Preferences",
+      "description": "Configure default settings that apply when you open new books.",
+      "generalPreferences": "General Preferences",
+      "autoSaveProgress": "Auto-save reading progress",
+      "autoSaveProgressDescription": "Automatically save your reading position as you read",
+      "pageTurnAnimation": "Page Turn Animation",
+      "pageTurnAnimationDescription": "Choose the animation style for turning pages",
+      "defaultReaderSettings": "Default Reader Settings",
+      "defaultReaderSettingsDescription": "These settings will be applied when you open a new book",
+      "readingMode": "Reading Mode",
+      "showPageNumbers": "Show page numbers",
+      "showProgressBar": "Show progress bar",
+      "showEstimatedTime": "Show estimated reading time",
+      "bionicReading": "Bionic reading mode",
+      "highlightParagraph": "Highlight current paragraph",
+      "autoScrollSpeed": "Auto-scroll speed",
+      "typography": "Typography",
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "visual": "Visual Preferences",
+      "margins": "Page margins",
+      "maxWidth": "Maximum content width",
+      "maxWidthDescription": "Set to 0 for full width",
+      "fullWidth": "Full Width",
+      "reset": "Reset to Defaults",
+      "resetDescription": "Reset all reader preferences to default values",
+      "resetButton": "Reset Preferences",
+      "resetSuccess": "Reader preferences reset to defaults",
+      "infoMessage": "These preferences will be applied as defaults when you open new books. You can change settings for individual books in the reader.",
+      "settings": {
+        "readingMode": {
+          "paginated": "Paginated",
+          "scroll": "Scroll",
+          "spread": "Spread"
+        },
+        "pageTurnAnimation": {
+          "none": "None",
+          "slide": "Slide",
+          "fade": "Fade",
+          "flip": "Flip (3D)"
+        },
+        "fontFamily": {
+          "system": "System Default",
+          "serif": "Serif",
+          "sansSerif": "Sans-Serif",
+          "monospace": "Monospace",
+          "openDyslexic": "OpenDyslexic"
+        }
+      }
     }
   },
   "languages": {

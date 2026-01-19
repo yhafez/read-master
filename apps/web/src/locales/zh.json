@@ -423,7 +423,12 @@
       "togglePosition": "切换面板位置",
       "searchPlaceholder": "搜索笔记...",
       "filter": "筛选笔记",
-      "sort": "排序笔记",
+      "sort": {
+        "created": "创建日期",
+        "updated": "更新日期",
+        "position": "位置",
+        "type": "类型"
+      },
       "noNote": "未添加笔记",
       "noAnnotations": "暂无注释",
       "noSearchResults": "没有匹配的笔记",
@@ -435,12 +440,6 @@
         "notesOnly": "仅笔记",
         "withNotes": "有笔记",
         "recent": "最近"
-      },
-      "sort": {
-        "created": "创建日期",
-        "updated": "更新日期",
-        "position": "位置",
-        "type": "类型"
       }
     },
     "export": {
@@ -1070,7 +1069,46 @@
     "title": "Forum",
     "category": "Forum Category",
     "categoryPlaceholder": "Posts in {{category}} will appear here.",
-    "post": "Forum Post",
+    "post": {
+      "loadError": "加载帖子失败，请重试。",
+      "notFound": "帖子未找到。",
+      "upvote": "赞同",
+      "downvote": "反对",
+      "bestAnswer": "最佳答案",
+      "markBestAnswer": "标记为最佳答案",
+      "op": "楼主",
+      "noReplies": "暂无回复。",
+      "beFirstToReply": "成为第一个回复的人",
+      "showReplies": "显示 {{count}} 条回复",
+      "hideReplies": "隐藏回复",
+      "justNow": "刚刚",
+      "timeAgo": "{{time}}前",
+      "inTime": "{{time}}后",
+      "time": {
+        "seconds": "{{count}} 秒",
+        "minutes": "{{count}} 分钟",
+        "hours": "{{count}} 小时",
+        "days": "{{count}} 天",
+        "weeks": "{{count}} 周",
+        "months": "{{count}} 个月",
+        "years": "{{count}} 年"
+      },
+      "sort": {
+        "best": "最佳",
+        "newest": "最新",
+        "oldest": "最早",
+        "controversial": "争议"
+      },
+      "reply": {
+        "action": "回复",
+        "placeholder": "写下你的回复...",
+        "replyTo": "回复 {{name}}...",
+        "writeReply": "写回复",
+        "submit": "回复",
+        "contentRequired": "回复内容是必填项",
+        "submitError": "回复发送失败，请重试。"
+      }
+    },
     "postPlaceholder": "Post {{postId}} will appear here.",
     "create": "Create Post",
     "newPost": "New Post",
@@ -1113,46 +1151,6 @@
         "contentTooLong": "内容不能超过{{max}}个字符",
         "categoryRequired": "请选择一个分类",
         "general": "发布失败，请重试。"
-      }
-    },
-    "post": {
-      "loadError": "加载帖子失败，请重试。",
-      "notFound": "帖子未找到。",
-      "upvote": "赞同",
-      "downvote": "反对",
-      "bestAnswer": "最佳答案",
-      "markBestAnswer": "标记为最佳答案",
-      "op": "楼主",
-      "noReplies": "暂无回复。",
-      "beFirstToReply": "成为第一个回复的人",
-      "showReplies": "显示 {{count}} 条回复",
-      "hideReplies": "隐藏回复",
-      "justNow": "刚刚",
-      "timeAgo": "{{time}}前",
-      "inTime": "{{time}}后",
-      "time": {
-        "seconds": "{{count}} 秒",
-        "minutes": "{{count}} 分钟",
-        "hours": "{{count}} 小时",
-        "days": "{{count}} 天",
-        "weeks": "{{count}} 周",
-        "months": "{{count}} 个月",
-        "years": "{{count}} 年"
-      },
-      "sort": {
-        "best": "最佳",
-        "newest": "最新",
-        "oldest": "最早",
-        "controversial": "争议"
-      },
-      "reply": {
-        "action": "回复",
-        "placeholder": "写下你的回复...",
-        "replyTo": "回复 {{name}}...",
-        "writeReply": "写回复",
-        "submit": "回复",
-        "contentRequired": "回复内容是必填项",
-        "submitError": "回复发送失败，请重试。"
       }
     }
   },
@@ -1414,6 +1412,58 @@
       "resetSettings": "重置为默认值",
       "resetConfirm": "您确定要将所有阅读设置重置为默认值吗？",
       "saved": "阅读设置已保存"
+    },
+    "reader": {
+      "title": "Reader Preferences",
+      "description": "Configure default settings that apply when you open new books.",
+      "generalPreferences": "General Preferences",
+      "autoSaveProgress": "Auto-save reading progress",
+      "autoSaveProgressDescription": "Automatically save your reading position as you read",
+      "pageTurnAnimation": "Page Turn Animation",
+      "pageTurnAnimationDescription": "Choose the animation style for turning pages",
+      "defaultReaderSettings": "Default Reader Settings",
+      "defaultReaderSettingsDescription": "These settings will be applied when you open a new book",
+      "readingMode": "Reading Mode",
+      "showPageNumbers": "Show page numbers",
+      "showProgressBar": "Show progress bar",
+      "showEstimatedTime": "Show estimated reading time",
+      "bionicReading": "Bionic reading mode",
+      "highlightParagraph": "Highlight current paragraph",
+      "autoScrollSpeed": "Auto-scroll speed",
+      "typography": "Typography",
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "visual": "Visual Preferences",
+      "margins": "Page margins",
+      "maxWidth": "Maximum content width",
+      "maxWidthDescription": "Set to 0 for full width",
+      "fullWidth": "Full Width",
+      "reset": "Reset to Defaults",
+      "resetDescription": "Reset all reader preferences to default values",
+      "resetButton": "Reset Preferences",
+      "resetSuccess": "Reader preferences reset to defaults",
+      "infoMessage": "These preferences will be applied as defaults when you open new books. You can change settings for individual books in the reader.",
+      "settings": {
+        "readingMode": {
+          "paginated": "Paginated",
+          "scroll": "Scroll",
+          "spread": "Spread"
+        },
+        "pageTurnAnimation": {
+          "none": "None",
+          "slide": "Slide",
+          "fade": "Fade",
+          "flip": "Flip (3D)"
+        },
+        "fontFamily": {
+          "system": "System Default",
+          "serif": "Serif",
+          "sansSerif": "Sans-Serif",
+          "monospace": "Monospace",
+          "openDyslexic": "OpenDyslexic"
+        }
+      }
     }
   },
   "languages": {
