@@ -1356,7 +1356,7 @@
         "Moderation queue works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-curriculum-001",

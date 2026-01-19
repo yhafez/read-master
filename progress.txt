@@ -6369,3 +6369,92 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7158 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 10 - Ralph Wiggum
+
+### Task Completed
+- **api-forum-004**: Implement forum moderation endpoints
+
+### Implementation Details
+
+- Created POST/DELETE /api/forum/replies/:id/best-answer endpoint (apps/api/api/forum/replies/[id]/best-answer.ts):
+  - POST: Mark a reply as the best answer
+    - Only the original post author can mark best answer
+    - Unmarks any previously marked best answer for the same post
+    - Sets post.isAnswered = true
+  - DELETE: Unmark a reply as best answer
+    - Only the original post author can unmark
+    - Sets post.isAnswered = false if no other best answers exist
+  - Validates reply exists and is not deleted
+  - Validates post is not deleted and category is active
+  - Validates post is not locked
+  - Types exported:
+    - ReplyInfo, PostInfo types
+    - MarkBestAnswerResponse, UnmarkBestAnswerResponse types
+    - parseReplyId, formatDateOptional helpers
+
+- Created POST /api/forum/report endpoint (apps/api/api/forum/report.ts):
+  - Report forum posts or replies for moderation
+  - Supports multiple report types: SPAM, HARASSMENT, INAPPROPRIATE, OFF_TOPIC, MISINFORMATION, OTHER
+  - Stores reports in AuditLog table for moderator review
+  - Prevents duplicate reports (same user cannot report same content twice)
+  - Cannot report own content
+  - Validates target exists and is not deleted
+  - Includes content preview in report for context
+  - Types and constants exported:
+    - REPORT_ACTION, REPORT_ENTITY_TYPES, REPORT_STATUS constants
+    - ReportedContentInfo, CreateReportResponse, ReportStatus types
+    - formatDate, truncateContent helpers
+
+- Created GET/PUT /api/forum/moderation endpoint (apps/api/api/forum/moderation.ts):
+  - GET: List moderation queue (pending reports)
+    - Moderator/Admin role required (stored in user.preferences.role)
+    - Supports pagination (page, limit)
+    - Supports filtering by status (PENDING, REVIEWED, DISMISSED, ACTION_TAKEN)
+    - Supports filtering by targetType (post, reply)
+    - Returns reporter info, content author info, content preview
+  - PUT: Update report status
+    - Moderator/Admin role required
+    - Can mark as REVIEWED, DISMISSED, or ACTION_TAKEN
+    - Supports moderator notes (max 1000 chars)
+    - Records reviewer ID and timestamp
+  - Types and schemas exported:
+    - DEFAULT_LIMIT, MAX_LIMIT, MODERATOR_ROLES constants
+    - ModerationReportItem, ListModerationResponse, UpdateReportResponse types
+    - reportStatusSchema, listModerationQuerySchema, updateReportBodySchema
+    - parsePage, parseLimit, parseStatus, parseTargetType, parseReportId helpers
+    - formatDate, formatDateOptional, isModerator, getRoleFromPreferences helpers
+
+- Added comprehensive tests for all new endpoints:
+  - apps/api/api/forum/replies/[id]/best-answer.test.ts (17 tests)
+  - apps/api/api/forum/report.test.ts (28 tests)
+  - apps/api/api/forum/moderation.test.ts (49 tests)
+
+- Files created:
+  - apps/api/api/forum/replies/[id]/best-answer.ts
+  - apps/api/api/forum/replies/[id]/best-answer.test.ts
+  - apps/api/api/forum/report.ts
+  - apps/api/api/forum/report.test.ts
+  - apps/api/api/forum/moderation.ts
+  - apps/api/api/forum/moderation.test.ts
+
+### Design Decisions
+- Reports are stored in AuditLog table instead of a dedicated ForumReport model
+  - Leverages existing audit infrastructure
+  - No schema migration required
+  - Uses metadata JSON for report-specific fields
+- Moderator role is checked via user.preferences.role field
+  - User model doesn't have a dedicated role field
+  - Preferences JSON provides flexibility for role storage
+  - Values: "MODERATOR" or "ADMIN" for access
+
+### Acceptance Criteria Verification
+- ✅ Best answer marking works (POST/DELETE /api/forum/replies/:id/best-answer)
+- ✅ Reporting works (POST /api/forum/report with all report types)
+- ✅ Moderation queue works (GET /api/forum/moderation with filters, PUT for status updates)
+- ✅ Tests pass (94 new tests, 7258 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7258 tests pass (pre-existing i18n test failure unrelated to this change)
