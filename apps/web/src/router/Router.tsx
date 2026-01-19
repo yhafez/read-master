@@ -43,6 +43,8 @@ import {
   SettingsSubscriptionPage,
   UserStatsPage,
   AchievementsPage,
+  AdminDashboardPage,
+  AdminProtectedRoute,
 } from "@/pages";
 
 /**
@@ -250,6 +252,25 @@ function createAppRouter() {
             {
               path: ROUTES.ACHIEVEMENTS,
               element: <AchievementsPage />,
+            },
+          ],
+        },
+
+        // Admin routes (admin-protected)
+        {
+          element: (
+            <AdminProtectedRoute>
+              <MainLayout />
+            </AdminProtectedRoute>
+          ),
+          children: [
+            {
+              path: ROUTES.ADMIN,
+              element: <AdminDashboardPage />,
+            },
+            {
+              path: ROUTES.ADMIN_DASHBOARD,
+              element: <AdminDashboardPage />,
             },
           ],
         },

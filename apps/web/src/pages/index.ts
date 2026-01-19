@@ -68,3 +68,6 @@ export {
 
 // Stats
 export { UserStatsPage, AchievementsPage } from "./stats";
+
+// Admin
+export { AdminDashboardPage, AdminProtectedRoute } from "./admin";

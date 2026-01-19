@@ -11730,3 +11730,103 @@ Also added common.play and common.pause keys.
 - TypeScript strict mode compliant (exactOptionalPropertyTypes)
 
 ---
+
+
+## Iteration 59
+
+[2026-01-19] frontend-106: Create admin dashboard page with overview metrics
+
+### Task Overview
+Implemented admin dashboard page with KPI metrics for administrators:
+1. **AdminDashboardPage** - Main dashboard with users, revenue, engagement, AI costs sections
+2. **MetricCard** - Reusable KPI display component with trends and loading states
+3. **AdminProtectedRoute** - Route guard for admin-only access
+4. **Auto-refresh** - 60-second automatic data refresh
+
+### Files Created
+
+#### apps/web/src/pages/admin/adminDashboardTypes.ts (NEW - ~100 lines)
+Core types, constants, and utility functions:
+- Types: `OverviewStats`, `MetricType`, `MetricCardConfig`, `OverviewStatsResponse`
+- Constants: `TIER_PRICES`, `AUTO_REFRESH_INTERVAL` (60s)
+- Formatting Functions:
+  - `formatCurrency`: Format cents to dollar strings
+  - `formatLargeNumber`: Format numbers with K/M suffixes
+  - `formatPercentage`: Format with sign and decimal
+  - `formatStickiness`: Format DAU/MAU ratio as percentage
+
+#### apps/web/src/pages/admin/MetricCard.tsx (NEW - ~150 lines)
+Reusable metric card component:
+- Supports number, currency, percentage, trend, ratio types
+- Loading skeleton state
+- Trend indicators (up/down arrows with colors)
+- Color variants (primary, secondary, success, error, warning, info)
+- Subtitle support for additional context
+
+#### apps/web/src/pages/admin/AdminProtectedRoute.tsx (NEW - ~80 lines)
+Admin access control wrapper:
+- Checks Clerk user publicMetadata.role for 'admin'
+- Shows loading state during auth check
+- Displays access denied with return link for non-admins
+- Development fallback when Clerk not configured
+
+#### apps/web/src/pages/admin/AdminDashboardPage.tsx (NEW - ~460 lines)
+Main admin dashboard component:
+- Four sections: Users, Revenue, Engagement, AI Costs
+- `useOverviewStats` hook with auto-refresh (60s interval)
+- `useMetricCards` hook builds metric configurations
+- Responsive grid layout with Paper containers
+- Manual refresh button with last updated timestamp
+- Error state handling with Alert
+- Mock data placeholder (TODO: connect to admin-005 API)
+
+#### apps/web/src/pages/admin/index.ts (NEW)
+Barrel exports for admin module
+
+#### apps/web/src/pages/admin/adminDashboardTypes.test.ts (NEW - ~230 lines)
+Comprehensive test suite with 25 tests:
+- `formatCurrency`: Cents to dollars, large amounts, edge cases
+- `formatLargeNumber`: K/M suffixes, boundaries
+- `formatPercentage`: Signed/unsigned, zero handling
+- `formatStickiness`: Ratio to percentage conversion
+- Constants: TIER_PRICES, AUTO_REFRESH_INTERVAL
+- Type definitions: OverviewStats, MetricType, MetricCardConfig
+
+### Files Modified
+
+#### apps/web/src/pages/index.ts
+Added exports: `AdminDashboardPage`, `AdminProtectedRoute`
+
+#### apps/web/src/router/routes.ts
+Added routes: `ADMIN: "/admin"`, `ADMIN_DASHBOARD: "/admin/dashboard"`
+
+#### apps/web/src/router/Router.tsx
+Added admin routes with AdminProtectedRoute wrapper
+
+### Translations Added (6 locales)
+Added complete `admin` translation keys to all locale files:
+- `apps/web/src/locales/en.json` - English
+- `apps/web/src/locales/ar.json` - Arabic  
+- `apps/web/src/locales/es.json` - Spanish
+- `apps/web/src/locales/ja.json` - Japanese
+- `apps/web/src/locales/zh.json` - Chinese (Simplified)
+- `apps/web/src/locales/tl.json` - Tagalog
+
+Keys added: checkingAccess, accessDenied, adminOnly, returnToDashboard, dashboard.title/subtitle/refresh/autoRefresh/lastUpdated, sections.users/revenue/engagement/aiCosts, metrics.totalUsers/activeUsers/newUsers/mrr/arr/dau/mau/stickiness/aiCostCurrent/aiCostProjected/registered/netNew/today/last30Days/userEngagement/actualSpend/forecast
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors from new code)
+- pnpm vitest run: ✅ 25 new tests pass (3910 total tests pass)
+
+### Technical Notes
+- Uses mock data with TODO comment for API integration (admin-005)
+- Auto-refresh every 60 seconds with manual refresh button
+- Currency stored in cents, formatted on display
+- Large numbers formatted with K/M suffixes (12847 → 12.8K)
+- i18next t() function used with second positional argument for defaults
+- AdminProtectedRoute uses Clerk publicMetadata.role check
+- Responsive MUI Grid2 layout with Paper sections
+- MetricCard supports loading skeleton for smooth transitions
+
+---

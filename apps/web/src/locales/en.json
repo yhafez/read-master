@@ -1698,5 +1698,43 @@
       "name": "Reading Marathon",
       "description": "Read for 50 hours total"
     }
+  },
+  "admin": {
+    "checkingAccess": "Checking access...",
+    "accessDenied": "Access Denied",
+    "adminOnly": "This page is only accessible to administrators.",
+    "returnToDashboard": "Return to Dashboard",
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Overview of key platform metrics and performance",
+      "lastUpdated": "Updated {{time}}",
+      "refresh": "Refresh data",
+      "autoRefresh": "Auto-refreshes every {{seconds}} seconds"
+    },
+    "sections": {
+      "users": "Users",
+      "revenue": "Revenue",
+      "engagement": "Engagement",
+      "aiCosts": "AI Costs"
+    },
+    "metrics": {
+      "totalUsers": "Total Users",
+      "registered": "Registered",
+      "activeUsers": "Active Users (30d)",
+      "newUsers": "New Users (30d)",
+      "netNew": "Net new",
+      "mrr": "Monthly Recurring Revenue",
+      "arr": "Annual Recurring Revenue",
+      "dau": "Daily Active Users",
+      "mau": "Monthly Active Users",
+      "today": "Today",
+      "last30Days": "Last 30 days",
+      "stickiness": "Stickiness (DAU/MAU)",
+      "userEngagement": "User engagement",
+      "aiCostCurrent": "AI Costs (30d)",
+      "actualSpend": "Actual spend",
+      "aiCostProjected": "Projected Monthly",
+      "forecast": "Forecast"
+    }
   }
 }

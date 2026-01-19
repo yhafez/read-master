@@ -1698,5 +1698,43 @@
       "name": "阅读马拉松",
       "description": "总计阅读50小时"
     }
+  },
+  "admin": {
+    "checkingAccess": "正在检查权限...",
+    "accessDenied": "访问被拒绝",
+    "adminOnly": "此页面仅管理员可访问。",
+    "returnToDashboard": "返回仪表板",
+    "dashboard": {
+      "title": "管理员仪表板",
+      "subtitle": "平台关键指标和性能概览",
+      "lastUpdated": "更新于 {{time}}",
+      "refresh": "刷新数据",
+      "autoRefresh": "每 {{seconds}} 秒自动刷新"
+    },
+    "sections": {
+      "users": "用户",
+      "revenue": "收入",
+      "engagement": "参与度",
+      "aiCosts": "AI成本"
+    },
+    "metrics": {
+      "totalUsers": "总用户数",
+      "registered": "已注册",
+      "activeUsers": "活跃用户 (30天)",
+      "newUsers": "新用户 (30天)",
+      "netNew": "净增",
+      "mrr": "月度经常性收入",
+      "arr": "年度经常性收入",
+      "dau": "日活跃用户",
+      "mau": "月活跃用户",
+      "today": "今天",
+      "last30Days": "过去30天",
+      "stickiness": "粘性 (DAU/MAU)",
+      "userEngagement": "用户参与度",
+      "aiCostCurrent": "AI成本 (30天)",
+      "actualSpend": "实际支出",
+      "aiCostProjected": "月度预测",
+      "forecast": "预测"
+    }
   }
 }

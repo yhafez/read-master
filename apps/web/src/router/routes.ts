@@ -59,6 +59,10 @@ export const ROUTES = {
   STATS: "/stats",
   ACHIEVEMENTS: "/achievements",
 
+  // Admin
+  ADMIN: "/admin",
+  ADMIN_DASHBOARD: "/admin/dashboard",
+
   // 404
   NOT_FOUND: "*",
 } as const;

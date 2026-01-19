@@ -1698,5 +1698,43 @@
       "name": "Maratón de Lectura",
       "description": "Lee durante 50 horas en total"
     }
+  },
+  "admin": {
+    "checkingAccess": "Verificando acceso...",
+    "accessDenied": "Acceso denegado",
+    "adminOnly": "Esta página solo es accesible para administradores.",
+    "returnToDashboard": "Volver al panel",
+    "dashboard": {
+      "title": "Panel de Administrador",
+      "subtitle": "Resumen de métricas clave y rendimiento de la plataforma",
+      "lastUpdated": "Actualizado {{time}}",
+      "refresh": "Actualizar datos",
+      "autoRefresh": "Se actualiza automáticamente cada {{seconds}} segundos"
+    },
+    "sections": {
+      "users": "Usuarios",
+      "revenue": "Ingresos",
+      "engagement": "Participación",
+      "aiCosts": "Costos de IA"
+    },
+    "metrics": {
+      "totalUsers": "Total de Usuarios",
+      "registered": "Registrados",
+      "activeUsers": "Usuarios Activos (30d)",
+      "newUsers": "Nuevos Usuarios (30d)",
+      "netNew": "Nuevos netos",
+      "mrr": "Ingreso Mensual Recurrente",
+      "arr": "Ingreso Anual Recurrente",
+      "dau": "Usuarios Activos Diarios",
+      "mau": "Usuarios Activos Mensuales",
+      "today": "Hoy",
+      "last30Days": "Últimos 30 días",
+      "stickiness": "Adhesión (DAU/MAU)",
+      "userEngagement": "Participación del usuario",
+      "aiCostCurrent": "Costos de IA (30d)",
+      "actualSpend": "Gasto real",
+      "aiCostProjected": "Proyección Mensual",
+      "forecast": "Pronóstico"
+    }
   }
 }

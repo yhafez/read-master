@@ -1698,5 +1698,43 @@
       "name": "読書マラソン",
       "description": "合計50時間読書"
     }
+  },
+  "admin": {
+    "checkingAccess": "アクセスを確認中...",
+    "accessDenied": "アクセス拒否",
+    "adminOnly": "このページは管理者のみアクセスできます。",
+    "returnToDashboard": "ダッシュボードに戻る",
+    "dashboard": {
+      "title": "管理者ダッシュボード",
+      "subtitle": "プラットフォームの主要指標とパフォーマンスの概要",
+      "lastUpdated": "更新時刻 {{time}}",
+      "refresh": "データを更新",
+      "autoRefresh": "{{seconds}}秒ごとに自動更新"
+    },
+    "sections": {
+      "users": "ユーザー",
+      "revenue": "収益",
+      "engagement": "エンゲージメント",
+      "aiCosts": "AIコスト"
+    },
+    "metrics": {
+      "totalUsers": "総ユーザー数",
+      "registered": "登録済み",
+      "activeUsers": "アクティブユーザー (30日)",
+      "newUsers": "新規ユーザー (30日)",
+      "netNew": "純増",
+      "mrr": "月間経常収益",
+      "arr": "年間経常収益",
+      "dau": "日次アクティブユーザー",
+      "mau": "月次アクティブユーザー",
+      "today": "今日",
+      "last30Days": "過去30日間",
+      "stickiness": "定着率 (DAU/MAU)",
+      "userEngagement": "ユーザーエンゲージメント",
+      "aiCostCurrent": "AIコスト (30日)",
+      "actualSpend": "実際の支出",
+      "aiCostProjected": "月間予測",
+      "forecast": "予測"
+    }
   }
 }

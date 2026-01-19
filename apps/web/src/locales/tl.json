@@ -1697,5 +1697,43 @@
       "name": "Reading Marathon",
       "description": "Magbasa ng 50 oras sa kabuuan"
     }
+  },
+  "admin": {
+    "checkingAccess": "Sinusuri ang access...",
+    "accessDenied": "Hindi Pinapayagan ang Access",
+    "adminOnly": "Ang pahinang ito ay para lamang sa mga administrator.",
+    "returnToDashboard": "Bumalik sa Dashboard",
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Pangkalahatang-tanaw ng mga pangunahing sukatan at performance ng platform",
+      "lastUpdated": "Na-update {{time}}",
+      "refresh": "I-refresh ang data",
+      "autoRefresh": "Auto-refresh kada {{seconds}} segundo"
+    },
+    "sections": {
+      "users": "Mga User",
+      "revenue": "Kita",
+      "engagement": "Engagement",
+      "aiCosts": "Mga Gastos sa AI"
+    },
+    "metrics": {
+      "totalUsers": "Kabuuang Mga User",
+      "registered": "Nakarehistrong",
+      "activeUsers": "Mga Aktibong User (30d)",
+      "newUsers": "Mga Bagong User (30d)",
+      "netNew": "Net na bago",
+      "mrr": "Buwanang Paulit-ulit na Kita",
+      "arr": "Taunang Paulit-ulit na Kita",
+      "dau": "Pang-araw-araw na Aktibong User",
+      "mau": "Buwanang Aktibong User",
+      "today": "Ngayon",
+      "last30Days": "Huling 30 araw",
+      "stickiness": "Stickiness (DAU/MAU)",
+      "userEngagement": "User engagement",
+      "aiCostCurrent": "Mga Gastos sa AI (30d)",
+      "actualSpend": "Aktwal na gastos",
+      "aiCostProjected": "Buwanang Projection",
+      "forecast": "Forecast"
+    }
   }
 }
