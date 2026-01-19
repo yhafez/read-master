@@ -10362,3 +10362,168 @@ Added 50+ translations in all 6 locale files (en, ar, es, ja, zh, tl):
 - Timezone validation uses Intl.DateTimeFormat for accurate checking
 - Browser timezone detection with fallback to UTC
 - Format timezone display shows both abbreviation and UTC offset
+
+---
+
+## Iteration 45 - Focus Management & Indicators [frontend-097]
+
+### Date: 2026-01-19
+
+### Task Completed
+**frontend-097: Focus management & indicators**
+
+Implemented comprehensive focus management hooks and components for WCAG 2.4.3 (Focus Order), 2.4.7 (Focus Visible), and 2.4.11 (Focus Not Obscured) compliance.
+
+### Implementation Summary
+
+#### apps/web/src/hooks/useFocusManagement.ts (NEW)
+Created React hooks for managing keyboard focus:
+
+**useFocusTrap** - Traps focus within a container for modals/dialogs:
+- Activates/deactivates focus trap
+- Handles Tab key cycling through focusable elements
+- Supports onEscape and onClickOutside callbacks
+- Auto-focuses first element when activated
+- Restores focus to previously focused element on deactivation
+
+**useFocusRestore** - Saves and restores focus:
+- saveFocus() captures current focus
+- restoreFocus() returns focus to saved element
+- Auto-restore on component unmount (optional)
+- onBeforeRestore callback support
+
+**useFocusWithin** - Tracks focus within a container:
+- Returns hasFocus boolean
+- Useful for styling focus states
+
+**useRovingTabindex** - Implements roving tabindex pattern:
+- Arrow key navigation (horizontal/vertical)
+- Home/End key support
+- Wrap-around option
+- getTabIndex helper for setting tabindex values
+
+**useSkipLink** - Skip to main content functionality:
+- Generates skip link props
+- Generates target element props
+- Handles smooth scrolling
+
+**useFocusVisible** - Detects keyboard vs mouse focus:
+- Tracks if focus is from keyboard navigation
+- Returns isFocusVisible and isFocused booleans
+
+Exports:
+- 6 hooks: useFocusTrap, useFocusRestore, useFocusWithin, useRovingTabindex, useSkipLink, useFocusVisible
+- Constants: DEFAULT_FOCUS_TRAP_OPTIONS, FOCUSABLE_SELECTOR
+- Types: FocusTrapOptions, FocusRestoreOptions, FocusTrapReturn, FocusRestoreReturn, RovingTabindexOptions
+
+#### apps/web/src/hooks/useFocusManagement.test.ts (NEW)
+55 comprehensive tests covering:
+- DEFAULT_FOCUS_TRAP_OPTIONS defaults (4 tests)
+- FOCUSABLE_SELECTOR validation (16 tests)
+- Type exports verification (5 tests)
+- Hook exports verification (6 tests)
+- DOM integration tests (10 tests)
+- Edge cases for form elements, inputs, media (14 tests)
+
+#### apps/web/src/components/common/FocusTrap.tsx (NEW)
+Created React components for focus management:
+
+**FocusTrap** - Wrapper component for trapping focus:
+- Uses useFocusTrap hook internally
+- Exposes activate/deactivate methods via ref
+- Supports all ARIA attributes for dialogs/modals
+- TypeScript strict mode compatible (exactOptionalPropertyTypes)
+
+**SkipLink** - Accessible skip navigation component:
+- Visually hidden until focused
+- Smooth scroll to target
+- Customizable styling via sx prop
+
+**VisuallyHidden** - Screen reader only content:
+- Hides content visually while keeping accessible
+- Useful for icon buttons and other visual-only elements
+
+Exports:
+- FocusTrap, SkipLink, VisuallyHidden components
+- FocusTrapProps, FocusTrapRef, SkipLinkProps, VisuallyHiddenProps types
+
+#### apps/web/src/hooks/index.ts (UPDATED)
+Added exports for all new focus management hooks and types
+
+#### apps/web/src/components/common/index.ts (UPDATED)
+Added exports for FocusTrap, SkipLink, VisuallyHidden components and types
+
+### Acceptance Criteria Verification
+- ✅ Focus always visible - Global focus-visible styles in theme + useFocusVisible hook
+- ✅ Traps work - useFocusTrap hook with Tab cycling and FocusTrap component
+- ✅ Restore on close - useFocusRestore hook and restoreFocus option in useFocusTrap
+- ✅ Tests pass - 55 tests for hooks, all passing
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 55 new tests pass (9773 total passing, 43 pre-existing failures)
+
+### Technical Notes
+- Theme already has focus-visible styles in createAppTheme.ts (lines 27-32)
+- Leverages existing accessibility.ts utilities (createFocusTrap, getFocusableElements)
+- TypeScript exactOptionalPropertyTypes required careful handling of optional props
+- Uses Record<string, unknown> pattern for MUI Box props to handle undefined values
+- Hooks are composable - useFocusTrap uses createFocusTrap from accessibility.ts
+- No external dependencies required (@testing-library/react not needed for tests)
+
+### Integration Examples
+
+Using FocusTrap in a modal:
+```tsx
+function Modal({ isOpen, onClose, children }) {
+  return (
+    <FocusTrap
+      active={isOpen}
+      onEscape={onClose}
+      onClickOutside={onClose}
+      role="dialog"
+      modal
+      aria-label="Modal title"
+    >
+      {children}
+    </FocusTrap>
+  );
+}
+```
+
+Using SkipLink in App layout:
+```tsx
+function App() {
+  return (
+    <>
+      <SkipLink targetId="main-content">Skip to main content</SkipLink>
+      <Header />
+      <Navigation />
+      <main id="main-content">{/* Content */}</main>
+    </>
+  );
+}
+```
+
+Using useRovingTabindex for a tab list:
+```tsx
+function TabList({ tabs, activeIndex, onChange }) {
+  const { containerRef, getTabIndex, handleKeyDown } = useRovingTabindex({
+    currentIndex: activeIndex,
+    onIndexChange: onChange,
+    horizontal: true,
+  });
+
+  return (
+    <div ref={containerRef} role="tablist" onKeyDown={handleKeyDown}>
+      {tabs.map((tab, i) => (
+        <button key={tab.id} role="tab" tabIndex={getTabIndex(i)}>
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
