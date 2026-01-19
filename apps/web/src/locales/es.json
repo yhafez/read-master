@@ -349,6 +349,24 @@
       "previewCount": "Anotaciones a exportar:",
       "export": "Exportar",
       "exporting": "Exportando..."
+    },
+    "lookup": {
+      "tabs": "Pestañas de búsqueda",
+      "error": "No se pudieron cargar los resultados. Por favor, inténtalo de nuevo.",
+      "invalidSelection": "Por favor, selecciona una palabra o frase válida para buscar."
+    },
+    "dictionary": {
+      "title": "Diccionario",
+      "notFound": "Palabra no encontrada en el diccionario",
+      "playPronunciation": "Reproducir pronunciación",
+      "origin": "Origen",
+      "synonyms": "Sinónimos",
+      "antonyms": "Antónimos"
+    },
+    "wikipedia": {
+      "title": "Wikipedia",
+      "notFound": "Artículo no encontrado en Wikipedia",
+      "readMore": "Leer más en Wikipedia"
     }
   },
   "flashcards": {

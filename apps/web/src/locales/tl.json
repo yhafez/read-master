@@ -349,6 +349,24 @@
       "previewCount": "Mga anotasyon na i-e-export:",
       "export": "I-export",
       "exporting": "Nag-e-export..."
+    },
+    "lookup": {
+      "tabs": "Mga tab ng paghahanap",
+      "error": "Hindi ma-load ang mga resulta. Subukan muli.",
+      "invalidSelection": "Pumili ng wastong salita o parirala para hanapin."
+    },
+    "dictionary": {
+      "title": "Diksyunaryo",
+      "notFound": "Hindi nahanap ang salita sa diksyunaryo",
+      "playPronunciation": "I-play ang pagbigkas",
+      "origin": "Pinagmulan",
+      "synonyms": "Mga kasingkahulugan",
+      "antonyms": "Mga kasalungat"
+    },
+    "wikipedia": {
+      "title": "Wikipedia",
+      "notFound": "Hindi nahanap ang artikulo sa Wikipedia",
+      "readMore": "Magbasa pa sa Wikipedia"
     }
   },
   "flashcards": {

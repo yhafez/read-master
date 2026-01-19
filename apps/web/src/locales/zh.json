@@ -349,6 +349,24 @@
       "previewCount": "要导出的注释:",
       "export": "导出",
       "exporting": "正在导出..."
+    },
+    "lookup": {
+      "tabs": "查询标签",
+      "error": "无法加载结果。请重试。",
+      "invalidSelection": "请选择有效的单词或短语进行查询。"
+    },
+    "dictionary": {
+      "title": "词典",
+      "notFound": "词典中未找到该单词",
+      "playPronunciation": "播放发音",
+      "origin": "词源",
+      "synonyms": "同义词",
+      "antonyms": "反义词"
+    },
+    "wikipedia": {
+      "title": "维基百科",
+      "notFound": "维基百科中未找到该文章",
+      "readMore": "在维基百科上阅读更多"
     }
   },
   "flashcards": {

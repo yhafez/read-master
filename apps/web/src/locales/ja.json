@@ -349,6 +349,24 @@
       "previewCount": "エクスポートする注釈:",
       "export": "エクスポート",
       "exporting": "エクスポート中..."
+    },
+    "lookup": {
+      "tabs": "検索タブ",
+      "error": "結果を読み込めませんでした。もう一度お試しください。",
+      "invalidSelection": "検索する有効な単語またはフレーズを選択してください。"
+    },
+    "dictionary": {
+      "title": "辞書",
+      "notFound": "辞書に単語が見つかりません",
+      "playPronunciation": "発音を再生",
+      "origin": "語源",
+      "synonyms": "同義語",
+      "antonyms": "反義語"
+    },
+    "wikipedia": {
+      "title": "ウィキペディア",
+      "notFound": "ウィキペディアに記事が見つかりません",
+      "readMore": "ウィキペディアで続きを読む"
     }
   },
   "flashcards": {

@@ -350,6 +350,24 @@
       "previewCount": "Annotations to export:",
       "export": "Export",
       "exporting": "Exporting..."
+    },
+    "lookup": {
+      "tabs": "Lookup tabs",
+      "error": "Unable to load results. Please try again.",
+      "invalidSelection": "Please select a valid word or phrase to look up."
+    },
+    "dictionary": {
+      "title": "Dictionary",
+      "notFound": "Word not found in dictionary",
+      "playPronunciation": "Play pronunciation",
+      "origin": "Origin",
+      "synonyms": "Synonyms",
+      "antonyms": "Antonyms"
+    },
+    "wikipedia": {
+      "title": "Wikipedia",
+      "notFound": "Article not found on Wikipedia",
+      "readMore": "Read more on Wikipedia"
     }
   },
   "flashcards": {

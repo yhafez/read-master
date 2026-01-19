@@ -8490,3 +8490,130 @@ Created comprehensionCheckTypes.test.ts:
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
 - pnpm vitest run: ✅ 1828 tests pass (70 new comprehension check tests)
+
+## Iteration 29
+
+[2026-01-19] frontend-016: Dictionary & Wikipedia lookup
+
+### Summary
+Implemented comprehensive dictionary lookup and Wikipedia search features for the reader. Users can select words to look up definitions from the Free Dictionary API or search Wikipedia for more detailed information.
+
+### Implementation Details
+
+#### Types and Utilities (dictionaryTypes.ts)
+Created comprehensive type system and 30+ utility functions:
+
+**Types:**
+- LookupSource: "dictionary" | "wikipedia"
+- LookupState: "idle" | "loading" | "success" | "error"
+- DictionaryEntry: Word with phonetics, meanings, definitions
+- WikipediaSummary: Wikipedia article summary with thumbnail
+- LookupCacheEntry: Cache entry with TTL support
+- LookupSettings: User preferences for lookup behavior
+
+**Constants:**
+- DICTIONARY_API_URL: Free Dictionary API endpoint
+- WIKIPEDIA_API_URL: Wikipedia REST API endpoint
+- WIKIPEDIA_LANGUAGES: Supported Wikipedia languages (en, ar, es, ja, zh, tl)
+- CACHE_TTL: 24 hours
+- MAX_CACHE_ENTRIES: 100
+
+**Cache Utilities:**
+- createCacheEntry, isCacheValid, getCache, setCache
+- addToCache, getFromCache, clearCache, getCacheSize
+
+**Dictionary Parsing:**
+- parseDictionaryResponse: Parse API response to DictionaryEntry
+- parseDictionaryPhonetics: Extract pronunciation info
+- parseDictionaryMeanings: Parse word meanings by part of speech
+- parseDictionaryDefinitions: Parse individual definitions with examples
+
+**Wikipedia Parsing:**
+- buildWikipediaUrl: Build API URL for language
+- parseWikipediaResponse: Parse summary response
+- truncateExtract: Truncate long extracts
+
+**Helper Functions:**
+- normalizeWord, isValidLookupWord, extractFirstWord, isPhrase
+- getPhoneticText, getPhoneticAudio, getAllSynonyms, getAllAntonyms
+- countDefinitions, getDictionaryErrorMessage, getWikipediaErrorMessage
+- getPartOfSpeechAbbrev, formatPartOfSpeech, getWikipediaUrlForLanguage
+
+**Settings Persistence:**
+- loadLookupSettings, saveLookupSettings, updateLookupSetting
+
+#### DictionaryPopover Component
+React component with MUI integration:
+- Tabs for switching between Dictionary and Wikipedia sources
+- Audio playback for pronunciation
+- Rich formatting for definitions, examples, synonyms/antonyms
+- Wikipedia thumbnail and extract display
+- Loading and error states
+- Accessible keyboard navigation
+- Responsive positioning
+
+#### i18n Translations
+Added translations for all 6 locales (en, ar, es, ja, zh, tl):
+- reader.lookup.* (placeholder, search, noResults, loading)
+- reader.dictionary.* (title, partOfSpeech, definition, example, synonyms, antonyms, pronunciation, source, noDefinitions)
+- reader.wikipedia.* (title, noArticle, readMore, notFound, source)
+
+### Test Coverage (105 tests)
+Created dictionaryTypes.test.ts:
+- Constants tests (6)
+- normalizeWord tests (5)
+- isValidLookupWord tests (5)
+- extractFirstWord tests (4)
+- isPhrase tests (4)
+- createCacheEntry tests (4)
+- isCacheValid tests (5)
+- getCache/setCache tests (6)
+- addToCache tests (6)
+- getFromCache tests (4)
+- clearCache tests (3)
+- getCacheSize tests (3)
+- createDictionaryError tests (4)
+- parseDictionaryResponse tests (4)
+- parseDictionaryPhonetics tests (4)
+- parseDictionaryMeanings tests (4)
+- parseDictionaryDefinitions tests (3)
+- getPhoneticText tests (3)
+- getPhoneticAudio tests (3)
+- getAllSynonyms tests (3)
+- getAllAntonyms tests (3)
+- countDefinitions tests (3)
+- createWikipediaError tests (3)
+- buildWikipediaUrl tests (3)
+- parseWikipediaResponse tests (4)
+- truncateExtract tests (4)
+- loadLookupSettings/saveLookupSettings tests (5)
+- updateLookupSetting tests (4)
+- Error message functions tests (6)
+- Part of speech formatting tests (4)
+- Wikipedia URL functions tests (3)
+
+### Files Created
+- apps/web/src/components/reader/dictionaryTypes.ts
+- apps/web/src/components/reader/DictionaryPopover.tsx
+- apps/web/src/components/reader/dictionaryTypes.test.ts
+
+### Files Modified
+- apps/web/src/components/reader/index.ts (added dictionary exports)
+- apps/web/src/locales/en.json (added reader.lookup.*, reader.dictionary.*, reader.wikipedia.*)
+- apps/web/src/locales/ar.json (added reader.lookup.*, reader.dictionary.*, reader.wikipedia.*)
+- apps/web/src/locales/es.json (added reader.lookup.*, reader.dictionary.*, reader.wikipedia.*)
+- apps/web/src/locales/ja.json (added reader.lookup.*, reader.dictionary.*, reader.wikipedia.*)
+- apps/web/src/locales/zh.json (added reader.lookup.*, reader.dictionary.*, reader.wikipedia.*)
+- apps/web/src/locales/tl.json (added reader.lookup.*, reader.dictionary.*, reader.wikipedia.*)
+
+### Acceptance Criteria Verification
+- ✅ Dictionary works (Free Dictionary API integration with response parsing)
+- ✅ Wikipedia works (Wikipedia REST API integration with language support)
+- ✅ Popover displays (DictionaryPopover component with tabs)
+- ✅ Cache works (LocalStorage caching with TTL and size limits)
+- ✅ Tests pass (105 tests for dictionary/Wikipedia utilities)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 1933 tests pass (105 new dictionary/Wikipedia tests)
