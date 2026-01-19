@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import handler from "./srs-reminders";
+import handler, {
+  verifyCronAuth,
+  hasRemindersEnabled,
+  BATCH_SIZE,
+  MIN_DUE_CARDS_FOR_REMINDER,
+} from "./srs-reminders";
 
 // Mock the logger
 vi.mock("../../src/utils/logger", () => ({
@@ -8,6 +13,15 @@ vi.mock("../../src/utils/logger", () => ({
     info: vi.fn(),
     warn: vi.fn(),
     error: vi.fn(),
+  },
+}));
+
+// Mock the database
+vi.mock("../../src/services/db", () => ({
+  db: {
+    user: {
+      findMany: vi.fn().mockResolvedValue([]),
+    },
   },
 }));
 
@@ -49,76 +63,149 @@ describe("SRS Reminders Cron", () => {
     delete process.env.CRON_SECRET;
   });
 
-  it("should return 200 for successful execution without cron secret", async () => {
-    const req = createMockRequest();
-    const res = createMockResponse();
+  describe("handler", () => {
+    it("should return 200 for successful execution without cron secret", async () => {
+      const req = createMockRequest();
+      const res = createMockResponse();
 
-    await handler(req, res);
+      await handler(req, res);
 
-    expect(res._status).toBe(200);
-    expect(res._json).toMatchObject({
-      success: true,
-      message: "SRS reminders job completed",
-      usersNotified: 0,
+      expect(res._status).toBe(200);
+      expect(res._json).toMatchObject({
+        success: true,
+        message: "SRS reminders job completed",
+        usersNotified: 0,
+      });
+    });
+
+    it("should return 401 when cron secret is set but not provided", async () => {
+      process.env.CRON_SECRET = "test-secret";
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(401);
+      expect(res._json).toEqual({ error: "Unauthorized" });
+    });
+
+    it("should return 401 when cron secret is wrong", async () => {
+      process.env.CRON_SECRET = "test-secret";
+      const req = createMockRequest({
+        headers: { authorization: "Bearer wrong-secret" },
+      });
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(401);
+      expect(res._json).toEqual({ error: "Unauthorized" });
+    });
+
+    it("should return 200 when cron secret is correct", async () => {
+      process.env.CRON_SECRET = "test-secret";
+      const req = createMockRequest({
+        headers: { authorization: "Bearer test-secret" },
+      });
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(200);
+      expect(res._json).toMatchObject({
+        success: true,
+      });
+    });
+
+    it("should return 405 for non-GET requests", async () => {
+      const req = createMockRequest({ method: "POST" });
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(405);
+      expect(res._json).toEqual({ error: "Method not allowed" });
+    });
+
+    it("should include duration in response", async () => {
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(200);
+      expect(typeof (res._json as { duration: number }).duration).toBe(
+        "number"
+      );
+    });
+
+    it("should include stats in response", async () => {
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(200);
+      const json = res._json as { stats: object };
+      expect(json.stats).toBeDefined();
+      expect(json.stats).toHaveProperty("usersProcessed");
+      expect(json.stats).toHaveProperty("usersWithDueCards");
+      expect(json.stats).toHaveProperty("usersNotified");
+      expect(json.stats).toHaveProperty("errors");
     });
   });
 
-  it("should return 401 when cron secret is set but not provided", async () => {
-    process.env.CRON_SECRET = "test-secret";
-    const req = createMockRequest();
-    const res = createMockResponse();
-
-    await handler(req, res);
-
-    expect(res._status).toBe(401);
-    expect(res._json).toEqual({ error: "Unauthorized" });
-  });
-
-  it("should return 401 when cron secret is wrong", async () => {
-    process.env.CRON_SECRET = "test-secret";
-    const req = createMockRequest({
-      headers: { authorization: "Bearer wrong-secret" },
+  describe("verifyCronAuth", () => {
+    it("should return true when no cron secret is set", () => {
+      expect(verifyCronAuth(undefined, undefined)).toBe(true);
     });
-    const res = createMockResponse();
 
-    await handler(req, res);
-
-    expect(res._status).toBe(401);
-    expect(res._json).toEqual({ error: "Unauthorized" });
-  });
-
-  it("should return 200 when cron secret is correct", async () => {
-    process.env.CRON_SECRET = "test-secret";
-    const req = createMockRequest({
-      headers: { authorization: "Bearer test-secret" },
+    it("should return false when cron secret is set but auth header is missing", () => {
+      expect(verifyCronAuth(undefined, "test-secret")).toBe(false);
     });
-    const res = createMockResponse();
 
-    await handler(req, res);
+    it("should return false when cron secret is wrong", () => {
+      expect(verifyCronAuth("Bearer wrong-secret", "test-secret")).toBe(false);
+    });
 
-    expect(res._status).toBe(200);
-    expect(res._json).toMatchObject({
-      success: true,
+    it("should return true when auth matches", () => {
+      expect(verifyCronAuth("Bearer test-secret", "test-secret")).toBe(true);
     });
   });
 
-  it("should return 405 for non-GET requests", async () => {
-    const req = createMockRequest({ method: "POST" });
-    const res = createMockResponse();
+  describe("hasRemindersEnabled", () => {
+    it("should return true when preferences is null", () => {
+      expect(hasRemindersEnabled(null)).toBe(true);
+    });
 
-    await handler(req, res);
+    it("should return true when preferences is undefined", () => {
+      expect(hasRemindersEnabled(undefined)).toBe(true);
+    });
 
-    expect(res._status).toBe(405);
-    expect(res._json).toEqual({ error: "Method not allowed" });
+    it("should return true when preferences is empty object", () => {
+      expect(hasRemindersEnabled({})).toBe(true);
+    });
+
+    it("should return true when srsRemindersEnabled is not set", () => {
+      expect(hasRemindersEnabled({ theme: "dark" })).toBe(true);
+    });
+
+    it("should return true when srsRemindersEnabled is true", () => {
+      expect(hasRemindersEnabled({ srsRemindersEnabled: true })).toBe(true);
+    });
+
+    it("should return false when srsRemindersEnabled is false", () => {
+      expect(hasRemindersEnabled({ srsRemindersEnabled: false })).toBe(false);
+    });
   });
 
-  it("should include duration in response", async () => {
-    const req = createMockRequest();
-    const res = createMockResponse();
+  describe("configuration constants", () => {
+    it("should have expected batch size", () => {
+      expect(BATCH_SIZE).toBe(100);
+    });
 
-    await handler(req, res);
-
-    expect(res._status).toBe(200);
-    expect(typeof (res._json as { duration: number }).duration).toBe("number");
+    it("should have expected minimum due cards threshold", () => {
+      expect(MIN_DUE_CARDS_FOR_REMINDER).toBe(1);
+    });
   });
 });

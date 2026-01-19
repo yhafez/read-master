@@ -6843,3 +6843,76 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7761 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 15 - Ralph Wiggum
+
+### Task Completed
+- **api-cron-001**: Implement cron job endpoints
+
+### Implementation Details
+
+- Fully implemented api/cron/srs-reminders.ts:
+  - Sends reminders for users with due flashcards
+  - Batch processing with configurable BATCH_SIZE (100)
+  - Verifies CRON_SECRET for auth
+  - Gets users with due cards (flashcards where dueDate <= now, not suspended)
+  - Logs notifications (placeholder for actual email/push sending)
+  - Returns stats: usersProcessed, usersWithDueCards, usersNotified, errors
+  - Exported helpers: verifyCronAuth, getUsersWithDueCards, hasRemindersEnabled, logNotification, processSrsReminders
+
+- Fully implemented api/cron/streak-check.ts:
+  - Checks and updates streaks daily at midnight UTC
+  - Activity = flashcard reviews OR reading progress updates
+  - If no activity yesterday, streak resets to 0
+  - If activity yesterday, streak increments
+  - Awards streak achievements at milestones (7, 30, 100, 365 days)
+  - Uses ACHIEVEMENTS from @read-master/shared
+  - Updates longestStreak when current exceeds it
+  - Batch processing with configurable BATCH_SIZE (100)
+  - Returns stats: usersProcessed, streaksChecked, streaksMaintained, streaksReset, streaksIncremented, achievementsAwarded, totalXpAwarded, errors
+  - Exported helpers: verifyCronAuth, getStartOfDayUTC, isSameDayUTC, isYesterday, getUserLastActivityDate, hadActivityOnDay, getUsersWithStats, updateUserStreak, awardStreakAchievement, checkStreakAchievements, processUserStreak, processStreakCheck
+
+- Fully implemented api/cron/cleanup-expired.ts:
+  - Runs weekly on Sundays at 3:00 AM UTC
+  - Cleans up:
+    - Old audit logs (> 90 days)
+    - Old AI usage logs (> 365 days)
+    - Soft-deleted books (> 30 days) and cascades to related data
+    - Soft-deleted flashcards (> 30 days)
+    - Soft-deleted annotations (> 30 days)
+    - Soft-deleted curriculums (> 30 days) with items and follows
+    - Soft-deleted forum posts (> 30 days) with replies and votes
+    - Soft-deleted forum replies (> 30 days) with votes
+  - Batch processing with BATCH_SIZE (1000)
+  - Handles foreign key constraints by deleting in correct order
+  - Partial failure handling (continues cleanup even if one type fails)
+  - Returns detailed stats for each cleanup type
+  - Exported helpers: verifyCronAuth, getCutoffDate, cleanupAuditLogs, cleanupAIUsageLogs, cleanupSoftDeletedBooks, cleanupSoftDeletedFlashcards, cleanupSoftDeletedAnnotations, cleanupSoftDeletedCurriculums, cleanupSoftDeletedForumPosts, cleanupSoftDeletedForumReplies, runCleanup
+
+- Updated tests for all cron jobs:
+  - srs-reminders.test.ts: Tests handler (auth, method, responses), verifyCronAuth, hasRemindersEnabled, constants
+  - streak-check.test.ts: Tests handler (auth, method, responses), verifyCronAuth, getStartOfDayUTC, isSameDayUTC, isYesterday, constants
+  - cleanup-expired.test.ts: Tests handler (auth, method, responses), verifyCronAuth, getCutoffDate, constants
+
+- Cron jobs verified in vercel.json:
+  - /api/cron/srs-reminders: Daily at 8:00 AM UTC
+  - /api/cron/streak-check: Daily at midnight UTC
+  - /api/cron/cleanup-expired: Weekly Sundays at 3:00 AM UTC
+
+### Files Modified
+- apps/api/api/cron/srs-reminders.ts (fully implemented)
+- apps/api/api/cron/streak-check.ts (fully implemented)
+- apps/api/api/cron/cleanup-expired.ts (fully implemented)
+- apps/api/api/cron/srs-reminders.test.ts (enhanced with more tests)
+- apps/api/api/cron/streak-check.test.ts (enhanced with more tests)
+- apps/api/api/cron/cleanup-expired.test.ts (enhanced with more tests)
+
+### Acceptance Criteria Verification
+- ✅ All cron jobs are implemented (srs-reminders, streak-check, cleanup-expired)
+- ✅ Jobs configured to run on schedule in vercel.json
+- ✅ Tests verify job logic (handler behavior, helper functions, auth)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm test: ✅ 5128 tests pass

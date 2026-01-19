@@ -1,6 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import handler from "./cleanup-expired";
+import handler, {
+  verifyCronAuth,
+  getCutoffDate,
+  AUDIT_LOG_RETENTION_DAYS,
+  SOFT_DELETE_RETENTION_DAYS,
+  AI_USAGE_LOG_RETENTION_DAYS,
+} from "./cleanup-expired";
 
 // Mock the logger
 vi.mock("../../src/utils/logger", () => ({
@@ -8,6 +14,65 @@ vi.mock("../../src/utils/logger", () => ({
     info: vi.fn(),
     warn: vi.fn(),
     error: vi.fn(),
+  },
+}));
+
+// Mock the database
+vi.mock("../../src/services/db", () => ({
+  db: {
+    auditLog: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    aIUsageLog: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    book: {
+      findMany: vi.fn().mockResolvedValue([]),
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    flashcard: {
+      findMany: vi.fn().mockResolvedValue([]),
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    flashcardReview: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    annotation: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    assessment: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    preReadingGuide: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    readingProgress: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    chapter: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    curriculum: {
+      findMany: vi.fn().mockResolvedValue([]),
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    curriculumFollow: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    curriculumItem: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    forumPost: {
+      findMany: vi.fn().mockResolvedValue([]),
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    forumReply: {
+      findMany: vi.fn().mockResolvedValue([]),
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
+    forumVote: {
+      deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
   },
 }));
 
@@ -49,88 +114,166 @@ describe("Cleanup Expired Cron", () => {
     delete process.env.CRON_SECRET;
   });
 
-  it("should return 200 for successful execution without cron secret", async () => {
-    const req = createMockRequest();
-    const res = createMockResponse();
+  describe("handler", () => {
+    it("should return 200 for successful execution without cron secret", async () => {
+      const req = createMockRequest();
+      const res = createMockResponse();
 
-    await handler(req, res);
+      await handler(req, res);
 
-    expect(res._status).toBe(200);
-    expect(res._json).toMatchObject({
-      success: true,
-      message: "Cleanup job completed",
-      stats: {
-        expiredDownloadsDeleted: 0,
-        oldAuditLogsDeleted: 0,
-        orphanedFilesDeleted: 0,
-        softDeletedRecordsPurged: 0,
-      },
+      expect(res._status).toBe(200);
+      expect(res._json).toMatchObject({
+        success: true,
+        message: "Cleanup job completed successfully",
+        stats: {
+          oldAuditLogsDeleted: 0,
+          oldAILogsDeleted: 0,
+          softDeletedBooksDeleted: 0,
+          softDeletedFlashcardsDeleted: 0,
+          softDeletedAnnotationsDeleted: 0,
+          softDeletedCurriculumsDeleted: 0,
+          softDeletedForumPostsDeleted: 0,
+          softDeletedForumRepliesDeleted: 0,
+          totalDeleted: 0,
+        },
+      });
+    });
+
+    it("should return 401 when cron secret is set but not provided", async () => {
+      process.env.CRON_SECRET = "test-secret";
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(401);
+      expect(res._json).toEqual({ error: "Unauthorized" });
+    });
+
+    it("should return 401 when cron secret is wrong", async () => {
+      process.env.CRON_SECRET = "test-secret";
+      const req = createMockRequest({
+        headers: { authorization: "Bearer wrong-secret" },
+      });
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(401);
+      expect(res._json).toEqual({ error: "Unauthorized" });
+    });
+
+    it("should return 200 when cron secret is correct", async () => {
+      process.env.CRON_SECRET = "test-secret";
+      const req = createMockRequest({
+        headers: { authorization: "Bearer test-secret" },
+      });
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(200);
+      expect(res._json).toMatchObject({
+        success: true,
+      });
+    });
+
+    it("should return 405 for non-GET requests", async () => {
+      const req = createMockRequest({ method: "POST" });
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(405);
+      expect(res._json).toEqual({ error: "Method not allowed" });
+    });
+
+    it("should include duration in response", async () => {
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(200);
+      const json = res._json as { duration: number };
+      expect(typeof json.duration).toBe("number");
+    });
+
+    it("should include all cleanup stats in response", async () => {
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req, res);
+
+      expect(res._status).toBe(200);
+      const json = res._json as { stats: Record<string, number> };
+      expect(json.stats).toHaveProperty("oldAuditLogsDeleted");
+      expect(json.stats).toHaveProperty("oldAILogsDeleted");
+      expect(json.stats).toHaveProperty("softDeletedBooksDeleted");
+      expect(json.stats).toHaveProperty("softDeletedFlashcardsDeleted");
+      expect(json.stats).toHaveProperty("softDeletedAnnotationsDeleted");
+      expect(json.stats).toHaveProperty("softDeletedCurriculumsDeleted");
+      expect(json.stats).toHaveProperty("softDeletedForumPostsDeleted");
+      expect(json.stats).toHaveProperty("softDeletedForumRepliesDeleted");
+      expect(json.stats).toHaveProperty("totalDeleted");
     });
   });
 
-  it("should return 401 when cron secret is set but not provided", async () => {
-    process.env.CRON_SECRET = "test-secret";
-    const req = createMockRequest();
-    const res = createMockResponse();
-
-    await handler(req, res);
-
-    expect(res._status).toBe(401);
-    expect(res._json).toEqual({ error: "Unauthorized" });
-  });
-
-  it("should return 401 when cron secret is wrong", async () => {
-    process.env.CRON_SECRET = "test-secret";
-    const req = createMockRequest({
-      headers: { authorization: "Bearer wrong-secret" },
+  describe("verifyCronAuth", () => {
+    it("should return true when no cron secret is set", () => {
+      const mockReq = { headers: {} } as VercelRequest;
+      expect(verifyCronAuth(mockReq)).toBe(true);
     });
-    const res = createMockResponse();
 
-    await handler(req, res);
-
-    expect(res._status).toBe(401);
-    expect(res._json).toEqual({ error: "Unauthorized" });
-  });
-
-  it("should return 200 when cron secret is correct", async () => {
-    process.env.CRON_SECRET = "test-secret";
-    const req = createMockRequest({
-      headers: { authorization: "Bearer test-secret" },
+    it("should return false when cron secret is set but auth header is missing", () => {
+      process.env.CRON_SECRET = "test-secret";
+      const mockReq = { headers: {} } as VercelRequest;
+      expect(verifyCronAuth(mockReq)).toBe(false);
     });
-    const res = createMockResponse();
 
-    await handler(req, res);
+    it("should return false when cron secret is set but auth header is wrong", () => {
+      process.env.CRON_SECRET = "test-secret";
+      const mockReq = {
+        headers: { authorization: "Bearer wrong-secret" },
+      } as VercelRequest;
+      expect(verifyCronAuth(mockReq)).toBe(false);
+    });
 
-    expect(res._status).toBe(200);
-    expect(res._json).toMatchObject({
-      success: true,
+    it("should return true when cron secret matches", () => {
+      process.env.CRON_SECRET = "test-secret";
+      const mockReq = {
+        headers: { authorization: "Bearer test-secret" },
+      } as VercelRequest;
+      expect(verifyCronAuth(mockReq)).toBe(true);
     });
   });
 
-  it("should return 405 for non-GET requests", async () => {
-    const req = createMockRequest({ method: "POST" });
-    const res = createMockResponse();
+  describe("getCutoffDate", () => {
+    it("should return a date in the past by specified days", () => {
+      const cutoff = getCutoffDate(30);
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    await handler(req, res);
+      // Should be approximately 30 days ago (within same day)
+      expect(cutoff.getDate()).toBe(thirtyDaysAgo.getDate());
+      expect(cutoff.getMonth()).toBe(thirtyDaysAgo.getMonth());
+      expect(cutoff.getFullYear()).toBe(thirtyDaysAgo.getFullYear());
+    });
 
-    expect(res._status).toBe(405);
-    expect(res._json).toEqual({ error: "Method not allowed" });
+    it("should set time to start of day", () => {
+      const cutoff = getCutoffDate(30);
+      expect(cutoff.getHours()).toBe(0);
+      expect(cutoff.getMinutes()).toBe(0);
+      expect(cutoff.getSeconds()).toBe(0);
+      expect(cutoff.getMilliseconds()).toBe(0);
+    });
   });
 
-  it("should include all cleanup stats in response", async () => {
-    const req = createMockRequest();
-    const res = createMockResponse();
-
-    await handler(req, res);
-
-    expect(res._status).toBe(200);
-    const json = res._json as { duration: number; stats: object };
-    expect(typeof json.duration).toBe("number");
-    expect(json.stats).toEqual({
-      expiredDownloadsDeleted: 0,
-      oldAuditLogsDeleted: 0,
-      orphanedFilesDeleted: 0,
-      softDeletedRecordsPurged: 0,
+  describe("configuration constants", () => {
+    it("should have expected retention periods", () => {
+      expect(AUDIT_LOG_RETENTION_DAYS).toBe(90);
+      expect(SOFT_DELETE_RETENTION_DAYS).toBe(30);
+      expect(AI_USAGE_LOG_RETENTION_DAYS).toBe(365);
     });
   });
 });
