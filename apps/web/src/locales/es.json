@@ -482,6 +482,41 @@
       "longPressDesc": "Mostrar menú de anotaciones",
       "pinch": "Pellizco",
       "pinchDesc": "Acercar o alejar"
+    },
+    "tts": {
+      "title": "Texto a voz",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "stop": "Detener",
+      "resume": "Continuar",
+      "speed": "Velocidad",
+      "volume": "Volumen",
+      "voice": "Voz",
+      "settings": "Configuración de TTS",
+      "highlightText": "Resaltar texto mientras se habla",
+      "autoScroll": "Desplazamiento automático durante la reproducción",
+      "notSupported": "Texto a voz no es compatible con este navegador",
+      "noVoices": "No hay voces disponibles",
+      "loading": "Cargando voces...",
+      "providers": {
+        "browser": "Navegador",
+        "openai": "OpenAI",
+        "elevenlabs": "ElevenLabs"
+      },
+      "tiers": {
+        "free": "Nivel gratuito - Voces del navegador",
+        "pro": "Nivel Pro - Voces de OpenAI",
+        "scholar": "Nivel Scholar - Voces premium"
+      },
+      "errors": {
+        "notSupported": "Texto a voz no es compatible con este navegador",
+        "noVoices": "No hay voces disponibles para texto a voz",
+        "voiceNotFound": "La voz seleccionada no está disponible",
+        "synthesisError": "Error al sintetizar el habla",
+        "networkError": "Error de red al generar el habla",
+        "rateLimited": "Demasiadas solicitudes, intente de nuevo más tarde",
+        "unauthorized": "Actualice su plan para usar voces premium"
+      }
     }
   },
   "flashcards": {

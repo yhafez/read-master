@@ -482,6 +482,41 @@
       "longPressDesc": "注釈メニューを表示",
       "pinch": "ピンチ",
       "pinchDesc": "ズームイン/アウト"
+    },
+    "tts": {
+      "title": "テキスト読み上げ",
+      "play": "再生",
+      "pause": "一時停止",
+      "stop": "停止",
+      "resume": "再開",
+      "speed": "速度",
+      "volume": "音量",
+      "voice": "音声",
+      "settings": "読み上げ設定",
+      "highlightText": "読み上げ中のテキストをハイライト",
+      "autoScroll": "再生中に自動スクロール",
+      "notSupported": "このブラウザではテキスト読み上げがサポートされていません",
+      "noVoices": "利用可能な音声がありません",
+      "loading": "音声を読み込み中...",
+      "providers": {
+        "browser": "ブラウザ",
+        "openai": "OpenAI",
+        "elevenlabs": "ElevenLabs"
+      },
+      "tiers": {
+        "free": "無料プラン - ブラウザ音声",
+        "pro": "Proプラン - OpenAI音声",
+        "scholar": "Scholarプラン - プレミアム音声"
+      },
+      "errors": {
+        "notSupported": "このブラウザではテキスト読み上げがサポートされていません",
+        "noVoices": "テキスト読み上げ用の音声がありません",
+        "voiceNotFound": "選択した音声は利用できません",
+        "synthesisError": "音声合成に失敗しました",
+        "networkError": "音声生成中にネットワークエラーが発生しました",
+        "rateLimited": "リクエストが多すぎます。後でもう一度お試しください",
+        "unauthorized": "プレミアム音声を使用するにはプランをアップグレードしてください"
+      }
     }
   },
   "flashcards": {

@@ -483,6 +483,41 @@
       "longPressDesc": "Show annotation menu",
       "pinch": "Pinch",
       "pinchDesc": "Zoom in or out"
+    },
+    "tts": {
+      "title": "Text-to-Speech",
+      "play": "Play",
+      "pause": "Pause",
+      "stop": "Stop",
+      "resume": "Resume",
+      "speed": "Speed",
+      "volume": "Volume",
+      "voice": "Voice",
+      "settings": "TTS Settings",
+      "highlightText": "Highlight text while speaking",
+      "autoScroll": "Auto-scroll during playback",
+      "notSupported": "Text-to-speech is not supported in this browser",
+      "noVoices": "No voices available",
+      "loading": "Loading voices...",
+      "providers": {
+        "browser": "Browser",
+        "openai": "OpenAI",
+        "elevenlabs": "ElevenLabs"
+      },
+      "tiers": {
+        "free": "Free tier - Browser voices",
+        "pro": "Pro tier - OpenAI voices",
+        "scholar": "Scholar tier - Premium voices"
+      },
+      "errors": {
+        "notSupported": "Text-to-speech is not supported in this browser",
+        "noVoices": "No voices available for text-to-speech",
+        "voiceNotFound": "Selected voice is not available",
+        "synthesisError": "Failed to synthesize speech",
+        "networkError": "Network error while generating speech",
+        "rateLimited": "Too many requests, please try again later",
+        "unauthorized": "Upgrade your plan to use premium voices"
+      }
     }
   },
   "flashcards": {

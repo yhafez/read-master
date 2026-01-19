@@ -482,6 +482,41 @@
       "longPressDesc": "显示注释菜单",
       "pinch": "捏合",
       "pinchDesc": "放大或缩小"
+    },
+    "tts": {
+      "title": "文字转语音",
+      "play": "播放",
+      "pause": "暂停",
+      "stop": "停止",
+      "resume": "继续",
+      "speed": "速度",
+      "volume": "音量",
+      "voice": "声音",
+      "settings": "语音设置",
+      "highlightText": "朗读时高亮文字",
+      "autoScroll": "播放时自动滚动",
+      "notSupported": "此浏览器不支持文字转语音",
+      "noVoices": "没有可用的声音",
+      "loading": "正在加载声音...",
+      "providers": {
+        "browser": "浏览器",
+        "openai": "OpenAI",
+        "elevenlabs": "ElevenLabs"
+      },
+      "tiers": {
+        "free": "免费版 - 浏览器声音",
+        "pro": "专业版 - OpenAI声音",
+        "scholar": "学者版 - 高级声音"
+      },
+      "errors": {
+        "notSupported": "此浏览器不支持文字转语音",
+        "noVoices": "没有可用的文字转语音声音",
+        "voiceNotFound": "所选声音不可用",
+        "synthesisError": "语音合成失败",
+        "networkError": "生成语音时网络错误",
+        "rateLimited": "请求过多，请稍后重试",
+        "unauthorized": "升级您的计划以使用高级声音"
+      }
     }
   },
   "flashcards": {

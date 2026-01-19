@@ -398,3 +398,65 @@ export {
 
 // Shortcuts Help Dialog
 export { ShortcutsHelpDialog } from "./ShortcutsHelpDialog";
+
+// TTS (Text-to-Speech) Types and Utilities
+export type {
+  TTSProvider,
+  TTSPlaybackState,
+  TTSVoice,
+  WebSpeechVoiceInfo,
+  TTSSettings,
+  TTSPosition,
+  TTSErrorType,
+  TTSError,
+  TTSState,
+  TTSControlsProps,
+} from "./ttsTypes";
+export {
+  TTS_SETTINGS_KEY,
+  DEFAULT_TTS_SETTINGS,
+  RATE_RANGE,
+  PITCH_RANGE,
+  VOLUME_RANGE,
+  RATE_PRESETS,
+  OPENAI_VOICES,
+  ELEVENLABS_VOICES,
+  INITIAL_TTS_STATE,
+  isWebSpeechSupported,
+  getWebSpeechVoices,
+  convertWebSpeechVoice,
+  getAllWebSpeechVoices,
+  findVoiceByLanguage,
+  findWebSpeechVoiceById,
+  getVoicesForTier,
+  getDefaultVoiceForTier,
+  findVoiceById,
+  groupVoicesByProvider,
+  filterVoicesByLanguage,
+  loadTTSSettings,
+  saveTTSSettings,
+  updateTTSSetting,
+  resetTTSSettings,
+  clampValue as clampTTSValue,
+  formatRate,
+  formatVolume,
+  getClosestRatePreset,
+  createTTSError,
+  getTTSErrorMessage,
+  isRecoverableError,
+  prepareTextForTTS,
+  splitIntoSentences,
+  estimateSpeechDuration,
+  getWordCount,
+  createPositionFromBoundary,
+  getHighlightRange,
+  getTextContext,
+  getProviderDisplayName,
+  getProviderFromVoiceId,
+  voiceRequiresAPI,
+  getTierForVoice,
+  canUseVoice,
+} from "./ttsTypes";
+
+// TTS Controls Component
+export { TTSControls } from "./TTSControls";

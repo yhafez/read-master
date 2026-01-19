@@ -9631,3 +9631,151 @@ Languages: en.json, es.json, ar.json, ja.json, zh.json, tl.json
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (only pre-existing warnings)
 - pnpm vitest run: ✅ 2591/2591 tests pass
+
+## Iteration 39 - frontend-041: TTS Controls in Reader
+
+**Date:** 2026-01-19
+**Task:** frontend-041 - TTS controls in reader
+**Status:** ✅ COMPLETED
+
+### Implementation Summary
+
+Implemented comprehensive TTS (Text-to-Speech) controls for the reader with Web Speech API support, voice selection, speed/volume controls, and text highlighting.
+
+### Files Created
+
+#### apps/web/src/components/reader/ttsTypes.ts
+Complete TTS types and utilities module (850+ lines):
+
+**Types:**
+- TTSProvider: 'web_speech' | 'openai' | 'elevenlabs'
+- TTSPlaybackState: 'idle' | 'loading' | 'playing' | 'paused'
+- TTSVoice: Voice information with id, name, lang, provider, isPremium
+- TTSSettings: Persisted settings (enabled, voice, rate, pitch, volume, highlight)
+- TTSPosition: Position tracking for text highlighting
+- TTSError: Error information with type and message
+- TTSState: Complete playback state for component
+- TTSControlsProps: Component props interface
+
+**Constants:**
+- TTS_SETTINGS_KEY: localStorage key
+- DEFAULT_TTS_SETTINGS: Default configuration
+- RATE_RANGE, PITCH_RANGE, VOLUME_RANGE: Value constraints
+- RATE_PRESETS: Preset speed options (0.5x-2x)
+- OPENAI_VOICES: 6 OpenAI voice options for Pro tier
+- ELEVENLABS_VOICES: 8 ElevenLabs voice options for Scholar tier
+- INITIAL_TTS_STATE: Initial component state
+
+**Web Speech Utilities:**
+- isWebSpeechSupported: Check browser support
+- getWebSpeechVoices, getAllWebSpeechVoices: Get available voices
+- convertWebSpeechVoice: Convert to TTSVoice format
+- findVoiceByLanguage, findWebSpeechVoiceById: Voice lookup
+
+**Voice Management:**
+- getVoicesForTier: Get voices available for subscription tier
+- getDefaultVoiceForTier: Get default voice for tier
+- findVoiceById: Find voice by ID
+- groupVoicesByProvider: Group voices for display
+- filterVoicesByLanguage: Filter by language code
+
+**Settings Persistence:**
+- loadTTSSettings: Load from localStorage with validation
+- saveTTSSettings: Save to localStorage
+- updateTTSSetting: Update single setting
+- resetTTSSettings: Reset to defaults
+
+**Rate/Volume Utilities:**
+- clampValue: Clamp within range
+- formatRate, formatVolume: Format for display
+- getClosestRatePreset: Find nearest preset
+
+**Error Handling:**
+- createTTSError: Create error with message
+- getTTSErrorMessage: Get display message
+- isRecoverableError: Check if can retry
+
+**Text Processing:**
+- prepareTextForTTS: Clean and normalize text
+- splitIntoSentences: Split for chunked processing
+- estimateSpeechDuration: Estimate playback time
+- getWordCount: Count words
+
+**Position Tracking:**
+- createPositionFromBoundary: Create from speech event
+- getHighlightRange: Get range for highlighting
+- getTextContext: Get surrounding context
+
+**Provider Utilities:**
+- getProviderDisplayName: Display name for provider
+- getProviderFromVoiceId: Get provider from ID
+- voiceRequiresAPI: Check if needs API
+- getTierForVoice: Get required tier
+- canUseVoice: Check if user can use voice
+
+#### apps/web/src/components/reader/TTSControls.tsx
+MUI-based TTS controls component (~270 lines):
+
+**Features:**
+- Play/Pause/Stop buttons with icons
+- Loading state with spinner
+- Voice selector grouped by provider
+- Speed slider with presets (0.5x-2x)
+- Volume slider with icon feedback
+- Expandable settings panel
+- Tier-based voice filtering
+- Error display with retry option
+- Compact mode option
+- Full i18n support
+
+**Props:**
+- text: Text to speak
+- tier: User subscription tier
+- onPlaybackChange: Playback state callback
+- onPositionChange: Position callback for highlighting
+- onError: Error callback
+- compact, disabled: UI options
+
+#### apps/web/src/components/reader/ttsTypes.test.ts
+60 comprehensive tests covering:
+- Constants (7 tests): All constants have correct values
+- Web Speech utilities (6 tests): Voice detection and conversion
+- Voice management (9 tests): Tier-based voice selection
+- Settings persistence (5 tests): localStorage operations
+- Rate/Volume utilities (4 tests): Formatting and clamping
+- Error handling (5 tests): Error creation and messages
+- Text processing (10 tests): Text preparation and splitting
+- Position tracking (4 tests): Highlight range calculation
+- Provider utilities (10 tests): Provider detection and tier checks
+
+### Files Modified
+
+#### apps/web/src/components/reader/index.ts
+Added exports for:
+- All TTS types (TTSProvider, TTSPlaybackState, TTSVoice, etc.)
+- All TTS constants (TTS_SETTINGS_KEY, DEFAULT_TTS_SETTINGS, etc.)
+- All TTS utilities (50+ functions)
+- TTSControls component
+
+#### i18n Translations (all 6 locales)
+Added reader.tts.* translations:
+- Basic controls: play, pause, stop, resume
+- Settings: speed, volume, voice, settings
+- Options: highlightText, autoScroll
+- Providers: browser, openai, elevenlabs
+- Tiers: free, pro, scholar
+- Errors: notSupported, noVoices, voiceNotFound, synthesisError, etc.
+
+Languages: en.json, es.json, ar.json, ja.json, zh.json, tl.json
+
+### Acceptance Criteria Verification
+- ✅ Works all tiers - Free uses Web Speech API, Pro/Scholar use premium voices
+- ✅ Voice selection works - Grouped by provider, filtered by tier
+- ✅ Highlighting works - Position tracking with callbacks
+- ✅ Persists - Settings saved to localStorage
+- ✅ Tests pass - 60 comprehensive tests
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (only pre-existing warnings)
+- pnpm vitest run: ✅ 2651/2651 tests pass

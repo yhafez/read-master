@@ -482,6 +482,41 @@
       "longPressDesc": "Ipakita ang annotation menu",
       "pinch": "Pinch",
       "pinchDesc": "Mag-zoom in o out"
+    },
+    "tts": {
+      "title": "Text-to-Speech",
+      "play": "I-play",
+      "pause": "I-pause",
+      "stop": "Itigil",
+      "resume": "Ituloy",
+      "speed": "Bilis",
+      "volume": "Lakas ng tunog",
+      "voice": "Boses",
+      "settings": "Mga Setting ng TTS",
+      "highlightText": "I-highlight ang teksto habang binabasa",
+      "autoScroll": "Auto-scroll habang nagpe-play",
+      "notSupported": "Hindi sinusuportahan ang text-to-speech sa browser na ito",
+      "noVoices": "Walang available na mga boses",
+      "loading": "Nilo-load ang mga boses...",
+      "providers": {
+        "browser": "Browser",
+        "openai": "OpenAI",
+        "elevenlabs": "ElevenLabs"
+      },
+      "tiers": {
+        "free": "Libreng tier - Mga boses ng browser",
+        "pro": "Pro tier - Mga boses ng OpenAI",
+        "scholar": "Scholar tier - Mga premium na boses"
+      },
+      "errors": {
+        "notSupported": "Hindi sinusuportahan ang text-to-speech sa browser na ito",
+        "noVoices": "Walang available na mga boses para sa text-to-speech",
+        "voiceNotFound": "Ang napiling boses ay hindi available",
+        "synthesisError": "Nabigo sa pag-synthesize ng speech",
+        "networkError": "Network error habang ginagawa ang speech",
+        "rateLimited": "Masyadong maraming requests, subukan ulit mamaya",
+        "unauthorized": "I-upgrade ang iyong plan para gamitin ang mga premium na boses"
+      }
     }
   },
   "flashcards": {
