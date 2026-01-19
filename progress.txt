@@ -10279,3 +10279,86 @@ Added 50+ translations for AI settings UI including:
 - Accessible UI with proper aria-labels
 - FeatureToggle extracted as reusable component
 - Responsive design using MUI Card and Stack components
+
+---
+
+## Iteration 44 - General Settings Page [frontend-089]
+
+### Date: 2026-01-19
+
+### Task Completed
+**frontend-089: General settings page**
+
+Implemented a comprehensive General Settings page allowing users to configure language, timezone, display name, and email notification preferences.
+
+### Implementation Summary
+
+#### apps/web/src/stores/generalSettingsStore.ts (NEW)
+Created Zustand store for general settings with localStorage persistence:
+- **Language Selection**: 6 languages (en, ar, es, ja, zh, tl)
+- **Timezone Selection**: 38 common timezones with offset display
+- **Display Name**: User's display name for social features (max 50 chars)
+- **Email Notifications**: 6 toggle settings:
+  - SRS reminders (daily flashcard review)
+  - Weekly progress summaries
+  - Achievement notifications
+  - Group activity updates
+  - Forum reply notifications
+  - Marketing & promotional content
+
+Exports:
+- Constants: GENERAL_SETTINGS_STORAGE_KEY, supportedLanguages, commonTimezones
+- Defaults: DEFAULT_GENERAL_SETTINGS, DEFAULT_EMAIL_NOTIFICATIONS
+- Validators: validateLanguage, validateTimezone, validateDisplayName
+- Sanitizers: sanitizeGeneralSettings, sanitizeEmailNotifications
+- Helpers: getBrowserTimezone, formatTimezoneDisplay, languageNames
+- Store: useGeneralSettingsStore with all state and actions
+
+#### apps/web/src/stores/generalSettingsStore.test.ts (NEW)
+56 comprehensive tests covering:
+- Constants and defaults (6 tests)
+- Validators (13 tests)
+- Sanitizers (11 tests)
+- Helper functions (9 tests)
+- Store actions (14 tests)
+- Initial state (3 tests)
+
+#### apps/web/src/pages/settings/SettingsPage.tsx (UPDATED)
+Replaced placeholder with full settings page:
+- Language Autocomplete with native language names
+- Timezone Autocomplete with formatted offset display
+- Display name input with character counter and validation
+- Email notification toggles with Enable All/Disable All
+- Reset to defaults button with confirmation
+- Snackbar feedback on save
+- Proper keyboard navigation and accessibility
+
+#### apps/web/src/stores/index.ts (UPDATED)
+Added exports for new general settings store and types
+
+#### apps/web/src/locales/*.json (UPDATED)
+Added 50+ translations in all 6 locale files (en, ar, es, ja, zh, tl):
+- Section titles and descriptions
+- Language and timezone labels
+- Display name validation messages
+- Email notification labels and descriptions
+- Reset/saved messages
+
+### Acceptance Criteria Verification
+- ✅ Language, timezone configurable - Autocomplete dropdowns
+- ✅ Display name editable - Text input with validation
+- ✅ Notifications configurable - 6 toggle switches
+- ✅ Persists to localStorage - Zustand persist middleware
+- ✅ Tests pass - 56 tests for store
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 2988 tests pass (56 new)
+
+### Technical Notes
+- Fixed TypeScript strict mode issues with MUI Autocomplete renderInput
+- Used manual property passing pattern instead of spreading params
+- Timezone validation uses Intl.DateTimeFormat for accurate checking
+- Browser timezone detection with fallback to UTC
+- Format timezone display shows both abbreviation and UTC offset

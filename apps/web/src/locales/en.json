@@ -948,6 +948,58 @@
       "resetSettings": "Reset to Defaults",
       "resetConfirm": "Are you sure you want to reset all AI settings to defaults?",
       "saved": "AI settings saved"
+    },
+    "general": {
+      "title": "General Settings",
+      "description": "Configure your language, timezone, display name, and notification preferences.",
+      "language": {
+        "title": "Language",
+        "description": "Choose your preferred language for the app interface."
+      },
+      "timezone": {
+        "title": "Timezone",
+        "description": "Select your timezone for accurate dates and times."
+      },
+      "displayName": {
+        "title": "Display Name",
+        "description": "This name will be shown on your profile and in social features.",
+        "placeholder": "Enter your display name",
+        "helperText": "{{count}}/{{max}} characters",
+        "tooLong": "Display name must be 50 characters or less"
+      },
+      "notifications": {
+        "title": "Email Notifications",
+        "description": "Control which email notifications you receive.",
+        "enableAll": "Enable All",
+        "disableAll": "Disable All",
+        "srsReminders": {
+          "label": "SRS Reminders",
+          "description": "Daily reminders to review your flashcards"
+        },
+        "weeklyProgress": {
+          "label": "Weekly Progress",
+          "description": "Weekly summary of your reading progress"
+        },
+        "achievements": {
+          "label": "Achievements",
+          "description": "Notifications when you earn new achievements"
+        },
+        "groupActivity": {
+          "label": "Group Activity",
+          "description": "Updates from your reading groups"
+        },
+        "forumReplies": {
+          "label": "Forum Replies",
+          "description": "Notifications when someone replies to your forum posts"
+        },
+        "marketing": {
+          "label": "Marketing & Updates",
+          "description": "Product updates and promotional content"
+        }
+      },
+      "resetSettings": "Reset to Defaults",
+      "resetConfirm": "Are you sure you want to reset all general settings to defaults?",
+      "saved": "Settings saved"
     }
   },
   "languages": {

@@ -947,6 +947,58 @@
       "resetSettings": "Restablecer a valores predeterminados",
       "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones de IA a los valores predeterminados?",
       "saved": "Configuración de IA guardada"
+    },
+    "general": {
+      "title": "Configuración General",
+      "description": "Configura tu idioma, zona horaria, nombre para mostrar y preferencias de notificaciones.",
+      "language": {
+        "title": "Idioma",
+        "description": "Elige tu idioma preferido para la interfaz de la aplicación."
+      },
+      "timezone": {
+        "title": "Zona Horaria",
+        "description": "Selecciona tu zona horaria para fechas y horas precisas."
+      },
+      "displayName": {
+        "title": "Nombre para Mostrar",
+        "description": "Este nombre se mostrará en tu perfil y en las funciones sociales.",
+        "placeholder": "Ingresa tu nombre para mostrar",
+        "helperText": "{{count}}/{{max}} caracteres",
+        "tooLong": "El nombre para mostrar debe tener 50 caracteres o menos"
+      },
+      "notifications": {
+        "title": "Notificaciones por Correo",
+        "description": "Controla qué notificaciones por correo recibes.",
+        "enableAll": "Habilitar Todo",
+        "disableAll": "Deshabilitar Todo",
+        "srsReminders": {
+          "label": "Recordatorios SRS",
+          "description": "Recordatorios diarios para revisar tus tarjetas"
+        },
+        "weeklyProgress": {
+          "label": "Progreso Semanal",
+          "description": "Resumen semanal de tu progreso de lectura"
+        },
+        "achievements": {
+          "label": "Logros",
+          "description": "Notificaciones cuando obtienes nuevos logros"
+        },
+        "groupActivity": {
+          "label": "Actividad de Grupo",
+          "description": "Actualizaciones de tus grupos de lectura"
+        },
+        "forumReplies": {
+          "label": "Respuestas del Foro",
+          "description": "Notificaciones cuando alguien responde a tus publicaciones"
+        },
+        "marketing": {
+          "label": "Marketing y Actualizaciones",
+          "description": "Actualizaciones del producto y contenido promocional"
+        }
+      },
+      "resetSettings": "Restablecer Valores",
+      "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones generales a los valores predeterminados?",
+      "saved": "Configuración guardada"
     }
   },
   "languages": {

@@ -947,6 +947,58 @@
       "resetSettings": "重置为默认值",
       "resetConfirm": "您确定要将所有AI设置重置为默认值吗？",
       "saved": "AI设置已保存"
+    },
+    "general": {
+      "title": "通用设置",
+      "description": "配置您的语言、时区、显示名称和通知偏好。",
+      "language": {
+        "title": "语言",
+        "description": "选择应用界面的首选语言。"
+      },
+      "timezone": {
+        "title": "时区",
+        "description": "选择您的时区以获取准确的日期和时间。"
+      },
+      "displayName": {
+        "title": "显示名称",
+        "description": "此名称将显示在您的个人资料和社交功能中。",
+        "placeholder": "输入您的显示名称",
+        "helperText": "{{count}}/{{max}} 个字符",
+        "tooLong": "显示名称必须不超过50个字符"
+      },
+      "notifications": {
+        "title": "电子邮件通知",
+        "description": "控制您接收的电子邮件通知。",
+        "enableAll": "全部启用",
+        "disableAll": "全部禁用",
+        "srsReminders": {
+          "label": "SRS提醒",
+          "description": "每日提醒您复习闪卡"
+        },
+        "weeklyProgress": {
+          "label": "每周进度",
+          "description": "您的阅读进度周报"
+        },
+        "achievements": {
+          "label": "成就",
+          "description": "获得新成就时的通知"
+        },
+        "groupActivity": {
+          "label": "群组活动",
+          "description": "来自您阅读群组的更新"
+        },
+        "forumReplies": {
+          "label": "论坛回复",
+          "description": "有人回复您的论坛帖子时的通知"
+        },
+        "marketing": {
+          "label": "营销与更新",
+          "description": "产品更新和促销内容"
+        }
+      },
+      "resetSettings": "重置为默认值",
+      "resetConfirm": "您确定要将所有通用设置重置为默认值吗？",
+      "saved": "设置已保存"
     }
   },
   "languages": {

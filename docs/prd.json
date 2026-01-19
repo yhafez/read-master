@@ -17,7 +17,7 @@
   "sprint_info": {
     "description": "All tasks active. Complete Read Master MVP to production.",
     "current_sprint_focus": "Full stack completion - API, Frontend, PWA, Testing, Deployment",
-    "completed_count": 65,
+    "completed_count": 66,
     "total_tasks": 193,
     "active_tasks": 193,
     "new_tasks_added": 135
@@ -3430,7 +3430,7 @@
         "Tests"
       ],
       "acceptance_criteria": ["All settings work", "Persist", "Tests pass"],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-090",

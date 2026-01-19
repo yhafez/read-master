@@ -947,6 +947,58 @@
       "resetSettings": "I-reset sa Default",
       "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng AI setting sa default?",
       "saved": "Na-save ang mga AI setting"
+    },
+    "general": {
+      "title": "Mga Pangkalahatang Setting",
+      "description": "I-configure ang iyong wika, timezone, display name, at mga kagustuhan sa notification.",
+      "language": {
+        "title": "Wika",
+        "description": "Piliin ang iyong gustong wika para sa interface ng app."
+      },
+      "timezone": {
+        "title": "Timezone",
+        "description": "Piliin ang iyong timezone para sa tumpak na petsa at oras."
+      },
+      "displayName": {
+        "title": "Display Name",
+        "description": "Ang pangalang ito ay ipapakita sa iyong profile at sa mga social feature.",
+        "placeholder": "Ilagay ang iyong display name",
+        "helperText": "{{count}}/{{max}} karakter",
+        "tooLong": "Ang display name ay dapat 50 karakter o mas kaunti"
+      },
+      "notifications": {
+        "title": "Mga Email Notification",
+        "description": "Kontrolin kung anong mga email notification ang iyong natatanggap.",
+        "enableAll": "I-enable Lahat",
+        "disableAll": "I-disable Lahat",
+        "srsReminders": {
+          "label": "Mga SRS Reminder",
+          "description": "Mga pang-araw-araw na paalala para i-review ang iyong mga flashcard"
+        },
+        "weeklyProgress": {
+          "label": "Lingguhang Progreso",
+          "description": "Lingguhang buod ng iyong progreso sa pagbabasa"
+        },
+        "achievements": {
+          "label": "Mga Achievement",
+          "description": "Mga notification kapag nakakuha ka ng bagong achievement"
+        },
+        "groupActivity": {
+          "label": "Aktibidad ng Grupo",
+          "description": "Mga update mula sa iyong mga reading group"
+        },
+        "forumReplies": {
+          "label": "Mga Reply sa Forum",
+          "description": "Mga notification kapag may sumagot sa iyong mga post sa forum"
+        },
+        "marketing": {
+          "label": "Marketing at Updates",
+          "description": "Mga product update at promotional content"
+        }
+      },
+      "resetSettings": "I-reset sa Default",
+      "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng pangkalahatang setting sa default?",
+      "saved": "Na-save ang mga setting"
     }
   },
   "languages": {

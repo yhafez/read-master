@@ -947,6 +947,58 @@
       "resetSettings": "デフォルトにリセット",
       "resetConfirm": "すべてのAI設定をデフォルトにリセットしてもよろしいですか？",
       "saved": "AI設定を保存しました"
+    },
+    "general": {
+      "title": "一般設定",
+      "description": "言語、タイムゾーン、表示名、通知設定を構成します。",
+      "language": {
+        "title": "言語",
+        "description": "アプリインターフェースの優先言語を選択してください。"
+      },
+      "timezone": {
+        "title": "タイムゾーン",
+        "description": "正確な日付と時刻のためにタイムゾーンを選択してください。"
+      },
+      "displayName": {
+        "title": "表示名",
+        "description": "この名前はプロフィールやソーシャル機能に表示されます。",
+        "placeholder": "表示名を入力",
+        "helperText": "{{count}}/{{max}} 文字",
+        "tooLong": "表示名は50文字以下にしてください"
+      },
+      "notifications": {
+        "title": "メール通知",
+        "description": "受信するメール通知を制御します。",
+        "enableAll": "すべて有効",
+        "disableAll": "すべて無効",
+        "srsReminders": {
+          "label": "SRSリマインダー",
+          "description": "フラッシュカードを復習するための毎日のリマインダー"
+        },
+        "weeklyProgress": {
+          "label": "週間進捗",
+          "description": "読書進捗の週間サマリー"
+        },
+        "achievements": {
+          "label": "実績",
+          "description": "新しい実績を獲得した時の通知"
+        },
+        "groupActivity": {
+          "label": "グループ活動",
+          "description": "読書グループからの更新"
+        },
+        "forumReplies": {
+          "label": "フォーラム返信",
+          "description": "フォーラム投稿への返信の通知"
+        },
+        "marketing": {
+          "label": "マーケティングと更新",
+          "description": "製品の更新とプロモーションコンテンツ"
+        }
+      },
+      "resetSettings": "デフォルトにリセット",
+      "resetConfirm": "すべての一般設定をデフォルトにリセットしてもよろしいですか？",
+      "saved": "設定を保存しました"
     }
   },
   "languages": {
