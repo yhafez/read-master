@@ -96,57 +96,6 @@
   },
   "library": {
     "title": "マイライブラリ",
-    "addBook": "本を追加",
-    "upload": "ファイルをアップロード",
-    "importUrl": "URLからインポート",
-    "pasteText": "テキストを貼り付け",
-    "searchBooks": "本を検索...",
-    "noBooks": "ライブラリにはまだ本がありません",
-    "startReading": "読書の旅を始めるために本を追加しましょう",
-    "noResults": "フィルターに一致する本がありません",
-    "tryDifferentFilters": "検索やフィルターを調整してみてください",
-    "viewMode": "表示モード",
-    "gridView": "グリッド表示",
-    "listView": "リスト表示",
-    "filterPanel": "本をフィルター",
-    "clearFilters": "フィルターをクリア",
-    "status": "ステータス",
-    "genre": "ジャンル",
-    "tags": "タグ",
-    "moreActions": "その他のアクション",
-    "filters": {
-      "all": "すべての本",
-      "reading": "読書中",
-      "completed": "完了",
-      "wantToRead": "読みたい",
-      "abandoned": "中断"
-    },
-    "sort": {
-      "dateAdded": "追加日",
-      "title": "タイトル",
-      "author": "著者",
-      "progress": "進捗",
-      "ascending": "昇順",
-      "descending": "降順",
-      "toggleOrder": "並び順を切り替え"
-    },
-    "genres": {
-      "fiction": "フィクション",
-      "nonFiction": "ノンフィクション",
-      "mystery": "ミステリー",
-      "romance": "ロマンス",
-      "sciFi": "SF",
-      "fantasy": "ファンタジー",
-      "biography": "伝記",
-      "history": "歴史",
-      "selfHelp": "自己啓発",
-      "business": "ビジネス"
-    },
-    "bookCard": {
-      "progress": "{{percent}}% 完了",
-      "continueReading": "読書を続ける",
-      "startReading": "読み始める"
-    },
     "addBook": {
       "title": "本を追加",
       "tabsLabel": "本のインポート方法",
@@ -200,6 +149,56 @@
         "invalidData": "フォームデータが無効です",
         "addFailed": "本の追加に失敗しました。もう一度お試しください。"
       }
+    },
+    "upload": "ファイルをアップロード",
+    "importUrl": "URLからインポート",
+    "pasteText": "テキストを貼り付け",
+    "searchBooks": "本を検索...",
+    "noBooks": "ライブラリにはまだ本がありません",
+    "startReading": "読書の旅を始めるために本を追加しましょう",
+    "noResults": "フィルターに一致する本がありません",
+    "tryDifferentFilters": "検索やフィルターを調整してみてください",
+    "viewMode": "表示モード",
+    "gridView": "グリッド表示",
+    "listView": "リスト表示",
+    "filterPanel": "本をフィルター",
+    "clearFilters": "フィルターをクリア",
+    "status": "ステータス",
+    "genre": "ジャンル",
+    "tags": "タグ",
+    "moreActions": "その他のアクション",
+    "filters": {
+      "all": "すべての本",
+      "reading": "読書中",
+      "completed": "完了",
+      "wantToRead": "読みたい",
+      "abandoned": "中断"
+    },
+    "sort": {
+      "dateAdded": "追加日",
+      "title": "タイトル",
+      "author": "著者",
+      "progress": "進捗",
+      "ascending": "昇順",
+      "descending": "降順",
+      "toggleOrder": "並び順を切り替え"
+    },
+    "genres": {
+      "fiction": "フィクション",
+      "nonFiction": "ノンフィクション",
+      "mystery": "ミステリー",
+      "romance": "ロマンス",
+      "sciFi": "SF",
+      "fantasy": "ファンタジー",
+      "biography": "伝記",
+      "history": "歴史",
+      "selfHelp": "自己啓発",
+      "business": "ビジネス"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% 完了",
+      "continueReading": "読書を続ける",
+      "startReading": "読み始める"
     }
   },
   "reader": {
@@ -352,5 +351,28 @@
     "closeMenu": "Close navigation menu",
     "expandSection": "Expand section",
     "collapseSection": "Collapse section"
+  },
+  "ai": {
+    "cached": "Cached",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "regenerate": "Regenerate",
+    "generatedAt": "Generated",
+    "example": "Example",
+    "relevance": "Why it matters",
+    "preReading": {
+      "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
+      "generating": "Generating..."
+    },
+    "sections": {
+      "overview": "Overview",
+      "themes": "Themes",
+      "targetAudience": "Target Audience",
+      "keyConcepts": "Key Concepts",
+      "context": "Context",
+      "culturalContext": "Cultural Context",
+      "guidingQuestions": "Guiding Questions",
+      "readingTips": "Reading Tips"
+    }
   }
 }

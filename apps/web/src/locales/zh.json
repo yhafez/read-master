@@ -96,57 +96,6 @@
   },
   "library": {
     "title": "我的书库",
-    "addBook": "添加书籍",
-    "upload": "上传文件",
-    "importUrl": "从URL导入",
-    "pasteText": "粘贴文本",
-    "searchBooks": "搜索书籍...",
-    "noBooks": "您的书库中还没有书籍",
-    "startReading": "开始添加书籍来开启您的阅读之旅",
-    "noResults": "没有符合筛选条件的书籍",
-    "tryDifferentFilters": "尝试调整搜索或筛选条件",
-    "viewMode": "视图模式",
-    "gridView": "网格视图",
-    "listView": "列表视图",
-    "filterPanel": "筛选书籍",
-    "clearFilters": "清除筛选",
-    "status": "状态",
-    "genre": "类型",
-    "tags": "标签",
-    "moreActions": "更多操作",
-    "filters": {
-      "all": "全部书籍",
-      "reading": "正在阅读",
-      "completed": "已完成",
-      "wantToRead": "想读",
-      "abandoned": "已放弃"
-    },
-    "sort": {
-      "dateAdded": "添加日期",
-      "title": "标题",
-      "author": "作者",
-      "progress": "进度",
-      "ascending": "升序",
-      "descending": "降序",
-      "toggleOrder": "切换排序"
-    },
-    "genres": {
-      "fiction": "小说",
-      "nonFiction": "非虚构",
-      "mystery": "悬疑",
-      "romance": "言情",
-      "sciFi": "科幻",
-      "fantasy": "奇幻",
-      "biography": "传记",
-      "history": "历史",
-      "selfHelp": "自助",
-      "business": "商业"
-    },
-    "bookCard": {
-      "progress": "{{percent}}% 完成",
-      "continueReading": "继续阅读",
-      "startReading": "开始阅读"
-    },
     "addBook": {
       "title": "添加书籍",
       "tabsLabel": "书籍导入方式",
@@ -200,6 +149,56 @@
         "invalidData": "表单数据无效",
         "addFailed": "添加书籍失败。请重试。"
       }
+    },
+    "upload": "上传文件",
+    "importUrl": "从URL导入",
+    "pasteText": "粘贴文本",
+    "searchBooks": "搜索书籍...",
+    "noBooks": "您的书库中还没有书籍",
+    "startReading": "开始添加书籍来开启您的阅读之旅",
+    "noResults": "没有符合筛选条件的书籍",
+    "tryDifferentFilters": "尝试调整搜索或筛选条件",
+    "viewMode": "视图模式",
+    "gridView": "网格视图",
+    "listView": "列表视图",
+    "filterPanel": "筛选书籍",
+    "clearFilters": "清除筛选",
+    "status": "状态",
+    "genre": "类型",
+    "tags": "标签",
+    "moreActions": "更多操作",
+    "filters": {
+      "all": "全部书籍",
+      "reading": "正在阅读",
+      "completed": "已完成",
+      "wantToRead": "想读",
+      "abandoned": "已放弃"
+    },
+    "sort": {
+      "dateAdded": "添加日期",
+      "title": "标题",
+      "author": "作者",
+      "progress": "进度",
+      "ascending": "升序",
+      "descending": "降序",
+      "toggleOrder": "切换排序"
+    },
+    "genres": {
+      "fiction": "小说",
+      "nonFiction": "非虚构",
+      "mystery": "悬疑",
+      "romance": "言情",
+      "sciFi": "科幻",
+      "fantasy": "奇幻",
+      "biography": "传记",
+      "history": "历史",
+      "selfHelp": "自助",
+      "business": "商业"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% 完成",
+      "continueReading": "继续阅读",
+      "startReading": "开始阅读"
     }
   },
   "reader": {
@@ -352,5 +351,28 @@
     "closeMenu": "Close navigation menu",
     "expandSection": "Expand section",
     "collapseSection": "Collapse section"
+  },
+  "ai": {
+    "cached": "Cached",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "regenerate": "Regenerate",
+    "generatedAt": "Generated",
+    "example": "Example",
+    "relevance": "Why it matters",
+    "preReading": {
+      "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
+      "generating": "Generating..."
+    },
+    "sections": {
+      "overview": "Overview",
+      "themes": "Themes",
+      "targetAudience": "Target Audience",
+      "keyConcepts": "Key Concepts",
+      "context": "Context",
+      "culturalContext": "Cultural Context",
+      "guidingQuestions": "Guiding Questions",
+      "readingTips": "Reading Tips"
+    }
   }
 }

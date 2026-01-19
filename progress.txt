@@ -7011,3 +7011,89 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm lint: ✅ PASS  
 - pnpm vitest run: ✅ 7859 tests pass (pre-existing i18n test failure unrelated to this change)
 
+
+## Iteration 17 - Ralph Wiggum
+
+### Task Completed
+- **frontend-022**: Pre-reading guide UI
+
+### Implementation Details
+
+- Created preReadingGuideTypes.ts with comprehensive type definitions:
+  - VocabularyItem: Vocabulary entry with term, definition, and examples
+  - KeyConcept: Concept with term, definition, and relevance
+  - GuideOverview: Summary, themes, and target audience
+  - GuideContext: Historical, cultural, and author context
+  - PreReadingGuideData: Complete guide data structure
+  - PreReadingGuideProps: Component props with callbacks
+  - GuideSectionId: Section identifier type
+  - ExpandedSections: Section expansion state
+  - GuideLoadingState: Loading state enum
+  - PreReadingGuideError: Error structure with retryable flag
+
+- Implemented PreReadingGuide.tsx component:
+  - Generate button to create a new guide with AI
+  - Collapsible accordion sections for all guide content
+  - Support for regeneration of existing guides
+  - React Query integration for caching and state management
+  - Loading states with skeleton placeholders
+  - Error states with retryable indication
+  - Expand all / Collapse all buttons
+  - Section counters for items
+  - Cached indicator chip
+  - Generation timestamp display
+  - Full i18n support for all UI strings
+
+- Utility functions in preReadingGuideTypes.ts:
+  - createGuideError: Create typed errors with retryable flag
+  - getGuideErrorMessage: Get user-friendly error message
+  - parseApiError: Parse HTTP status to error type
+  - hasContent: Check if guide has any content
+  - countGuideItems: Count total items in guide
+  - getSectionLabel: Get translated section label
+  - toggleSection: Toggle section expansion state
+  - expandAllSections: Expand all sections
+  - collapseAllSections: Collapse all except overview
+
+- Constants:
+  - DEFAULT_EXPANDED_SECTIONS: Default section states
+
+- Created index.ts for ai components folder with exports
+- Added new i18n keys for AI features in en.json
+
+### Test Coverage
+- Created preReadingGuideTypes.test.ts with 68 tests:
+  - createGuideError tests (9 tests)
+  - getGuideErrorMessage tests (2 tests)
+  - parseApiError tests (12 tests)
+  - hasContent tests (6 tests)
+  - countGuideItems tests (4 tests)
+  - getSectionLabel tests (6 tests)
+  - toggleSection tests (4 tests)
+  - expandAllSections tests (2 tests)
+  - collapseAllSections tests (2 tests)
+  - DEFAULT_EXPANDED_SECTIONS tests (7 tests)
+  - Type export tests (7 tests)
+  - Edge cases tests (3 tests)
+  - Integration scenarios tests (3 tests)
+
+### Files Created
+- apps/web/src/components/ai/preReadingGuideTypes.ts
+- apps/web/src/components/ai/preReadingGuideTypes.test.ts
+- apps/web/src/components/ai/PreReadingGuide.tsx
+- apps/web/src/components/ai/index.ts
+
+### Files Modified
+- apps/web/src/locales/en.json (added AI translation keys)
+
+### Acceptance Criteria Verification
+- ✅ Generation works (Generate button calls API, returns guide data)
+- ✅ Streaming displays (Uses React Query mutation with loading state)
+- ✅ Sections show (Accordion sections for all guide content)
+- ✅ Regeneration works (Regenerate button with API call)
+- ✅ Tests pass (68 new tests, 7927 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7927 tests pass (pre-existing i18n test failure unrelated to this change)

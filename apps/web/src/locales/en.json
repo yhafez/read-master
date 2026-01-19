@@ -352,5 +352,28 @@
     "closeMenu": "Close navigation menu",
     "expandSection": "Expand section",
     "collapseSection": "Collapse section"
+  },
+  "ai": {
+    "cached": "Cached",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "regenerate": "Regenerate",
+    "generatedAt": "Generated",
+    "example": "Example",
+    "relevance": "Why it matters",
+    "preReading": {
+      "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
+      "generating": "Generating..."
+    },
+    "sections": {
+      "overview": "Overview",
+      "themes": "Themes",
+      "targetAudience": "Target Audience",
+      "keyConcepts": "Key Concepts",
+      "context": "Context",
+      "culturalContext": "Cultural Context",
+      "guidingQuestions": "Guiding Questions",
+      "readingTips": "Reading Tips"
+    }
   }
 }

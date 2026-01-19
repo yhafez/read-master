@@ -96,57 +96,6 @@
   },
   "library": {
     "title": "Aking Library",
-    "addBook": "Magdagdag ng Libro",
-    "upload": "Mag-upload ng File",
-    "importUrl": "Mag-import mula sa URL",
-    "pasteText": "I-paste ang Teksto",
-    "searchBooks": "Maghanap ng libro...",
-    "noBooks": "Wala pang libro sa iyong library",
-    "startReading": "Magsimulang magdagdag ng libro para simulan ang iyong paglalakbay sa pagbabasa",
-    "noResults": "Walang libro na tumutugma sa iyong mga filter",
-    "tryDifferentFilters": "Subukang ayusin ang paghahanap o mga filter",
-    "viewMode": "Mode ng view",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "filterPanel": "I-filter ang mga libro",
-    "clearFilters": "I-clear ang mga filter",
-    "status": "Status",
-    "genre": "Genre",
-    "tags": "Mga tag",
-    "moreActions": "Higit pang aksyon",
-    "filters": {
-      "all": "Lahat ng Libro",
-      "reading": "Kasalukuyang Binabasa",
-      "completed": "Tapos Na",
-      "wantToRead": "Gustong Basahin",
-      "abandoned": "Inabandona"
-    },
-    "sort": {
-      "dateAdded": "Petsa ng Pagdagdag",
-      "title": "Pamagat",
-      "author": "May-akda",
-      "progress": "Progreso",
-      "ascending": "Pataas",
-      "descending": "Pababa",
-      "toggleOrder": "Palitan ang pagkakasunod"
-    },
-    "genres": {
-      "fiction": "Fiction",
-      "nonFiction": "Non-Fiction",
-      "mystery": "Mystery",
-      "romance": "Romance",
-      "sciFi": "Science Fiction",
-      "fantasy": "Fantasy",
-      "biography": "Biography",
-      "history": "History",
-      "selfHelp": "Self-Help",
-      "business": "Business"
-    },
-    "bookCard": {
-      "progress": "{{percent}}% tapos",
-      "continueReading": "Magpatuloy sa Pagbabasa",
-      "startReading": "Magsimulang Magbasa"
-    },
     "addBook": {
       "title": "Magdagdag ng Libro",
       "tabsLabel": "Mga paraan ng pag-import ng libro",
@@ -200,6 +149,56 @@
         "invalidData": "Hindi wasto ang form data",
         "addFailed": "Nabigo ang pagdagdag ng libro. Pakisubukan ulit."
       }
+    },
+    "upload": "Mag-upload ng File",
+    "importUrl": "Mag-import mula sa URL",
+    "pasteText": "I-paste ang Teksto",
+    "searchBooks": "Maghanap ng libro...",
+    "noBooks": "Wala pang libro sa iyong library",
+    "startReading": "Magsimulang magdagdag ng libro para simulan ang iyong paglalakbay sa pagbabasa",
+    "noResults": "Walang libro na tumutugma sa iyong mga filter",
+    "tryDifferentFilters": "Subukang ayusin ang paghahanap o mga filter",
+    "viewMode": "Mode ng view",
+    "gridView": "Grid view",
+    "listView": "List view",
+    "filterPanel": "I-filter ang mga libro",
+    "clearFilters": "I-clear ang mga filter",
+    "status": "Status",
+    "genre": "Genre",
+    "tags": "Mga tag",
+    "moreActions": "Higit pang aksyon",
+    "filters": {
+      "all": "Lahat ng Libro",
+      "reading": "Kasalukuyang Binabasa",
+      "completed": "Tapos Na",
+      "wantToRead": "Gustong Basahin",
+      "abandoned": "Inabandona"
+    },
+    "sort": {
+      "dateAdded": "Petsa ng Pagdagdag",
+      "title": "Pamagat",
+      "author": "May-akda",
+      "progress": "Progreso",
+      "ascending": "Pataas",
+      "descending": "Pababa",
+      "toggleOrder": "Palitan ang pagkakasunod"
+    },
+    "genres": {
+      "fiction": "Fiction",
+      "nonFiction": "Non-Fiction",
+      "mystery": "Mystery",
+      "romance": "Romance",
+      "sciFi": "Science Fiction",
+      "fantasy": "Fantasy",
+      "biography": "Biography",
+      "history": "History",
+      "selfHelp": "Self-Help",
+      "business": "Business"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% tapos",
+      "continueReading": "Magpatuloy sa Pagbabasa",
+      "startReading": "Magsimulang Magbasa"
     }
   },
   "reader": {
@@ -352,5 +351,28 @@
     "closeMenu": "Close navigation menu",
     "expandSection": "Expand section",
     "collapseSection": "Collapse section"
+  },
+  "ai": {
+    "cached": "Cached",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "regenerate": "Regenerate",
+    "generatedAt": "Generated",
+    "example": "Example",
+    "relevance": "Why it matters",
+    "preReading": {
+      "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
+      "generating": "Generating..."
+    },
+    "sections": {
+      "overview": "Overview",
+      "themes": "Themes",
+      "targetAudience": "Target Audience",
+      "keyConcepts": "Key Concepts",
+      "context": "Context",
+      "culturalContext": "Cultural Context",
+      "guidingQuestions": "Guiding Questions",
+      "readingTips": "Reading Tips"
+    }
   }
 }

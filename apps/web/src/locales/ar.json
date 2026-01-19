@@ -96,57 +96,6 @@
   },
   "library": {
     "title": "مكتبتي",
-    "addBook": "إضافة كتاب",
-    "upload": "رفع ملف",
-    "importUrl": "استيراد من رابط",
-    "pasteText": "لصق نص",
-    "searchBooks": "البحث عن كتب...",
-    "noBooks": "لا توجد كتب في مكتبتك بعد",
-    "startReading": "ابدأ بإضافة كتب لبدء رحلة القراءة",
-    "noResults": "لا توجد كتب تطابق فلاترك",
-    "tryDifferentFilters": "حاول تعديل البحث أو الفلاتر",
-    "viewMode": "وضع العرض",
-    "gridView": "عرض الشبكة",
-    "listView": "عرض القائمة",
-    "filterPanel": "تصفية الكتب",
-    "clearFilters": "مسح الفلاتر",
-    "status": "الحالة",
-    "genre": "النوع",
-    "tags": "الوسوم",
-    "moreActions": "المزيد من الإجراءات",
-    "filters": {
-      "all": "جميع الكتب",
-      "reading": "قيد القراءة",
-      "completed": "مكتملة",
-      "wantToRead": "أريد قراءتها",
-      "abandoned": "متروكة"
-    },
-    "sort": {
-      "dateAdded": "تاريخ الإضافة",
-      "title": "العنوان",
-      "author": "المؤلف",
-      "progress": "التقدم",
-      "ascending": "تصاعدي",
-      "descending": "تنازلي",
-      "toggleOrder": "تبديل ترتيب الفرز"
-    },
-    "genres": {
-      "fiction": "خيال",
-      "nonFiction": "غير خيالي",
-      "mystery": "غموض",
-      "romance": "رومانسية",
-      "sciFi": "خيال علمي",
-      "fantasy": "فانتازيا",
-      "biography": "سيرة ذاتية",
-      "history": "تاريخ",
-      "selfHelp": "تطوير الذات",
-      "business": "أعمال"
-    },
-    "bookCard": {
-      "progress": "{{percent}}% مكتمل",
-      "continueReading": "متابعة القراءة",
-      "startReading": "بدء القراءة"
-    },
     "addBook": {
       "title": "إضافة كتاب",
       "tabsLabel": "طرق استيراد الكتب",
@@ -200,6 +149,56 @@
         "invalidData": "بيانات النموذج غير صالحة",
         "addFailed": "فشل إضافة الكتاب. الرجاء المحاولة مرة أخرى."
       }
+    },
+    "upload": "رفع ملف",
+    "importUrl": "استيراد من رابط",
+    "pasteText": "لصق نص",
+    "searchBooks": "البحث عن كتب...",
+    "noBooks": "لا توجد كتب في مكتبتك بعد",
+    "startReading": "ابدأ بإضافة كتب لبدء رحلة القراءة",
+    "noResults": "لا توجد كتب تطابق فلاترك",
+    "tryDifferentFilters": "حاول تعديل البحث أو الفلاتر",
+    "viewMode": "وضع العرض",
+    "gridView": "عرض الشبكة",
+    "listView": "عرض القائمة",
+    "filterPanel": "تصفية الكتب",
+    "clearFilters": "مسح الفلاتر",
+    "status": "الحالة",
+    "genre": "النوع",
+    "tags": "الوسوم",
+    "moreActions": "المزيد من الإجراءات",
+    "filters": {
+      "all": "جميع الكتب",
+      "reading": "قيد القراءة",
+      "completed": "مكتملة",
+      "wantToRead": "أريد قراءتها",
+      "abandoned": "متروكة"
+    },
+    "sort": {
+      "dateAdded": "تاريخ الإضافة",
+      "title": "العنوان",
+      "author": "المؤلف",
+      "progress": "التقدم",
+      "ascending": "تصاعدي",
+      "descending": "تنازلي",
+      "toggleOrder": "تبديل ترتيب الفرز"
+    },
+    "genres": {
+      "fiction": "خيال",
+      "nonFiction": "غير خيالي",
+      "mystery": "غموض",
+      "romance": "رومانسية",
+      "sciFi": "خيال علمي",
+      "fantasy": "فانتازيا",
+      "biography": "سيرة ذاتية",
+      "history": "تاريخ",
+      "selfHelp": "تطوير الذات",
+      "business": "أعمال"
+    },
+    "bookCard": {
+      "progress": "{{percent}}% مكتمل",
+      "continueReading": "متابعة القراءة",
+      "startReading": "بدء القراءة"
     }
   },
   "reader": {
@@ -352,5 +351,28 @@
     "closeMenu": "إغلاق قائمة التنقل",
     "expandSection": "توسيع القسم",
     "collapseSection": "طي القسم"
+  },
+  "ai": {
+    "cached": "Cached",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "regenerate": "Regenerate",
+    "generatedAt": "Generated",
+    "example": "Example",
+    "relevance": "Why it matters",
+    "preReading": {
+      "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
+      "generating": "Generating..."
+    },
+    "sections": {
+      "overview": "Overview",
+      "themes": "Themes",
+      "targetAudience": "Target Audience",
+      "keyConcepts": "Key Concepts",
+      "context": "Context",
+      "culturalContext": "Cultural Context",
+      "guidingQuestions": "Guiding Questions",
+      "readingTips": "Reading Tips"
+    }
   }
 }
