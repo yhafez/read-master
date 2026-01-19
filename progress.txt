@@ -9500,3 +9500,134 @@ Added new sort-related translations in library.sort:
 - pnpm vitest run sortTypes.test.ts types.test.ts: ✅ 100/100 tests pass
 
 
+
+
+---
+
+## Iteration 38 - frontend-019: Keyboard shortcuts & gestures
+
+### Implementation Summary
+
+Implemented comprehensive keyboard shortcuts and touch gestures system for the reader with 27 keyboard shortcuts across 4 categories (navigation, annotation, reader, AI), 5 touch gestures, user preference persistence, and a help dialog component.
+
+### Files Created
+
+#### apps/web/src/components/reader/keyboardShortcutTypes.ts
+Complete keyboard shortcuts and gestures types/utilities module with:
+
+**Constants:**
+- SHORTCUT_PREFERENCES_KEY: localStorage key for persistence
+- SHORTCUT_CATEGORIES: ["navigation", "annotation", "reader", "ai"]
+- MODIFIER_KEYS: ["ctrl", "alt", "shift", "meta"]
+- SPECIAL_KEYS: Mapping for display (arrows, space, escape, etc.)
+- GESTURE_TYPES: ["swipeLeft", "swipeRight", "swipeUp", "swipeDown", "tap", "doubleTap", "longPress", "pinchIn", "pinchOut"]
+- Touch detection thresholds: MIN_SWIPE_DISTANCE (50px), MIN_SWIPE_VELOCITY (0.3px/ms), LONG_PRESS_DURATION (500ms), DOUBLE_TAP_INTERVAL (300ms), PINCH_THRESHOLD (0.2)
+
+**Types:**
+- ModifierKey, ShortcutCategory, GestureType
+- ShortcutDefinition: id, key, modifiers, labelKey, descriptionKey, category, customizable, enabledByDefault
+- GestureDefinition: id, type, labelKey, descriptionKey, category, enabledByDefault
+- ShortcutPreferences: enabledShortcuts, enabledGestures, customBindings, shortcutsEnabled, gesturesEnabled
+- TouchPosition, TouchState for gesture detection
+
+**Default Data:**
+- DEFAULT_SHORTCUTS: 27 keyboard shortcuts
+  - Navigation (10): nextPage, prevPage, nextPageAlt, prevPageAlt, firstPage, lastPage, nextChapter, prevChapter, goToPage, toggleToc
+  - Annotation (5): highlight, note, bookmark, copySelection, search
+  - Reader (7): toggleFullscreen, zoomIn, zoomOut, resetZoom, toggleReadingMode, showHelp, escape
+  - AI (5): explainSelection, aiChat, generateFlashcard, comprehensionCheck, translate
+- DEFAULT_GESTURES: 5 touch gestures (swipeLeftNav, swipeRightNav, doubleTapZoom, longPressMenu, pinchZoom)
+- DEFAULT_SHORTCUT_PREFERENCES: All shortcuts/gestures enabled by default
+
+**Utility Functions:**
+- getKeyDisplayString, getModifierDisplayString: Format keys for display
+- formatShortcutDisplay: Format full shortcut (e.g., "Ctrl + →")
+- isMacPlatform: Detect Mac for symbol display
+- eventMatchesShortcut: Match keyboard event to shortcut
+- getShortcutsByCategory, getGesturesByCategory: Filter by category
+- getGroupedShortcuts: Group all shortcuts by category
+- findShortcutById, findGestureById: Lookup functions
+
+**Persistence Functions:**
+- createDefaultPreferences: Creates fresh copy (prevents mutation)
+- loadShortcutPreferences: Load from localStorage with defaults fallback
+- saveShortcutPreferences: Save to localStorage
+- updateShortcutPreference: Update single preference
+- toggleShortcutEnabled, toggleGestureEnabled: Toggle individual shortcuts/gestures
+- setCustomBinding, clearCustomBinding: Custom key bindings
+- resetShortcutPreferences: Reset to defaults
+
+**Gesture Detection Functions:**
+- createInitialTouchState: Initialize touch tracking state
+- calculateDistance, calculateVelocity: Math utilities
+- detectSwipeGesture: Detect swipe direction from touch movement
+- detectPinchGesture: Detect pinch in/out from two-finger gesture
+- shouldPreventGesture: Check if gesture should be blocked (input fields)
+- isShortcutEnabled, isGestureEnabled: Check if shortcut/gesture is active
+- getEffectiveBinding: Get current binding (custom or default)
+- validateCustomBinding: Check for conflicts
+
+**UI Helpers:**
+- getCategoryLabelKey: Get i18n key for category
+- getGestureIconName: Get MUI icon name for gesture type
+
+#### apps/web/src/components/reader/keyboardShortcutTypes.test.ts
+86 comprehensive tests covering:
+- Constants (6 tests): All constants have correct values
+- DEFAULT_SHORTCUTS (5 tests): Structure and categories
+- DEFAULT_GESTURES (2 tests): Structure and content
+- DEFAULT_SHORTCUT_PREFERENCES (2 tests): Fields and defaults
+- Utility functions (17 tests): Display formatting, matching, grouping
+- Persistence functions (9 tests): load, save, toggle, custom bindings
+- Touch gesture detection (12 tests): Swipe, pinch, velocity calculations
+- Enable/disable checks (5 tests): Shortcut and gesture enabled states
+- Binding functions (4 tests): getEffectiveBinding, validateCustomBinding
+- UI helpers (4 tests): Category labels, gesture icons
+
+#### apps/web/src/components/reader/ShortcutsHelpDialog.tsx
+MUI Dialog component for displaying all keyboard shortcuts:
+- Shows shortcuts grouped by category
+- Displays both keyboard shortcuts and touch gestures
+- Mac/Windows adaptive key symbols
+- Uses i18n for all labels
+- Props: open, onClose
+
+### Files Modified
+
+#### apps/web/src/components/reader/index.ts
+Added exports for:
+- All constants from keyboardShortcutTypes
+- All types from keyboardShortcutTypes
+- All utility functions from keyboardShortcutTypes
+- ShortcutsHelpDialog component
+
+#### i18n Translations (all 6 locales)
+Added reader.shortcuts.* and reader.gestures.* translations:
+
+**reader.shortcuts (70+ keys):**
+- Category labels: navigation, annotation, reader, ai
+- Shortcut labels: nextPage, prevPage, firstPage, lastPage, nextChapter, prevChapter, goToPage, toggleToc, highlight, note, bookmark, copySelection, search, toggleFullscreen, zoomIn, zoomOut, resetZoom, toggleReadingMode, showHelp, escape, explainSelection, aiChat, generateFlashcard, comprehensionCheck, translate
+- Descriptions for each shortcut
+- Help dialog: title, keyboardShortcuts, touchGestures, enabled, disabled
+
+**reader.gestures (10+ keys):**
+- swipeLeft, swipeRight, doubleTap, longPress, pinch
+- Descriptions for each gesture
+
+Languages: en.json, es.json, ar.json, ja.json, zh.json, tl.json
+
+### Bug Fixes
+- Fixed mutation of DEFAULT_SHORTCUT_PREFERENCES by creating createDefaultPreferences() helper that returns fresh copies of all arrays/objects
+
+### Acceptance Criteria Verification
+- ✅ Shortcuts defined - 27 keyboard shortcuts across 4 categories
+- ✅ Navigation shortcuts - nextPage, prevPage, firstPage, lastPage, nextChapter, prevChapter, goToPage, toggleToc
+- ✅ Annotation shortcuts - highlight, note, bookmark, copySelection, search
+- ✅ Mobile gestures - 5 gestures: swipe left/right, double tap, long press, pinch
+- ✅ Help dialog - ShortcutsHelpDialog component with grouped shortcuts
+- ✅ Tests pass - 86 comprehensive tests for all functionality
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (only pre-existing warnings)
+- pnpm vitest run: ✅ 2591/2591 tests pass
