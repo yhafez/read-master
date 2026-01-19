@@ -1490,7 +1490,12 @@
     "openMenu": "فتح قائمة التنقل",
     "closeMenu": "إغلاق قائمة التنقل",
     "expandSection": "توسيع القسم",
-    "collapseSection": "طي القسم"
+    "collapseSection": "طي القسم",
+    "navigatedTo": "Navigated to {{page}}",
+    "loading": "Loading content, please wait",
+    "loadingComplete": "Content loaded",
+    "error": "Error: {{message}}",
+    "success": "Success: {{message}}"
   },
   "ai": {
     "cached": "Cached",

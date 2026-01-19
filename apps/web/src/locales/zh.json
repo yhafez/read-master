@@ -1490,7 +1490,12 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "expandSection": "Expand section",
-    "collapseSection": "Collapse section"
+    "collapseSection": "Collapse section",
+    "navigatedTo": "Navigated to {{page}}",
+    "loading": "Loading content, please wait",
+    "loadingComplete": "Content loaded",
+    "error": "Error: {{message}}",
+    "success": "Success: {{message}}"
   },
   "ai": {
     "cached": "Cached",

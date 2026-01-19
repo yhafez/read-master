@@ -16,3 +16,10 @@ export {
 } from "./AchievementNotification";
 
 export { AchievementNotificationManager } from "./AchievementNotificationManager";
+
+export {
+  LiveRegion,
+  PoliteLiveRegion,
+  AssertiveLiveRegion,
+  type LiveRegionProps,
+} from "./LiveRegion";
