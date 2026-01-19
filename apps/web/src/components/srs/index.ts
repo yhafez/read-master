@@ -10,5 +10,12 @@ export {
   default as FlashcardDeckListDefault,
 } from "./FlashcardDeckList";
 
+// Flashcard Study Interface
+export {
+  FlashcardStudy,
+  default as FlashcardStudyDefault,
+} from "./FlashcardStudy";
+
 // Types and utilities
 export * from "./flashcardDeckTypes";
+export * from "./flashcardStudyTypes";

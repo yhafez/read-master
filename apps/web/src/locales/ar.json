@@ -291,6 +291,33 @@
         "noDue": "بدون مستحقات",
         "hasNew": "بها جديدة"
       }
+    },
+    "study": {
+      "title": "جلسة الدراسة",
+      "loading": "جاري تحميل البطاقات...",
+      "showAnswer": "إظهار الإجابة",
+      "answer": "الإجابة",
+      "again": "مرة أخرى",
+      "hard": "صعب",
+      "good": "جيد",
+      "easy": "سهل",
+      "againDescription": "نسيت تماماً",
+      "hardDescription": "صحيح ولكن بصعوبة كبيرة",
+      "goodDescription": "صحيح مع بعض التردد",
+      "easyDescription": "تذكرت بسهولة تامة",
+      "cardProgress": "البطاقة {{current}} من {{total}}",
+      "correct": "صحيح",
+      "incorrect": "خطأ",
+      "sessionComplete": "اكتملت الجلسة!",
+      "sessionSummary": "درست {{count}} بطاقة",
+      "retention": "معدل الاحتفاظ",
+      "xpEarned": "النقاط المكتسبة",
+      "duration": "المدة",
+      "cardsStillDue": "البطاقات المتبقية",
+      "studyMore": "دراسة المزيد",
+      "shortcuts": "اختصارات لوحة المفاتيح",
+      "noCardsDue": "لا توجد بطاقات مستحقة للمراجعة الآن.",
+      "comeBackLater": "عد لاحقاً أو أضف المزيد من البطاقات."
     }
   },
   "assessments": {

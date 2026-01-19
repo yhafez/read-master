@@ -291,6 +291,33 @@
         "noDue": "无待学",
         "hasNew": "有新卡"
       }
+    },
+    "study": {
+      "title": "学习会话",
+      "loading": "加载卡片中...",
+      "showAnswer": "显示答案",
+      "answer": "答案",
+      "again": "再来一次",
+      "hard": "困难",
+      "good": "良好",
+      "easy": "简单",
+      "againDescription": "完全忘记",
+      "hardDescription": "正确但很困难",
+      "goodDescription": "有些犹豫但正确",
+      "easyDescription": "完美回忆，毫不费力",
+      "cardProgress": "卡片 {{current}} / {{total}}",
+      "correct": "正确",
+      "incorrect": "错误",
+      "sessionComplete": "学习完成！",
+      "sessionSummary": "你学习了 {{count}} 张卡片",
+      "retention": "记忆率",
+      "xpEarned": "获得经验",
+      "duration": "时长",
+      "cardsStillDue": "剩余卡片",
+      "studyMore": "继续学习",
+      "shortcuts": "键盘快捷键",
+      "noCardsDue": "目前没有需要复习的卡片。",
+      "comeBackLater": "稍后再来或添加更多卡片。"
     }
   },
   "assessments": {

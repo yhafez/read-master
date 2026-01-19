@@ -291,6 +291,33 @@
         "noDue": "Walang Pending",
         "hasNew": "May Bago"
       }
+    },
+    "study": {
+      "title": "Sesyon ng Pag-aaral",
+      "loading": "Nilo-load ang mga kard...",
+      "showAnswer": "Ipakita ang Sagot",
+      "answer": "Sagot",
+      "again": "Ulit",
+      "hard": "Mahirap",
+      "good": "Mabuti",
+      "easy": "Madali",
+      "againDescription": "Kumpletong blangko, nakalimutan ng tuluyan",
+      "hardDescription": "Tama pero may malaking kahirapan",
+      "goodDescription": "Tama na may kaunting pag-aalinlangan",
+      "easyDescription": "Perpektong pagkaalala, walang hirap",
+      "cardProgress": "Kard {{current}} sa {{total}}",
+      "correct": "Tama",
+      "incorrect": "Mali",
+      "sessionComplete": "Tapos na ang Sesyon!",
+      "sessionSummary": "Nag-aral ka ng {{count}} kard",
+      "retention": "Rate ng Retention",
+      "xpEarned": "XP na Nakuha",
+      "duration": "Tagal",
+      "cardsStillDue": "Mga Kard na May Pending Pa",
+      "studyMore": "Mag-aral Pa",
+      "shortcuts": "Mga Keyboard Shortcut",
+      "noCardsDue": "Walang kard na pending para i-review ngayon.",
+      "comeBackLater": "Bumalik mamaya o magdagdag ng mga kard sa iyong deck."
     }
   },
   "assessments": {

@@ -291,6 +291,33 @@
         "noDue": "Sin pendientes",
         "hasNew": "Con nuevas"
       }
+    },
+    "study": {
+      "title": "Sesión de estudio",
+      "loading": "Cargando tarjetas...",
+      "showAnswer": "Mostrar respuesta",
+      "answer": "Respuesta",
+      "again": "Otra vez",
+      "hard": "Difícil",
+      "good": "Bien",
+      "easy": "Fácil",
+      "againDescription": "Olvido completo",
+      "hardDescription": "Correcto pero con dificultad",
+      "goodDescription": "Correcto con algo de duda",
+      "easyDescription": "Recuerdo perfecto, sin esfuerzo",
+      "cardProgress": "Tarjeta {{current}} de {{total}}",
+      "correct": "Correcto",
+      "incorrect": "Incorrecto",
+      "sessionComplete": "¡Sesión completada!",
+      "sessionSummary": "Estudiaste {{count}} tarjetas",
+      "retention": "Tasa de retención",
+      "xpEarned": "XP ganado",
+      "duration": "Duración",
+      "cardsStillDue": "Tarjetas pendientes",
+      "studyMore": "Estudiar más",
+      "shortcuts": "Atajos de teclado",
+      "noCardsDue": "No hay tarjetas pendientes de revisión.",
+      "comeBackLater": "Vuelve más tarde o añade más tarjetas."
     }
   },
   "assessments": {

@@ -291,6 +291,33 @@
         "noDue": "期限なし",
         "hasNew": "新規あり"
       }
+    },
+    "study": {
+      "title": "学習セッション",
+      "loading": "カードを読み込み中...",
+      "showAnswer": "解答を表示",
+      "answer": "解答",
+      "again": "もう一度",
+      "hard": "難しい",
+      "good": "良い",
+      "easy": "簡単",
+      "againDescription": "完全に忘れた",
+      "hardDescription": "正解だが難しかった",
+      "goodDescription": "少し迷ったが正解",
+      "easyDescription": "完璧に覚えている",
+      "cardProgress": "カード {{current}} / {{total}}",
+      "correct": "正解",
+      "incorrect": "不正解",
+      "sessionComplete": "セッション完了！",
+      "sessionSummary": "{{count}}枚のカードを学習しました",
+      "retention": "定着率",
+      "xpEarned": "獲得XP",
+      "duration": "所要時間",
+      "cardsStillDue": "残りのカード",
+      "studyMore": "もっと学習",
+      "shortcuts": "キーボードショートカット",
+      "noCardsDue": "現在復習が必要なカードはありません。",
+      "comeBackLater": "後でまた来るか、カードを追加してください。"
     }
   },
   "assessments": {
