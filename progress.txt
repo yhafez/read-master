@@ -9101,3 +9101,103 @@ Marked frontend-027 as passes: true
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (only pre-existing warnings)
 - pnpm vitest run: ✅ 2200/2200 tests pass
+
+---
+
+## Iteration 34 - frontend-034: Manual flashcard creation
+
+### Implementation Summary
+
+Implemented a complete manual flashcard creation dialog with form validation, type selection, tags input, book linking, and comprehensive tests.
+
+### Files Created
+
+#### apps/web/src/components/srs/createFlashcardTypes.ts
+Types and utilities for the create flashcard dialog:
+
+**Constants:**
+- MIN_FRONT_LENGTH=1, MAX_FRONT_LENGTH=500
+- MIN_BACK_LENGTH=1, MAX_BACK_LENGTH=2000
+- MAX_TAGS=10, MAX_TAG_LENGTH=50
+- PREFERENCES_KEY="flashcard-create-preferences"
+- FLASHCARD_TYPE_CONFIGS (5 types: CUSTOM, VOCABULARY, CONCEPT, COMPREHENSION, QUOTE)
+
+**Types:**
+- CreateFlashcardFormData: front, back, type, tags, bookId
+- CreateFlashcardPreferences: defaultType, recentTags, lastBookId
+- FieldError, ValidationResult: Validation error structures
+- DialogState: idle | validating | submitting | success | error
+- SubmissionError: messageKey, retryable
+- BookOption: id, title, author, coverUrl
+- CreateFlashcardDialogProps: open, onClose, onSuccess, initialBookId, initialFront, initialBack
+- CreatedFlashcard: API response type
+- FlashcardTypeConfig: value, labelKey, descriptionKey, icon
+
+**Validation Functions:**
+- isValidFront, isValidBack, isValidTag, isValidTags, isValidType
+- validateFormData: Returns all validation errors
+- getFieldError, hasFieldError: Error lookup helpers
+
+**Form Helper Functions:**
+- createFormData, updateFormField, addTag, removeTag, resetFormData
+
+**Preference Functions:**
+- loadPreferences, savePreferences: localStorage integration
+- updateRecentTags: Track recently used tags (up to 20)
+
+**API Helper Functions:**
+- buildCreateRequest: Prepare API request body
+- parseCreateApiError: Parse API errors to SubmissionError
+
+**Display Helper Functions:**
+- getCharacterCount, isAtLimit, isNearLimit
+- getTypeConfig, formatTagsDisplay
+
+#### apps/web/src/components/srs/CreateFlashcardDialog.tsx
+Full-featured dialog component with:
+- Front/back content text fields with character counts
+- Type selector dropdown (5 types with descriptions)
+- Book selector autocomplete with search
+- Tags input with chip display
+- Form validation with field-level errors
+- Success/error states with appropriate feedback
+- Preference persistence (default type, last book, recent tags)
+- Loading states during submission
+- Responsive design
+
+#### apps/web/src/components/srs/createFlashcardTypes.test.ts
+71 comprehensive tests covering:
+- Constants (7 tests)
+- Validation functions: isValidFront, isValidBack, isValidTag, isValidTags, isValidType (10 tests)
+- Form validation: validateFormData, getFieldError, hasFieldError (8 tests)
+- Form helpers: createFormData, updateFormField, addTag, removeTag, resetFormData (10 tests)
+- Preference helpers: loadPreferences, savePreferences, updateRecentTags (8 tests)
+- API helpers: buildCreateRequest, parseCreateApiError (8 tests)
+- Display helpers: getCharacterCount, isAtLimit, isNearLimit, getTypeConfig, formatTagsDisplay (10 tests)
+
+### Files Modified
+
+#### apps/web/src/components/srs/index.ts
+Added exports for:
+- CreateFlashcardDialog component
+- All createFlashcardTypes exports
+
+#### i18n Translations (all 6 locales)
+Added flashcards.create translations with:
+- title, front, frontPlaceholder, back, backPlaceholder
+- type, book, bookPlaceholder, tags, tagsPlaceholder
+- addTag, tagsCount, createButton, creating, success
+- types.* (custom, vocabulary, concept, comprehension, quote)
+- errors.* (frontRequired, backRequired, tooLong, unauthorized, etc.)
+
+### Acceptance Criteria Verification
+- ✅ Form validates - Comprehensive validation with field-level error messages
+- ✅ Creation works - Full API integration with error handling
+- ✅ All fields saved - Front, back, type, tags, bookId all submitted
+- ✅ Tests pass - 71 tests covering all utilities and validation
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (only pre-existing warnings)
+- pnpm vitest run: ✅ 2271/2271 tests pass
+

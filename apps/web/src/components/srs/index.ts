@@ -16,6 +16,13 @@ export {
   default as FlashcardStudyDefault,
 } from "./FlashcardStudy";
 
+// Create Flashcard Dialog
+export {
+  CreateFlashcardDialog,
+  default as CreateFlashcardDialogDefault,
+} from "./CreateFlashcardDialog";
+
 // Types and utilities
 export * from "./flashcardDeckTypes";
 export * from "./flashcardStudyTypes";
+export * from "./createFlashcardTypes";

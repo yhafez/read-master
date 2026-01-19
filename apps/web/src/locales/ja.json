@@ -466,6 +466,51 @@
       "shortcuts": "キーボードショートカット",
       "noCardsDue": "現在復習が必要なカードはありません。",
       "comeBackLater": "後でまた来るか、カードを追加してください。"
+    },
+    "create": {
+      "title": "フラッシュカード作成",
+      "front": "表面（質問）",
+      "frontPlaceholder": "質問またはプロンプトを入力",
+      "back": "裏面（答え）",
+      "backPlaceholder": "答えを入力",
+      "type": "カードタイプ",
+      "book": "本にリンク",
+      "bookPlaceholder": "本を選択（任意）",
+      "tags": "タグ",
+      "tagsPlaceholder": "タグを追加してEnterを押す",
+      "addTag": "追加",
+      "tagsCount": "{{count}}/{{max}} タグ",
+      "createButton": "カード作成",
+      "creating": "作成中...",
+      "success": "カードが正常に作成されました！",
+      "types": {
+        "custom": "カスタム",
+        "customDescription": "自分で作成するカスタムカード",
+        "vocabulary": "語彙",
+        "vocabularyDescription": "新しい単語と定義を学ぶ",
+        "concept": "コンセプト",
+        "conceptDescription": "重要なアイデアと概念を理解",
+        "comprehension": "理解",
+        "comprehensionDescription": "内容の理解度をテスト",
+        "quote": "引用",
+        "quoteDescription": "重要な引用を暗記"
+      },
+      "errors": {
+        "frontRequired": "表面の内容は必須です",
+        "frontTooShort": "表面は{{min}}文字以上必要です",
+        "frontTooLong": "表面は{{max}}文字以下にしてください",
+        "backRequired": "裏面の内容は必須です",
+        "backTooShort": "裏面は{{min}}文字以上必要です",
+        "backTooLong": "裏面は{{max}}文字以下にしてください",
+        "invalidType": "有効なカードタイプを選択してください",
+        "tooManyTags": "{{max}}個を超えるタグは追加できません",
+        "invalidTag": "タグは{{maxLength}}文字以下にしてください",
+        "validation": "フォームにエラーがあります",
+        "unauthorized": "カードを作成するにはサインインが必要です",
+        "rateLimit": "リクエストが多すぎます。後でお試しください。",
+        "server": "サーバーエラー。再度お試しください。",
+        "unknown": "予期しないエラーが発生しました"
+      }
     }
   },
   "assessments": {

@@ -466,6 +466,51 @@
       "shortcuts": "اختصارات لوحة المفاتيح",
       "noCardsDue": "لا توجد بطاقات مستحقة للمراجعة الآن.",
       "comeBackLater": "عد لاحقاً أو أضف المزيد من البطاقات."
+    },
+    "create": {
+      "title": "إنشاء بطاقة تعليمية",
+      "front": "الوجه (السؤال)",
+      "frontPlaceholder": "أدخل السؤال أو التلميح",
+      "back": "الخلف (الإجابة)",
+      "backPlaceholder": "أدخل الإجابة",
+      "type": "نوع البطاقة",
+      "book": "ربط بكتاب",
+      "bookPlaceholder": "اختر كتاباً (اختياري)",
+      "tags": "العلامات",
+      "tagsPlaceholder": "أضف علامة واضغط Enter",
+      "addTag": "إضافة",
+      "tagsCount": "{{count}}/{{max}} علامات",
+      "createButton": "إنشاء بطاقة",
+      "creating": "جارٍ الإنشاء...",
+      "success": "تم إنشاء البطاقة بنجاح!",
+      "types": {
+        "custom": "مخصص",
+        "customDescription": "بطاقة مخصصة تنشئها",
+        "vocabulary": "مفردات",
+        "vocabularyDescription": "تعلم كلمات وتعريفات جديدة",
+        "concept": "مفهوم",
+        "conceptDescription": "فهم الأفكار والمفاهيم الرئيسية",
+        "comprehension": "استيعاب",
+        "comprehensionDescription": "اختبار فهم المحتوى",
+        "quote": "اقتباس",
+        "quoteDescription": "حفظ الاقتباسات المهمة"
+      },
+      "errors": {
+        "frontRequired": "محتوى الوجه مطلوب",
+        "frontTooShort": "يجب أن يكون الوجه {{min}} حرف على الأقل",
+        "frontTooLong": "لا يمكن أن يتجاوز الوجه {{max}} حرف",
+        "backRequired": "محتوى الخلف مطلوب",
+        "backTooShort": "يجب أن يكون الخلف {{min}} حرف على الأقل",
+        "backTooLong": "لا يمكن أن يتجاوز الخلف {{max}} حرف",
+        "invalidType": "يرجى اختيار نوع بطاقة صالح",
+        "tooManyTags": "لا يمكن إضافة أكثر من {{max}} علامات",
+        "invalidTag": "لا يمكن أن تتجاوز العلامة {{maxLength}} حرف",
+        "validation": "يرجى التحقق من الأخطاء في النموذج",
+        "unauthorized": "يجب تسجيل الدخول لإنشاء بطاقات",
+        "rateLimit": "طلبات كثيرة جداً. حاول مرة أخرى لاحقاً.",
+        "server": "خطأ في الخادم. حاول مرة أخرى.",
+        "unknown": "حدث خطأ غير متوقع"
+      }
     }
   },
   "assessments": {

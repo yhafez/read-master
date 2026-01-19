@@ -466,6 +466,51 @@
       "shortcuts": "Mga Keyboard Shortcut",
       "noCardsDue": "Walang kard na pending para i-review ngayon.",
       "comeBackLater": "Bumalik mamaya o magdagdag ng mga kard sa iyong deck."
+    },
+    "create": {
+      "title": "Gumawa ng Flashcard",
+      "front": "Harap (Tanong)",
+      "frontPlaceholder": "Ilagay ang tanong o prompt",
+      "back": "Likod (Sagot)",
+      "backPlaceholder": "Ilagay ang sagot",
+      "type": "Uri ng Kard",
+      "book": "I-link sa Libro",
+      "bookPlaceholder": "Pumili ng libro (opsyonal)",
+      "tags": "Mga Tag",
+      "tagsPlaceholder": "Magdagdag ng tag at pindutin ang Enter",
+      "addTag": "Idagdag",
+      "tagsCount": "{{count}}/{{max}} mga tag",
+      "createButton": "Gumawa ng Kard",
+      "creating": "Gumagawa...",
+      "success": "Matagumpay na nagawa ang flashcard!",
+      "types": {
+        "custom": "Custom",
+        "customDescription": "Isang custom na kard na ginawa mo",
+        "vocabulary": "Bokabularyo",
+        "vocabularyDescription": "Matuto ng bagong salita at kahulugan",
+        "concept": "Konsepto",
+        "conceptDescription": "Unawain ang mahahalagang ideya",
+        "comprehension": "Pag-unawa",
+        "comprehensionDescription": "Subukan ang pag-unawa sa nilalaman",
+        "quote": "Quote",
+        "quoteDescription": "Kabisaduhin ang mahahalagang quote"
+      },
+      "errors": {
+        "frontRequired": "Kinakailangan ang nilalaman ng harap",
+        "frontTooShort": "Ang harap ay dapat {{min}} character man lang",
+        "frontTooLong": "Ang harap ay hindi dapat lumampas sa {{max}} character",
+        "backRequired": "Kinakailangan ang nilalaman ng likod",
+        "backTooShort": "Ang likod ay dapat {{min}} character man lang",
+        "backTooLong": "Ang likod ay hindi dapat lumampas sa {{max}} character",
+        "invalidType": "Pumili ng valid na uri ng kard",
+        "tooManyTags": "Hindi maaaring magdagdag ng higit sa {{max}} tag",
+        "invalidTag": "Ang tag ay hindi dapat lumampas sa {{maxLength}} character",
+        "validation": "Suriin ang form para sa mga error",
+        "unauthorized": "Dapat naka-sign in para gumawa ng kard",
+        "rateLimit": "Masyadong maraming request. Subukan mamaya.",
+        "server": "Server error. Subukan ulit.",
+        "unknown": "May naganap na hindi inaasahang error"
+      }
     }
   },
   "assessments": {
