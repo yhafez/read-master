@@ -866,6 +866,57 @@
         "changeType": "Change Type",
         "delete": "Delete"
       }
+    },
+    "importExport": {
+      "title": "Import/Export Flashcards",
+      "tabs": {
+        "import": "Import",
+        "export": "Export"
+      },
+      "columns": {
+        "front": "Front",
+        "back": "Back",
+        "type": "Type",
+        "status": "Status"
+      },
+      "import": {
+        "dragOrClick": "Drag & drop a CSV file or click to browse",
+        "supportedFormats": "CSV or TXT files with comma, semicolon, or tab separators",
+        "maxSize": "Maximum file size: {{maxSize}}",
+        "downloadTemplate": "Download CSV template",
+        "steps": {
+          "upload": "Upload File",
+          "preview": "Preview & Select",
+          "confirm": "Confirm Import"
+        },
+        "selectAll": "Select All",
+        "deselectAll": "Deselect All",
+        "selectedCount": "{{count}} of {{total}} selected",
+        "confirmMessage": "You are about to import {{count}} flashcards. This action cannot be undone.",
+        "summary": "Cards to import:",
+        "andMore": "...and {{count}} more",
+        "importButton": "Import {{count}} Cards",
+        "rowsLimited": "Only the first {{max}} rows are shown.",
+        "errors": {
+          "invalidFileType": "Invalid file type. Please upload a CSV or TXT file.",
+          "fileTooLarge": "File is too large. Maximum size is {{maxSize}}.",
+          "readFailed": "Failed to read file. Please try again.",
+          "noValidRows": "No valid rows found in the file."
+        }
+      },
+      "export": {
+        "noCards": "No flashcards to export. Select cards from the browse page first.",
+        "cardCount": "{{count}} flashcards will be exported.",
+        "options": "Export Options",
+        "includeStatus": "Include card status",
+        "includeStats": "Include SRS statistics (ease, interval, due date)",
+        "includeCreatedAt": "Include created date",
+        "delimiter": "Delimiter",
+        "delimiterComma": "Comma (,)",
+        "delimiterSemicolon": "Semicolon (;)",
+        "delimiterTab": "Tab",
+        "exportButton": "Export to CSV"
+      }
     }
   },
   "assessments": {

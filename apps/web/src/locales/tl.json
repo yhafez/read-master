@@ -866,6 +866,57 @@
         "changeType": "Palitan ang Uri",
         "delete": "Tanggalin"
       }
+    },
+    "importExport": {
+      "title": "I-import/I-export ang mga Card",
+      "tabs": {
+        "import": "I-import",
+        "export": "I-export"
+      },
+      "columns": {
+        "front": "Harap",
+        "back": "Likod",
+        "type": "Uri",
+        "status": "Katayuan"
+      },
+      "import": {
+        "dragOrClick": "I-drag at i-drop ang CSV file o mag-click upang mag-browse",
+        "supportedFormats": "CSV o TXT na mga file na may comma, semicolon, o tab na mga separator",
+        "maxSize": "Maximum na laki ng file: {{maxSize}}",
+        "downloadTemplate": "I-download ang CSV template",
+        "steps": {
+          "upload": "I-upload ang File",
+          "preview": "Preview at Pumili",
+          "confirm": "Kumpirmahin ang Import"
+        },
+        "selectAll": "Piliin Lahat",
+        "deselectAll": "Alisin Lahat sa Seleksyon",
+        "selectedCount": "{{count}} ng {{total}} ang napili",
+        "confirmMessage": "Malapit ka nang mag-import ng {{count}} na card. Hindi na maibabalik ang aksyon na ito.",
+        "summary": "Mga card na i-import:",
+        "andMore": "...at {{count}} pa",
+        "importButton": "I-import ang {{count}} na Card",
+        "rowsLimited": "Unang {{max}} na hanay lamang ang ipinapakita.",
+        "errors": {
+          "invalidFileType": "Hindi valid ang uri ng file. Mangyaring mag-upload ng CSV o TXT file.",
+          "fileTooLarge": "Masyadong malaki ang file. Maximum na laki ay {{maxSize}}.",
+          "readFailed": "Nabigo ang pagbasa ng file. Subukan muli.",
+          "noValidRows": "Walang nahanap na mga valid na hanay sa file."
+        }
+      },
+      "export": {
+        "noCards": "Walang mga card na i-export. Pumili muna ng mga card mula sa browse page.",
+        "cardCount": "{{count}} na card ang ie-export.",
+        "options": "Mga Opsyon sa Export",
+        "includeStatus": "Isama ang katayuan ng card",
+        "includeStats": "Isama ang SRS statistics (dali, pagitan, petsa ng due)",
+        "includeCreatedAt": "Isama ang petsa ng pagkakagawa",
+        "delimiter": "Delimiter",
+        "delimiterComma": "Comma (,)",
+        "delimiterSemicolon": "Semicolon (;)",
+        "delimiterTab": "Tab",
+        "exportButton": "I-export sa CSV"
+      }
     }
   },
   "assessments": {

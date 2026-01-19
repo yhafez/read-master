@@ -866,6 +866,57 @@
         "changeType": "タイプを変更",
         "delete": "削除"
       }
+    },
+    "importExport": {
+      "title": "カードのインポート/エクスポート",
+      "tabs": {
+        "import": "インポート",
+        "export": "エクスポート"
+      },
+      "columns": {
+        "front": "表面",
+        "back": "裏面",
+        "type": "タイプ",
+        "status": "ステータス"
+      },
+      "import": {
+        "dragOrClick": "CSVファイルをドラッグ＆ドロップするか、クリックして参照",
+        "supportedFormats": "カンマ、セミコロン、タブ区切りのCSVまたはTXTファイル",
+        "maxSize": "最大ファイルサイズ: {{maxSize}}",
+        "downloadTemplate": "CSVテンプレートをダウンロード",
+        "steps": {
+          "upload": "ファイルをアップロード",
+          "preview": "プレビューと選択",
+          "confirm": "インポートの確認"
+        },
+        "selectAll": "すべて選択",
+        "deselectAll": "すべて選択解除",
+        "selectedCount": "{{count}} / {{total}} 選択中",
+        "confirmMessage": "{{count}}枚のカードをインポートしようとしています。この操作は取り消せません。",
+        "summary": "インポートするカード:",
+        "andMore": "...他 {{count}} 件",
+        "importButton": "{{count}}枚のカードをインポート",
+        "rowsLimited": "最初の{{max}}行のみ表示されています。",
+        "errors": {
+          "invalidFileType": "無効なファイル形式です。CSVまたはTXTファイルをアップロードしてください。",
+          "fileTooLarge": "ファイルが大きすぎます。最大サイズは{{maxSize}}です。",
+          "readFailed": "ファイルの読み取りに失敗しました。もう一度お試しください。",
+          "noValidRows": "ファイルに有効な行が見つかりませんでした。"
+        }
+      },
+      "export": {
+        "noCards": "エクスポートするカードがありません。まず参照ページでカードを選択してください。",
+        "cardCount": "{{count}}枚のカードがエクスポートされます。",
+        "options": "エクスポートオプション",
+        "includeStatus": "カードのステータスを含める",
+        "includeStats": "SRS統計を含める（難易度、間隔、復習予定日）",
+        "includeCreatedAt": "作成日を含める",
+        "delimiter": "区切り文字",
+        "delimiterComma": "カンマ (,)",
+        "delimiterSemicolon": "セミコロン (;)",
+        "delimiterTab": "タブ",
+        "exportButton": "CSVにエクスポート"
+      }
     }
   },
   "assessments": {

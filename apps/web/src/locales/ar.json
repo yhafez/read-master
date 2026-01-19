@@ -866,6 +866,57 @@
         "changeType": "تغيير النوع",
         "delete": "حذف"
       }
+    },
+    "importExport": {
+      "title": "استيراد/تصدير البطاقات",
+      "tabs": {
+        "import": "استيراد",
+        "export": "تصدير"
+      },
+      "columns": {
+        "front": "الأمام",
+        "back": "الخلف",
+        "type": "النوع",
+        "status": "الحالة"
+      },
+      "import": {
+        "dragOrClick": "اسحب وأفلت ملف CSV أو انقر للتصفح",
+        "supportedFormats": "ملفات CSV أو TXT مع فواصل الفاصلة أو الفاصلة المنقوطة أو علامات التبويب",
+        "maxSize": "الحد الأقصى لحجم الملف: {{maxSize}}",
+        "downloadTemplate": "تحميل قالب CSV",
+        "steps": {
+          "upload": "رفع الملف",
+          "preview": "معاينة واختيار",
+          "confirm": "تأكيد الاستيراد"
+        },
+        "selectAll": "تحديد الكل",
+        "deselectAll": "إلغاء تحديد الكل",
+        "selectedCount": "{{count}} من {{total}} محدد",
+        "confirmMessage": "أنت على وشك استيراد {{count}} بطاقة. لا يمكن التراجع عن هذا الإجراء.",
+        "summary": "البطاقات المراد استيرادها:",
+        "andMore": "...و {{count}} أخرى",
+        "importButton": "استيراد {{count}} بطاقة",
+        "rowsLimited": "يتم عرض أول {{max}} صف فقط.",
+        "errors": {
+          "invalidFileType": "نوع ملف غير صالح. يرجى رفع ملف CSV أو TXT.",
+          "fileTooLarge": "الملف كبير جداً. الحد الأقصى للحجم هو {{maxSize}}.",
+          "readFailed": "فشل قراءة الملف. يرجى المحاولة مرة أخرى.",
+          "noValidRows": "لم يتم العثور على صفوف صالحة في الملف."
+        }
+      },
+      "export": {
+        "noCards": "لا توجد بطاقات للتصدير. حدد البطاقات من صفحة التصفح أولاً.",
+        "cardCount": "سيتم تصدير {{count}} بطاقة.",
+        "options": "خيارات التصدير",
+        "includeStatus": "تضمين حالة البطاقة",
+        "includeStats": "تضمين إحصائيات SRS (السهولة، الفترة، تاريخ الاستحقاق)",
+        "includeCreatedAt": "تضمين تاريخ الإنشاء",
+        "delimiter": "الفاصل",
+        "delimiterComma": "فاصلة (,)",
+        "delimiterSemicolon": "فاصلة منقوطة (;)",
+        "delimiterTab": "علامة تبويب",
+        "exportButton": "تصدير إلى CSV"
+      }
     }
   },
   "assessments": {

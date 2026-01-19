@@ -11396,3 +11396,77 @@ Added settings.srs translations to all 6 locales (en, ar, es, ja, zh, tl):
 - Follows existing patterns from aiSettingsStore.ts and SettingsAIPage.tsx
 
 ---
+
+## Iteration 55 - frontend-040: Flashcard Import/Export
+**Task:** Implement flashcard import/export functionality via CSV files
+**Status:** ✅ COMPLETE
+
+### Implementation Summary
+
+Created a comprehensive flashcard import/export feature that allows users to import flashcards from CSV files and export existing flashcards to CSV format with customizable options.
+
+### Files Created/Modified
+
+#### apps/web/src/components/srs/flashcardImportExportTypes.ts (NEW)
+- CSV structure types: CSVRow, CSVHeader, ValidatedImportCard, ImportCardResult, ImportResult
+- Export types: ExportCard, ExportOptions, DEFAULT_EXPORT_OPTIONS
+- Dialog state types: ImportStep, ImportState, INITIAL_IMPORT_STATE, ImportExportFlashcardsDialogProps
+- Validation constants (import-specific): IMPORT_MIN/MAX_FRONT_LENGTH, IMPORT_MIN/MAX_BACK_LENGTH, IMPORT_MAX_TAGS_PER_CARD, IMPORT_MAX_TAG_LENGTH
+- File constants: MAX_IMPORT_ROWS (1000), MAX_FILE_SIZE (5MB), VALID_TYPES, TYPE_ALIASES
+- CSV parsing functions: escapeCSVValue, unescapeCSVValue, parseCSVLine, detectDelimiter, parseCSVContent
+- Validation functions: normalizeCardType, parseTags, validateImportRow, validateImport
+- Export functions: generateCSVHeader, generateCSVRow, generateCSVContent, generateExportFilename, downloadCSV
+- File handling functions: readFileAsText, isValidCSVFile, isValidFileSize
+- Template functions: generateCSVTemplate, downloadCSVTemplate
+- Summary functions: getImportSummaryText, getValidCards, getSelectedValidCards, formatFileSize
+- Mock data functions: createMockCSVRow, createMockExportCard, createMockExportCards
+
+#### apps/web/src/components/srs/ImportExportFlashcardsDialog.tsx (NEW)
+- Main dialog component with Import/Export tabs using MUI Tabs
+- Import flow: 3-step wizard (upload → preview → confirm)
+- Upload step: Drag-and-drop file upload with file validation
+- Preview step: Table showing all rows with validation status, select/deselect functionality
+- Confirm step: Summary of import with final confirmation
+- Export tab: Options for including stats, status, dates; delimiter selection
+- ImportRowPreview sub-component for table rows with validation icons
+- Full i18n integration with translations for all UI strings
+
+#### apps/web/src/components/srs/index.ts (MODIFIED)
+- Added exports for ImportExportFlashcardsDialog component
+- Added exports for all flashcardImportExportTypes functions and types
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added flashcards.importExport translations to all 6 locales (en, ar, es, ja, zh, tl):
+- Tab labels: import, export
+- Column headers: front, back, type, tags, book, status, row
+- Import step labels: upload, preview, confirm
+- Error messages: invalidFile, fileTooLarge, parseError, noValidRows, maxRowsExceeded
+- Export options: includeStats, includeStatus, includeCreatedAt, delimiter
+- Action buttons: downloadTemplate, selectFile, selectAll, deselectAll, importSelected, exportCards, cancel
+
+#### apps/web/src/components/srs/flashcardImportExportTypes.test.ts (NEW)
+- Comprehensive test suite with 99 tests covering:
+- Constants verification (CSV_HEADERS, validation limits, TYPE_ALIASES, VALID_TYPES)
+- CSV parsing: escapeCSVValue, unescapeCSVValue, parseCSVLine, detectDelimiter, parseCSVContent
+- Validation: normalizeCardType, parseTags, validateImportRow, validateImport
+- Export: generateCSVHeader, generateCSVRow, generateCSVContent, generateExportFilename, downloadCSV
+- File handling: readFileAsText, isValidCSVFile, isValidFileSize
+- Template: generateCSVTemplate, downloadCSVTemplate
+- Summary utilities: getImportSummaryText, getValidCards, getSelectedValidCards, formatFileSize
+- Mock data functions: createMockCSVRow, createMockExportCard, createMockExportCards
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, warnings only in pre-existing files)
+- pnpm vitest run: ✅ 3784 tests pass (99 new tests)
+
+### Technical Notes
+- CSV parsing handles quoted values, escaped quotes, and multiple delimiters (comma, semicolon, tab)
+- Type normalization with aliases (e.g., "vocab" → "VOCABULARY", "idea" → "CONCEPT")
+- Validation constants renamed to IMPORT_* prefix to avoid conflicts with createFlashcardTypes
+- Import validation more lenient than creation (larger max lengths)
+- Export supports optional columns for stats, status, and dates
+- File validation checks both file type and size before processing
+- Template download provides pre-formatted CSV with headers and example row
+
+---

@@ -866,6 +866,57 @@
         "changeType": "Cambiar Tipo",
         "delete": "Eliminar"
       }
+    },
+    "importExport": {
+      "title": "Importar/Exportar Tarjetas",
+      "tabs": {
+        "import": "Importar",
+        "export": "Exportar"
+      },
+      "columns": {
+        "front": "Frente",
+        "back": "Reverso",
+        "type": "Tipo",
+        "status": "Estado"
+      },
+      "import": {
+        "dragOrClick": "Arrastra un archivo CSV o haz clic para buscar",
+        "supportedFormats": "Archivos CSV o TXT con separadores de coma, punto y coma o tabulador",
+        "maxSize": "Tamaño máximo de archivo: {{maxSize}}",
+        "downloadTemplate": "Descargar plantilla CSV",
+        "steps": {
+          "upload": "Subir Archivo",
+          "preview": "Vista Previa y Selección",
+          "confirm": "Confirmar Importación"
+        },
+        "selectAll": "Seleccionar Todo",
+        "deselectAll": "Deseleccionar Todo",
+        "selectedCount": "{{count}} de {{total}} seleccionados",
+        "confirmMessage": "Estás a punto de importar {{count}} tarjetas. Esta acción no se puede deshacer.",
+        "summary": "Tarjetas a importar:",
+        "andMore": "...y {{count}} más",
+        "importButton": "Importar {{count}} Tarjetas",
+        "rowsLimited": "Solo se muestran las primeras {{max}} filas.",
+        "errors": {
+          "invalidFileType": "Tipo de archivo inválido. Por favor sube un archivo CSV o TXT.",
+          "fileTooLarge": "El archivo es demasiado grande. El tamaño máximo es {{maxSize}}.",
+          "readFailed": "Error al leer el archivo. Por favor intenta de nuevo.",
+          "noValidRows": "No se encontraron filas válidas en el archivo."
+        }
+      },
+      "export": {
+        "noCards": "No hay tarjetas para exportar. Selecciona tarjetas desde la página de navegación primero.",
+        "cardCount": "Se exportarán {{count}} tarjetas.",
+        "options": "Opciones de Exportación",
+        "includeStatus": "Incluir estado de la tarjeta",
+        "includeStats": "Incluir estadísticas SRS (facilidad, intervalo, fecha de vencimiento)",
+        "includeCreatedAt": "Incluir fecha de creación",
+        "delimiter": "Delimitador",
+        "delimiterComma": "Coma (,)",
+        "delimiterSemicolon": "Punto y coma (;)",
+        "delimiterTab": "Tabulador",
+        "exportButton": "Exportar a CSV"
+      }
     }
   },
   "assessments": {

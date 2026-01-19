@@ -34,8 +34,15 @@ export {
   default as FlashcardStatsDefault,
 } from "./FlashcardStats";
 
+// Import/Export Dialog
+export {
+  ImportExportFlashcardsDialog,
+  default as ImportExportFlashcardsDialogDefault,
+} from "./ImportExportFlashcardsDialog";
+
 // Types and utilities
 export * from "./flashcardDeckTypes";
+export * from "./flashcardImportExportTypes";
 export * from "./flashcardStudyTypes";
 export * from "./createFlashcardTypes";
 export * from "./editFlashcardTypes";

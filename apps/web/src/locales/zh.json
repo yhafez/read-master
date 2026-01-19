@@ -866,6 +866,57 @@
         "changeType": "更改类型",
         "delete": "删除"
       }
+    },
+    "importExport": {
+      "title": "导入/导出卡片",
+      "tabs": {
+        "import": "导入",
+        "export": "导出"
+      },
+      "columns": {
+        "front": "正面",
+        "back": "背面",
+        "type": "类型",
+        "status": "状态"
+      },
+      "import": {
+        "dragOrClick": "拖放CSV文件或点击浏览",
+        "supportedFormats": "支持逗号、分号或制表符分隔的CSV或TXT文件",
+        "maxSize": "最大文件大小: {{maxSize}}",
+        "downloadTemplate": "下载CSV模板",
+        "steps": {
+          "upload": "上传文件",
+          "preview": "预览和选择",
+          "confirm": "确认导入"
+        },
+        "selectAll": "全选",
+        "deselectAll": "取消全选",
+        "selectedCount": "已选择 {{count}}/{{total}}",
+        "confirmMessage": "您即将导入 {{count}} 张卡片。此操作无法撤销。",
+        "summary": "将导入的卡片:",
+        "andMore": "...还有 {{count}} 张",
+        "importButton": "导入 {{count}} 张卡片",
+        "rowsLimited": "仅显示前 {{max}} 行。",
+        "errors": {
+          "invalidFileType": "无效的文件类型。请上传CSV或TXT文件。",
+          "fileTooLarge": "文件过大。最大大小为 {{maxSize}}。",
+          "readFailed": "读取文件失败。请重试。",
+          "noValidRows": "文件中未找到有效行。"
+        }
+      },
+      "export": {
+        "noCards": "没有可导出的卡片。请先从浏览页面选择卡片。",
+        "cardCount": "将导出 {{count}} 张卡片。",
+        "options": "导出选项",
+        "includeStatus": "包含卡片状态",
+        "includeStats": "包含SRS统计数据（难度、间隔、到期日期）",
+        "includeCreatedAt": "包含创建日期",
+        "delimiter": "分隔符",
+        "delimiterComma": "逗号 (,)",
+        "delimiterSemicolon": "分号 (;)",
+        "delimiterTab": "制表符",
+        "exportButton": "导出为CSV"
+      }
     }
   },
   "assessments": {
