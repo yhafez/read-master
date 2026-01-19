@@ -261,6 +261,36 @@
       "retention": "Retention Rate",
       "streak": "Day Streak",
       "reviewed": "Cards Reviewed"
+    },
+    "deck": {
+      "totalCards_one": "{{count}} tarjeta",
+      "totalCards_other": "{{count}} tarjetas",
+      "newCards_one": "{{count}} nueva",
+      "newCards_other": "{{count}} nuevas",
+      "overdue_one": "{{count}} atrasada",
+      "overdue_other": "{{count}} atrasadas",
+      "retention": "Retención",
+      "lastReviewed": "Último: {{time}}",
+      "studyDeck": "Estudiar {{name}}",
+      "studyAll": "Estudiar todo ({{count}} pendientes)",
+      "searchPlaceholder": "Buscar mazos...",
+      "noResults": "No hay mazos que coincidan con los filtros",
+      "tryDifferentFilters": "Intenta ajustar tu búsqueda o filtros",
+      "unassigned": "Tarjetas sin asignar",
+      "sort": {
+        "dueCount": "Cantidad pendiente",
+        "totalCards": "Total de tarjetas",
+        "lastReviewed": "Última revisión",
+        "bookTitle": "Título del libro",
+        "retentionRate": "Tasa de retención",
+        "createdAt": "Fecha de creación"
+      },
+      "filter": {
+        "all": "Todos los mazos",
+        "hasDue": "Con pendientes",
+        "noDue": "Sin pendientes",
+        "hasNew": "Con nuevas"
+      }
     }
   },
   "assessments": {

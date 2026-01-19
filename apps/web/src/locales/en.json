@@ -262,6 +262,36 @@
       "retention": "Retention Rate",
       "streak": "Day Streak",
       "reviewed": "Cards Reviewed"
+    },
+    "deck": {
+      "totalCards_one": "{{count}} card",
+      "totalCards_other": "{{count}} cards",
+      "newCards_one": "{{count}} new",
+      "newCards_other": "{{count}} new",
+      "overdue_one": "{{count}} overdue",
+      "overdue_other": "{{count}} overdue",
+      "retention": "Retention",
+      "lastReviewed": "Last: {{time}}",
+      "studyDeck": "Study {{name}}",
+      "studyAll": "Study All ({{count}} due)",
+      "searchPlaceholder": "Search decks...",
+      "noResults": "No decks match your filters",
+      "tryDifferentFilters": "Try adjusting your search or filters",
+      "unassigned": "Unassigned Cards",
+      "sort": {
+        "dueCount": "Due Count",
+        "totalCards": "Total Cards",
+        "lastReviewed": "Last Reviewed",
+        "bookTitle": "Book Title",
+        "retentionRate": "Retention Rate",
+        "createdAt": "Date Created"
+      },
+      "filter": {
+        "all": "All Decks",
+        "hasDue": "Has Due Cards",
+        "noDue": "No Due Cards",
+        "hasNew": "Has New Cards"
+      }
     }
   },
   "assessments": {

@@ -261,6 +261,36 @@
       "retention": "Retention Rate",
       "streak": "Day Streak",
       "reviewed": "Cards Reviewed"
+    },
+    "deck": {
+      "totalCards_one": "{{count}} kard",
+      "totalCards_other": "{{count}} mga kard",
+      "newCards_one": "{{count}} bago",
+      "newCards_other": "{{count}} bago",
+      "overdue_one": "{{count}} nakaraan",
+      "overdue_other": "{{count}} nakaraan",
+      "retention": "Retention",
+      "lastReviewed": "Huli: {{time}}",
+      "studyDeck": "Aralin ang {{name}}",
+      "studyAll": "Aralin Lahat ({{count}} na pending)",
+      "searchPlaceholder": "Maghanap ng deck...",
+      "noResults": "Walang deck na tumutugma sa mga filter",
+      "tryDifferentFilters": "Subukang i-adjust ang iyong paghahanap o mga filter",
+      "unassigned": "Hindi Nakatalaga na mga Kard",
+      "sort": {
+        "dueCount": "Bilang ng Pending",
+        "totalCards": "Kabuuang Kard",
+        "lastReviewed": "Huling Na-review",
+        "bookTitle": "Titulo ng Libro",
+        "retentionRate": "Rate ng Retention",
+        "createdAt": "Petsa ng Paggawa"
+      },
+      "filter": {
+        "all": "Lahat ng Deck",
+        "hasDue": "May Pending",
+        "noDue": "Walang Pending",
+        "hasNew": "May Bago"
+      }
     }
   },
   "assessments": {

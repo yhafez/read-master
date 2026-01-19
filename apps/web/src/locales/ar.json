@@ -261,6 +261,36 @@
       "retention": "معدل الاحتفاظ",
       "streak": "أيام متتالية",
       "reviewed": "البطاقات المراجعة"
+    },
+    "deck": {
+      "totalCards_one": "{{count}} بطاقة",
+      "totalCards_other": "{{count}} بطاقة",
+      "newCards_one": "{{count}} جديدة",
+      "newCards_other": "{{count}} جديدة",
+      "overdue_one": "{{count}} متأخرة",
+      "overdue_other": "{{count}} متأخرة",
+      "retention": "الاحتفاظ",
+      "lastReviewed": "آخر: {{time}}",
+      "studyDeck": "ادرس {{name}}",
+      "studyAll": "ادرس الكل ({{count}} مستحقة)",
+      "searchPlaceholder": "ابحث في المجموعات...",
+      "noResults": "لا توجد مجموعات تطابق الفلاتر",
+      "tryDifferentFilters": "جرب تعديل البحث أو الفلاتر",
+      "unassigned": "بطاقات غير مصنفة",
+      "sort": {
+        "dueCount": "عدد المستحقة",
+        "totalCards": "إجمالي البطاقات",
+        "lastReviewed": "آخر مراجعة",
+        "bookTitle": "عنوان الكتاب",
+        "retentionRate": "معدل الاحتفاظ",
+        "createdAt": "تاريخ الإنشاء"
+      },
+      "filter": {
+        "all": "جميع المجموعات",
+        "hasDue": "بها مستحقات",
+        "noDue": "بدون مستحقات",
+        "hasNew": "بها جديدة"
+      }
     }
   },
   "assessments": {

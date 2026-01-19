@@ -261,6 +261,36 @@
       "retention": "Retention Rate",
       "streak": "Day Streak",
       "reviewed": "Cards Reviewed"
+    },
+    "deck": {
+      "totalCards_one": "{{count}}张",
+      "totalCards_other": "{{count}}张",
+      "newCards_one": "{{count}}张新卡",
+      "newCards_other": "{{count}}张新卡",
+      "overdue_one": "{{count}}张逾期",
+      "overdue_other": "{{count}}张逾期",
+      "retention": "记忆率",
+      "lastReviewed": "最后: {{time}}",
+      "studyDeck": "学习 {{name}}",
+      "studyAll": "学习全部 ({{count}}张待学)",
+      "searchPlaceholder": "搜索卡组...",
+      "noResults": "没有符合条件的卡组",
+      "tryDifferentFilters": "尝试调整搜索或筛选条件",
+      "unassigned": "未分类卡片",
+      "sort": {
+        "dueCount": "待学数量",
+        "totalCards": "卡片总数",
+        "lastReviewed": "最后复习",
+        "bookTitle": "书名",
+        "retentionRate": "记忆率",
+        "createdAt": "创建日期"
+      },
+      "filter": {
+        "all": "所有卡组",
+        "hasDue": "有待学",
+        "noDue": "无待学",
+        "hasNew": "有新卡"
+      }
     }
   },
   "assessments": {

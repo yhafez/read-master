@@ -7300,3 +7300,135 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 8108 tests pass (pre-existing i18n test failure unrelated to this change)
+
+
+## Iteration 20 - Ralph Wiggum
+
+### Task Completed
+- **frontend-032**: Flashcard deck list
+
+### Implementation Details
+
+- Created flashcardDeckTypes.ts with comprehensive type definitions and utilities:
+  - CardCounts: Card state counts (total, new, learning, review, suspended)
+  - DueCounts: Due card counts (dueNow, overdue, dueToday, dueTomorrow)
+  - DeckStudyStats: Study statistics (reviewedToday, correctToday, retentionRate)
+  - DeckBookInfo: Book information (id, title, author, coverUrl)
+  - FlashcardDeck: Complete deck structure with all metadata
+  - DeckListFilters: Filter state (search, status, tags, sortBy, sortDirection)
+  - DeckFilterStatus: Filter options (all, hasDue, noDue, hasNew)
+  - DeckSortOption: Sort options (dueCount, totalCards, lastReviewed, bookTitle, retentionRate, createdAt)
+  - DeckListError: Error handling with type, message, retryable flag
+  - FlashcardDeckListProps: Component props with callbacks
+  - DeckCardProps: Individual deck card props
+
+- Implemented 30+ utility functions:
+  - createDefaultCardCounts, createDefaultDueCounts, createDefaultStudyStats
+  - createDeckListError, parseApiError for error handling
+  - getTotalDue, getActiveCardCount, hasDueCards, hasNewCards, hasOverdueCards
+  - isUnassignedDeck, getDeckDisplayName, getDeckDisplayAuthor
+  - formatRetentionRate, formatDueCount, formatCardCount, formatLastReviewed
+  - getDueBadgeColor, getRetentionColor for UI styling
+  - sortDecks with all sort options and null handling
+  - filterDecksByStatus, filterDecksBySearch, filterDecksByTags
+  - applyFiltersAndSort for combined filtering and sorting
+  - calculateDeckListSummary for aggregate stats
+  - getAllTags for tag extraction
+  - createEmptyDeck, isValidDeck for deck management
+  - isDeckListEmpty, hasAnyDueCards, getDecksWithDue
+  - getStudyPriority, sortByStudyPriority for study prioritization
+
+- Constants defined:
+  - UNASSIGNED_DECK_ID for cards without a book
+  - DEFAULT_DECK_FILTERS with sensible defaults
+  - SORT_OPTIONS with i18n label keys
+  - FILTER_STATUSES with i18n label keys
+
+- Implemented FlashcardDeckList.tsx component:
+  - DeckCard sub-component with:
+    - Title and author display (with truncation)
+    - Due badge with color coding (error/warning/success)
+    - Card counts (total, new, overdue)
+    - Retention rate with colored progress bar
+    - Tag chips (max 3 shown with overflow indicator)
+    - Last reviewed timestamp
+    - Study Now button (when due cards exist)
+    - Click-to-select functionality
+  - FlashcardDeckList main component with:
+    - Header with title and Create Card button
+    - Summary stats (total cards, due today, retention rate)
+    - Search input with icon
+    - Status filter dropdown
+    - Sort dropdown with direction toggle
+    - "Study All" button for combined study
+    - Empty state with appropriate messaging
+    - Responsive grid layout (1/2/3 columns)
+    - Full i18n support for all UI strings
+
+- Created index.ts for clean exports from srs folder
+
+- Added new i18n keys to en.json:
+  - flashcards.deck.* for deck-specific strings
+  - flashcards.deck.sort.* for sort options
+  - flashcards.deck.filter.* for filter options
+
+### Test Coverage
+- Created flashcardDeckTypes.test.ts with 116 tests:
+  - Type export tests (6 tests)
+  - Constants tests (4 tests)
+  - createDefaultCardCounts test
+  - createDefaultDueCounts test
+  - createDefaultStudyStats test
+  - createDeckListError tests (5 tests)
+  - parseApiError tests (6 tests)
+  - getTotalDue tests (2 tests)
+  - getActiveCardCount tests (2 tests)
+  - hasDueCards tests (2 tests)
+  - hasNewCards tests (2 tests)
+  - hasOverdueCards tests (2 tests)
+  - isUnassignedDeck tests (3 tests)
+  - getDeckDisplayName tests (2 tests)
+  - getDeckDisplayAuthor tests (3 tests)
+  - formatRetentionRate tests (4 tests)
+  - formatDueCount tests (3 tests)
+  - formatCardCount tests (3 tests)
+  - formatLastReviewed tests (6 tests)
+  - getDueBadgeColor tests (4 tests)
+  - getRetentionColor tests (4 tests)
+  - sortDecks tests (9 tests) - including null date handling
+  - filterDecksByStatus tests (4 tests)
+  - filterDecksBySearch tests (5 tests)
+  - filterDecksByTags tests (3 tests)
+  - applyFiltersAndSort tests (2 tests)
+  - calculateDeckListSummary tests (3 tests)
+  - getAllTags tests (3 tests)
+  - createEmptyDeck tests (2 tests)
+  - isValidDeck tests (6 tests)
+  - isDeckListEmpty tests (2 tests)
+  - hasAnyDueCards tests (2 tests)
+  - getDecksWithDue tests (1 test)
+  - getStudyPriority tests (3 tests)
+  - sortByStudyPriority tests (1 test)
+  - Edge cases tests (4 tests)
+
+### Files Created
+- apps/web/src/components/srs/flashcardDeckTypes.ts
+- apps/web/src/components/srs/flashcardDeckTypes.test.ts
+- apps/web/src/components/srs/FlashcardDeckList.tsx
+- apps/web/src/components/srs/index.ts
+
+### Files Modified
+- apps/web/src/locales/en.json (added flashcard deck i18n keys)
+- docs/prd.json (marked frontend-032 as passes: true)
+
+### Acceptance Criteria Verification
+- ✅ Decks display (FlashcardDeckList renders grid of DeckCard components)
+- ✅ Counts accurate (getTotalDue, getActiveCardCount, summary calculations)
+- ✅ Filters work (filterDecksByStatus, filterDecksBySearch, filterDecksByTags)
+- ✅ Navigation works (onDeckClick, onStudyDeck callbacks, click-to-navigate)
+- ✅ Tests pass (116 tests, all passing)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (only non-null assertion warnings in tests)
+- pnpm vitest run: ✅ 116 tests pass

@@ -261,6 +261,36 @@
       "retention": "Retention Rate",
       "streak": "Day Streak",
       "reviewed": "Cards Reviewed"
+    },
+    "deck": {
+      "totalCards_one": "{{count}}枚",
+      "totalCards_other": "{{count}}枚",
+      "newCards_one": "{{count}}枚新規",
+      "newCards_other": "{{count}}枚新規",
+      "overdue_one": "{{count}}枚期限超過",
+      "overdue_other": "{{count}}枚期限超過",
+      "retention": "定着率",
+      "lastReviewed": "最終: {{time}}",
+      "studyDeck": "{{name}}を学習",
+      "studyAll": "すべて学習 ({{count}}枚期限)",
+      "searchPlaceholder": "デッキを検索...",
+      "noResults": "条件に一致するデッキがありません",
+      "tryDifferentFilters": "検索条件やフィルターを変更してください",
+      "unassigned": "未分類カード",
+      "sort": {
+        "dueCount": "期限数",
+        "totalCards": "総カード数",
+        "lastReviewed": "最終復習日",
+        "bookTitle": "本のタイトル",
+        "retentionRate": "定着率",
+        "createdAt": "作成日"
+      },
+      "filter": {
+        "all": "すべてのデッキ",
+        "hasDue": "期限あり",
+        "noDue": "期限なし",
+        "hasNew": "新規あり"
+      }
     }
   },
   "assessments": {
