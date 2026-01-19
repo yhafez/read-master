@@ -163,3 +163,47 @@ export { NoteEditorDialog } from "./NoteEditorDialog";
 export type { NoteEditorDialogProps } from "./NoteEditorDialog";
 export { AnnotationSidebar } from "./AnnotationSidebar";
 export type { AnnotationSidebarProps } from "./AnnotationSidebar";
+
+// Annotation Export Types and Utilities
+export type {
+  ExportFormat,
+  ExportFilters,
+  ExportOptions,
+  AnnotationWithContext,
+  ExportResult,
+  ExportStats,
+  PdfGenerationOptions,
+  PdfAnnotationBlock,
+} from "./annotationExportTypes";
+export {
+  DEFAULT_EXPORT_OPTIONS,
+  DATE_FORMATS,
+  PDF_PAGE,
+  formatExportDate,
+  generateExportFilename,
+  calculateExportStats,
+  filterAnnotationsForExport,
+  sortAnnotationsForExport,
+  getExportTypeLabel,
+  getColorDisplayName,
+  truncateText,
+  escapeMarkdown,
+  wrapTextForPdf,
+  generateMarkdownHeader,
+  generateMarkdownStats,
+  generateMarkdownToc,
+  formatAnnotationAsMarkdown,
+  generateMarkdownExport,
+  getPdfContentWidth,
+  getCharsPerLine,
+  getPdfGenerationOptions,
+  formatAnnotationForPdf,
+  prepareAnnotationsForPdf,
+  downloadMarkdown,
+  downloadBlob,
+  validateExportOptions,
+} from "./annotationExportTypes";
+
+// Annotation Export Dialog
+export { AnnotationExportDialog } from "./AnnotationExportDialog";
+export type { AnnotationExportDialogProps } from "./AnnotationExportDialog";

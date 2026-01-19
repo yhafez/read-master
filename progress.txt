@@ -7995,3 +7995,115 @@ All 6 locales (en, ar, es, ja, zh, tl) now include:
 - pnpm vitest run: ✅ 1514 tests pass (78 new annotation tests)
 
 ### Commit
+
+## Iteration 25 - frontend-015: Annotation export (MD, PDF)
+**Date**: 2026-01-19
+**Status**: ✅ COMPLETE
+
+### Summary
+Implemented annotation export functionality with support for Markdown and PDF formats, including export dialog, utilities, and comprehensive test coverage.
+
+### Components Created
+
+#### annotationExportTypes.ts (Core types and utilities)
+Types:
+- ExportFormat: "markdown" | "pdf"
+- ExportFilters: types, publicOnly, colors, includeContext, contextLength
+- ExportOptions: format, bookTitle, bookAuthor, filters, includeToc, includeStats, dateFormat
+- AnnotationWithContext: Annotation with context/chapter info
+- ExportResult: success, content, blob, filename, error
+- ExportStats: totalAnnotations, highlights, notes, bookmarks, withNotes, publicAnnotations, exportDate
+- PdfGenerationOptions: orientation, unit, format, title, author
+- PdfAnnotationBlock: type, typeLabel, index, content, note, selectedText, color, colorName, date, position
+
+Constants:
+- DEFAULT_EXPORT_OPTIONS: includeToc, includeStats, dateFormat, filters
+- DATE_FORMATS: short, long, iso options
+- PDF_PAGE: A4 dimensions, margins, font sizes
+
+Utility Functions:
+- formatExportDate: Format date for export (short/long/iso)
+- generateExportFilename: Generate sanitized filename with date
+- calculateExportStats: Count annotations by type
+- filterAnnotationsForExport: Filter by type, public, colors
+- sortAnnotationsForExport: Sort by position
+- getExportTypeLabel, getColorDisplayName: Display helpers
+- truncateText, escapeMarkdown, wrapTextForPdf: Text formatting
+
+Markdown Export Functions:
+- generateMarkdownHeader: Title, author
+- generateMarkdownStats: Summary section
+- generateMarkdownToc: Table of contents with counts
+- formatAnnotationAsMarkdown: Format single annotation
+- generateMarkdownExport: Complete markdown document
+
+PDF Export Functions:
+- getPdfContentWidth, getCharsPerLine: Layout calculations
+- getPdfGenerationOptions: jsPDF options
+- formatAnnotationForPdf: Format annotation for PDF
+- prepareAnnotationsForPdf: Group and format all annotations
+
+Download Functions:
+- downloadMarkdown: Download as .md file
+- downloadBlob: Download blob as file
+- validateExportOptions: Validate export configuration
+
+#### AnnotationExportDialog.tsx
+- Modal dialog for exporting annotations
+- Format selection (Markdown or PDF radio buttons)
+- Type filters (Highlights, Notes, Bookmarks checkboxes with counts)
+- Export options (Include TOC, Include Stats checkboxes)
+- Preview count showing annotations to export
+- PDF generation using jsPDF with proper formatting
+- Loading states and error handling
+- i18n support for all UI strings
+
+### Test Coverage
+Created annotationExportTypes.test.ts with 76 tests:
+- Constants: DEFAULT_EXPORT_OPTIONS, DATE_FORMATS, PDF_PAGE (8 tests)
+- formatExportDate: long, short, iso formats (3 tests)
+- generateExportFilename: markdown, pdf, sanitization, truncation (4 tests)
+- calculateExportStats: counts, withNotes, publicAnnotations (5 tests)
+- filterAnnotationsForExport: types, multiple types, publicOnly, colors, empty (6 tests)
+- sortAnnotationsForExport: position, mutation (2 tests)
+- getExportTypeLabel, getColorDisplayName: all types (4 tests)
+- truncateText, escapeMarkdown, wrapTextForPdf: text utilities (8 tests)
+- Markdown export functions: header, stats, toc, annotation, full export (12 tests)
+- PDF export functions: width, chars per line, options, format, prepare (8 tests)
+- validateExportOptions: valid, empty title, invalid format (5 tests)
+
+### Files Created
+- apps/web/src/components/reader/annotationExportTypes.ts
+- apps/web/src/components/reader/annotationExportTypes.test.ts
+- apps/web/src/components/reader/AnnotationExportDialog.tsx
+
+### Files Modified
+- apps/web/src/components/reader/index.ts (added all exports)
+- apps/web/package.json (added jspdf dependency)
+- apps/web/src/locales/en.json (added reader.export.* translations)
+- apps/web/src/locales/ar.json (added reader.export.* translations)
+- apps/web/src/locales/es.json (added reader.export.* translations)
+- apps/web/src/locales/ja.json (added reader.export.* translations)
+- apps/web/src/locales/zh.json (added reader.export.* translations)
+- apps/web/src/locales/tl.json (added reader.export.* translations)
+
+### i18n Translations Added
+All 6 locales (en, ar, es, ja, zh, tl) now include:
+- reader.export.title, format, includeTypes, options
+- reader.export.includeToc, includeStats, previewCount
+- reader.export.export, exporting
+
+### Acceptance Criteria Verification
+- ✅ MD export works (generateMarkdownExport with headers, TOC, sections)
+- ✅ PDF export works (jsPDF integration with proper formatting)
+- ✅ Context included (book title, author, dates, colors)
+- ✅ Filters work (by type, by color)
+- ✅ Tests pass (76 tests for export utilities)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 1590 tests pass (76 new export tests)
+
+### Commit
+Pending...

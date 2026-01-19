@@ -26,6 +26,7 @@
     "i18next": "^25.7.4",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^3.0.2",
+    "jspdf": "^4.0.0",
     "pdfjs-dist": "4.9.155",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

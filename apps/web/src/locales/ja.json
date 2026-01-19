@@ -338,6 +338,17 @@
         "updated": "更新日",
         "type": "種類"
       }
+    },
+    "export": {
+      "title": "注釈をエクスポート",
+      "format": "エクスポート形式",
+      "includeTypes": "注釈タイプを含める",
+      "options": "エクスポートオプション",
+      "includeToc": "目次を含める",
+      "includeStats": "統計サマリーを含める",
+      "previewCount": "エクスポートする注釈:",
+      "export": "エクスポート",
+      "exporting": "エクスポート中..."
     }
   },
   "flashcards": {

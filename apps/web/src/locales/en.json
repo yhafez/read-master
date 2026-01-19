@@ -339,6 +339,17 @@
         "updated": "Date Updated",
         "type": "Type"
       }
+    },
+    "export": {
+      "title": "Export Annotations",
+      "format": "Export Format",
+      "includeTypes": "Include Annotation Types",
+      "options": "Export Options",
+      "includeToc": "Include table of contents",
+      "includeStats": "Include statistics summary",
+      "previewCount": "Annotations to export:",
+      "export": "Export",
+      "exporting": "Exporting..."
     }
   },
   "flashcards": {

@@ -338,6 +338,17 @@
         "updated": "Petsa ng Pag-update",
         "type": "Uri"
       }
+    },
+    "export": {
+      "title": "I-export ang mga Anotasyon",
+      "format": "Format ng Pag-export",
+      "includeTypes": "Isama ang mga Uri ng Anotasyon",
+      "options": "Mga Opsyon sa Pag-export",
+      "includeToc": "Isama ang talaan ng nilalaman",
+      "includeStats": "Isama ang buod ng estadistika",
+      "previewCount": "Mga anotasyon na i-e-export:",
+      "export": "I-export",
+      "exporting": "Nag-e-export..."
     }
   },
   "flashcards": {
