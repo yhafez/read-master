@@ -229,15 +229,26 @@
       "intellectual": "Intellectual Background"
     },
     "toolbar": {
-      "explain": "Explain This",
-      "ask": "Ask a Question",
-      "highlight": "Highlight",
-      "note": "Add Note",
-      "bookmark": "Bookmark"
+      "explain": "Explicar esto",
+      "ask": "Hacer una pregunta",
+      "highlight": "Resaltar",
+      "note": "Agregar nota",
+      "bookmark": "Marcador"
+    },
+    "progress": {
+      "progress": "Progreso",
+      "complete": "Completo",
+      "timeRemaining": "{{time}} restante",
+      "timeRemainingTooltip": "Tiempo estimado para terminar de leer",
+      "readingSpeedTooltip": "Tu velocidad de lectura actual",
+      "clickToNavigate": "Haz clic para ir a la posición",
+      "wordsRead": "{{current}} / {{total}} palabras",
+      "timeSpent": "Tiempo dedicado: {{time}}",
+      "averageSpeed": "Promedio: {{wpm}} PPM"
     }
   },
   "flashcards": {
-    "title": "Flashcards",
+    "title": "Tarjetas de memoria",
     "review": "Review",
     "create": "Create Flashcard",
     "dueToday": "Due Today",

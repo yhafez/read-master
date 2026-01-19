@@ -229,11 +229,22 @@
       "intellectual": "Intellectual Background"
     },
     "toolbar": {
-      "explain": "Explain This",
-      "ask": "Ask a Question",
-      "highlight": "Highlight",
-      "note": "Add Note",
+      "explain": "Ipaliwanag Ito",
+      "ask": "Magtanong",
+      "highlight": "I-highlight",
+      "note": "Magdagdag ng Tala",
       "bookmark": "Bookmark"
+    },
+    "progress": {
+      "progress": "Progreso",
+      "complete": "Tapos",
+      "timeRemaining": "{{time}} natitira",
+      "timeRemainingTooltip": "Tinatayang oras para matapos ang pagbabasa",
+      "readingSpeedTooltip": "Ang iyong kasalukuyang bilis ng pagbabasa",
+      "clickToNavigate": "I-click para tumalon sa posisyon",
+      "wordsRead": "{{current}} / {{total}} salita",
+      "timeSpent": "Oras na ginugol: {{time}}",
+      "averageSpeed": "Average: {{wpm}} WPM"
     }
   },
   "flashcards": {

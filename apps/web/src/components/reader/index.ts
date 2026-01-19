@@ -77,3 +77,37 @@ export {
   getOverlappingHighlights,
   mergeOverlappingHighlights,
 } from "./textTypes";
+
+// Progress Tracker
+export { ProgressTracker } from "./ProgressTracker";
+export type {
+  ProgressTrackerProps,
+  ProgressData,
+  ProgressDisplayMode,
+  ProgressBarSegment,
+  ReadingSession,
+  TimeDisplayFormat,
+} from "./progressTypes";
+export {
+  DEFAULT_WPM,
+  MIN_WPM_THRESHOLD,
+  MAX_WPM_THRESHOLD,
+  MIN_TIME_FOR_WPM,
+  READING_PAUSE_THRESHOLD,
+  TIME_UNITS,
+  DISPLAY_MODE_DEFAULTS,
+  calculatePercentage,
+  calculateWpm,
+  estimateTimeRemaining,
+  formatDuration,
+  formatPercentage,
+  formatWpm,
+  calculateWordsRead,
+  calculateProgressData,
+  isReadingActive,
+  createReadingSession,
+  updateReadingSession,
+  getDisplaySettings,
+  createProgressSegments,
+  validateProgressProps,
+} from "./progressTypes";

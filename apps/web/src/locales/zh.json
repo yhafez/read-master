@@ -229,15 +229,26 @@
       "intellectual": "Intellectual Background"
     },
     "toolbar": {
-      "explain": "Explain This",
-      "ask": "Ask a Question",
-      "highlight": "Highlight",
-      "note": "Add Note",
-      "bookmark": "Bookmark"
+      "explain": "解释这个",
+      "ask": "提问",
+      "highlight": "高亮",
+      "note": "添加笔记",
+      "bookmark": "书签"
+    },
+    "progress": {
+      "progress": "进度",
+      "complete": "完成",
+      "timeRemaining": "剩余{{time}}",
+      "timeRemainingTooltip": "预计完成阅读时间",
+      "readingSpeedTooltip": "当前阅读速度",
+      "clickToNavigate": "点击跳转到位置",
+      "wordsRead": "{{current}} / {{total}} 字",
+      "timeSpent": "阅读时间: {{time}}",
+      "averageSpeed": "平均: {{wpm}} WPM"
     }
   },
   "flashcards": {
-    "title": "Flashcards",
+    "title": "闪卡",
     "review": "Review",
     "create": "Create Flashcard",
     "dueToday": "Due Today",

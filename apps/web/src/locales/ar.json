@@ -234,6 +234,17 @@
       "highlight": "تمييز",
       "note": "إضافة ملاحظة",
       "bookmark": "إشارة مرجعية"
+    },
+    "progress": {
+      "progress": "التقدم",
+      "complete": "مكتمل",
+      "timeRemaining": "{{time}} متبقي",
+      "timeRemainingTooltip": "الوقت المتوقع لإنهاء القراءة",
+      "readingSpeedTooltip": "سرعة القراءة الحالية",
+      "clickToNavigate": "انقر للانتقال إلى موضع",
+      "wordsRead": "{{current}} / {{total}} كلمة",
+      "timeSpent": "الوقت المستغرق: {{time}}",
+      "averageSpeed": "المتوسط: {{wpm}} كلمة/دقيقة"
     }
   },
   "flashcards": {

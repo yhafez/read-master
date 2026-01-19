@@ -235,6 +235,17 @@
       "highlight": "Highlight",
       "note": "Add Note",
       "bookmark": "Bookmark"
+    },
+    "progress": {
+      "progress": "Progress",
+      "complete": "Complete",
+      "timeRemaining": "{{time}} left",
+      "timeRemainingTooltip": "Estimated time to finish reading",
+      "readingSpeedTooltip": "Your current reading speed",
+      "clickToNavigate": "Click to jump to position",
+      "wordsRead": "{{current}} / {{total}} words",
+      "timeSpent": "Time spent: {{time}}",
+      "averageSpeed": "Avg: {{wpm}} WPM"
     }
   },
   "flashcards": {

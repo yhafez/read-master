@@ -229,15 +229,26 @@
       "intellectual": "Intellectual Background"
     },
     "toolbar": {
-      "explain": "Explain This",
-      "ask": "Ask a Question",
-      "highlight": "Highlight",
-      "note": "Add Note",
-      "bookmark": "Bookmark"
+      "explain": "これを説明",
+      "ask": "質問する",
+      "highlight": "ハイライト",
+      "note": "メモを追加",
+      "bookmark": "ブックマーク"
+    },
+    "progress": {
+      "progress": "進捗",
+      "complete": "完了",
+      "timeRemaining": "残り{{time}}",
+      "timeRemainingTooltip": "読み終わるまでの推定時間",
+      "readingSpeedTooltip": "現在の読書速度",
+      "clickToNavigate": "クリックして移動",
+      "wordsRead": "{{current}} / {{total}} 語",
+      "timeSpent": "読書時間: {{time}}",
+      "averageSpeed": "平均: {{wpm}} WPM"
     }
   },
   "flashcards": {
-    "title": "Flashcards",
+    "title": "フラッシュカード",
     "review": "Review",
     "create": "Create Flashcard",
     "dueToday": "Due Today",
