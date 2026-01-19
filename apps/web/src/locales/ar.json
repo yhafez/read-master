@@ -1260,5 +1260,29 @@
     "tip1": "تحقق من اتصال Wi-Fi أو بيانات الهاتف",
     "tip2": "حاول الانتقال إلى منطقة بها إشارة أفضل",
     "tip3": "قم بتنزيل الكتب للقراءة بدون اتصال عندما تكون متصلاً"
+  },
+  "userStats": {
+    "title": "إحصائياتك",
+    "subtitle": "تتبع تقدمك في القراءة وإنجازاتك",
+    "level": "المستوى",
+    "totalXP": "إجمالي نقاط الخبرة",
+    "nextLevel": "التالي: المستوى {{level}}",
+    "needed": "مطلوب",
+    "maxLevel": "تم الوصول للمستوى الأقصى!",
+    "days": "أيام",
+    "currentStreak": "السلسلة الحالية",
+    "longestStreak": "أطول سلسلة",
+    "weeklyActivity": "النشاط الأسبوعي",
+    "booksCompleted": "الكتب المكتملة",
+    "totalReadingTime": "إجمالي وقت القراءة",
+    "averageSpeed": "متوسط السرعة",
+    "wordsPerMinute": "كلمة في الدقيقة",
+    "flashcardsReviewed": "البطاقات التعليمية المراجعة",
+    "assessmentsTaken": "الاختبارات المأخوذة",
+    "averageScore": "متوسط الدرجة",
+    "noData": "غير متاح",
+    "acrossAssessments": "عبر جميع الاختبارات",
+    "thisWeek": "هذا الأسبوع: {{count}}",
+    "thisWeekTime": "هذا الأسبوع: {{time}}"
   }
 }

@@ -1260,5 +1260,29 @@
     "tip1": "Verifica tu conexión Wi-Fi o de datos móviles",
     "tip2": "Intenta moverte a un área con mejor señal",
     "tip3": "Descarga libros para leer sin conexión cuando estés conectado"
+  },
+  "userStats": {
+    "title": "Tus Estadísticas",
+    "subtitle": "Rastrea tu progreso de lectura y logros",
+    "level": "Nivel",
+    "totalXP": "XP Total",
+    "nextLevel": "Siguiente: Nivel {{level}}",
+    "needed": "necesario",
+    "maxLevel": "¡Nivel máximo alcanzado!",
+    "days": "días",
+    "currentStreak": "Racha Actual",
+    "longestStreak": "Racha Más Larga",
+    "weeklyActivity": "Actividad Semanal",
+    "booksCompleted": "Libros Completados",
+    "totalReadingTime": "Tiempo Total de Lectura",
+    "averageSpeed": "Velocidad Promedio",
+    "wordsPerMinute": "Palabras por minuto",
+    "flashcardsReviewed": "Tarjetas Revisadas",
+    "assessmentsTaken": "Evaluaciones Realizadas",
+    "averageScore": "Puntuación Promedio",
+    "noData": "N/D",
+    "acrossAssessments": "En todas las evaluaciones",
+    "thisWeek": "Esta semana: {{count}}",
+    "thisWeekTime": "Esta semana: {{time}}"
   }
 }

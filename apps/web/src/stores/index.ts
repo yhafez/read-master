@@ -126,3 +126,19 @@ export type {
   ShelfIcon,
   UpdateShelfInput,
 } from "./shelvesStore";
+
+export {
+  areConsecutiveDays,
+  formatReadingTime,
+  getCurrentLevelProgress,
+  getLevelFromXP,
+  getTodayDateString,
+  getXPForLevel,
+  isToday,
+  MAX_LEVEL,
+  sanitizeUserStats,
+  USER_STATS_STORAGE_KEY,
+  useUserStatsStore,
+  XP_PER_LEVEL,
+} from "./userStatsStore";
+export type { ReadingActivity, UserStats } from "./userStatsStore";

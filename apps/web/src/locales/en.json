@@ -1261,5 +1261,29 @@
     "tip1": "Check your Wi-Fi or mobile data connection",
     "tip2": "Try moving to an area with better signal",
     "tip3": "Download books for offline reading when connected"
+  },
+  "userStats": {
+    "title": "Your Statistics",
+    "subtitle": "Track your reading progress and achievements",
+    "level": "Level",
+    "totalXP": "Total XP",
+    "nextLevel": "Next: Level {{level}}",
+    "needed": "needed",
+    "maxLevel": "Maximum level reached!",
+    "days": "days",
+    "currentStreak": "Current Streak",
+    "longestStreak": "Longest Streak",
+    "weeklyActivity": "Weekly Activity",
+    "booksCompleted": "Books Completed",
+    "totalReadingTime": "Total Reading Time",
+    "averageSpeed": "Average Speed",
+    "wordsPerMinute": "Words per minute",
+    "flashcardsReviewed": "Flashcards Reviewed",
+    "assessmentsTaken": "Assessments Taken",
+    "averageScore": "Average Score",
+    "noData": "N/A",
+    "acrossAssessments": "Across all assessments",
+    "thisWeek": "This week: {{count}}",
+    "thisWeekTime": "This week: {{time}}"
   }
 }

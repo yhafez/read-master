@@ -41,6 +41,7 @@ import {
   SettingsNotificationsPage,
   SettingsPrivacyPage,
   SettingsSubscriptionPage,
+  UserStatsPage,
 } from "@/pages";
 
 /**
@@ -234,6 +235,12 @@ function createAppRouter() {
             {
               path: ROUTES.SETTINGS_SUBSCRIPTION,
               element: <SettingsSubscriptionPage />,
+            },
+
+            // Stats
+            {
+              path: ROUTES.STATS,
+              element: <UserStatsPage />,
             },
           ],
         },

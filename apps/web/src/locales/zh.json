@@ -1260,5 +1260,29 @@
     "tip1": "检查您的 Wi-Fi 或移动数据连接",
     "tip2": "尝试移动到信号更好的区域",
     "tip3": "在连接时下载书籍以供离线阅读"
+  },
+  "userStats": {
+    "title": "您的统计数据",
+    "subtitle": "跟踪您的阅读进度和成就",
+    "level": "等级",
+    "totalXP": "总经验值",
+    "nextLevel": "下一级: 等级 {{level}}",
+    "needed": "需要",
+    "maxLevel": "已达到最高等级！",
+    "days": "天",
+    "currentStreak": "当前连续天数",
+    "longestStreak": "最长连续天数",
+    "weeklyActivity": "每周活动",
+    "booksCompleted": "已完成书籍",
+    "totalReadingTime": "总阅读时间",
+    "averageSpeed": "平均速度",
+    "wordsPerMinute": "每分钟字数",
+    "flashcardsReviewed": "已复习闪卡",
+    "assessmentsTaken": "已完成测评",
+    "averageScore": "平均分数",
+    "noData": "暂无数据",
+    "acrossAssessments": "所有测评的平均",
+    "thisWeek": "本周: {{count}}",
+    "thisWeekTime": "本周: {{time}}"
   }
 }

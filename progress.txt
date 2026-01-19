@@ -10786,3 +10786,123 @@ Added translations in all 6 locale files (en, ar, es, ja, zh, tl):
 
 ---
 
+
+---
+
+## Iteration 48 - User Stats Dashboard (frontend-051)
+**Date:** 2026-01-19
+**Task:** frontend-051 - Create user stats dashboard page with XP, level, reading streaks
+**Status:** COMPLETED
+
+### Summary
+Implemented a comprehensive user statistics dashboard displaying gamification metrics including XP, level progression, reading streaks, and activity tracking. The feature uses a quadratic XP formula for level progression, making each level require increasingly more XP.
+
+### Files Created/Modified
+
+#### apps/web/src/stores/userStatsStore.ts (NEW)
+Zustand store for user gamification statistics with:
+- **XP System:** Quadratic progression formula (Level N requires N*100 XP from previous level)
+- **Level System:** MAX_LEVEL = 100, with `getLevelFromXP()` and `getXPForLevel()` functions
+- **Streak Tracking:** Current/longest streak with consecutive day detection
+- **Activity History:** Last 30 days of reading activity with minutes, units, books
+- **localStorage persistence** with partialize for state selection
+
+**Key Functions:**
+- `getXPForLevel(level)` - XP required to reach a level (quadratic sum)
+- `getLevelFromXP(totalXP)` - Calculate level from total XP
+- `getCurrentLevelProgress(totalXP)` - Get level, current XP, XP to next level, percent
+- `formatReadingTime(minutes)` - Format as "1h 30m" or "45m"
+- `getTodayDateString()` - ISO date string for today
+- `areConsecutiveDays()` - Check if two dates are sequential
+- `isToday()` - Check if date is today
+- `sanitizeUserStats()` - Validate and sanitize stat values
+
+**Store Actions:**
+- `addXP()` - Add XP and recalculate level
+- `updateStreak()` - Update streak based on activity
+- `recordReadingActivity()` - Record reading session
+- `recordFlashcardReview()` - Track flashcard reviews
+- `recordAssessmentCompletion()` - Track assessment scores
+- `getLevelProgress()`, `getRecentActivity()`, `getTotalForPeriod()`
+- `reset()` - Reset all stats
+
+#### apps/web/src/stores/userStatsStore.test.ts (NEW)
+65 comprehensive tests covering:
+- Constants validation (3 tests)
+- getXPForLevel calculations (6 tests)
+- getLevelFromXP calculations (7 tests)
+- getCurrentLevelProgress (4 tests)
+- formatReadingTime formatting (4 tests)
+- Date utility functions (7 tests)
+- sanitizeUserStats validation (5 tests)
+- Store initial state (1 test)
+- addXP functionality (4 tests)
+- updateStreak logic (5 tests)
+- recordReadingActivity (4 tests)
+- recordFlashcardReview (3 tests)
+- recordAssessmentCompletion (3 tests)
+- getLevelProgress (2 tests)
+- getRecentActivity (2 tests)
+- getTotalForPeriod (2 tests)
+- reset functionality (1 test)
+- Type exports (2 tests)
+
+#### apps/web/src/pages/stats/UserStatsPage.tsx (NEW)
+Dashboard page with:
+- **LevelProgress:** Level display with XP bar, total XP, next level indicator
+- **StreakDisplay:** Current streak flame icon, longest streak
+- **StatCards:** 6 cards for books, time, speed, flashcards, assessments, avg score
+- **ActivityChart:** Bar chart showing last 7 days of reading activity
+- MUI Grid2 responsive layout
+- Full i18n support
+
+#### apps/web/src/pages/stats/index.ts (NEW)
+Module exports for UserStatsPage
+
+#### apps/web/src/stores/index.ts (UPDATED)
+Added exports for userStatsStore, types, and utility functions
+
+#### apps/web/src/pages/index.ts (UPDATED)
+Added UserStatsPage export
+
+#### apps/web/src/router/routes.ts (UPDATED)
+Added STATS route (/stats) and protected route entry
+
+#### apps/web/src/router/Router.tsx (UPDATED)
+Added UserStatsPage route under protected routes
+
+#### apps/web/src/locales/*.json (UPDATED)
+Added translations in all 6 locale files (en, ar, es, ja, zh, tl):
+- 18 translation keys for stats feature
+- "thisWeek" for numeric counts, "thisWeekTime" for time strings
+- Level, streak, activity labels
+- All stats card labels
+
+### Acceptance Criteria Verification
+- ✅ XP/Level progression display with progress bar
+- ✅ Reading streak tracking with consecutive day logic
+- ✅ Books read and reading time statistics
+- ✅ Flashcard and assessment tracking
+- ✅ Activity chart for weekly view
+- ✅ Tests pass - 65 tests covering all functionality
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 65 new tests pass
+
+### Technical Notes
+- XP formula: Level L requires XP_PER_LEVEL * (L-1) * L / 2 total XP
+- Inverse formula solved via quadratic equation for getLevelFromXP
+- Streak resets if a day is missed, longest streak preserved
+- Activity history limited to 30 days to manage storage
+- Grid2 from @mui/material used for responsive layout
+- exactOptionalPropertyTypes compliance with `| undefined` on optional props
+
+### Discoveries for Future Sprints
+- Achievements/badges system (frontend-052)
+- Milestone celebrations on level up
+- Weekly/monthly stat comparisons
+- Social sharing of achievements
+
+---

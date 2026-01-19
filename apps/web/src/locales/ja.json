@@ -1260,5 +1260,29 @@
     "tip1": "Wi-Fiまたはモバイルデータ接続を確認してください",
     "tip2": "電波状況の良い場所に移動してみてください",
     "tip3": "接続時にオフライン読書用の本をダウンロードしてください"
+  },
+  "userStats": {
+    "title": "あなたの統計",
+    "subtitle": "読書の進捗と実績を追跡",
+    "level": "レベル",
+    "totalXP": "合計XP",
+    "nextLevel": "次: レベル {{level}}",
+    "needed": "必要",
+    "maxLevel": "最高レベルに到達しました！",
+    "days": "日",
+    "currentStreak": "現在の連続記録",
+    "longestStreak": "最長連続記録",
+    "weeklyActivity": "週間アクティビティ",
+    "booksCompleted": "読了した本",
+    "totalReadingTime": "合計読書時間",
+    "averageSpeed": "平均速度",
+    "wordsPerMinute": "単語/分",
+    "flashcardsReviewed": "復習したフラッシュカード",
+    "assessmentsTaken": "受けた評価テスト",
+    "averageScore": "平均スコア",
+    "noData": "該当なし",
+    "acrossAssessments": "全ての評価を通して",
+    "thisWeek": "今週: {{count}}",
+    "thisWeekTime": "今週: {{time}}"
   }
 }

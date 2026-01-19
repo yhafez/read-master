@@ -54,6 +54,9 @@ export const ROUTES = {
   SETTINGS_PRIVACY: "/settings/privacy",
   SETTINGS_SUBSCRIPTION: "/settings/subscription",
 
+  // Stats
+  STATS: "/stats",
+
   // 404
   NOT_FOUND: "*",
 } as const;
@@ -109,6 +112,7 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.SETTINGS_NOTIFICATIONS,
   ROUTES.SETTINGS_PRIVACY,
   ROUTES.SETTINGS_SUBSCRIPTION,
+  ROUTES.STATS,
 ] as const;
 
 /**

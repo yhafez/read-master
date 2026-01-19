@@ -1260,5 +1260,29 @@
     "tip1": "Suriin ang iyong Wi-Fi o mobile data connection",
     "tip2": "Subukang lumipat sa lugar na may mas magandang signal",
     "tip3": "Mag-download ng mga libro para sa offline reading kapag connected"
+  },
+  "userStats": {
+    "title": "Iyong Mga Istatistika",
+    "subtitle": "Subaybayan ang iyong progreso sa pagbabasa at mga nagawa",
+    "level": "Lebel",
+    "totalXP": "Kabuuang XP",
+    "nextLevel": "Susunod: Lebel {{level}}",
+    "needed": "kailangan",
+    "maxLevel": "Naabot na ang pinakamataas na lebel!",
+    "days": "araw",
+    "currentStreak": "Kasalukuyang Streak",
+    "longestStreak": "Pinakamahabang Streak",
+    "weeklyActivity": "Lingguhang Aktibidad",
+    "booksCompleted": "Mga Librong Natapos",
+    "totalReadingTime": "Kabuuang Oras ng Pagbabasa",
+    "averageSpeed": "Average na Bilis",
+    "wordsPerMinute": "Salita bawat minuto",
+    "flashcardsReviewed": "Mga Flashcard na Na-review",
+    "assessmentsTaken": "Mga Pagsusulit na Kinuha",
+    "averageScore": "Average na Puntos",
+    "noData": "Walang data",
+    "acrossAssessments": "Sa lahat ng mga pagsusulit",
+    "thisWeek": "Ngayong linggo: {{count}}",
+    "thisWeekTime": "Ngayong linggo: {{time}}"
   }
 }

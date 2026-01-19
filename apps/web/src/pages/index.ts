@@ -65,3 +65,6 @@ export {
   SettingsPrivacyPage,
   SettingsSubscriptionPage,
 } from "./settings";
+
+// Stats
+export { UserStatsPage } from "./stats";
