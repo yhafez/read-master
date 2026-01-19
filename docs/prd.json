@@ -2549,6 +2549,7 @@
         "Links work",
         "Tests pass"
       ],
+      "passes": true,
       "passes": false
     },
     {

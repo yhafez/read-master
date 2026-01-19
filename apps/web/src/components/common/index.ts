@@ -9,3 +9,10 @@ export {
   type SkipLinkProps,
   type VisuallyHiddenProps,
 } from "./FocusTrap";
+
+export {
+  AchievementNotification,
+  type AchievementNotificationProps,
+} from "./AchievementNotification";
+
+export { AchievementNotificationManager } from "./AchievementNotificationManager";
