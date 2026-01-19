@@ -559,6 +559,27 @@
       "culturalContext": "Cultural Context",
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
+    },
+    "chat": {
+      "title": "AI助手",
+      "placeholder": "问一个关于这本书的问题...",
+      "clear": "清除聊天",
+      "context": "讨论: {{book}}",
+      "welcome": "我能帮你什么？",
+      "welcomeDescription": "询问关于你正在阅读的内容，获取摘要，或探索主题和人物。",
+      "suggestions": "试试问:",
+      "you": "你",
+      "assistant": "助手",
+      "thinking": "思考中...",
+      "errorGeneric": "出了点问题。请再试一次。",
+      "charCount": "{{current}} / {{max}}",
+      "suggested": {
+        "0": "总结我到目前为止读过的内容",
+        "1": "解释主要主题",
+        "2": "主要人物是谁？",
+        "3": "我应该注意什么？",
+        "4": "定义难懂的词汇"
+      }
     }
   },
   "pwa": {

@@ -559,6 +559,27 @@
       "culturalContext": "Cultural Context",
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
+    },
+    "chat": {
+      "title": "AI Assistant",
+      "placeholder": "Magtanong tungkol sa libro...",
+      "clear": "I-clear ang chat",
+      "context": "Pinag-uusapan: {{book}}",
+      "welcome": "Paano kita matutulungan?",
+      "welcomeDescription": "Magtanong tungkol sa iyong binabasa, kumuha ng mga buod, o i-explore ang mga tema at karakter.",
+      "suggestions": "Subukan itanong:",
+      "you": "Ikaw",
+      "assistant": "Assistant",
+      "thinking": "Nag-iisip...",
+      "errorGeneric": "May nangyaring mali. Pakisubukan ulit.",
+      "charCount": "{{current}} / {{max}}",
+      "suggested": {
+        "0": "Ibuod ang nabasa ko hanggang ngayon",
+        "1": "Ipaliwanag ang mga pangunahing tema",
+        "2": "Sino ang mga pangunahing karakter?",
+        "3": "Ano ang dapat kong pansinin?",
+        "4": "Ipaliwanag ang mahirap na bokabularyo"
+      }
     }
   },
   "pwa": {

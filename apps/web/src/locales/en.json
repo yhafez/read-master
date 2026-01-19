@@ -560,6 +560,27 @@
       "culturalContext": "Cultural Context",
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
+    },
+    "chat": {
+      "title": "AI Assistant",
+      "placeholder": "Ask a question about the book...",
+      "clear": "Clear chat",
+      "context": "Discussing: {{book}}",
+      "welcome": "How can I help you?",
+      "welcomeDescription": "Ask questions about what you're reading, get summaries, or explore themes and characters.",
+      "suggestions": "Try asking:",
+      "you": "You",
+      "assistant": "Assistant",
+      "thinking": "Thinking...",
+      "errorGeneric": "Something went wrong. Please try again.",
+      "charCount": "{{current}} / {{max}}",
+      "suggested": {
+        "0": "Summarize what I've read so far",
+        "1": "Explain the main themes",
+        "2": "Who are the key characters?",
+        "3": "What should I pay attention to?",
+        "4": "Define any difficult vocabulary"
+      }
     }
   },
   "pwa": {

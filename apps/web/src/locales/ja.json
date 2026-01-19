@@ -559,6 +559,27 @@
       "culturalContext": "Cultural Context",
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
+    },
+    "chat": {
+      "title": "AIアシスタント",
+      "placeholder": "本について質問してください...",
+      "clear": "チャットをクリア",
+      "context": "話題: {{book}}",
+      "welcome": "どのようにお手伝いできますか？",
+      "welcomeDescription": "読んでいる内容について質問したり、要約を取得したり、テーマやキャラクターを探索できます。",
+      "suggestions": "こんな質問を試してみてください:",
+      "you": "あなた",
+      "assistant": "アシスタント",
+      "thinking": "考え中...",
+      "errorGeneric": "エラーが発生しました。もう一度お試しください。",
+      "charCount": "{{current}} / {{max}}",
+      "suggested": {
+        "0": "これまで読んだ内容を要約して",
+        "1": "主なテーマを説明して",
+        "2": "主要なキャラクターは誰？",
+        "3": "何に注意すべき？",
+        "4": "難しい語彙を定義して"
+      }
     }
   },
   "pwa": {

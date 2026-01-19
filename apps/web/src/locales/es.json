@@ -559,6 +559,27 @@
       "culturalContext": "Cultural Context",
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
+    },
+    "chat": {
+      "title": "Asistente IA",
+      "placeholder": "Haz una pregunta sobre el libro...",
+      "clear": "Limpiar chat",
+      "context": "Discutiendo: {{book}}",
+      "welcome": "¿Cómo puedo ayudarte?",
+      "welcomeDescription": "Haz preguntas sobre lo que estás leyendo, obtén resúmenes o explora temas y personajes.",
+      "suggestions": "Intenta preguntar:",
+      "you": "Tú",
+      "assistant": "Asistente",
+      "thinking": "Pensando...",
+      "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
+      "charCount": "{{current}} / {{max}}",
+      "suggested": {
+        "0": "Resume lo que he leído hasta ahora",
+        "1": "Explica los temas principales",
+        "2": "¿Quiénes son los personajes principales?",
+        "3": "¿A qué debería prestar atención?",
+        "4": "Define el vocabulario difícil"
+      }
     }
   },
   "pwa": {

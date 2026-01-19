@@ -1817,7 +1817,7 @@
         "Context included",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-025",

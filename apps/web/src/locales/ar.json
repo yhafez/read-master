@@ -559,6 +559,27 @@
       "culturalContext": "Cultural Context",
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
+    },
+    "chat": {
+      "title": "مساعد الذكاء الاصطناعي",
+      "placeholder": "اطرح سؤالاً عن الكتاب...",
+      "clear": "مسح المحادثة",
+      "context": "مناقشة: {{book}}",
+      "welcome": "كيف يمكنني مساعدتك؟",
+      "welcomeDescription": "اطرح أسئلة حول ما تقرأه، احصل على ملخصات، أو استكشف المواضيع والشخصيات.",
+      "suggestions": "جرب أن تسأل:",
+      "you": "أنت",
+      "assistant": "المساعد",
+      "thinking": "جارٍ التفكير...",
+      "errorGeneric": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      "charCount": "{{current}} / {{max}}",
+      "suggested": {
+        "0": "لخص ما قرأته حتى الآن",
+        "1": "اشرح المواضيع الرئيسية",
+        "2": "من هي الشخصيات الرئيسية؟",
+        "3": "ما الذي يجب أن أنتبه إليه؟",
+        "4": "عرّف المفردات الصعبة"
+      }
     }
   },
   "pwa": {
