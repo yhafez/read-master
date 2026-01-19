@@ -18,7 +18,9 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "retry": "Retry"
+    "retry": "Retry",
+    "create": "Create",
+    "moreOptions": "More options"
   },
   "nav": {
     "home": "Home",
@@ -289,6 +291,54 @@
       "wordsRead": "{{current}} / {{total}} words",
       "timeSpent": "Time spent: {{time}}",
       "averageSpeed": "Avg: {{wpm}} WPM"
+    },
+    "annotations": {
+      "title": "Annotations",
+      "toolbar": "Annotation Toolbar",
+      "addNote": "Add Note",
+      "addBookmark": "Add Bookmark",
+      "editNote": "Edit Note",
+      "copy": "Copy Text",
+      "lookup": "Look Up",
+      "explain": "Explain",
+      "selectedText": "Selected Text",
+      "noteLabel": "Note",
+      "notePlaceholder": "Write your thoughts...",
+      "noteRequired": "Note content is required",
+      "noteTooLong": "Note must be at most {{max}} characters",
+      "makePublic": "Make public",
+      "publicDescription": "Public annotations can be seen by other users",
+      "noContent": "No content",
+      "noAnnotations": "No annotations yet",
+      "noSearchResults": "No annotations match your search",
+      "search": "Search annotations...",
+      "sort": "Sort annotations",
+      "count": "{{count}} annotations",
+      "colors": {
+        "yellow": "Yellow",
+        "green": "Green",
+        "blue": "Blue",
+        "pink": "Pink",
+        "purple": "Purple",
+        "orange": "Orange"
+      },
+      "types": {
+        "highlight": "Highlight",
+        "note": "Note",
+        "bookmark": "Bookmark"
+      },
+      "tabs": {
+        "all": "All",
+        "highlights": "Highlights",
+        "notes": "Notes",
+        "bookmarks": "Bookmarks"
+      },
+      "sortBy": {
+        "position": "Position",
+        "created": "Date Created",
+        "updated": "Date Updated",
+        "type": "Type"
+      }
     }
   },
   "flashcards": {

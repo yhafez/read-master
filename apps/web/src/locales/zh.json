@@ -18,7 +18,9 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "retry": "重试"
+    "retry": "重试",
+    "create": "创建",
+    "moreOptions": "更多选项"
   },
   "nav": {
     "home": "Home",
@@ -288,6 +290,54 @@
       "wordsRead": "{{current}} / {{total}} 字",
       "timeSpent": "阅读时间: {{time}}",
       "averageSpeed": "平均: {{wpm}} WPM"
+    },
+    "annotations": {
+      "title": "注释",
+      "toolbar": "注释工具栏",
+      "addNote": "添加笔记",
+      "addBookmark": "添加书签",
+      "editNote": "编辑笔记",
+      "copy": "复制文本",
+      "lookup": "查找",
+      "explain": "解释",
+      "selectedText": "选中文本",
+      "noteLabel": "笔记",
+      "notePlaceholder": "写下你的想法...",
+      "noteRequired": "笔记内容不能为空",
+      "noteTooLong": "笔记最多{{max}}个字符",
+      "makePublic": "设为公开",
+      "publicDescription": "公开的注释可被其他用户查看",
+      "noContent": "无内容",
+      "noAnnotations": "暂无注释",
+      "noSearchResults": "没有匹配的注释",
+      "search": "搜索注释...",
+      "sort": "排序注释",
+      "count": "{{count}}条注释",
+      "colors": {
+        "yellow": "黄色",
+        "green": "绿色",
+        "blue": "蓝色",
+        "pink": "粉色",
+        "purple": "紫色",
+        "orange": "橙色"
+      },
+      "types": {
+        "highlight": "高亮",
+        "note": "笔记",
+        "bookmark": "书签"
+      },
+      "tabs": {
+        "all": "全部",
+        "highlights": "高亮",
+        "notes": "笔记",
+        "bookmarks": "书签"
+      },
+      "sortBy": {
+        "position": "位置",
+        "created": "创建日期",
+        "updated": "更新日期",
+        "type": "类型"
+      }
     }
   },
   "flashcards": {

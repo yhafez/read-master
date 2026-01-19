@@ -18,7 +18,9 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "create": "Crear",
+    "moreOptions": "Más opciones"
   },
   "nav": {
     "home": "Home",
@@ -288,6 +290,54 @@
       "wordsRead": "{{current}} / {{total}} palabras",
       "timeSpent": "Tiempo dedicado: {{time}}",
       "averageSpeed": "Promedio: {{wpm}} PPM"
+    },
+    "annotations": {
+      "title": "Anotaciones",
+      "toolbar": "Barra de anotaciones",
+      "addNote": "Agregar nota",
+      "addBookmark": "Agregar marcador",
+      "editNote": "Editar nota",
+      "copy": "Copiar texto",
+      "lookup": "Buscar",
+      "explain": "Explicar",
+      "selectedText": "Texto seleccionado",
+      "noteLabel": "Nota",
+      "notePlaceholder": "Escribe tus pensamientos...",
+      "noteRequired": "El contenido de la nota es requerido",
+      "noteTooLong": "La nota debe tener máximo {{max}} caracteres",
+      "makePublic": "Hacer pública",
+      "publicDescription": "Las anotaciones públicas pueden ser vistas por otros usuarios",
+      "noContent": "Sin contenido",
+      "noAnnotations": "Sin anotaciones aún",
+      "noSearchResults": "No hay anotaciones que coincidan con tu búsqueda",
+      "search": "Buscar anotaciones...",
+      "sort": "Ordenar anotaciones",
+      "count": "{{count}} anotaciones",
+      "colors": {
+        "yellow": "Amarillo",
+        "green": "Verde",
+        "blue": "Azul",
+        "pink": "Rosa",
+        "purple": "Púrpura",
+        "orange": "Naranja"
+      },
+      "types": {
+        "highlight": "Resaltado",
+        "note": "Nota",
+        "bookmark": "Marcador"
+      },
+      "tabs": {
+        "all": "Todos",
+        "highlights": "Resaltados",
+        "notes": "Notas",
+        "bookmarks": "Marcadores"
+      },
+      "sortBy": {
+        "position": "Posición",
+        "created": "Fecha de creación",
+        "updated": "Fecha de actualización",
+        "type": "Tipo"
+      }
     }
   },
   "flashcards": {

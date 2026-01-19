@@ -18,7 +18,9 @@
     "confirm": "تأكيد",
     "yes": "نعم",
     "no": "لا",
-    "retry": "إعادة المحاولة"
+    "retry": "إعادة المحاولة",
+    "create": "إنشاء",
+    "moreOptions": "المزيد من الخيارات"
   },
   "nav": {
     "home": "الرئيسية",
@@ -288,6 +290,54 @@
       "wordsRead": "{{current}} / {{total}} كلمة",
       "timeSpent": "الوقت المستغرق: {{time}}",
       "averageSpeed": "المتوسط: {{wpm}} كلمة/دقيقة"
+    },
+    "annotations": {
+      "title": "التعليقات التوضيحية",
+      "toolbar": "شريط أدوات التعليقات",
+      "addNote": "إضافة ملاحظة",
+      "addBookmark": "إضافة إشارة مرجعية",
+      "editNote": "تعديل الملاحظة",
+      "copy": "نسخ النص",
+      "lookup": "بحث",
+      "explain": "شرح",
+      "selectedText": "النص المحدد",
+      "noteLabel": "ملاحظة",
+      "notePlaceholder": "اكتب أفكارك...",
+      "noteRequired": "محتوى الملاحظة مطلوب",
+      "noteTooLong": "يجب ألا تتجاوز الملاحظة {{max}} حرفاً",
+      "makePublic": "جعلها عامة",
+      "publicDescription": "التعليقات العامة يمكن أن يراها المستخدمون الآخرون",
+      "noContent": "لا يوجد محتوى",
+      "noAnnotations": "لا توجد تعليقات بعد",
+      "noSearchResults": "لا توجد تعليقات تطابق بحثك",
+      "search": "البحث في التعليقات...",
+      "sort": "ترتيب التعليقات",
+      "count": "{{count}} تعليق",
+      "colors": {
+        "yellow": "أصفر",
+        "green": "أخضر",
+        "blue": "أزرق",
+        "pink": "وردي",
+        "purple": "بنفسجي",
+        "orange": "برتقالي"
+      },
+      "types": {
+        "highlight": "تمييز",
+        "note": "ملاحظة",
+        "bookmark": "إشارة مرجعية"
+      },
+      "tabs": {
+        "all": "الكل",
+        "highlights": "التمييزات",
+        "notes": "الملاحظات",
+        "bookmarks": "الإشارات المرجعية"
+      },
+      "sortBy": {
+        "position": "الموضع",
+        "created": "تاريخ الإنشاء",
+        "updated": "تاريخ التحديث",
+        "type": "النوع"
+      }
     }
   },
   "flashcards": {

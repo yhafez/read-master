@@ -18,7 +18,9 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "retry": "Subukan muli"
+    "retry": "Subukan muli",
+    "create": "Lumikha",
+    "moreOptions": "Mas maraming opsyon"
   },
   "nav": {
     "home": "Home",
@@ -288,6 +290,54 @@
       "wordsRead": "{{current}} / {{total}} salita",
       "timeSpent": "Oras na ginugol: {{time}}",
       "averageSpeed": "Average: {{wpm}} WPM"
+    },
+    "annotations": {
+      "title": "Mga Anotasyon",
+      "toolbar": "Toolbar ng Anotasyon",
+      "addNote": "Magdagdag ng Tala",
+      "addBookmark": "Magdagdag ng Bookmark",
+      "editNote": "I-edit ang Tala",
+      "copy": "Kopyahin ang Teksto",
+      "lookup": "Hanapin",
+      "explain": "Ipaliwanag",
+      "selectedText": "Napiling Teksto",
+      "noteLabel": "Tala",
+      "notePlaceholder": "Isulat ang iyong mga iniisip...",
+      "noteRequired": "Kinakailangan ang nilalaman ng tala",
+      "noteTooLong": "Ang tala ay dapat hanggang {{max}} karakter lamang",
+      "makePublic": "Gawing pampubliko",
+      "publicDescription": "Makikita ng ibang mga gumagamit ang pampublikong mga anotasyon",
+      "noContent": "Walang nilalaman",
+      "noAnnotations": "Wala pang mga anotasyon",
+      "noSearchResults": "Walang anotasyon na tumutugma sa iyong paghahanap",
+      "search": "Maghanap ng mga anotasyon...",
+      "sort": "Ayusin ang mga anotasyon",
+      "count": "{{count}} mga anotasyon",
+      "colors": {
+        "yellow": "Dilaw",
+        "green": "Berde",
+        "blue": "Asul",
+        "pink": "Rosas",
+        "purple": "Lila",
+        "orange": "Kahel"
+      },
+      "types": {
+        "highlight": "Highlight",
+        "note": "Tala",
+        "bookmark": "Bookmark"
+      },
+      "tabs": {
+        "all": "Lahat",
+        "highlights": "Mga Highlight",
+        "notes": "Mga Tala",
+        "bookmarks": "Mga Bookmark"
+      },
+      "sortBy": {
+        "position": "Posisyon",
+        "created": "Petsa ng Paglikha",
+        "updated": "Petsa ng Pag-update",
+        "type": "Uri"
+      }
     }
   },
   "flashcards": {

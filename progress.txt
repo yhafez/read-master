@@ -7879,3 +7879,119 @@ Created serviceWorkerUtils.test.ts with 31 tests:
 
 ### Commit
 Pending...
+
+## Iteration 24 - frontend-014: Annotation UI (highlights, notes, bookmarks)
+**Date**: 2026-01-19
+**Status**: ✅ COMPLETE
+
+### Summary
+Implemented comprehensive annotation UI components for the reader, including types/utilities, toolbar, note editor dialog, and sidebar list.
+
+### Components Created
+
+#### annotationTypes.ts (Core types and utilities)
+- Types: AnnotationType, HighlightColor, Annotation (HighlightAnnotation, NoteAnnotation, BookmarkAnnotation)
+- Types: TextSelectionInfo, SelectionPosition, AnnotationAction
+- Types: CreateAnnotationInput, UpdateAnnotationInput, AnnotationFilters, AnnotationSort
+- Constants: HIGHLIGHT_COLOR_VALUES (6 colors), DEFAULT_HIGHLIGHT_COLOR
+- Utilities: colorToHex, hexToColor, isHighlight, isNote, isBookmark
+- Utilities: getAnnotationIcon, getAnnotationLabel, sortAnnotations, filterAnnotations
+- Utilities: groupAnnotationsByType, getAnnotationsInRange, getAnnotationAtPosition
+- Utilities: validateSelection, createHighlightInput, createNoteInput, createBookmarkInput
+- Utilities: getExcerptText, formatAnnotationDate, countAnnotationsByType
+
+#### AnnotationToolbar.tsx
+- Floating toolbar appearing on text selection
+- Color buttons for highlights (6 colors: yellow, green, blue, pink, purple, orange)
+- Quick actions: Add Note, Add Bookmark, Copy Text
+- Optional actions: Look Up (dictionary), AI Explain
+- Uses MUI Popper for positioning with viewport overflow prevention
+- ClickAwayListener for dismissal
+- Accessible with ARIA labels and tooltips
+
+#### NoteEditorDialog.tsx
+- Modal dialog for creating/editing notes
+- Shows selected text context with highlight color
+- Note textarea with character limit (5000)
+- Public/private toggle for annotation visibility
+- Validation for required content and length
+- Supports both create and edit modes
+
+#### AnnotationSidebar.tsx
+- Drawer component for viewing all annotations
+- Tabs for filtering: All, Highlights, Notes, Bookmarks
+- Badge counts per type
+- Search functionality with text filtering
+- Sort options: Position, Date Created, Date Updated, Type
+- Individual annotation items with icons and color indicators
+- Menu for edit/delete actions
+- Empty states for no annotations or no search results
+
+#### useSelectionAnchor hook
+- Creates virtual anchor element from text selection position
+- Used by AnnotationToolbar for proper Popper positioning
+
+### Test Coverage
+Created annotationTypes.test.ts with 78 tests:
+- HIGHLIGHT_COLOR_VALUES: 2 tests (all colors, hex values)
+- DEFAULT_HIGHLIGHT_COLOR: 1 test (default is yellow)
+- colorToHex: 4 tests (all colors, default for invalid)
+- hexToColor: 4 tests (exact match, case insensitive, not found, default)
+- Type guards (isHighlight, isNote, isBookmark): 6 tests
+- getAnnotationIcon: 4 tests (all types, default)
+- getAnnotationLabel: 3 tests
+- sortAnnotations: 9 tests (position, date, type, direction)
+- filterAnnotations: 8 tests (type, search, public, color, combined)
+- groupAnnotationsByType: 3 tests
+- getAnnotationsInRange: 5 tests (overlap, multiple, partial)
+- getAnnotationAtPosition: 5 tests
+- validateSelection: 3 tests
+- createHighlightInput/createNoteInput/createBookmarkInput: 8 tests
+- getExcerptText: 5 tests
+- formatAnnotationDate: 3 tests
+- countAnnotationsByType: 3 tests
+
+### Files Created
+- apps/web/src/components/reader/annotationTypes.ts
+- apps/web/src/components/reader/annotationTypes.test.ts
+- apps/web/src/components/reader/AnnotationToolbar.tsx
+- apps/web/src/components/reader/NoteEditorDialog.tsx
+- apps/web/src/components/reader/AnnotationSidebar.tsx
+
+### Files Modified
+- apps/web/src/components/reader/index.ts (added all exports)
+- apps/web/src/locales/en.json (added common.create, common.moreOptions, reader.annotations.*)
+- apps/web/src/locales/ar.json (added translations)
+- apps/web/src/locales/es.json (added translations)
+- apps/web/src/locales/ja.json (added translations)
+- apps/web/src/locales/zh.json (added translations)
+- apps/web/src/locales/tl.json (added translations)
+
+### i18n Translations Added
+All 6 locales (en, ar, es, ja, zh, tl) now include:
+- common.create, common.moreOptions
+- reader.annotations.title, toolbar, addNote, addBookmark, editNote
+- reader.annotations.copy, lookup, explain, selectedText
+- reader.annotations.noteLabel, notePlaceholder, noteRequired, noteTooLong
+- reader.annotations.makePublic, publicDescription, noContent
+- reader.annotations.noAnnotations, noSearchResults, search, sort, count
+- reader.annotations.colors.* (yellow, green, blue, pink, purple, orange)
+- reader.annotations.types.* (highlight, note, bookmark)
+- reader.annotations.tabs.* (all, highlights, notes, bookmarks)
+- reader.annotations.sortBy.* (position, created, updated, type)
+
+### Acceptance Criteria Verification
+- ✅ Toolbar appears on text selection with highlight colors
+- ✅ Color picker with 6 colors (yellow, green, blue, pink, purple, orange)
+- ✅ Note editor dialog with validation and public toggle
+- ✅ Bookmark functionality in toolbar
+- ✅ Annotation sidebar with filtering, search, and sorting
+- ✅ Tests pass (78 tests for annotation utilities)
+- ✅ All 6 locale files updated with translations
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 1514 tests pass (78 new annotation tests)
+
+### Commit

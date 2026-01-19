@@ -18,7 +18,9 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "retry": "再試行"
+    "retry": "再試行",
+    "create": "作成",
+    "moreOptions": "その他のオプション"
   },
   "nav": {
     "home": "Home",
@@ -288,6 +290,54 @@
       "wordsRead": "{{current}} / {{total}} 語",
       "timeSpent": "読書時間: {{time}}",
       "averageSpeed": "平均: {{wpm}} WPM"
+    },
+    "annotations": {
+      "title": "注釈",
+      "toolbar": "注釈ツールバー",
+      "addNote": "メモを追加",
+      "addBookmark": "ブックマークを追加",
+      "editNote": "メモを編集",
+      "copy": "テキストをコピー",
+      "lookup": "検索",
+      "explain": "説明",
+      "selectedText": "選択テキスト",
+      "noteLabel": "メモ",
+      "notePlaceholder": "あなたの考えを書いてください...",
+      "noteRequired": "メモの内容は必須です",
+      "noteTooLong": "メモは最大{{max}}文字までです",
+      "makePublic": "公開する",
+      "publicDescription": "公開された注釈は他のユーザーに表示されます",
+      "noContent": "コンテンツなし",
+      "noAnnotations": "まだ注釈がありません",
+      "noSearchResults": "検索に一致する注釈がありません",
+      "search": "注釈を検索...",
+      "sort": "注釈をソート",
+      "count": "{{count}}件の注釈",
+      "colors": {
+        "yellow": "黄色",
+        "green": "緑",
+        "blue": "青",
+        "pink": "ピンク",
+        "purple": "紫",
+        "orange": "オレンジ"
+      },
+      "types": {
+        "highlight": "ハイライト",
+        "note": "メモ",
+        "bookmark": "ブックマーク"
+      },
+      "tabs": {
+        "all": "すべて",
+        "highlights": "ハイライト",
+        "notes": "メモ",
+        "bookmarks": "ブックマーク"
+      },
+      "sortBy": {
+        "position": "位置",
+        "created": "作成日",
+        "updated": "更新日",
+        "type": "種類"
+      }
     }
   },
   "flashcards": {

@@ -111,3 +111,55 @@ export {
   createProgressSegments,
   validateProgressProps,
 } from "./progressTypes";
+
+// Annotation Types and Utilities
+export type {
+  AnnotationType,
+  HighlightColor,
+  AnnotationBase,
+  HighlightAnnotation,
+  NoteAnnotation,
+  BookmarkAnnotation,
+  Annotation,
+  SelectionPosition,
+  TextSelectionInfo,
+  AnnotationAction,
+  CreateAnnotationInput,
+  UpdateAnnotationInput,
+  AnnotationFilters,
+  AnnotationSortField,
+  AnnotationSortDirection,
+  AnnotationSort,
+  AnnotationViewMode,
+} from "./annotationTypes";
+export {
+  HIGHLIGHT_COLOR_VALUES,
+  DEFAULT_HIGHLIGHT_COLOR,
+  colorToHex,
+  hexToColor,
+  isHighlight,
+  isNote,
+  isBookmark,
+  getAnnotationIcon,
+  getAnnotationLabel,
+  sortAnnotations,
+  filterAnnotations,
+  groupAnnotationsByType,
+  getAnnotationsInRange,
+  getAnnotationAtPosition,
+  validateSelection,
+  createHighlightInput,
+  createNoteInput,
+  createBookmarkInput,
+  getExcerptText,
+  formatAnnotationDate,
+  countAnnotationsByType,
+} from "./annotationTypes";
+
+// Annotation UI Components
+export { AnnotationToolbar, useSelectionAnchor } from "./AnnotationToolbar";
+export type { AnnotationToolbarProps } from "./AnnotationToolbar";
+export { NoteEditorDialog } from "./NoteEditorDialog";
+export type { NoteEditorDialogProps } from "./NoteEditorDialog";
+export { AnnotationSidebar } from "./AnnotationSidebar";
+export type { AnnotationSidebarProps } from "./AnnotationSidebar";
