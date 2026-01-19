@@ -884,6 +884,69 @@
     "language": {
       "title": "Language",
       "select": "Select Language"
+    },
+    "aiSettings": {
+      "title": "AI設定",
+      "description": "アプリ全体でAI機能がどのように動作するかを設定します。",
+      "globalToggle": {
+        "title": "AI機能を有効にする",
+        "description": "AI機能をグローバルにオン/オフします。無効にすると、すべてのAI搭載機能が非表示になります。"
+      },
+      "features": {
+        "title": "機能設定",
+        "description": "利用可能なAI機能を制御します。",
+        "preReadingGuides": {
+          "label": "読書前ガイド",
+          "description": "読書前に語彙、コンテキスト、要約を生成"
+        },
+        "explainThis": {
+          "label": "これを説明",
+          "description": "読書中に選択したテキストのAI説明を取得"
+        },
+        "aiChat": {
+          "label": "AIチャット",
+          "description": "読書資料についてAIとチャット"
+        },
+        "comprehensionChecks": {
+          "label": "理解度チェック",
+          "description": "理解度をテストする定期的な質問を受け取る"
+        },
+        "assessments": {
+          "label": "AI評価",
+          "description": "書籍の包括的な評価を生成"
+        },
+        "flashcardGeneration": {
+          "label": "フラッシュカード生成",
+          "description": "読書内容から自動的にフラッシュカードを作成"
+        },
+        "enableAll": "すべて有効",
+        "disableAll": "すべて無効"
+      },
+      "readingLevel": {
+        "title": "読書レベル",
+        "description": "AIはこのレベルに合わせて応答を調整します。",
+        "beginner": "初級",
+        "intermediate": "中級",
+        "advanced": "上級",
+        "expert": "エキスパート"
+      },
+      "comprehensionFrequency": {
+        "title": "理解度チェック頻度",
+        "description": "読書中に理解度の質問をどのくらいの頻度で表示するか。",
+        "never": "表示しない",
+        "rarely": "まれに（30分ごと）",
+        "sometimes": "時々（15分ごと）",
+        "often": "頻繁に（5分ごと）",
+        "always": "常に（各章ごと）"
+      },
+      "usageStats": {
+        "title": "使用統計",
+        "description": "AI使用統計と制限を表示します。",
+        "showStats": "使用統計を表示"
+      },
+      "resetSettings": "デフォルトにリセット",
+      "resetConfirm": "すべてのAI設定をデフォルトにリセットしてもよろしいですか？",
+      "saved": "AI設定を保存しました"
     }
   },
   "languages": {

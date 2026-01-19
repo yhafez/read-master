@@ -884,6 +884,69 @@
     "language": {
       "title": "Language",
       "select": "Select Language"
+    },
+    "aiSettings": {
+      "title": "AI设置",
+      "description": "配置AI功能在整个应用程序中的工作方式。",
+      "globalToggle": {
+        "title": "启用AI功能",
+        "description": "全局开启或关闭AI功能。禁用时，所有AI驱动的功能将被隐藏。"
+      },
+      "features": {
+        "title": "功能设置",
+        "description": "控制可用的AI功能。",
+        "preReadingGuides": {
+          "label": "阅读前指南",
+          "description": "在阅读前生成词汇、上下文和摘要"
+        },
+        "explainThis": {
+          "label": "解释此内容",
+          "description": "在阅读时获取所选文本的AI解释"
+        },
+        "aiChat": {
+          "label": "AI聊天",
+          "description": "与AI聊天讨论您的阅读材料"
+        },
+        "comprehensionChecks": {
+          "label": "理解检查",
+          "description": "接收定期问题以测试理解程度"
+        },
+        "assessments": {
+          "label": "AI评估",
+          "description": "为书籍生成全面的评估"
+        },
+        "flashcardGeneration": {
+          "label": "生成闪卡",
+          "description": "从阅读内容自动创建闪卡"
+        },
+        "enableAll": "全部启用",
+        "disableAll": "全部禁用"
+      },
+      "readingLevel": {
+        "title": "阅读水平",
+        "description": "AI将调整其响应以匹配此级别。",
+        "beginner": "初级",
+        "intermediate": "中级",
+        "advanced": "高级",
+        "expert": "专家"
+      },
+      "comprehensionFrequency": {
+        "title": "理解检查频率",
+        "description": "阅读期间显示理解问题的频率。",
+        "never": "从不",
+        "rarely": "很少（每30分钟）",
+        "sometimes": "有时（每15分钟）",
+        "often": "经常（每5分钟）",
+        "always": "总是（每章）"
+      },
+      "usageStats": {
+        "title": "使用统计",
+        "description": "显示AI使用统计和限制。",
+        "showStats": "显示使用统计"
+      },
+      "resetSettings": "重置为默认值",
+      "resetConfirm": "您确定要将所有AI设置重置为默认值吗？",
+      "saved": "AI设置已保存"
     }
   },
   "languages": {

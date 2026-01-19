@@ -885,6 +885,69 @@
     "language": {
       "title": "Language",
       "select": "Select Language"
+    },
+    "aiSettings": {
+      "title": "AI Settings",
+      "description": "Configure how AI features work throughout the app.",
+      "globalToggle": {
+        "title": "Enable AI Features",
+        "description": "Turn AI features on or off globally. When disabled, all AI-powered features will be hidden."
+      },
+      "features": {
+        "title": "Feature Settings",
+        "description": "Control which AI features are available.",
+        "preReadingGuides": {
+          "label": "Pre-Reading Guides",
+          "description": "Generate vocabulary, context, and summaries before reading"
+        },
+        "explainThis": {
+          "label": "Explain This",
+          "description": "Get AI explanations of selected text while reading"
+        },
+        "aiChat": {
+          "label": "AI Chat",
+          "description": "Chat with AI about your reading material"
+        },
+        "comprehensionChecks": {
+          "label": "Comprehension Check-ins",
+          "description": "Receive periodic questions to test understanding"
+        },
+        "assessments": {
+          "label": "AI Assessments",
+          "description": "Generate comprehensive assessments for books"
+        },
+        "flashcardGeneration": {
+          "label": "Flashcard Generation",
+          "description": "Create flashcards automatically from reading content"
+        },
+        "enableAll": "Enable All",
+        "disableAll": "Disable All"
+      },
+      "readingLevel": {
+        "title": "Reading Level",
+        "description": "AI will adjust its responses to match this level.",
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "expert": "Expert"
+      },
+      "comprehensionFrequency": {
+        "title": "Comprehension Check Frequency",
+        "description": "How often to show comprehension questions during reading.",
+        "never": "Never",
+        "rarely": "Rarely (every 30 minutes)",
+        "sometimes": "Sometimes (every 15 minutes)",
+        "often": "Often (every 5 minutes)",
+        "always": "Always (every chapter)"
+      },
+      "usageStats": {
+        "title": "Usage Statistics",
+        "description": "Show AI usage statistics and limits.",
+        "showStats": "Show usage statistics"
+      },
+      "resetSettings": "Reset to Defaults",
+      "resetConfirm": "Are you sure you want to reset all AI settings to defaults?",
+      "saved": "AI settings saved"
     }
   },
   "languages": {

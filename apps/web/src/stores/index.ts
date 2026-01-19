@@ -46,3 +46,23 @@ export type {
   ReadingMode,
   ReadingPosition,
 } from "./readerStore";
+
+export {
+  AI_SETTINGS_STORAGE_KEY,
+  comprehensionFrequencies,
+  DEFAULT_AI_SETTINGS,
+  DEFAULT_FEATURE_TOGGLES,
+  isFeatureEnabled,
+  readingLevels,
+  sanitizeAISettings,
+  sanitizeFeatureToggles,
+  useAISettingsStore,
+  validateComprehensionFrequency,
+  validateReadingLevel,
+} from "./aiSettingsStore";
+export type {
+  AIFeatureToggles,
+  AISettings,
+  ComprehensionFrequency,
+  ReadingLevel,
+} from "./aiSettingsStore";

@@ -10193,3 +10193,89 @@ Added exports for all offline book storage types and utilities:
 - IndexedDB requires careful handling of exact optional property types in TypeScript
 - jsdom test environment doesn't provide IndexedDB by default - tests adapted accordingly
 - Storage Manager API provides accurate quota info when available
+
+---
+
+## Iteration 43 - AI Settings Page [frontend-029]
+
+### Date: 2026-01-19
+
+### Task Completed
+**frontend-029: AI settings page**
+
+Implemented a comprehensive AI settings page allowing users to configure AI feature preferences.
+
+### Implementation Summary
+
+#### apps/web/src/stores/aiSettingsStore.ts (NEW)
+Created Zustand store for AI settings with localStorage persistence:
+- **Global AI Toggle**: Enable/disable all AI features at once
+- **Feature Toggles**: Individual toggles for 6 AI features:
+  - Pre-reading guides
+  - Explain this (in-reader explanations)
+  - AI chat sidebar
+  - Comprehension check-ins
+  - AI assessments
+  - Flashcard generation
+- **Reading Level**: beginner/intermediate/advanced/expert
+- **Comprehension Frequency**: never/rarely/sometimes/often/always
+- **Usage Stats Toggle**: Show/hide AI usage statistics
+
+Exports:
+- Constants: AI_SETTINGS_STORAGE_KEY, readingLevels, comprehensionFrequencies
+- Defaults: DEFAULT_AI_SETTINGS, DEFAULT_FEATURE_TOGGLES
+- Validators: validateReadingLevel, validateComprehensionFrequency
+- Sanitizers: sanitizeAISettings, sanitizeFeatureToggles
+- Helper: isFeatureEnabled (checks both global and feature toggle)
+- Store: useAISettingsStore with all state and actions
+
+#### apps/web/src/stores/aiSettingsStore.test.ts (NEW)
+37 comprehensive tests covering:
+- Constants and defaults (5 tests)
+- Validators (4 tests)
+- Sanitizers (7 tests)
+- isFeatureEnabled helper (4 tests)
+- Store actions (13 tests)
+- Initial state (4 tests)
+
+#### apps/web/src/pages/settings/SettingsAIPage.tsx (UPDATED)
+Replaced placeholder with full settings page:
+- Global AI toggle card with description
+- Feature toggles card with Enable All/Disable All buttons
+- Reading level dropdown (beginner to expert)
+- Comprehension frequency dropdown
+- Usage stats toggle
+- Reset to defaults button with confirmation
+- Snackbar feedback on save
+- Proper disabled states when AI is off
+
+#### apps/web/src/stores/index.ts (UPDATED)
+Added exports for new AI settings store and types
+
+#### apps/web/src/locales/en.json (UPDATED)
+Added 50+ translations for AI settings UI including:
+- Section titles and descriptions
+- Feature labels and descriptions
+- Reading level options
+- Comprehension frequency options
+- Reset/saved messages
+
+### Acceptance Criteria Verification
+- ✅ Settings configurable - All settings can be changed via UI
+- ✅ Global toggle works - Disables all features when off
+- ✅ Stats display - Usage stats toggle implemented
+- ✅ Persists - Uses localStorage via Zustand persist
+- ✅ Tests pass - 37 tests for store, page follows patterns
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 37 new tests pass
+
+### Technical Notes
+- Store follows existing patterns from uiStore.ts and themeStore.ts
+- Proper type safety with validation functions
+- Persistence with localStorage via zustand/middleware/persist
+- Accessible UI with proper aria-labels
+- FeatureToggle extracted as reusable component
+- Responsive design using MUI Card and Stack components

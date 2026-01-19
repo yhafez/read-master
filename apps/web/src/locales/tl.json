@@ -884,6 +884,69 @@
     "language": {
       "title": "Language",
       "select": "Select Language"
+    },
+    "aiSettings": {
+      "title": "Mga Setting ng AI",
+      "description": "I-configure kung paano gumagana ang mga feature ng AI sa buong app.",
+      "globalToggle": {
+        "title": "I-enable ang mga AI Feature",
+        "description": "I-on o i-off ang mga AI feature nang pangkalahatan. Kapag naka-disable, lahat ng AI-powered feature ay maitatago."
+      },
+      "features": {
+        "title": "Mga Setting ng Feature",
+        "description": "Kontrolin kung anong mga AI feature ang available.",
+        "preReadingGuides": {
+          "label": "Mga Gabay Bago Magbasa",
+          "description": "Gumawa ng bokabularyo, konteksto, at buod bago magbasa"
+        },
+        "explainThis": {
+          "label": "Ipaliwanag Ito",
+          "description": "Kumuha ng AI explanation ng napiling teksto habang nagbabasa"
+        },
+        "aiChat": {
+          "label": "AI Chat",
+          "description": "Makipag-chat sa AI tungkol sa iyong babasahin"
+        },
+        "comprehensionChecks": {
+          "label": "Pagsusuri ng Pag-unawa",
+          "description": "Tumanggap ng pana-panahong mga tanong para subukan ang pag-unawa"
+        },
+        "assessments": {
+          "label": "AI Assessments",
+          "description": "Gumawa ng komprehensibong assessment para sa mga libro"
+        },
+        "flashcardGeneration": {
+          "label": "Paggawa ng Flashcard",
+          "description": "Awtomatikong gumawa ng flashcards mula sa binabasa"
+        },
+        "enableAll": "I-enable Lahat",
+        "disableAll": "I-disable Lahat"
+      },
+      "readingLevel": {
+        "title": "Antas ng Pagbabasa",
+        "description": "Iaayos ng AI ang mga sagot nito para tumugma sa antas na ito.",
+        "beginner": "Baguhan",
+        "intermediate": "Katamtaman",
+        "advanced": "Abante",
+        "expert": "Eksperto"
+      },
+      "comprehensionFrequency": {
+        "title": "Dalas ng Pagsusuri ng Pag-unawa",
+        "description": "Gaano kadalas magpakita ng mga tanong tungkol sa pag-unawa habang nagbabasa.",
+        "never": "Hindi Kailanman",
+        "rarely": "Bihira (bawat 30 minuto)",
+        "sometimes": "Minsan (bawat 15 minuto)",
+        "often": "Madalas (bawat 5 minuto)",
+        "always": "Palagi (bawat kabanata)"
+      },
+      "usageStats": {
+        "title": "Istatistika ng Paggamit",
+        "description": "Ipakita ang istatistika ng paggamit ng AI at mga limitasyon.",
+        "showStats": "Ipakita ang istatistika ng paggamit"
+      },
+      "resetSettings": "I-reset sa Default",
+      "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng AI setting sa default?",
+      "saved": "Na-save ang mga AI setting"
     }
   },
   "languages": {

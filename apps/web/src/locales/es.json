@@ -884,6 +884,69 @@
     "language": {
       "title": "Language",
       "select": "Select Language"
+    },
+    "aiSettings": {
+      "title": "Configuración de IA",
+      "description": "Configura cómo funcionan las características de IA en la aplicación.",
+      "globalToggle": {
+        "title": "Habilitar funciones de IA",
+        "description": "Activa o desactiva las funciones de IA globalmente. Cuando está deshabilitado, todas las funciones de IA estarán ocultas."
+      },
+      "features": {
+        "title": "Configuración de funciones",
+        "description": "Controla qué funciones de IA están disponibles.",
+        "preReadingGuides": {
+          "label": "Guías de pre-lectura",
+          "description": "Generar vocabulario, contexto y resúmenes antes de leer"
+        },
+        "explainThis": {
+          "label": "Explicar esto",
+          "description": "Obtener explicaciones de IA del texto seleccionado mientras lees"
+        },
+        "aiChat": {
+          "label": "Chat de IA",
+          "description": "Chatear con IA sobre tu material de lectura"
+        },
+        "comprehensionChecks": {
+          "label": "Verificaciones de comprensión",
+          "description": "Recibir preguntas periódicas para probar la comprensión"
+        },
+        "assessments": {
+          "label": "Evaluaciones de IA",
+          "description": "Generar evaluaciones completas para libros"
+        },
+        "flashcardGeneration": {
+          "label": "Generación de tarjetas",
+          "description": "Crear tarjetas automáticamente del contenido de lectura"
+        },
+        "enableAll": "Habilitar todo",
+        "disableAll": "Deshabilitar todo"
+      },
+      "readingLevel": {
+        "title": "Nivel de lectura",
+        "description": "La IA ajustará sus respuestas para coincidir con este nivel.",
+        "beginner": "Principiante",
+        "intermediate": "Intermedio",
+        "advanced": "Avanzado",
+        "expert": "Experto"
+      },
+      "comprehensionFrequency": {
+        "title": "Frecuencia de verificación de comprensión",
+        "description": "Con qué frecuencia mostrar preguntas de comprensión durante la lectura.",
+        "never": "Nunca",
+        "rarely": "Raramente (cada 30 minutos)",
+        "sometimes": "A veces (cada 15 minutos)",
+        "often": "A menudo (cada 5 minutos)",
+        "always": "Siempre (cada capítulo)"
+      },
+      "usageStats": {
+        "title": "Estadísticas de uso",
+        "description": "Mostrar estadísticas de uso de IA y límites.",
+        "showStats": "Mostrar estadísticas de uso"
+      },
+      "resetSettings": "Restablecer a valores predeterminados",
+      "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones de IA a los valores predeterminados?",
+      "saved": "Configuración de IA guardada"
     }
   },
   "languages": {
