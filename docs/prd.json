@@ -3864,7 +3864,7 @@
         "Quota managed",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-004",
