@@ -359,6 +359,9 @@
     "zoomLevel": "Zoom level",
     "increaseFontSize": "Increase font size",
     "decreaseFontSize": "Decrease font size",
+    "toolbar": {
+      "open": "Open toolbar"
+    },
     "context": {
       "historical": "Historical Context",
       "author": "About the Author",

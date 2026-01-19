@@ -496,3 +496,7 @@ export {
 // Notes Panel Component
 export { NotesPanel } from "./NotesPanel";
 export type { NotesPanelProps } from "./NotesPanel";
+
+// Mobile Reader Toolbar
+export { MobileReaderToolbar } from "./MobileReaderToolbar";
+export type { MobileReaderToolbarProps } from "./MobileReaderToolbar";

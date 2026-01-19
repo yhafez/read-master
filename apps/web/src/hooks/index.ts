@@ -40,3 +40,5 @@ export {
   useSuccessAnnouncements,
   useContentChangeAnnouncements,
 } from "./useScreenReaderAnnouncement";
+
+export { useGestureDetection } from "./useGestureDetection";
