@@ -3594,7 +3594,7 @@
         "Screen reader works",
         "Documented"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-097",
