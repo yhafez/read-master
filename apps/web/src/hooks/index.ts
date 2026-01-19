@@ -24,3 +24,10 @@ export {
   type FocusRestoreReturn,
   type RovingTabindexOptions,
 } from "./useFocusManagement";
+
+export {
+  useLeaderboard,
+  type LeaderboardParams,
+  type FullLeaderboardResponse,
+  type LeaderboardEntry,
+} from "./useLeaderboard";
