@@ -206,3 +206,38 @@ export {
   getTotalOfflineStorageUsed,
   clearAllOfflineBooks,
 } from "./offlineBookStorage";
+
+// Offline reading progress sync types and constants
+export type {
+  OfflineReadingProgress,
+  ProgressSyncQueueItem,
+  ProgressSyncStatus,
+  ProgressSyncState,
+} from "./offlineReadingProgressSync";
+
+export {
+  PROGRESS_STORAGE_KEY,
+  PROGRESS_SYNC_KEY,
+  SYNC_DEBOUNCE_MS,
+  SYNC_BATCH_SIZE,
+  PROGRESS_UPDATE_THRESHOLD,
+} from "./offlineReadingProgressSync";
+
+// Offline reading progress sync utilities
+export {
+  getAllOfflineProgress,
+  saveOfflineProgress,
+  getOfflineProgressForBook,
+  updateOfflineProgress,
+  markProgressAsSynced,
+  getProgressNeedingSync,
+  clearSyncedProgress,
+  queueProgressUpdate,
+  getProgressSyncQueue,
+  removeProgressFromQueue,
+  getProgressSyncStatus,
+  getOverallSyncState,
+  syncAllProgress,
+  resolveProgressConflict,
+  clearAllProgressData,
+} from "./offlineReadingProgressSync";

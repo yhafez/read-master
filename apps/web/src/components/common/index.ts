@@ -23,3 +23,10 @@ export {
   AssertiveLiveRegion,
   type LiveRegionProps,
 } from "./LiveRegion";
+
+export {
+  SyncStatusIndicator,
+  CompactSyncStatus,
+  SyncStatusWithLabel,
+  type SyncStatusIndicatorProps,
+} from "./SyncStatusIndicator";

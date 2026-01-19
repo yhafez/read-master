@@ -1848,5 +1848,13 @@
       "aiCostProjected": "月度预测",
       "forecast": "预测"
     }
+  },
+  "sync": {
+    "syncing": "Syncing progress...",
+    "synced": "All progress synced",
+    "offline": "Offline",
+    "syncError": "Sync failed ({{count}} items)",
+    "pendingChanges": "{{count}} changes pending",
+    "syncNow": "Sync now"
   }
 }

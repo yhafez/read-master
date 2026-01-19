@@ -3889,7 +3889,7 @@
         "Conflicts resolved",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-005",

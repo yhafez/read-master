@@ -1503,6 +1503,14 @@
     "error": "Error: {{message}}",
     "success": "Success: {{message}}"
   },
+  "sync": {
+    "syncing": "Syncing progress...",
+    "synced": "All progress synced",
+    "offline": "Offline",
+    "syncError": "Sync failed ({{count}} items)",
+    "pendingChanges": "{{count}} changes pending",
+    "syncNow": "Sync now"
+  },
   "ai": {
     "cached": "Cached",
     "expandAll": "Expand all",
