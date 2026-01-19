@@ -88,6 +88,8 @@ export const CacheKeyPrefix = {
   FORUM: "forum",
   /** Session data */
   SESSION: "session",
+  /** Analytics data */
+  ANALYTICS: "analytics",
 } as const;
 
 export type CacheKeyPrefixType =

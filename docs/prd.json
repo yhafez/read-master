@@ -4844,7 +4844,7 @@
         "Caching works correctly",
         "Tests verify all calculations"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-005",

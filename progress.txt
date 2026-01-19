@@ -11521,3 +11521,115 @@ Added 2 test cases for DailyAnalytics model:
 - Performance metrics include occasional error spikes for realism
 
 ---
+
+## Iteration 57 - admin-004: Create Analytics Service with Metrics Calculation
+**Task:** Create comprehensive analytics service for admin dashboard metrics
+**Status:** ✅ COMPLETE
+
+### Implementation Summary
+
+Created a full analytics service (`apps/api/src/services/analytics.ts`) that provides metrics calculation functions for the admin dashboard. The service implements caching via Redis for performance and includes comprehensive type definitions.
+
+### Files Created/Modified
+
+#### apps/api/src/services/analytics.ts (NEW - ~1200 lines)
+**User Statistics (`getUserStats`)**
+- Total registered users (excluding soft-deleted)
+- Active users (had reading activity in period)
+- New users in period
+- Users by tier (FREE, PRO, SCHOLAR)
+- Growth metrics (percent change, net new)
+
+**Revenue Statistics (`getRevenueStats`)**
+- Monthly Recurring Revenue (MRR) in cents
+- Annual Recurring Revenue (ARR) in cents
+- Revenue by tier
+- Total period revenue from DailyAnalytics
+- Growth percentage
+- Average Revenue Per User (ARPU)
+
+**Engagement Statistics (`getEngagementStats`)**
+- Daily Active Users (DAU)
+- Weekly Active Users (WAU)
+- Monthly Active Users (MAU)
+- Stickiness ratio (DAU/MAU)
+- Average session duration
+- Total reading hours
+- Books completed
+- Assessments taken
+
+**Feature Usage Statistics (`getFeatureUsageStats`)**
+- AI features: total requests, unique users, by type (pre-reading guides, explanations, assessments, flashcards)
+- SRS: cards created, reviews completed, active learners, retention rate
+- TTS: requests, downloads, active users
+- Social: forum users, posts, active groups, curriculums created
+
+**AI Cost Statistics (`getAICostStats`)**
+- Total cost in cents
+- Cost per user
+- Total tokens used
+- Cost by operation type
+- Daily average cost
+- Projected monthly cost
+
+**Content Statistics (`getContentStats`)**
+- Total books
+- Books added in period
+- Popular genres (with percentages)
+- Popular books (by read count)
+- Average books per user
+- Books by source (upload, URL, paste, Google Books, Open Library)
+
+**Additional Functions**
+- `getOverviewStats`: Combined key metrics for dashboard overview
+- `getDailyAnalytics`: Time-series data for charts
+- `invalidateAnalyticsCache`: Cache management
+
+**Architecture**
+- All functions use `getOrSet` cache pattern with 5-minute TTL
+- Configurable period via `days` option (default: 30)
+- `skipCache` option for fresh data fetches
+- Exported as both individual functions and `analytics` service object
+
+#### apps/api/src/services/redis.ts (MODIFIED)
+- Added `ANALYTICS: "analytics"` to CacheKeyPrefix enum
+
+#### apps/api/src/services/index.ts (MODIFIED)
+- Added exports for all analytics functions and types
+
+#### apps/api/src/services/analytics.test.ts (NEW - ~700 lines)
+Comprehensive test suite with 29 tests covering:
+- getUserStats: all fields, growth calculation, cache skipping, custom days, empty tiers
+- getRevenueStats: MRR/ARR calculation, zero revenue, ARPU
+- getEngagementStats: DAU/WAU/MAU, stickiness, zero MAU handling
+- getFeatureUsageStats: AI stats, SRS stats, social stats, null retention
+- getAICostStats: cost calculation, per-user costs, null values
+- getContentStats: all fields, empty results
+- getOverviewStats: combines all categories
+- getDailyAnalytics: date range queries, empty results
+- invalidateAnalyticsCache: pattern invalidation
+- Service object exports and constants
+- Type export verification for all 7 stat types
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, warnings only in pre-existing files)
+- pnpm vitest run: ✅ 10409 tests pass (29 new tests)
+  - Note: 115 pre-existing failures related to localStorage mocking in browser tests (not related to this task)
+
+### Technical Notes
+- Revenue stored in cents for precision (no floating-point issues)
+- Tier prices: PRO = $9.99 (999 cents), SCHOLAR = $19.99 (1999 cents)
+- Caching uses ANALYTICS_CACHE_PREFIX = "analytics"
+- Cache TTL = 5 minutes (CacheTTL.SHORT = 300 seconds)
+- Percentages calculated with one decimal precision
+- All functions handle edge cases (zero users, null values, empty results)
+- DailyAnalytics integration for time-series charts
+
+### Dependencies Met
+This analytics service satisfies the following requirements:
+- admin-005: Admin analytics API endpoints (can now use these functions)
+- admin-006: Daily analytics cron job (can use these for calculations)
+- frontend-106: Admin dashboard page (backend data source ready)
+
+---

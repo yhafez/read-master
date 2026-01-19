@@ -347,3 +347,32 @@ export {
   type AICompletionResult,
   type AIStreamResult,
 } from "./ai.js";
+
+// Analytics service
+export {
+  // Stats functions
+  getUserStats,
+  getRevenueStats,
+  getEngagementStats,
+  getFeatureUsageStats,
+  getAICostStats,
+  getContentStats,
+  getOverviewStats,
+  getDailyAnalytics,
+
+  // Cache management
+  invalidateAnalyticsCache,
+
+  // Service object
+  analytics,
+
+  // Types
+  type UserStats,
+  type RevenueStats,
+  type EngagementStats,
+  type FeatureUsageStats,
+  type AICostStats,
+  type ContentStats,
+  type OverviewStats,
+  type StatsOptions,
+} from "./analytics.js";
