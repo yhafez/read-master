@@ -806,6 +806,66 @@
         "loadServer": "Error al cargar la tarjeta. Intenta de nuevo.",
         "loadUnknown": "No se puede cargar la tarjeta"
       }
+    },
+    "browse": {
+      "title": "Explorar Tarjetas",
+      "searchPlaceholder": "Buscar tarjetas...",
+      "filters": "Filtros",
+      "clearFilters": "Limpiar Filtros",
+      "showing": "Mostrando {{from}}-{{to}} de {{total}}",
+      "noResults": "No hay tarjetas que coincidan con los filtros",
+      "noCards": "Aún no hay tarjetas",
+      "totalCards": "Total de Tarjetas",
+      "totalDue": "Pendientes",
+      "totalOverdue": "Atrasadas",
+      "bulkActions": "Acciones Masivas",
+      "interval": "Intervalo",
+      "study": "Estudiar",
+      "book": "Libro",
+      "allBooks": "Todos los Libros",
+      "tags": "Etiquetas",
+      "status": {
+        "label": "Estado",
+        "all": "Todos los Estados",
+        "new": "Nueva",
+        "learning": "Aprendiendo",
+        "review": "Revisión",
+        "suspended": "Suspendida"
+      },
+      "due": {
+        "label": "Vencimiento",
+        "all": "Todos",
+        "due": "Pendiente",
+        "overdue": "Atrasada",
+        "notDue": "No Pendiente"
+      },
+      "type": {
+        "label": "Tipo",
+        "all": "Todos los Tipos",
+        "vocabulary": "Vocabulario",
+        "concept": "Concepto",
+        "comprehension": "Comprensión",
+        "quote": "Cita",
+        "custom": "Personalizada"
+      },
+      "sort": {
+        "label": "Ordenar",
+        "createdAt": "Creación",
+        "updatedAt": "Modificación",
+        "dueDate": "Fecha de Vencimiento",
+        "easeFactor": "Facilidad",
+        "interval": "Intervalo",
+        "front": "Texto Frontal",
+        "type": "Tipo"
+      },
+      "bulk": {
+        "suspend": "Suspender",
+        "unsuspend": "Reactivar",
+        "addTag": "Añadir Etiqueta",
+        "removeTag": "Quitar Etiqueta",
+        "changeType": "Cambiar Tipo",
+        "delete": "Eliminar"
+      }
     }
   },
   "assessments": {

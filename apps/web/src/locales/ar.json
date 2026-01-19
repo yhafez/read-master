@@ -806,6 +806,66 @@
         "loadServer": "فشل في تحميل البطاقة. حاول مرة أخرى.",
         "loadUnknown": "لا يمكن تحميل البطاقة"
       }
+    },
+    "browse": {
+      "title": "تصفح البطاقات",
+      "searchPlaceholder": "البحث في البطاقات...",
+      "filters": "التصفية",
+      "clearFilters": "مسح التصفية",
+      "showing": "عرض {{from}}-{{to}} من {{total}}",
+      "noResults": "لا توجد بطاقات تطابق التصفية",
+      "noCards": "لا توجد بطاقات بعد",
+      "totalCards": "إجمالي البطاقات",
+      "totalDue": "المستحقة الآن",
+      "totalOverdue": "متأخرة",
+      "bulkActions": "إجراءات مجمعة",
+      "interval": "الفترة",
+      "study": "دراسة",
+      "book": "الكتاب",
+      "allBooks": "جميع الكتب",
+      "tags": "العلامات",
+      "status": {
+        "label": "الحالة",
+        "all": "جميع الحالات",
+        "new": "جديدة",
+        "learning": "قيد التعلم",
+        "review": "للمراجعة",
+        "suspended": "معلقة"
+      },
+      "due": {
+        "label": "حالة الاستحقاق",
+        "all": "الكل",
+        "due": "مستحقة",
+        "overdue": "متأخرة",
+        "notDue": "غير مستحقة"
+      },
+      "type": {
+        "label": "النوع",
+        "all": "جميع الأنواع",
+        "vocabulary": "مفردات",
+        "concept": "مفهوم",
+        "comprehension": "استيعاب",
+        "quote": "اقتباس",
+        "custom": "مخصص"
+      },
+      "sort": {
+        "label": "الترتيب",
+        "createdAt": "تاريخ الإنشاء",
+        "updatedAt": "تاريخ التعديل",
+        "dueDate": "تاريخ الاستحقاق",
+        "easeFactor": "السهولة",
+        "interval": "الفترة",
+        "front": "النص الأمامي",
+        "type": "النوع"
+      },
+      "bulk": {
+        "suspend": "تعليق",
+        "unsuspend": "إلغاء التعليق",
+        "addTag": "إضافة علامة",
+        "removeTag": "إزالة علامة",
+        "changeType": "تغيير النوع",
+        "delete": "حذف"
+      }
     }
   },
   "assessments": {

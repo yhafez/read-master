@@ -806,6 +806,66 @@
         "loadServer": "Failed to load flashcard. Please try again.",
         "loadUnknown": "Unable to load flashcard"
       }
+    },
+    "browse": {
+      "title": "Browse Flashcards",
+      "searchPlaceholder": "Search flashcards...",
+      "filters": "Filters",
+      "clearFilters": "Clear Filters",
+      "showing": "Showing {{from}}-{{to}} of {{total}}",
+      "noResults": "No flashcards match your filters",
+      "noCards": "No flashcards yet",
+      "totalCards": "Total Cards",
+      "totalDue": "Due Now",
+      "totalOverdue": "Overdue",
+      "bulkActions": "Bulk Actions",
+      "interval": "Interval",
+      "study": "Study",
+      "book": "Book",
+      "allBooks": "All Books",
+      "tags": "Tags",
+      "status": {
+        "label": "Status",
+        "all": "All Statuses",
+        "new": "New",
+        "learning": "Learning",
+        "review": "Review",
+        "suspended": "Suspended"
+      },
+      "due": {
+        "label": "Due State",
+        "all": "All",
+        "due": "Due",
+        "overdue": "Overdue",
+        "notDue": "Not Due"
+      },
+      "type": {
+        "label": "Type",
+        "all": "All Types",
+        "vocabulary": "Vocabulary",
+        "concept": "Concept",
+        "comprehension": "Comprehension",
+        "quote": "Quote",
+        "custom": "Custom"
+      },
+      "sort": {
+        "label": "Sort",
+        "createdAt": "Created",
+        "updatedAt": "Modified",
+        "dueDate": "Due Date",
+        "easeFactor": "Ease",
+        "interval": "Interval",
+        "front": "Front Text",
+        "type": "Type"
+      },
+      "bulk": {
+        "suspend": "Suspend",
+        "unsuspend": "Unsuspend",
+        "addTag": "Add Tag",
+        "removeTag": "Remove Tag",
+        "changeType": "Change Type",
+        "delete": "Delete"
+      }
     }
   },
   "assessments": {

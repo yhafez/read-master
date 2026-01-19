@@ -806,6 +806,66 @@
         "loadServer": "加载卡片失败，请重试。",
         "loadUnknown": "无法加载卡片"
       }
+    },
+    "browse": {
+      "title": "浏览卡片",
+      "searchPlaceholder": "搜索卡片...",
+      "filters": "筛选",
+      "clearFilters": "清除筛选",
+      "showing": "显示 {{from}}-{{to}} / {{total}}",
+      "noResults": "没有符合筛选条件的卡片",
+      "noCards": "暂无卡片",
+      "totalCards": "卡片总数",
+      "totalDue": "待复习",
+      "totalOverdue": "已逾期",
+      "bulkActions": "批量操作",
+      "interval": "间隔",
+      "study": "学习",
+      "book": "书籍",
+      "allBooks": "所有书籍",
+      "tags": "标签",
+      "status": {
+        "label": "状态",
+        "all": "所有状态",
+        "new": "新卡片",
+        "learning": "学习中",
+        "review": "复习",
+        "suspended": "已暂停"
+      },
+      "due": {
+        "label": "到期状态",
+        "all": "全部",
+        "due": "待复习",
+        "overdue": "已逾期",
+        "notDue": "未到期"
+      },
+      "type": {
+        "label": "类型",
+        "all": "所有类型",
+        "vocabulary": "词汇",
+        "concept": "概念",
+        "comprehension": "理解",
+        "quote": "引用",
+        "custom": "自定义"
+      },
+      "sort": {
+        "label": "排序",
+        "createdAt": "创建日期",
+        "updatedAt": "修改日期",
+        "dueDate": "到期日期",
+        "easeFactor": "难度",
+        "interval": "间隔",
+        "front": "正面文字",
+        "type": "类型"
+      },
+      "bulk": {
+        "suspend": "暂停",
+        "unsuspend": "恢复",
+        "addTag": "添加标签",
+        "removeTag": "移除标签",
+        "changeType": "更改类型",
+        "delete": "删除"
+      }
     }
   },
   "assessments": {

@@ -11247,3 +11247,88 @@ Added reader.notes translations to all 6 locales (en, ar, es, ja, zh, tl):
 - Uses MUI ListItemButton for selected state support
 
 ---
+
+## Iteration 53 - Flashcard Browse/Search Page [frontend-036]
+
+**Date:** 2026-01-19
+**Task:** Flashcard browse/search page with filtering, sorting, pagination, and bulk actions
+**Status:** ✅ COMPLETE
+
+### Summary
+Implemented a comprehensive flashcard browse and search page that allows users to view, search, filter, sort, and perform bulk actions on their flashcards. The page includes pagination, advanced filtering by status/type/due state/tags/book, and bulk action menu for card management.
+
+### Features Implemented
+- Full browse page with card list display
+- Search by card content (front, back, tags, book title)
+- Status filters: All, New, Learning, Review, Suspended
+- Type filters: Vocabulary, Concept, Quote, Comprehension
+- Due state filters: All, Due now, Overdue, Not due
+- Tag filtering with multi-select support
+- Book filtering
+- Sort options: Created date, Due date, Ease factor, Interval, Front text, Type
+- Pagination with configurable page size (10, 25, 50, 100)
+- Bulk actions: Suspend, Unsuspend, Add tag, Remove tag, Change type, Delete
+- Card selection with select all toggle
+- Card statistics summary (total, due today, new, learning, review)
+- Full internationalization support (6 languages)
+
+### Files Created/Modified
+
+#### apps/web/src/components/srs/flashcardBrowseTypes.ts (CREATED)
+- Core utility types and functions for flashcard browsing (~950 lines)
+- Types: BrowseCard, CardBrowseFilters, CardStatusFilter, CardDueFilter, CardPagination, BrowseCardSummary, BulkActionType, CardSortField, CardSortDirection, BrowseError
+- Constants: DEFAULT_BROWSE_FILTERS, DEFAULT_PAGINATION, PAGE_SIZE_OPTIONS, CARD_SORT_OPTIONS, CARD_STATUS_FILTERS, CARD_DUE_FILTERS, CARD_TYPE_FILTERS, BULK_ACTIONS
+- Error handling: createBrowseError, parseBrowseApiError
+- Due date utilities: isCardDue, isCardOverdue, getCardDueState
+- Filter functions: statusToFilter, filterBySearch, filterByStatus, filterByType, filterByDueState, filterByBook, filterByTags
+- Sort function: sortCards
+- Pagination: paginateCards
+- Summary: calculateSummary
+- Collection helpers: getAllTags, getAllBooks
+- Formatting: formatDate, formatDueDate, formatInterval
+- Color helpers: getStatusColor, getTypeColor
+- Text helpers: truncateText, getTypeName, getStatusName
+- Filter helpers: isDefaultFilters, countActiveFilters
+- Integration: applyFiltersAndSort
+
+#### apps/web/src/pages/flashcards/FlashcardsBrowsePage.tsx (CREATED)
+- Main flashcard browse page component (~760 lines)
+- Sub-component: CardListItem for individual card display
+- Features: Header with bulk action menu, search bar, filter controls, sort controls
+- Collapsible advanced filters section
+- Card list with checkbox selection
+- Pagination controls with page size selector
+- Statistics summary with filter counts
+- Mock data for development (MOCK_CARDS)
+
+#### apps/web/src/components/srs/flashcardBrowseTypes.test.ts (CREATED)
+- Comprehensive tests for all utility functions (111 tests)
+- Test categories: Error Handling, Due Date Utilities, Status Conversion, Filtering Functions, Sorting Functions, Pagination, Summary Functions, Collection Helpers, Formatting Functions, Color Functions, Text Functions, Filter Functions, Integration Tests
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added flashcards.browse translations to all 6 locales (en, ar, es, ja, zh, tl):
+- title, search, filters, sort, pageSize, selectAll, summary
+- status labels (all, new, learning, review, suspended)
+- due state labels (all, dueNow, overdue, notDue)
+- type labels (vocabulary, concept, quote, comprehension)
+- sort fields (createdAt, dueDate, easeFactor, interval, front, type)
+- bulk actions (suspend, unsuspend, addTag, removeTag, changeType, delete)
+- card labels (front, back, due, created, interval, ease, tags, book)
+- pagination labels (showing, of)
+- empty states (no results, no cards)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, 188 warnings - pre-existing non-null assertions)
+- pnpm vitest run: ✅ 3604 tests pass (111 new tests)
+
+### Technical Notes
+- Filter and sort are applied in-memory on pre-fetched cards
+- Due state calculated relative to current time (overdue if > 24 hours past due)
+- Bulk actions require card selection (menu only shown when cards selected)
+- Tags and books extracted from card collection for filter dropdowns
+- Page size persisted with pagination state
+- All filter/sort state managed with React useState hooks
+- Mock data includes 12 cards covering all types and statuses
+
+---

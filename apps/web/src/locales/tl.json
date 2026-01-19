@@ -806,6 +806,66 @@
         "loadServer": "Hindi na-load ang kard. Subukan ulit.",
         "loadUnknown": "Hindi ma-load ang kard"
       }
+    },
+    "browse": {
+      "title": "Mag-browse ng mga Kard",
+      "searchPlaceholder": "Maghanap ng mga kard...",
+      "filters": "Mga Filter",
+      "clearFilters": "I-clear ang mga Filter",
+      "showing": "Ipinapakita ang {{from}}-{{to}} sa {{total}}",
+      "noResults": "Walang mga kard na tumugma sa mga filter",
+      "noCards": "Wala pang mga kard",
+      "totalCards": "Kabuuang Kard",
+      "totalDue": "Dapat Repasuhin",
+      "totalOverdue": "Overdue",
+      "bulkActions": "Mga Bulk Action",
+      "interval": "Pagitan",
+      "study": "Mag-aral",
+      "book": "Libro",
+      "allBooks": "Lahat ng Libro",
+      "tags": "Mga Tag",
+      "status": {
+        "label": "Status",
+        "all": "Lahat ng Status",
+        "new": "Bago",
+        "learning": "Natututo",
+        "review": "Repaso",
+        "suspended": "Naka-suspend"
+      },
+      "due": {
+        "label": "Due State",
+        "all": "Lahat",
+        "due": "Dapat Gawin",
+        "overdue": "Overdue",
+        "notDue": "Hindi Pa Due"
+      },
+      "type": {
+        "label": "Uri",
+        "all": "Lahat ng Uri",
+        "vocabulary": "Bokabularyo",
+        "concept": "Konsepto",
+        "comprehension": "Pag-unawa",
+        "quote": "Sipi",
+        "custom": "Pasadya"
+      },
+      "sort": {
+        "label": "Ayusin",
+        "createdAt": "Petsa ng Paglikha",
+        "updatedAt": "Petsa ng Pagbabago",
+        "dueDate": "Petsa ng Due",
+        "easeFactor": "Dali",
+        "interval": "Pagitan",
+        "front": "Harap na Teksto",
+        "type": "Uri"
+      },
+      "bulk": {
+        "suspend": "I-suspend",
+        "unsuspend": "I-unsuspend",
+        "addTag": "Magdagdag ng Tag",
+        "removeTag": "Alisin ang Tag",
+        "changeType": "Palitan ang Uri",
+        "delete": "Tanggalin"
+      }
     }
   },
   "assessments": {

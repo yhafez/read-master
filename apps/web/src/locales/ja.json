@@ -806,6 +806,66 @@
         "loadServer": "カードの読み込みに失敗しました。再度お試しください。",
         "loadUnknown": "カードを読み込めません"
       }
+    },
+    "browse": {
+      "title": "カードを閲覧",
+      "searchPlaceholder": "カードを検索...",
+      "filters": "フィルター",
+      "clearFilters": "フィルターをクリア",
+      "showing": "{{from}}-{{to}} / {{total}}件を表示",
+      "noResults": "フィルターに一致するカードがありません",
+      "noCards": "カードがまだありません",
+      "totalCards": "カード総数",
+      "totalDue": "復習予定",
+      "totalOverdue": "期限超過",
+      "bulkActions": "一括操作",
+      "interval": "間隔",
+      "study": "学習",
+      "book": "本",
+      "allBooks": "すべての本",
+      "tags": "タグ",
+      "status": {
+        "label": "状態",
+        "all": "すべての状態",
+        "new": "新規",
+        "learning": "学習中",
+        "review": "復習",
+        "suspended": "一時停止"
+      },
+      "due": {
+        "label": "復習状態",
+        "all": "すべて",
+        "due": "復習予定",
+        "overdue": "期限超過",
+        "notDue": "復習不要"
+      },
+      "type": {
+        "label": "タイプ",
+        "all": "すべてのタイプ",
+        "vocabulary": "語彙",
+        "concept": "概念",
+        "comprehension": "理解",
+        "quote": "引用",
+        "custom": "カスタム"
+      },
+      "sort": {
+        "label": "並び替え",
+        "createdAt": "作成日",
+        "updatedAt": "更新日",
+        "dueDate": "復習予定日",
+        "easeFactor": "難易度",
+        "interval": "間隔",
+        "front": "表面テキスト",
+        "type": "タイプ"
+      },
+      "bulk": {
+        "suspend": "一時停止",
+        "unsuspend": "再開",
+        "addTag": "タグを追加",
+        "removeTag": "タグを削除",
+        "changeType": "タイプを変更",
+        "delete": "削除"
+      }
     }
   },
   "assessments": {
