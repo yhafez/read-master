@@ -61,6 +61,37 @@
       "pink": "وردي"
     }
   },
+  "shelves": {
+    "title": "الأرفف",
+    "create": "رف جديد",
+    "createShelf": "إنشاء رف",
+    "editShelf": "تعديل الرف",
+    "name": "الاسم",
+    "nameHelp": "1-50 حرفًا",
+    "nameRequired": "اسم الرف مطلوب",
+    "description": "الوصف",
+    "descriptionHelp": "اختياري، حتى 200 حرف",
+    "icon": "الأيقونة",
+    "bookCount": "{{count}} كتب",
+    "bookCount_one": "كتاب واحد",
+    "bookCount_other": "{{count}} كتب",
+    "empty": "لا توجد أرفف بعد",
+    "emptyDescription": "أنشئ أرففًا لتصنيف كتبك",
+    "createFirst": "أنشئ رفك الأول",
+    "viewBooks": "عرض الكتب",
+    "deleteConfirm": "حذف \"{{name}}\"؟ ستتم إزالة الكتب من هذا الرف ولكن لن يتم حذفها.",
+    "helpText": "يمكن أن تكون الكتب على أرفف متعددة. استخدم الأرفف للتصنيف البسيط مثل 'المفضلة' أو 'للقراءة'.",
+    "icons": {
+      "shelf": "رف",
+      "book": "كتاب",
+      "star": "نجمة",
+      "heart": "قلب",
+      "bookmark": "إشارة مرجعية",
+      "flag": "علم",
+      "tag": "وسم",
+      "folder": "مجلد"
+    }
+  },
   "nav": {
     "home": "الرئيسية",
     "library": "المكتبة",

@@ -13,6 +13,7 @@ export const ROUTES = {
   // Main app routes (protected)
   LIBRARY: "/library",
   COLLECTIONS: "/library/collections",
+  SHELVES: "/library/shelves",
   READER: "/reader/:bookId",
   DASHBOARD: "/dashboard",
   FLASHCARDS: "/flashcards",
@@ -84,6 +85,7 @@ export const routeHelpers = {
 export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.LIBRARY,
   ROUTES.COLLECTIONS,
+  ROUTES.SHELVES,
   ROUTES.READER,
   ROUTES.DASHBOARD,
   ROUTES.FLASHCARDS,

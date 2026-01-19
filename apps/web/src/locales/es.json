@@ -61,6 +61,37 @@
       "pink": "Rosa"
     }
   },
+  "shelves": {
+    "title": "Estantes",
+    "create": "Nuevo Estante",
+    "createShelf": "Crear Estante",
+    "editShelf": "Editar Estante",
+    "name": "Nombre",
+    "nameHelp": "1-50 caracteres",
+    "nameRequired": "El nombre del estante es obligatorio",
+    "description": "Descripción",
+    "descriptionHelp": "Opcional, hasta 200 caracteres",
+    "icon": "Ícono",
+    "bookCount": "{{count}} libros",
+    "bookCount_one": "{{count}} libro",
+    "bookCount_other": "{{count}} libros",
+    "empty": "No hay estantes aún",
+    "emptyDescription": "Crea estantes para categorizar tus libros",
+    "createFirst": "Crea tu primer estante",
+    "viewBooks": "Ver Libros",
+    "deleteConfirm": "¿Eliminar \"{{name}}\"? Los libros se eliminarán de este estante pero no se borrarán.",
+    "helpText": "Los libros pueden estar en múltiples estantes. Usa estantes para categorización simple como 'Favoritos' o 'Por Leer'.",
+    "icons": {
+      "shelf": "Estante",
+      "book": "Libro",
+      "star": "Estrella",
+      "heart": "Corazón",
+      "bookmark": "Marcador",
+      "flag": "Bandera",
+      "tag": "Etiqueta",
+      "folder": "Carpeta"
+    }
+  },
   "nav": {
     "home": "Home",
     "library": "Library",

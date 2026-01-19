@@ -61,6 +61,37 @@
       "pink": "Pink"
     }
   },
+  "shelves": {
+    "title": "Mga Istante",
+    "create": "Bagong Istante",
+    "createShelf": "Gumawa ng Istante",
+    "editShelf": "I-edit ang Istante",
+    "name": "Pangalan",
+    "nameHelp": "1-50 na karakter",
+    "nameRequired": "Kinakailangan ang pangalan ng istante",
+    "description": "Paglalarawan",
+    "descriptionHelp": "Opsyonal, hanggang 200 karakter",
+    "icon": "Icon",
+    "bookCount": "{{count}} na libro",
+    "bookCount_one": "{{count}} na libro",
+    "bookCount_other": "{{count}} na libro",
+    "empty": "Wala pang istante",
+    "emptyDescription": "Gumawa ng mga istante upang i-kategorya ang iyong mga libro",
+    "createFirst": "Gumawa ng iyong unang istante",
+    "viewBooks": "Tingnan ang Mga Libro",
+    "deleteConfirm": "I-delete ang \"{{name}}\"? Aalisin ang mga libro sa istante na ito ngunit hindi mabubura.",
+    "helpText": "Maaaring nasa maraming istante ang mga libro. Gamitin ang mga istante para sa simpleng kategorisasyon tulad ng 'Mga Paborito' o 'Babasahin'.",
+    "icons": {
+      "shelf": "Istante",
+      "book": "Libro",
+      "star": "Bituin",
+      "heart": "Puso",
+      "bookmark": "Bookmark",
+      "flag": "Bandila",
+      "tag": "Tag",
+      "folder": "Folder"
+    }
+  },
   "nav": {
     "home": "Home",
     "library": "Library",

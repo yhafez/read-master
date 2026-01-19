@@ -61,6 +61,37 @@
       "pink": "Pink"
     }
   },
+  "shelves": {
+    "title": "Shelves",
+    "create": "New Shelf",
+    "createShelf": "Create Shelf",
+    "editShelf": "Edit Shelf",
+    "name": "Name",
+    "nameHelp": "1-50 characters",
+    "nameRequired": "Shelf name is required",
+    "description": "Description",
+    "descriptionHelp": "Optional, up to 200 characters",
+    "icon": "Icon",
+    "bookCount": "{{count}} books",
+    "bookCount_one": "{{count}} book",
+    "bookCount_other": "{{count}} books",
+    "empty": "No shelves yet",
+    "emptyDescription": "Create shelves to categorize your books",
+    "createFirst": "Create your first shelf",
+    "viewBooks": "View Books",
+    "deleteConfirm": "Delete \"{{name}}\"? Books will be removed from this shelf but not deleted.",
+    "helpText": "Books can be on multiple shelves. Use shelves for simple categorization like 'Favorites' or 'To Read'.",
+    "icons": {
+      "shelf": "Shelf",
+      "book": "Book",
+      "star": "Star",
+      "heart": "Heart",
+      "bookmark": "Bookmark",
+      "flag": "Flag",
+      "tag": "Tag",
+      "folder": "Folder"
+    }
+  },
   "nav": {
     "home": "Home",
     "library": "Library",

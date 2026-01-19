@@ -10664,3 +10664,125 @@ Added translations in all 6 locale files (en, ar, es, ja, zh, tl):
 
 ---
 
+## Iteration 48
+
+[2026-01-19] frontend-048: Custom shelves - Create shelves page, CRUD operations, multiple shelves per book, reordering
+
+### Changes Made
+
+#### apps/web/src/stores/shelvesStore.ts (NEW)
+Custom shelves Zustand store with persist middleware featuring:
+- Flat shelf structure (unlike nested collections)
+- Books can be on multiple shelves simultaneously
+- Full CRUD operations (create, update, delete)
+- Book management (add/remove from single/multiple shelves)
+- Shelf reordering support
+- 8 icon options: shelf, book, star, heart, bookmark, flag, tag, folder
+- localStorage persistence
+- Selection state tracking
+
+**Utility Functions:**
+- `generateShelfId()` - Creates unique IDs with shelf_ prefix
+- `validateShelfName()` - Validates name (1-50 chars)
+- `validateShelfIcon()` - Validates icon options with default fallback
+- `sanitizeShelf()` - Sanitizes shelf data
+- `getShelvesForBook()` - Gets all shelves containing a book
+- `getAllBookIds()` - Gets unique book IDs across all shelves
+
+**Store Actions:**
+- `createShelf()`, `updateShelf()`, `deleteShelf()`
+- `addBookToShelf()`, `removeBookFromShelf()`
+- `addBookToShelves()`, `removeBookFromAllShelves()`
+- `reorderShelves()`
+- `selectShelf()`
+- `getShelves()`, `getShelf()`, `getShelvesForBook()`, `isBookOnShelf()`
+- `reset()`
+
+#### apps/web/src/stores/shelvesStore.test.ts (NEW)
+56 comprehensive tests covering:
+- Constants and icon validation (2 tests)
+- ID generation and uniqueness (2 tests)
+- Name validation (4 tests)
+- Icon validation (2 tests)
+- Sanitization (6 tests)
+- getShelvesForBook utility (2 tests)
+- getAllBookIds utility (2 tests)
+- CRUD operations (9 tests)
+- Book management (7 tests)
+- Reordering (2 tests)
+- Selection and queries (9 tests)
+- Reset (1 test)
+- Type exports (4 tests)
+
+#### apps/web/src/pages/library/shelves/ShelvesPage.tsx (NEW)
+Main shelves page with:
+- Header with create button
+- Selected shelf info panel with book count
+- List view of shelves with icons
+- Context menu for edit/delete
+- Drag handle for reordering
+- Empty state with call-to-action
+- Delete confirmation alert
+- Help text explaining shelves vs collections
+
+#### apps/web/src/pages/library/shelves/ShelfDialog.tsx (NEW)
+Create/Edit dialog with:
+- Name field with validation
+- Description field (optional, max 200 chars)
+- Icon selector with visual grid display
+- Edit mode pre-fills existing values
+- Proper form reset on open/close
+
+#### apps/web/src/pages/library/shelves/index.ts (NEW)
+Module exports for ShelvesPage and ShelfDialog
+
+#### apps/web/src/stores/index.ts (UPDATED)
+Added exports for shelves store, types, and utility functions
+
+#### apps/web/src/pages/library/index.ts (UPDATED)
+Added exports for ShelvesPage and ShelfDialog
+
+#### apps/web/src/pages/index.ts (UPDATED)
+Added ShelvesPage and ShelfDialog exports
+
+#### apps/web/src/router/routes.ts (UPDATED)
+Added SHELVES route (/library/shelves) and protected route entry
+
+#### apps/web/src/router/Router.tsx (UPDATED)
+Added ShelvesPage route under protected routes
+
+#### apps/web/src/locales/*.json (UPDATED)
+Added translations in all 6 locale files (en, ar, es, ja, zh, tl):
+- 20+ translation keys for shelves feature
+- Icon names in all languages
+- Error messages and help text
+- UI labels and descriptions
+
+### Acceptance Criteria Verification
+- ✅ Can create - Dialog with name, description, icon selection
+- ✅ Add/remove works - Store methods for book management
+- ✅ Multiple shelves per book - addBookToShelves() and getShelvesForBook()
+- ✅ Reordering works - reorderShelves() method for ordering
+- ✅ Tests pass - 56 tests covering all functionality
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 56 new tests pass (3177 total passing)
+
+### Technical Notes
+- Shelves are flat (no nesting) unlike collections which support hierarchy
+- Books can be on multiple shelves simultaneously
+- Shelves support 50 character names, 200 character descriptions
+- 8 icons using MUI icons: Inventory2, Book, Star, Favorite, Bookmark, Flag, LocalOffer, Folder
+- Simpler than collections - designed for quick categorization (Favorites, To Read, etc.)
+- localStorage persistence excludes session-only state (selectedShelfId)
+
+### Discoveries for Future Sprints
+- Drag and drop UI implementation with visual feedback
+- Bulk add books to shelf from library view
+- Smart shelf suggestions based on reading patterns
+- Shelf sharing between users
+
+---
+

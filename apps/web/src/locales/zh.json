@@ -61,6 +61,37 @@
       "pink": "粉色"
     }
   },
+  "shelves": {
+    "title": "书架",
+    "create": "新建书架",
+    "createShelf": "创建书架",
+    "editShelf": "编辑书架",
+    "name": "名称",
+    "nameHelp": "1-50个字符",
+    "nameRequired": "书架名称为必填项",
+    "description": "描述",
+    "descriptionHelp": "可选，最多200个字符",
+    "icon": "图标",
+    "bookCount": "{{count}}本书",
+    "bookCount_one": "{{count}}本书",
+    "bookCount_other": "{{count}}本书",
+    "empty": "暂无书架",
+    "emptyDescription": "创建书架来分类您的书籍",
+    "createFirst": "创建您的第一个书架",
+    "viewBooks": "查看书籍",
+    "deleteConfirm": "删除\"{{name}}\"？书籍将从此书架移除但不会被删除。",
+    "helpText": "书籍可以放在多个书架上。使用书架进行简单分类，如「收藏」或「待读」。",
+    "icons": {
+      "shelf": "书架",
+      "book": "书籍",
+      "star": "星星",
+      "heart": "心形",
+      "bookmark": "书签",
+      "flag": "旗帜",
+      "tag": "标签",
+      "folder": "文件夹"
+    }
+  },
   "nav": {
     "home": "Home",
     "library": "Library",

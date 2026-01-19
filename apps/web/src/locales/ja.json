@@ -61,6 +61,37 @@
       "pink": "ピンク"
     }
   },
+  "shelves": {
+    "title": "本棚",
+    "create": "新しい本棚",
+    "createShelf": "本棚を作成",
+    "editShelf": "本棚を編集",
+    "name": "名前",
+    "nameHelp": "1〜50文字",
+    "nameRequired": "本棚の名前は必須です",
+    "description": "説明",
+    "descriptionHelp": "オプション、最大200文字",
+    "icon": "アイコン",
+    "bookCount": "{{count}}冊",
+    "bookCount_one": "{{count}}冊",
+    "bookCount_other": "{{count}}冊",
+    "empty": "本棚がありません",
+    "emptyDescription": "本を分類するための本棚を作成しましょう",
+    "createFirst": "最初の本棚を作成",
+    "viewBooks": "本を表示",
+    "deleteConfirm": "「{{name}}」を削除しますか？本はこの本棚から削除されますが、完全には削除されません。",
+    "helpText": "本は複数の本棚に置くことができます。「お気に入り」や「読みたい」などの簡単な分類に本棚を使用してください。",
+    "icons": {
+      "shelf": "本棚",
+      "book": "本",
+      "star": "星",
+      "heart": "ハート",
+      "bookmark": "ブックマーク",
+      "flag": "フラグ",
+      "tag": "タグ",
+      "folder": "フォルダ"
+    }
+  },
   "nav": {
     "home": "Home",
     "library": "Library",

@@ -2422,7 +2422,7 @@
         "Reordering works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-049",

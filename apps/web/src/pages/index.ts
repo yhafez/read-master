@@ -8,7 +8,13 @@ export { SignInPage, SignUpPage } from "./auth";
 export { DashboardPage } from "./dashboard";
 
 // Library
-export { LibraryPage, CollectionsPage, CollectionDialog } from "./library";
+export {
+  LibraryPage,
+  CollectionsPage,
+  CollectionDialog,
+  ShelvesPage,
+  ShelfDialog,
+} from "./library";
 
 // Reader
 export { ReaderPage } from "./reader";

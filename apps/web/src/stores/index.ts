@@ -108,3 +108,21 @@ export type {
   CreateCollectionInput,
   UpdateCollectionInput,
 } from "./collectionsStore";
+
+export {
+  generateShelfId,
+  getAllBookIds,
+  getShelvesForBook,
+  sanitizeShelf,
+  shelfIcons,
+  SHELVES_STORAGE_KEY,
+  useShelvesStore,
+  validateShelfIcon,
+  validateShelfName,
+} from "./shelvesStore";
+export type {
+  CreateShelfInput,
+  Shelf,
+  ShelfIcon,
+  UpdateShelfInput,
+} from "./shelvesStore";
