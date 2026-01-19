@@ -499,5 +499,22 @@
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "新しいバージョンが利用可能です！",
+      "refresh": "更新",
+      "later": "後で"
+    },
+    "offline": {
+      "ready": "アプリはオフラインで使用できます！",
+      "indicator": "現在オフラインです"
+    },
+    "install": {
+      "prompt": "Read Masterをインストール",
+      "description": "アプリをインストールして最高の体験を",
+      "install": "インストール",
+      "notNow": "今は不要"
+    }
   }
 }

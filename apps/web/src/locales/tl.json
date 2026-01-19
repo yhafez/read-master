@@ -499,5 +499,22 @@
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "May bagong bersyon na available!",
+      "refresh": "I-refresh",
+      "later": "Mamaya"
+    },
+    "offline": {
+      "ready": "Handa na ang app para gamitin offline!",
+      "indicator": "Kasalukuyang offline ka"
+    },
+    "install": {
+      "prompt": "I-install ang Read Master",
+      "description": "I-install ang aming app para sa pinakamahusay na karanasan",
+      "install": "I-install",
+      "notNow": "Hindi ngayon"
+    }
   }
 }

@@ -499,5 +499,22 @@
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "¡Hay una nueva versión disponible!",
+      "refresh": "Actualizar",
+      "later": "Más tarde"
+    },
+    "offline": {
+      "ready": "¡La app está lista para funcionar sin conexión!",
+      "indicator": "Estás actualmente sin conexión"
+    },
+    "install": {
+      "prompt": "Instalar Read Master",
+      "description": "Instala nuestra app para una mejor experiencia",
+      "install": "Instalar",
+      "notNow": "Ahora no"
+    }
   }
 }

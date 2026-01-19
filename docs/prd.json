@@ -3815,7 +3815,7 @@
         "Updates handled",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-002",

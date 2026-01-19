@@ -499,5 +499,22 @@
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "يتوفر إصدار جديد!",
+      "refresh": "تحديث",
+      "later": "لاحقاً"
+    },
+    "offline": {
+      "ready": "التطبيق جاهز للعمل بدون اتصال!",
+      "indicator": "أنت غير متصل حالياً"
+    },
+    "install": {
+      "prompt": "تثبيت Read Master",
+      "description": "ثبت تطبيقنا للحصول على أفضل تجربة",
+      "install": "تثبيت",
+      "notNow": "ليس الآن"
+    }
   }
 }

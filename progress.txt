@@ -7743,3 +7743,139 @@ Keys include:
 
 ### Commit
 Pending...
+
+---
+
+## Iteration 23: Service Worker Setup (pwa-001)
+
+**Date:** 2026-01-19
+**Task:** pwa-001 - Service worker setup
+**Status:** COMPLETED
+
+### Summary
+Implemented complete PWA service worker setup using vite-plugin-pwa with Workbox for caching strategies, offline support, and update handling.
+
+### Implementation Details
+
+#### Installed Dependencies
+- vite-plugin-pwa 1.2.0
+- workbox-window 7.4.0
+
+#### Created PWA Module (`apps/web/src/pwa/`)
+
+**serviceWorkerTypes.ts** - Type definitions and constants:
+- SWStatus, SWEventType, CacheStrategy types
+- PWAInstallState, SWUpdateState, CacheStats interfaces
+- BeforeInstallPromptEvent interface for install prompt
+- CACHE_NAMES constant with all cache names
+- CACHE_MAX_AGE constant with TTLs per cache type
+- NETWORK_TIMEOUT constant for request timeouts
+
+**serviceWorkerUtils.ts** - Helper functions:
+- isServiceWorkerSupported(): Check SW support
+- isStandaloneMode(): Detect PWA standalone mode
+- isOnline(): Check online status
+- getRegistration(): Get SW registration
+- hasActiveServiceWorker(): Check for active SW
+- getServiceWorkerStatus(): Get current SW status
+- skipWaiting(): Force waiting SW to activate
+- unregisterServiceWorker(): Unregister all SWs
+- getCacheNames(), getCacheStats(): Cache inspection
+- clearCache(), clearAllCaches(), clearApiCache(): Cache management
+- formatBytes(): Human-readable size formatting
+- getOfflineStatus(): Get offline readiness
+- createSWUpdateState(), createPWAInstallState(): State factories
+- triggerInstallPrompt(): Show install prompt
+- urlMatchesPattern(): URL pattern matching
+- getCacheStrategyForUrl(): Determine cache strategy
+- waitForServiceWorkerReady(), sendMessageToServiceWorker()
+- createUpdateListener(): Create update event listener
+
+**useServiceWorker.ts** - React hook:
+- Integrates with vite-plugin-pwa's useRegisterSW
+- Tracks SW status, needRefresh, offlineReady
+- Handles online/offline events
+- Manages install prompt (beforeinstallprompt event)
+- Provides updateServiceWorker(), closePrompt()
+- Provides clearCachesAndReset(), promptInstall()
+- Returns updateState and installState objects
+
+**ServiceWorkerUpdatePrompt.tsx** - UI component:
+- Shows snackbar when update available
+- Shows offline-ready notification
+- Shows offline indicator when disconnected
+- Refresh/Later buttons for update prompt
+- Uses MUI Alert, Snackbar, Button components
+
+**vite-pwa.d.ts** - TypeScript declarations:
+- Type definitions for virtual:pwa-register/react
+- Type definitions for virtual:pwa-register
+
+**index.ts** - Module exports:
+- Exports all types, constants, utilities
+- Exports useServiceWorker hook
+- Exports ServiceWorkerUpdatePrompt component
+
+#### Updated vite.config.ts
+- Added VitePWA plugin configuration
+- Configured caching strategies:
+  - CacheFirst for Google Fonts (1 year TTL)
+  - CacheFirst for images (30 days TTL)
+  - NetworkFirst for API calls (5 min TTL, 10s timeout)
+- Configured Web App Manifest:
+  - App name, description, theme colors
+  - Icon sizes: 72, 96, 128, 144, 152, 192, 384, 512
+  - Display: standalone, orientation: portrait
+  - Categories: education, books, productivity
+- Enabled dev mode for development testing
+
+#### Updated App.tsx
+- Added ServiceWorkerUpdatePrompt component
+
+#### Added i18n Translations (6 locales)
+- en, ar, es, ja, zh, tl
+- pwa.update.available, refresh, later
+- pwa.offline.ready, indicator
+- pwa.install.prompt, description, install, notNow
+
+### Test Coverage
+Created serviceWorkerUtils.test.ts with 31 tests:
+- formatBytes: 9 tests (0 bytes, bytes, KB, MB, GB, decimals)
+- urlMatchesPattern: 5 tests (string, regex, case-insensitive)
+- getCacheStrategyForUrl: 5 tests (API, static, fonts, images, HTML)
+- createSWUpdateState: 5 tests (default, waiting, installing, both, none)
+- Constants: 7 tests (CACHE_NAMES, CACHE_MAX_AGE, NETWORK_TIMEOUT)
+
+### Files Created
+- apps/web/src/pwa/serviceWorkerTypes.ts
+- apps/web/src/pwa/serviceWorkerUtils.ts
+- apps/web/src/pwa/serviceWorkerUtils.test.ts
+- apps/web/src/pwa/useServiceWorker.ts
+- apps/web/src/pwa/ServiceWorkerUpdatePrompt.tsx
+- apps/web/src/pwa/vite-pwa.d.ts
+- apps/web/src/pwa/index.ts
+
+### Files Modified
+- apps/web/vite.config.ts (added VitePWA plugin)
+- apps/web/package.json (added vite-plugin-pwa, workbox-window)
+- apps/web/src/App.tsx (added ServiceWorkerUpdatePrompt)
+- apps/web/src/locales/en.json (added pwa translations)
+- apps/web/src/locales/ar.json (added pwa translations)
+- apps/web/src/locales/es.json (added pwa translations)
+- apps/web/src/locales/ja.json (added pwa translations)
+- apps/web/src/locales/zh.json (added pwa translations)
+- apps/web/src/locales/tl.json (added pwa translations)
+
+### Acceptance Criteria Verification
+- ✅ SW registers (via vite-plugin-pwa auto-registration)
+- ✅ Caching works (configured runtime caching for fonts, images, API)
+- ✅ Updates handled (ServiceWorkerUpdatePrompt component)
+- ✅ Tests pass (31 tests for utilities and constants)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 8480 tests pass (31 new PWA tests)
+
+### Commit
+Pending...

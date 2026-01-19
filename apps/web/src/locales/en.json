@@ -500,5 +500,22 @@
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "A new version is available!",
+      "refresh": "Refresh",
+      "later": "Later"
+    },
+    "offline": {
+      "ready": "App ready to work offline!",
+      "indicator": "You are currently offline"
+    },
+    "install": {
+      "prompt": "Install Read Master",
+      "description": "Install our app for the best experience",
+      "install": "Install",
+      "notNow": "Not now"
+    }
   }
 }

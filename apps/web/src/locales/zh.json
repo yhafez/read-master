@@ -499,5 +499,22 @@
       "guidingQuestions": "Guiding Questions",
       "readingTips": "Reading Tips"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "有新版本可用！",
+      "refresh": "刷新",
+      "later": "稍后"
+    },
+    "offline": {
+      "ready": "应用已准备好离线使用！",
+      "indicator": "您当前处于离线状态"
+    },
+    "install": {
+      "prompt": "安装 Read Master",
+      "description": "安装我们的应用以获得最佳体验",
+      "install": "安装",
+      "notNow": "暂不安装"
+    }
   }
 }
