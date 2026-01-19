@@ -945,6 +945,46 @@
         "categoryRequired": "カテゴリを選択してください",
         "general": "投稿に失敗しました。もう一度お試しください。"
       }
+    },
+    "post": {
+      "loadError": "投稿の読み込みに失敗しました。もう一度お試しください。",
+      "notFound": "投稿が見つかりません。",
+      "upvote": "賛成",
+      "downvote": "反対",
+      "bestAnswer": "ベストアンサー",
+      "markBestAnswer": "ベストアンサーに設定",
+      "op": "投稿者",
+      "noReplies": "まだ返信がありません。",
+      "beFirstToReply": "最初に返信する",
+      "showReplies": "{{count}}件の返信を表示",
+      "hideReplies": "返信を非表示",
+      "justNow": "たった今",
+      "timeAgo": "{{time}}前",
+      "inTime": "{{time}}後",
+      "time": {
+        "seconds": "{{count}}秒",
+        "minutes": "{{count}}分",
+        "hours": "{{count}}時間",
+        "days": "{{count}}日",
+        "weeks": "{{count}}週間",
+        "months": "{{count}}ヶ月",
+        "years": "{{count}}年"
+      },
+      "sort": {
+        "best": "ベスト",
+        "newest": "新着順",
+        "oldest": "古い順",
+        "controversial": "議論中"
+      },
+      "reply": {
+        "action": "返信",
+        "placeholder": "返信を入力...",
+        "replyTo": "{{name}}に返信...",
+        "writeReply": "返信を書く",
+        "submit": "返信する",
+        "contentRequired": "返信内容は必須です",
+        "submitError": "返信の送信に失敗しました。もう一度お試しください。"
+      }
     }
   },
   "curriculums": {

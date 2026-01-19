@@ -11114,3 +11114,68 @@ Added forum.form translations to all 6 locales (en, ar, es, ja, zh, tl):
 - TranslateFn type created for i18next compatibility with strict TypeScript
 
 ---
+## Iteration 51 - Forum Post Detail View [frontend-076]
+
+**Date:** 2026-01-19
+**Task:** Forum post detail view with voting and replies
+**Status:** ✅ COMPLETE
+
+### Implementation Details
+
+Created a comprehensive forum post detail view with:
+- Full post display with markdown rendering
+- Vote buttons (upvote/downvote) with score display
+- Author information with avatar
+- Threaded replies with 3-level nesting
+- Reply form with markdown support
+- Best answer marking capability
+- Sort options (best, newest, oldest, controversial)
+- Full internationalization support
+
+### Files Created/Modified
+
+#### apps/web/src/pages/forum/forumPostUtils.ts (CREATED)
+- Core utility functions for forum post detail (~350 lines)
+- Types: VoteType, VoteState, ForumReply, ForumPostDetail
+- Vote utilities: calculateVoteScore, applyVote, formatVoteScore, getVoteScoreColor
+- Time utilities: getRelativeTime, formatRelativeTime, TIME_THRESHOLDS
+- Reply threading: buildReplyTree, countTotalReplies, getReplyDepth, findReplyById, sortReplies
+- Post utilities: canEditPost, canEditReply, canMarkBestAnswer, renderMarkdownContent, truncateContent
+- Constants: MAX_REPLY_DEPTH = 3
+
+#### apps/web/src/pages/forum/ForumPostPage.tsx (REPLACED)
+- Main forum post detail page component (~1029 lines)
+- Sub-components: VoteButtons, ReplyForm, ReplyItem
+- Features: Post display with markdown, voting, reply form, threaded replies, best answer marking
+- Mock data for development (MOCK_POST, MOCK_REPLIES)
+- Full MUI styling with responsive layout
+
+#### apps/web/src/pages/forum/forumPostUtils.test.ts (CREATED)
+- Comprehensive tests for all utility functions (76 tests)
+- Test categories: Vote Utilities, Time Utilities, Reply Threading, Post Utilities
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added forum.post translations to all 6 locales (en, ar, es, ja, zh, tl):
+- Error messages and loading states
+- Vote labels (upvote, downvote, score)
+- Best answer labels
+- Relative time formatting
+- Reply section translations
+- Sort options (best, newest, oldest, controversial)
+- Reply form labels and buttons
+- Author badges (OP, mod, admin)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, warnings for non-null assertions in tests only)
+- pnpm vitest run: ✅ 76 new tests pass
+
+### Technical Notes
+- Vote score uses upvotes - downvotes calculation
+- Relative time shows "just now" through "X years ago"
+- Reply tree built using parentReplyId with orphan handling
+- MAX_REPLY_DEPTH of 3 matches Reddit-style threading
+- Markdown rendering escapes HTML for XSS prevention
+- Mock data provided for development/testing
+
+---

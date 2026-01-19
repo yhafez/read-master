@@ -945,6 +945,46 @@
         "categoryRequired": "Please select a category",
         "general": "Failed to submit post. Please try again."
       }
+    },
+    "post": {
+      "loadError": "Failed to load post. Please try again.",
+      "notFound": "Post not found.",
+      "upvote": "Upvote",
+      "downvote": "Downvote",
+      "bestAnswer": "Best Answer",
+      "markBestAnswer": "Mark as Best Answer",
+      "op": "OP",
+      "noReplies": "No replies yet.",
+      "beFirstToReply": "Be the first to reply",
+      "showReplies": "Show {{count}} replies",
+      "hideReplies": "Hide replies",
+      "justNow": "just now",
+      "timeAgo": "{{time}} ago",
+      "inTime": "in {{time}}",
+      "time": {
+        "seconds": "{{count}} seconds",
+        "minutes": "{{count}} minutes",
+        "hours": "{{count}} hours",
+        "days": "{{count}} days",
+        "weeks": "{{count}} weeks",
+        "months": "{{count}} months",
+        "years": "{{count}} years"
+      },
+      "sort": {
+        "best": "Best",
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "controversial": "Controversial"
+      },
+      "reply": {
+        "action": "Reply",
+        "placeholder": "Write your reply...",
+        "replyTo": "Reply to {{name}}...",
+        "writeReply": "Write a Reply",
+        "submit": "Reply",
+        "contentRequired": "Reply content is required",
+        "submitError": "Failed to submit reply. Please try again."
+      }
     }
   },
   "curriculums": {

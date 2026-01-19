@@ -945,6 +945,46 @@
         "categoryRequired": "请选择一个分类",
         "general": "发布失败，请重试。"
       }
+    },
+    "post": {
+      "loadError": "加载帖子失败，请重试。",
+      "notFound": "帖子未找到。",
+      "upvote": "赞同",
+      "downvote": "反对",
+      "bestAnswer": "最佳答案",
+      "markBestAnswer": "标记为最佳答案",
+      "op": "楼主",
+      "noReplies": "暂无回复。",
+      "beFirstToReply": "成为第一个回复的人",
+      "showReplies": "显示 {{count}} 条回复",
+      "hideReplies": "隐藏回复",
+      "justNow": "刚刚",
+      "timeAgo": "{{time}}前",
+      "inTime": "{{time}}后",
+      "time": {
+        "seconds": "{{count}} 秒",
+        "minutes": "{{count}} 分钟",
+        "hours": "{{count}} 小时",
+        "days": "{{count}} 天",
+        "weeks": "{{count}} 周",
+        "months": "{{count}} 个月",
+        "years": "{{count}} 年"
+      },
+      "sort": {
+        "best": "最佳",
+        "newest": "最新",
+        "oldest": "最早",
+        "controversial": "争议"
+      },
+      "reply": {
+        "action": "回复",
+        "placeholder": "写下你的回复...",
+        "replyTo": "回复 {{name}}...",
+        "writeReply": "写回复",
+        "submit": "回复",
+        "contentRequired": "回复内容是必填项",
+        "submitError": "回复发送失败，请重试。"
+      }
     }
   },
   "curriculums": {

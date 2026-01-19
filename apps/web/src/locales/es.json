@@ -945,6 +945,46 @@
         "categoryRequired": "Por favor selecciona una categoría",
         "general": "Error al publicar. Por favor intenta de nuevo."
       }
+    },
+    "post": {
+      "loadError": "Error al cargar la publicación. Por favor intenta de nuevo.",
+      "notFound": "Publicación no encontrada.",
+      "upvote": "Votar a favor",
+      "downvote": "Votar en contra",
+      "bestAnswer": "Mejor respuesta",
+      "markBestAnswer": "Marcar como mejor respuesta",
+      "op": "OP",
+      "noReplies": "Aún no hay respuestas.",
+      "beFirstToReply": "Sé el primero en responder",
+      "showReplies": "Mostrar {{count}} respuestas",
+      "hideReplies": "Ocultar respuestas",
+      "justNow": "ahora mismo",
+      "timeAgo": "hace {{time}}",
+      "inTime": "en {{time}}",
+      "time": {
+        "seconds": "{{count}} segundos",
+        "minutes": "{{count}} minutos",
+        "hours": "{{count}} horas",
+        "days": "{{count}} días",
+        "weeks": "{{count}} semanas",
+        "months": "{{count}} meses",
+        "years": "{{count}} años"
+      },
+      "sort": {
+        "best": "Mejor",
+        "newest": "Más reciente",
+        "oldest": "Más antiguo",
+        "controversial": "Controversial"
+      },
+      "reply": {
+        "action": "Responder",
+        "placeholder": "Escribe tu respuesta...",
+        "replyTo": "Responder a {{name}}...",
+        "writeReply": "Escribir una respuesta",
+        "submit": "Responder",
+        "contentRequired": "El contenido de la respuesta es obligatorio",
+        "submitError": "Error al enviar respuesta. Por favor intenta de nuevo."
+      }
     }
   },
   "curriculums": {

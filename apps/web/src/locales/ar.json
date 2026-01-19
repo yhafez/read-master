@@ -945,6 +945,46 @@
         "categoryRequired": "يرجى اختيار فئة",
         "general": "فشل في نشر المنشور. يرجى المحاولة مرة أخرى."
       }
+    },
+    "post": {
+      "loadError": "فشل في تحميل الموضوع. يرجى المحاولة مرة أخرى.",
+      "notFound": "الموضوع غير موجود.",
+      "upvote": "تصويت إيجابي",
+      "downvote": "تصويت سلبي",
+      "bestAnswer": "أفضل إجابة",
+      "markBestAnswer": "تحديد كأفضل إجابة",
+      "op": "الكاتب",
+      "noReplies": "لا توجد ردود بعد.",
+      "beFirstToReply": "كن أول من يرد",
+      "showReplies": "إظهار {{count}} ردود",
+      "hideReplies": "إخفاء الردود",
+      "justNow": "الآن",
+      "timeAgo": "منذ {{time}}",
+      "inTime": "خلال {{time}}",
+      "time": {
+        "seconds": "{{count}} ثواني",
+        "minutes": "{{count}} دقائق",
+        "hours": "{{count}} ساعات",
+        "days": "{{count}} أيام",
+        "weeks": "{{count}} أسابيع",
+        "months": "{{count}} أشهر",
+        "years": "{{count}} سنوات"
+      },
+      "sort": {
+        "best": "الأفضل",
+        "newest": "الأحدث",
+        "oldest": "الأقدم",
+        "controversial": "الأكثر جدلاً"
+      },
+      "reply": {
+        "action": "رد",
+        "placeholder": "اكتب ردك...",
+        "replyTo": "الرد على {{name}}...",
+        "writeReply": "اكتب رداً",
+        "submit": "إرسال الرد",
+        "contentRequired": "محتوى الرد مطلوب",
+        "submitError": "فشل في إرسال الرد. يرجى المحاولة مرة أخرى."
+      }
     }
   },
   "curriculums": {
