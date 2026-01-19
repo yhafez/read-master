@@ -151,6 +151,49 @@
         "addFailed": "添加书籍失败。请重试。"
       }
     },
+    "advancedSearch": {
+      "title": "高级搜索",
+      "searchPlaceholder": "按标题、作者或内容搜索...",
+      "author": "作者",
+      "authorPlaceholder": "按作者名筛选",
+      "reset": "重置",
+      "apply": "应用筛选",
+      "progressRange": "进度范围",
+      "dateAdded": "添加日期",
+      "lastRead": "最后阅读",
+      "sections": {
+        "status": "状态",
+        "progress": "进度",
+        "genre": "类型",
+        "tags": "标签",
+        "dates": "日期",
+        "type": "文件类型"
+      },
+      "types": {
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "文档",
+        "text": "文本",
+        "url": "网页导入"
+      },
+      "progress": {
+        "notStarted": "未开始",
+        "inProgress": "阅读中",
+        "almostDone": "即将完成",
+        "completed": "已完成"
+      },
+      "dates": {
+        "today": "今天",
+        "lastWeek": "上周",
+        "lastMonth": "上月",
+        "lastYear": "去年"
+      },
+      "tagChip": "标签",
+      "progressChip": "进度",
+      "authorChip": "作者",
+      "dateAddedChip": "已添加",
+      "lastReadChip": "最后阅读"
+    },
     "upload": "上传文件",
     "importUrl": "从URL导入",
     "pasteText": "粘贴文本",

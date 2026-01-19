@@ -151,6 +151,49 @@
         "addFailed": "فشل إضافة الكتاب. الرجاء المحاولة مرة أخرى."
       }
     },
+    "advancedSearch": {
+      "title": "بحث متقدم",
+      "searchPlaceholder": "البحث بالعنوان أو المؤلف أو المحتوى...",
+      "author": "المؤلف",
+      "authorPlaceholder": "تصفية حسب اسم المؤلف",
+      "reset": "إعادة تعيين",
+      "apply": "تطبيق الفلاتر",
+      "progressRange": "نطاق التقدم",
+      "dateAdded": "تاريخ الإضافة",
+      "lastRead": "آخر قراءة",
+      "sections": {
+        "status": "الحالة",
+        "progress": "التقدم",
+        "genre": "النوع",
+        "tags": "الوسوم",
+        "dates": "التواريخ",
+        "type": "نوع الملف"
+      },
+      "types": {
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "مستند",
+        "text": "نص",
+        "url": "استيراد ويب"
+      },
+      "progress": {
+        "notStarted": "لم يبدأ",
+        "inProgress": "قيد القراءة",
+        "almostDone": "شارف على الانتهاء",
+        "completed": "مكتمل"
+      },
+      "dates": {
+        "today": "اليوم",
+        "lastWeek": "الأسبوع الماضي",
+        "lastMonth": "الشهر الماضي",
+        "lastYear": "السنة الماضية"
+      },
+      "tagChip": "وسم",
+      "progressChip": "التقدم",
+      "authorChip": "المؤلف",
+      "dateAddedChip": "تمت الإضافة",
+      "lastReadChip": "آخر قراءة"
+    },
     "upload": "رفع ملف",
     "importUrl": "استيراد من رابط",
     "pasteText": "لصق نص",

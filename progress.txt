@@ -7559,3 +7559,187 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (only non-null assertion warnings in tests)
 - pnpm vitest run: ✅ 8327 tests pass (pre-existing i18n test failure unrelated to this change)
+
+### Commit
+Commit: feat(frontend-033): Implement flashcard study interface with SM-2
+Hash: fad0aca
+Files: 12 files changed, 2670 insertions(+)
+
+Added i18n keys to all 6 locale files:
+- en.json, ar.json, es.json, ja.json, zh.json, tl.json
+
+---
+
+## ITERATION 21 COMPLETE
+Task: frontend-033 - Flashcard study interface with SM-2
+Status: ✅ COMPLETE
+
+
+---
+
+## ITERATION 22: frontend-045 - Advanced book search with filters
+Date: 2026-01-19
+Status: ✅ COMPLETE
+
+### Task Details
+- ID: frontend-045
+- Priority: critical
+- Category: frontend-library
+- Phase: 5b
+- Description: Advanced book search with filters
+
+### Implementation Details
+
+#### Created advancedSearchTypes.ts with comprehensive types and utilities:
+
+**Types:**
+- AdvancedSearchFilters: Main interface for all filter values
+- ProgressRange: { min: number; max: number }
+- DateRange: { start: Date | null; end: Date | null }
+- BookType: Union type for file types (epub, pdf, txt, etc.)
+- FilterPreset: { id, label, filters }
+- FilterSection: Collapsible section configuration
+- FilterChip: Active filter chip display
+
+**Constants:**
+- BOOK_TYPE_OPTIONS: 10 supported file types with labels
+- PROGRESS_PRESETS: 5 presets (notStarted, started, halfway, almostDone, completed)
+- DATE_PRESETS: 6 presets (today, thisWeek, thisMonth, thisYear, lastMonth, older)
+- COMMON_GENRES: 20 common book genres
+- FILTER_SECTIONS: All configurable filter sections
+- DEFAULT_FILTERS: Default empty filter state
+
+**Utility Functions (30+):**
+- createDefaultFilters(): Create empty filter state
+- isDefaultFilter(): Check if filter equals default
+- hasActiveFilters(): Check if any filter is active
+- countActiveFilters(): Count non-default filters
+- matchesTextSearch(): Full-text search in book fields
+- matchesStatusFilter(): Filter by reading status
+- matchesGenreFilter(): Filter by genres
+- matchesTagFilter(): Filter by tags
+- matchesProgressFilter(): Filter by progress range
+- matchesDateFilter(): Filter by date range
+- matchesTypeFilter(): Filter by file type
+- matchesAuthorFilter(): Filter by author
+- applyFilters(): Apply all filters to book array
+- getActiveFilterChips(): Get displayable filter chips
+- clearFilter(): Clear specific filter
+- mergeFilters(): Merge filter objects
+- parseProgressRange(): Parse progress string
+- formatProgressRange(): Format progress for display
+- parseDateRange(): Parse date string
+- formatDateRange(): Format date for display
+- applyProgressPreset(): Apply progress preset
+- applyDatePreset(): Apply date preset
+- isValidProgressRange(): Validate progress bounds
+- isValidDateRange(): Validate date bounds
+- normalizeFilters(): Normalize filter values
+- serializeFilters(): Convert to URL params
+- deserializeFilters(): Parse from URL params
+- filterBooksWithCount(): Apply filters with count
+- sortFilteredBooks(): Sort after filtering
+- createFilterSummary(): Human-readable summary
+
+#### Created AdvancedBookSearch.tsx component:
+
+**Features:**
+- Dialog-based UI with MUI components
+- FilterSection sub-component with accordion pattern
+- ActiveFilterChips sub-component showing active filters
+- Full-text search across title, author, description
+- Status filter (all, unread, reading, completed, archived, abandoned)
+- Multi-select genre filter with chips
+- Multi-select tag filter with chips
+- Progress range slider (0-100%)
+- Date added filter with native date inputs
+- Last read filter with native date inputs
+- File type filter (EPUB, PDF, etc.)
+- Author search text field
+- Clear All / Apply buttons
+- Real-time active filter count display
+- Keyboard accessible
+
+**Props:**
+- open: boolean
+- onClose: () => void
+- onApplyFilters: (filters, count) => void
+- initialFilters?: Partial<AdvancedSearchFilters>
+- availableGenres?: string[]
+- availableTags?: string[]
+
+#### i18n Support:
+Added ~45 translation keys to all 6 locale files:
+- apps/web/src/locales/en.json
+- apps/web/src/locales/ar.json
+- apps/web/src/locales/es.json
+- apps/web/src/locales/ja.json
+- apps/web/src/locales/zh.json
+- apps/web/src/locales/tl.json
+
+Keys include:
+- library.advancedSearch.title
+- library.advancedSearch.search
+- library.advancedSearch.clear
+- library.advancedSearch.apply
+- library.advancedSearch.sections.* (status, genres, tags, progress, dateAdded, lastRead, types, author)
+- library.advancedSearch.status.* (all, unread, reading, completed, archived, abandoned)
+- library.advancedSearch.progressPresets.* (notStarted, started, halfway, almostDone, completed)
+- library.advancedSearch.datePresets.* (today, thisWeek, thisMonth, thisYear, lastMonth, older)
+- library.advancedSearch.types.* (epub, pdf, txt, html, mobi, azw, docx, rtf, markdown, other)
+- library.advancedSearch.chips.* (various chip label formats)
+
+### Test Coverage
+- Created advancedSearchTypes.test.ts with 122 tests:
+  - Type exports tests
+  - Constants tests
+  - createDefaultFilters tests
+  - isDefaultFilter tests
+  - hasActiveFilters tests
+  - countActiveFilters tests
+  - matchesTextSearch tests
+  - matchesStatusFilter tests
+  - matchesGenreFilter tests
+  - matchesTagFilter tests
+  - matchesProgressFilter tests
+  - matchesDateFilter tests
+  - matchesTypeFilter tests
+  - matchesAuthorFilter tests
+  - applyFilters tests
+  - getActiveFilterChips tests
+  - clearFilter tests
+  - mergeFilters tests
+  - Progress/Date preset tests
+  - Validation function tests
+  - Serialization tests
+  - Integration tests
+
+### Files Created
+- apps/web/src/components/library/advancedSearchTypes.ts
+- apps/web/src/components/library/advancedSearchTypes.test.ts
+- apps/web/src/components/library/AdvancedBookSearch.tsx
+
+### Files Modified
+- apps/web/src/components/library/index.ts (added exports)
+- apps/web/src/locales/en.json (added advancedSearch keys)
+- apps/web/src/locales/ar.json (added advancedSearch keys)
+- apps/web/src/locales/es.json (added advancedSearch keys)
+- apps/web/src/locales/ja.json (added advancedSearch keys)
+- apps/web/src/locales/zh.json (added advancedSearch keys)
+- apps/web/src/locales/tl.json (added advancedSearch keys)
+- docs/prd.json (marked frontend-045 as passes: true)
+
+### Acceptance Criteria Verification
+- ✅ Full-text works (searches title, author, description case-insensitively)
+- ✅ All filters work (status, genres, tags, progress, dates, types, author)
+- ✅ Filters combine (AND logic, all conditions must match)
+- ✅ Results update (callback returns filtered count)
+- ✅ Tests pass (122 tests for types/utils, 1405 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors)
+- pnpm vitest run: ✅ 1405 tests pass
+
+### Commit
+Pending...

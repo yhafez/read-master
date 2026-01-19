@@ -3,6 +3,7 @@
  */
 
 export * from "./types";
+export * from "./advancedSearchTypes";
 export {
   BookCard,
   getStatusColor,
@@ -15,4 +16,8 @@ export {
   LibraryFilterPanel,
   type LibraryFilterPanelProps,
 } from "./LibraryFilterPanel";
+export {
+  AdvancedBookSearch,
+  type AdvancedBookSearchProps,
+} from "./AdvancedBookSearch";
 export { AddBookModal, type AddBookModalProps } from "./addBook";

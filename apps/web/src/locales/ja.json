@@ -151,6 +151,49 @@
         "addFailed": "本の追加に失敗しました。もう一度お試しください。"
       }
     },
+    "advancedSearch": {
+      "title": "詳細検索",
+      "searchPlaceholder": "タイトル、著者、または内容で検索...",
+      "author": "著者",
+      "authorPlaceholder": "著者名でフィルター",
+      "reset": "リセット",
+      "apply": "フィルターを適用",
+      "progressRange": "進捗範囲",
+      "dateAdded": "追加日",
+      "lastRead": "最終閲覧日",
+      "sections": {
+        "status": "ステータス",
+        "progress": "進捗",
+        "genre": "ジャンル",
+        "tags": "タグ",
+        "dates": "日付",
+        "type": "ファイル形式"
+      },
+      "types": {
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "ドキュメント",
+        "text": "テキスト",
+        "url": "Webインポート"
+      },
+      "progress": {
+        "notStarted": "未開始",
+        "inProgress": "読書中",
+        "almostDone": "もうすぐ完了",
+        "completed": "完了"
+      },
+      "dates": {
+        "today": "今日",
+        "lastWeek": "先週",
+        "lastMonth": "先月",
+        "lastYear": "昨年"
+      },
+      "tagChip": "タグ",
+      "progressChip": "進捗",
+      "authorChip": "著者",
+      "dateAddedChip": "追加日",
+      "lastReadChip": "最終閲覧"
+    },
     "upload": "ファイルをアップロード",
     "importUrl": "URLからインポート",
     "pasteText": "テキストを貼り付け",

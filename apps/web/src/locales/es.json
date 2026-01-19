@@ -151,6 +151,49 @@
         "addFailed": "Error al agregar el libro. Por favor intenta de nuevo."
       }
     },
+    "advancedSearch": {
+      "title": "Búsqueda Avanzada",
+      "searchPlaceholder": "Buscar por título, autor o contenido...",
+      "author": "Autor",
+      "authorPlaceholder": "Filtrar por nombre de autor",
+      "reset": "Restablecer",
+      "apply": "Aplicar Filtros",
+      "progressRange": "Rango de progreso",
+      "dateAdded": "Fecha de Adición",
+      "lastRead": "Última Lectura",
+      "sections": {
+        "status": "Estado",
+        "progress": "Progreso",
+        "genre": "Género",
+        "tags": "Etiquetas",
+        "dates": "Fechas",
+        "type": "Tipo de Archivo"
+      },
+      "types": {
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "Documento",
+        "text": "Texto",
+        "url": "Importación Web"
+      },
+      "progress": {
+        "notStarted": "No Iniciado",
+        "inProgress": "En Progreso",
+        "almostDone": "Casi Terminado",
+        "completed": "Completado"
+      },
+      "dates": {
+        "today": "Hoy",
+        "lastWeek": "Última Semana",
+        "lastMonth": "Último Mes",
+        "lastYear": "Último Año"
+      },
+      "tagChip": "Etiqueta",
+      "progressChip": "Progreso",
+      "authorChip": "Autor",
+      "dateAddedChip": "Añadido",
+      "lastReadChip": "Última Lectura"
+    },
     "upload": "Subir Archivo",
     "importUrl": "Importar desde URL",
     "pasteText": "Pegar Texto",

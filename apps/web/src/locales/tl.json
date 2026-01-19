@@ -151,6 +151,49 @@
         "addFailed": "Nabigo ang pagdagdag ng libro. Pakisubukan ulit."
       }
     },
+    "advancedSearch": {
+      "title": "Advanced na Paghahanap",
+      "searchPlaceholder": "Maghanap ayon sa pamagat, may-akda, o nilalaman...",
+      "author": "May-akda",
+      "authorPlaceholder": "I-filter ayon sa pangalan ng may-akda",
+      "reset": "I-reset",
+      "apply": "Ilapat ang mga Filter",
+      "progressRange": "Saklaw ng progreso",
+      "dateAdded": "Petsa ng Pagdagdag",
+      "lastRead": "Huling Binasa",
+      "sections": {
+        "status": "Status",
+        "progress": "Progreso",
+        "genre": "Genre",
+        "tags": "Mga Tag",
+        "dates": "Mga Petsa",
+        "type": "Uri ng File"
+      },
+      "types": {
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "Dokumento",
+        "text": "Teksto",
+        "url": "Web Import"
+      },
+      "progress": {
+        "notStarted": "Hindi pa Nasimulan",
+        "inProgress": "Kasalukuyang Binabasa",
+        "almostDone": "Halos Tapos Na",
+        "completed": "Nakumpleto"
+      },
+      "dates": {
+        "today": "Ngayon",
+        "lastWeek": "Nakaraang Linggo",
+        "lastMonth": "Nakaraang Buwan",
+        "lastYear": "Nakaraang Taon"
+      },
+      "tagChip": "Tag",
+      "progressChip": "Progreso",
+      "authorChip": "May-akda",
+      "dateAddedChip": "Idinagdag",
+      "lastReadChip": "Huling Binasa"
+    },
     "upload": "Mag-upload ng File",
     "importUrl": "Mag-import mula sa URL",
     "pasteText": "I-paste ang Teksto",

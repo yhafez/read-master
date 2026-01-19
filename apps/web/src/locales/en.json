@@ -201,6 +201,49 @@
         "invalidData": "Invalid form data",
         "addFailed": "Failed to add book. Please try again."
       }
+    },
+    "advancedSearch": {
+      "title": "Advanced Search",
+      "searchPlaceholder": "Search by title, author, or content...",
+      "author": "Author",
+      "authorPlaceholder": "Filter by author name",
+      "reset": "Reset",
+      "apply": "Apply Filters",
+      "progressRange": "Progress range",
+      "dateAdded": "Date Added",
+      "lastRead": "Last Read",
+      "sections": {
+        "status": "Status",
+        "progress": "Progress",
+        "genre": "Genre",
+        "tags": "Tags",
+        "dates": "Dates",
+        "type": "File Type"
+      },
+      "types": {
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "Document",
+        "text": "Text",
+        "url": "Web Import"
+      },
+      "progress": {
+        "notStarted": "Not Started",
+        "inProgress": "In Progress",
+        "almostDone": "Almost Done",
+        "completed": "Completed"
+      },
+      "dates": {
+        "today": "Today",
+        "lastWeek": "Last Week",
+        "lastMonth": "Last Month",
+        "lastYear": "Last Year"
+      },
+      "tagChip": "Tag",
+      "progressChip": "Progress",
+      "authorChip": "Author",
+      "dateAddedChip": "Added",
+      "lastReadChip": "Last Read"
     }
   },
   "reader": {
