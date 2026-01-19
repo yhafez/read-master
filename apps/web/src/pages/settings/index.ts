@@ -5,3 +5,4 @@ export { SettingsAIPage } from "./SettingsAIPage";
 export { SettingsNotificationsPage } from "./SettingsNotificationsPage";
 export { SettingsPrivacyPage } from "./SettingsPrivacyPage";
 export { SettingsSubscriptionPage } from "./SettingsSubscriptionPage";
+export { SettingsSRSPage } from "./SettingsSRSPage";

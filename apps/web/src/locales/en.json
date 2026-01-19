@@ -1217,6 +1217,63 @@
       "resetSettings": "Reset to Defaults",
       "resetConfirm": "Are you sure you want to reset all general settings to defaults?",
       "saved": "Settings saved"
+    },
+    "srs": {
+      "title": "SRS Settings",
+      "description": "Configure your spaced repetition system preferences for flashcard reviews.",
+      "limits": {
+        "title": "Daily Limits",
+        "description": "Control how many cards you review each day.",
+        "dailyReviewLimit": "Daily Review Limit",
+        "dailyReviewLimitDescription": "Maximum number of reviews per day. Set to 0 for unlimited.",
+        "dailyNewCardLimit": "Daily New Card Limit",
+        "dailyNewCardLimitDescription": "Maximum new cards to introduce each day.",
+        "unlimited": "Unlimited",
+        "currentValue": "Current: {{value}}"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "Configure reminders for your daily reviews.",
+        "pushEnabled": "Push Notifications",
+        "pushEnabledDescription": "Receive browser push notifications for due reviews.",
+        "emailEnabled": "Email Reminders",
+        "emailEnabledDescription": "Receive email reminders when you have cards due.",
+        "reminderTime": "Reminder Time",
+        "reminderTimeDescription": "When to send daily review reminders.",
+        "onlyWhenDue": "Only When Cards Are Due",
+        "onlyWhenDueDescription": "Only send reminders when you have cards due for review."
+      },
+      "reviewPreferences": {
+        "title": "Review Preferences",
+        "description": "Customize your review session experience.",
+        "cardOrder": {
+          "title": "Card Order",
+          "description": "How cards are ordered during review sessions.",
+          "due_date": "Due Date (oldest first)",
+          "random": "Random",
+          "difficulty": "Difficulty (hardest first)",
+          "added_date": "Added Date (newest first)"
+        },
+        "ratingStyle": {
+          "title": "Rating Style",
+          "description": "How you rate cards during reviews.",
+          "buttons": "Buttons",
+          "keyboard": "Keyboard (1-4 keys)",
+          "swipe": "Swipe Gestures"
+        },
+        "autoPlayAudio": "Auto-Play Audio",
+        "autoPlayAudioDescription": "Automatically play audio when revealing card answers.",
+        "showProgress": "Show Progress",
+        "showProgressDescription": "Display progress bar during review sessions.",
+        "enableUndo": "Enable Undo",
+        "enableUndoDescription": "Allow undoing the last rating during reviews.",
+        "autoAdvance": "Auto-Advance",
+        "autoAdvanceDescription": "Automatically move to next card after rating.",
+        "autoAdvanceDelay": "Auto-Advance Delay"
+      },
+      "resetSettings": "Reset to Defaults",
+      "resetConfirm": "Are you sure you want to reset all SRS settings to defaults?",
+      "saved": "SRS settings saved"
     }
   },
   "languages": {

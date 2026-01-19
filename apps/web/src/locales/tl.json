@@ -1216,6 +1216,63 @@
       "resetSettings": "I-reset sa Default",
       "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng pangkalahatang setting sa default?",
       "saved": "Na-save ang mga setting"
+    },
+    "srs": {
+      "title": "Mga Setting ng SRS",
+      "description": "I-configure ang iyong mga kagustuhan sa spaced repetition system para sa mga flashcard review.",
+      "limits": {
+        "title": "Mga Limitasyon sa Araw-araw",
+        "description": "Kontrolin kung ilang card ang nire-review mo araw-araw.",
+        "dailyReviewLimit": "Limitasyon sa Araw-araw na Review",
+        "dailyReviewLimitDescription": "Pinakamataas na bilang ng review sa isang araw. Itakda sa 0 para walang limitasyon.",
+        "dailyNewCardLimit": "Limitasyon sa Bagong Card sa Araw-araw",
+        "dailyNewCardLimitDescription": "Pinakamataas na bagong card na ipapakilala araw-araw.",
+        "unlimited": "Walang Limitasyon",
+        "currentValue": "Kasalukuyan: {{value}}"
+      },
+      "notifications": {
+        "title": "Mga Notipikasyon",
+        "description": "I-configure ang mga paalala para sa iyong araw-araw na review.",
+        "pushEnabled": "Mga Push Notification",
+        "pushEnabledDescription": "Tumanggap ng browser push notification para sa mga due na review.",
+        "emailEnabled": "Mga Email Reminder",
+        "emailEnabledDescription": "Tumanggap ng email reminder kapag may mga due na card ka.",
+        "reminderTime": "Oras ng Paalala",
+        "reminderTimeDescription": "Kailan ipadala ang mga araw-araw na review reminder.",
+        "onlyWhenDue": "Kapag May Due na Card Lang",
+        "onlyWhenDueDescription": "Magpadala lang ng paalala kapag may mga card kang due para i-review."
+      },
+      "reviewPreferences": {
+        "title": "Mga Kagustuhan sa Review",
+        "description": "I-customize ang iyong review session experience.",
+        "cardOrder": {
+          "title": "Pagkakaayos ng Card",
+          "description": "Paano naka-ayos ang mga card sa mga review session.",
+          "due_date": "Petsa ng Due (pinaka-luma muna)",
+          "random": "Random",
+          "difficulty": "Kahirapan (pinaka-mahirap muna)",
+          "added_date": "Petsa ng Pagdagdag (pinaka-bago muna)"
+        },
+        "ratingStyle": {
+          "title": "Estilo ng Rating",
+          "description": "Paano mo nire-rate ang mga card sa mga review.",
+          "buttons": "Mga Button",
+          "keyboard": "Keyboard (1-4 key)",
+          "swipe": "Mga Swipe Gesture"
+        },
+        "autoPlayAudio": "Auto-Play Audio",
+        "autoPlayAudioDescription": "Awtomatikong i-play ang audio kapag ipinapakita ang mga sagot ng card.",
+        "showProgress": "Ipakita ang Progress",
+        "showProgressDescription": "Ipakita ang progress bar sa mga review session.",
+        "enableUndo": "I-enable ang Undo",
+        "enableUndoDescription": "Payagan ang pag-undo ng huling rating sa mga review.",
+        "autoAdvance": "Auto-Advance",
+        "autoAdvanceDescription": "Awtomatikong lumipat sa susunod na card pagkatapos mag-rate.",
+        "autoAdvanceDelay": "Delay ng Auto-Advance"
+      },
+      "resetSettings": "I-reset sa Default",
+      "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng SRS setting sa default?",
+      "saved": "Na-save ang mga SRS setting"
     }
   },
   "languages": {

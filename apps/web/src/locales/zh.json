@@ -1217,6 +1217,63 @@
       "resetSettings": "重置为默认值",
       "resetConfirm": "您确定要将所有通用设置重置为默认值吗？",
       "saved": "设置已保存"
+    },
+    "srs": {
+      "title": "间隔重复设置",
+      "description": "配置您的闪卡复习间隔重复系统偏好。",
+      "limits": {
+        "title": "每日限制",
+        "description": "控制您每天复习多少张卡片。",
+        "dailyReviewLimit": "每日复习限制",
+        "dailyReviewLimitDescription": "每天最大复习次数。设为0表示无限制。",
+        "dailyNewCardLimit": "每日新卡限制",
+        "dailyNewCardLimitDescription": "每天引入的最大新卡数量。",
+        "unlimited": "无限制",
+        "currentValue": "当前：{{value}}"
+      },
+      "notifications": {
+        "title": "通知",
+        "description": "配置您每日复习的提醒。",
+        "pushEnabled": "推送通知",
+        "pushEnabledDescription": "接收浏览器推送通知以提醒到期的复习。",
+        "emailEnabled": "邮件提醒",
+        "emailEnabledDescription": "当您有到期的卡片时接收邮件提醒。",
+        "reminderTime": "提醒时间",
+        "reminderTimeDescription": "何时发送每日复习提醒。",
+        "onlyWhenDue": "仅在有到期卡片时",
+        "onlyWhenDueDescription": "仅在您有到期复习的卡片时发送提醒。"
+      },
+      "reviewPreferences": {
+        "title": "复习偏好",
+        "description": "自定义您的复习会话体验。",
+        "cardOrder": {
+          "title": "卡片顺序",
+          "description": "复习会话中卡片的排列顺序。",
+          "due_date": "到期日期（最早优先）",
+          "random": "随机",
+          "difficulty": "难度（最难优先）",
+          "added_date": "添加日期（最新优先）"
+        },
+        "ratingStyle": {
+          "title": "评分方式",
+          "description": "复习过程中如何评分卡片。",
+          "buttons": "按钮",
+          "keyboard": "键盘（1-4键）",
+          "swipe": "滑动手势"
+        },
+        "autoPlayAudio": "自动播放音频",
+        "autoPlayAudioDescription": "显示卡片答案时自动播放音频。",
+        "showProgress": "显示进度",
+        "showProgressDescription": "在复习会话中显示进度条。",
+        "enableUndo": "启用撤销",
+        "enableUndoDescription": "允许在复习期间撤销上一次评分。",
+        "autoAdvance": "自动前进",
+        "autoAdvanceDescription": "评分后自动移至下一张卡片。",
+        "autoAdvanceDelay": "自动前进延迟"
+      },
+      "resetSettings": "重置为默认值",
+      "resetConfirm": "您确定要将所有间隔重复设置重置为默认值吗？",
+      "saved": "间隔重复设置已保存"
     }
   },
   "languages": {

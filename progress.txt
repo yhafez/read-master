@@ -11332,3 +11332,67 @@ Added flashcards.browse translations to all 6 locales (en, ar, es, ja, zh, tl):
 - Mock data includes 12 cards covering all types and statuses
 
 ---
+
+## Iteration 54 - frontend-038: SRS Settings Page
+**Task:** Implement SRS (Spaced Repetition System) settings page
+**Status:** ✅ COMPLETE
+
+### Implementation Summary
+
+Created a comprehensive SRS settings page that allows users to configure their spaced repetition review experience, including daily limits, notifications, and review preferences.
+
+### Files Created/Modified
+
+#### apps/web/src/stores/srsSettingsStore.ts (NEW)
+- Zustand store with localStorage persistence
+- Types: ReminderTime, CardOrder, RatingStyle, SRSLimits, SRSNotifications, SRSReviewPreferences, SRSSettings, DeepPartialSRSSettings
+- Constants: reminderTimes (06:00-22:00), cardOrderOptions, ratingStyleOptions
+- Range constants: DAILY_REVIEW_LIMIT_RANGE (0-500), DAILY_NEW_CARD_LIMIT_RANGE (0-100), AUTO_ADVANCE_DELAY_RANGE (1000-5000)
+- Validation functions: validateDailyReviewLimit, validateDailyNewCardLimit, validateReminderTime, validateCardOrder, validateRatingStyle, validateAutoAdvanceDelay
+- Sanitization functions: sanitizeLimits, sanitizeNotifications, sanitizeReviewPreferences, sanitizeSRSSettings
+- Utility functions: formatReminderTime, getCardOrderLabelKey, getRatingStyleLabelKey, hasAnyNotificationsEnabled
+- Store actions: setDailyReviewLimit, setDailyNewCardLimit, setNotificationEnabled, setPushEnabled, setEmailEnabled, setReminderTime, setOnlyWhenDue, setCardOrder, setRatingStyle, setAutoPlayAudio, setShowProgress, setEnableUndo, setAutoAdvance, setAutoAdvanceDelay, reset
+
+#### apps/web/src/stores/index.ts (MODIFIED)
+- Exported all SRS settings types, constants, and functions
+
+#### apps/web/src/pages/settings/SettingsSRSPage.tsx (NEW)
+- Full settings page component using MUI
+- Sections: Daily Limits (sliders), Notifications (toggles + time select), Review Preferences (select, toggles, slider)
+- ToggleItem sub-component for consistent toggle styling
+- Reset to defaults functionality with confirmation snackbar
+- i18n integration for all labels and descriptions
+
+#### apps/web/src/pages/settings/index.ts (MODIFIED)
+- Added export for SettingsSRSPage
+
+#### apps/web/src/stores/srsSettingsStore.test.ts (NEW)
+- Comprehensive test suite with 81 tests
+- Tests for: clampNumber, validation functions, sanitization functions
+- Tests for: utility functions (formatReminderTime, getCardOrderLabelKey, getRatingStyleLabelKey, hasAnyNotificationsEnabled)
+- Tests for: store actions and reset functionality
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added settings.srs translations to all 6 locales (en, ar, es, ja, zh, tl):
+- Section titles and descriptions
+- Daily limits labels (review limit, new card limit, descriptions)
+- Notification labels (enabled, push, email, reminder time, only when due)
+- Review preferences labels (card order, rating style, auto-play audio, show progress, enable undo, auto-advance)
+- Card order options (due date, random, difficulty, added date)
+- Rating style options (buttons, keyboard, swipe)
+- Reset button and success message
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, warnings only)
+- pnpm vitest run: ✅ 3685 tests pass (81 new tests)
+
+### Technical Notes
+- Settings persisted to localStorage with key "srs-settings-storage"
+- All numeric inputs validated and clamped to valid ranges
+- Sanitization functions handle partial/invalid data gracefully
+- Type-safe enums for card order, rating style, and reminder time
+- DeepPartialSRSSettings type for flexible partial updates
+- Follows existing patterns from aiSettingsStore.ts and SettingsAIPage.tsx
+
+---

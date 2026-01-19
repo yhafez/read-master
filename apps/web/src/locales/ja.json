@@ -1217,6 +1217,63 @@
       "resetSettings": "デフォルトにリセット",
       "resetConfirm": "すべての一般設定をデフォルトにリセットしてもよろしいですか？",
       "saved": "設定を保存しました"
+    },
+    "srs": {
+      "title": "SRS設定",
+      "description": "フラッシュカードレビューのための間隔反復システムの設定を行います。",
+      "limits": {
+        "title": "1日の制限",
+        "description": "毎日レビューするカードの数を制御します。",
+        "dailyReviewLimit": "1日のレビュー制限",
+        "dailyReviewLimitDescription": "1日あたりの最大レビュー数。無制限にするには0を設定。",
+        "dailyNewCardLimit": "1日の新規カード制限",
+        "dailyNewCardLimitDescription": "毎日導入する新規カードの最大数。",
+        "unlimited": "無制限",
+        "currentValue": "現在: {{value}}"
+      },
+      "notifications": {
+        "title": "通知",
+        "description": "毎日のレビューのリマインダーを設定します。",
+        "pushEnabled": "プッシュ通知",
+        "pushEnabledDescription": "期限のレビューのブラウザプッシュ通知を受け取る。",
+        "emailEnabled": "メールリマインダー",
+        "emailEnabledDescription": "期限のカードがある時にメールリマインダーを受け取る。",
+        "reminderTime": "リマインダー時間",
+        "reminderTimeDescription": "毎日のレビューリマインダーを送信する時間。",
+        "onlyWhenDue": "カードが期限の時のみ",
+        "onlyWhenDueDescription": "レビュー期限のカードがある時のみリマインダーを送信。"
+      },
+      "reviewPreferences": {
+        "title": "レビュー設定",
+        "description": "レビューセッションの体験をカスタマイズします。",
+        "cardOrder": {
+          "title": "カードの順序",
+          "description": "レビューセッション中のカードの並び順。",
+          "due_date": "期限日（古い順）",
+          "random": "ランダム",
+          "difficulty": "難易度（難しい順）",
+          "added_date": "追加日（新しい順）"
+        },
+        "ratingStyle": {
+          "title": "評価スタイル",
+          "description": "レビュー中のカードの評価方法。",
+          "buttons": "ボタン",
+          "keyboard": "キーボード（1-4キー）",
+          "swipe": "スワイプジェスチャー"
+        },
+        "autoPlayAudio": "自動音声再生",
+        "autoPlayAudioDescription": "カードの回答を表示する際に自動的に音声を再生。",
+        "showProgress": "進捗を表示",
+        "showProgressDescription": "レビューセッション中に進捗バーを表示。",
+        "enableUndo": "元に戻すを有効化",
+        "enableUndoDescription": "レビュー中に最後の評価を元に戻すことを許可。",
+        "autoAdvance": "自動進行",
+        "autoAdvanceDescription": "評価後に自動的に次のカードに進む。",
+        "autoAdvanceDelay": "自動進行の遅延"
+      },
+      "resetSettings": "デフォルトにリセット",
+      "resetConfirm": "すべてのSRS設定をデフォルトにリセットしてもよろしいですか？",
+      "saved": "SRS設定を保存しました"
     }
   },
   "languages": {

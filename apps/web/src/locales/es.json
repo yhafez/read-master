@@ -1217,6 +1217,63 @@
       "resetSettings": "Restablecer Valores",
       "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones generales a los valores predeterminados?",
       "saved": "Configuración guardada"
+    },
+    "srs": {
+      "title": "Configuración de SRS",
+      "description": "Configura tus preferencias del sistema de repetición espaciada para las revisiones de tarjetas.",
+      "limits": {
+        "title": "Límites Diarios",
+        "description": "Controla cuántas tarjetas revisas cada día.",
+        "dailyReviewLimit": "Límite de Revisiones Diarias",
+        "dailyReviewLimitDescription": "Número máximo de revisiones por día. Establece 0 para ilimitado.",
+        "dailyNewCardLimit": "Límite de Tarjetas Nuevas Diarias",
+        "dailyNewCardLimitDescription": "Máximo de tarjetas nuevas a introducir cada día.",
+        "unlimited": "Ilimitado",
+        "currentValue": "Actual: {{value}}"
+      },
+      "notifications": {
+        "title": "Notificaciones",
+        "description": "Configura recordatorios para tus revisiones diarias.",
+        "pushEnabled": "Notificaciones Push",
+        "pushEnabledDescription": "Recibe notificaciones push del navegador para revisiones pendientes.",
+        "emailEnabled": "Recordatorios por Email",
+        "emailEnabledDescription": "Recibe recordatorios por email cuando tengas tarjetas pendientes.",
+        "reminderTime": "Hora del Recordatorio",
+        "reminderTimeDescription": "Cuándo enviar recordatorios de revisión diaria.",
+        "onlyWhenDue": "Solo Cuando Hay Tarjetas Pendientes",
+        "onlyWhenDueDescription": "Solo enviar recordatorios cuando tengas tarjetas pendientes de revisar."
+      },
+      "reviewPreferences": {
+        "title": "Preferencias de Revisión",
+        "description": "Personaliza tu experiencia de sesión de revisión.",
+        "cardOrder": {
+          "title": "Orden de Tarjetas",
+          "description": "Cómo se ordenan las tarjetas durante las sesiones de revisión.",
+          "due_date": "Fecha de Vencimiento (más antiguas primero)",
+          "random": "Aleatorio",
+          "difficulty": "Dificultad (más difíciles primero)",
+          "added_date": "Fecha de Añadido (más recientes primero)"
+        },
+        "ratingStyle": {
+          "title": "Estilo de Calificación",
+          "description": "Cómo calificas las tarjetas durante las revisiones.",
+          "buttons": "Botones",
+          "keyboard": "Teclado (teclas 1-4)",
+          "swipe": "Gestos de Deslizamiento"
+        },
+        "autoPlayAudio": "Reproducción Automática de Audio",
+        "autoPlayAudioDescription": "Reproducir audio automáticamente al revelar respuestas.",
+        "showProgress": "Mostrar Progreso",
+        "showProgressDescription": "Mostrar barra de progreso durante las sesiones de revisión.",
+        "enableUndo": "Habilitar Deshacer",
+        "enableUndoDescription": "Permitir deshacer la última calificación durante las revisiones.",
+        "autoAdvance": "Avance Automático",
+        "autoAdvanceDescription": "Pasar automáticamente a la siguiente tarjeta después de calificar.",
+        "autoAdvanceDelay": "Retraso de Avance Automático"
+      },
+      "resetSettings": "Restablecer Valores",
+      "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones de SRS a los valores predeterminados?",
+      "saved": "Configuración de SRS guardada"
     }
   },
   "languages": {

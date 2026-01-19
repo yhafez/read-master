@@ -17,7 +17,7 @@
   "sprint_info": {
     "description": "All tasks active. Complete Read Master MVP to production.",
     "current_sprint_focus": "Full stack completion - API, Frontend, PWA, Testing, Deployment",
-    "completed_count": 92,
+    "completed_count": 98,
     "total_tasks": 193,
     "active_tasks": 193,
     "new_tasks_added": 135
@@ -2169,7 +2169,7 @@
         "Limits enforced",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-039",
@@ -4742,6 +4742,402 @@
         "Migrations run successfully",
         "Endpoints persist to database",
         "Cleanup job removes expired downloads",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-001",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "high",
+      "description": "Add UserRole enum and admin role to User model",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add UserRole enum (USER, MODERATOR, ADMIN, SUPER_ADMIN) to schema",
+        "Add role field to User model with default USER",
+        "Create migration",
+        "Update seed data to include admin user",
+        "Update User type in shared package",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "UserRole enum exists with all values",
+        "User model has role field",
+        "Migration runs successfully",
+        "Seed data includes admin user",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-002",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "high",
+      "description": "Create requireAdmin middleware for API protection",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create apps/api/src/middleware/requireAdmin.ts",
+        "Check user role from auth context",
+        "Throw ForbiddenError if not ADMIN or SUPER_ADMIN",
+        "Add audit logging for admin access attempts",
+        "Export middleware",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Middleware blocks non-admin users",
+        "Middleware allows ADMIN and SUPER_ADMIN",
+        "Audit logs are created",
+        "Clear error messages",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-003",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "critical",
+      "description": "Create DailyAnalytics model for time-series data",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add DailyAnalytics model to schema",
+        "Include date, user metrics, revenue metrics, engagement, AI costs",
+        "Add unique constraint on date",
+        "Add index on date for queries",
+        "Create migration",
+        "Update seed data with sample analytics",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "DailyAnalytics model exists",
+        "All metric fields included",
+        "Constraints and indexes work",
+        "Seed data includes sample analytics",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-004",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "critical",
+      "description": "Create analytics service with metrics calculation",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create apps/api/src/services/analytics.ts",
+        "Implement getUserStats (total, active, by tier)",
+        "Implement getRevenueStats (MRR, ARR, by tier)",
+        "Implement getEngagementStats (DAU, WAU, MAU, sessions)",
+        "Implement getFeatureUsageStats (AI, SRS, TTS, social)",
+        "Implement getAICostStats (total cost, per user, tokens)",
+        "Implement getContentStats (popular books, genres)",
+        "Add caching for expensive queries",
+        "Write comprehensive tests"
+      ],
+      "acceptance_criteria": [
+        "All stats functions implemented",
+        "Calculations are accurate",
+        "Performance is acceptable (< 5s)",
+        "Caching works correctly",
+        "Tests verify all calculations"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-005",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "high",
+      "description": "Create admin analytics API endpoints",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create GET /api/admin/analytics/overview",
+        "Create GET /api/admin/analytics/users",
+        "Create GET /api/admin/analytics/revenue",
+        "Create GET /api/admin/analytics/engagement",
+        "Create GET /api/admin/analytics/features",
+        "Create GET /api/admin/analytics/ai-costs",
+        "Create GET /api/admin/analytics/content",
+        "Apply requireAdmin middleware to all",
+        "Add response caching (5 min)",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "All endpoints return correct data",
+        "Admin-only access enforced",
+        "Caching works",
+        "Response times acceptable",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-006",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "high",
+      "description": "Create daily analytics cron job",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create api/cron/daily-analytics.ts",
+        "Calculate all metrics for previous day",
+        "Store in DailyAnalytics table",
+        "Handle errors gracefully",
+        "Send notification on failure",
+        "Configure in vercel.json (runs at midnight UTC)",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Cron job runs daily",
+        "Metrics calculated correctly",
+        "Data stored in database",
+        "Failures are logged and reported",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-106",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "critical",
+      "description": "Create admin dashboard page with overview metrics",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create AdminDashboardPage component",
+        "Add route protection (admin-only)",
+        "Fetch analytics data from API",
+        "Create MetricCard component for KPIs",
+        "Display total users, MRR, AI costs",
+        "Display active users, conversion rate",
+        "Add auto-refresh (every 60 seconds)",
+        "Add loading and error states",
+        "Make responsive",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Dashboard only accessible to admins",
+        "All key metrics display correctly",
+        "Auto-refresh works",
+        "Responsive on all screen sizes",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-107",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "high",
+      "description": "Create users over time chart",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Install charting library (recharts or similar)",
+        "Create UsersOverTimeChart component",
+        "Fetch time-series data from API",
+        "Display line chart with total and active users",
+        "Add date range selector (7d, 30d, 90d, 1y)",
+        "Add tooltips with exact values",
+        "Handle loading and error states",
+        "Make responsive",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Chart displays correctly",
+        "Data is accurate",
+        "Date range selector works",
+        "Responsive layout",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-108",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "high",
+      "description": "Create revenue over time chart",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create RevenueOverTimeChart component",
+        "Fetch revenue time-series data",
+        "Display line chart with MRR trends",
+        "Add breakdown by tier (stacked area chart)",
+        "Add date range selector",
+        "Add tooltips with values",
+        "Show growth rate indicators",
+        "Make responsive",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Chart displays MRR trends",
+        "Tier breakdown works",
+        "Growth rates calculated correctly",
+        "Responsive layout",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-109",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "medium",
+      "description": "Create feature usage table/chart",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create FeatureUsageTable component",
+        "Fetch feature usage stats from API",
+        "Display table with feature name, usage %, trend",
+        "Add sorting by usage/trend",
+        "Add filters (tier, date range)",
+        "Visualize with horizontal bar chart",
+        "Highlight low-usage features",
+        "Make responsive",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "All features listed with usage stats",
+        "Sorting works",
+        "Filters work",
+        "Low-usage features highlighted",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-110",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "medium",
+      "description": "Create AI costs breakdown visualization",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create AICostsDashboard component",
+        "Display total costs and cost per user",
+        "Show breakdown by feature (pie chart)",
+        "Show cost trends over time (line chart)",
+        "Show tokens used by feature",
+        "Add cost efficiency metrics",
+        "Add alerts for unusual spikes",
+        "Make responsive",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Cost breakdown is accurate",
+        "Charts display correctly",
+        "Alerts work for spikes",
+        "Responsive layout",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-111",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "low",
+      "description": "Create user cohort analysis view",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create CohortAnalysisView component",
+        "Fetch cohort data from API",
+        "Display retention cohort table",
+        "Color-code retention rates",
+        "Add cohort comparison",
+        "Add filters (date range, tier)",
+        "Make responsive",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "Cohort table displays correctly",
+        "Retention rates calculated correctly",
+        "Color coding helps identify trends",
+        "Filters work",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "frontend-112",
+      "category": "frontend-admin",
+      "phase": "9-admin",
+      "priority": "low",
+      "description": "Create analytics export functionality",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create ExportDialog component",
+        "Add export format selector (CSV, PDF, JSON)",
+        "Add date range selector",
+        "Add metric selector (which metrics to include)",
+        "Generate export on server",
+        "Trigger download",
+        "Add email option for large exports",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "All formats work (CSV, PDF, JSON)",
+        "Date range filtering works",
+        "Metric selection works",
+        "Downloads work",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-007",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "medium",
+      "description": "Create admin user management page",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create GET /api/admin/users endpoint with pagination",
+        "Create PUT /api/admin/users/:id/role endpoint",
+        "Create PUT /api/admin/users/:id/tier endpoint",
+        "Create DELETE /api/admin/users/:id endpoint",
+        "Create AdminUsersPage component",
+        "Display users table with search/filter",
+        "Add role management UI",
+        "Add tier management UI",
+        "Add user deletion with confirmation",
+        "Add audit logging",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "User list displays with pagination",
+        "Search and filters work",
+        "Role changes work with audit trail",
+        "Tier changes work",
+        "User deletion works (soft delete)",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "admin-008",
+      "category": "admin",
+      "phase": "9-admin",
+      "priority": "low",
+      "description": "Create admin settings page",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create AdminSettingsPage component",
+        "Add feature flags management",
+        "Add system notifications",
+        "Add maintenance mode toggle",
+        "Add rate limit configuration",
+        "Add API key management",
+        "Save settings to database",
+        "Write tests"
+      ],
+      "acceptance_criteria": [
+        "All settings are configurable",
+        "Changes persist correctly",
+        "Maintenance mode works",
         "Tests pass"
       ],
       "passes": false
