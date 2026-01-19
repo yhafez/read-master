@@ -550,6 +550,54 @@
         "loadServer": "فشل في تحميل البطاقة. حاول مرة أخرى.",
         "loadUnknown": "لا يمكن تحميل البطاقة"
       }
+    },
+    "stats": {
+      "title": "إحصائيات البطاقات التعليمية",
+      "refresh": "تحديث الإحصائيات",
+      "studyNow": "ادرس الآن ({{count}} مستحقة)",
+      "dueToday": "المستحقة اليوم",
+      "overdue": "{{count}} متأخرة",
+      "retention": "نسبة الحفظ",
+      "streak": "سلسلة الأيام",
+      "bestStreak": "الأفضل: {{count}} أيام",
+      "totalCards": "إجمالي البطاقات",
+      "activeCards": "{{count}} نشطة",
+      "cardsByStatus": "البطاقات حسب الحالة",
+      "history": "سجل المراجعة",
+      "chartType": "نوع الرسم البياني",
+      "timeRange": "النطاق الزمني",
+      "studyTime": "وقت الدراسة",
+      "forecast": "المراجعات القادمة",
+      "today": "اليوم",
+      "tomorrow": "غداً",
+      "thisWeek": "هذا الأسبوع",
+      "thisMonth": "هذا الشهر",
+      "next7Days": "الـ 7 أيام القادمة",
+      "next30Days": "الـ 30 يوماً القادمة",
+      "averagePerDay": "المعدل/اليوم",
+      "status": {
+        "new": "جديدة",
+        "learning": "قيد التعلم",
+        "review": "للمراجعة",
+        "suspended": "معلقة"
+      },
+      "charts": {
+        "reviews": "المراجعات",
+        "reviewsDescription": "عدد المراجعات في اليوم",
+        "retention": "نسبة الحفظ",
+        "retentionDescription": "نسبة الحفظ عبر الزمن",
+        "time": "وقت الدراسة",
+        "timeDescription": "الوقت المستغرق في الدراسة"
+      },
+      "timeRange": {
+        "7days": "7 أيام",
+        "30days": "30 يوماً",
+        "90days": "90 يوماً",
+        "year": "سنة واحدة"
+      },
+      "errors": {
+        "loadFailed": "فشل تحميل الإحصائيات. يرجى المحاولة مرة أخرى."
+      }
     }
   },
   "assessments": {

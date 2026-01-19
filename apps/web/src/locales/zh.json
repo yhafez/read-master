@@ -550,6 +550,54 @@
         "loadServer": "加载卡片失败，请重试。",
         "loadUnknown": "无法加载卡片"
       }
+    },
+    "stats": {
+      "title": "卡片统计",
+      "refresh": "刷新统计",
+      "studyNow": "立即学习（{{count}}张待复习）",
+      "dueToday": "今日待复习",
+      "overdue": "{{count}}张逾期",
+      "retention": "记忆率",
+      "streak": "连续天数",
+      "bestStreak": "最佳: {{count}}天",
+      "totalCards": "总卡片数",
+      "activeCards": "{{count}}张活跃",
+      "cardsByStatus": "按状态分类",
+      "history": "复习历史",
+      "chartType": "图表类型",
+      "timeRange": "时间范围",
+      "studyTime": "学习时间",
+      "forecast": "即将复习",
+      "today": "今天",
+      "tomorrow": "明天",
+      "thisWeek": "本周",
+      "thisMonth": "本月",
+      "next7Days": "未来7天",
+      "next30Days": "未来30天",
+      "averagePerDay": "日均",
+      "status": {
+        "new": "新卡片",
+        "learning": "学习中",
+        "review": "复习中",
+        "suspended": "已暂停"
+      },
+      "charts": {
+        "reviews": "复习",
+        "reviewsDescription": "每日复习数量",
+        "retention": "记忆率",
+        "retentionDescription": "记忆率变化趋势",
+        "time": "学习时间",
+        "timeDescription": "学习花费的时间"
+      },
+      "timeRange": {
+        "7days": "7天",
+        "30days": "30天",
+        "90days": "90天",
+        "year": "1年"
+      },
+      "errors": {
+        "loadFailed": "加载统计失败，请重试。"
+      }
     }
   },
   "assessments": {

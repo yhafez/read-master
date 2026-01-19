@@ -550,6 +550,54 @@
         "loadServer": "Error al cargar la tarjeta. Intenta de nuevo.",
         "loadUnknown": "No se puede cargar la tarjeta"
       }
+    },
+    "stats": {
+      "title": "Estadísticas de Tarjetas",
+      "refresh": "Actualizar estadísticas",
+      "studyNow": "Estudiar Ahora ({{count}} pendientes)",
+      "dueToday": "Pendientes Hoy",
+      "overdue": "{{count}} atrasadas",
+      "retention": "Retención",
+      "streak": "Racha de Días",
+      "bestStreak": "Mejor: {{count}} días",
+      "totalCards": "Total de Tarjetas",
+      "activeCards": "{{count}} activas",
+      "cardsByStatus": "Tarjetas por Estado",
+      "history": "Historial de Revisiones",
+      "chartType": "Tipo de gráfico",
+      "timeRange": "Rango de tiempo",
+      "studyTime": "Tiempo de Estudio",
+      "forecast": "Revisiones Próximas",
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "thisWeek": "Esta Semana",
+      "thisMonth": "Este Mes",
+      "next7Days": "Próximos 7 Días",
+      "next30Days": "Próximos 30 Días",
+      "averagePerDay": "Prom/Día",
+      "status": {
+        "new": "Nuevas",
+        "learning": "Aprendiendo",
+        "review": "Revisión",
+        "suspended": "Suspendidas"
+      },
+      "charts": {
+        "reviews": "Revisiones",
+        "reviewsDescription": "Número de revisiones por día",
+        "retention": "Retención",
+        "retentionDescription": "Tasa de retención a lo largo del tiempo",
+        "time": "Tiempo de Estudio",
+        "timeDescription": "Tiempo dedicado al estudio"
+      },
+      "timeRange": {
+        "7days": "7 Días",
+        "30days": "30 Días",
+        "90days": "90 Días",
+        "year": "1 Año"
+      },
+      "errors": {
+        "loadFailed": "Error al cargar estadísticas. Intenta de nuevo."
+      }
     }
   },
   "assessments": {

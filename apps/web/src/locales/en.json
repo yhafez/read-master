@@ -551,6 +551,54 @@
         "loadServer": "Failed to load flashcard. Please try again.",
         "loadUnknown": "Unable to load flashcard"
       }
+    },
+    "stats": {
+      "title": "Flashcard Statistics",
+      "refresh": "Refresh statistics",
+      "studyNow": "Study Now ({{count}} due)",
+      "dueToday": "Due Today",
+      "overdue": "{{count}} overdue",
+      "retention": "Retention",
+      "streak": "Day Streak",
+      "bestStreak": "Best: {{count}} days",
+      "totalCards": "Total Cards",
+      "activeCards": "{{count}} active",
+      "cardsByStatus": "Cards by Status",
+      "history": "Review History",
+      "chartType": "Chart type",
+      "timeRange": "Time range",
+      "studyTime": "Study Time",
+      "forecast": "Upcoming Reviews",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "next7Days": "Next 7 Days",
+      "next30Days": "Next 30 Days",
+      "averagePerDay": "Avg/Day",
+      "status": {
+        "new": "New",
+        "learning": "Learning",
+        "review": "Review",
+        "suspended": "Suspended"
+      },
+      "charts": {
+        "reviews": "Reviews",
+        "reviewsDescription": "Number of reviews per day",
+        "retention": "Retention",
+        "retentionDescription": "Retention rate over time",
+        "time": "Study Time",
+        "timeDescription": "Time spent studying"
+      },
+      "timeRange": {
+        "7days": "7 Days",
+        "30days": "30 Days",
+        "90days": "90 Days",
+        "year": "1 Year"
+      },
+      "errors": {
+        "loadFailed": "Failed to load statistics. Please try again."
+      }
     }
   },
   "assessments": {

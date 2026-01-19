@@ -550,6 +550,54 @@
         "loadServer": "カードの読み込みに失敗しました。再度お試しください。",
         "loadUnknown": "カードを読み込めません"
       }
+    },
+    "stats": {
+      "title": "フラッシュカード統計",
+      "refresh": "統計を更新",
+      "studyNow": "今すぐ学習（{{count}}枚期限）",
+      "dueToday": "今日の期限",
+      "overdue": "{{count}}枚遅延",
+      "retention": "記憶率",
+      "streak": "連続日数",
+      "bestStreak": "最長: {{count}}日",
+      "totalCards": "総カード数",
+      "activeCards": "{{count}}枚アクティブ",
+      "cardsByStatus": "ステータス別カード",
+      "history": "復習履歴",
+      "chartType": "グラフの種類",
+      "timeRange": "期間",
+      "studyTime": "学習時間",
+      "forecast": "今後の復習",
+      "today": "今日",
+      "tomorrow": "明日",
+      "thisWeek": "今週",
+      "thisMonth": "今月",
+      "next7Days": "次の7日間",
+      "next30Days": "次の30日間",
+      "averagePerDay": "日平均",
+      "status": {
+        "new": "新規",
+        "learning": "学習中",
+        "review": "復習",
+        "suspended": "停止中"
+      },
+      "charts": {
+        "reviews": "復習",
+        "reviewsDescription": "1日あたりの復習数",
+        "retention": "記憶率",
+        "retentionDescription": "記憶率の推移",
+        "time": "学習時間",
+        "timeDescription": "学習に費やした時間"
+      },
+      "timeRange": {
+        "7days": "7日間",
+        "30days": "30日間",
+        "90days": "90日間",
+        "year": "1年間"
+      },
+      "errors": {
+        "loadFailed": "統計の読み込みに失敗しました。再度お試しください。"
+      }
     }
   },
   "assessments": {
