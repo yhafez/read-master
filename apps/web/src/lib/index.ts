@@ -82,3 +82,86 @@ export {
   createFieldIds,
   createFieldAriaAttributes,
 } from "./accessibility";
+
+// Mobile-responsive layout utilities
+export {
+  // Types
+  type BreakpointKey,
+  type ExtendedBreakpointKey,
+  type Orientation,
+  type DeviceType,
+  type ResponsiveValue,
+  type ContainerWidth,
+  type SpacingScale,
+  type GridColumns,
+  type TouchTargetResult,
+  type ScreenInfo,
+  type ResponsiveConfig,
+  // Constants
+  BREAKPOINT_VALUES,
+  EXTENDED_BREAKPOINT_VALUES,
+  MIN_TOUCH_TARGET,
+  COMFORTABLE_TOUCH_TARGET,
+  CONTAINER_MAX_WIDTHS,
+  RESPONSIVE_SPACING,
+  RESPONSIVE_PADDING,
+  RESPONSIVE_COLUMNS,
+  SAFE_AREA_VARS,
+  // Breakpoint utilities
+  getBreakpointFromWidth,
+  isBreakpointUp,
+  isBreakpointDown,
+  isBreakpointBetween,
+  isBreakpointOnly,
+  // Device detection
+  getDeviceType,
+  isTouchDevice,
+  getOrientation,
+  getPixelRatio,
+  isHighDPI,
+  getScreenInfo,
+  // Responsive value utilities
+  resolveResponsiveValue,
+  createResponsiveSx,
+  // Touch target utilities
+  validateTouchTarget,
+  getMinTouchTargetStyles as getResponsiveTouchTargetStyles,
+  getComfortableTouchTargetStyles,
+  // Layout utilities
+  getResponsiveConfig,
+  getContainerStyles,
+  getSafeAreaPadding,
+  getBottomNavPadding,
+  // Grid utilities
+  getGridItemWidth,
+  createResponsiveGridColumns,
+  // Media query utilities
+  createMinWidthQuery,
+  createMaxWidthQuery,
+  createPointerQuery,
+  createHoverQuery,
+  createOrientationQuery,
+  // Style helpers
+  createResponsiveDisplay,
+  createFluidFontSize,
+  createResponsiveSpacing,
+  // Hooks
+  useWindowSize,
+  useBreakpoint,
+  useBreakpointUp,
+  useBreakpointDown,
+  useBreakpointOnly,
+  useIsMobile,
+  useIsTablet,
+  useIsDesktop,
+  useIsTouchDevice,
+  useOrientation,
+  useScreenInfo,
+  useResponsiveValue,
+  useResponsiveConfig,
+  useResizeObserver,
+  useCustomMediaQuery,
+  usePrefersReducedMotion,
+  usePrefersDarkMode,
+  useCoarsePointer,
+} from "./responsive";
