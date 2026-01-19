@@ -6559,3 +6559,84 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7428 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 12 - Ralph Wiggum
+
+### Task Completed
+- **api-curriculum-002**: Implement curriculum browse and search endpoints
+
+### Implementation Details
+
+- Created GET /api/curriculums/browse endpoint (apps/api/api/curriculums/browse.ts):
+  - Returns only PUBLIC visibility curriculums (browse for discovery)
+  - Supports filtering by:
+    - category: Case-insensitive match
+    - difficulty: Beginner, Intermediate, Advanced
+    - tag: Array contains check
+    - search: Searches both title and description (case-insensitive OR)
+  - Supports sorting by:
+    - popularity: By followers count descending
+    - recent: By creation date descending
+    - rating: By followers count (proxy for rating)
+    - followers: By followers count descending
+    - items: By total items descending (curriculum size)
+  - Full pagination support with page and limit params
+  - Results cached with TTL for performance
+  - Re-checks follow status on cache hit for user-specific accuracy
+
+- Types and constants exported:
+  - DEFAULT_LIMIT, MAX_LIMIT, MIN_LIMIT constants
+  - MAX_SEARCH_LENGTH, MAX_CATEGORY_LENGTH, MAX_DIFFICULTY_LENGTH
+  - BROWSE_CACHE_TTL constant
+  - BrowseSortOptions, VALID_SORT_OPTIONS, DIFFICULTY_OPTIONS
+  - BrowseCurriculumsQueryParams, BrowseUserInfo, BrowseCurriculumSummary types
+  - BrowsePaginationInfo, BrowseCurriculumsResponse types
+
+- Helper functions exported:
+  - parsePage, parseLimit, parseSortBy, isValidSortOption
+  - parseCategory, parseDifficulty, isValidDifficulty
+  - parseSearch, parseTag, parseBrowseQuery
+  - buildBrowseCacheKey, formatDate
+  - mapToBrowseUserInfo, mapToBrowseCurriculumSummary
+  - truncateDescription, calculatePagination
+  - buildOrderBy, buildBrowseWhereClause
+
+- Comprehensive tests (apps/api/api/curriculums/browse.test.ts):
+  - Constants tests (12 tests)
+  - Type export tests (5 tests)
+  - parsePage tests (3 tests)
+  - parseLimit tests (3 tests)
+  - parseSortBy tests (5 tests)
+  - isValidSortOption tests (2 tests)
+  - parseCategory tests (3 tests)
+  - parseDifficulty tests (3 tests)
+  - isValidDifficulty tests (2 tests)
+  - parseSearch tests (4 tests)
+  - parseTag tests (3 tests)
+  - parseBrowseQuery tests (3 tests)
+  - buildBrowseCacheKey tests (3 tests)
+  - formatDate tests (2 tests)
+  - mapToBrowseUserInfo tests (2 tests)
+  - mapToBrowseCurriculumSummary tests (4 tests)
+  - truncateDescription tests (5 tests)
+  - calculatePagination tests (5 tests)
+  - buildOrderBy tests (6 tests)
+  - buildBrowseWhereClause tests (5 tests)
+  - Edge cases tests (6 tests)
+  - Integration tests (2 tests)
+
+- Files created:
+  - apps/api/api/curriculums/browse.ts
+  - apps/api/api/curriculums/browse.test.ts
+
+### Acceptance Criteria Verification
+- ✅ Browsing works with filters (category, difficulty, tag filters implemented)
+- ✅ Search works (searches title and description with OR condition)
+- ✅ Sorting works (popularity, recent, rating, followers, items)
+- ✅ Only public curriculums shown (visibility: "PUBLIC" always in where clause)
+- ✅ Tests pass (88 new tests, 7516 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7516 tests pass (pre-existing i18n test failure unrelated to this change)
