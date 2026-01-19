@@ -5636,3 +5636,65 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (69 tests pass)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6129 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+## Iteration 96
+
+[2026-01-18] api-social-003: Implement followers/following list endpoints
+- Created GET /api/users/:id/followers endpoint (apps/api/api/users/[id]/followers.ts):
+  - Types exported:
+    - FollowUserInfo: Basic user info in follow lists (id, username, displayName, avatarUrl, bio, followedAt)
+    - FollowUserWithRelation: Extended user info with isFollowing/isFollowedBy flags
+    - FollowListQueryParams: Query parameters (page, limit, search)
+    - FollowListResponse: Paginated response with users array and pagination metadata
+    - FollowWithUser: Database follow record with follower user info
+  - Helper functions:
+    - parseFollowListParams: Parse and validate query parameters
+    - validateUserId: Validate user ID format
+    - getUserBasicInfo: Check if user exists and get basic info
+    - buildSearchFilter: Build Prisma OR filter for username/displayName search
+    - getCurrentUserFollowing: Get set of user IDs current user follows
+    - getCurrentUserFollowers: Get set of user IDs that follow current user
+    - mapFollowToUserInfo: Map database record to response format with relationship status
+    - sanitizeSearch: Sanitize and limit search input length
+  - API handler:
+    - GET endpoint: Returns paginated list of followers
+    - Supports pagination (page, limit params)
+    - Supports search by username or displayName (case-insensitive)
+    - Returns isFollowing/isFollowedBy flags relative to current user
+    - Excludes soft-deleted users
+    - Orders by follow date (newest first)
+- Created GET /api/users/:id/following endpoint (apps/api/api/users/[id]/following.ts):
+  - Same structure as followers endpoint
+  - Types exported: Same types adapted for following relation
+  - Helper functions: Same functions adapted for following relation
+  - API handler:
+    - GET endpoint: Returns paginated list of users the target follows
+    - Same features: pagination, search, relationship status
+- Created comprehensive test suite for followers (apps/api/api/users/[id]/followers.test.ts):
+  - Type Export tests (6 tests)
+  - validateUserId tests (10 tests)
+  - parseFollowListParams tests (13 tests)
+  - buildSearchFilter tests (6 tests)
+  - sanitizeSearch tests (7 tests)
+  - mapFollowToUserInfo tests (8 tests)
+  - Edge Cases tests (8 tests)
+  - Response Structure tests (2 tests)
+  - Integration Scenarios tests (3 tests)
+  - FollowWithUser Type tests (2 tests)
+  - Total: 64 tests
+- Created comprehensive test suite for following (apps/api/api/users/[id]/following.test.ts):
+  - Same test structure as followers
+  - Additional tests for Following vs Followers differences (2 tests)
+  - Total: 64 tests
+- Files created:
+  - apps/api/api/users/[id]/followers.ts
+  - apps/api/api/users/[id]/followers.test.ts
+  - apps/api/api/users/[id]/following.ts
+  - apps/api/api/users/[id]/following.test.ts
+- Acceptance criteria verification:
+  - ✅ Lists work correctly (GET /api/users/:id/followers and /api/users/:id/following)
+  - ✅ Pagination works (page, limit params with proper skip/take)
+  - ✅ Tests pass (128 new tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6257 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+

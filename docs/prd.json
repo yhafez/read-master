@@ -1156,7 +1156,7 @@
         "Pagination works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-social-004",
