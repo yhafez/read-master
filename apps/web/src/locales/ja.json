@@ -580,6 +580,35 @@
         "3": "何に注意すべき？",
         "4": "難しい語彙を定義して"
       }
+    },
+    "checkIn": {
+      "title": "理解度チェック",
+      "generating": "問題を作成中...",
+      "error": "問題の作成に失敗しました",
+      "correct": "正解！",
+      "incorrect": "惜しい！",
+      "correctMessage": "よくできました！内容をよく理解しています。",
+      "incorrectMessage": "このセクションを復習して理解を深めましょう。",
+      "correctAnswerWas": "正解:",
+      "showExplanation": "解説を表示",
+      "hideExplanation": "解説を非表示",
+      "skip": "スキップ",
+      "submit": "回答を送信",
+      "continue": "読書を続ける",
+      "frequency": {
+        "title": "チェック頻度",
+        "description": "理解度チェックの表示頻度は？",
+        "never": "表示しない",
+        "sometimes": "時々（25%ごと）",
+        "always": "頻繁に（10%ごと）"
+      },
+      "difficulty": {
+        "easy": "簡単",
+        "moderate": "やや簡単",
+        "medium": "普通",
+        "challenging": "やや難しい",
+        "hard": "難しい"
+      }
     }
   },
   "pwa": {

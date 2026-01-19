@@ -580,6 +580,35 @@
         "3": "Ano ang dapat kong pansinin?",
         "4": "Ipaliwanag ang mahirap na bokabularyo"
       }
+    },
+    "checkIn": {
+      "title": "Pagsusuri ng Pag-unawa",
+      "generating": "Gumagawa ng mabilis na tanong...",
+      "error": "Nabigong gumawa ng tanong",
+      "correct": "Tama!",
+      "incorrect": "Hindi masyadong tama",
+      "correctMessage": "Magaling! Naintindihan mo nang mabuti ang nilalaman.",
+      "incorrectMessage": "Suriin muli ang seksyong ito para palakasin ang iyong pag-unawa.",
+      "correctAnswerWas": "Tamang sagot:",
+      "showExplanation": "Ipakita ang paliwanag",
+      "hideExplanation": "Itago ang paliwanag",
+      "skip": "Laktawan",
+      "submit": "Isumite ang Sagot",
+      "continue": "Magpatuloy sa Pagbabasa",
+      "frequency": {
+        "title": "Dalas ng Pagsusuri",
+        "description": "Gaano kadalas dapat lumabas ang mga pagsusuri ng pag-unawa?",
+        "never": "Hindi kailanman",
+        "sometimes": "Paminsan-minsan (bawat 25%)",
+        "always": "Madalas (bawat 10%)"
+      },
+      "difficulty": {
+        "easy": "Madali",
+        "moderate": "Katamtaman",
+        "medium": "Gitnang",
+        "challenging": "Mahamon",
+        "hard": "Mahirap"
+      }
     }
   },
   "pwa": {

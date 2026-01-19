@@ -581,6 +581,35 @@
         "3": "What should I pay attention to?",
         "4": "Define any difficult vocabulary"
       }
+    },
+    "checkIn": {
+      "title": "Comprehension Check",
+      "generating": "Generating a quick question...",
+      "error": "Failed to generate question",
+      "correct": "Correct!",
+      "incorrect": "Not quite right",
+      "correctMessage": "Great job! You understood the content well.",
+      "incorrectMessage": "Review this section to strengthen your understanding.",
+      "correctAnswerWas": "Correct answer:",
+      "showExplanation": "Show explanation",
+      "hideExplanation": "Hide explanation",
+      "skip": "Skip",
+      "submit": "Submit Answer",
+      "continue": "Continue Reading",
+      "frequency": {
+        "title": "Check-in Frequency",
+        "description": "How often should comprehension checks appear?",
+        "never": "Never",
+        "sometimes": "Occasionally (every 25%)",
+        "always": "Frequently (every 10%)"
+      },
+      "difficulty": {
+        "easy": "Easy",
+        "moderate": "Moderate",
+        "medium": "Medium",
+        "challenging": "Challenging",
+        "hard": "Hard"
+      }
     }
   },
   "pwa": {

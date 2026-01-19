@@ -8369,3 +8369,124 @@ All 6 locales (en, ar, es, ja, zh, tl) now include:
 - pnpm vitest run: ✅ 1758 tests pass (71 new offline caching tests)
 
 ### Commit
+
+---
+
+## Iteration 28: frontend-025 - Comprehension Check-Ins
+**Status**: ✅ COMPLETE
+**Date**: 2026-01-19
+
+### Task Description
+Implement comprehension check-in dialog that appears during reading to verify understanding. Triggers based on reading progress and user preferences.
+
+### Implementation Details
+
+#### Types and Utilities (comprehensionCheckTypes.ts)
+Created comprehensive types and 20+ utility functions:
+
+Types:
+- CheckInFrequency: "never" | "sometimes" | "always"
+- QuestionType: "multiple_choice" | "true_false" | "short_answer"
+- QuestionOption: id, text, isCorrect
+- ComprehensionQuestion: id, question, type, options, correctAnswer, explanation, difficulty, textReference
+- CheckInState: "loading" | "question" | "feedback_correct" | "feedback_incorrect" | "error"
+- UserAnswer: questionId, userAnswer, isCorrect, timestamp
+- ComprehensionCheckApiRequest/Response: API types
+- CheckInError: type, message, retryable
+- CheckInProgress: bookId, completedMilestones, lastCheckIn
+
+Constants:
+- CHECK_IN_FREQUENCY_CONFIG: Interval configs (never: 0, sometimes: 25%, always: 10%)
+- CHECK_IN_STORAGE_KEY, CHECK_IN_FREQUENCY_KEY: localStorage keys
+- MIN_CONTENT_LENGTH (100), MAX_CONTENT_LENGTH (5000)
+
+Utility Functions:
+- createCheckInError: Create typed error objects
+- parseCheckInApiError: Parse HTTP status to error type
+- isAnswerCorrect: Validate answer for all question types
+- calculateNextMilestone: Find next uncompleted milestone
+- shouldTriggerCheckIn: Determine if check-in should show
+- getCurrentMilestone: Get milestone for progress percentage
+- loadCheckInProgress/saveCheckInProgress: Persist progress
+- markMilestoneCompleted: Track completed milestones
+- loadCheckInFrequency/saveCheckInFrequency: Persist preference
+- buildCheckInApiRequest: Build API request
+- parseApiResponseToQuestion: Parse API response
+- getDifficultyLabel: 1-5 → Easy/Moderate/Medium/Challenging/Hard
+- getQuestionTypeLabel: Type to human-readable label
+- validateContentLength: Check content is valid for API
+
+#### Component (ComprehensionCheckIn.tsx)
+MUI Dialog with complete state management:
+- Loading state with spinner
+- Question display with difficulty chip and progress
+- Radio button answer selection
+- Submit with validation
+- Feedback screens (correct/incorrect)
+- Show/hide explanation
+- Skip and retry functionality
+- Milestone tracking on answer/skip
+
+Features:
+- React Query mutations for API calls
+- Progress tracking with localStorage
+- Proper error handling with retry
+- Keyboard-accessible controls
+- Full i18n support
+
+#### i18n Translations
+Added to all 6 locales (en, ar, es, ja, zh, tl):
+- ai.checkIn.title
+- ai.checkIn.generating
+- ai.checkIn.error
+- ai.checkIn.correct/incorrect
+- ai.checkIn.correctMessage/incorrectMessage
+- ai.checkIn.correctAnswerWas
+- ai.checkIn.showExplanation/hideExplanation
+- ai.checkIn.submit
+- ai.checkIn.skip
+- ai.checkIn.continue
+
+### Test Coverage (70 tests)
+Created comprehensionCheckTypes.test.ts:
+- Constants tests (3)
+- createCheckInError tests (7)
+- parseCheckInApiError tests (10)
+- isAnswerCorrect tests (9)
+- calculateNextMilestone tests (4)
+- shouldTriggerCheckIn tests (5)
+- getCurrentMilestone tests (4)
+- loadCheckInProgress/saveCheckInProgress tests (4)
+- markMilestoneCompleted tests (2)
+- loadCheckInFrequency/saveCheckInFrequency tests (3)
+- buildCheckInApiRequest tests (4)
+- parseApiResponseToQuestion tests (2)
+- getDifficultyLabel tests (5)
+- getQuestionTypeLabel tests (3)
+- validateContentLength tests (4)
+
+### Files Created
+- apps/web/src/components/ai/comprehensionCheckTypes.ts
+- apps/web/src/components/ai/ComprehensionCheckIn.tsx
+- apps/web/src/components/ai/comprehensionCheckTypes.test.ts
+
+### Files Modified
+- apps/web/src/components/ai/index.ts (added exports)
+- apps/web/src/locales/en.json (added ai.checkIn.*)
+- apps/web/src/locales/ar.json (added ai.checkIn.*)
+- apps/web/src/locales/es.json (added ai.checkIn.*)
+- apps/web/src/locales/ja.json (added ai.checkIn.*)
+- apps/web/src/locales/zh.json (added ai.checkIn.*)
+- apps/web/src/locales/tl.json (added ai.checkIn.*)
+
+### Acceptance Criteria Verification
+- ✅ Triggers correctly (shouldTriggerCheckIn + milestone tracking)
+- ✅ Questions display (ComprehensionCheckIn dialog)
+- ✅ Feedback shown (correct/incorrect states with explanation)
+- ✅ Can disable (frequency: "never" option)
+- ✅ Tests pass (70 tests for comprehension check utilities)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 1828 tests pass (70 new comprehension check tests)

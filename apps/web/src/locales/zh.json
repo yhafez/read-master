@@ -580,6 +580,35 @@
         "3": "我应该注意什么？",
         "4": "定义难懂的词汇"
       }
+    },
+    "checkIn": {
+      "title": "理解检查",
+      "generating": "正在生成问题...",
+      "error": "生成问题失败",
+      "correct": "正确！",
+      "incorrect": "不太对",
+      "correctMessage": "做得好！你很好地理解了内容。",
+      "incorrectMessage": "复习这个部分以加强理解。",
+      "correctAnswerWas": "正确答案：",
+      "showExplanation": "显示解释",
+      "hideExplanation": "隐藏解释",
+      "skip": "跳过",
+      "submit": "提交答案",
+      "continue": "继续阅读",
+      "frequency": {
+        "title": "检查频率",
+        "description": "理解检查应该多久出现一次？",
+        "never": "从不",
+        "sometimes": "偶尔（每25%）",
+        "always": "频繁（每10%）"
+      },
+      "difficulty": {
+        "easy": "简单",
+        "moderate": "适中",
+        "medium": "中等",
+        "challenging": "有挑战",
+        "hard": "困难"
+      }
     }
   },
   "pwa": {

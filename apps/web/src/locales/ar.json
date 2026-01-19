@@ -580,6 +580,35 @@
         "3": "ما الذي يجب أن أنتبه إليه؟",
         "4": "عرّف المفردات الصعبة"
       }
+    },
+    "checkIn": {
+      "title": "فحص الفهم",
+      "generating": "جارٍ إنشاء سؤال سريع...",
+      "error": "فشل إنشاء السؤال",
+      "correct": "صحيح!",
+      "incorrect": "ليس صحيحاً تماماً",
+      "correctMessage": "أحسنت! لقد فهمت المحتوى جيداً.",
+      "incorrectMessage": "راجع هذا القسم لتعزيز فهمك.",
+      "correctAnswerWas": "الإجابة الصحيحة:",
+      "showExplanation": "إظهار التفسير",
+      "hideExplanation": "إخفاء التفسير",
+      "skip": "تخطي",
+      "submit": "إرسال الإجابة",
+      "continue": "متابعة القراءة",
+      "frequency": {
+        "title": "تكرار الفحص",
+        "description": "كم مرة يجب أن تظهر فحوصات الفهم؟",
+        "never": "أبداً",
+        "sometimes": "أحياناً (كل 25%)",
+        "always": "كثيراً (كل 10%)"
+      },
+      "difficulty": {
+        "easy": "سهل",
+        "moderate": "متوسط",
+        "medium": "وسط",
+        "challenging": "صعب",
+        "hard": "صعب جداً"
+      }
     }
   },
   "pwa": {

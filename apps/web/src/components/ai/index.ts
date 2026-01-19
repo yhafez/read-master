@@ -118,3 +118,44 @@ export {
   isWaitingForResponse,
   getLastError,
 } from "./chatTypes";
+
+// Comprehension Check-In Feature
+export { ComprehensionCheckIn } from "./ComprehensionCheckIn";
+export type {
+  CheckInFrequency,
+  QuestionType,
+  QuestionOption,
+  ComprehensionQuestion,
+  ComprehensionCheckInProps,
+  CheckInState,
+  UserAnswer,
+  ComprehensionCheckApiRequest,
+  ComprehensionCheckApiResponse,
+  CheckInError,
+  CheckInErrorType,
+  CheckInProgress,
+} from "./comprehensionCheckTypes";
+export {
+  CHECK_IN_FREQUENCY_CONFIG,
+  CHECK_IN_STORAGE_KEY,
+  CHECK_IN_FREQUENCY_KEY,
+  MIN_CONTENT_LENGTH as CHECK_IN_MIN_CONTENT_LENGTH,
+  MAX_CONTENT_LENGTH as CHECK_IN_MAX_CONTENT_LENGTH,
+  DEFAULT_QUESTION_TYPE,
+  createCheckInError,
+  parseCheckInApiError,
+  isAnswerCorrect,
+  calculateNextMilestone,
+  shouldTriggerCheckIn,
+  getCurrentMilestone,
+  loadCheckInProgress,
+  saveCheckInProgress,
+  markMilestoneCompleted,
+  loadCheckInFrequency,
+  saveCheckInFrequency,
+  buildCheckInApiRequest,
+  parseApiResponseToQuestion,
+  getDifficultyLabel,
+  getQuestionTypeLabel,
+  validateContentLength,
+} from "./comprehensionCheckTypes";

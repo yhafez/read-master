@@ -580,6 +580,35 @@
         "3": "¿A qué debería prestar atención?",
         "4": "Define el vocabulario difícil"
       }
+    },
+    "checkIn": {
+      "title": "Verificación de Comprensión",
+      "generating": "Generando una pregunta rápida...",
+      "error": "Error al generar la pregunta",
+      "correct": "¡Correcto!",
+      "incorrect": "No del todo correcto",
+      "correctMessage": "¡Buen trabajo! Comprendiste bien el contenido.",
+      "incorrectMessage": "Revisa esta sección para fortalecer tu comprensión.",
+      "correctAnswerWas": "Respuesta correcta:",
+      "showExplanation": "Mostrar explicación",
+      "hideExplanation": "Ocultar explicación",
+      "skip": "Saltar",
+      "submit": "Enviar Respuesta",
+      "continue": "Continuar Leyendo",
+      "frequency": {
+        "title": "Frecuencia de Verificación",
+        "description": "¿Con qué frecuencia deben aparecer las verificaciones de comprensión?",
+        "never": "Nunca",
+        "sometimes": "Ocasionalmente (cada 25%)",
+        "always": "Frecuentemente (cada 10%)"
+      },
+      "difficulty": {
+        "easy": "Fácil",
+        "moderate": "Moderado",
+        "medium": "Medio",
+        "challenging": "Desafiante",
+        "hard": "Difícil"
+      }
     }
   },
   "pwa": {
