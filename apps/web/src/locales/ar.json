@@ -1358,6 +1358,62 @@
       "resetSettings": "إعادة التعيين إلى الافتراضي",
       "resetConfirm": "هل أنت متأكد من أنك تريد إعادة تعيين جميع إعدادات التكرار المتباعد إلى الافتراضي؟",
       "saved": "تم حفظ إعدادات التكرار المتباعد"
+    },
+    "readingSettings": {
+      "title": "إعدادات القراءة",
+      "description": "قم بتكوين تفضيلات القراءة الافتراضية. سيتم تطبيق هذه الإعدادات عند فتح أي كتاب.",
+      "appearance": {
+        "title": "المظهر",
+        "description": "تخصيص إعدادات السمة والخط.",
+        "theme": "السمة",
+        "themeDescription": "اختر سمة لونية مناسبة للقراءة.",
+        "themes": {
+          "light": "فاتح",
+          "dark": "داكن",
+          "sepia": "بني داكن",
+          "highContrast": "تباين عالي"
+        },
+        "font": "عائلة الخط",
+        "fontDescription": "اختر خطًا للقراءة."
+      },
+      "fonts": {
+        "system": "النظام الافتراضي",
+        "serif": "سيريف",
+        "openDyslexic": "أوبن ديسلكسيك"
+      },
+      "typography": {
+        "title": "الطباعة",
+        "description": "ضبط إعدادات حجم النص والتباعد.",
+        "fontSize": "حجم الخط",
+        "fontSizeDescription": "ضبط حجم نص القراءة.",
+        "lineHeight": "ارتفاع السطر",
+        "lineHeightDescription": "ضبط المسافة بين الأسطر."
+      },
+      "layout": {
+        "title": "التخطيط",
+        "description": "تخصيص إعدادات تخطيط القراءة.",
+        "margins": "الهوامش",
+        "marginsDescription": "ضبط المسافة حول النص.",
+        "maxWidth": "أقصى عرض",
+        "maxWidthDescription": "تعيين الحد الأقصى لعرض محتوى القراءة."
+      },
+      "display": {
+        "title": "ميزات العرض",
+        "description": "تبديل خيارات العرض.",
+        "showProgressBar": "إظهار شريط التقدم",
+        "showProgressBarDescription": "عرض شريط التقدم أثناء القراءة.",
+        "showTimeRemaining": "إظهار الوقت المتبقي",
+        "showTimeRemainingDescription": "عرض الوقت المقدر للانتهاء.",
+        "showReadingSpeed": "إظهار سرعة القراءة",
+        "showReadingSpeedDescription": "عرض سرعة القراءة الحالية (كلمة/دقيقة).",
+        "autoSave": "الحفظ التلقائي للتقدم",
+        "autoSaveDescription": "حفظ تقدم القراءة تلقائيًا.",
+        "pageAnimation": "رسوم متحركة لقلب الصفحة",
+        "pageAnimationDescription": "تمكين رسوم الانتقال بين الصفحات."
+      },
+      "resetSettings": "إعادة التعيين إلى الافتراضي",
+      "resetConfirm": "هل أنت متأكد من أنك تريد إعادة تعيين جميع إعدادات القراءة إلى الافتراضي؟",
+      "saved": "تم حفظ إعدادات القراءة"
     }
   },
   "languages": {

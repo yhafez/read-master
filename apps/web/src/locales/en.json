@@ -1358,6 +1358,62 @@
       "resetSettings": "Reset to Defaults",
       "resetConfirm": "Are you sure you want to reset all SRS settings to defaults?",
       "saved": "SRS settings saved"
+    },
+    "readingSettings": {
+      "title": "Reading Settings",
+      "description": "Configure your default reader preferences. These settings will be applied when you open any book.",
+      "appearance": {
+        "title": "Appearance",
+        "description": "Customize theme and font settings.",
+        "theme": "Theme",
+        "themeDescription": "Choose a color theme suitable for reading.",
+        "themes": {
+          "light": "Light",
+          "dark": "Dark",
+          "sepia": "Sepia",
+          "highContrast": "High Contrast"
+        },
+        "font": "Font Family",
+        "fontDescription": "Select a font for reading."
+      },
+      "fonts": {
+        "system": "System Default",
+        "serif": "Serif",
+        "openDyslexic": "OpenDyslexic"
+      },
+      "typography": {
+        "title": "Typography",
+        "description": "Adjust text size and spacing settings.",
+        "fontSize": "Font Size",
+        "fontSizeDescription": "Adjust the size of reading text.",
+        "lineHeight": "Line Height",
+        "lineHeightDescription": "Adjust the space between lines."
+      },
+      "layout": {
+        "title": "Layout",
+        "description": "Customize reading layout settings.",
+        "margins": "Margins",
+        "marginsDescription": "Adjust space around text.",
+        "maxWidth": "Max Width",
+        "maxWidthDescription": "Set maximum width of reading content."
+      },
+      "display": {
+        "title": "Display Features",
+        "description": "Toggle display options on/off.",
+        "showProgressBar": "Show Progress Bar",
+        "showProgressBarDescription": "Display progress bar while reading.",
+        "showTimeRemaining": "Show Time Remaining",
+        "showTimeRemainingDescription": "Display estimated time to finish.",
+        "showReadingSpeed": "Show Reading Speed",
+        "showReadingSpeedDescription": "Display current reading speed (WPM).",
+        "autoSave": "Auto-save Progress",
+        "autoSaveDescription": "Automatically save reading progress.",
+        "pageAnimation": "Page Turn Animation",
+        "pageAnimationDescription": "Enable page transition animations."
+      },
+      "resetSettings": "Reset to Defaults",
+      "resetConfirm": "Are you sure you want to reset all reading settings to defaults?",
+      "saved": "Reading settings saved"
     }
   },
   "languages": {

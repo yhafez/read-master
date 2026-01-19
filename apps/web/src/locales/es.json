@@ -1358,6 +1358,62 @@
       "resetSettings": "Restablecer Valores",
       "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones de SRS a los valores predeterminados?",
       "saved": "Configuración de SRS guardada"
+    },
+    "readingSettings": {
+      "title": "Configuración de Lectura",
+      "description": "Configura tus preferencias de lectura predeterminadas. Estas configuraciones se aplicarán cuando abras cualquier libro.",
+      "appearance": {
+        "title": "Apariencia",
+        "description": "Personaliza la configuración del tema y la fuente.",
+        "theme": "Tema",
+        "themeDescription": "Elige un tema de color adecuado para la lectura.",
+        "themes": {
+          "light": "Claro",
+          "dark": "Oscuro",
+          "sepia": "Sepia",
+          "highContrast": "Alto Contraste"
+        },
+        "font": "Familia de Fuente",
+        "fontDescription": "Selecciona una fuente para la lectura."
+      },
+      "fonts": {
+        "system": "Predeterminado del Sistema",
+        "serif": "Serif",
+        "openDyslexic": "OpenDyslexic"
+      },
+      "typography": {
+        "title": "Tipografía",
+        "description": "Ajusta la configuración del tamaño y espaciado del texto.",
+        "fontSize": "Tamaño de Fuente",
+        "fontSizeDescription": "Ajusta el tamaño del texto de lectura.",
+        "lineHeight": "Altura de Línea",
+        "lineHeightDescription": "Ajusta el espacio entre líneas."
+      },
+      "layout": {
+        "title": "Diseño",
+        "description": "Personaliza la configuración del diseño de lectura.",
+        "margins": "Márgenes",
+        "marginsDescription": "Ajusta el espacio alrededor del texto.",
+        "maxWidth": "Ancho Máximo",
+        "maxWidthDescription": "Establece el ancho máximo del contenido de lectura."
+      },
+      "display": {
+        "title": "Funciones de Visualización",
+        "description": "Activa/desactiva opciones de visualización.",
+        "showProgressBar": "Mostrar Barra de Progreso",
+        "showProgressBarDescription": "Muestra la barra de progreso durante la lectura.",
+        "showTimeRemaining": "Mostrar Tiempo Restante",
+        "showTimeRemainingDescription": "Muestra el tiempo estimado para terminar.",
+        "showReadingSpeed": "Mostrar Velocidad de Lectura",
+        "showReadingSpeedDescription": "Muestra la velocidad de lectura actual (PPM).",
+        "autoSave": "Guardar Progreso Automáticamente",
+        "autoSaveDescription": "Guarda el progreso de lectura automáticamente.",
+        "pageAnimation": "Animación de Paso de Página",
+        "pageAnimationDescription": "Habilita animaciones de transición de página."
+      },
+      "resetSettings": "Restablecer Valores",
+      "resetConfirm": "¿Estás seguro de que quieres restablecer toda la configuración de lectura a los valores predeterminados?",
+      "saved": "Configuración de lectura guardada"
     }
   },
   "languages": {

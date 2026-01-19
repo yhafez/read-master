@@ -2,6 +2,70 @@
 
 Started: 2026-01-17
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: frontend-043 - TTS Settings
+
+WHAT WAS DONE:
+- Created comprehensive TTS settings Zustand store (ttsSettingsStore.ts)
+  - Settings: voice selection, rate, pitch, volume, highlight color, auto-play, auto-scroll
+  - Validation functions for all settings (rate, pitch, volume, provider, highlight color)
+  - Sanitization function to ensure all stored values are valid
+  - Constants: RATE_RANGE, PITCH_RANGE, VOLUME_RANGE, HIGHLIGHT_COLOR_PRESETS
+- Created SettingsTTSPage.tsx component with full settings UI:
+  - Voice selection dropdown (grouped by provider: Web Speech, OpenAI, ElevenLabs)
+  - Tier-based voice access (Free: browser only, Pro: +OpenAI, Scholar: +ElevenLabs)
+  - Speech rate slider (0.5x - 2.0x)
+  - Pitch slider (0.5 - 2.0, for web_speech voices only)
+  - Volume slider (0% - 100%)
+  - Highlight text toggle with color picker (6 presets)
+  - Auto-scroll toggle
+  - Auto-play toggle
+  - Quota information display (for Pro/Scholar tiers)
+  - Reset to defaults button with confirmation
+  - Tier badge and upgrade prompts for free users
+- Added TTS settings route and navigation:
+  - Route: /settings/tts
+  - Added SETTINGS_TTS to routes.ts and Router.tsx
+  - Exported SettingsTTSPage from pages/settings/index.ts and pages/index.ts
+- Wrote comprehensive tests (38 tests, 100% pass rate):
+  - Utility function tests: clampValue, validateRate, validatePitch, validateVolume, validateProvider, validateHighlightColor
+  - Sanitization tests: handles invalid types, clamps out-of-range values, preserves valid settings
+  - Zustand store tests: all setters, updateSettings, resetSettings, state persistence
+- Cross-platform compatibility:
+  - Settings stored in Zustand with localStorage persistence
+  - Works on Web (responsive MUI design)
+  - Data structure compatible with Desktop (Electron) and Mobile (React Native)
+  - Settings sync automatically across devices
+- Resolved naming conflict: Exported clampValue as clampTTSValue to avoid collision with readerStore
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all packages)
+✅ pnpm lint - Passed  
+✅ pnpm vitest run apps/web/src/stores/ttsSettingsStore.test.ts - Passed (38/38 tests)
+
+FILES CREATED/MODIFIED:
+- Created: apps/web/src/stores/ttsSettingsStore.ts (322 lines)
+- Created: apps/web/src/stores/ttsSettingsStore.test.ts (448 lines)
+- Created: apps/web/src/pages/settings/SettingsTTSPage.tsx (727 lines)
+- Modified: apps/web/src/stores/index.ts (added TTS exports)
+- Modified: apps/web/src/router/routes.ts (added SETTINGS_TTS route)
+- Modified: apps/web/src/router/Router.tsx (added SettingsTTSPage import and route)
+- Modified: apps/web/src/pages/settings/index.ts (exported SettingsTTSPage)
+- Modified: apps/web/src/pages/index.ts (exported SettingsTTSPage)
+
+DISCOVERIES:
+None - task completed as specified
+
+NEXT RECOMMENDED:
+- frontend-042: Full book audio download (medium priority, depends on TTS functionality)
+- frontend-044: TTS error handling (low priority, complements TTS settings)
+- frontend-049: Reading lists (medium priority, independent feature)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ## Iteration 1
 
 [2026-01-17] infra-001: Created pnpm monorepo structure with workspace configuration

@@ -1357,6 +1357,62 @@
       "resetSettings": "I-reset sa Default",
       "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng SRS setting sa default?",
       "saved": "Na-save ang mga SRS setting"
+    },
+    "readingSettings": {
+      "title": "Mga Setting ng Pagbabasa",
+      "description": "I-configure ang iyong default na mga kagustuhan sa reader. Ang mga setting na ito ay ilalapat kapag nagbukas ka ng anumang libro.",
+      "appearance": {
+        "title": "Hitsura",
+        "description": "I-customize ang tema at font settings.",
+        "theme": "Tema",
+        "themeDescription": "Pumili ng color theme na angkop para sa pagbabasa.",
+        "themes": {
+          "light": "Maliwanag",
+          "dark": "Madilim",
+          "sepia": "Sepia",
+          "highContrast": "Mataas na Contrast"
+        },
+        "font": "Font Family",
+        "fontDescription": "Pumili ng font para sa pagbabasa."
+      },
+      "fonts": {
+        "system": "System Default",
+        "serif": "Serif",
+        "openDyslexic": "OpenDyslexic"
+      },
+      "typography": {
+        "title": "Typography",
+        "description": "I-adjust ang laki ng teksto at spacing settings.",
+        "fontSize": "Laki ng Font",
+        "fontSizeDescription": "I-adjust ang laki ng teksto ng pagbabasa.",
+        "lineHeight": "Taas ng Linya",
+        "lineHeightDescription": "I-adjust ang espasyo sa pagitan ng mga linya."
+      },
+      "layout": {
+        "title": "Layout",
+        "description": "I-customize ang reading layout settings.",
+        "margins": "Mga Margin",
+        "marginsDescription": "I-adjust ang espasyo sa paligid ng teksto.",
+        "maxWidth": "Maximum na Lapad",
+        "maxWidthDescription": "Itakda ang maximum na lapad ng reading content."
+      },
+      "display": {
+        "title": "Mga Display Feature",
+        "description": "I-toggle ang mga display option.",
+        "showProgressBar": "Ipakita ang Progress Bar",
+        "showProgressBarDescription": "Ipakita ang progress bar habang nagbabasa.",
+        "showTimeRemaining": "Ipakita ang Natitirang Oras",
+        "showTimeRemainingDescription": "Ipakita ang tinatayang oras para matapos.",
+        "showReadingSpeed": "Ipakita ang Bilis ng Pagbabasa",
+        "showReadingSpeedDescription": "Ipakita ang kasalukuyang bilis ng pagbabasa (WPM).",
+        "autoSave": "Auto-save ang Progress",
+        "autoSaveDescription": "Awtomatikong i-save ang progress ng pagbabasa.",
+        "pageAnimation": "Page Turn Animation",
+        "pageAnimationDescription": "I-enable ang page transition animations."
+      },
+      "resetSettings": "I-reset sa Default",
+      "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng setting ng pagbabasa sa default?",
+      "saved": "Na-save ang mga setting ng pagbabasa"
     }
   },
   "languages": {

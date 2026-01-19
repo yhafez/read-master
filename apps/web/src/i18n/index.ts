@@ -32,6 +32,7 @@ export function getDocumentDirection(lang: string): "ltr" | "rtl" {
 }
 
 export function updateDocumentDirection(lang: string): void {
+  if (typeof document === "undefined") return;
   const direction = getDocumentDirection(lang);
   document.documentElement.dir = direction;
   document.documentElement.lang = lang;

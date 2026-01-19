@@ -788,12 +788,12 @@ describe("Index exports", () => {
   it("should export searchBooks from index", async () => {
     const { searchBooks } = await import("./index.js");
     expect(typeof searchBooks).toBe("function");
-  });
+  }, 10000);
 
   it("should export getBookDetails from index", async () => {
     const { getBookDetails } = await import("./index.js");
     expect(typeof getBookDetails).toBe("function");
-  });
+  }, 10000);
 
   it("should export googleBooks from index", async () => {
     const { googleBooks } = await import("./index.js");

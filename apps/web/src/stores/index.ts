@@ -199,3 +199,21 @@ export type {
   SRSReviewPreferences,
   SRSSettings,
 } from "./srsSettingsStore";
+
+export {
+  clampValue as clampTTSValue,
+  DEFAULT_TTS_SETTINGS,
+  HIGHLIGHT_COLOR_PRESETS,
+  PITCH_RANGE,
+  RATE_RANGE,
+  sanitizeTTSSettings,
+  TTS_SETTINGS_STORAGE_KEY,
+  useTTSSettingsStore,
+  validateHighlightColor,
+  validatePitch,
+  validateProvider,
+  validateRate,
+  validateVolume,
+  VOLUME_RANGE,
+} from "./ttsSettingsStore";
+export type { PartialTTSSettings, TTSSettings } from "./ttsSettingsStore";

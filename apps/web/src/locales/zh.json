@@ -1358,6 +1358,62 @@
       "resetSettings": "重置为默认值",
       "resetConfirm": "您确定要将所有间隔重复设置重置为默认值吗？",
       "saved": "间隔重复设置已保存"
+    },
+    "readingSettings": {
+      "title": "阅读设置",
+      "description": "自定义您的阅读体验。",
+      "appearance": {
+        "title": "外观",
+        "description": "自定义主题和字体设置。",
+        "theme": "主题",
+        "themeDescription": "选择适合阅读的配色方案。",
+        "themes": {
+          "light": "浅色",
+          "dark": "深色",
+          "sepia": "棕褐色",
+          "highContrast": "高对比度"
+        },
+        "font": "字体",
+        "fontDescription": "选择阅读时使用的字体。"
+      },
+      "fonts": {
+        "system": "系统默认",
+        "serif": "衬线体",
+        "openDyslexic": "OpenDyslexic"
+      },
+      "typography": {
+        "title": "排版",
+        "description": "调整文字大小和间距设置。",
+        "fontSize": "字体大小",
+        "fontSizeDescription": "调整阅读文本的大小。",
+        "lineHeight": "行高",
+        "lineHeightDescription": "调整文本行之间的间距。"
+      },
+      "layout": {
+        "title": "布局",
+        "description": "自定义阅读布局设置。",
+        "margins": "边距",
+        "marginsDescription": "调整文本周围的空间。",
+        "maxWidth": "最大宽度",
+        "maxWidthDescription": "设置阅读内容的最大宽度。"
+      },
+      "display": {
+        "title": "显示功能",
+        "description": "切换显示选项的开关。",
+        "showProgressBar": "显示进度条",
+        "showProgressBarDescription": "阅读时显示进度条。",
+        "showTimeRemaining": "显示剩余时间",
+        "showTimeRemainingDescription": "显示预计完成阅读所需的时间。",
+        "showReadingSpeed": "显示阅读速度",
+        "showReadingSpeedDescription": "显示当前每分钟阅读字数。",
+        "autoSave": "自动保存进度",
+        "autoSaveDescription": "自动保存阅读进度。",
+        "pageAnimation": "翻页动画",
+        "pageAnimationDescription": "启用页面过渡动画。"
+      },
+      "resetSettings": "重置为默认值",
+      "resetConfirm": "您确定要将所有阅读设置重置为默认值吗？",
+      "saved": "阅读设置已保存"
     }
   },
   "languages": {

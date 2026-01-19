@@ -1358,6 +1358,62 @@
       "resetSettings": "デフォルトにリセット",
       "resetConfirm": "すべてのSRS設定をデフォルトにリセットしてもよろしいですか？",
       "saved": "SRS設定を保存しました"
+    },
+    "readingSettings": {
+      "title": "読書設定",
+      "description": "読書体験をカスタマイズしてください。",
+      "appearance": {
+        "title": "外観",
+        "description": "テーマとフォントの設定をカスタマイズします。",
+        "theme": "テーマ",
+        "themeDescription": "読書に適したカラーテーマを選択してください。",
+        "themes": {
+          "light": "ライト",
+          "dark": "ダーク",
+          "sepia": "セピア",
+          "highContrast": "ハイコントラスト"
+        },
+        "font": "フォントファミリー",
+        "fontDescription": "読書用のフォントを選択してください。"
+      },
+      "fonts": {
+        "system": "システムデフォルト",
+        "serif": "セリフ",
+        "openDyslexic": "OpenDyslexic"
+      },
+      "typography": {
+        "title": "タイポグラフィ",
+        "description": "テキストサイズと間隔の設定を調整します。",
+        "fontSize": "フォントサイズ",
+        "fontSizeDescription": "読書テキストのサイズを調整します。",
+        "lineHeight": "行の高さ",
+        "lineHeightDescription": "行間のスペースを調整します。"
+      },
+      "layout": {
+        "title": "レイアウト",
+        "description": "読書レイアウトの設定をカスタマイズします。",
+        "margins": "余白",
+        "marginsDescription": "テキストの周りのスペースを調整します。",
+        "maxWidth": "最大幅",
+        "maxWidthDescription": "読書コンテンツの最大幅を設定します。"
+      },
+      "display": {
+        "title": "表示機能",
+        "description": "表示オプションのオン/オフを切り替えます。",
+        "showProgressBar": "プログレスバーを表示",
+        "showProgressBarDescription": "読書中に進行状況バーを表示します。",
+        "showTimeRemaining": "残り時間を表示",
+        "showTimeRemainingDescription": "読み終わるまでの推定時間を表示します。",
+        "showReadingSpeed": "読書速度を表示",
+        "showReadingSpeedDescription": "現在の読書速度（WPM）を表示します。",
+        "autoSave": "進行状況を自動保存",
+        "autoSaveDescription": "読書の進行状況を自動的に保存します。",
+        "pageAnimation": "ページめくりアニメーション",
+        "pageAnimationDescription": "ページ遷移アニメーションを有効にします。"
+      },
+      "resetSettings": "デフォルトにリセット",
+      "resetConfirm": "すべての読書設定をデフォルトにリセットしてもよろしいですか？",
+      "saved": "読書設定を保存しました"
     }
   },
   "languages": {
