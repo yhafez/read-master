@@ -1285,5 +1285,127 @@
     "acrossAssessments": "Across all assessments",
     "thisWeek": "This week: {{count}}",
     "thisWeekTime": "This week: {{time}}"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "subtitle": "Track your accomplishments and earn rewards",
+    "unlocked": "Achievements Unlocked",
+    "completion": "Completion",
+    "total": "total",
+    "xpEarned": "XP Earned from Achievements",
+    "progress": "Progress",
+    "unlockedOn": "Unlocked on {{date}}",
+    "filter": "Filter achievements",
+    "filterAll": "All",
+    "filterUnlocked": "Unlocked",
+    "filterLocked": "Locked",
+    "noUnlocked": "No achievements unlocked yet. Keep reading!",
+    "allUnlocked": "Congratulations! You've unlocked all achievements!",
+    "categories": {
+      "reading": "Reading",
+      "streak": "Streak",
+      "flashcards": "Flashcards",
+      "assessments": "Assessments",
+      "social": "Social",
+      "milestones": "Milestones"
+    },
+    "tier": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum"
+    },
+    "firstBook": {
+      "name": "First Book",
+      "description": "Complete your first book"
+    },
+    "bookworm": {
+      "name": "Bookworm",
+      "description": "Complete 10 books"
+    },
+    "bibliophile": {
+      "name": "Bibliophile",
+      "description": "Complete 50 books"
+    },
+    "libraryMaster": {
+      "name": "Library Master",
+      "description": "Complete 100 books"
+    },
+    "streakStarter": {
+      "name": "Streak Starter",
+      "description": "Read for 3 days in a row"
+    },
+    "weekWarrior": {
+      "name": "Week Warrior",
+      "description": "Maintain a 7-day reading streak"
+    },
+    "monthChampion": {
+      "name": "Month Champion",
+      "description": "Maintain a 30-day reading streak"
+    },
+    "streakLegend": {
+      "name": "Streak Legend",
+      "description": "Maintain a 100-day reading streak"
+    },
+    "flashLearner": {
+      "name": "Flash Learner",
+      "description": "Review 50 flashcards"
+    },
+    "memoryMaster": {
+      "name": "Memory Master",
+      "description": "Review 250 flashcards"
+    },
+    "knowledgeKeeper": {
+      "name": "Knowledge Keeper",
+      "description": "Review 1,000 flashcards"
+    },
+    "flashcardSage": {
+      "name": "Flashcard Sage",
+      "description": "Review 5,000 flashcards"
+    },
+    "testTaker": {
+      "name": "Test Taker",
+      "description": "Complete 5 assessments"
+    },
+    "highAchiever": {
+      "name": "High Achiever",
+      "description": "Score 90% or higher on assessments"
+    },
+    "perfectScore": {
+      "name": "Perfect Score",
+      "description": "Get a perfect 100% on an assessment"
+    },
+    "assessmentExpert": {
+      "name": "Assessment Expert",
+      "description": "Complete 50 assessments"
+    },
+    "level5": {
+      "name": "Rising Star",
+      "description": "Reach Level 5"
+    },
+    "level10": {
+      "name": "Getting Serious",
+      "description": "Reach Level 10"
+    },
+    "level25": {
+      "name": "Dedicated Reader",
+      "description": "Reach Level 25"
+    },
+    "level50": {
+      "name": "Reading Legend",
+      "description": "Reach Level 50"
+    },
+    "hourReader": {
+      "name": "Hour Reader",
+      "description": "Read for 1 hour total"
+    },
+    "dedicatedReader": {
+      "name": "Dedicated Reader",
+      "description": "Read for 10 hours total"
+    },
+    "readingMarathon": {
+      "name": "Reading Marathon",
+      "description": "Read for 50 hours total"
+    }
   }
 }

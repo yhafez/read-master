@@ -330,7 +330,17 @@
     "placeholder": "Book content for {{bookId}} will appear here.",
     "backToLibrary": "Back to Library",
     "settings": "Reader Settings",
-    "progress": "{{percent}}% complete",
+    "progress": {
+      "progress": "Progreso",
+      "complete": "Completo",
+      "timeRemaining": "{{time}} restante",
+      "timeRemainingTooltip": "Tiempo estimado para terminar de leer",
+      "readingSpeedTooltip": "Tu velocidad de lectura actual",
+      "clickToNavigate": "Haz clic para ir a la posición",
+      "wordsRead": "{{current}} / {{total}} palabras",
+      "timeSpent": "Tiempo dedicado: {{time}}",
+      "averageSpeed": "Promedio: {{wpm}} PPM"
+    },
     "pageOf": "{{current}} / {{total}}",
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
@@ -357,17 +367,6 @@
       "highlight": "Resaltar",
       "note": "Agregar nota",
       "bookmark": "Marcador"
-    },
-    "progress": {
-      "progress": "Progreso",
-      "complete": "Completo",
-      "timeRemaining": "{{time}} restante",
-      "timeRemainingTooltip": "Tiempo estimado para terminar de leer",
-      "readingSpeedTooltip": "Tu velocidad de lectura actual",
-      "clickToNavigate": "Haz clic para ir a la posición",
-      "wordsRead": "{{current}} / {{total}} palabras",
-      "timeSpent": "Tiempo dedicado: {{time}}",
-      "averageSpeed": "Promedio: {{wpm}} PPM"
     },
     "annotations": {
       "title": "Anotaciones",
@@ -589,7 +588,51 @@
   "flashcards": {
     "title": "Tarjetas de memoria",
     "review": "Review",
-    "create": "Create Flashcard",
+    "create": {
+      "title": "Crear Tarjeta",
+      "front": "Frente (Pregunta)",
+      "frontPlaceholder": "Ingresa la pregunta o indicación",
+      "back": "Reverso (Respuesta)",
+      "backPlaceholder": "Ingresa la respuesta",
+      "type": "Tipo de Tarjeta",
+      "book": "Vincular a Libro",
+      "bookPlaceholder": "Selecciona un libro (opcional)",
+      "tags": "Etiquetas",
+      "tagsPlaceholder": "Agrega una etiqueta y presiona Enter",
+      "addTag": "Agregar",
+      "tagsCount": "{{count}}/{{max}} etiquetas",
+      "createButton": "Crear Tarjeta",
+      "creating": "Creando...",
+      "success": "¡Tarjeta creada exitosamente!",
+      "types": {
+        "custom": "Personalizada",
+        "customDescription": "Una tarjeta personalizada que creas",
+        "vocabulary": "Vocabulario",
+        "vocabularyDescription": "Aprende nuevas palabras y definiciones",
+        "concept": "Concepto",
+        "conceptDescription": "Comprende ideas y conceptos clave",
+        "comprehension": "Comprensión",
+        "comprehensionDescription": "Evalúa la comprensión del contenido",
+        "quote": "Cita",
+        "quoteDescription": "Memoriza citas importantes"
+      },
+      "errors": {
+        "frontRequired": "El contenido del frente es requerido",
+        "frontTooShort": "El frente debe tener al menos {{min}} carácter",
+        "frontTooLong": "El frente no puede exceder {{max}} caracteres",
+        "backRequired": "El contenido del reverso es requerido",
+        "backTooShort": "El reverso debe tener al menos {{min}} carácter",
+        "backTooLong": "El reverso no puede exceder {{max}} caracteres",
+        "invalidType": "Por favor selecciona un tipo de tarjeta válido",
+        "tooManyTags": "No puedes agregar más de {{max}} etiquetas",
+        "invalidTag": "La etiqueta no puede exceder {{maxLength}} caracteres",
+        "validation": "Por favor revisa el formulario",
+        "unauthorized": "Debes iniciar sesión para crear tarjetas",
+        "rateLimit": "Demasiadas solicitudes. Intenta más tarde.",
+        "server": "Error del servidor. Intenta de nuevo.",
+        "unknown": "Ocurrió un error inesperado"
+      }
+    },
     "dueToday": "Due Today",
     "totalCards": "Total Cards",
     "studyNow": "Study Now",
@@ -597,9 +640,51 @@
     "noCards": "No flashcards yet",
     "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "Retention Rate",
-      "streak": "Day Streak",
-      "reviewed": "Cards Reviewed"
+      "title": "Estadísticas de Tarjetas",
+      "refresh": "Actualizar estadísticas",
+      "studyNow": "Estudiar Ahora ({{count}} pendientes)",
+      "dueToday": "Pendientes Hoy",
+      "overdue": "{{count}} atrasadas",
+      "retention": "Retención",
+      "streak": "Racha de Días",
+      "bestStreak": "Mejor: {{count}} días",
+      "totalCards": "Total de Tarjetas",
+      "activeCards": "{{count}} activas",
+      "cardsByStatus": "Tarjetas por Estado",
+      "history": "Historial de Revisiones",
+      "chartType": "Tipo de gráfico",
+      "timeRange": {
+        "7days": "7 Días",
+        "30days": "30 Días",
+        "90days": "90 Días",
+        "year": "1 Año"
+      },
+      "studyTime": "Tiempo de Estudio",
+      "forecast": "Revisiones Próximas",
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "thisWeek": "Esta Semana",
+      "thisMonth": "Este Mes",
+      "next7Days": "Próximos 7 Días",
+      "next30Days": "Próximos 30 Días",
+      "averagePerDay": "Prom/Día",
+      "status": {
+        "new": "Nuevas",
+        "learning": "Aprendiendo",
+        "review": "Revisión",
+        "suspended": "Suspendidas"
+      },
+      "charts": {
+        "reviews": "Revisiones",
+        "reviewsDescription": "Número de revisiones por día",
+        "retention": "Retención",
+        "retentionDescription": "Tasa de retención a lo largo del tiempo",
+        "time": "Tiempo de Estudio",
+        "timeDescription": "Tiempo dedicado al estudio"
+      },
+      "errors": {
+        "loadFailed": "Error al cargar estadísticas. Intenta de nuevo."
+      }
     },
     "deck": {
       "totalCards_one": "{{count}} tarjeta",
@@ -658,51 +743,6 @@
       "noCardsDue": "No hay tarjetas pendientes de revisión.",
       "comeBackLater": "Vuelve más tarde o añade más tarjetas."
     },
-    "create": {
-      "title": "Crear Tarjeta",
-      "front": "Frente (Pregunta)",
-      "frontPlaceholder": "Ingresa la pregunta o indicación",
-      "back": "Reverso (Respuesta)",
-      "backPlaceholder": "Ingresa la respuesta",
-      "type": "Tipo de Tarjeta",
-      "book": "Vincular a Libro",
-      "bookPlaceholder": "Selecciona un libro (opcional)",
-      "tags": "Etiquetas",
-      "tagsPlaceholder": "Agrega una etiqueta y presiona Enter",
-      "addTag": "Agregar",
-      "tagsCount": "{{count}}/{{max}} etiquetas",
-      "createButton": "Crear Tarjeta",
-      "creating": "Creando...",
-      "success": "¡Tarjeta creada exitosamente!",
-      "types": {
-        "custom": "Personalizada",
-        "customDescription": "Una tarjeta personalizada que creas",
-        "vocabulary": "Vocabulario",
-        "vocabularyDescription": "Aprende nuevas palabras y definiciones",
-        "concept": "Concepto",
-        "conceptDescription": "Comprende ideas y conceptos clave",
-        "comprehension": "Comprensión",
-        "comprehensionDescription": "Evalúa la comprensión del contenido",
-        "quote": "Cita",
-        "quoteDescription": "Memoriza citas importantes"
-      },
-      "errors": {
-        "frontRequired": "El contenido del frente es requerido",
-        "frontTooShort": "El frente debe tener al menos {{min}} carácter",
-        "frontTooLong": "El frente no puede exceder {{max}} caracteres",
-        "backRequired": "El contenido del reverso es requerido",
-        "backTooShort": "El reverso debe tener al menos {{min}} carácter",
-        "backTooLong": "El reverso no puede exceder {{max}} caracteres",
-        "invalidType": "Por favor selecciona un tipo de tarjeta válido",
-        "tooManyTags": "No puedes agregar más de {{max}} etiquetas",
-        "invalidTag": "La etiqueta no puede exceder {{maxLength}} caracteres",
-        "validation": "Por favor revisa el formulario",
-        "unauthorized": "Debes iniciar sesión para crear tarjetas",
-        "rateLimit": "Demasiadas solicitudes. Intenta más tarde.",
-        "server": "Error del servidor. Intenta de nuevo.",
-        "unknown": "Ocurrió un error inesperado"
-      }
-    },
     "edit": {
       "title": "Editar Tarjeta",
       "front": "Frente (Pregunta)",
@@ -740,54 +780,6 @@
         "loadNotFound": "Tarjeta no encontrada",
         "loadServer": "Error al cargar la tarjeta. Intenta de nuevo.",
         "loadUnknown": "No se puede cargar la tarjeta"
-      }
-    },
-    "stats": {
-      "title": "Estadísticas de Tarjetas",
-      "refresh": "Actualizar estadísticas",
-      "studyNow": "Estudiar Ahora ({{count}} pendientes)",
-      "dueToday": "Pendientes Hoy",
-      "overdue": "{{count}} atrasadas",
-      "retention": "Retención",
-      "streak": "Racha de Días",
-      "bestStreak": "Mejor: {{count}} días",
-      "totalCards": "Total de Tarjetas",
-      "activeCards": "{{count}} activas",
-      "cardsByStatus": "Tarjetas por Estado",
-      "history": "Historial de Revisiones",
-      "chartType": "Tipo de gráfico",
-      "timeRange": "Rango de tiempo",
-      "studyTime": "Tiempo de Estudio",
-      "forecast": "Revisiones Próximas",
-      "today": "Hoy",
-      "tomorrow": "Mañana",
-      "thisWeek": "Esta Semana",
-      "thisMonth": "Este Mes",
-      "next7Days": "Próximos 7 Días",
-      "next30Days": "Próximos 30 Días",
-      "averagePerDay": "Prom/Día",
-      "status": {
-        "new": "Nuevas",
-        "learning": "Aprendiendo",
-        "review": "Revisión",
-        "suspended": "Suspendidas"
-      },
-      "charts": {
-        "reviews": "Revisiones",
-        "reviewsDescription": "Número de revisiones por día",
-        "retention": "Retención",
-        "retentionDescription": "Tasa de retención a lo largo del tiempo",
-        "time": "Tiempo de Estudio",
-        "timeDescription": "Tiempo dedicado al estudio"
-      },
-      "timeRange": {
-        "7days": "7 Días",
-        "30days": "30 Días",
-        "90days": "90 Días",
-        "year": "1 Año"
-      },
-      "errors": {
-        "loadFailed": "Error al cargar estadísticas. Intenta de nuevo."
       }
     }
   },
@@ -1284,5 +1276,127 @@
     "acrossAssessments": "En todas las evaluaciones",
     "thisWeek": "Esta semana: {{count}}",
     "thisWeekTime": "Esta semana: {{time}}"
+  },
+  "achievements": {
+    "title": "Logros",
+    "subtitle": "Sigue tus logros y gana recompensas",
+    "unlocked": "Logros Desbloqueados",
+    "completion": "Completado",
+    "total": "total",
+    "xpEarned": "XP Ganado de Logros",
+    "progress": "Progreso",
+    "unlockedOn": "Desbloqueado el {{date}}",
+    "filterAll": "Todos",
+    "filterUnlocked": "Desbloqueados",
+    "filterLocked": "Bloqueados",
+    "filter": "Filtrar logros",
+    "noUnlocked": "Aún no has desbloqueado ningún logro. ¡Sigue leyendo!",
+    "allUnlocked": "¡Felicidades! ¡Has desbloqueado todos los logros!",
+    "tier": {
+      "bronze": "Bronce",
+      "silver": "Plata",
+      "gold": "Oro",
+      "platinum": "Platino"
+    },
+    "categories": {
+      "reading": "Lectura",
+      "streak": "Racha",
+      "flashcards": "Tarjetas",
+      "assessments": "Evaluaciones",
+      "social": "Social",
+      "milestones": "Hitos"
+    },
+    "firstBook": {
+      "name": "Primer Libro",
+      "description": "Completa tu primer libro"
+    },
+    "bookworm": {
+      "name": "Ratón de Biblioteca",
+      "description": "Completa 10 libros"
+    },
+    "bibliophile": {
+      "name": "Bibliófilo",
+      "description": "Completa 50 libros"
+    },
+    "libraryMaster": {
+      "name": "Maestro de Biblioteca",
+      "description": "Completa 100 libros"
+    },
+    "streakStarter": {
+      "name": "Iniciador de Racha",
+      "description": "Mantén una racha de 3 días"
+    },
+    "weekWarrior": {
+      "name": "Guerrero Semanal",
+      "description": "Mantén una racha de 7 días"
+    },
+    "monthChampion": {
+      "name": "Campeón Mensual",
+      "description": "Mantén una racha de 30 días"
+    },
+    "streakLegend": {
+      "name": "Leyenda de Racha",
+      "description": "Mantén una racha de 100 días"
+    },
+    "flashLearner": {
+      "name": "Aprendiz Veloz",
+      "description": "Revisa 50 tarjetas"
+    },
+    "memoryMaster": {
+      "name": "Maestro de Memoria",
+      "description": "Revisa 250 tarjetas"
+    },
+    "knowledgeKeeper": {
+      "name": "Guardián del Conocimiento",
+      "description": "Revisa 1,000 tarjetas"
+    },
+    "flashcardSage": {
+      "name": "Sabio de Tarjetas",
+      "description": "Revisa 5,000 tarjetas"
+    },
+    "testTaker": {
+      "name": "Evaluado",
+      "description": "Completa 5 evaluaciones"
+    },
+    "highAchiever": {
+      "name": "Alto Rendimiento",
+      "description": "Obtén 90%+ en evaluaciones"
+    },
+    "perfectScore": {
+      "name": "Puntuación Perfecta",
+      "description": "Obtén 100% en una evaluación"
+    },
+    "assessmentExpert": {
+      "name": "Experto en Evaluaciones",
+      "description": "Completa 50 evaluaciones"
+    },
+    "level5": {
+      "name": "Nivel 5",
+      "description": "Alcanza el nivel 5"
+    },
+    "level10": {
+      "name": "Nivel 10",
+      "description": "Alcanza el nivel 10"
+    },
+    "level25": {
+      "name": "Nivel 25",
+      "description": "Alcanza el nivel 25"
+    },
+    "level50": {
+      "name": "Nivel 50",
+      "description": "Alcanza el nivel 50"
+    },
+    "hourReader": {
+      "name": "Lector por Hora",
+      "description": "Lee durante 1 hora en total"
+    },
+    "dedicatedReader": {
+      "name": "Lector Dedicado",
+      "description": "Lee durante 10 horas en total"
+    },
+    "readingMarathon": {
+      "name": "Maratón de Lectura",
+      "description": "Lee durante 50 horas en total"
+    }
   }
 }

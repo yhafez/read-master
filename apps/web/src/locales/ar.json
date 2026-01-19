@@ -330,7 +330,17 @@
     "placeholder": "سيظهر محتوى الكتاب {{bookId}} هنا.",
     "backToLibrary": "العودة إلى المكتبة",
     "settings": "إعدادات القارئ",
-    "progress": "{{percent}}% مكتمل",
+    "progress": {
+      "progress": "التقدم",
+      "complete": "مكتمل",
+      "timeRemaining": "{{time}} متبقي",
+      "timeRemainingTooltip": "الوقت المتوقع لإنهاء القراءة",
+      "readingSpeedTooltip": "سرعة القراءة الحالية",
+      "clickToNavigate": "انقر للانتقال إلى موضع",
+      "wordsRead": "{{current}} / {{total}} كلمة",
+      "timeSpent": "الوقت المستغرق: {{time}}",
+      "averageSpeed": "المتوسط: {{wpm}} كلمة/دقيقة"
+    },
     "pageOf": "{{current}} / {{total}}",
     "tableOfContents": "جدول المحتويات",
     "preReadingGuide": "دليل ما قبل القراءة",
@@ -357,17 +367,6 @@
       "highlight": "تمييز",
       "note": "إضافة ملاحظة",
       "bookmark": "إشارة مرجعية"
-    },
-    "progress": {
-      "progress": "التقدم",
-      "complete": "مكتمل",
-      "timeRemaining": "{{time}} متبقي",
-      "timeRemainingTooltip": "الوقت المتوقع لإنهاء القراءة",
-      "readingSpeedTooltip": "سرعة القراءة الحالية",
-      "clickToNavigate": "انقر للانتقال إلى موضع",
-      "wordsRead": "{{current}} / {{total}} كلمة",
-      "timeSpent": "الوقت المستغرق: {{time}}",
-      "averageSpeed": "المتوسط: {{wpm}} كلمة/دقيقة"
     },
     "annotations": {
       "title": "التعليقات التوضيحية",
@@ -589,7 +588,51 @@
   "flashcards": {
     "title": "البطاقات التعليمية",
     "review": "مراجعة",
-    "create": "إنشاء بطاقة",
+    "create": {
+      "title": "إنشاء بطاقة تعليمية",
+      "front": "الوجه (السؤال)",
+      "frontPlaceholder": "أدخل السؤال أو التلميح",
+      "back": "الخلف (الإجابة)",
+      "backPlaceholder": "أدخل الإجابة",
+      "type": "نوع البطاقة",
+      "book": "ربط بكتاب",
+      "bookPlaceholder": "اختر كتاباً (اختياري)",
+      "tags": "العلامات",
+      "tagsPlaceholder": "أضف علامة واضغط Enter",
+      "addTag": "إضافة",
+      "tagsCount": "{{count}}/{{max}} علامات",
+      "createButton": "إنشاء بطاقة",
+      "creating": "جارٍ الإنشاء...",
+      "success": "تم إنشاء البطاقة بنجاح!",
+      "types": {
+        "custom": "مخصص",
+        "customDescription": "بطاقة مخصصة تنشئها",
+        "vocabulary": "مفردات",
+        "vocabularyDescription": "تعلم كلمات وتعريفات جديدة",
+        "concept": "مفهوم",
+        "conceptDescription": "فهم الأفكار والمفاهيم الرئيسية",
+        "comprehension": "استيعاب",
+        "comprehensionDescription": "اختبار فهم المحتوى",
+        "quote": "اقتباس",
+        "quoteDescription": "حفظ الاقتباسات المهمة"
+      },
+      "errors": {
+        "frontRequired": "محتوى الوجه مطلوب",
+        "frontTooShort": "يجب أن يكون الوجه {{min}} حرف على الأقل",
+        "frontTooLong": "لا يمكن أن يتجاوز الوجه {{max}} حرف",
+        "backRequired": "محتوى الخلف مطلوب",
+        "backTooShort": "يجب أن يكون الخلف {{min}} حرف على الأقل",
+        "backTooLong": "لا يمكن أن يتجاوز الخلف {{max}} حرف",
+        "invalidType": "يرجى اختيار نوع بطاقة صالح",
+        "tooManyTags": "لا يمكن إضافة أكثر من {{max}} علامات",
+        "invalidTag": "لا يمكن أن تتجاوز العلامة {{maxLength}} حرف",
+        "validation": "يرجى التحقق من الأخطاء في النموذج",
+        "unauthorized": "يجب تسجيل الدخول لإنشاء بطاقات",
+        "rateLimit": "طلبات كثيرة جداً. حاول مرة أخرى لاحقاً.",
+        "server": "خطأ في الخادم. حاول مرة أخرى.",
+        "unknown": "حدث خطأ غير متوقع"
+      }
+    },
     "dueToday": "مستحقة اليوم",
     "totalCards": "إجمالي البطاقات",
     "studyNow": "ادرس الآن",
@@ -597,9 +640,51 @@
     "noCards": "لا توجد بطاقات تعليمية بعد",
     "generateFromBook": "أنشئ بطاقات من قراءتك",
     "stats": {
-      "retention": "معدل الاحتفاظ",
-      "streak": "أيام متتالية",
-      "reviewed": "البطاقات المراجعة"
+      "title": "إحصائيات البطاقات التعليمية",
+      "refresh": "تحديث الإحصائيات",
+      "studyNow": "ادرس الآن ({{count}} مستحقة)",
+      "dueToday": "المستحقة اليوم",
+      "overdue": "{{count}} متأخرة",
+      "retention": "نسبة الحفظ",
+      "streak": "سلسلة الأيام",
+      "bestStreak": "الأفضل: {{count}} أيام",
+      "totalCards": "إجمالي البطاقات",
+      "activeCards": "{{count}} نشطة",
+      "cardsByStatus": "البطاقات حسب الحالة",
+      "history": "سجل المراجعة",
+      "chartType": "نوع الرسم البياني",
+      "timeRange": {
+        "7days": "7 أيام",
+        "30days": "30 يوماً",
+        "90days": "90 يوماً",
+        "year": "سنة واحدة"
+      },
+      "studyTime": "وقت الدراسة",
+      "forecast": "المراجعات القادمة",
+      "today": "اليوم",
+      "tomorrow": "غداً",
+      "thisWeek": "هذا الأسبوع",
+      "thisMonth": "هذا الشهر",
+      "next7Days": "الـ 7 أيام القادمة",
+      "next30Days": "الـ 30 يوماً القادمة",
+      "averagePerDay": "المعدل/اليوم",
+      "status": {
+        "new": "جديدة",
+        "learning": "قيد التعلم",
+        "review": "للمراجعة",
+        "suspended": "معلقة"
+      },
+      "charts": {
+        "reviews": "المراجعات",
+        "reviewsDescription": "عدد المراجعات في اليوم",
+        "retention": "نسبة الحفظ",
+        "retentionDescription": "نسبة الحفظ عبر الزمن",
+        "time": "وقت الدراسة",
+        "timeDescription": "الوقت المستغرق في الدراسة"
+      },
+      "errors": {
+        "loadFailed": "فشل تحميل الإحصائيات. يرجى المحاولة مرة أخرى."
+      }
     },
     "deck": {
       "totalCards_one": "{{count}} بطاقة",
@@ -658,51 +743,6 @@
       "noCardsDue": "لا توجد بطاقات مستحقة للمراجعة الآن.",
       "comeBackLater": "عد لاحقاً أو أضف المزيد من البطاقات."
     },
-    "create": {
-      "title": "إنشاء بطاقة تعليمية",
-      "front": "الوجه (السؤال)",
-      "frontPlaceholder": "أدخل السؤال أو التلميح",
-      "back": "الخلف (الإجابة)",
-      "backPlaceholder": "أدخل الإجابة",
-      "type": "نوع البطاقة",
-      "book": "ربط بكتاب",
-      "bookPlaceholder": "اختر كتاباً (اختياري)",
-      "tags": "العلامات",
-      "tagsPlaceholder": "أضف علامة واضغط Enter",
-      "addTag": "إضافة",
-      "tagsCount": "{{count}}/{{max}} علامات",
-      "createButton": "إنشاء بطاقة",
-      "creating": "جارٍ الإنشاء...",
-      "success": "تم إنشاء البطاقة بنجاح!",
-      "types": {
-        "custom": "مخصص",
-        "customDescription": "بطاقة مخصصة تنشئها",
-        "vocabulary": "مفردات",
-        "vocabularyDescription": "تعلم كلمات وتعريفات جديدة",
-        "concept": "مفهوم",
-        "conceptDescription": "فهم الأفكار والمفاهيم الرئيسية",
-        "comprehension": "استيعاب",
-        "comprehensionDescription": "اختبار فهم المحتوى",
-        "quote": "اقتباس",
-        "quoteDescription": "حفظ الاقتباسات المهمة"
-      },
-      "errors": {
-        "frontRequired": "محتوى الوجه مطلوب",
-        "frontTooShort": "يجب أن يكون الوجه {{min}} حرف على الأقل",
-        "frontTooLong": "لا يمكن أن يتجاوز الوجه {{max}} حرف",
-        "backRequired": "محتوى الخلف مطلوب",
-        "backTooShort": "يجب أن يكون الخلف {{min}} حرف على الأقل",
-        "backTooLong": "لا يمكن أن يتجاوز الخلف {{max}} حرف",
-        "invalidType": "يرجى اختيار نوع بطاقة صالح",
-        "tooManyTags": "لا يمكن إضافة أكثر من {{max}} علامات",
-        "invalidTag": "لا يمكن أن تتجاوز العلامة {{maxLength}} حرف",
-        "validation": "يرجى التحقق من الأخطاء في النموذج",
-        "unauthorized": "يجب تسجيل الدخول لإنشاء بطاقات",
-        "rateLimit": "طلبات كثيرة جداً. حاول مرة أخرى لاحقاً.",
-        "server": "خطأ في الخادم. حاول مرة أخرى.",
-        "unknown": "حدث خطأ غير متوقع"
-      }
-    },
     "edit": {
       "title": "تعديل البطاقة",
       "front": "الأمام (السؤال)",
@@ -740,54 +780,6 @@
         "loadNotFound": "البطاقة غير موجودة",
         "loadServer": "فشل في تحميل البطاقة. حاول مرة أخرى.",
         "loadUnknown": "لا يمكن تحميل البطاقة"
-      }
-    },
-    "stats": {
-      "title": "إحصائيات البطاقات التعليمية",
-      "refresh": "تحديث الإحصائيات",
-      "studyNow": "ادرس الآن ({{count}} مستحقة)",
-      "dueToday": "المستحقة اليوم",
-      "overdue": "{{count}} متأخرة",
-      "retention": "نسبة الحفظ",
-      "streak": "سلسلة الأيام",
-      "bestStreak": "الأفضل: {{count}} أيام",
-      "totalCards": "إجمالي البطاقات",
-      "activeCards": "{{count}} نشطة",
-      "cardsByStatus": "البطاقات حسب الحالة",
-      "history": "سجل المراجعة",
-      "chartType": "نوع الرسم البياني",
-      "timeRange": "النطاق الزمني",
-      "studyTime": "وقت الدراسة",
-      "forecast": "المراجعات القادمة",
-      "today": "اليوم",
-      "tomorrow": "غداً",
-      "thisWeek": "هذا الأسبوع",
-      "thisMonth": "هذا الشهر",
-      "next7Days": "الـ 7 أيام القادمة",
-      "next30Days": "الـ 30 يوماً القادمة",
-      "averagePerDay": "المعدل/اليوم",
-      "status": {
-        "new": "جديدة",
-        "learning": "قيد التعلم",
-        "review": "للمراجعة",
-        "suspended": "معلقة"
-      },
-      "charts": {
-        "reviews": "المراجعات",
-        "reviewsDescription": "عدد المراجعات في اليوم",
-        "retention": "نسبة الحفظ",
-        "retentionDescription": "نسبة الحفظ عبر الزمن",
-        "time": "وقت الدراسة",
-        "timeDescription": "الوقت المستغرق في الدراسة"
-      },
-      "timeRange": {
-        "7days": "7 أيام",
-        "30days": "30 يوماً",
-        "90days": "90 يوماً",
-        "year": "سنة واحدة"
-      },
-      "errors": {
-        "loadFailed": "فشل تحميل الإحصائيات. يرجى المحاولة مرة أخرى."
       }
     }
   },
@@ -1284,5 +1276,127 @@
     "acrossAssessments": "عبر جميع الاختبارات",
     "thisWeek": "هذا الأسبوع: {{count}}",
     "thisWeekTime": "هذا الأسبوع: {{time}}"
+  },
+  "achievements": {
+    "title": "الإنجازات",
+    "subtitle": "تتبع إنجازاتك واكسب المكافآت",
+    "unlocked": "الإنجازات المفتوحة",
+    "completion": "الإكمال",
+    "total": "الإجمالي",
+    "xpEarned": "XP مكتسب من الإنجازات",
+    "progress": "التقدم",
+    "unlockedOn": "تم الفتح في {{date}}",
+    "filterAll": "الكل",
+    "filterUnlocked": "مفتوح",
+    "filterLocked": "مغلق",
+    "filter": "تصفية الإنجازات",
+    "noUnlocked": "لم يتم فتح أي إنجازات بعد. استمر في القراءة!",
+    "allUnlocked": "تهانينا! لقد فتحت جميع الإنجازات!",
+    "tier": {
+      "bronze": "برونز",
+      "silver": "فضي",
+      "gold": "ذهبي",
+      "platinum": "بلاتيني"
+    },
+    "categories": {
+      "reading": "القراءة",
+      "streak": "التتابع",
+      "flashcards": "البطاقات التعليمية",
+      "assessments": "التقييمات",
+      "social": "اجتماعي",
+      "milestones": "الأحداث المهمة"
+    },
+    "firstBook": {
+      "name": "الكتاب الأول",
+      "description": "أكمل كتابك الأول"
+    },
+    "bookworm": {
+      "name": "دودة كتب",
+      "description": "أكمل 10 كتب"
+    },
+    "bibliophile": {
+      "name": "محب الكتب",
+      "description": "أكمل 50 كتاباً"
+    },
+    "libraryMaster": {
+      "name": "سيد المكتبة",
+      "description": "أكمل 100 كتاب"
+    },
+    "streakStarter": {
+      "name": "بداية التتابع",
+      "description": "حافظ على تتابع 3 أيام"
+    },
+    "weekWarrior": {
+      "name": "محارب الأسبوع",
+      "description": "حافظ على تتابع 7 أيام"
+    },
+    "monthChampion": {
+      "name": "بطل الشهر",
+      "description": "حافظ على تتابع 30 يوماً"
+    },
+    "streakLegend": {
+      "name": "أسطورة التتابع",
+      "description": "حافظ على تتابع 100 يوم"
+    },
+    "flashLearner": {
+      "name": "متعلم سريع",
+      "description": "راجع 50 بطاقة تعليمية"
+    },
+    "memoryMaster": {
+      "name": "سيد الذاكرة",
+      "description": "راجع 250 بطاقة تعليمية"
+    },
+    "knowledgeKeeper": {
+      "name": "حافظ المعرفة",
+      "description": "راجع 1,000 بطاقة تعليمية"
+    },
+    "flashcardSage": {
+      "name": "حكيم البطاقات",
+      "description": "راجع 5,000 بطاقة تعليمية"
+    },
+    "testTaker": {
+      "name": "متقدم للاختبار",
+      "description": "أكمل 5 تقييمات"
+    },
+    "highAchiever": {
+      "name": "متفوق",
+      "description": "حصل على 90%+ في التقييمات"
+    },
+    "perfectScore": {
+      "name": "درجة كاملة",
+      "description": "حصل على 100% في تقييم"
+    },
+    "assessmentExpert": {
+      "name": "خبير التقييمات",
+      "description": "أكمل 50 تقييماً"
+    },
+    "level5": {
+      "name": "المستوى 5",
+      "description": "وصل إلى المستوى 5"
+    },
+    "level10": {
+      "name": "المستوى 10",
+      "description": "وصل إلى المستوى 10"
+    },
+    "level25": {
+      "name": "المستوى 25",
+      "description": "وصل إلى المستوى 25"
+    },
+    "level50": {
+      "name": "المستوى 50",
+      "description": "وصل إلى المستوى 50"
+    },
+    "hourReader": {
+      "name": "قارئ الساعة",
+      "description": "اقرأ لمدة ساعة واحدة إجمالاً"
+    },
+    "dedicatedReader": {
+      "name": "قارئ متفاني",
+      "description": "اقرأ لمدة 10 ساعات إجمالاً"
+    },
+    "readingMarathon": {
+      "name": "ماراثون القراءة",
+      "description": "اقرأ لمدة 50 ساعة إجمالاً"
+    }
   }
 }

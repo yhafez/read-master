@@ -330,7 +330,17 @@
     "placeholder": "Book content for {{bookId}} will appear here.",
     "backToLibrary": "Back to Library",
     "settings": "Reader Settings",
-    "progress": "{{percent}}% complete",
+    "progress": {
+      "progress": "進捗",
+      "complete": "完了",
+      "timeRemaining": "残り{{time}}",
+      "timeRemainingTooltip": "読み終わるまでの推定時間",
+      "readingSpeedTooltip": "現在の読書速度",
+      "clickToNavigate": "クリックして移動",
+      "wordsRead": "{{current}} / {{total}} 語",
+      "timeSpent": "読書時間: {{time}}",
+      "averageSpeed": "平均: {{wpm}} WPM"
+    },
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
     "generateGuide": "Generate Pre-Reading Guide",
@@ -357,17 +367,6 @@
       "highlight": "ハイライト",
       "note": "メモを追加",
       "bookmark": "ブックマーク"
-    },
-    "progress": {
-      "progress": "進捗",
-      "complete": "完了",
-      "timeRemaining": "残り{{time}}",
-      "timeRemainingTooltip": "読み終わるまでの推定時間",
-      "readingSpeedTooltip": "現在の読書速度",
-      "clickToNavigate": "クリックして移動",
-      "wordsRead": "{{current}} / {{total}} 語",
-      "timeSpent": "読書時間: {{time}}",
-      "averageSpeed": "平均: {{wpm}} WPM"
     },
     "annotations": {
       "title": "注釈",
@@ -589,7 +588,51 @@
   "flashcards": {
     "title": "フラッシュカード",
     "review": "Review",
-    "create": "Create Flashcard",
+    "create": {
+      "title": "フラッシュカード作成",
+      "front": "表面（質問）",
+      "frontPlaceholder": "質問またはプロンプトを入力",
+      "back": "裏面（答え）",
+      "backPlaceholder": "答えを入力",
+      "type": "カードタイプ",
+      "book": "本にリンク",
+      "bookPlaceholder": "本を選択（任意）",
+      "tags": "タグ",
+      "tagsPlaceholder": "タグを追加してEnterを押す",
+      "addTag": "追加",
+      "tagsCount": "{{count}}/{{max}} タグ",
+      "createButton": "カード作成",
+      "creating": "作成中...",
+      "success": "カードが正常に作成されました！",
+      "types": {
+        "custom": "カスタム",
+        "customDescription": "自分で作成するカスタムカード",
+        "vocabulary": "語彙",
+        "vocabularyDescription": "新しい単語と定義を学ぶ",
+        "concept": "コンセプト",
+        "conceptDescription": "重要なアイデアと概念を理解",
+        "comprehension": "理解",
+        "comprehensionDescription": "内容の理解度をテスト",
+        "quote": "引用",
+        "quoteDescription": "重要な引用を暗記"
+      },
+      "errors": {
+        "frontRequired": "表面の内容は必須です",
+        "frontTooShort": "表面は{{min}}文字以上必要です",
+        "frontTooLong": "表面は{{max}}文字以下にしてください",
+        "backRequired": "裏面の内容は必須です",
+        "backTooShort": "裏面は{{min}}文字以上必要です",
+        "backTooLong": "裏面は{{max}}文字以下にしてください",
+        "invalidType": "有効なカードタイプを選択してください",
+        "tooManyTags": "{{max}}個を超えるタグは追加できません",
+        "invalidTag": "タグは{{maxLength}}文字以下にしてください",
+        "validation": "フォームにエラーがあります",
+        "unauthorized": "カードを作成するにはサインインが必要です",
+        "rateLimit": "リクエストが多すぎます。後でお試しください。",
+        "server": "サーバーエラー。再度お試しください。",
+        "unknown": "予期しないエラーが発生しました"
+      }
+    },
     "dueToday": "Due Today",
     "totalCards": "Total Cards",
     "studyNow": "Study Now",
@@ -597,9 +640,51 @@
     "noCards": "No flashcards yet",
     "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "Retention Rate",
-      "streak": "Day Streak",
-      "reviewed": "Cards Reviewed"
+      "title": "フラッシュカード統計",
+      "refresh": "統計を更新",
+      "studyNow": "今すぐ学習（{{count}}枚期限）",
+      "dueToday": "今日の期限",
+      "overdue": "{{count}}枚遅延",
+      "retention": "記憶率",
+      "streak": "連続日数",
+      "bestStreak": "最長: {{count}}日",
+      "totalCards": "総カード数",
+      "activeCards": "{{count}}枚アクティブ",
+      "cardsByStatus": "ステータス別カード",
+      "history": "復習履歴",
+      "chartType": "グラフの種類",
+      "timeRange": {
+        "7days": "7日間",
+        "30days": "30日間",
+        "90days": "90日間",
+        "year": "1年間"
+      },
+      "studyTime": "学習時間",
+      "forecast": "今後の復習",
+      "today": "今日",
+      "tomorrow": "明日",
+      "thisWeek": "今週",
+      "thisMonth": "今月",
+      "next7Days": "次の7日間",
+      "next30Days": "次の30日間",
+      "averagePerDay": "日平均",
+      "status": {
+        "new": "新規",
+        "learning": "学習中",
+        "review": "復習",
+        "suspended": "停止中"
+      },
+      "charts": {
+        "reviews": "復習",
+        "reviewsDescription": "1日あたりの復習数",
+        "retention": "記憶率",
+        "retentionDescription": "記憶率の推移",
+        "time": "学習時間",
+        "timeDescription": "学習に費やした時間"
+      },
+      "errors": {
+        "loadFailed": "統計の読み込みに失敗しました。再度お試しください。"
+      }
     },
     "deck": {
       "totalCards_one": "{{count}}枚",
@@ -658,51 +743,6 @@
       "noCardsDue": "現在復習が必要なカードはありません。",
       "comeBackLater": "後でまた来るか、カードを追加してください。"
     },
-    "create": {
-      "title": "フラッシュカード作成",
-      "front": "表面（質問）",
-      "frontPlaceholder": "質問またはプロンプトを入力",
-      "back": "裏面（答え）",
-      "backPlaceholder": "答えを入力",
-      "type": "カードタイプ",
-      "book": "本にリンク",
-      "bookPlaceholder": "本を選択（任意）",
-      "tags": "タグ",
-      "tagsPlaceholder": "タグを追加してEnterを押す",
-      "addTag": "追加",
-      "tagsCount": "{{count}}/{{max}} タグ",
-      "createButton": "カード作成",
-      "creating": "作成中...",
-      "success": "カードが正常に作成されました！",
-      "types": {
-        "custom": "カスタム",
-        "customDescription": "自分で作成するカスタムカード",
-        "vocabulary": "語彙",
-        "vocabularyDescription": "新しい単語と定義を学ぶ",
-        "concept": "コンセプト",
-        "conceptDescription": "重要なアイデアと概念を理解",
-        "comprehension": "理解",
-        "comprehensionDescription": "内容の理解度をテスト",
-        "quote": "引用",
-        "quoteDescription": "重要な引用を暗記"
-      },
-      "errors": {
-        "frontRequired": "表面の内容は必須です",
-        "frontTooShort": "表面は{{min}}文字以上必要です",
-        "frontTooLong": "表面は{{max}}文字以下にしてください",
-        "backRequired": "裏面の内容は必須です",
-        "backTooShort": "裏面は{{min}}文字以上必要です",
-        "backTooLong": "裏面は{{max}}文字以下にしてください",
-        "invalidType": "有効なカードタイプを選択してください",
-        "tooManyTags": "{{max}}個を超えるタグは追加できません",
-        "invalidTag": "タグは{{maxLength}}文字以下にしてください",
-        "validation": "フォームにエラーがあります",
-        "unauthorized": "カードを作成するにはサインインが必要です",
-        "rateLimit": "リクエストが多すぎます。後でお試しください。",
-        "server": "サーバーエラー。再度お試しください。",
-        "unknown": "予期しないエラーが発生しました"
-      }
-    },
     "edit": {
       "title": "カード編集",
       "front": "表面（質問）",
@@ -740,54 +780,6 @@
         "loadNotFound": "カードが見つかりません",
         "loadServer": "カードの読み込みに失敗しました。再度お試しください。",
         "loadUnknown": "カードを読み込めません"
-      }
-    },
-    "stats": {
-      "title": "フラッシュカード統計",
-      "refresh": "統計を更新",
-      "studyNow": "今すぐ学習（{{count}}枚期限）",
-      "dueToday": "今日の期限",
-      "overdue": "{{count}}枚遅延",
-      "retention": "記憶率",
-      "streak": "連続日数",
-      "bestStreak": "最長: {{count}}日",
-      "totalCards": "総カード数",
-      "activeCards": "{{count}}枚アクティブ",
-      "cardsByStatus": "ステータス別カード",
-      "history": "復習履歴",
-      "chartType": "グラフの種類",
-      "timeRange": "期間",
-      "studyTime": "学習時間",
-      "forecast": "今後の復習",
-      "today": "今日",
-      "tomorrow": "明日",
-      "thisWeek": "今週",
-      "thisMonth": "今月",
-      "next7Days": "次の7日間",
-      "next30Days": "次の30日間",
-      "averagePerDay": "日平均",
-      "status": {
-        "new": "新規",
-        "learning": "学習中",
-        "review": "復習",
-        "suspended": "停止中"
-      },
-      "charts": {
-        "reviews": "復習",
-        "reviewsDescription": "1日あたりの復習数",
-        "retention": "記憶率",
-        "retentionDescription": "記憶率の推移",
-        "time": "学習時間",
-        "timeDescription": "学習に費やした時間"
-      },
-      "timeRange": {
-        "7days": "7日間",
-        "30days": "30日間",
-        "90days": "90日間",
-        "year": "1年間"
-      },
-      "errors": {
-        "loadFailed": "統計の読み込みに失敗しました。再度お試しください。"
       }
     }
   },
@@ -1284,5 +1276,127 @@
     "acrossAssessments": "全ての評価を通して",
     "thisWeek": "今週: {{count}}",
     "thisWeekTime": "今週: {{time}}"
+  },
+  "achievements": {
+    "title": "実績",
+    "subtitle": "あなたの実績を追跡し、報酬を獲得しましょう",
+    "unlocked": "解除済み実績",
+    "completion": "達成率",
+    "total": "合計",
+    "xpEarned": "実績から獲得したXP",
+    "progress": "進捗",
+    "unlockedOn": "{{date}}に解除",
+    "filterAll": "すべて",
+    "filterUnlocked": "解除済み",
+    "filterLocked": "未解除",
+    "filter": "実績をフィルター",
+    "noUnlocked": "まだ解除された実績はありません。読書を続けましょう！",
+    "allUnlocked": "おめでとうございます！すべての実績を解除しました！",
+    "tier": {
+      "bronze": "ブロンズ",
+      "silver": "シルバー",
+      "gold": "ゴールド",
+      "platinum": "プラチナ"
+    },
+    "categories": {
+      "reading": "読書",
+      "streak": "連続記録",
+      "flashcards": "フラッシュカード",
+      "assessments": "評価",
+      "social": "ソーシャル",
+      "milestones": "マイルストーン"
+    },
+    "firstBook": {
+      "name": "初めての本",
+      "description": "最初の本を読み終える"
+    },
+    "bookworm": {
+      "name": "本の虫",
+      "description": "10冊の本を読み終える"
+    },
+    "bibliophile": {
+      "name": "愛書家",
+      "description": "50冊の本を読み終える"
+    },
+    "libraryMaster": {
+      "name": "図書館マスター",
+      "description": "100冊の本を読み終える"
+    },
+    "streakStarter": {
+      "name": "連続記録スタート",
+      "description": "3日間の連続記録を達成"
+    },
+    "weekWarrior": {
+      "name": "週間戦士",
+      "description": "7日間の連続記録を達成"
+    },
+    "monthChampion": {
+      "name": "月間チャンピオン",
+      "description": "30日間の連続記録を達成"
+    },
+    "streakLegend": {
+      "name": "連続記録の伝説",
+      "description": "100日間の連続記録を達成"
+    },
+    "flashLearner": {
+      "name": "フラッシュ学習者",
+      "description": "50枚のフラッシュカードを復習"
+    },
+    "memoryMaster": {
+      "name": "記憶マスター",
+      "description": "250枚のフラッシュカードを復習"
+    },
+    "knowledgeKeeper": {
+      "name": "知識の守護者",
+      "description": "1,000枚のフラッシュカードを復習"
+    },
+    "flashcardSage": {
+      "name": "カードの賢者",
+      "description": "5,000枚のフラッシュカードを復習"
+    },
+    "testTaker": {
+      "name": "テスト受験者",
+      "description": "5回の評価を完了"
+    },
+    "highAchiever": {
+      "name": "ハイアチーバー",
+      "description": "評価で90%以上を獲得"
+    },
+    "perfectScore": {
+      "name": "完璧なスコア",
+      "description": "評価で100%を獲得"
+    },
+    "assessmentExpert": {
+      "name": "評価エキスパート",
+      "description": "50回の評価を完了"
+    },
+    "level5": {
+      "name": "レベル5",
+      "description": "レベル5に到達"
+    },
+    "level10": {
+      "name": "レベル10",
+      "description": "レベル10に到達"
+    },
+    "level25": {
+      "name": "レベル25",
+      "description": "レベル25に到達"
+    },
+    "level50": {
+      "name": "レベル50",
+      "description": "レベル50に到達"
+    },
+    "hourReader": {
+      "name": "1時間リーダー",
+      "description": "合計1時間読書"
+    },
+    "dedicatedReader": {
+      "name": "熱心な読者",
+      "description": "合計10時間読書"
+    },
+    "readingMarathon": {
+      "name": "読書マラソン",
+      "description": "合計50時間読書"
+    }
   }
 }

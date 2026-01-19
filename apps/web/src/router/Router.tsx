@@ -42,6 +42,7 @@ import {
   SettingsPrivacyPage,
   SettingsSubscriptionPage,
   UserStatsPage,
+  AchievementsPage,
 } from "@/pages";
 
 /**
@@ -241,6 +242,10 @@ function createAppRouter() {
             {
               path: ROUTES.STATS,
               element: <UserStatsPage />,
+            },
+            {
+              path: ROUTES.ACHIEVEMENTS,
+              element: <AchievementsPage />,
             },
           ],
         },

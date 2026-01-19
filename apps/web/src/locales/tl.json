@@ -330,7 +330,17 @@
     "placeholder": "Book content for {{bookId}} will appear here.",
     "backToLibrary": "Back to Library",
     "settings": "Reader Settings",
-    "progress": "{{percent}}% complete",
+    "progress": {
+      "progress": "Progreso",
+      "complete": "Tapos",
+      "timeRemaining": "{{time}} natitira",
+      "timeRemainingTooltip": "Tinatayang oras para matapos ang pagbabasa",
+      "readingSpeedTooltip": "Ang iyong kasalukuyang bilis ng pagbabasa",
+      "clickToNavigate": "I-click para tumalon sa posisyon",
+      "wordsRead": "{{current}} / {{total}} salita",
+      "timeSpent": "Oras na ginugol: {{time}}",
+      "averageSpeed": "Average: {{wpm}} WPM"
+    },
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
     "generateGuide": "Generate Pre-Reading Guide",
@@ -357,17 +367,6 @@
       "highlight": "I-highlight",
       "note": "Magdagdag ng Tala",
       "bookmark": "Bookmark"
-    },
-    "progress": {
-      "progress": "Progreso",
-      "complete": "Tapos",
-      "timeRemaining": "{{time}} natitira",
-      "timeRemainingTooltip": "Tinatayang oras para matapos ang pagbabasa",
-      "readingSpeedTooltip": "Ang iyong kasalukuyang bilis ng pagbabasa",
-      "clickToNavigate": "I-click para tumalon sa posisyon",
-      "wordsRead": "{{current}} / {{total}} salita",
-      "timeSpent": "Oras na ginugol: {{time}}",
-      "averageSpeed": "Average: {{wpm}} WPM"
     },
     "annotations": {
       "title": "Mga Anotasyon",
@@ -589,7 +588,51 @@
   "flashcards": {
     "title": "Flashcards",
     "review": "Review",
-    "create": "Create Flashcard",
+    "create": {
+      "title": "Gumawa ng Flashcard",
+      "front": "Harap (Tanong)",
+      "frontPlaceholder": "Ilagay ang tanong o prompt",
+      "back": "Likod (Sagot)",
+      "backPlaceholder": "Ilagay ang sagot",
+      "type": "Uri ng Kard",
+      "book": "I-link sa Libro",
+      "bookPlaceholder": "Pumili ng libro (opsyonal)",
+      "tags": "Mga Tag",
+      "tagsPlaceholder": "Magdagdag ng tag at pindutin ang Enter",
+      "addTag": "Idagdag",
+      "tagsCount": "{{count}}/{{max}} mga tag",
+      "createButton": "Gumawa ng Kard",
+      "creating": "Gumagawa...",
+      "success": "Matagumpay na nagawa ang flashcard!",
+      "types": {
+        "custom": "Custom",
+        "customDescription": "Isang custom na kard na ginawa mo",
+        "vocabulary": "Bokabularyo",
+        "vocabularyDescription": "Matuto ng bagong salita at kahulugan",
+        "concept": "Konsepto",
+        "conceptDescription": "Unawain ang mahahalagang ideya",
+        "comprehension": "Pag-unawa",
+        "comprehensionDescription": "Subukan ang pag-unawa sa nilalaman",
+        "quote": "Quote",
+        "quoteDescription": "Kabisaduhin ang mahahalagang quote"
+      },
+      "errors": {
+        "frontRequired": "Kinakailangan ang nilalaman ng harap",
+        "frontTooShort": "Ang harap ay dapat {{min}} character man lang",
+        "frontTooLong": "Ang harap ay hindi dapat lumampas sa {{max}} character",
+        "backRequired": "Kinakailangan ang nilalaman ng likod",
+        "backTooShort": "Ang likod ay dapat {{min}} character man lang",
+        "backTooLong": "Ang likod ay hindi dapat lumampas sa {{max}} character",
+        "invalidType": "Pumili ng valid na uri ng kard",
+        "tooManyTags": "Hindi maaaring magdagdag ng higit sa {{max}} tag",
+        "invalidTag": "Ang tag ay hindi dapat lumampas sa {{maxLength}} character",
+        "validation": "Suriin ang form para sa mga error",
+        "unauthorized": "Dapat naka-sign in para gumawa ng kard",
+        "rateLimit": "Masyadong maraming request. Subukan mamaya.",
+        "server": "Server error. Subukan ulit.",
+        "unknown": "May naganap na hindi inaasahang error"
+      }
+    },
     "dueToday": "Due Today",
     "totalCards": "Total Cards",
     "studyNow": "Study Now",
@@ -597,9 +640,51 @@
     "noCards": "No flashcards yet",
     "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "Retention Rate",
-      "streak": "Day Streak",
-      "reviewed": "Cards Reviewed"
+      "title": "Mga Istatistika ng Kard",
+      "refresh": "I-refresh ang istatistika",
+      "studyNow": "Mag-aral Ngayon ({{count}} dapat na)",
+      "dueToday": "Dapat Ngayon",
+      "overdue": "{{count}} lampas na",
+      "retention": "Pagkaalala",
+      "streak": "Sunod-sunod na Araw",
+      "bestStreak": "Pinakamahusay: {{count}} araw",
+      "totalCards": "Kabuuang Mga Kard",
+      "activeCards": "{{count}} aktibo",
+      "cardsByStatus": "Mga Kard ayon sa Estado",
+      "history": "Kasaysayan ng Pagsusuri",
+      "chartType": "Uri ng tsart",
+      "timeRange": {
+        "7days": "7 Araw",
+        "30days": "30 Araw",
+        "90days": "90 Araw",
+        "year": "1 Taon"
+      },
+      "studyTime": "Oras ng Pag-aaral",
+      "forecast": "Mga Paparating na Pagsusuri",
+      "today": "Ngayon",
+      "tomorrow": "Bukas",
+      "thisWeek": "Ngayong Linggo",
+      "thisMonth": "Ngayong Buwan",
+      "next7Days": "Susunod na 7 Araw",
+      "next30Days": "Susunod na 30 Araw",
+      "averagePerDay": "Ave/Araw",
+      "status": {
+        "new": "Bago",
+        "learning": "Nag-aaral",
+        "review": "Pagsusuri",
+        "suspended": "Sinuspinde"
+      },
+      "charts": {
+        "reviews": "Mga Pagsusuri",
+        "reviewsDescription": "Bilang ng pagsusuri bawat araw",
+        "retention": "Pagkaalala",
+        "retentionDescription": "Rate ng pagkaalala sa paglipas ng panahon",
+        "time": "Oras ng Pag-aaral",
+        "timeDescription": "Oras na ginugol sa pag-aaral"
+      },
+      "errors": {
+        "loadFailed": "Hindi ma-load ang istatistika. Subukan ulit."
+      }
     },
     "deck": {
       "totalCards_one": "{{count}} kard",
@@ -658,51 +743,6 @@
       "noCardsDue": "Walang kard na pending para i-review ngayon.",
       "comeBackLater": "Bumalik mamaya o magdagdag ng mga kard sa iyong deck."
     },
-    "create": {
-      "title": "Gumawa ng Flashcard",
-      "front": "Harap (Tanong)",
-      "frontPlaceholder": "Ilagay ang tanong o prompt",
-      "back": "Likod (Sagot)",
-      "backPlaceholder": "Ilagay ang sagot",
-      "type": "Uri ng Kard",
-      "book": "I-link sa Libro",
-      "bookPlaceholder": "Pumili ng libro (opsyonal)",
-      "tags": "Mga Tag",
-      "tagsPlaceholder": "Magdagdag ng tag at pindutin ang Enter",
-      "addTag": "Idagdag",
-      "tagsCount": "{{count}}/{{max}} mga tag",
-      "createButton": "Gumawa ng Kard",
-      "creating": "Gumagawa...",
-      "success": "Matagumpay na nagawa ang flashcard!",
-      "types": {
-        "custom": "Custom",
-        "customDescription": "Isang custom na kard na ginawa mo",
-        "vocabulary": "Bokabularyo",
-        "vocabularyDescription": "Matuto ng bagong salita at kahulugan",
-        "concept": "Konsepto",
-        "conceptDescription": "Unawain ang mahahalagang ideya",
-        "comprehension": "Pag-unawa",
-        "comprehensionDescription": "Subukan ang pag-unawa sa nilalaman",
-        "quote": "Quote",
-        "quoteDescription": "Kabisaduhin ang mahahalagang quote"
-      },
-      "errors": {
-        "frontRequired": "Kinakailangan ang nilalaman ng harap",
-        "frontTooShort": "Ang harap ay dapat {{min}} character man lang",
-        "frontTooLong": "Ang harap ay hindi dapat lumampas sa {{max}} character",
-        "backRequired": "Kinakailangan ang nilalaman ng likod",
-        "backTooShort": "Ang likod ay dapat {{min}} character man lang",
-        "backTooLong": "Ang likod ay hindi dapat lumampas sa {{max}} character",
-        "invalidType": "Pumili ng valid na uri ng kard",
-        "tooManyTags": "Hindi maaaring magdagdag ng higit sa {{max}} tag",
-        "invalidTag": "Ang tag ay hindi dapat lumampas sa {{maxLength}} character",
-        "validation": "Suriin ang form para sa mga error",
-        "unauthorized": "Dapat naka-sign in para gumawa ng kard",
-        "rateLimit": "Masyadong maraming request. Subukan mamaya.",
-        "server": "Server error. Subukan ulit.",
-        "unknown": "May naganap na hindi inaasahang error"
-      }
-    },
     "edit": {
       "title": "I-edit ang Kard",
       "front": "Harap (Tanong)",
@@ -740,54 +780,6 @@
         "loadNotFound": "Hindi nahanap ang kard",
         "loadServer": "Hindi na-load ang kard. Subukan ulit.",
         "loadUnknown": "Hindi ma-load ang kard"
-      }
-    },
-    "stats": {
-      "title": "Mga Istatistika ng Kard",
-      "refresh": "I-refresh ang istatistika",
-      "studyNow": "Mag-aral Ngayon ({{count}} dapat na)",
-      "dueToday": "Dapat Ngayon",
-      "overdue": "{{count}} lampas na",
-      "retention": "Pagkaalala",
-      "streak": "Sunod-sunod na Araw",
-      "bestStreak": "Pinakamahusay: {{count}} araw",
-      "totalCards": "Kabuuang Mga Kard",
-      "activeCards": "{{count}} aktibo",
-      "cardsByStatus": "Mga Kard ayon sa Estado",
-      "history": "Kasaysayan ng Pagsusuri",
-      "chartType": "Uri ng tsart",
-      "timeRange": "Sakop ng oras",
-      "studyTime": "Oras ng Pag-aaral",
-      "forecast": "Mga Paparating na Pagsusuri",
-      "today": "Ngayon",
-      "tomorrow": "Bukas",
-      "thisWeek": "Ngayong Linggo",
-      "thisMonth": "Ngayong Buwan",
-      "next7Days": "Susunod na 7 Araw",
-      "next30Days": "Susunod na 30 Araw",
-      "averagePerDay": "Ave/Araw",
-      "status": {
-        "new": "Bago",
-        "learning": "Nag-aaral",
-        "review": "Pagsusuri",
-        "suspended": "Sinuspinde"
-      },
-      "charts": {
-        "reviews": "Mga Pagsusuri",
-        "reviewsDescription": "Bilang ng pagsusuri bawat araw",
-        "retention": "Pagkaalala",
-        "retentionDescription": "Rate ng pagkaalala sa paglipas ng panahon",
-        "time": "Oras ng Pag-aaral",
-        "timeDescription": "Oras na ginugol sa pag-aaral"
-      },
-      "timeRange": {
-        "7days": "7 Araw",
-        "30days": "30 Araw",
-        "90days": "90 Araw",
-        "year": "1 Taon"
-      },
-      "errors": {
-        "loadFailed": "Hindi ma-load ang istatistika. Subukan ulit."
       }
     }
   },
@@ -1284,5 +1276,127 @@
     "acrossAssessments": "Sa lahat ng mga pagsusulit",
     "thisWeek": "Ngayong linggo: {{count}}",
     "thisWeekTime": "Ngayong linggo: {{time}}"
+  },
+  "achievements": {
+    "title": "Mga Nagawa",
+    "subtitle": "Subaybayan ang iyong mga nagawa at makakuha ng mga gantimpala",
+    "unlocked": "Na-unlock na Nagawa",
+    "completion": "Pagkumpleto",
+    "total": "kabuuan",
+    "xpEarned": "XP na Nakuha mula sa Mga Nagawa",
+    "progress": "Progreso",
+    "unlockedOn": "Na-unlock noong {{date}}",
+    "filterAll": "Lahat",
+    "filterUnlocked": "Na-unlock",
+    "filterLocked": "Naka-lock",
+    "filter": "I-filter ang mga nagawa",
+    "noUnlocked": "Wala pang na-unlock na nagawa. Magpatuloy sa pagbabasa!",
+    "allUnlocked": "Binabati kita! Na-unlock mo na ang lahat ng nagawa!",
+    "tier": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum"
+    },
+    "categories": {
+      "reading": "Pagbabasa",
+      "streak": "Streak",
+      "flashcards": "Mga Flashcard",
+      "assessments": "Mga Pagsusulit",
+      "social": "Panlipunan",
+      "milestones": "Mga Mahahalagang Pangyayari"
+    },
+    "firstBook": {
+      "name": "Unang Libro",
+      "description": "Tapusin ang iyong unang libro"
+    },
+    "bookworm": {
+      "name": "Bookworm",
+      "description": "Tapusin ang 10 libro"
+    },
+    "bibliophile": {
+      "name": "Bibliophile",
+      "description": "Tapusin ang 50 libro"
+    },
+    "libraryMaster": {
+      "name": "Library Master",
+      "description": "Tapusin ang 100 libro"
+    },
+    "streakStarter": {
+      "name": "Streak Starter",
+      "description": "Panatilihin ang 3-araw na streak"
+    },
+    "weekWarrior": {
+      "name": "Week Warrior",
+      "description": "Panatilihin ang 7-araw na streak"
+    },
+    "monthChampion": {
+      "name": "Month Champion",
+      "description": "Panatilihin ang 30-araw na streak"
+    },
+    "streakLegend": {
+      "name": "Streak Legend",
+      "description": "Panatilihin ang 100-araw na streak"
+    },
+    "flashLearner": {
+      "name": "Flash Learner",
+      "description": "Mag-review ng 50 flashcard"
+    },
+    "memoryMaster": {
+      "name": "Memory Master",
+      "description": "Mag-review ng 250 flashcard"
+    },
+    "knowledgeKeeper": {
+      "name": "Knowledge Keeper",
+      "description": "Mag-review ng 1,000 flashcard"
+    },
+    "flashcardSage": {
+      "name": "Flashcard Sage",
+      "description": "Mag-review ng 5,000 flashcard"
+    },
+    "testTaker": {
+      "name": "Test Taker",
+      "description": "Kumpletuhin ang 5 pagsusulit"
+    },
+    "highAchiever": {
+      "name": "High Achiever",
+      "description": "Makakuha ng 90%+ sa mga pagsusulit"
+    },
+    "perfectScore": {
+      "name": "Perfect Score",
+      "description": "Makakuha ng 100% sa isang pagsusulit"
+    },
+    "assessmentExpert": {
+      "name": "Assessment Expert",
+      "description": "Kumpletuhin ang 50 pagsusulit"
+    },
+    "level5": {
+      "name": "Level 5",
+      "description": "Maabot ang level 5"
+    },
+    "level10": {
+      "name": "Level 10",
+      "description": "Maabot ang level 10"
+    },
+    "level25": {
+      "name": "Level 25",
+      "description": "Maabot ang level 25"
+    },
+    "level50": {
+      "name": "Level 50",
+      "description": "Maabot ang level 50"
+    },
+    "hourReader": {
+      "name": "Hour Reader",
+      "description": "Magbasa ng 1 oras sa kabuuan"
+    },
+    "dedicatedReader": {
+      "name": "Dedicated Reader",
+      "description": "Magbasa ng 10 oras sa kabuuan"
+    },
+    "readingMarathon": {
+      "name": "Reading Marathon",
+      "description": "Magbasa ng 50 oras sa kabuuan"
+    }
   }
 }

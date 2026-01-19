@@ -330,7 +330,17 @@
     "placeholder": "Book content for {{bookId}} will appear here.",
     "backToLibrary": "Back to Library",
     "settings": "Reader Settings",
-    "progress": "{{percent}}% complete",
+    "progress": {
+      "progress": "进度",
+      "complete": "完成",
+      "timeRemaining": "剩余{{time}}",
+      "timeRemainingTooltip": "预计完成阅读时间",
+      "readingSpeedTooltip": "当前阅读速度",
+      "clickToNavigate": "点击跳转到位置",
+      "wordsRead": "{{current}} / {{total}} 字",
+      "timeSpent": "阅读时间: {{time}}",
+      "averageSpeed": "平均: {{wpm}} WPM"
+    },
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
     "generateGuide": "Generate Pre-Reading Guide",
@@ -357,17 +367,6 @@
       "highlight": "高亮",
       "note": "添加笔记",
       "bookmark": "书签"
-    },
-    "progress": {
-      "progress": "进度",
-      "complete": "完成",
-      "timeRemaining": "剩余{{time}}",
-      "timeRemainingTooltip": "预计完成阅读时间",
-      "readingSpeedTooltip": "当前阅读速度",
-      "clickToNavigate": "点击跳转到位置",
-      "wordsRead": "{{current}} / {{total}} 字",
-      "timeSpent": "阅读时间: {{time}}",
-      "averageSpeed": "平均: {{wpm}} WPM"
     },
     "annotations": {
       "title": "注释",
@@ -589,7 +588,51 @@
   "flashcards": {
     "title": "闪卡",
     "review": "Review",
-    "create": "Create Flashcard",
+    "create": {
+      "title": "创建闪卡",
+      "front": "正面（问题）",
+      "frontPlaceholder": "输入问题或提示",
+      "back": "背面（答案）",
+      "backPlaceholder": "输入答案",
+      "type": "卡片类型",
+      "book": "关联书籍",
+      "bookPlaceholder": "选择书籍（可选）",
+      "tags": "标签",
+      "tagsPlaceholder": "添加标签并按Enter",
+      "addTag": "添加",
+      "tagsCount": "{{count}}/{{max}} 标签",
+      "createButton": "创建卡片",
+      "creating": "创建中...",
+      "success": "卡片创建成功！",
+      "types": {
+        "custom": "自定义",
+        "customDescription": "您创建的自定义卡片",
+        "vocabulary": "词汇",
+        "vocabularyDescription": "学习新单词和定义",
+        "concept": "概念",
+        "conceptDescription": "理解关键思想和概念",
+        "comprehension": "理解",
+        "comprehensionDescription": "测试内容理解",
+        "quote": "引用",
+        "quoteDescription": "记忆重要引用"
+      },
+      "errors": {
+        "frontRequired": "正面内容为必填",
+        "frontTooShort": "正面至少需要{{min}}个字符",
+        "frontTooLong": "正面不能超过{{max}}个字符",
+        "backRequired": "背面内容为必填",
+        "backTooShort": "背面至少需要{{min}}个字符",
+        "backTooLong": "背面不能超过{{max}}个字符",
+        "invalidType": "请选择有效的卡片类型",
+        "tooManyTags": "不能添加超过{{max}}个标签",
+        "invalidTag": "标签不能超过{{maxLength}}个字符",
+        "validation": "请检查表单错误",
+        "unauthorized": "需要登录才能创建卡片",
+        "rateLimit": "请求过多，请稍后重试。",
+        "server": "服务器错误，请重试。",
+        "unknown": "发生意外错误"
+      }
+    },
     "dueToday": "Due Today",
     "totalCards": "Total Cards",
     "studyNow": "Study Now",
@@ -597,9 +640,51 @@
     "noCards": "No flashcards yet",
     "generateFromBook": "Generate cards from your reading",
     "stats": {
-      "retention": "Retention Rate",
-      "streak": "Day Streak",
-      "reviewed": "Cards Reviewed"
+      "title": "卡片统计",
+      "refresh": "刷新统计",
+      "studyNow": "立即学习（{{count}}张待复习）",
+      "dueToday": "今日待复习",
+      "overdue": "{{count}}张逾期",
+      "retention": "记忆率",
+      "streak": "连续天数",
+      "bestStreak": "最佳: {{count}}天",
+      "totalCards": "总卡片数",
+      "activeCards": "{{count}}张活跃",
+      "cardsByStatus": "按状态分类",
+      "history": "复习历史",
+      "chartType": "图表类型",
+      "timeRange": {
+        "7days": "7天",
+        "30days": "30天",
+        "90days": "90天",
+        "year": "1年"
+      },
+      "studyTime": "学习时间",
+      "forecast": "即将复习",
+      "today": "今天",
+      "tomorrow": "明天",
+      "thisWeek": "本周",
+      "thisMonth": "本月",
+      "next7Days": "未来7天",
+      "next30Days": "未来30天",
+      "averagePerDay": "日均",
+      "status": {
+        "new": "新卡片",
+        "learning": "学习中",
+        "review": "复习中",
+        "suspended": "已暂停"
+      },
+      "charts": {
+        "reviews": "复习",
+        "reviewsDescription": "每日复习数量",
+        "retention": "记忆率",
+        "retentionDescription": "记忆率变化趋势",
+        "time": "学习时间",
+        "timeDescription": "学习花费的时间"
+      },
+      "errors": {
+        "loadFailed": "加载统计失败，请重试。"
+      }
     },
     "deck": {
       "totalCards_one": "{{count}}张",
@@ -658,51 +743,6 @@
       "noCardsDue": "目前没有需要复习的卡片。",
       "comeBackLater": "稍后再来或添加更多卡片。"
     },
-    "create": {
-      "title": "创建闪卡",
-      "front": "正面（问题）",
-      "frontPlaceholder": "输入问题或提示",
-      "back": "背面（答案）",
-      "backPlaceholder": "输入答案",
-      "type": "卡片类型",
-      "book": "关联书籍",
-      "bookPlaceholder": "选择书籍（可选）",
-      "tags": "标签",
-      "tagsPlaceholder": "添加标签并按Enter",
-      "addTag": "添加",
-      "tagsCount": "{{count}}/{{max}} 标签",
-      "createButton": "创建卡片",
-      "creating": "创建中...",
-      "success": "卡片创建成功！",
-      "types": {
-        "custom": "自定义",
-        "customDescription": "您创建的自定义卡片",
-        "vocabulary": "词汇",
-        "vocabularyDescription": "学习新单词和定义",
-        "concept": "概念",
-        "conceptDescription": "理解关键思想和概念",
-        "comprehension": "理解",
-        "comprehensionDescription": "测试内容理解",
-        "quote": "引用",
-        "quoteDescription": "记忆重要引用"
-      },
-      "errors": {
-        "frontRequired": "正面内容为必填",
-        "frontTooShort": "正面至少需要{{min}}个字符",
-        "frontTooLong": "正面不能超过{{max}}个字符",
-        "backRequired": "背面内容为必填",
-        "backTooShort": "背面至少需要{{min}}个字符",
-        "backTooLong": "背面不能超过{{max}}个字符",
-        "invalidType": "请选择有效的卡片类型",
-        "tooManyTags": "不能添加超过{{max}}个标签",
-        "invalidTag": "标签不能超过{{maxLength}}个字符",
-        "validation": "请检查表单错误",
-        "unauthorized": "需要登录才能创建卡片",
-        "rateLimit": "请求过多，请稍后重试。",
-        "server": "服务器错误，请重试。",
-        "unknown": "发生意外错误"
-      }
-    },
     "edit": {
       "title": "编辑卡片",
       "front": "正面（问题）",
@@ -740,54 +780,6 @@
         "loadNotFound": "卡片未找到",
         "loadServer": "加载卡片失败，请重试。",
         "loadUnknown": "无法加载卡片"
-      }
-    },
-    "stats": {
-      "title": "卡片统计",
-      "refresh": "刷新统计",
-      "studyNow": "立即学习（{{count}}张待复习）",
-      "dueToday": "今日待复习",
-      "overdue": "{{count}}张逾期",
-      "retention": "记忆率",
-      "streak": "连续天数",
-      "bestStreak": "最佳: {{count}}天",
-      "totalCards": "总卡片数",
-      "activeCards": "{{count}}张活跃",
-      "cardsByStatus": "按状态分类",
-      "history": "复习历史",
-      "chartType": "图表类型",
-      "timeRange": "时间范围",
-      "studyTime": "学习时间",
-      "forecast": "即将复习",
-      "today": "今天",
-      "tomorrow": "明天",
-      "thisWeek": "本周",
-      "thisMonth": "本月",
-      "next7Days": "未来7天",
-      "next30Days": "未来30天",
-      "averagePerDay": "日均",
-      "status": {
-        "new": "新卡片",
-        "learning": "学习中",
-        "review": "复习中",
-        "suspended": "已暂停"
-      },
-      "charts": {
-        "reviews": "复习",
-        "reviewsDescription": "每日复习数量",
-        "retention": "记忆率",
-        "retentionDescription": "记忆率变化趋势",
-        "time": "学习时间",
-        "timeDescription": "学习花费的时间"
-      },
-      "timeRange": {
-        "7days": "7天",
-        "30days": "30天",
-        "90days": "90天",
-        "year": "1年"
-      },
-      "errors": {
-        "loadFailed": "加载统计失败，请重试。"
       }
     }
   },
@@ -1284,5 +1276,127 @@
     "acrossAssessments": "所有测评的平均",
     "thisWeek": "本周: {{count}}",
     "thisWeekTime": "本周: {{time}}"
+  },
+  "achievements": {
+    "title": "成就",
+    "subtitle": "追踪你的成就并获得奖励",
+    "unlocked": "已解锁成就",
+    "completion": "完成度",
+    "total": "总计",
+    "xpEarned": "从成就获得的经验值",
+    "progress": "进度",
+    "unlockedOn": "于 {{date}} 解锁",
+    "filterAll": "全部",
+    "filterUnlocked": "已解锁",
+    "filterLocked": "未解锁",
+    "filter": "筛选成就",
+    "noUnlocked": "还没有解锁任何成就。继续阅读吧！",
+    "allUnlocked": "恭喜！你已解锁所有成就！",
+    "tier": {
+      "bronze": "铜牌",
+      "silver": "银牌",
+      "gold": "金牌",
+      "platinum": "白金"
+    },
+    "categories": {
+      "reading": "阅读",
+      "streak": "连续",
+      "flashcards": "闪卡",
+      "assessments": "评估",
+      "social": "社交",
+      "milestones": "里程碑"
+    },
+    "firstBook": {
+      "name": "第一本书",
+      "description": "完成你的第一本书"
+    },
+    "bookworm": {
+      "name": "书虫",
+      "description": "完成10本书"
+    },
+    "bibliophile": {
+      "name": "爱书人",
+      "description": "完成50本书"
+    },
+    "libraryMaster": {
+      "name": "图书馆大师",
+      "description": "完成100本书"
+    },
+    "streakStarter": {
+      "name": "连续起步",
+      "description": "保持3天连续记录"
+    },
+    "weekWarrior": {
+      "name": "周冠军",
+      "description": "保持7天连续记录"
+    },
+    "monthChampion": {
+      "name": "月冠军",
+      "description": "保持30天连续记录"
+    },
+    "streakLegend": {
+      "name": "连续传奇",
+      "description": "保持100天连续记录"
+    },
+    "flashLearner": {
+      "name": "闪卡学习者",
+      "description": "复习50张闪卡"
+    },
+    "memoryMaster": {
+      "name": "记忆大师",
+      "description": "复习250张闪卡"
+    },
+    "knowledgeKeeper": {
+      "name": "知识守护者",
+      "description": "复习1,000张闪卡"
+    },
+    "flashcardSage": {
+      "name": "闪卡圣人",
+      "description": "复习5,000张闪卡"
+    },
+    "testTaker": {
+      "name": "测试者",
+      "description": "完成5次评估"
+    },
+    "highAchiever": {
+      "name": "高成就者",
+      "description": "评估中获得90%以上"
+    },
+    "perfectScore": {
+      "name": "满分",
+      "description": "评估中获得100%"
+    },
+    "assessmentExpert": {
+      "name": "评估专家",
+      "description": "完成50次评估"
+    },
+    "level5": {
+      "name": "等级5",
+      "description": "达到等级5"
+    },
+    "level10": {
+      "name": "等级10",
+      "description": "达到等级10"
+    },
+    "level25": {
+      "name": "等级25",
+      "description": "达到等级25"
+    },
+    "level50": {
+      "name": "等级50",
+      "description": "达到等级50"
+    },
+    "hourReader": {
+      "name": "一小时读者",
+      "description": "总计阅读1小时"
+    },
+    "dedicatedReader": {
+      "name": "专注读者",
+      "description": "总计阅读10小时"
+    },
+    "readingMarathon": {
+      "name": "阅读马拉松",
+      "description": "总计阅读50小时"
+    }
   }
 }

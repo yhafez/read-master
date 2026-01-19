@@ -142,3 +142,20 @@ export {
   XP_PER_LEVEL,
 } from "./userStatsStore";
 export type { ReadingActivity, UserStats } from "./userStatsStore";
+
+export {
+  ACHIEVEMENTS,
+  ACHIEVEMENTS_STORAGE_KEY,
+  calculateProgressPercent,
+  getAchievementById,
+  getAchievementsByCategory,
+  TIER_COLORS,
+  TIER_XP_REWARDS,
+  useAchievementsStore,
+} from "./achievementsStore";
+export type {
+  Achievement,
+  AchievementCategory,
+  AchievementProgress,
+  AchievementTier,
+} from "./achievementsStore";

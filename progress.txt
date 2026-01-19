@@ -10906,3 +10906,127 @@ Added translations in all 6 locale files (en, ar, es, ja, zh, tl):
 - Social sharing of achievements
 
 ---
+
+## Iteration 49
+
+[2026-01-19] frontend-052: Achievements display page
+Implemented the achievements display page with full gamification system.
+
+### Files Created/Modified
+
+#### apps/web/src/stores/achievementsStore.ts (NEW)
+Zustand store with persistence for achievement tracking.
+
+**Types:**
+- `AchievementCategory`: reading | streak | flashcards | assessments | social | milestones
+- `AchievementTier`: bronze | silver | gold | platinum
+- `Achievement`: Complete achievement definition with id, nameKey, descriptionKey, category, tier, icon, threshold, xpReward
+- `AchievementProgress`: User progress tracking per achievement
+
+**Constants:**
+- `ACHIEVEMENTS`: 23 achievements across 5 categories
+- `TIER_XP_REWARDS`: bronze=50, silver=100, gold=250, platinum=500
+- `TIER_COLORS`: Color codes for each tier
+
+**Helper Functions:**
+- `getAchievementById(id)` - Find achievement by ID
+- `getAchievementsByCategory(category)` - Get all achievements in category
+- `calculateProgressPercent(current, threshold)` - Calculate progress percentage
+
+**Store Actions:**
+- `updateProgress()` - Update progress, auto-unlock when threshold reached
+- `checkUnlock()` - Check if achievement should unlock
+- `unlockAchievement()` - Manually unlock an achievement
+- `clearNewlyUnlocked()` - Clear animation queue
+- `getProgress()`, `getUnlockedAchievements()`, `getLockedAchievements()`
+- `getTotalAchievementXP()`, `getUnlockCount()`
+- `checkAchievementsFromStats()` - Bulk check from user stats
+- `reset()` - Reset all progress
+
+#### apps/web/src/stores/achievementsStore.test.ts (NEW)
+64 comprehensive tests covering:
+- Achievement constants validation (8 tests)
+- TIER_XP_REWARDS values (2 tests)
+- TIER_COLORS hex validation (1 test)
+- getAchievementById (3 tests)
+- getAchievementsByCategory (6 tests)
+- calculateProgressPercent (6 tests)
+- Store initial state (3 tests)
+- updateProgress (5 tests)
+- checkUnlock (3 tests)
+- unlockAchievement (4 tests)
+- clearNewlyUnlocked (1 test)
+- getProgress (2 tests)
+- getUnlockedAchievements (2 tests)
+- getLockedAchievements (2 tests)
+- getTotalAchievementXP (2 tests)
+- getUnlockCount (2 tests)
+- checkAchievementsFromStats (8 tests)
+- reset (1 test)
+- Category coverage (2 tests)
+
+#### apps/web/src/pages/stats/AchievementsPage.tsx (NEW)
+Full achievements display page with:
+- **AchievementStats:** Summary with unlock count, completion bar, total XP earned
+- **CategorySection:** Grouped display by category with unlock counts
+- **AchievementCard:** Individual achievement cards with:
+  - Tier badge (bronze/silver/gold/platinum)
+  - Icon with tier-colored background
+  - Progress bars for locked achievements
+  - Unlock date for completed achievements
+  - XP reward chip
+  - Pulse animation for newly unlocked
+  - Hover effects
+- **Filter controls:** All/Unlocked/Locked toggle
+- **Empty states:** Messages for filtered results
+- Full i18n support
+- Responsive Grid2 layout
+
+#### apps/web/src/locales/*.json (MODIFIED)
+Added achievement translations to all 6 locales (en, ar, es, ja, zh, tl):
+- Page titles and subtitles
+- Tier names (bronze/silver/gold/platinum)
+- Category names (reading/streak/flashcards/assessments/milestones)
+- All 23 achievement names and descriptions
+- Filter labels
+- Empty state messages
+
+#### apps/web/src/router/routes.ts (MODIFIED)
+- Added `ACHIEVEMENTS: "/achievements"` route
+- Added to PROTECTED_ROUTES array
+
+#### apps/web/src/router/Router.tsx (MODIFIED)
+- Added AchievementsPage import
+- Added route configuration for /achievements
+
+#### apps/web/src/stores/index.ts (MODIFIED)
+- Added exports for achievements store functions, constants, and types
+
+#### apps/web/src/pages/stats/index.ts (MODIFIED)
+- Added AchievementsPage export
+
+#### apps/web/src/pages/index.ts (MODIFIED)
+- Updated stats export to include AchievementsPage
+
+### Achievement Categories
+1. **Reading:** first_book (1), bookworm (10), bibliophile (50), library_master (100)
+2. **Streak:** streak_starter (3d), week_warrior (7d), month_champion (30d), streak_legend (100d)
+3. **Flashcards:** flash_learner (50), memory_master (250), knowledge_keeper (1000), flashcard_sage (5000)
+4. **Assessments:** test_taker (5), high_achiever (90%+), perfect_score (100%), assessment_expert (50)
+5. **Milestones:** level_5, level_10, level_25, level_50
+6. **Reading Time:** hour_reader (60m), dedicated_reader (600m), reading_marathon (3000m)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, pre-existing warnings only)
+- pnpm vitest run: ✅ 3306 tests pass (64 new tests)
+
+### Technical Notes
+- Tier progression within categories (bronze → platinum)
+- XP rewards scale with tier difficulty
+- Progress bars show percentage toward threshold
+- Newly unlocked achievements get pulse animation
+- Store uses zustand persist middleware
+- checkAchievementsFromStats allows bulk unlocking from user stats
+
+---

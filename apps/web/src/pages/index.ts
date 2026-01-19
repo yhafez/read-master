@@ -67,4 +67,4 @@ export {
 } from "./settings";
 
 // Stats
-export { UserStatsPage } from "./stats";
+export { UserStatsPage, AchievementsPage } from "./stats";

@@ -56,6 +56,7 @@ export const ROUTES = {
 
   // Stats
   STATS: "/stats",
+  ACHIEVEMENTS: "/achievements",
 
   // 404
   NOT_FOUND: "*",
@@ -113,6 +114,7 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.SETTINGS_PRIVACY,
   ROUTES.SETTINGS_SUBSCRIPTION,
   ROUTES.STATS,
+  ROUTES.ACHIEVEMENTS,
 ] as const;
 
 /**
