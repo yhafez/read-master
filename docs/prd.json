@@ -1381,7 +1381,7 @@
         "Profanity filter is applied",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-curriculum-002",

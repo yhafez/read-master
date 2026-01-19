@@ -6458,3 +6458,104 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7258 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 11 - Ralph Wiggum
+
+### Task Completed
+- **api-curriculum-001**: Implement curriculum CRUD endpoints
+
+### Implementation Details
+
+- Created GET /api/curriculums endpoint (apps/api/api/curriculums/index.ts):
+  - Lists user's curriculums with pagination
+  - Supports filtering by visibility (PUBLIC, PRIVATE, UNLISTED)
+  - Returns curriculum metadata, creator info, and follow status
+  - Caches results for performance
+  - Types and helpers exported:
+    - ListCurriculumsQueryParams, CurriculumUserInfo, CurriculumItemInfo, CurriculumResponse types
+    - listCurriculumsQuerySchema, createCurriculumSchema
+    - parseListCurriculumsQuery, buildCurriculumsListCacheKey, buildCurriculumsWhereClause
+    - formatDate, mapToCurriculumUserInfo, mapToCurriculumItemInfo, mapToCurriculumResponse
+    - calculatePagination, canCreateCurriculum
+
+- Created POST /api/curriculums endpoint (apps/api/api/curriculums/index.ts):
+  - Creates a new curriculum
+  - Tier-locked: requires Pro or Scholar subscription
+  - Validates input with Zod schema
+  - Applies profanity filter to title, description, and category
+  - Supports tags (up to 10), difficulty levels, and visibility settings
+  - Invalidates cache on creation
+
+- Created GET /api/curriculums/:id endpoint (apps/api/api/curriculums/[id].ts):
+  - Returns full curriculum details including items
+  - Includes creator info and follow status
+  - Access control:
+    - PUBLIC/UNLISTED: accessible to all
+    - PRIVATE: owner or followers only
+  - Types exported:
+    - CurriculumUserInfo, CurriculumBookInfo, CurriculumItemDetailInfo, CurriculumDetailResponse
+    - UpdateCurriculumInput, updateCurriculumSchema
+    - validateCurriculumId, formatDate, mapToCurriculumUserInfo
+    - mapToCurriculumBookInfo, mapToCurriculumItemDetailInfo
+    - canAccessCurriculum, isOwner, buildCurriculumCacheKey
+
+- Created PUT /api/curriculums/:id endpoint (apps/api/api/curriculums/[id].ts):
+  - Updates curriculum metadata
+  - Only owner can update
+  - Validates with Zod schema
+  - Applies profanity filter to title, description, and category
+  - Supports partial updates
+  - Invalidates caches on update
+
+- Created DELETE /api/curriculums/:id endpoint (apps/api/api/curriculums/[id].ts):
+  - Soft deletes curriculum (sets deletedAt)
+  - Only owner can delete
+  - Invalidates caches on deletion
+
+- Added comprehensive tests:
+  - apps/api/api/curriculums/index.test.ts (91 tests):
+    - Constants tests (11 tests)
+    - Type export tests (7 tests)
+    - listCurriculumsQuerySchema tests (10 tests)
+    - createCurriculumSchema tests (23 tests)
+    - parseListCurriculumsQuery tests (4 tests)
+    - buildCurriculumsListCacheKey tests (5 tests)
+    - buildCurriculumsWhereClause tests (5 tests)
+    - formatDate tests (3 tests)
+    - mapToCurriculumUserInfo tests (3 tests)
+    - mapToCurriculumItemInfo tests (3 tests)
+    - mapToCurriculumResponse tests (5 tests)
+    - calculatePagination tests (6 tests)
+    - canCreateCurriculum tests (3 tests)
+    - Edge cases and integration tests (3 tests)
+  - apps/api/api/curriculums/[id].test.ts (79 tests):
+    - Constants tests (7 tests)
+    - Type export tests (5 tests)
+    - updateCurriculumSchema tests (21 tests)
+    - validateCurriculumId tests (9 tests)
+    - formatDate tests (3 tests)
+    - mapToCurriculumUserInfo tests (2 tests)
+    - mapToCurriculumBookInfo tests (3 tests)
+    - mapToCurriculumItemDetailInfo tests (4 tests)
+    - canAccessCurriculum tests (8 tests)
+    - isOwner tests (3 tests)
+    - buildCurriculumCacheKey tests (2 tests)
+    - Edge cases tests (10 tests)
+    - Integration tests (2 tests)
+
+- Files created:
+  - apps/api/api/curriculums/index.ts
+  - apps/api/api/curriculums/index.test.ts
+  - apps/api/api/curriculums/[id].ts
+  - apps/api/api/curriculums/[id].test.ts
+
+### Acceptance Criteria Verification
+- ✅ Creation is tier-locked (Pro/Scholar only, via canCreateCurriculum check)
+- ✅ CRUD operations work (GET list, POST create, GET single, PUT update, DELETE soft-delete)
+- ✅ Profanity filter is applied (via Zod schema refine and validateFieldsNoProfanity)
+- ✅ Tests pass (170 new tests, 7428 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7428 tests pass (pre-existing i18n test failure unrelated to this change)
