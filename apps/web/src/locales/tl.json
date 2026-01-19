@@ -25,7 +25,9 @@
     "clearFilters": "I-clear ang mga Filter",
     "rowsPerPage": "Mga hilera kada pahina:",
     "expand": "Palawakin",
-    "collapse": "I-collapse"
+    "collapse": "I-collapse",
+    "play": "I-play",
+    "pause": "I-pause"
   },
   "collections": {
     "title": "Mga Koleksyon",
@@ -573,6 +575,37 @@
       "longPressDesc": "Ipakita ang annotation menu",
       "pinch": "Pinch",
       "pinchDesc": "Mag-zoom in o out"
+    },
+    "advancedReading": {
+      "title": "Advanced na Pagbabasa",
+      "selectMode": "Pumili ng mode ng pagbabasa",
+      "modes": {
+        "normal": "Normal",
+        "rsvp": "Mabilis",
+        "focus": "Pokus",
+        "bionic": "Bionic"
+      },
+      "rsvpDescription": "RSVP - Basahin ang mga salita nang isa-isa sa mabilis na bilis",
+      "focusDescription": "Pokus mode - Padilimin ang nakapaligid na teksto para magpokus sa kasalukuyang linya",
+      "bionicDescription": "Bionic reading - I-bold ang simula ng mga salita para gabayan ang mga mata",
+      "normalDescription": "Karaniwang mode ng pagbabasa na walang espesyal na pagpapahusay",
+      "wpmLabel": "Bilis ng Pagbabasa",
+      "advancedSettings": "Advanced na Settings",
+      "pauseOnPunctuation": "I-pause sa bantas",
+      "wordsPerFlash": "Mga salita kada flash",
+      "overlayOpacity": "Kadiliman ng overlay",
+      "visibleLines": "Mga linyang nakikita",
+      "autoFollow": "Auto-follow scroll",
+      "boldPercentage": "Porsyento ng bold",
+      "boldShortWords": "I-bold ang maikliing salita",
+      "preview": "Preview",
+      "previewText": "Ang mabilis na kayumangging soro ay tumalon sa tamad na aso.",
+      "rsvpComplete": "Tapos na ang Pagbabasa!",
+      "remaining": "Natitira",
+      "restart": "Ulitin",
+      "rsvpKeyboardHint": "Pindutin ang Space para i-play/pause, ← → para mag-navigate",
+      "focusUp": "Ilipat ang pokus pataas",
+      "focusDown": "Ilipat ang pokus pababa"
     },
     "tts": {
       "title": "Text-to-Speech",

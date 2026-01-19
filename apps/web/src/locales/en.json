@@ -25,7 +25,9 @@
     "clearFilters": "Clear Filters",
     "rowsPerPage": "Rows per page:",
     "expand": "Expand",
-    "collapse": "Collapse"
+    "collapse": "Collapse",
+    "play": "Play",
+    "pause": "Pause"
   },
   "collections": {
     "title": "Collections",
@@ -573,6 +575,37 @@
       "longPressDesc": "Show annotation menu",
       "pinch": "Pinch",
       "pinchDesc": "Zoom in or out"
+    },
+    "advancedReading": {
+      "title": "Advanced Reading",
+      "selectMode": "Select reading mode",
+      "modes": {
+        "normal": "Normal",
+        "rsvp": "Speed",
+        "focus": "Focus",
+        "bionic": "Bionic"
+      },
+      "rsvpDescription": "RSVP (Rapid Serial Visual Presentation) - Read words one at a time at high speed",
+      "focusDescription": "Focus mode - Dim surrounding text to concentrate on current line",
+      "bionicDescription": "Bionic reading - Bold the beginning of words to guide your eyes",
+      "normalDescription": "Standard reading mode with no special enhancements",
+      "wpmLabel": "Reading Speed",
+      "advancedSettings": "Advanced Settings",
+      "pauseOnPunctuation": "Pause on punctuation",
+      "wordsPerFlash": "Words per flash",
+      "overlayOpacity": "Overlay darkness",
+      "visibleLines": "Visible lines",
+      "autoFollow": "Auto-follow scroll",
+      "boldPercentage": "Bold percentage",
+      "boldShortWords": "Bold short words",
+      "preview": "Preview",
+      "previewText": "The quick brown fox jumps over the lazy dog.",
+      "rsvpComplete": "Reading Complete!",
+      "remaining": "Remaining",
+      "restart": "Restart",
+      "rsvpKeyboardHint": "Press Space to play/pause, ← → to navigate",
+      "focusUp": "Move focus up",
+      "focusDown": "Move focus down"
     },
     "tts": {
       "title": "Text-to-Speech",

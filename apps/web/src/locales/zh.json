@@ -25,7 +25,9 @@
     "clearFilters": "清除筛选",
     "rowsPerPage": "每页行数:",
     "expand": "展开",
-    "collapse": "折叠"
+    "collapse": "折叠",
+    "play": "播放",
+    "pause": "暂停"
   },
   "collections": {
     "title": "收藏夹",
@@ -573,6 +575,37 @@
       "longPressDesc": "显示注释菜单",
       "pinch": "捏合",
       "pinchDesc": "放大或缩小"
+    },
+    "advancedReading": {
+      "title": "高级阅读",
+      "selectMode": "选择阅读模式",
+      "modes": {
+        "normal": "普通",
+        "rsvp": "快速",
+        "focus": "专注",
+        "bionic": "仿生"
+      },
+      "rsvpDescription": "RSVP - 高速逐词显示",
+      "focusDescription": "专注模式 - 使周围文本变暗以集中于当前行",
+      "bionicDescription": "仿生阅读 - 加粗单词开头以引导视线",
+      "normalDescription": "无特殊增强的标准阅读模式",
+      "wpmLabel": "阅读速度",
+      "advancedSettings": "高级设置",
+      "pauseOnPunctuation": "在标点处暂停",
+      "wordsPerFlash": "每次闪现词数",
+      "overlayOpacity": "遮罩深度",
+      "visibleLines": "可见行数",
+      "autoFollow": "自动跟随滚动",
+      "boldPercentage": "加粗比例",
+      "boldShortWords": "加粗短词",
+      "preview": "预览",
+      "previewText": "敏捷的棕色狐狸跳过懒惰的狗。",
+      "rsvpComplete": "阅读完成！",
+      "remaining": "剩余",
+      "restart": "重新开始",
+      "rsvpKeyboardHint": "按空格键播放/暂停，← →导航",
+      "focusUp": "向上移动焦点",
+      "focusDown": "向下移动焦点"
     },
     "tts": {
       "title": "文字转语音",

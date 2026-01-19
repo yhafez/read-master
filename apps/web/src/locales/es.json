@@ -25,7 +25,9 @@
     "clearFilters": "Limpiar filtros",
     "rowsPerPage": "Filas por página:",
     "expand": "Expandir",
-    "collapse": "Contraer"
+    "collapse": "Contraer",
+    "play": "Reproducir",
+    "pause": "Pausar"
   },
   "collections": {
     "title": "Colecciones",
@@ -573,6 +575,37 @@
       "longPressDesc": "Mostrar menú de anotaciones",
       "pinch": "Pellizco",
       "pinchDesc": "Acercar o alejar"
+    },
+    "advancedReading": {
+      "title": "Lectura avanzada",
+      "selectMode": "Seleccionar modo de lectura",
+      "modes": {
+        "normal": "Normal",
+        "rsvp": "Rápido",
+        "focus": "Enfoque",
+        "bionic": "Biónico"
+      },
+      "rsvpDescription": "RSVP - Lee palabra por palabra a alta velocidad",
+      "focusDescription": "Modo enfoque - Atenúa el texto circundante para concentrarte en la línea actual",
+      "bionicDescription": "Lectura biónica - Resalta el inicio de las palabras para guiar tu vista",
+      "normalDescription": "Modo de lectura estándar sin mejoras especiales",
+      "wpmLabel": "Velocidad de lectura",
+      "advancedSettings": "Configuración avanzada",
+      "pauseOnPunctuation": "Pausar en puntuación",
+      "wordsPerFlash": "Palabras por destello",
+      "overlayOpacity": "Oscuridad de superposición",
+      "visibleLines": "Líneas visibles",
+      "autoFollow": "Seguir desplazamiento automáticamente",
+      "boldPercentage": "Porcentaje de negrita",
+      "boldShortWords": "Resaltar palabras cortas",
+      "preview": "Vista previa",
+      "previewText": "El veloz zorro marrón salta sobre el perro perezoso.",
+      "rsvpComplete": "¡Lectura completada!",
+      "remaining": "Restante",
+      "restart": "Reiniciar",
+      "rsvpKeyboardHint": "Presiona Espacio para reproducir/pausar, ← → para navegar",
+      "focusUp": "Mover enfoque arriba",
+      "focusDown": "Mover enfoque abajo"
     },
     "tts": {
       "title": "Texto a voz",

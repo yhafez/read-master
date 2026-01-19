@@ -25,7 +25,9 @@
     "clearFilters": "フィルターをクリア",
     "rowsPerPage": "1ページあたりの行数:",
     "expand": "展開",
-    "collapse": "折りたたむ"
+    "collapse": "折りたたむ",
+    "play": "再生",
+    "pause": "一時停止"
   },
   "collections": {
     "title": "コレクション",
@@ -573,6 +575,37 @@
       "longPressDesc": "注釈メニューを表示",
       "pinch": "ピンチ",
       "pinchDesc": "ズームイン/アウト"
+    },
+    "advancedReading": {
+      "title": "高度な読書機能",
+      "selectMode": "読書モードを選択",
+      "modes": {
+        "normal": "通常",
+        "rsvp": "速読",
+        "focus": "集中",
+        "bionic": "バイオニック"
+      },
+      "rsvpDescription": "RSVP - 単語を高速で一つずつ表示",
+      "focusDescription": "集中モード - 周囲のテキストを暗くして現在の行に集中",
+      "bionicDescription": "バイオニック読書 - 単語の先頭を太字にして視線を誘導",
+      "normalDescription": "特別な機能強化なしの標準読書モード",
+      "wpmLabel": "読書速度",
+      "advancedSettings": "詳細設定",
+      "pauseOnPunctuation": "句読点で一時停止",
+      "wordsPerFlash": "フラッシュごとの単語数",
+      "overlayOpacity": "オーバーレイの暗さ",
+      "visibleLines": "表示行数",
+      "autoFollow": "スクロールを自動追従",
+      "boldPercentage": "太字の割合",
+      "boldShortWords": "短い単語も太字",
+      "preview": "プレビュー",
+      "previewText": "素早い茶色のキツネが怠けた犬を飛び越える。",
+      "rsvpComplete": "読了しました！",
+      "remaining": "残り",
+      "restart": "最初から",
+      "rsvpKeyboardHint": "スペースキーで再生/一時停止、← →でナビゲート",
+      "focusUp": "フォーカスを上へ",
+      "focusDown": "フォーカスを下へ"
     },
     "tts": {
       "title": "テキスト読み上げ",

@@ -25,7 +25,9 @@
     "clearFilters": "مسح عوامل التصفية",
     "rowsPerPage": "صفوف لكل صفحة:",
     "expand": "توسيع",
-    "collapse": "طي"
+    "collapse": "طي",
+    "play": "تشغيل",
+    "pause": "إيقاف مؤقت"
   },
   "collections": {
     "title": "المجموعات",
@@ -573,6 +575,37 @@
       "longPressDesc": "إظهار قائمة التعليقات التوضيحية",
       "pinch": "قرص",
       "pinchDesc": "تكبير أو تصغير"
+    },
+    "advancedReading": {
+      "title": "قراءة متقدمة",
+      "selectMode": "اختر وضع القراءة",
+      "modes": {
+        "normal": "عادي",
+        "rsvp": "سريع",
+        "focus": "تركيز",
+        "bionic": "بيونيك"
+      },
+      "rsvpDescription": "RSVP - اقرأ كلمة واحدة في كل مرة بسرعة عالية",
+      "focusDescription": "وضع التركيز - تعتيم النص المحيط للتركيز على السطر الحالي",
+      "bionicDescription": "القراءة البيونيكية - تغميق بداية الكلمات لتوجيه عينيك",
+      "normalDescription": "وضع القراءة العادي بدون تحسينات خاصة",
+      "wpmLabel": "سرعة القراءة",
+      "advancedSettings": "إعدادات متقدمة",
+      "pauseOnPunctuation": "توقف عند علامات الترقيم",
+      "wordsPerFlash": "الكلمات لكل وميض",
+      "overlayOpacity": "شدة التعتيم",
+      "visibleLines": "الأسطر المرئية",
+      "autoFollow": "متابعة التمرير تلقائياً",
+      "boldPercentage": "نسبة التغميق",
+      "boldShortWords": "تغميق الكلمات القصيرة",
+      "preview": "معاينة",
+      "previewText": "الثعلب البني السريع يقفز فوق الكلب الكسول.",
+      "rsvpComplete": "اكتملت القراءة!",
+      "remaining": "المتبقي",
+      "restart": "إعادة التشغيل",
+      "rsvpKeyboardHint": "اضغط مسافة للتشغيل/الإيقاف، ← → للتنقل",
+      "focusUp": "تحريك التركيز للأعلى",
+      "focusDown": "تحريك التركيز للأسفل"
     },
     "tts": {
       "title": "تحويل النص إلى كلام",

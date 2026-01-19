@@ -11633,3 +11633,100 @@ This analytics service satisfies the following requirements:
 - frontend-106: Admin dashboard page (backend data source ready)
 
 ---
+
+
+## Iteration 58
+
+[2026-01-19] frontend-018: Advanced reading modes (RSVP speed reading, Focus mode, Bionic reading)
+
+### Task Overview
+Implemented advanced reading features for the reader view:
+1. **RSVP Speed Reading** - Rapid Serial Visual Presentation for speed reading
+2. **Focus Mode** - Overlay that dims surrounding text to reduce distractions
+3. **Bionic Reading** - Bold beginning of words to guide eye movement
+
+### Files Created
+
+#### apps/web/src/components/reader/advancedReadingTypes.ts (NEW - ~350 lines)
+Core types, constants, and utility functions:
+- Types: `AdvancedReadingMode`, `RSVPConfig`, `FocusModeConfig`, `BionicReadingConfig`, `RSVPState`, `BionicWord`
+- Constants: `WPM_RANGE` (100-1000), `DEFAULT_RSVP_CONFIG`, `DEFAULT_FOCUS_CONFIG`, `DEFAULT_BIONIC_CONFIG`
+- RSVP Functions:
+  - `calculateWordDisplayTime`: Calculate display time with punctuation/long word pauses
+  - `splitIntoWords`: Split text for RSVP display
+  - `groupWordsForRSVP`: Group multiple words per flash
+  - `findORP`: Find optimal recognition point in word
+- Bionic Functions:
+  - `applyBionicFormatting`: Calculate bold/normal split for a word
+  - `transformToBionic`: Transform entire text to bionic format
+- Utility Functions:
+  - `validateWPM`, `formatWPM`, `calculateEstimatedTime`, `formatReadingTime`
+  - `calculateRSVPProgress`, `isSentenceEnd`, `getLineHeightPx`, `calculateFocusOverlay`
+
+#### apps/web/src/components/reader/AdvancedReadingPanel.tsx (NEW - ~300 lines)
+Control panel component for advanced reading modes:
+- Mode selection: Normal, RSVP, Focus, Bionic
+- WPM slider with 100-1000 range
+- Focus mode opacity and visible lines controls
+- Bionic reading bold percentage slider
+- Collapsible advanced settings panel
+- Live preview for bionic reading
+
+#### apps/web/src/components/reader/RSVPDisplay.tsx (NEW - ~250 lines)
+Full RSVP speed reading display component:
+- Word-by-word display with ORP highlighting
+- Play/pause/restart controls
+- Progress bar and time remaining
+- WPM adjustment during playback
+- Keyboard shortcuts support
+
+#### apps/web/src/components/reader/FocusModeOverlay.tsx (NEW - ~200 lines)
+Focus mode overlay component:
+- Configurable dimmed overlay regions
+- Visible line tracking with auto-follow scroll
+- Manual navigation controls
+- Opacity customization
+
+#### apps/web/src/components/reader/BionicText.tsx (NEW - ~150 lines)
+Bionic reading text components:
+- `BionicText`: Render bionic-formatted text
+- `ProcessedBionicContent`: Handle various content types
+- `useBionicText`: Hook for programmatic transformation
+
+#### apps/web/src/components/reader/advancedReadingTypes.test.ts (NEW - ~650 lines)
+Comprehensive test suite with 101 tests:
+- Constants tests: WPM_RANGE, DEFAULT_*_CONFIG, INITIAL_RSVP_STATE, PUNCTUATION_MARKS
+- RSVP tests: calculateWordDisplayTime, splitIntoWords, groupWordsForRSVP, findORP
+- Bionic tests: applyBionicFormatting, transformToBionic
+- Utility tests: validateWPM, formatWPM, calculateEstimatedTime, formatReadingTime
+- Focus mode tests: isSentenceEnd, getLineHeightPx, calculateFocusOverlay
+- Type compatibility tests
+
+### Translations Added (6 locales)
+Added complete `reader.advancedReading` translation keys to all locale files:
+- `apps/web/src/locales/en.json` - English
+- `apps/web/src/locales/ar.json` - Arabic  
+- `apps/web/src/locales/es.json` - Spanish
+- `apps/web/src/locales/ja.json` - Japanese
+- `apps/web/src/locales/zh.json` - Chinese (Simplified)
+- `apps/web/src/locales/tl.json` - Tagalog
+
+Keys added: readingMode, normal, rsvp, focus, bionic, speed, wordsPerMinute, wpmDescription, pauseOnPunctuation, visibleLines, overlayOpacity, boldPercentage, autoFollowScroll, advancedSettings, estimatedTime, currentWord, progress, pressSpaceToStart, rsvpComplete, focusModeActive, bionicPreview
+
+Also added common.play and common.pause keys.
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors from new code)
+- pnpm vitest run: ✅ 101 new tests pass (10510 total tests pass)
+  - Note: 115 pre-existing failures in other files related to browser API mocking
+
+### Technical Notes
+- RSVP uses configurable WPM (100-1000) with SM-2 style sliders
+- ORP (Optimal Recognition Point) at ~35% of word for optimal reading
+- Focus mode calculates overlay heights as percentages
+- Bionic reading uses configurable bold percentage (30-70%)
+- All components follow existing reader component patterns
+- TypeScript strict mode compliant (exactOptionalPropertyTypes)
+
+---
