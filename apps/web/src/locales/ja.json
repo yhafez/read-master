@@ -17,7 +17,8 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "retry": "再試行"
   },
   "nav": {
     "home": "Home",
@@ -363,6 +364,19 @@
     "preReading": {
       "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
       "generating": "Generating..."
+    },
+    "explain": {
+      "title": "これを説明",
+      "button": "これを説明",
+      "description": "選択したテキストのAI説明を取得します。",
+      "generating": "説明を生成中...",
+      "explanation": "説明",
+      "simpler": "より簡単な説明",
+      "relatedConcepts": "関連する概念",
+      "examples": "例",
+      "followUps": "フォローアップの質問",
+      "askFollowUp": "フォローアップの質問がありますか？(残り{{remaining}})",
+      "followUpPlaceholder": "フォローアップの質問をする..."
     },
     "sections": {
       "overview": "Overview",

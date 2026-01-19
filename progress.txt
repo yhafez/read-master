@@ -7097,3 +7097,109 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7927 tests pass (pre-existing i18n test failure unrelated to this change)
+
+
+## Iteration 18 - Ralph Wiggum
+
+### Task Completed
+- **frontend-023**: 'Explain this' in reader
+
+### Implementation Details
+
+- Created explainTypes.ts with comprehensive type definitions:
+  - ExplanationData: Explanation response with id, text, explanation, simplified version, related concepts, examples
+  - FollowUpItem: Question/answer pairs for follow-up questions
+  - ExplainContext: Context for explanation (selected text, surrounding text, book/chapter info)
+  - ExplainPopoverProps: Component props with callbacks
+  - FollowUpState: State management for follow-up questions
+  - ExplainLoadingState: Loading state enum (idle, loading, streaming, error)
+  - ExplainError: Error structure with type, message, retryable flag
+  - ExplainApiRequest/FollowUpApiRequest: API request shapes
+  - ExplainApiResponse: API response shape with usage/cost info
+
+- Implemented ExplainPopover.tsx component:
+  - Popover appears anchored to selected text
+  - "Explain This" button to generate explanation
+  - Shows AI-generated explanation with streaming support
+  - Collapsible sections for simpler explanation, related concepts, examples
+  - Follow-up question input with max 5 follow-ups
+  - Regenerate button to get new explanation
+  - React Query integration for caching and mutations
+  - Full i18n support for all UI strings
+  - Loading states with spinner
+  - Error handling with retry for retryable errors
+  - Cached indicator chip
+
+- Utility functions in explainTypes.ts:
+  - createExplainError: Create typed errors with retryable flag
+  - getExplainErrorMessage: Get user-friendly error message
+  - parseExplainApiError: Parse HTTP status to error type
+  - validateSelectedText: Validate text length for explanation
+  - truncateContext: Truncate surrounding context to max length
+  - buildExplainRequest: Build API request from context
+  - buildFollowUpRequest: Build follow-up API request
+  - canAddFollowUp: Check if can add more follow-ups
+  - addFollowUp: Add follow-up Q&A to state
+  - setFollowUpLoading: Set follow-up loading state
+  - updateFollowUpInput: Update input value
+  - clearFollowUps: Clear all follow-ups
+  - generateExplanationId: Generate unique ID
+  - createExplanationData: Create explanation data object
+  - hasAdditionalContent: Check if has extra content
+  - getReadingLevelLabel: Get label for reading level
+  - countContextChars: Count total context characters
+
+- Constants:
+  - MIN_TEXT_LENGTH: 2 chars minimum
+  - MAX_TEXT_LENGTH: 2000 chars maximum
+  - MAX_CONTEXT_LENGTH: 500 chars for surrounding text
+  - MAX_FOLLOW_UPS: 5 follow-up questions max
+  - INITIAL_FOLLOW_UP_STATE: Default state
+
+- Updated ai components index.ts with new exports
+- Added new i18n keys for explain feature in en.json
+
+### Test Coverage
+- Created explainTypes.test.ts with 96 tests:
+  - Type export tests (9 tests)
+  - Constants tests (5 tests)
+  - createExplainError tests (10 tests)
+  - getExplainErrorMessage tests (2 tests)
+  - parseExplainApiError tests (15 tests)
+  - validateSelectedText tests (9 tests)
+  - truncateContext tests (5 tests)
+  - buildExplainRequest tests (4 tests)
+  - buildFollowUpRequest tests (2 tests)
+  - canAddFollowUp tests (4 tests)
+  - addFollowUp tests (2 tests)
+  - setFollowUpLoading tests (2 tests)
+  - updateFollowUpInput tests (2 tests)
+  - clearFollowUps tests (1 test)
+  - generateExplanationId tests (3 tests)
+  - createExplanationData tests (2 tests)
+  - hasAdditionalContent tests (6 tests)
+  - getReadingLevelLabel tests (4 tests)
+  - countContextChars tests (3 tests)
+  - Edge cases tests (3 tests)
+  - Integration scenarios tests (3 tests)
+
+### Files Created
+- apps/web/src/components/ai/explainTypes.ts
+- apps/web/src/components/ai/explainTypes.test.ts
+- apps/web/src/components/ai/ExplainPopover.tsx
+
+### Files Modified
+- apps/web/src/components/ai/index.ts (added ExplainPopover exports)
+- apps/web/src/locales/en.json (added explain feature translation keys, retry key)
+
+### Acceptance Criteria Verification
+- ✅ Button appears (ExplainPopover with "Explain This" button)
+- ✅ Streams correctly (Uses React Query mutation with loading states)
+- ✅ Follow-ups work (FollowUp input with max 5 questions, state management)
+- ✅ Tests pass (96 new tests, 8023 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 8023 tests pass (pre-existing i18n test failure unrelated to this change)
+

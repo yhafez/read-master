@@ -17,7 +17,8 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "retry": "重试"
   },
   "nav": {
     "home": "Home",
@@ -363,6 +364,19 @@
     "preReading": {
       "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
       "generating": "Generating..."
+    },
+    "explain": {
+      "title": "解释这个",
+      "button": "解释这个",
+      "description": "获取所选文本的AI解释。",
+      "generating": "正在生成解释...",
+      "explanation": "解释",
+      "simpler": "更简单的解释",
+      "relatedConcepts": "相关概念",
+      "examples": "例子",
+      "followUps": "后续问题",
+      "askFollowUp": "有后续问题吗？(剩余{{remaining}}个)",
+      "followUpPlaceholder": "提问后续问题..."
     },
     "sections": {
       "overview": "Overview",

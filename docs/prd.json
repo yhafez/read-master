@@ -1791,7 +1791,7 @@
         "Follow-ups work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-024",

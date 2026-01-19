@@ -17,7 +17,8 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "retry": "Retry"
   },
   "nav": {
     "home": "Home",
@@ -364,6 +365,19 @@
     "preReading": {
       "description": "Get AI-generated vocabulary, key concepts, and context to help you understand this book better.",
       "generating": "Generating..."
+    },
+    "explain": {
+      "title": "Explain This",
+      "button": "Explain This",
+      "description": "Get an AI-powered explanation of the selected text.",
+      "generating": "Generating explanation...",
+      "explanation": "Explanation",
+      "simpler": "Simpler explanation",
+      "relatedConcepts": "Related concepts",
+      "examples": "Examples",
+      "followUps": "Follow-up questions",
+      "askFollowUp": "Have a follow-up question? ({{remaining}} remaining)",
+      "followUpPlaceholder": "Ask a follow-up question..."
     },
     "sections": {
       "overview": "Overview",
