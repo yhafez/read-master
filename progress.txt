@@ -6299,3 +6299,73 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm vitest run: ✅ 7082 tests pass (pre-existing i18n test failure unrelated to this change)
+
+## Iteration 9 - Ralph Wiggum
+
+### Task Completed
+- **api-forum-003**: Implement forum reply and voting endpoints
+
+### Implementation Details
+
+- Created POST /api/forum/posts/:id/replies endpoint (apps/api/api/forum/posts/[id]/replies.ts):
+  - Creates replies to forum posts
+  - Supports nested replies (parentReplyId)
+  - Validates content with Zod schema
+  - Applies profanity filter to reply content
+  - Enforces maximum reply depth (5 levels)
+  - Updates post repliesCount and lastReplyAt atomically
+  - Validates post is not locked before allowing replies
+  - Validates category is active and not locked
+  - Types and helpers exported:
+    - MAX_REPLY_DEPTH constant
+    - ReplyUserInfo, ForumReplyResponse, CreateReplyResponse types
+    - createReplyBodySchema, CreateReplyBody types
+    - formatDateRequired, parsePostId, mapToUserInfo, mapToReplyResponse
+    - calculateReplyDepth for depth validation
+
+- Created POST/DELETE /api/forum/posts/:id/vote endpoint (apps/api/api/forum/posts/[id]/vote.ts):
+  - POST: Create or update vote on a post (upvote: 1, downvote: -1)
+  - DELETE: Remove vote from a post
+  - Prevents duplicate votes (unique constraint)
+  - Updates post upvotes, downvotes, voteScore atomically via transaction
+  - Validates post exists and category is active
+  - Types exported:
+    - VoteResponse, CreateVoteResponse, RemoveVoteResponse types
+    - voteBodySchema, VoteBody types
+    - parsePostId, mapToVoteResponse helpers
+
+- Created POST/DELETE /api/forum/replies/:id/vote endpoint (apps/api/api/forum/replies/[id]/vote.ts):
+  - POST: Create or update vote on a reply
+  - DELETE: Remove vote from a reply
+  - Prevents duplicate votes
+  - Updates reply vote counts atomically
+  - Validates reply, post, and category state
+  - Types exported:
+    - ReplyVoteResponse, CreateReplyVoteResponse, RemoveReplyVoteResponse types
+    - voteBodySchema, VoteBody types
+    - parseReplyId, mapToVoteResponse helpers
+
+- Added tests for all new endpoints:
+  - apps/api/api/forum/posts/[id]/replies.test.ts (30 tests)
+  - apps/api/api/forum/posts/[id]/vote.test.ts (25 tests)
+  - apps/api/api/forum/replies/[id]/vote.test.ts (26 tests)
+
+- Files created:
+  - apps/api/api/forum/posts/[id]/replies.ts
+  - apps/api/api/forum/posts/[id]/replies.test.ts
+  - apps/api/api/forum/posts/[id]/vote.ts
+  - apps/api/api/forum/posts/[id]/vote.test.ts
+  - apps/api/api/forum/replies/[id]/vote.ts
+  - apps/api/api/forum/replies/[id]/vote.test.ts
+
+### Acceptance Criteria Verification
+- ✅ Replies work with nesting (parentReplyId support, max depth 5)
+- ✅ Voting works for posts and replies (POST/DELETE endpoints)
+- ✅ No duplicate votes (unique constraint enforced by database)
+- ✅ Counts update correctly (atomic transactions update upvotes, downvotes, voteScore)
+- ✅ Tests pass (81 new tests, 7158 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS
+- pnpm vitest run: ✅ 7158 tests pass (pre-existing i18n test failure unrelated to this change)

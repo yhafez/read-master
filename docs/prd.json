@@ -1332,7 +1332,7 @@
         "Counts update correctly",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-forum-004",
