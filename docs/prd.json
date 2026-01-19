@@ -1180,7 +1180,7 @@
         "Pagination works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-groups-001",

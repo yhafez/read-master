@@ -5698,3 +5698,92 @@ No discoveries added during this sprint (foundational infrastructure work)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6257 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
 
+
+## Iteration 97
+
+[2026-01-18] api-social-004: Implement activity feed endpoint
+- Created GET /api/feed endpoint (apps/api/api/feed.ts):
+  - Types exported:
+    - FeedQueryParams: Query parameters (page, limit)
+    - ActivityType: "book_completed" | "achievement_earned" | "highlight_shared"
+    - FeedUserInfo: User info in activity items (id, username, displayName, avatarUrl)
+    - FeedBookInfo: Book info in activity items (id, title, author, coverImageUrl)
+    - FeedAchievementInfo: Achievement info (id, name, description, icon, rarity)
+    - FeedHighlightInfo: Highlight info (id, selectedText, note, color)
+    - FeedActivityItem: Activity item with type, user, timestamp, and optional book/achievement/highlight
+    - FeedPaginationInfo: Pagination metadata (page, limit, total, totalPages, hasMore)
+    - FeedResponse: Complete response with items array and pagination
+  - Constants:
+    - DEFAULT_PAGE: 1
+    - DEFAULT_LIMIT: 20
+    - MAX_LIMIT: 50
+    - MIN_LIMIT: 1
+    - FEED_CACHE_TTL: Short TTL for social data freshness
+    - MAX_HIGHLIGHT_PREVIEW_LENGTH: 200 chars
+  - Helper functions:
+    - parsePage: Parse and validate page number with defaults
+    - parseLimit: Parse and validate limit with min/max clamping
+    - parseFeedQueryParams: Parse query params to FeedQueryParams
+    - buildFeedCacheKey: Generate cache key for feed with user and params
+    - formatDate: Format Date as ISO string
+    - mapTierToRarity: Convert BRONZE/SILVER/GOLD/PLATINUM to lowercase rarity
+    - truncateText: Truncate text to max length preserving word boundaries
+    - mapToFeedUserInfo: Map user data to FeedUserInfo (handles null username)
+    - mapToFeedBookInfo: Map book data to FeedBookInfo (coverImage -> coverImageUrl)
+    - mapToFeedAchievementInfo: Map achievement data with tier to rarity conversion
+    - mapToFeedHighlightInfo: Map annotation with text truncation
+    - createBookCompletedActivity: Create activity item for completed book
+    - createAchievementActivity: Create activity item for earned achievement
+    - createHighlightActivity: Create activity item for shared highlight
+    - calculatePagination: Calculate pagination info from total, page, limit
+  - Database queries:
+    - getFollowedUserIdsWithActivity: Get IDs of followed users with showActivity: true
+    - getCompletedBooksFromFollowed: Get completed books from followed users
+    - getAchievementsFromFollowed: Get achievements from followed users
+    - getSharedHighlightsFromFollowed: Get public annotations from followed users
+    - countTotalActivity: Count total activity items for pagination
+  - API handler:
+    - GET endpoint with authentication
+    - Parses and validates query params (page, limit)
+    - Checks cache first (short TTL for social freshness)
+    - Gets followed users who have activity sharing enabled (showActivity: true)
+    - Returns empty feed if not following anyone with activity
+    - Fetches all activity types in parallel:
+      - Completed books (from ReadingProgress with completedAt)
+      - Earned achievements (from UserAchievement)
+      - Shared highlights (from Annotation with isPublic: true)
+    - Combines all activity types and sorts by timestamp descending
+    - Applies pagination (skip/take based on page and limit)
+    - Caches response for quick subsequent requests
+    - Proper error handling and logging
+- Created comprehensive test suite with 98 tests (apps/api/api/feed.test.ts):
+  - Constants tests (6 tests): DEFAULT_PAGE, DEFAULT_LIMIT, MAX_LIMIT, MIN_LIMIT, FEED_CACHE_TTL, MAX_HIGHLIGHT_PREVIEW_LENGTH
+  - Type Export tests (11 tests): FeedQueryParams, ActivityType, FeedUserInfo, FeedBookInfo, FeedAchievementInfo, FeedHighlightInfo, FeedActivityItem (all 3 types), FeedPaginationInfo, FeedResponse
+  - parsePage tests (10 tests): undefined, null, empty, valid, non-numeric, zero, negative, array, empty array, decimal
+  - parseLimit tests (10 tests): undefined, null, empty, valid, non-numeric, min clamp, max clamp, array, empty array, decimal
+  - parseFeedQueryParams tests (5 tests): defaults, page, limit, both, invalid values
+  - buildFeedCacheKey tests (5 tests): basic, different pages, different limits, different users, feed identifier
+  - formatDate tests (3 tests): ISO format, midnight, end of day
+  - mapTierToRarity tests (6 tests): BRONZE, SILVER, GOLD, PLATINUM, unknown, lowercase
+  - truncateText tests (6 tests): short, equal length, longer, word boundary, empty, single long word
+  - mapToFeedUserInfo tests (3 tests): correct mapping, null username to anonymous, null optional fields
+  - mapToFeedBookInfo tests (2 tests): correct mapping with coverImage->coverImageUrl, null optional fields
+  - mapToFeedAchievementInfo tests (3 tests): correct mapping, tier to rarity, null icon
+  - mapToFeedHighlightInfo tests (4 tests): correct mapping, truncation, null selectedText, null optional fields
+  - createBookCompletedActivity tests (2 tests): correct structure, no achievement/highlight
+  - createAchievementActivity tests (2 tests): correct structure, no book/highlight
+  - createHighlightActivity tests (2 tests): correct structure, no achievement
+  - calculatePagination tests (7 tests): first page, middle, last, empty, partial last, single item, beyond total
+  - Edge Cases tests (5 tests): unicode, emoji, long user IDs, special characters, whitespace
+  - Response Structure tests (2 tests): empty feed, populated feed
+  - Integration Scenarios tests (4 tests): complete workflow, mixed activity types, multiple pages, different cache keys
+- Files created:
+  - apps/api/api/feed.ts
+  - apps/api/api/feed.test.ts
+- Acceptance criteria verification:
+  - ✅ Feed shows relevant activity (reading completions, achievements, shared highlights)
+  - ✅ Privacy is respected (only shows activity from users with showActivity: true, only public annotations)
+  - ✅ Pagination works (page, limit params with proper skip/take and hasMore flag)
+  - ✅ Tests pass (98 tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6355 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
