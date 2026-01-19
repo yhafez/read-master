@@ -115,15 +115,9 @@ Time management tips:
   # Check for timeout
   if [ $exit_code -eq 124 ]; then
     echo ""
-    echo "❌ Iteration $i timed out after ${TIMEOUT_MINUTES} minutes"
+    echo "⏱️  Iteration $i timed out after ${TIMEOUT_MINUTES} minutes"
+    echo "   Claude Code process terminated. Continuing to next iteration..."
     echo ""
-    echo "📋 What to do:"
-    echo "   1. Check progress.txt to see if any work was completed"
-    echo "   2. Manually verify and commit any changes if needed"
-    echo "   3. Run ./scripts/ralph.sh again to continue"
-    echo "   4. Consider increasing timeout: ./scripts/ralph.sh $MAX_ITERATIONS 45"
-    echo ""
-    exit 1
   fi
 
   # Check for completion

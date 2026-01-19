@@ -4,6 +4,92 @@
 
 Read Master is an AI-powered reading comprehension platform that dramatically improves reading comprehension and retention through intelligent pre-reading guides, contextual support during reading, adaptive post-reading assessments, and spaced repetition review.
 
+## ⚠️ CRITICAL: Cross-Platform Feature Parity
+
+**ALL features MUST work across ALL platforms: Web, Desktop, and Mobile.**
+
+### Platform Support
+
+Read Master is available on:
+
+- 🌐 **Web**: Browser-based responsive web app (React + Vite)
+- 💻 **Desktop**: Electron app (macOS, Windows, Linux)
+- 📱 **Mobile**: Native apps (iOS and Android via React Native or similar)
+
+### Feature Parity Requirements
+
+**When implementing ANY feature:**
+
+1. ✅ **Implement for ALL platforms** - Web, Desktop, AND Mobile
+   - A feature is NOT complete until it works on all three platforms
+   - Test on all platforms before marking task as complete
+   - If you implement reader annotations on web, you MUST implement on desktop and mobile too
+
+2. ✅ **Maintain UI/UX consistency** across platforms
+   - Same feature set available everywhere
+   - Similar user experience with platform-appropriate adaptations
+   - Use Material-UI (MUI) components that work responsively across platforms
+
+3. ✅ **Platform-appropriate implementations are OK**
+   - Mobile: Touch gestures, swipe navigation, bottom sheets
+   - Desktop: Keyboard shortcuts, right-click menus, window management
+   - Web: Responsive design that works on all screen sizes (320px-1920px+)
+   - **BUT** the core functionality must be identical
+
+4. ✅ **Data synchronization** is automatic
+   - Books, reading progress, annotations, flashcards, settings sync in real-time
+   - Backend API is platform-agnostic
+   - Changes on one device immediately reflect on all other devices
+
+5. ✅ **Offline support** on all platforms
+   - PWA for web (service workers, IndexedDB)
+   - Local storage for desktop (Electron)
+   - Native storage for mobile
+   - All platforms support offline reading with automatic sync when back online
+
+### Development Workflow for New Features
+
+```
+Step 1: Design feature (consider all platforms)
+Step 2: Implement backend API (platform-agnostic)
+Step 3: Implement web version (responsive design)
+Step 4: Implement desktop version (Electron adaptations)
+Step 5: Implement mobile version (React Native/native adaptations)
+Step 6: Test on ALL platforms
+Step 7: Mark feature as complete ONLY when working everywhere
+```
+
+### Examples of Platform-Appropriate Adaptations
+
+✅ **GOOD** (Same feature, different interaction):
+
+- **Web/Desktop**: Click and drag to highlight text
+- **Mobile**: Long press and drag to highlight text
+- **Result**: All platforms support highlighting, just different gestures
+
+✅ **GOOD** (Same feature, optimized UI):
+
+- **Desktop**: Split-screen notes panel (horizontal)
+- **Mobile**: Slide-up notes panel (bottom sheet)
+- **Result**: Both platforms can view notes while reading
+
+❌ **BAD** (Feature missing on a platform):
+
+- **Web**: Has AI chat sidebar
+- **Mobile**: No AI chat at all
+- **Problem**: Feature parity broken, mobile users missing functionality
+
+### When Platform Limitations Exist
+
+If a technical limitation prevents implementing a feature on a specific platform:
+
+1. **Document it prominently** in the code and specifications
+2. **Provide an alternative** that achieves the same goal
+3. **Escalate to project lead** for approval
+4. **Update PRD** to reflect the platform-specific behavior
+
+**Default stance: If we can't implement it everywhere, we need to seriously question if it belongs in the app.**
+
 ## Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite + Material-UI (MUI)
@@ -161,6 +247,96 @@ For user-generated content that is **publicly visible** (forum posts, reading gr
 2. Store all dates in UTC
 3. Use transactions for multi-table operations
 4. Always use parameterized queries (Prisma handles this)
+5. **ALWAYS update seed data when modifying schema** (see below)
+
+#### Seed Data Requirements
+
+**CRITICAL: All schema changes MUST include corresponding seed data updates.**
+
+Location: `packages/database/prisma/seed.ts`
+
+**When to update seed data:**
+
+1. **Adding a new model** → Add multiple seed records (at least 3-5 examples)
+2. **Adding a required field** → Update ALL existing seed records with the new field
+3. **Adding an enum** → Include examples using all enum values
+4. **Adding a relationship** → Ensure related records exist in seed data
+5. **Modifying constraints** → Verify seed data respects new constraints
+6. **Adding indexes or unique constraints** → Ensure seed data doesn't violate them
+
+**What to include in seed data:**
+
+- ✅ **Realistic data**: Use real-world examples, not "test1", "test2"
+- ✅ **Edge cases**: Empty strings, nulls (where allowed), min/max values, boundary conditions
+- ✅ **Relationships**: Fully populate foreign keys and related records
+- ✅ **All tiers**: Include users and data for Free, Pro, and Scholar tiers
+- ✅ **All states**: Include records in various states (active, completed, deleted, etc.)
+- ✅ **Permissions**: Cover all user roles and permission levels
+- ✅ **Timestamps**: Use varied dates (recent, old, future where applicable)
+- ✅ **Test coverage**: Ensure data supports all test scenarios
+
+**Example: Adding a new model**
+
+```typescript
+// ❌ BAD - Minimal seed data
+await prisma.book.create({
+  data: { title: "Test Book", userId: user1.id },
+});
+
+// ✅ GOOD - Comprehensive seed data
+const books = await Promise.all([
+  // Book in various states
+  prisma.book.create({
+    data: {
+      title: "1984",
+      author: "George Orwell",
+      status: "COMPLETED",
+      genre: "FICTION",
+      pageCount: 328,
+      userId: user1.id,
+      completedAt: new Date("2024-01-15"),
+    },
+  }),
+  prisma.book.create({
+    data: {
+      title: "Sapiens",
+      author: "Yuval Noah Harari",
+      status: "READING",
+      genre: "NON_FICTION",
+      pageCount: 443,
+      currentPage: 127,
+      userId: user1.id,
+    },
+  }),
+  prisma.book.create({
+    data: {
+      title: "The Pragmatic Programmer",
+      author: "Hunt & Thomas",
+      status: "WANT_TO_READ",
+      genre: "TECHNICAL",
+      pageCount: 352,
+      userId: user2.id,
+    },
+  }),
+]);
+```
+
+**Why this matters:**
+
+- 🔧 **Development**: Developers get realistic data immediately after `pnpm db:seed`
+- 🧪 **Testing**: Tests run against consistent, realistic data
+- 👥 **Onboarding**: New team members see working examples instantly
+- 🎭 **Demos**: Preview/staging environments have professional-looking data
+- 🐛 **Bug prevention**: Catches constraint violations and edge cases early
+- 📊 **Data relationships**: Ensures all foreign keys and relations work correctly
+
+**Enforcement:**
+
+- Run `pnpm db:seed` after every schema change
+- Verify seed script runs without errors
+- Check that seed data appears correctly in database
+- Update seed tests if they exist
+- Document any special seed data requirements in code comments
 
 ### State Management
 

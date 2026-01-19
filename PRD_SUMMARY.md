@@ -2,87 +2,161 @@
 
 ## What You Got
 
-A **production-ready, comprehensive PRD** for autonomous AI development using Ralph Wiggum methodology.
+A **production-ready, focused PRD** for autonomous AI development using Ralph Wiggum methodology with **discovery mode** enabled.
 
-## 📊 Current Status: 99 Backend Tasks Defined
+## 📊 Current Status (Updated 2026-01-18)
 
 ```
-✅ Phase 1: Infrastructure      -  9 tasks
-✅ Phase 2: Database Schema     - 13 tasks
-✅ Phase 3: Shared Package      - 13 tasks
-✅ Phase 4A: API Infrastructure - 10 tasks
-✅ Phase 4B: Books & Library    - 18 tasks
-✅ Phase 4C: AI Features        -  9 tasks
-✅ Phase 4D: SRS & Gamification -  7 tasks
-✅ Phase 4E: TTS                -  4 tasks
-✅ Phase 4F: Social & Forum     - 11 tasks
-✅ Phase 4G: Curriculums & Cron -  5 tasks
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ BACKEND COMPLETE             - 99 tasks
+✅ COMPLETED (History)         - 51 tasks ✅
+   Infrastructure              -  9 tasks
+   Database Schema             - 13 tasks
+   Shared Package              - 13 tasks
+   API Infrastructure          - 10 tasks
+   Books Services              -  6 tasks (Google Books, Open Library)
 
-⚠️  FRONTEND NEEDED              - ~80 tasks (to be added)
-⚠️  PWA & OFFLINE NEEDED         - ~10 tasks (to be added)
-⚠️  TESTING NEEDED               - ~20 tasks (to be added)
-⚠️  DEPLOYMENT NEEDED            - ~10 tasks (to be added)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 ESTIMATED TOTAL              - ~220 tasks
+🔄 CURRENT SPRINT              - 22 tasks 🎯
+   Books API Endpoints         - 12 tasks (upload, CRUD, streaming)
+   Frontend Foundation         - 10 tasks (theme, routing, library, readers)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏸️  NEXT SPRINT (Deferred)     - 36 tasks ⏸️
+   AI Features API             -  9 tasks
+   SRS & Gamification          -  7 tasks
+   TTS API                     -  4 tasks
+   Social & Forum              - 11 tasks
+   Curriculums & Cron          -  5 tasks
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  TO BE DEFINED               - ~80 tasks
+   More Frontend UI            - ~40 tasks
+   PWA & Offline               - ~10 tasks
+   Testing & Polish            - ~20 tasks
+   Deployment                  - ~10 tasks
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 TOTAL                       - ~160 tasks estimated
+   ✅ Done: 51 (32%)
+   🔄 Active: 22 (14%)
+   ⏸️  Queued: 36 (22%)
+   ⚠️  Needed: ~51 (32%)
 ```
 
-## 🚀 Quick Start (3 Steps)
+## 🎯 Discovery Mode - How It Works
 
-### 1. Review the PRD
+### New Pattern (Cleaner!)
+
+1. **While working**: Ralph can add high-value discoveries to prd.json with `"defer_to_next_sprint": true`
+2. **At start of next run**: Scripts automatically promote all deferred tasks to `"defer_to_next_sprint": false`
+3. **Ralph chooses**: From current sprint tasks based on priority
+4. **Organic growth**: PRD grows based on actual observations, not guesses
+
+### Example Discovery
+
+While implementing `api-books-007`, Ralph notices an opportunity:
+
+```json
+{
+  "id": "discovered-001",
+  "category": "performance",
+  "phase": "optimization",
+  "priority": "medium",
+  "description": "Add Redis caching to book search endpoint",
+  "defer_to_next_sprint": true,
+  "rationale": "Noticed repeated identical searches in logs",
+  "steps": [...],
+  "passes": false
+}
+```
+
+Next run: automatically becomes `"defer_to_next_sprint": false` and Ralph can work on it!
+
+## 🚀 Quick Start (Updated)
+
+### 1. Review Current Sprint Tasks
 
 ```bash
-cat prd.json | jq '.tasks[] | {id, category, priority, description}' | less
+cd /Users/yahyahafez/Desktop/read-master-v2
+cat docs/prd.json | jq '.tasks[] | select(.defer_to_next_sprint == false) | {id, priority, description}' | less
 ```
 
 ### 2. Run First Iteration (HITL)
 
 ```bash
-./ralph-prd.sh
+./scripts/ralph-once.sh [timeout_minutes]
+# Default: 30 minutes
 ```
 
 Watch Ralph:
 
-- Pick a task (starts with `infra-001`)
+- Pick a task from current sprint (22 tasks)
 - Implement it
 - Run tests
 - Commit
 - Update progress
+- Can add discoveries!
 
 ### 3. Go Autonomous (AFK)
 
 ```bash
-./ralph-prd-afk.sh 30  # Run 30 iterations
+./scripts/ralph-loop.sh [iterations] [timeout_minutes]
+# Example: 15 iterations, 30 min each
 ```
 
-Come back in 30-45 minutes. Review commits.
+At start:
 
-## 📁 Files Created
+- Promotes all deferred tasks to current sprint
+- Now 22 + discoveries available
 
-| File                 | Purpose                                  | Size          |
-| -------------------- | ---------------------------------------- | ------------- |
-| **prd.json**         | Complete task list with 99 backend tasks | 2,353 lines   |
-| **ralph-prd.sh**     | HITL script (watch & intervene)          | Executable    |
-| **ralph-prd-afk.sh** | AFK script (autonomous)                  | Executable    |
-| **PRD_GUIDE.md**     | Complete documentation                   | Comprehensive |
-| **README_PRD.md**    | Getting started guide                    | Detailed      |
-| **PRD_SUMMARY.md**   | This file - quick reference              | You are here  |
+Each iteration:
 
-## 🎯 Each Task Has
+- Ralph picks highest priority task
+- Implements it
+- Can add discoveries for next sprint
 
-```json
-{
-  "id": "unique-id",
-  "category": "infrastructure|database|api-*|...",
-  "phase": "1-infrastructure|2-database|...",
-  "priority": "critical|high|medium|low",
-  "description": "Clear description",
-  "steps": ["Concrete step 1", "Concrete step 2", "Write tests"],
-  "acceptance_criteria": ["Verifiable criterion 1", "Verifiable criterion 2"],
-  "passes": false // Ralph marks true when done
-}
-```
+## 📁 Files
+
+| File                       | Purpose                                      | Status      |
+| -------------------------- | -------------------------------------------- | ----------- |
+| **docs/prd.json**          | Clean, focused task list (58 tasks)          | ✅ Updated  |
+| **scripts/ralph-once.sh**  | HITL mode (single iteration)                 | ✅ Updated  |
+| **scripts/ralph-loop.sh**  | AFK mode (autonomous loop)                   | ✅ Updated  |
+| **scripts/ralph.sh**       | Fully automated mode                         | ✅ Updated  |
+| **scripts/setup.sh**       | Project setup automation                     | ✅ New      |
+| **progress.txt**           | Complete history (51 iterations, 2501 lines) | ✅ Active   |
+| **PRD_CLEANUP_SUMMARY.md** | Detailed cleanup summary                     | ✅ New      |
+| **PRD_GUIDE.md**           | Complete PRD documentation                   | ✅ Existing |
+| **README_PRD.md**          | Getting started guide                        | ✅ Existing |
+
+## 🎯 Current Sprint Focus
+
+### Complete Books API (12 tasks)
+
+1. **api-books-007**: POST /api/books/upload (file upload with R2)
+2. **api-books-008**: POST /api/books/import-url (fetch from URL)
+3. **api-books-009**: POST /api/books/paste (paste text)
+4. **api-books-010**: GET /api/books/search (combine Google Books + Open Library)
+5. **api-books-011**: POST /api/books/add-from-library (add from external API)
+6. **api-books-012**: GET /api/books (list with filters/pagination)
+7. **api-books-013**: GET /api/books/:id (book details)
+8. **api-books-014**: PUT /api/books/:id (update metadata)
+9. **api-books-015**: DELETE /api/books/:id (soft delete)
+10. **api-books-016**: GET /api/books/:id/content (stream content)
+11. **api-reading-001**: Reading progress tracking
+12. **api-annotations-001**: Annotation CRUD
+
+### Start Frontend Foundation (10 tasks)
+
+1. **frontend-001**: MUI theme (4 modes: light/dark/sepia/high-contrast)
+2. **frontend-002**: React Router setup (all routes)
+3. **frontend-003**: Clerk authentication (sign-in/sign-up)
+4. **frontend-004**: React Query configuration
+5. **frontend-005**: Zustand stores (UI + Reader state)
+6. **frontend-006**: Library page (grid/list view, filters)
+7. **frontend-007**: BookCard component
+8. **frontend-008**: AddBookModal (4 tabs: upload/URL/paste/search)
+9. **frontend-009**: EPUB reader (epub.js integration)
+10. **frontend-010**: PDF reader (PDF.js integration)
 
 ## ✅ Quality Gates (Enforced)
 
@@ -94,263 +168,276 @@ Before EVERY commit, Ralph must run:
 
 **Ralph cannot bypass these** (no `--no-verify`).
 
-## 🧬 What's Included (Backend Complete)
+## 🧬 What's Completed (51 Tasks)
 
-### Infrastructure ✅
+### Infrastructure ✅ (9 tasks)
 
 - pnpm monorepo with workspaces
 - TypeScript strict mode
 - ESLint + Prettier + Husky
 - React + Vite frontend setup
 - Vercel serverless API setup
-- i18next (6 languages with RTL)
+- i18next (6 languages: en, es, ar, zh, ja, tl with RTL)
 - Environment configuration
 
-### Database ✅
+### Database ✅ (13 tasks)
 
 - Complete Prisma schema (15+ models)
 - All enums and relations
 - Proper indexes and constraints
+- Migrations generated
 - Seed script with sample data
+- Soft delete patterns
 
-### Shared Package ✅
+### Shared Package ✅ (13 tasks)
 
-- TypeScript types
-- Zod validation schemas
-- **SM-2 spaced repetition algorithm**
-- **Profanity filter** (3-layer validation)
+- TypeScript types exported
+- Zod validation schemas for all APIs
+- **SM-2 spaced repetition algorithm** (100% tested)
+- **Profanity filter** (3-layer validation: exact, partial, permutations)
 - Date/timezone utilities
 - Bloom's taxonomy helpers
-- Tier limits and achievements
+- Tier limits and achievements constants
+- ISO language codes
+- Comprehensive test coverage (100%)
 
-### API Infrastructure ✅
+### API Infrastructure ✅ (10 tasks)
 
-- Clerk authentication
-- Error handling
+- Clerk authentication middleware
+- Error handling middleware
 - Zod validation middleware
-- **Tier-based rate limiting**
-- Winston logging
-- Prisma + Redis services
-- Health check
+- **Tier-based rate limiting** (free: 20/min, pro: 100/min, scholar: 500/min)
+- Winston logging with context
+- Prisma service wrapper
+- Redis service wrapper
+- Health check endpoint
+- Pagination utilities
+- All infrastructure fully tested
 
-### Books & Library API ✅
+### Books Services ✅ (6 tasks)
 
-- File parsing: EPUB, PDF, DOC/DOCX
-- Google Books + Open Library integration
-- Cloudflare R2 storage
-- Upload endpoint (max 50MB)
-- Import from URL
-- Paste text to book
-- Full CRUD with filtering
+- **Cloudflare R2 storage** service (upload/download/delete with tests)
+- **File parsing** service (EPUB, PDF, DOC/DOCX with 45 tests)
+- **Google Books API** integration (search, details, ISBN lookup with 64 tests)
+- **Open Library API** integration (search, works, editions, content with 77 tests)
+- Rate limiting and caching implemented
+- Error handling and retry logic
+- **Total: 2,939 tests passing**
 
-### AI Features API ✅
+## ⏸️ Next Sprint (36 Tasks Deferred)
 
-- Vercel AI SDK + Claude streaming
-- Token tracking and cost calculation
+These will be **auto-promoted** at start of next Ralph run:
+
+### AI Features API (9 tasks)
+
+- Vercel AI SDK + Claude setup
+- Prompt templates package
 - Pre-reading guide generation
-- Contextual explanations
+- Contextual explanations (selected text)
+- Ask questions endpoint
 - Comprehension check-ins
 - Assessment generation (Bloom's Taxonomy)
 - AI grading with feedback
 - Auto-generate flashcards
 
-### SRS & Gamification API ✅
+### SRS & Gamification (7 tasks)
 
 - Flashcard CRUD
-- Due cards query
-- **Review with SM-2 algorithm** (4 ratings)
-- XP and achievement system
-- Stats tracking
-- Leaderboard (opt-in)
+- Due cards query with daily limits
+- Review with SM-2 algorithm (4 ratings)
+- Flashcard statistics
+- User stats and leveling
+- Achievement system with checking
+- Leaderboard (opt-in, privacy-first)
 
-### TTS API ✅
+### TTS API (4 tasks)
 
-- Free: Web Speech API
-- Pro: OpenAI TTS streaming
-- Scholar: ElevenLabs premium
+- Tier-based TTS (Web Speech/OpenAI/ElevenLabs)
+- TTS service integrations
 - Voice selection per tier
-- Full book audio download (quota limits)
+- Full book audio downloads with quotas
 
-### Social & Forum API ✅
+### Social & Forum (11 tasks)
 
 - User profiles (public/private)
 - Follow/unfollow system
-- Activity feed
-- Reading groups
-- Forum (nested replies, voting)
-- Best answer marking
-- Content moderation
+- Followers/following lists
+- Activity feed (respects privacy)
+- Reading groups CRUD
+- Group membership and invites
+- Group discussions with replies
+- Forum categories and posts
+- Forum replies with nesting and voting
+- Forum moderation and best answers
 
-### Curriculums API ✅
+### Curriculums & Cron (5 tasks)
 
-- CRUD (Pro/Scholar only)
+- Curriculum CRUD (Pro/Scholar only)
 - Browse/search public curriculums
-- Follow/progress tracking
-- Cron jobs (reminders, cleanup)
-
-## ⚠️ What's Missing (TODO)
-
-### Frontend (~80 tasks needed)
-
-- App shell & routing
-- MUI theme + Clerk auth UI
-- Library management UI
-- **Reader interface** (EPUB/PDF rendering)
-- AI features UI (streaming, chat)
-- SRS flashcard UI
-- Social features UI
-- Forum UI
-- Curriculum builder UI
-- Analytics dashboard
-- Settings & WCAG 2.2 AAA accessibility
-
-### PWA (~10 tasks)
-
-- Service worker
-- IndexedDB
-- Background sync
-
-### Testing (~20 tasks)
-
-- E2E tests
-- Accessibility audit
-- Performance optimization
-
-### Deployment (~10 tasks)
-
-- Vercel config
-- Environment setup
-- Monitoring
+- Curriculum items management
+- Follow and progress tracking
+- Cron jobs (SRS reminders, streak check, cleanup)
 
 ## 📈 Monitoring Progress
 
 ```bash
-# Completed tasks
-jq '[.tasks[] | select(.passes == true)] | length' prd.json
+# Current sprint tasks
+jq '[.tasks[] | select(.defer_to_next_sprint == false)] | length' docs/prd.json
 
-# Remaining tasks
-jq '[.tasks[] | select(.passes == false)] | length' prd.json
+# Deferred tasks
+jq '[.tasks[] | select(.defer_to_next_sprint == true)] | length' docs/prd.json
 
-# View progress file
-tail -20 progress.txt
+# View current sprint
+jq '.tasks[] | select(.defer_to_next_sprint == false) | {id, priority, description}' docs/prd.json
+
+# View recent progress
+tail -50 progress.txt
 
 # View recent commits
-git log --oneline -10
+git log --oneline -20
 ```
 
-## 💰 Cost Estimate
+## 🎬 Updated Workflow
 
-- **Current backend**: ~200-300 iterations
-- **Per iteration**: ~$0.50-2.00
-- **Backend total**: ~$100-600
-- **Full project**: ~$300-1,600
-
-**Reduce cost:**
-
-- HITL for risky work
-- AFK for standard implementations
-- 20-30 iterations per session
-
-## 🎬 Workflow
-
-### HITL Mode (Learning)
+### HITL Mode (Learning & Supervision)
 
 ```bash
-# Run once, watch, intervene
-./ralph-prd.sh
+# Run one iteration, watch and intervene
+./scripts/ralph-once.sh 30  # 30 min timeout
 
 # Review what changed
 git log -1 --stat
-cat progress.txt | tail -10
+tail -20 progress.txt
 
-# Run again
-./ralph-prd.sh
+# Continue
+./scripts/ralph-once.sh
 ```
 
 ### AFK Mode (Autonomous)
 
 ```bash
-# Run 30 iterations
-./ralph-prd-afk.sh 30
+# Run multiple iterations
+./scripts/ralph-loop.sh 15 30  # 15 iterations, 30 min each
 
-# Come back in 30-45 minutes
+# At start: promotes all deferred tasks
+# Come back when done
 
 # Review commits
-git log --oneline -30
+git log --oneline -15
 
-# Continue if needed
-./ralph-prd-afk.sh 30
+# Check for discoveries
+jq '.tasks[] | select(.defer_to_next_sprint == true) | {id, description, rationale}' docs/prd.json
+
+# Continue next sprint
+./scripts/ralph-loop.sh 15 30
 ```
+
+### Fully Automated
+
+```bash
+# No prompts between iterations
+./scripts/ralph.sh 15 30
+```
+
+## 💰 Cost Estimate (Updated)
+
+- **Completed backend**: 51 iterations (~$75-150)
+- **Current sprint**: 22 iterations (~$30-60)
+- **Next sprint**: 36 iterations (~$50-100)
+- **Remaining**: ~51 iterations (~$75-150)
+- **Total estimated**: ~$230-460
+
+**Reduce cost:**
+
+- Use HITL for complex/risky work (AI, reader)
+- Use AFK for standard CRUD endpoints
+- 15-20 iterations per session
+- Review and adjust before continuing
 
 ## 🔥 Quick Commands
 
 ```bash
-# View all tasks
-jq '.tasks[]' prd.json | less
+# View current sprint tasks
+jq '.tasks[] | select(.defer_to_next_sprint == false)' docs/prd.json | less
 
-# View incomplete tasks
-jq '.tasks[] | select(.passes == false)' prd.json
+# View deferred tasks
+jq '.tasks[] | select(.defer_to_next_sprint == true)' docs/prd.json | less
 
 # View by priority
-jq '.tasks[] | select(.priority == "critical")' prd.json
+jq '.tasks[] | select(.priority == "critical")' docs/prd.json
 
 # Count by phase
-jq '.tasks | group_by(.phase) | map({phase: .[0].phase, count: length})' prd.json
+jq '.tasks | group_by(.phase) | map({phase: .[0].phase, count: length})' docs/prd.json
 
-# Mark a task complete manually
-jq '.tasks[0].passes = true' prd.json > tmp.json && mv tmp.json prd.json
+# Sprint summary
+jq '{current_sprint: [.tasks[] | select(.defer_to_next_sprint == false)] | length, next_sprint: [.tasks[] | select(.defer_to_next_sprint == true)] | length, completed: .sprint_info.completed_count}' docs/prd.json
 ```
 
 ## 🎯 Next Steps
 
-1. **Extend PRD with frontend tasks** (~80 more)
-2. **Run first HITL iteration**: `./ralph-prd.sh`
-3. **Review and refine prompt** if needed
-4. **Go AFK for backend**: `./ralph-prd-afk.sh 30`
-5. **Review commits every 20-30 iterations**
-6. **Add frontend/PWA/testing tasks**
-7. **Continue until all tasks pass**
-8. **Ship Read Master!** 🚀
+1. ✅ **PRD cleaned up** (removed 51 completed tasks)
+2. ✅ **Discovery mode enabled** (defer_to_next_sprint pattern)
+3. ✅ **Current sprint defined** (22 high-priority tasks)
+4. 🔄 **Run HITL**: `./scripts/ralph-once.sh`
+5. 🔄 **Review and refine** if needed
+6. 🔄 **Go AFK**: `./scripts/ralph-loop.sh 15 30`
+7. ⏸️ **After current sprint**: Ralph auto-promotes 36 deferred tasks
+8. ⏸️ **Add more frontend tasks** (~40 more needed)
+9. ⏸️ **Add PWA/testing/deployment tasks**
+10. 🚀 **Ship Read Master!**
 
 ## 📚 Documentation
 
-- **README_PRD.md** - Comprehensive getting started guide
-- **PRD_GUIDE.md** - Detailed PRD structure and Ralph tips
-- **prd.json** - The actual task list
-- **progress.txt** - Auto-generated by Ralph
-- **SPECIFICATIONS.md** - Original product requirements
-- **RALPH_PROMTS.md** - Original phase-based prompts
-- **CLAUDE.md** - Coding standards
+- ✅ **PRD_CLEANUP_SUMMARY.md** - Detailed cleanup summary (NEW!)
+- ✅ **docs/prd.json** - Clean, focused task list (UPDATED!)
+- ✅ **scripts/** - All Ralph scripts updated with timeouts
+- ✅ **SCRIPTS_UPDATED.md** - Ralph scripts documentation
+- ✅ **progress.txt** - Complete history (51 iterations)
+- ✅ **README_PRD.md** - Getting started guide
+- ✅ **PRD_GUIDE.md** - PRD structure and Ralph principles
+- ✅ **SPECIFICATIONS.md** - Original product requirements
+- ✅ **CLAUDE.md** - Coding standards
 
 ## 🤓 Ralph Wiggum Principles Applied
 
 ✅ **1. Ralph Is A Loop** - Same prompt, different tasks
-✅ **2. HITL Then AFK** - Two scripts for two modes
-✅ **3. Define The Scope** - 99 tasks with clear criteria
+✅ **2. HITL Then AFK** - Three scripts for flexibility
+✅ **3. Define The Scope** - 58 active tasks, 51 completed
 ✅ **4. Track Progress** - progress.txt + git commits
 ✅ **5. Feedback Loops** - typecheck/lint/test enforced
-✅ **6. Small Steps** - One feature per commit
+✅ **6. Small Steps** - One task per commit
 ✅ **7. Prioritize Risk** - Critical > High > Medium > Low
 ✅ **8. Define Quality** - "Fight entropy, leave it better"
-✅ **9. Docker Sandbox** - AFK script uses Docker
-✅ **10. Pay To Play** - Cost estimates provided
+✅ **9. Discovery Mode** - Ralph can add tasks organically
+✅ **10. Timeouts** - Prevent infinite loops (30 min default)
 ✅ **11. Make It Your Own** - Extend and customize PRD
 
 ## 🎉 You're Ready!
 
 ```bash
-# Initialize progress tracking
-echo "# Read Master Progress" > progress.txt
-echo "Started: $(date)" >> progress.txt
+# Review the cleaned-up PRD
+cat docs/prd.json | jq '.sprint_info'
+
+# Review current sprint
+cat docs/prd.json | jq '.tasks[] | select(.defer_to_next_sprint == false) | .id'
 
 # Run your first iteration
-./ralph-prd.sh
+./scripts/ralph-once.sh
 ```
 
-**Welcome to autonomous development!** 🚀
+**Welcome to focused, autonomous development!** 🚀
 
 ---
 
-Questions? Check **README_PRD.md** for detailed guide.
+**Key Changes from Previous Version:**
+
+- ✅ Removed 51 completed tasks (they're history)
+- ✅ Added discovery mode pattern
+- ✅ Added 10 frontend foundation tasks
+- ✅ Organized into current sprint (22) vs next sprint (36)
+- ✅ Updated all scripts with timeouts
+- ✅ Cleaner, more focused PRD
+
+Questions? Check **PRD_CLEANUP_SUMMARY.md** for detailed breakdown!
 
 Happy coding! 🤓📚

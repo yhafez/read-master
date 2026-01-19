@@ -4,6 +4,77 @@
 
 This is an AI-powered reading comprehension platform built with a pnpm monorepo structure.
 
+## ⚠️ CRITICAL: Cross-Platform Feature Parity
+
+**EVERY feature MUST work across ALL platforms: Web, Desktop, and Mobile.**
+
+### Platform Requirements
+
+Read Master supports:
+- 🌐 **Web**: Responsive browser app (React + Vite)
+- 💻 **Desktop**: Electron app (macOS, Windows, Linux)
+- 📱 **Mobile**: Native apps (iOS, Android)
+
+### Mandatory Cross-Platform Rules
+
+**When implementing ANY feature, you MUST:**
+
+1. ✅ **Implement for ALL three platforms** (Web, Desktop, Mobile)
+   - Feature is NOT complete until it works everywhere
+   - Test on all platforms before marking as done
+   - Example: If you add annotations on web, you MUST add them on desktop and mobile too
+
+2. ✅ **Maintain UI/UX consistency**
+   - Same core functionality on all platforms
+   - Platform-appropriate interactions are OK (touch vs. mouse, gestures vs. keyboard)
+   - Use responsive MUI components that adapt to all screen sizes
+
+3. ✅ **Data syncs automatically**
+   - Books, progress, annotations, flashcards, settings sync in real-time
+   - Backend API is platform-agnostic
+   - Changes on one device appear immediately on all others
+
+4. ✅ **All platforms support offline mode**
+   - PWA for web, local storage for desktop, native storage for mobile
+   - Offline reading works everywhere
+   - Auto-sync when back online
+
+### Development Checklist for New Features
+
+Before marking a feature as complete:
+
+```
+□ Implemented on web (responsive design)
+□ Implemented on desktop (Electron)
+□ Implemented on mobile (React Native/native)
+□ Tested on all three platforms
+□ Data syncs correctly between platforms
+□ Works offline on all platforms
+□ UI is consistent but platform-appropriate
+□ Documentation updated to reflect cross-platform support
+```
+
+### Platform-Appropriate Adaptations (GOOD)
+
+✅ Same feature, different interaction method:
+- **Desktop**: Right-click context menu for actions
+- **Web**: Click button or dropdown for actions
+- **Mobile**: Long-press menu for actions
+
+✅ Same feature, optimized layout:
+- **Desktop**: Sidebar navigation
+- **Web**: Responsive sidebar that collapses on mobile
+- **Mobile**: Bottom navigation bar
+
+### Platform Exclusivity (BAD - Do NOT do this)
+
+❌ Feature only on one platform:
+- Web has AI chat, but mobile doesn't
+- Desktop has export, but web doesn't
+- Mobile has gestures, but desktop has nothing
+
+**If you can't implement it everywhere, escalate immediately. Default answer: Don't add it.**
+
 ## Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite + Material-UI (MUI)
@@ -111,6 +182,32 @@ packages/
 2. Store all dates in UTC
 3. Use transactions for multi-table operations
 4. Always use parameterized queries (Prisma handles this)
+5. **CRITICAL: Always update seed data when modifying database schema**
+
+#### Seed Data Requirements
+
+**Location:** `packages/database/prisma/seed.ts`
+
+**When schema changes, seed data MUST be updated:**
+
+- **New model** → Add 3-5 seed records with realistic data
+- **New required field** → Update ALL existing seed records
+- **New enum** → Include examples of all enum values
+- **New relationship** → Ensure related records exist
+- **New constraints** → Verify seed data respects them
+
+**Seed data must include:**
+
+- ✅ Realistic data (not "test1", "test2")
+- ✅ Edge cases (nulls, boundaries, empty values)
+- ✅ All subscription tiers (Free, Pro, Scholar)
+- ✅ All user roles and permissions
+- ✅ Various record states (active, completed, deleted, etc.)
+- ✅ Full relationship chains (all foreign keys populated)
+
+**Why:** Ensures development databases work immediately, tests have consistent data, new developers can start quickly, and edge cases are caught early.
+
+**Enforcement:** Run `pnpm db:seed` after every schema change and verify it succeeds.
 
 ### State Management
 

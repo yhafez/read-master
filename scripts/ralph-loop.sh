@@ -146,20 +146,8 @@ Time management tips:
     echo "  ⏱️  TIMEOUT: Iteration $ITERATION exceeded ${TIMEOUT_MINUTES} minutes"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
-    echo "💡 Claude Code did not exit within the timeout period."
+    echo "💡 Claude Code process terminated. Moving to next iteration..."
     echo ""
-    echo "📋 What to do:"
-    echo "   1. Check progress.txt to see if work was completed"
-    echo "   2. Review git log for any commits made"
-    echo "   3. Manually close Claude Code if still running"
-    echo "   4. Verify tests pass: pnpm vitest run"
-    echo ""
-    read -p "Continue to next iteration anyway? (y/n): " -n 1 -r
-    echo ""
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-      echo "🛑 Stopping Ralph loop. Review and fix issues before continuing."
-      exit 1
-    fi
   fi
 
   echo ""

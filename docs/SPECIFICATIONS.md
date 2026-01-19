@@ -24,6 +24,41 @@ An AI-powered reading platform that dramatically improves reading comprehension 
 
 Unlike static reading apps, Read Master uses AI to create a personalized, adaptive learning experience. It generates contextual guides tailored to each text, tracks comprehension across all reading, and uses proven pedagogical methods (Bloom's Taxonomy, SRS) to ensure lasting retention. All AI features can be disabled for users who prefer traditional reading.
 
+### Cross-Platform Parity
+
+**CRITICAL REQUIREMENT: All platforms must have feature parity.**
+
+Read Master is built as a cross-platform application available on:
+
+- **Web** (browser-based, responsive)
+- **Desktop** (Electron app for macOS, Windows, Linux)
+- **Mobile** (iOS and Android native apps)
+
+**Feature Parity Mandate:**
+
+- ✅ **Every feature** implemented must work across ALL platforms (web, desktop, mobile)
+- ✅ **UI/UX consistency** - Similar user experience across all platforms with platform-specific optimizations
+- ✅ **Data synchronization** - Real-time sync of books, progress, annotations, flashcards, and settings across all devices
+- ✅ **Offline support** - All platforms support offline reading with sync when back online
+- ✅ **No platform-exclusive features** - If a feature works on one platform, it must work on all platforms
+- ✅ **Platform-appropriate adaptations** - While features are identical, implementations may differ (e.g., touch gestures on mobile, keyboard shortcuts on desktop)
+
+**Implementation Guidelines:**
+
+1. When developing any feature, implement it for web, desktop, AND mobile simultaneously
+2. Use responsive design principles so web version works on all screen sizes
+3. Leverage React Native or similar for mobile to maximize code sharing
+4. Test on all platforms before considering a feature complete
+5. Document any platform-specific behavior or limitations
+6. If a technical limitation prevents feature parity, escalate immediately and document workaround
+
+**Why Cross-Platform Parity Matters:**
+
+- Users expect consistent experience across devices
+- Reading should be seamless whether on phone, tablet, laptop, or desktop
+- No user should feel they're missing features based on their device choice
+- Builds trust and increases engagement across all platforms
+
 ---
 
 ## Core Features
@@ -46,12 +81,40 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
   - [ ] Open Library API (access to millions of free books)
 - [ ] Store content in user's personal library
 - [ ] Library organization:
-  - [ ] Folders/collections
-  - [ ] Tags (user-created)
-  - [ ] Custom shelves
-  - [ ] Reading lists
+  - [ ] Folders/collections (nestable)
+  - [ ] Tags (user-created, color-coded)
+  - [ ] Custom shelves (books can be on multiple shelves)
+  - [ ] Reading lists (ordered, shareable)
   - [ ] Status filters: Want to Read, Reading, Completed, Abandoned
-- [ ] Search and filter library
+- [ ] Advanced search and filtering:
+  - [ ] **Full-text search** across title, author, and content
+  - [ ] **Filter by status** (Want to Read, Reading, Completed, Abandoned)
+  - [ ] **Filter by genre/category** (Fiction, Non-fiction, Academic, Technical, etc.)
+  - [ ] **Filter by tags** (user-created tags, multiple select)
+  - [ ] **Filter by reading progress** (Not started, 1-25%, 26-50%, 51-75%, 76-99%, Completed)
+  - [ ] **Filter by date** (date added, date started, date completed)
+  - [ ] **Filter by file type** (EPUB, PDF, DOC/DOCX, Text, URL)
+  - [ ] **Filter by source** (Uploaded, Google Books, Open Library, URL, Pasted)
+  - [ ] **Combine filters** (multiple filters work together)
+  - [ ] **Sort options**:
+    - [ ] Title (A-Z, Z-A)
+    - [ ] Author (A-Z, Z-A)
+    - [ ] Date added (newest first, oldest first)
+    - [ ] Last read (most recent first)
+    - [ ] Reading progress (most complete first, least complete first)
+    - [ ] Rating (if user has rated books)
+  - [ ] **Bulk actions**:
+    - [ ] Multi-select books with checkboxes
+    - [ ] Bulk add to collection
+    - [ ] Bulk add to shelf
+    - [ ] Bulk change status
+    - [ ] Bulk add tags
+    - [ ] Bulk delete (with confirmation)
+  - [ ] **Search within book** (when reading):
+    - [ ] Full-text search within current book
+    - [ ] Navigate to search results
+    - [ ] Highlight search term in text
+  - [ ] **Save search queries** (favorite filters for quick access)
 - [ ] Reading progress sync across devices
 - [ ] Offline storage for downloaded content
 - [ ] File storage on Cloudflare R2
@@ -601,6 +664,32 @@ Unlike static reading apps, Read Master uses AI to create a personalized, adapti
 - Prisma ORM
 - Vercel Postgres (Neon)
 - Upstash Redis
+
+**Database Development Practices:**
+
+⚠️ **CRITICAL: Seed Data Must Be Updated with Schema Changes**
+
+- **All new models** must have corresponding seed data in `packages/database/prisma/seed.ts`
+- **All model modifications** that add required fields must update existing seed data
+- **Seed data requirements:**
+  - Provide realistic, representative sample data
+  - Include edge cases and various data states
+  - Cover all relationships and foreign keys
+  - Include data for all subscription tiers (Free, Pro, Scholar)
+  - Include data for all user types and permissions
+  - Ensure data supports all test scenarios
+- **When to update seeds:**
+  - Adding a new model → Add multiple seed records
+  - Adding a required field → Update all existing seed records
+  - Adding an enum → Include examples of all enum values
+  - Adding a relationship → Ensure related records exist
+  - Modifying constraints → Ensure seed data respects constraints
+- **Why this matters:**
+  - Development databases have realistic test data
+  - Tests can run against consistent seed data
+  - New developers can quickly set up working environments
+  - Demo/preview environments have good sample data
+  - Catches constraint and validation issues early
 
 **File Storage:**
 
@@ -1322,6 +1411,374 @@ model AuditLog {
 - [ ] Visible focus order
 - [ ] Timeouts adjustable/extendable
 - [ ] Reading level indicators
+
+---
+
+## Admin Analytics Dashboard
+
+**Purpose:** Provide product owner with comprehensive insights into business health, user behavior, and feature adoption.
+
+**Access:** Admin-only (SUPER_ADMIN and ADMIN roles)
+
+**User Story:** As a product owner, I want to see key business metrics, user engagement, and feature adoption in real-time so that I can make data-driven decisions about product direction and identify issues early.
+
+### Core Analytics Features
+
+#### Business Metrics
+
+**Revenue Analytics:**
+
+- [ ] Monthly Recurring Revenue (MRR)
+- [ ] Annual Recurring Revenue (ARR)
+- [ ] Revenue by subscription tier (Free, Pro, Scholar)
+- [ ] Revenue trends over time (daily, weekly, monthly)
+- [ ] New revenue vs. churned revenue
+- [ ] Average Revenue Per User (ARPU)
+- [ ] Lifetime Value (LTV) per user
+- [ ] Churn rate and churn reasons
+- [ ] Conversion rate (Free → Pro → Scholar)
+
+**User Metrics:**
+
+- [ ] Total users (all-time)
+- [ ] Active users (last 30 days)
+- [ ] New signups over time
+- [ ] User distribution by subscription tier
+- [ ] User growth rate (daily, weekly, monthly)
+- [ ] User retention cohorts
+- [ ] Geographic distribution
+- [ ] Inactive/at-risk users
+
+#### Product Metrics
+
+**Engagement Analytics:**
+
+- [ ] Daily Active Users (DAU)
+- [ ] Weekly Active Users (WAU)
+- [ ] Monthly Active Users (MAU)
+- [ ] DAU/MAU ratio (stickiness)
+- [ ] Average session duration
+- [ ] Sessions per user per day
+- [ ] Books read per user
+- [ ] Reading completion rates
+- [ ] Average reading time per day
+- [ ] Return rate (% users who come back)
+
+**Feature Adoption:**
+
+- [ ] AI features usage percentage
+  - [ ] Pre-reading guide generation
+  - [ ] "Explain this" feature
+  - [ ] AI chat
+  - [ ] Comprehension checks
+  - [ ] AI assessments
+  - [ ] AI flashcard generation
+- [ ] SRS flashcard adoption rate
+- [ ] Flashcard review completion rate
+- [ ] Annotation usage (highlights, notes, bookmarks)
+- [ ] TTS usage by tier
+- [ ] Social features engagement
+  - [ ] Profile views
+  - [ ] Follows
+  - [ ] Shared highlights
+- [ ] Forum activity
+  - [ ] Posts created
+  - [ ] Replies posted
+  - [ ] Active discussions
+- [ ] Reading groups participation
+- [ ] Curriculum usage
+
+**Content Analytics:**
+
+- [ ] Most popular books
+- [ ] Most popular genres
+- [ ] Most popular authors
+- [ ] Average book length read
+- [ ] Upload vs. external library ratio
+- [ ] Content types distribution (EPUB, PDF, DOC, text)
+- [ ] Public domain vs. owned content
+- [ ] Books completed vs. abandoned
+
+#### Technical Metrics
+
+**Performance:**
+
+- [ ] API response times by endpoint
+- [ ] Error rates by endpoint
+- [ ] Slow queries (> 1s)
+- [ ] Database connection pool usage
+- [ ] Redis cache hit rate
+- [ ] Uptime percentage
+
+**AI Cost Tracking:**
+
+- [ ] Total AI spend (30 days)
+- [ ] AI cost per active user
+- [ ] AI tokens used by feature
+- [ ] AI cost trends over time
+- [ ] Cost per AI interaction
+- [ ] AI efficiency metrics
+
+**Infrastructure:**
+
+- [ ] Vercel function invocations
+- [ ] Edge requests
+- [ ] Bandwidth usage
+- [ ] Storage usage (R2)
+- [ ] Database size
+- [ ] Redis memory usage
+
+### Dashboard Views
+
+#### 1. Overview Dashboard
+
+**Layout:** Grid of metric cards + key charts
+
+**Metrics Displayed:**
+
+- Total users (with % change)
+- Active users (30d)
+- MRR (with trend)
+- AI costs (30d)
+- Books read (30d)
+- Conversion rate
+
+**Charts:**
+
+- Users over time (line chart)
+- Revenue over time (line chart)
+- Feature adoption (bar chart)
+
+**Update Frequency:** Real-time (60-second auto-refresh)
+
+#### 2. Users Dashboard
+
+**Features:**
+
+- [ ] User list with search/filter
+- [ ] User growth chart
+- [ ] Cohort retention table
+- [ ] Users by tier (pie chart)
+- [ ] Geographic heatmap
+- [ ] User details on click
+
+#### 3. Revenue Dashboard
+
+**Features:**
+
+- [ ] Revenue trends (line chart)
+- [ ] Revenue by tier (stacked area)
+- [ ] Churn analysis
+- [ ] Conversion funnel
+- [ ] LTV by cohort
+- [ ] Revenue forecasting
+
+#### 4. Engagement Dashboard
+
+**Features:**
+
+- [ ] DAU/WAU/MAU trends
+- [ ] Session duration distribution
+- [ ] Reading time heatmap (by day/hour)
+- [ ] Feature usage table
+- [ ] Content popularity
+- [ ] User journey funnel
+
+#### 5. AI Costs Dashboard
+
+**Features:**
+
+- [ ] Total costs and trends
+- [ ] Cost breakdown by feature (pie)
+- [ ] Cost per user trends
+- [ ] Tokens used by feature
+- [ ] Cost efficiency metrics
+- [ ] Alerts for unusual spikes
+
+#### 6. Technical Dashboard
+
+**Features:**
+
+- [ ] API performance metrics
+- [ ] Error rate charts
+- [ ] Slow query log
+- [ ] Infrastructure usage
+- [ ] Uptime monitoring
+- [ ] Alert configuration
+
+### Data Collection & Storage
+
+**Time-Series Data:**
+
+Create `DailyAnalytics` model for storing daily snapshots:
+
+```prisma
+model DailyAnalytics {
+  id              String   @id @default(cuid())
+  date            DateTime @db.Date @unique
+
+  // User metrics
+  totalUsers      Int
+  activeUsers     Int
+  newSignups      Int
+  churned         Int
+  freeUsers       Int
+  proUsers        Int
+  scholarUsers    Int
+
+  // Revenue metrics
+  mrr             Decimal  @db.Decimal(10, 2)
+  arr             Decimal  @db.Decimal(10, 2)
+  newRevenue      Decimal  @db.Decimal(10, 2)
+  churnedRevenue  Decimal  @db.Decimal(10, 2)
+
+  // Engagement metrics
+  dau             Int
+  wau             Int
+  mau             Int
+  booksRead       Int
+  sessionsTotal   Int
+  avgSessionMin   Float
+  totalReadTimeMin Float
+
+  // Feature usage
+  aiInteractions  Int
+  flashcardReviews Int
+  annotationsCreated Int
+  ttsUsage        Int
+
+  // AI costs
+  aiCost          Decimal  @db.Decimal(10, 4)
+  aiTokens        BigInt
+  aiCostPerUser   Decimal  @db.Decimal(10, 4)
+
+  createdAt       DateTime @default(now())
+
+  @@index([date])
+}
+```
+
+**Cron Job:** Daily at midnight UTC
+
+- Calculate all metrics for previous day
+- Store in `DailyAnalytics` table
+- Send email summary to admins
+
+**Real-Time Queries:**
+
+- Calculate current day metrics on-demand
+- Cache for 5 minutes
+- Aggregate from live tables
+
+### Security & Access Control
+
+**Role-Based Access:**
+
+- [ ] Add `UserRole` enum (USER, MODERATOR, ADMIN, SUPER_ADMIN)
+- [ ] Add `role` field to User model
+- [ ] `requireAdmin` middleware for all admin endpoints
+- [ ] Audit logging for all admin actions
+
+**Access Restrictions:**
+
+- Only ADMIN and SUPER_ADMIN can access dashboard
+- MODERATOR can see limited stats (content moderation)
+- All access attempts logged with timestamp and user
+
+**Data Privacy:**
+
+- Aggregate views only (no PII exposed)
+- User-specific data requires additional permission
+- Export functionality includes data anonymization
+- Compliance with GDPR for EU users
+
+### Analytics API Endpoints
+
+**Admin-Only Endpoints:**
+
+```
+GET  /api/admin/analytics/overview
+GET  /api/admin/analytics/users
+GET  /api/admin/analytics/revenue
+GET  /api/admin/analytics/engagement
+GET  /api/admin/analytics/features
+GET  /api/admin/analytics/ai-costs
+GET  /api/admin/analytics/content
+GET  /api/admin/analytics/technical
+GET  /api/admin/analytics/export
+
+GET  /api/admin/users (user management)
+PUT  /api/admin/users/:id/role
+PUT  /api/admin/users/:id/tier
+DELETE /api/admin/users/:id
+
+POST /api/admin/settings (system configuration)
+```
+
+**Response Caching:** 5 minutes
+**Rate Limiting:** Strict (10 requests/minute per admin)
+
+### Export Functionality
+
+**Formats:**
+
+- [ ] CSV (for spreadsheet analysis)
+- [ ] JSON (for programmatic access)
+- [ ] PDF (for reports/presentations)
+
+**Options:**
+
+- Date range selection
+- Metric selection (choose which metrics to include)
+- Email delivery for large exports
+
+**Use Cases:**
+
+- Monthly board reports
+- Investor updates
+- Team performance reviews
+- Trend analysis in spreadsheets
+
+### Alerting & Notifications
+
+**Email Alerts:**
+
+- [ ] Daily summary (optional, configurable)
+- [ ] Unusual AI cost spikes (>50% increase)
+- [ ] Churn rate increase (>10% week-over-week)
+- [ ] Error rate spikes (>5% of requests)
+- [ ] Low conversion rate alerts
+- [ ] System downtime alerts
+
+**Alert Configuration:**
+
+- Customizable thresholds
+- Multiple recipients
+- Alert frequency (immediate, daily digest, weekly)
+
+### Acceptance Criteria
+
+- [ ] All business metrics display correctly
+- [ ] Charts render properly and are interactive
+- [ ] Data updates in real-time or near real-time
+- [ ] Only admins can access dashboard
+- [ ] All admin actions are audit logged
+- [ ] Mobile responsive (usable on tablet)
+- [ ] Export functionality works for all formats
+- [ ] Cron job calculates daily metrics correctly
+- [ ] Performance is acceptable (dashboard loads in < 3s)
+- [ ] No PII exposed in aggregate views
+
+### Future Enhancements
+
+- [ ] Predictive analytics (churn prediction, LTV forecasting)
+- [ ] A/B testing framework and results
+- [ ] User segmentation and persona analysis
+- [ ] Automated insights and anomaly detection
+- [ ] Integration with third-party analytics (Google Analytics, Mixpanel)
+- [ ] Custom dashboard builder
+- [ ] Real-time alerts dashboard
+- [ ] Comparison views (this month vs. last month)
 
 ---
 
