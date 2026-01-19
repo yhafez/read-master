@@ -43,3 +43,37 @@ export {
   calculateFitPageZoom,
   formatZoomPercent,
 } from "./pdfTypes";
+
+// Text Reader
+export { TextReader } from "./TextReader";
+export type {
+  TextReaderProps,
+  TextReaderState,
+  TextLocation,
+  TextReaderSelection,
+  TextHighlight,
+  TextHighlightColor,
+  TextContentType,
+  TextReaderErrorType,
+} from "./textTypes";
+export {
+  INITIAL_TEXT_READER_STATE,
+  CHARS_PER_PAGE,
+  SCROLL_AMOUNT,
+  MIN_FONT_SIZE,
+  MAX_FONT_SIZE,
+  FONT_SIZE_STEP,
+  HIGHLIGHT_COLORS,
+  createTextReaderError,
+  getTextReaderErrorMessage,
+  validateContent,
+  calculateLocation,
+  parseIntoParagraphs,
+  clampFontSize,
+  formatPercent,
+  getOffsetAtScrollPosition,
+  getScrollPositionFromOffset,
+  rangesOverlap,
+  getOverlappingHighlights,
+  mergeOverlappingHighlights,
+} from "./textTypes";

@@ -220,6 +220,9 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "zoomLevel": "Zoom level",
+    "pageOf": "{{current}} / {{total}}",
+    "increaseFontSize": "Increase font size",
+    "decreaseFontSize": "Decrease font size",
     "context": {
       "historical": "Historical Context",
       "author": "About the Author",

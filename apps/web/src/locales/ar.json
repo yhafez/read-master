@@ -208,6 +208,7 @@
     "backToLibrary": "العودة إلى المكتبة",
     "settings": "إعدادات القارئ",
     "progress": "{{percent}}% مكتمل",
+    "pageOf": "{{current}} / {{total}}",
     "tableOfContents": "جدول المحتويات",
     "preReadingGuide": "دليل ما قبل القراءة",
     "generateGuide": "إنشاء دليل ما قبل القراءة",
@@ -220,6 +221,8 @@
     "zoomIn": "تكبير",
     "zoomOut": "تصغير",
     "zoomLevel": "مستوى التكبير",
+    "increaseFontSize": "زيادة حجم الخط",
+    "decreaseFontSize": "تقليل حجم الخط",
     "context": {
       "historical": "السياق التاريخي",
       "author": "عن المؤلف",

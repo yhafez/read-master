@@ -208,6 +208,7 @@
     "backToLibrary": "Back to Library",
     "settings": "Reader Settings",
     "progress": "{{percent}}% complete",
+    "pageOf": "{{current}} / {{total}}",
     "tableOfContents": "Table of Contents",
     "preReadingGuide": "Pre-Reading Guide",
     "generateGuide": "Generate Pre-Reading Guide",
@@ -220,6 +221,8 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "zoomLevel": "Zoom level",
+    "increaseFontSize": "Increase font size",
+    "decreaseFontSize": "Decrease font size",
     "context": {
       "historical": "Historical Context",
       "author": "About the Author",

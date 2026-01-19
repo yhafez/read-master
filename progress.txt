@@ -6916,3 +6916,98 @@ No discoveries added during this sprint (foundational infrastructure work)
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS
 - pnpm test: ✅ 5128 tests pass
+
+## Iteration 16 - Ralph Wiggum
+
+### Task Completed
+- **frontend-011**: Text reader for DOC/DOCX/pasted content
+
+### Implementation Details
+
+- Created textTypes.ts with comprehensive type definitions:
+  - TextLocation: Character offset-based location tracking
+  - TextReaderSelection: Text selection with offsets
+  - TextHighlight: Highlight annotation with colors and notes
+  - TextHighlightColor: Type for 5 highlight colors (yellow, green, blue, pink, purple)
+  - TextReaderState: Full reader state including highlights and font settings
+  - TextContentType: Supported content types (plain, doc, docx, rtf, html)
+  - TextReaderProps: Component props with all callbacks
+  - TextReaderErrorType: Error type literals
+
+- Implemented TextReader.tsx component:
+  - Scroll-based navigation with keyboard support (ArrowUp/Down, PageUp/Down, Home/End)
+  - Text selection handling with character offset calculation
+  - Highlight rendering with overlapping highlight support
+  - Font size controls (0.75x to 2.0x multiplier)
+  - Position tracking and percentage calculation
+  - Estimated page numbers based on characters per page
+  - Responsive layout with max-width content area
+  - Toolbar with navigation and font size controls
+  - Progress bar with percentage and page numbers
+  - Integration with i18n for all UI strings
+  - Paragraph-based rendering with proper line heights
+  - Error and loading states matching other reader patterns
+
+- Exported utility functions in textTypes.ts:
+  - createTextReaderError: Create typed errors
+  - getTextReaderErrorMessage: User-friendly error messages
+  - validateContent: Content validation
+  - calculateLocation: Calculate location from char offset
+  - parseIntoParagraphs: Split content into paragraphs
+  - clampFontSize: Clamp font size to valid range
+  - formatPercent: Format percentage for display
+  - getOffsetAtScrollPosition: Calculate offset from scroll
+  - getScrollPositionFromOffset: Calculate scroll from offset
+  - rangesOverlap: Check if two ranges overlap
+  - getOverlappingHighlights: Find highlights in a range
+  - mergeOverlappingHighlights: Merge overlapping for rendering
+
+- Constants exported:
+  - INITIAL_TEXT_READER_STATE: Default state
+  - CHARS_PER_PAGE: 1500 chars per estimated page
+  - SCROLL_AMOUNT: 0.9 viewport heights per scroll
+  - MIN_FONT_SIZE, MAX_FONT_SIZE, FONT_SIZE_STEP: Font size limits
+  - HIGHLIGHT_COLORS: Color name to hex mapping
+
+- Updated reader exports in index.ts
+- Added new i18n keys: reader.pageOf, reader.increaseFontSize, reader.decreaseFontSize
+
+### Test Coverage
+- Created textTypes.test.ts with 63 tests:
+  - Type export tests (8 tests)
+  - Constants tests (5 tests)
+  - createTextReaderError tests (2 tests)
+  - getTextReaderErrorMessage tests (7 tests)
+  - validateContent tests (3 tests)
+  - calculateLocation tests (5 tests)
+  - parseIntoParagraphs tests (7 tests)
+  - clampFontSize tests (3 tests)
+  - formatPercent tests (2 tests)
+  - getOffsetAtScrollPosition tests (2 tests)
+  - getScrollPositionFromOffset tests (2 tests)
+  - rangesOverlap tests (3 tests)
+  - getOverlappingHighlights tests (3 tests)
+  - mergeOverlappingHighlights tests (5 tests)
+  - Edge cases tests (3 tests)
+  - Integration scenarios tests (3 tests)
+
+### Files Created
+- apps/web/src/components/reader/textTypes.ts
+- apps/web/src/components/reader/textTypes.test.ts
+- apps/web/src/components/reader/TextReader.tsx
+
+### Files Modified
+- apps/web/src/components/reader/index.ts (added TextReader exports)
+- apps/web/src/locales/en.json (added new reader translation keys)
+
+### Acceptance Criteria Verification
+- ✅ Renders correctly (TextReader component with paragraphs, highlights, toolbar)
+- ✅ Highlighting works (TextHighlight support with colors, overlapping highlight merging)
+- ✅ Position syncs (onLocationChange callback, character offset tracking)
+- ✅ Tests pass (63 new tests, 7859 total tests pass)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS  
+- pnpm vitest run: ✅ 7859 tests pass (pre-existing i18n test failure unrelated to this change)
+
