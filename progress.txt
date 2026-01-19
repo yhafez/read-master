@@ -5972,3 +5972,127 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (142 new tests, 6667 total tests pass)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6667 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+## Iteration 100
+
+[2026-01-18] api-groups-003: Implement group discussions endpoints
+- Created GET/POST /api/groups/:id/discussions endpoint (apps/api/api/groups/[id]/discussions.ts):
+  - Types exported:
+    - DiscussionListQueryParams: Query params for listing discussions
+    - DiscussionUserInfo: User info type for responses
+    - DiscussionBookInfo: Book info type for responses
+    - DiscussionSummary: Discussion summary for list/detail responses
+    - PaginationInfo: Pagination metadata type
+    - DiscussionListResponse: List response with discussions and pagination
+    - CreateDiscussionInput: Input type for creating discussion
+    - CreateDiscussionResponse: Response type for created discussion
+  - Constants:
+    - DEFAULT_PAGE, DEFAULT_LIMIT, MAX_LIMIT, MIN_LIMIT: Pagination constants
+    - MAX_TITLE_LENGTH (300), MAX_CONTENT_LENGTH (50000): Content limits
+    - DISCUSSIONS_CACHE_TTL (5 minutes): Cache duration
+    - DiscussionSortOptions: Sort options (lastReplyAt, createdAt, repliesCount)
+  - Zod validation schema:
+    - createDiscussionSchema: Validates title, content, and optional bookId
+  - Helper functions:
+    - validateGroupId: Validate and trim group ID
+    - formatDate/formatDateRequired: Format Date as ISO string
+    - parsePage, parseLimit, parseSortBy, parseSortDirection: Parse query params
+    - parseBookId, parseBoolean, parseSearch: Parse optional query params
+    - parseListDiscussionsQuery: Parse all list query parameters
+    - buildDiscussionsCacheKey, buildGroupCacheKey: Build cache keys
+    - mapToDiscussionUserInfo, mapToDiscussionBookInfo: Map entities to response types
+    - mapToDiscussionSummary: Map full discussion to summary
+    - calculatePagination: Calculate pagination metadata
+  - Database operations:
+    - getGroupForDiscussion: Fetch group for access control
+    - checkMembership: Check if user is a member and their role
+    - listDiscussions: List discussions with pagination and sorting
+    - createDiscussion: Create discussion in transaction
+  - API handlers:
+    - GET endpoint: Lists discussions with filtering, sorting, pagination
+    - POST endpoint: Creates discussion with profanity filtering
+    - Access control: Private groups require membership
+    - Cache integration: Results cached for 5 minutes
+
+- Created GET/POST /api/discussions/:id/replies endpoint (apps/api/api/discussions/[id]/replies.ts):
+  - Types exported:
+    - ReplyListQueryParams: Query params for listing replies
+    - ReplyUserInfo: User info type for responses
+    - ReplySummary: Reply summary with optional childReplies
+    - PaginationInfo: Pagination metadata type
+    - ReplyListResponse: List response with replies and pagination
+    - CreateReplyInput: Input type for creating reply
+    - CreateReplyResponse: Response type for created reply
+    - DiscussionContext: Context for access control
+  - Constants:
+    - DEFAULT_PAGE (1), DEFAULT_LIMIT (50), MAX_LIMIT (100), MIN_LIMIT (1)
+    - MAX_CONTENT_LENGTH (50000): Content limit for replies
+    - MAX_REPLY_DEPTH (5): Maximum nesting depth for replies
+    - REPLIES_CACHE_TTL (5 minutes): Cache duration
+  - Zod validation schema:
+    - createReplySchema: Validates content and optional parentReplyId
+  - Helper functions:
+    - validateDiscussionId: Validate and trim discussion ID
+    - formatDate/formatDateRequired: Format Date as ISO string
+    - parsePage, parseLimit, parseSortDirection, parseMaxDepth: Parse query params
+    - parseListRepliesQuery: Parse all list query parameters
+    - buildRepliesCacheKey, buildDiscussionCacheKey: Build cache keys
+    - mapToReplyUserInfo, mapToReplySummary: Map entities to response types
+    - buildReplyTree: Build nested reply tree from flat list
+    - calculatePagination: Calculate pagination metadata
+    - getReplyDepth: Get depth of a reply in the tree
+  - Database operations:
+    - getDiscussionContext: Fetch discussion with group for access control
+    - checkGroupMembership: Check if user is a member of the group
+    - listReplies: List replies with pagination
+    - createReply: Create reply in transaction, updates lastReplyAt
+  - API handlers:
+    - GET endpoint: Lists replies with nested tree structure
+    - POST endpoint: Creates reply with profanity filtering
+    - Access control: Private groups require membership
+    - Nested reply support: Validates parent reply exists and depth limit
+    - Cache integration: Results cached for 5 minutes
+
+- Created comprehensive test suites:
+  - apps/api/api/groups/[id]/discussions.test.ts (93 tests):
+    - Constants tests (7 tests)
+    - Type Export tests (9 tests)
+    - createDiscussionSchema tests (12 tests)
+    - validateGroupId tests (10 tests)
+    - Date formatting tests (8 tests)
+    - Query parsing tests (36 tests)
+    - Cache key tests (5 tests)
+    - Mapping function tests (12 tests)
+    - Pagination tests (8 tests)
+    - Edge cases tests (4 tests)
+    - Response structure tests (2 tests)
+    - Integration scenarios tests (4 tests)
+    - Profanity filter tests (4 tests)
+  - apps/api/api/discussions/[id]/replies.test.ts (90 tests):
+    - Constants tests (6 tests)
+    - Type Export tests (8 tests)
+    - createReplySchema tests (8 tests)
+    - validateDiscussionId tests (8 tests)
+    - Date formatting tests (8 tests)
+    - Query parsing tests (24 tests)
+    - Cache key tests (5 tests)
+    - Mapping function tests (6 tests)
+    - buildReplyTree tests (8 tests)
+    - Pagination tests (8 tests)
+    - Edge cases tests (4 tests)
+    - Response structure tests (2 tests)
+    - Integration scenarios tests (2 tests)
+    - Profanity filter tests (3 tests)
+
+- Files created:
+  - apps/api/api/groups/[id]/discussions.ts
+  - apps/api/api/groups/[id]/discussions.test.ts
+  - apps/api/api/discussions/[id]/replies.ts
+  - apps/api/api/discussions/[id]/replies.test.ts
+
+- Acceptance criteria verification:
+  - ✅ Discussions work (GET/POST /api/groups/:id/discussions)
+  - ✅ Replies work with nesting (GET/POST /api/discussions/:id/replies)
+  - ✅ Profanity filter is applied (validateFieldsNoProfanity for discussions, containsProfanity for replies)
+  - ✅ Tests pass (183 new tests, 4207 total tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (4207 tests pass)
