@@ -1135,7 +1135,7 @@
         "No duplicates allowed",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "api-social-003",

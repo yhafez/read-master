@@ -5562,3 +5562,77 @@ No discoveries added during this sprint (foundational infrastructure work)
   - ✅ Tests pass (85 tests pass)
 - All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6060 tests pass)
 - Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
+
+## Iteration 95
+
+[2026-01-18] api-social-002: Implement follow/unfollow endpoints
+- Created POST/DELETE /api/users/:id/follow endpoint (apps/api/api/users/[id]/follow.ts):
+  - Types exported:
+    - FollowRelationship: Follow record with id, followerId, followingId, createdAt
+    - FollowResponse: Complete response with action, usernames, and updated counts
+    - UserExistsResult: Check result with exists flag and user data
+    - FollowCountsResult: Updated follower/following counts after operation
+  - Helper functions:
+    - checkUserExists: Verify user exists and is not deleted
+    - checkFollowExists: Check if follow relationship already exists
+    - createFollow: Create follow relationship with transaction (atomic counts update)
+    - deleteFollow: Delete follow relationship with transaction (atomic counts update)
+    - buildProfileCachePattern: Generate cache key pattern for profile invalidation
+    - invalidateProfileCaches: Clear profile caches for both users
+    - validateUserId: Validate user ID is non-empty string
+    - isSelfFollow: Check if attempting to follow self
+  - API handler:
+    - POST endpoint: Create follow relationship
+    - DELETE endpoint: Remove follow relationship
+    - Validates target user ID
+    - Prevents self-follow (returns 400)
+    - Checks if already following (returns 409 Conflict for POST)
+    - Checks if not following (returns 404 for DELETE)
+    - Uses database transactions for atomic count updates
+    - Handles Prisma unique constraint violations (P2002)
+    - Handles Prisma record not found errors (P2025)
+    - Invalidates profile caches for both users
+    - Returns updated follower/following counts
+- Created comprehensive test suite with 69 tests (apps/api/api/users/[id]/follow.test.ts):
+  - Type Export tests (6 tests):
+    - FollowRelationship, FollowResponse (followed/unfollowed)
+    - UserExistsResult (exists/not exists), FollowCountsResult
+  - validateUserId tests (10 tests):
+    - Valid strings, empty strings, whitespace
+    - null, undefined, number, object, array, boolean
+  - isSelfFollow tests (6 tests):
+    - Same ID, different IDs, case sensitivity
+    - Empty strings, similar IDs, special characters
+  - buildProfileCachePattern tests (6 tests):
+    - Lowercase, mixed case, numbers, special chars, empty
+  - Follow Response Structure tests (2 tests):
+    - Required fields, action values
+  - Follow Counts Result tests (3 tests):
+    - Both counts, zero counts, high counts
+  - User Exists Result tests (3 tests):
+    - Existing user, non-existing user, null username
+  - Edge Cases tests (10 tests):
+    - Tab/newline/mixed whitespace, unicode, emoji, long IDs
+  - Integration Scenarios tests (4 tests):
+    - Complete follow workflow, unfollow workflow
+    - Self-follow prevention, invalid ID rejection
+  - Error Scenarios tests (4 tests):
+    - Empty IDs, self-follow detection, cache patterns
+  - FollowRelationship Structure tests (2 tests):
+    - Correct structure, date formats
+  - Response Validation tests (4 tests):
+    - Success flags, usernames, counts
+  - Cache Pattern tests (5 tests):
+    - Wildcard pattern, prefixes, segments, normalization
+  - Boundary Values tests (4 tests):
+    - Min/max counts, single character usernames/IDs
+- Files created:
+  - apps/api/api/users/[id]/follow.ts
+  - apps/api/api/users/[id]/follow.test.ts
+- Acceptance criteria verification:
+  - ✅ Following works (POST /api/users/:id/follow creates relationship)
+  - ✅ Unfollowing works (DELETE /api/users/:id/follow removes relationship)
+  - ✅ No duplicates allowed (unique constraint + 409 Conflict response)
+  - ✅ Tests pass (69 tests pass)
+- All feedback loops pass: pnpm typecheck, pnpm lint, pnpm vitest run (6129 tests pass)
+- Note: Pre-existing i18n test failure unrelated to this change (document not defined in Node)
