@@ -673,6 +673,56 @@
         "challenging": "Challenging",
         "hard": "Hard"
       }
+    },
+    "flashcardGeneration": {
+      "title": "Generate Flashcards",
+      "selectTypes": "Select card types",
+      "typeInfo": "Show card type info",
+      "typeInfoDescription": "Different card types help you learn in different ways. Vocabulary cards define words, concept cards explain ideas, comprehension cards test understanding, and quote cards highlight important passages.",
+      "cardCount": "Number of cards",
+      "cards": "cards",
+      "characters": "characters",
+      "estimatedTime": "Estimated time: {{time}}",
+      "generate": "Generate",
+      "generating": "Generating...",
+      "generatingDescription": "AI is creating flashcards from your selected content. This may take a moment.",
+      "regenerate": "Generate Again",
+      "done": "Done",
+      "front": "Front (Question)",
+      "back": "Back (Answer)",
+      "selectedCount": "{{count}} of {{total}} selected",
+      "selectAll": "Select all",
+      "deselectAll": "Deselect all",
+      "types": {
+        "vocabulary": {
+          "label": "Vocabulary",
+          "description": "Word definitions and usage examples"
+        },
+        "concept": {
+          "label": "Concept",
+          "description": "Key ideas and their explanations"
+        },
+        "comprehension": {
+          "label": "Comprehension",
+          "description": "Questions that test understanding"
+        },
+        "quote": {
+          "label": "Quote",
+          "description": "Important passages and their meanings"
+        }
+      },
+      "error": {
+        "network": "Unable to connect. Please check your internet connection.",
+        "validation": "Invalid request. Please check your input.",
+        "rateLimit": "You've reached your AI usage limit. Please try again later.",
+        "aiDisabled": "AI features are disabled. Enable them in settings.",
+        "aiUnavailable": "AI service is temporarily unavailable. Please try again.",
+        "bookNotFound": "Book not found.",
+        "contentTooShort": "Content must be at least 50 characters.",
+        "contentTooLong": "Content is too long. Maximum 50,000 characters.",
+        "noCards": "No flashcards could be generated from this content.",
+        "unknown": "An unexpected error occurred. Please try again."
+      }
     }
   },
   "pwa": {

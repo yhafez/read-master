@@ -672,6 +672,56 @@
         "challenging": "やや難しい",
         "hard": "難しい"
       }
+    },
+    "flashcardGeneration": {
+      "title": "フラッシュカードを生成",
+      "selectTypes": "カードの種類を選択",
+      "typeInfo": "カード種類の情報を表示",
+      "typeInfoDescription": "異なるカード種類は異なる方法で学習を助けます。語彙カードは単語を定義し、概念カードはアイデアを説明し、理解カードは理解度をテストし、引用カードは重要な箇所を強調します。",
+      "cardCount": "カード枚数",
+      "cards": "枚",
+      "characters": "文字",
+      "estimatedTime": "推定時間: {{time}}",
+      "generate": "生成",
+      "generating": "生成中...",
+      "generatingDescription": "AIが選択したコンテンツからフラッシュカードを作成しています。しばらくお待ちください。",
+      "regenerate": "再生成",
+      "done": "完了",
+      "front": "表面（質問）",
+      "back": "裏面（回答）",
+      "selectedCount": "{{total}}枚中{{count}}枚選択",
+      "selectAll": "すべて選択",
+      "deselectAll": "選択解除",
+      "types": {
+        "vocabulary": {
+          "label": "語彙",
+          "description": "単語の定義と使用例"
+        },
+        "concept": {
+          "label": "概念",
+          "description": "重要なアイデアとその説明"
+        },
+        "comprehension": {
+          "label": "理解",
+          "description": "理解度をテストする質問"
+        },
+        "quote": {
+          "label": "引用",
+          "description": "重要な箇所とその意味"
+        }
+      },
+      "error": {
+        "network": "接続できません。インターネット接続を確認してください。",
+        "validation": "無効なリクエストです。入力を確認してください。",
+        "rateLimit": "AI使用制限に達しました。後でもう一度お試しください。",
+        "aiDisabled": "AI機能が無効です。設定で有効にしてください。",
+        "aiUnavailable": "AIサービスは一時的に利用できません。もう一度お試しください。",
+        "bookNotFound": "本が見つかりません。",
+        "contentTooShort": "コンテンツは50文字以上である必要があります。",
+        "contentTooLong": "コンテンツが長すぎます。最大50,000文字です。",
+        "noCards": "このコンテンツからフラッシュカードを生成できませんでした。",
+        "unknown": "予期しないエラーが発生しました。もう一度お試しください。"
+      }
     }
   },
   "pwa": {

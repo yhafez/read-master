@@ -8891,3 +8891,137 @@ Created assessmentTypes.test.ts with jsdom environment:
 - pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
 - pnpm vitest run: ✅ 55/55 assessment tests pass
 
+
+
+## Iteration 32
+
+[2026-01-19] frontend-028: AI flashcard generation UI
+
+### Summary
+Implemented the AI flashcard generation feature, allowing users to generate flashcards from book content using AI. The implementation includes type selection, card count configuration, content validation, and editable preview with selection.
+
+### Implementation Details
+
+#### flashcardGenerationTypes.ts
+Core types and utilities module with:
+
+**Constants:**
+- MIN_CARD_COUNT=1, MAX_CARD_COUNT=30, DEFAULT_CARD_COUNT=10
+- MIN_CONTENT_LENGTH=50, MAX_CONTENT_LENGTH=50000
+- CARD_COUNT_STEP=5, GENERATION_PREFERENCES_KEY
+
+**Types:**
+- FlashcardGenerationType: vocabulary | concept | comprehension | quote
+- FlashcardTypeConfig: Configuration for UI display (value, labelKey, descriptionKey, icon, defaultSelected)
+- GeneratedFlashcard: AI-generated card with front, back, type, confidence, explanation
+- GenerationSummary: Statistics about generation (totalGenerated, byType, tokensUsed, cost, duration)
+- GenerationState: idle | generating | preview | complete | error
+- GenerationError: Error details with type, message, retryable flag
+- EditableFlashcard: Extends GeneratedFlashcard with editing/selection state
+- GenerationPreferences: User preferences (defaultCardCount, defaultTypes, autoSave)
+
+**Validation Functions:**
+- isValidFlashcardType, isValidCardCount, isValidContentLength
+- validateContent, validateCardTypes (returns {valid, error?})
+
+**Error Handling:**
+- createGenerationError: Creates typed errors
+- parseGenerationApiError: Parses API responses into typed errors
+- getGenerationErrorKey: Maps error types to i18n keys
+
+**Editable Card Functions:**
+- toEditableFlashcards: Convert generated cards to editable format
+- startEditingCard, cancelEditingCard, saveEditedCard
+- updateEditedFront, updateEditedBack
+- toggleCardSelection, selectAllCards, deselectAllCards
+- getSelectedCards, getSelectedCount, isAnyCardEditing
+- toGeneratedFlashcards: Convert back for saving
+
+**Storage Functions:**
+- loadGenerationPreferences, saveGenerationPreferences (localStorage)
+
+**Display Helpers:**
+- formatDuration, formatTokenCount, formatCost
+- getSummaryText, getTypeBreakdown, estimateGenerationTime
+- getFlashcardTypeDisplay, getFlashcardTypeDescription, getFlashcardTypeIcon
+- getFlashcardTypeConfig, getDefaultSelectedTypes
+
+#### GenerateFlashcardsDialog.tsx
+Dialog component with:
+- Type selection checkboxes (vocabulary, concept, comprehension, quote)
+- Card count slider (1-30 cards)
+- Content validation and length display
+- Estimated generation time
+- Generation state management (idle -> generating -> preview -> complete)
+- Editable preview with front/back editing
+- Card selection checkboxes with select/deselect all
+- Error display with retry option
+- Save selected cards to deck
+
+#### i18n Translations
+Added flashcardGeneration translations to all 6 locale files:
+- en.json: title, selectTypes, typeInfo, cardCount, generate, etc.
+- ar.json: Arabic translations
+- es.json: Spanish translations
+- ja.json: Japanese translations
+- zh.json: Chinese Simplified translations
+- tl.json: Tagalog translations
+
+Translation keys include:
+- ai.flashcardGeneration.title/selectTypes/typeInfo/typeInfoDescription
+- ai.flashcardGeneration.cardCount/cards/characters/estimatedTime
+- ai.flashcardGeneration.generate/generating/generatingDescription
+- ai.flashcardGeneration.regenerate/done/front/back
+- ai.flashcardGeneration.selectedCount/selectAll/deselectAll
+- ai.flashcardGeneration.types.vocabulary/concept/comprehension/quote
+- ai.flashcardGeneration.error.network/validation/rateLimit/aiDisabled/etc.
+
+### Test Coverage (72 tests)
+Created flashcardGenerationTypes.test.ts with jsdom environment:
+- Constants tests (4)
+- isValidFlashcardType tests (2)
+- isValidCardCount tests (2)
+- isValidContentLength tests (2)
+- validateContent tests (4)
+- validateCardTypes tests (3)
+- createGenerationError tests (4)
+- parseGenerationApiError tests (9)
+- getGenerationErrorKey tests (1)
+- getFlashcardTypeDisplay tests (1)
+- getFlashcardTypeDescription tests (1)
+- getFlashcardTypeIcon tests (1)
+- getFlashcardTypeConfig tests (2)
+- getDefaultSelectedTypes tests (1)
+- Editable flashcard function tests (13)
+- Storage function tests (4)
+- Display helper tests (6)
+- estimateGenerationTime tests (4)
+- buildGenerationRequest tests (2)
+- API helper tests (3)
+
+### Files Created
+- apps/web/src/components/ai/flashcardGenerationTypes.ts
+- apps/web/src/components/ai/GenerateFlashcardsDialog.tsx
+- apps/web/src/components/ai/flashcardGenerationTypes.test.ts
+
+### Files Modified
+- apps/web/src/components/ai/index.ts (added exports)
+- apps/web/src/locales/en.json (added flashcardGeneration section)
+- apps/web/src/locales/ar.json (added flashcardGeneration section)
+- apps/web/src/locales/es.json (added flashcardGeneration section)
+- apps/web/src/locales/ja.json (added flashcardGeneration section)
+- apps/web/src/locales/zh.json (added flashcardGeneration section)
+- apps/web/src/locales/tl.json (added flashcardGeneration section)
+- docs/prd.json (marked frontend-028 as passes: true, updated completed_count to 64)
+
+### Acceptance Criteria Verification
+- ✅ Generation works (dialog calls API with type selection)
+- ✅ Types selectable (checkbox selection for vocabulary/concept/comprehension/quote)
+- ✅ Preview works (editable cards with front/back editing)
+- ✅ Saves correctly (selected cards can be saved to deck)
+- ✅ Tests pass (72 tests for flashcard generation utilities)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors)
+- pnpm vitest run: ✅ 2127/2127 tests pass

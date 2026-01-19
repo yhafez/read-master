@@ -672,6 +672,56 @@
         "challenging": "Mahamon",
         "hard": "Mahirap"
       }
+    },
+    "flashcardGeneration": {
+      "title": "Gumawa ng Flashcards",
+      "selectTypes": "Pumili ng mga uri ng card",
+      "typeInfo": "Ipakita ang info ng uri ng card",
+      "typeInfoDescription": "Ang iba't ibang uri ng card ay tumutulong sa iyo na matuto sa iba't ibang paraan. Ang mga vocabulary card ay nagbibigay ng kahulugan ng mga salita, ang mga concept card ay nagpapaliwanag ng mga ideya, ang mga comprehension card ay sumusubok ng pag-unawa, at ang mga quote card ay nagha-highlight ng mga mahalagang sipi.",
+      "cardCount": "Bilang ng cards",
+      "cards": "cards",
+      "characters": "mga karakter",
+      "estimatedTime": "Tinatayang oras: {{time}}",
+      "generate": "Gumawa",
+      "generating": "Gumagawa...",
+      "generatingDescription": "Ang AI ay gumagawa ng flashcards mula sa napiling nilalaman. Maaaring tumagal ito ng ilang sandali.",
+      "regenerate": "Gumawa Muli",
+      "done": "Tapos",
+      "front": "Harap (Tanong)",
+      "back": "Likod (Sagot)",
+      "selectedCount": "{{count}} ng {{total}} napili",
+      "selectAll": "Piliin lahat",
+      "deselectAll": "Alisin lahat ng pagpili",
+      "types": {
+        "vocabulary": {
+          "label": "Bokabularyo",
+          "description": "Mga kahulugan ng salita at halimbawa ng paggamit"
+        },
+        "concept": {
+          "label": "Konsepto",
+          "description": "Mga pangunahing ideya at paliwanag"
+        },
+        "comprehension": {
+          "label": "Pag-unawa",
+          "description": "Mga tanong na sumusubok ng pag-unawa"
+        },
+        "quote": {
+          "label": "Sipi",
+          "description": "Mahahalagang sipi at kahulugan"
+        }
+      },
+      "error": {
+        "network": "Hindi makakonekta. Suriin ang iyong koneksyon sa internet.",
+        "validation": "Hindi valid ang request. Suriin ang iyong input.",
+        "rateLimit": "Naabot mo na ang limitasyon ng paggamit ng AI. Subukan ulit mamaya.",
+        "aiDisabled": "Hindi pinagana ang mga AI feature. I-enable ito sa settings.",
+        "aiUnavailable": "Pansamantalang hindi available ang AI service. Subukan ulit.",
+        "bookNotFound": "Hindi natagpuan ang libro.",
+        "contentTooShort": "Ang nilalaman ay dapat may hindi bababa sa 50 karakter.",
+        "contentTooLong": "Masyadong mahaba ang nilalaman. Maximum na 50,000 karakter.",
+        "noCards": "Hindi makagawa ng flashcards mula sa nilalamang ito.",
+        "unknown": "May hindi inaasahang error na naganap. Subukan ulit."
+      }
     }
   },
   "pwa": {

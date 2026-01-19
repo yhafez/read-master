@@ -672,6 +672,56 @@
         "challenging": "Desafiante",
         "hard": "Difícil"
       }
+    },
+    "flashcardGeneration": {
+      "title": "Generar Tarjetas",
+      "selectTypes": "Seleccionar tipos de tarjetas",
+      "typeInfo": "Mostrar info de tipos de tarjetas",
+      "typeInfoDescription": "Los diferentes tipos de tarjetas te ayudan a aprender de diferentes maneras. Las tarjetas de vocabulario definen palabras, las tarjetas de conceptos explican ideas, las tarjetas de comprensión evalúan el entendimiento, y las tarjetas de citas destacan pasajes importantes.",
+      "cardCount": "Número de tarjetas",
+      "cards": "tarjetas",
+      "characters": "caracteres",
+      "estimatedTime": "Tiempo estimado: {{time}}",
+      "generate": "Generar",
+      "generating": "Generando...",
+      "generatingDescription": "La IA está creando tarjetas a partir del contenido seleccionado. Esto puede tomar un momento.",
+      "regenerate": "Generar de nuevo",
+      "done": "Listo",
+      "front": "Frente (Pregunta)",
+      "back": "Reverso (Respuesta)",
+      "selectedCount": "{{count}} de {{total}} seleccionadas",
+      "selectAll": "Seleccionar todo",
+      "deselectAll": "Deseleccionar todo",
+      "types": {
+        "vocabulary": {
+          "label": "Vocabulario",
+          "description": "Definiciones de palabras y ejemplos de uso"
+        },
+        "concept": {
+          "label": "Concepto",
+          "description": "Ideas clave y sus explicaciones"
+        },
+        "comprehension": {
+          "label": "Comprensión",
+          "description": "Preguntas que evalúan el entendimiento"
+        },
+        "quote": {
+          "label": "Cita",
+          "description": "Pasajes importantes y sus significados"
+        }
+      },
+      "error": {
+        "network": "No se puede conectar. Por favor verifica tu conexión a internet.",
+        "validation": "Solicitud inválida. Por favor verifica tu entrada.",
+        "rateLimit": "Has alcanzado tu límite de uso de IA. Por favor intenta más tarde.",
+        "aiDisabled": "Las funciones de IA están deshabilitadas. Habilítalas en configuración.",
+        "aiUnavailable": "El servicio de IA no está disponible temporalmente. Por favor intenta de nuevo.",
+        "bookNotFound": "Libro no encontrado.",
+        "contentTooShort": "El contenido debe tener al menos 50 caracteres.",
+        "contentTooLong": "El contenido es muy largo. Máximo 50,000 caracteres.",
+        "noCards": "No se pudieron generar tarjetas de este contenido.",
+        "unknown": "Ocurrió un error inesperado. Por favor intenta de nuevo."
+      }
     }
   },
   "pwa": {
