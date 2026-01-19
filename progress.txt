@@ -9025,3 +9025,79 @@ Created flashcardGenerationTypes.test.ts with jsdom environment:
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (0 errors)
 - pnpm vitest run: ✅ 2127/2127 tests pass
+
+---
+
+## Iteration 33 - frontend-027: Assessment history & results
+
+### Implementation Summary
+
+Implemented a comprehensive assessment history page that displays past assessments with filtering, sorting, and detailed result views.
+
+### Files Created
+
+#### apps/web/src/components/ai/assessmentHistoryTypes.ts
+Types and utilities for assessment history:
+- **Types**: AssessmentHistoryItem, AssessmentHistorySummary, AssessmentHistoryFilter, AssessmentHistorySort, HistoryPageState, BloomLevelProgress
+- **Constants**: DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS, DEFAULT_SORT, SCORE_THRESHOLDS, PERFORMANCE_LABELS, PERFORMANCE_COLORS, TREND_THRESHOLD
+- **Filter Functions**: createDefaultFilter, isFilterActive, countActiveFilters, filterHistoryItems
+- **Sort Functions**: sortHistoryItems, toggleSort
+- **Statistics Functions**: calculateHistorySummary, createEmptyBloomsBreakdown, calculateAverageBloomsBreakdown, calculateTrend, getBloomLevelProgress
+- **Performance Functions**: getPerformanceCategory, getPerformanceLabel, getPerformanceColor
+- **Date/Time Formatting**: formatHistoryDate, formatHistoryDateTime, formatDuration, formatTotalTime, getRelativeTime
+- **Retake Helpers**: canRetake, buildRetakeUrl
+- **Mock Data**: generateMockHistoryItem, generateMockHistory
+- **Conversion**: resultToHistoryItem, getUniqueBooks
+
+#### apps/web/src/components/ai/assessmentHistoryTypes.test.ts
+Comprehensive test file with 73 tests covering:
+- Constants tests
+- Filter function tests (createDefaultFilter, isFilterActive, countActiveFilters, filterHistoryItems)
+- Sort function tests (sortHistoryItems, toggleSort)
+- Statistics function tests (calculateHistorySummary, calculateAverageBloomsBreakdown, calculateTrend, getBloomLevelProgress)
+- Performance categorization tests
+- Date/time formatting tests (formatDuration, formatTotalTime, getRelativeTime)
+- Retake helper tests
+- Mock data generation tests
+- Conversion helper tests
+
+### Files Modified
+
+#### apps/web/src/pages/assessments/AssessmentsPage.tsx
+Complete implementation of the assessments history page with:
+- **SummaryCards**: Display total assessments, average score, time spent, and recent trend
+- **BloomsBreakdownChart**: Visual representation of Bloom's taxonomy performance
+- **FilterPanel**: Filter by book, assessment type, and score range
+- **HistoryTableRow**: Sortable table with assessment details
+- **EmptyState**: Display when no assessments or no matching results
+- **AssessmentDetailPanel**: Side panel showing detailed assessment results with Bloom's breakdown
+
+#### apps/web/src/components/ai/index.ts
+Added exports for:
+- All assessment history types
+- All assessment history utility functions (constants, filter, sort, statistics, formatting, mock data, conversion)
+
+#### i18n Translations
+Updated all 6 locale files with assessments.history translations:
+- **en.json**: Added nested history section with summary, filters, table, detail, and sort translations
+- **ar.json**: Arabic translations for assessment history
+- **es.json**: Spanish translations for assessment history
+- **ja.json**: Japanese translations for assessment history
+- **zh.json**: Chinese Simplified translations for assessment history
+- **tl.json**: Tagalog translations for assessment history
+
+Also added common translations (filters, clearFilters, rowsPerPage) to all locale files.
+
+#### docs/prd.json
+Marked frontend-027 as passes: true
+
+### Acceptance Criteria Verification
+- ✅ History displays - Full history table with sortable columns
+- ✅ Detailed results viewable - Side panel shows assessment details with Bloom's breakdown
+- ✅ Progress shown - Summary cards show total assessments, averages, trends
+- ✅ Tests pass - 73 tests for assessment history utilities, all 2200 total tests pass
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (only pre-existing warnings)
+- pnpm vitest run: ✅ 2200/2200 tests pass

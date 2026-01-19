@@ -20,7 +20,10 @@
     "no": "No",
     "retry": "Reintentar",
     "create": "Crear",
-    "moreOptions": "Más opciones"
+    "moreOptions": "Más opciones",
+    "filters": "Filtros",
+    "clearFilters": "Limpiar filtros",
+    "rowsPerPage": "Filas por página:"
   },
   "nav": {
     "home": "Home",
@@ -499,6 +502,71 @@
       "score": "Puntuación: {{score}}%",
       "bloomsBreakdown": "Desglose de la Taxonomía de Bloom",
       "recommendations": "Recomendaciones"
+    },
+    "history": {
+      "title": "Historial de Evaluaciones",
+      "subtitle": "Ver evaluaciones pasadas y seguir tu progreso",
+      "noAssessments": "No hay evaluaciones todavía",
+      "noAssessmentsDescription": "Completa tu primera evaluación para seguir tu progreso aquí",
+      "takeFirstAssessment": "Realizar Primera Evaluación",
+      "noMatchingAssessments": "No hay evaluaciones que coincidan",
+      "noMatchingDescription": "Intenta ajustar los filtros o cambiar tu búsqueda",
+      "summary": {
+        "totalAssessments": "Total de Evaluaciones",
+        "averageScore": "Puntuación Promedio",
+        "totalTime": "Tiempo Total",
+        "trend": "Tendencia",
+        "improving": "Mejorando",
+        "declining": "Declinando",
+        "stable": "Estable"
+      },
+      "filters": {
+        "search": "Buscar por título o libro...",
+        "assessmentType": "Tipo de Evaluación",
+        "allTypes": "Todos los Tipos",
+        "book": "Libro",
+        "allBooks": "Todos los Libros",
+        "dateRange": "Rango de Fechas",
+        "allTime": "Todo el Tiempo",
+        "last7Days": "Últimos 7 Días",
+        "last30Days": "Últimos 30 Días",
+        "last90Days": "Últimos 90 Días",
+        "scoreRange": "Rango de Puntuación",
+        "allScores": "Todas las Puntuaciones",
+        "excellent": "Excelente (90%+)",
+        "good": "Bueno (70-89%)",
+        "needsWork": "Necesita Mejora (<70%)"
+      },
+      "table": {
+        "title": "Título",
+        "book": "Libro",
+        "type": "Tipo",
+        "score": "Puntuación",
+        "date": "Fecha",
+        "duration": "Duración",
+        "actions": "Acciones"
+      },
+      "detail": {
+        "title": "Detalles de la Evaluación",
+        "score": "Puntuación",
+        "questions": "Preguntas",
+        "duration": "Duración",
+        "completedAt": "Completado el",
+        "bloomsBreakdown": "Desglose de Taxonomía de Bloom",
+        "retake": "Repetir",
+        "viewAnswers": "Ver Respuestas",
+        "performance": "Rendimiento",
+        "excellent": "Excelente",
+        "good": "Bueno",
+        "fair": "Regular",
+        "needsImprovement": "Necesita Mejora"
+      },
+      "sort": {
+        "dateDesc": "Más Reciente",
+        "dateAsc": "Más Antiguo",
+        "scoreDesc": "Mayor Puntuación",
+        "scoreAsc": "Menor Puntuación"
+      }
     }
   },
   "profile": {

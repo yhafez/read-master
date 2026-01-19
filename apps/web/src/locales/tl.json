@@ -20,7 +20,10 @@
     "no": "No",
     "retry": "Subukan muli",
     "create": "Lumikha",
-    "moreOptions": "Mas maraming opsyon"
+    "moreOptions": "Mas maraming opsyon",
+    "filters": "Mga Filter",
+    "clearFilters": "I-clear ang mga Filter",
+    "rowsPerPage": "Mga hilera kada pahina:"
   },
   "nav": {
     "home": "Home",
@@ -499,6 +502,71 @@
       "score": "Puntos: {{score}}%",
       "bloomsBreakdown": "Desglose ng Bloom's Taxonomy",
       "recommendations": "Mga Rekomendasyon"
+    },
+    "history": {
+      "title": "Kasaysayan ng Pagsusulit",
+      "subtitle": "Tingnan ang mga nakaraang pagsusulit at subaybayan ang iyong pag-unlad",
+      "noAssessments": "Wala pang pagsusulit",
+      "noAssessmentsDescription": "Kumuha ng iyong unang pagsusulit upang subaybayan ang iyong pag-unlad dito",
+      "takeFirstAssessment": "Kumuha ng Unang Pagsusulit",
+      "noMatchingAssessments": "Walang tumutugmang pagsusulit",
+      "noMatchingDescription": "Subukang ayusin ang mga filter o baguhin ang iyong paghahanap",
+      "summary": {
+        "totalAssessments": "Kabuuang Pagsusulit",
+        "averageScore": "Average na Puntos",
+        "totalTime": "Kabuuang Oras ng Pag-aaral",
+        "trend": "Trend",
+        "improving": "Umaasenso",
+        "declining": "Bumababa",
+        "stable": "Matatag"
+      },
+      "filters": {
+        "search": "Maghanap ayon sa pamagat o libro...",
+        "assessmentType": "Uri ng Pagsusulit",
+        "allTypes": "Lahat ng Uri",
+        "book": "Libro",
+        "allBooks": "Lahat ng Libro",
+        "dateRange": "Saklaw ng Petsa",
+        "allTime": "Lahat ng Panahon",
+        "last7Days": "Huling 7 Araw",
+        "last30Days": "Huling 30 Araw",
+        "last90Days": "Huling 90 Araw",
+        "scoreRange": "Saklaw ng Puntos",
+        "allScores": "Lahat ng Puntos",
+        "excellent": "Mahusay (90%+)",
+        "good": "Mabuti (70-89%)",
+        "needsWork": "Kailangan ng Pagpapabuti (<70%)"
+      },
+      "table": {
+        "title": "Pamagat",
+        "book": "Libro",
+        "type": "Uri",
+        "score": "Puntos",
+        "date": "Petsa",
+        "duration": "Tagal",
+        "actions": "Mga Aksyon"
+      },
+      "detail": {
+        "title": "Detalye ng Pagsusulit",
+        "score": "Puntos",
+        "questions": "Mga Tanong",
+        "duration": "Tagal",
+        "completedAt": "Natapos Noong",
+        "bloomsBreakdown": "Desglose ng Bloom's Taxonomy",
+        "retake": "Ulitin",
+        "viewAnswers": "Tingnan ang mga Sagot",
+        "performance": "Pagganap",
+        "excellent": "Mahusay",
+        "good": "Mabuti",
+        "fair": "Katamtaman",
+        "needsImprovement": "Kailangan ng Pagpapabuti"
+      },
+      "sort": {
+        "dateDesc": "Pinakabago Muna",
+        "dateAsc": "Pinakaluma Muna",
+        "scoreDesc": "Pinakamataas na Puntos",
+        "scoreAsc": "Pinakamababang Puntos"
+      }
     }
   },
   "profile": {

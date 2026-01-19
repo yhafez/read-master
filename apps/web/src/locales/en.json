@@ -13,6 +13,7 @@
     "previous": "Previous",
     "search": "Search",
     "filter": "Filter",
+    "filters": "Filters",
     "sort": "Sort",
     "submit": "Submit",
     "confirm": "Confirm",
@@ -20,7 +21,9 @@
     "no": "No",
     "retry": "Retry",
     "create": "Create",
-    "moreOptions": "More options"
+    "moreOptions": "More options",
+    "clearFilters": "Clear Filters",
+    "rowsPerPage": "Rows per page:"
   },
   "nav": {
     "home": "Home",
@@ -500,6 +503,71 @@
       "score": "Score: {{score}}%",
       "bloomsBreakdown": "Bloom's Taxonomy Breakdown",
       "recommendations": "Recommendations"
+    },
+    "history": {
+      "title": "Assessment History",
+      "subtitle": "View past assessments and track your progress",
+      "noAssessments": "No assessments yet",
+      "noAssessmentsDescription": "Complete your first assessment to track your progress here",
+      "takeFirstAssessment": "Take First Assessment",
+      "noMatchingAssessments": "No assessments match your filters",
+      "noMatchingDescription": "Try adjusting your filters or changing your search",
+      "summary": {
+        "totalAssessments": "Total Assessments",
+        "averageScore": "Average Score",
+        "totalTime": "Total Time Spent",
+        "trend": "Trend",
+        "improving": "Improving",
+        "declining": "Declining",
+        "stable": "Stable"
+      },
+      "filters": {
+        "search": "Search by title or book...",
+        "assessmentType": "Assessment Type",
+        "allTypes": "All Types",
+        "book": "Book",
+        "allBooks": "All Books",
+        "dateRange": "Date Range",
+        "allTime": "All Time",
+        "last7Days": "Last 7 Days",
+        "last30Days": "Last 30 Days",
+        "last90Days": "Last 90 Days",
+        "scoreRange": "Score Range",
+        "allScores": "All Scores",
+        "excellent": "Excellent (90%+)",
+        "good": "Good (70-89%)",
+        "needsWork": "Needs Work (<70%)"
+      },
+      "table": {
+        "title": "Title",
+        "book": "Book",
+        "type": "Type",
+        "score": "Score",
+        "date": "Date",
+        "duration": "Duration",
+        "actions": "Actions"
+      },
+      "detail": {
+        "title": "Assessment Details",
+        "score": "Score",
+        "questions": "Questions",
+        "duration": "Duration",
+        "completedAt": "Completed At",
+        "bloomsBreakdown": "Bloom's Taxonomy Breakdown",
+        "retake": "Retake",
+        "viewAnswers": "View Answers",
+        "performance": "Performance",
+        "excellent": "Excellent",
+        "good": "Good",
+        "fair": "Fair",
+        "needsImprovement": "Needs Improvement"
+      },
+      "sort": {
+        "dateDesc": "Newest First",
+        "dateAsc": "Oldest First",
+        "scoreDesc": "Highest Score",
+        "scoreAsc": "Lowest Score"
+      }
     }
   },
   "profile": {

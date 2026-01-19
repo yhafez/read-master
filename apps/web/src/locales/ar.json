@@ -20,7 +20,10 @@
     "no": "لا",
     "retry": "إعادة المحاولة",
     "create": "إنشاء",
-    "moreOptions": "المزيد من الخيارات"
+    "moreOptions": "المزيد من الخيارات",
+    "filters": "عوامل التصفية",
+    "clearFilters": "مسح عوامل التصفية",
+    "rowsPerPage": "صفوف لكل صفحة:"
   },
   "nav": {
     "home": "الرئيسية",
@@ -499,6 +502,71 @@
       "score": "النتيجة: {{score}}%",
       "bloomsBreakdown": "توزيع تصنيف بلوم",
       "recommendations": "التوصيات"
+    },
+    "history": {
+      "title": "سجل التقييمات",
+      "subtitle": "عرض التقييمات السابقة وتتبع تقدمك",
+      "noAssessments": "لا توجد تقييمات بعد",
+      "noAssessmentsDescription": "أكمل أول تقييم لتتبع تقدمك هنا",
+      "takeFirstAssessment": "خوض التقييم الأول",
+      "noMatchingAssessments": "لا توجد تقييمات مطابقة",
+      "noMatchingDescription": "حاول تعديل الفلاتر أو تغيير بحثك",
+      "summary": {
+        "totalAssessments": "إجمالي التقييمات",
+        "averageScore": "متوسط النتيجة",
+        "totalTime": "إجمالي الوقت المستغرق",
+        "trend": "الاتجاه",
+        "improving": "تحسن",
+        "declining": "تراجع",
+        "stable": "مستقر"
+      },
+      "filters": {
+        "search": "البحث بالعنوان أو الكتاب...",
+        "assessmentType": "نوع التقييم",
+        "allTypes": "جميع الأنواع",
+        "book": "الكتاب",
+        "allBooks": "جميع الكتب",
+        "dateRange": "نطاق التاريخ",
+        "allTime": "كل الأوقات",
+        "last7Days": "آخر 7 أيام",
+        "last30Days": "آخر 30 يوم",
+        "last90Days": "آخر 90 يوم",
+        "scoreRange": "نطاق النتيجة",
+        "allScores": "جميع النتائج",
+        "excellent": "ممتاز (90%+)",
+        "good": "جيد (70-89%)",
+        "needsWork": "يحتاج تحسين (<70%)"
+      },
+      "table": {
+        "title": "العنوان",
+        "book": "الكتاب",
+        "type": "النوع",
+        "score": "النتيجة",
+        "date": "التاريخ",
+        "duration": "المدة",
+        "actions": "الإجراءات"
+      },
+      "detail": {
+        "title": "تفاصيل التقييم",
+        "score": "النتيجة",
+        "questions": "الأسئلة",
+        "duration": "المدة",
+        "completedAt": "أكتمل في",
+        "bloomsBreakdown": "توزيع تصنيف بلوم",
+        "retake": "إعادة التقييم",
+        "viewAnswers": "عرض الإجابات",
+        "performance": "الأداء",
+        "excellent": "ممتاز",
+        "good": "جيد",
+        "fair": "مقبول",
+        "needsImprovement": "يحتاج تحسين"
+      },
+      "sort": {
+        "dateDesc": "الأحدث أولاً",
+        "dateAsc": "الأقدم أولاً",
+        "scoreDesc": "أعلى نتيجة",
+        "scoreAsc": "أقل نتيجة"
+      }
     }
   },
   "profile": {

@@ -20,7 +20,10 @@
     "no": "No",
     "retry": "再試行",
     "create": "作成",
-    "moreOptions": "その他のオプション"
+    "moreOptions": "その他のオプション",
+    "filters": "フィルター",
+    "clearFilters": "フィルターをクリア",
+    "rowsPerPage": "1ページあたりの行数:"
   },
   "nav": {
     "home": "Home",
@@ -499,6 +502,71 @@
       "score": "スコア: {{score}}%",
       "bloomsBreakdown": "ブルームの分類法の内訳",
       "recommendations": "推奨事項"
+    },
+    "history": {
+      "title": "評価履歴",
+      "subtitle": "過去の評価結果を確認し、進捗を追跡します",
+      "noAssessments": "評価がまだありません",
+      "noAssessmentsDescription": "最初の評価を受けて、ここで進捗を追跡しましょう",
+      "takeFirstAssessment": "最初の評価を受ける",
+      "noMatchingAssessments": "条件に一致する評価がありません",
+      "noMatchingDescription": "フィルターを調整するか、検索語を変更してください",
+      "summary": {
+        "totalAssessments": "総評価数",
+        "averageScore": "平均スコア",
+        "totalTime": "総学習時間",
+        "trend": "傾向",
+        "improving": "向上中",
+        "declining": "低下中",
+        "stable": "安定"
+      },
+      "filters": {
+        "search": "タイトルまたは本で検索...",
+        "assessmentType": "評価タイプ",
+        "allTypes": "すべてのタイプ",
+        "book": "本",
+        "allBooks": "すべての本",
+        "dateRange": "日付範囲",
+        "allTime": "全期間",
+        "last7Days": "過去7日間",
+        "last30Days": "過去30日間",
+        "last90Days": "過去90日間",
+        "scoreRange": "スコア範囲",
+        "allScores": "すべてのスコア",
+        "excellent": "優秀 (90%以上)",
+        "good": "良好 (70-89%)",
+        "needsWork": "要改善 (70%未満)"
+      },
+      "table": {
+        "title": "タイトル",
+        "book": "本",
+        "type": "タイプ",
+        "score": "スコア",
+        "date": "日付",
+        "duration": "所要時間",
+        "actions": "アクション"
+      },
+      "detail": {
+        "title": "評価結果詳細",
+        "score": "スコア",
+        "questions": "問題数",
+        "duration": "所要時間",
+        "completedAt": "完了日時",
+        "bloomsBreakdown": "ブルームの分類法の内訳",
+        "retake": "再受験",
+        "viewAnswers": "回答を見る",
+        "performance": "パフォーマンス",
+        "excellent": "優秀",
+        "good": "良好",
+        "fair": "普通",
+        "needsImprovement": "要改善"
+      },
+      "sort": {
+        "dateDesc": "最新順",
+        "dateAsc": "古い順",
+        "scoreDesc": "スコア高い順",
+        "scoreAsc": "スコア低い順"
+      }
     }
   },
   "profile": {

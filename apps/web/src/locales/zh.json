@@ -20,7 +20,10 @@
     "no": "No",
     "retry": "重试",
     "create": "创建",
-    "moreOptions": "更多选项"
+    "moreOptions": "更多选项",
+    "filters": "筛选",
+    "clearFilters": "清除筛选",
+    "rowsPerPage": "每页行数:"
   },
   "nav": {
     "home": "Home",
@@ -499,6 +502,71 @@
       "score": "得分: {{score}}%",
       "bloomsBreakdown": "布鲁姆分类法分析",
       "recommendations": "建议"
+    },
+    "history": {
+      "title": "测评历史",
+      "subtitle": "查看过去的测评并追踪您的进度",
+      "noAssessments": "暂无测评",
+      "noAssessmentsDescription": "参加第一次测评，在这里追踪您的进度",
+      "takeFirstAssessment": "参加第一次测评",
+      "noMatchingAssessments": "没有匹配的测评",
+      "noMatchingDescription": "尝试调整筛选条件或更改搜索词",
+      "summary": {
+        "totalAssessments": "总测评数",
+        "averageScore": "平均分",
+        "totalTime": "总学习时间",
+        "trend": "趋势",
+        "improving": "进步中",
+        "declining": "下降中",
+        "stable": "稳定"
+      },
+      "filters": {
+        "search": "按标题或书籍搜索...",
+        "assessmentType": "测评类型",
+        "allTypes": "所有类型",
+        "book": "书籍",
+        "allBooks": "所有书籍",
+        "dateRange": "日期范围",
+        "allTime": "全部时间",
+        "last7Days": "过去7天",
+        "last30Days": "过去30天",
+        "last90Days": "过去90天",
+        "scoreRange": "分数范围",
+        "allScores": "所有分数",
+        "excellent": "优秀 (90%以上)",
+        "good": "良好 (70-89%)",
+        "needsWork": "需改进 (低于70%)"
+      },
+      "table": {
+        "title": "标题",
+        "book": "书籍",
+        "type": "类型",
+        "score": "分数",
+        "date": "日期",
+        "duration": "用时",
+        "actions": "操作"
+      },
+      "detail": {
+        "title": "测评详情",
+        "score": "分数",
+        "questions": "题目数",
+        "duration": "用时",
+        "completedAt": "完成时间",
+        "bloomsBreakdown": "布鲁姆分类法分析",
+        "retake": "重新测试",
+        "viewAnswers": "查看答案",
+        "performance": "表现",
+        "excellent": "优秀",
+        "good": "良好",
+        "fair": "一般",
+        "needsImprovement": "需改进"
+      },
+      "sort": {
+        "dateDesc": "最新优先",
+        "dateAsc": "最早优先",
+        "scoreDesc": "分数最高",
+        "scoreAsc": "分数最低"
+      }
     }
   },
   "profile": {
