@@ -598,5 +598,19 @@
       "install": "安装",
       "notNow": "暂不安装"
     }
+  },
+  "offline": {
+    "title": "您已离线",
+    "description": "您似乎已断开互联网连接。某些功能可能不可用。",
+    "lastOnline": "上次在线: {{time}}",
+    "tryAgain": "重试",
+    "checking": "检查中...",
+    "availablePages": "离线可用",
+    "cachedPagesDescription": "这些页面已缓存，可以离线查看:",
+    "cached": "已缓存",
+    "tips": "提示",
+    "tip1": "检查您的 Wi-Fi 或移动数据连接",
+    "tip2": "尝试移动到信号更好的区域",
+    "tip3": "在连接时下载书籍以供离线阅读"
   }
 }

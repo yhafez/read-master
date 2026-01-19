@@ -8222,3 +8222,150 @@ All 6 locales (en, ar, es, ja, zh, tl) now include:
 - pnpm vitest run: ✅ 1687 tests pass (97 new chat tests)
 
 ### Commit
+✅ feat(frontend-024): Implement AI chat sidebar with messaging
+
+## Iteration 27 - pwa-002: Offline page caching
+**Date**: 2026-01-19
+**Status**: ✅ COMPLETE
+
+### Summary
+Implemented offline page caching for PWA functionality including app shell caching, offline fallback page, route caching utilities, and comprehensive test coverage.
+
+### Types Created (offlineCacheTypes.ts)
+Types:
+- CacheableRoute: Route pattern with priority and offline enabled flag
+- OfflinePageState: State for offline UI (isOffline, lastOnline, cachedRoutes, pendingSync)
+- SyncQueueItem: Background sync queue item with retry logic
+- RouteCacheStatus: Cache status for a specific route
+- AppShellConfig: Configuration for app shell (routes, assets, fallbackPage)
+- OfflineFallbackProps: Props for offline fallback component
+- NetworkStatusEvent: Online/offline status change event
+- CacheRefreshOptions: Options for refreshing cache
+- PrecacheEntry: Precache manifest entry
+
+Constants:
+- APP_SHELL_ROUTES: Routes to cache (/, /library, /flashcards, /settings, /profile, /offline)
+- NETWORK_ONLY_ROUTES: Routes that need network (/api/, /sign-in, /sign-up, /oauth/, /webhook)
+- PRECACHE_ASSETS: Static assets to precache
+- OFFLINE_CACHE_VERSION, OFFLINE_CACHE_NAME, APP_SHELL_CACHE_NAME
+- ROUTE_CACHE_MAX_AGE: 24 hours
+- MAX_SYNC_RETRIES: 3
+- SYNC_QUEUE_KEY, LAST_ONLINE_KEY
+- DEFAULT_APP_SHELL_CONFIG
+
+### Utilities Created (offlineCacheUtils.ts)
+Cache Operations:
+- isCacheAvailable: Check if caches API is available
+- openOfflineCache, openAppShellCache: Open specific caches
+- cacheUrl, cacheUrls: Cache single/multiple URLs
+- isUrlCached, getCachedResponse: Check cache status
+- deleteCachedUrl, clearOfflineCache: Remove cached items
+
+App Shell Operations:
+- cacheAppShell: Cache critical routes and assets
+- isAppShellCached: Check if app shell is fully cached
+- getAppShellCacheStatus: Get cache status for all routes
+
+Route Utilities:
+- isRouteCacheable: Check if route should be cached
+- getCacheableRoute: Get route metadata
+- getHighPriorityRoutes: Get high-priority routes only
+- normalizePathForCache: Normalize URL for caching
+- shouldShowOfflineFallback: Determine if offline page should show
+
+Network Status:
+- getOnlineStatus: Get current online status
+- createNetworkStatusEvent: Create status change event
+- getLastOnlineTime, saveLastOnlineTime: Track last online time
+- formatTimeSinceOnline: Human-readable time since online
+
+Sync Queue:
+- createSyncQueueItem: Create sync queue item
+- getSyncQueue, saveSyncQueue: Get/save sync queue
+- addToSyncQueue, removeFromSyncQueue: Manage queue items
+- incrementRetryCount, shouldRetrySyncItem: Retry logic
+- clearSyncQueue: Clear all pending sync items
+
+State Management:
+- createOfflinePageState: Create initial offline state
+- getCachedRoutes: List all cached routes
+- refreshCache: Refresh cache with options
+- createOnlineHandler: Create event listener with cleanup
+
+### Component Created (OfflineFallbackPage.tsx)
+- MUI-based offline page with Material Design
+- Shows offline status icon and description
+- Displays last online time
+- Retry button with loading state
+- Lists cached pages available offline
+- Tips section for troubleshooting
+- Auto-redirects when back online
+- Fully internationalized
+
+### Vite Config Updates
+- Added navigateFallback: "/index.html"
+- Added navigateFallbackDenylist for API, auth, OAuth, webhook routes
+- Enabled cleanupOutdatedCaches: true
+- Enabled skipWaiting: true (immediate activation)
+- Enabled clientsClaim: true (claim all clients)
+
+### Test Coverage
+Created offlineCacheUtils.test.ts with 71 tests:
+- isCacheAvailable: boolean result (1 test)
+- isRouteCacheable: API, auth, OAuth, webhook, normal routes (5 tests)
+- getCacheableRoute: known routes, unknown routes (3 tests)
+- getHighPriorityRoutes: filter, includes home/library (2 tests)
+- normalizePathForCache: query strings, nested paths (4 tests)
+- shouldShowOfflineFallback: cacheable/non-cacheable routes (3 tests)
+- getOnlineStatus: online/offline states (2 tests)
+- createNetworkStatusEvent: online/offline events, timestamp (3 tests)
+- getLastOnlineTime: null, stored, invalid (3 tests)
+- saveLastOnlineTime: default, specific time (2 tests)
+- formatTimeSinceOnline: null, just now, minutes, hours, days, singular (7 tests)
+- createSyncQueueItem: url, method, body, id, retryCount, maxRetries, timestamp (7 tests)
+- getSyncQueue: empty, stored, invalid JSON (3 tests)
+- saveSyncQueue: save, empty (2 tests)
+- addToSyncQueue: empty queue, existing queue (2 tests)
+- removeFromSyncQueue: by ID, non-existent (2 tests)
+- clearSyncQueue: removes from storage (1 test)
+- incrementRetryCount: increment, null, persist (3 tests)
+- shouldRetrySyncItem: below max, at max, above max (3 tests)
+- createOfflinePageState: online, offline, lastOnlineTime, pendingSync, cachedRoutes (5 tests)
+- createOnlineHandler: cleanup, online event, offline event, removes listeners, tracks state (5 tests)
+- Constants: APP_SHELL_ROUTES, NETWORK_ONLY_ROUTES, DEFAULT_APP_SHELL_CONFIG (3 tests)
+
+### Files Created
+- apps/web/src/pwa/offlineCacheTypes.ts
+- apps/web/src/pwa/offlineCacheUtils.ts
+- apps/web/src/pwa/offlineCacheUtils.test.ts
+- apps/web/src/pwa/OfflineFallbackPage.tsx
+
+### Files Modified
+- apps/web/src/pwa/index.ts (added all exports)
+- apps/web/vite.config.ts (added offline caching config)
+- apps/web/src/locales/en.json (added offline.* translations)
+- apps/web/src/locales/ar.json (added offline.* translations)
+- apps/web/src/locales/es.json (added offline.* translations)
+- apps/web/src/locales/ja.json (added offline.* translations)
+- apps/web/src/locales/zh.json (added offline.* translations)
+- apps/web/src/locales/tl.json (added offline.* translations)
+
+### i18n Translations Added
+All 6 locales (en, ar, es, ja, zh, tl) now include:
+- offline.title, description, lastOnline
+- offline.tryAgain, checking, availablePages
+- offline.cachedPagesDescription, cached, tips
+- offline.tip1, tip2, tip3
+
+### Acceptance Criteria Verification
+- ✅ App shell cached (Vite PWA globPatterns + navigateFallback)
+- ✅ Assets cached (static assets via globPatterns)
+- ✅ Offline page works (OfflineFallbackPage component)
+- ✅ Tests pass (71 tests for offline caching utilities)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 1758 tests pass (71 new offline caching tests)
+
+### Commit

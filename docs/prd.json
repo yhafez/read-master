@@ -3837,7 +3837,7 @@
         "Offline page works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-003",

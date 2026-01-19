@@ -598,5 +598,19 @@
       "install": "Instalar",
       "notNow": "Ahora no"
     }
+  },
+  "offline": {
+    "title": "Estás sin conexión",
+    "description": "Parece que has perdido tu conexión a Internet. Algunas funciones pueden no estar disponibles.",
+    "lastOnline": "Última conexión: {{time}}",
+    "tryAgain": "Intentar de nuevo",
+    "checking": "Verificando...",
+    "availablePages": "Disponible sin conexión",
+    "cachedPagesDescription": "Estas páginas están en caché y se pueden ver sin conexión:",
+    "cached": "En caché",
+    "tips": "Consejos",
+    "tip1": "Verifica tu conexión Wi-Fi o de datos móviles",
+    "tip2": "Intenta moverte a un área con mejor señal",
+    "tip3": "Descarga libros para leer sin conexión cuando estés conectado"
   }
 }

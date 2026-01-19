@@ -62,3 +62,70 @@ export type { UseServiceWorkerReturn } from "./useServiceWorker";
 // Components
 export { ServiceWorkerUpdatePrompt } from "./ServiceWorkerUpdatePrompt";
 export type { ServiceWorkerUpdatePromptProps } from "./ServiceWorkerUpdatePrompt";
+export { OfflineFallbackPage } from "./OfflineFallbackPage";
+
+// Offline cache types and constants
+export type {
+  CacheableRoute,
+  OfflinePageState,
+  SyncQueueItem,
+  RouteCacheStatus,
+  AppShellConfig,
+  OfflineFallbackProps,
+  NetworkStatusEvent,
+  CacheRefreshOptions,
+  PrecacheEntry,
+} from "./offlineCacheTypes";
+
+export {
+  APP_SHELL_ROUTES,
+  NETWORK_ONLY_ROUTES,
+  PRECACHE_ASSETS,
+  OFFLINE_CACHE_VERSION,
+  OFFLINE_CACHE_NAME,
+  APP_SHELL_CACHE_NAME,
+  ROUTE_CACHE_MAX_AGE,
+  MAX_SYNC_RETRIES,
+  SYNC_QUEUE_KEY,
+  LAST_ONLINE_KEY,
+  DEFAULT_APP_SHELL_CONFIG,
+  NAVIGATION_PRELOAD_HEADER,
+} from "./offlineCacheTypes";
+
+// Offline cache utilities
+export {
+  isCacheAvailable,
+  openOfflineCache,
+  openAppShellCache,
+  cacheUrl,
+  cacheUrls,
+  isUrlCached,
+  getCachedResponse,
+  deleteCachedUrl,
+  clearOfflineCache,
+  cacheAppShell,
+  isAppShellCached,
+  getAppShellCacheStatus,
+  isRouteCacheable,
+  getCacheableRoute,
+  getHighPriorityRoutes,
+  normalizePathForCache,
+  shouldShowOfflineFallback,
+  getOnlineStatus,
+  createNetworkStatusEvent,
+  getLastOnlineTime,
+  saveLastOnlineTime,
+  formatTimeSinceOnline,
+  createSyncQueueItem,
+  getSyncQueue,
+  saveSyncQueue,
+  addToSyncQueue,
+  removeFromSyncQueue,
+  clearSyncQueue,
+  incrementRetryCount,
+  shouldRetrySyncItem,
+  createOfflinePageState,
+  getCachedRoutes,
+  refreshCache,
+  createOnlineHandler,
+} from "./offlineCacheUtils";

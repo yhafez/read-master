@@ -599,5 +599,19 @@
       "install": "Install",
       "notNow": "Not now"
     }
+  },
+  "offline": {
+    "title": "You're Offline",
+    "description": "It looks like you've lost your internet connection. Some features may not be available.",
+    "lastOnline": "Last online: {{time}}",
+    "tryAgain": "Try Again",
+    "checking": "Checking...",
+    "availablePages": "Available Offline",
+    "cachedPagesDescription": "These pages are cached and can be viewed offline:",
+    "cached": "Cached",
+    "tips": "Tips",
+    "tip1": "Check your Wi-Fi or mobile data connection",
+    "tip2": "Try moving to an area with better signal",
+    "tip3": "Download books for offline reading when connected"
   }
 }

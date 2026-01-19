@@ -598,5 +598,19 @@
       "install": "I-install",
       "notNow": "Hindi ngayon"
     }
+  },
+  "offline": {
+    "title": "Offline Ka",
+    "description": "Mukhang nawala ang iyong koneksyon sa internet. Maaaring hindi available ang ilang feature.",
+    "lastOnline": "Huling online: {{time}}",
+    "tryAgain": "Subukan Muli",
+    "checking": "Sinusuri...",
+    "availablePages": "Available Offline",
+    "cachedPagesDescription": "Ang mga pahinang ito ay naka-cache at maaaring makita offline:",
+    "cached": "Naka-cache",
+    "tips": "Mga Tip",
+    "tip1": "Suriin ang iyong Wi-Fi o mobile data connection",
+    "tip2": "Subukang lumipat sa lugar na may mas magandang signal",
+    "tip3": "Mag-download ng mga libro para sa offline reading kapag connected"
   }
 }

@@ -11,6 +11,21 @@ export default defineConfig({
       injectRegister: "auto",
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
+        // Precache navigation routes for app shell
+        navigateFallback: "/index.html",
+        navigateFallbackDenylist: [
+          /^\/api\//,
+          /^\/sign-in/,
+          /^\/sign-up/,
+          /^\/oauth\//,
+          /^\/webhook/,
+        ],
+        // Clean up old caches on new service worker activation
+        cleanupOutdatedCaches: true,
+        // Skip waiting to activate new service worker immediately
+        skipWaiting: true,
+        // Claim clients immediately
+        clientsClaim: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
