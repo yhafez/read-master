@@ -8617,3 +8617,132 @@ Created dictionaryTypes.test.ts:
 - pnpm typecheck: ✅ PASS
 - pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
 - pnpm vitest run: ✅ 1933 tests pass (105 new dictionary/Wikipedia tests)
+
+
+---
+
+## Iteration 30 - frontend-017: Translation feature
+
+### Task Description
+Implement text translation capability allowing users to translate selected text into different languages during reading.
+
+### Implementation Summary
+Created a complete translation feature using the MyMemory Translation API with comprehensive caching, settings persistence, and UI integration.
+
+#### translationTypes.ts - Types and Utilities
+
+**Types:**
+- TranslationState, TranslationErrorType, TranslationResult
+- LanguageOption, TranslationSettings, TranslationCacheEntry
+
+**Constants:**
+- MYMEMORY_API_URL: MyMemory Translation API endpoint
+- SUPPORTED_LANGUAGES: 25 languages with code, name, nativeName, RTL flag
+- RTL_LANGUAGES: Set of RTL language codes (ar, he, fa, ur)
+- DEFAULT_TRANSLATION_SETTINGS: Default settings configuration
+- Cache settings (TTL: 1 hour, max entries: 200)
+- Length limits (min: 1, max: 500 characters)
+
+**Validation Functions:**
+- isValidTranslationText: Validate text length and content
+- isSupportedLanguage: Check if language code is supported
+- isRtlLanguage: Check if language is RTL
+- getLanguageByCode: Get language option by code
+- getLanguageDisplayName: Format language name (with native option)
+- prepareTextForTranslation: Normalize and truncate text
+
+**Cache Utilities:**
+- getTranslationCacheKey: Generate cache key from text and language pair
+- createTranslationCacheEntry: Create cache entry with TTL
+- isTranslationCacheValid: Validate cache entry freshness
+- getTranslationCache, setTranslationCache: LocalStorage operations
+- addTranslationToCache, getTranslationFromCache: Cached lookup
+- clearTranslationCache, getTranslationCacheSize: Cache management
+
+**API Functions:**
+- createTranslationError: Create error result object
+- createTranslationSuccess: Create success result object
+- buildMyMemoryUrl: Build API URL with language pair
+- parseMyMemoryResponse: Parse API response to TranslationResult
+
+**Settings Persistence:**
+- loadTranslationSettings, saveTranslationSettings: LocalStorage operations
+- updateTranslationSetting: Update single setting
+
+**Helper Functions:**
+- getTranslationErrorMessage: Get user-friendly error message
+- getLanguagePairDisplay: Format language pair for display
+- swapLanguages: Swap source and target languages
+- getPopularLanguages: Get subset of commonly used languages
+- getSortedLanguages: Get alphabetically sorted languages
+
+#### TranslationPopover Component
+React component with MUI integration:
+- Source and target language selectors with 25 languages
+- Auto-detect source language option
+- Language swap button
+- Show original text toggle
+- Copy translation button with feedback
+- Loading and error states
+- RTL language support
+- Settings persistence
+- Caching integration
+- Accessible keyboard navigation
+
+#### i18n Translations
+Added translations for all 6 locales (en, ar, es, ja, zh, tl):
+- reader.translation.* (title, from, to, autoDetect, swapLanguages, cannotSwapAuto, original, translated, translating, invalidText, copy, copied, poweredBy)
+- reader.translation.error.* (network, rateLimit, invalidText, unsupported, tooLong, api, noTranslation, unknown)
+
+### Test Coverage (67 tests)
+Created translationTypes.test.ts:
+- Constants tests (6)
+- isValidTranslationText tests (5)
+- isSupportedLanguage tests (2)
+- isRtlLanguage tests (2)
+- getLanguageByCode tests (3)
+- getLanguageDisplayName tests (3)
+- prepareTextForTranslation tests (4)
+- getTranslationCacheKey tests (3)
+- createTranslationCacheEntry tests (2)
+- isTranslationCacheValid tests (3)
+- Cache localStorage tests (8)
+- Settings functions tests (4)
+- createTranslationError tests (1)
+- createTranslationSuccess tests (2)
+- buildMyMemoryUrl tests (3)
+- parseMyMemoryResponse tests (5)
+- getTranslationErrorMessage tests (6)
+- getLanguagePairDisplay tests (2)
+- swapLanguages tests (2)
+- getPopularLanguages tests (1)
+- getSortedLanguages tests (1)
+
+### Files Created
+- apps/web/src/components/reader/translationTypes.ts
+- apps/web/src/components/reader/TranslationPopover.tsx
+- apps/web/src/components/reader/translationTypes.test.ts
+
+### Files Modified
+- apps/web/src/components/reader/index.ts (added translation exports)
+- apps/web/src/locales/en.json (added reader.translation.*)
+- apps/web/src/locales/ar.json (added reader.translation.*)
+- apps/web/src/locales/es.json (added reader.translation.*)
+- apps/web/src/locales/ja.json (added reader.translation.*)
+- apps/web/src/locales/zh.json (added reader.translation.*)
+- apps/web/src/locales/tl.json (added reader.translation.*)
+
+### Acceptance Criteria Verification
+- ✅ Translation works (MyMemory API integration with response parsing)
+- ✅ Languages supported (25 languages with RTL support)
+- ✅ Auto-detect works (auto source language option)
+- ✅ Popover displays (TranslationPopover component with selectors)
+- ✅ Cache works (LocalStorage caching with TTL and size limits)
+- ✅ Tests pass (67 tests for translation utilities)
+
+### Feedback Loops
+- pnpm typecheck: ✅ PASS
+- pnpm lint: ✅ PASS (0 errors, only pre-existing warnings)
+- pnpm vitest run: ✅ 2000 tests pass (67 new translation tests)
+
+

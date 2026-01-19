@@ -367,6 +367,29 @@
       "title": "维基百科",
       "notFound": "维基百科中未找到该文章",
       "readMore": "在维基百科上阅读更多"
+    },
+    "translation": {
+      "title": "翻译",
+      "from": "从",
+      "to": "到",
+      "autoDetect": "自动检测",
+      "swapLanguages": "交换语言",
+      "cannotSwapAuto": "当源语言为自动检测时无法交换",
+      "original": "原文",
+      "translated": "译文",
+      "translating": "翻译中...",
+      "invalidText": "请选择有效的文本进行翻译",
+      "copy": "复制翻译",
+      "copied": "已复制！",
+      "poweredBy": "由MyMemory提供支持",
+      "error": {
+        "networkError": "无法连接到翻译服务",
+        "rateLimited": "已达到翻译限制。请稍后再试。",
+        "invalidText": "请选择有效的文本进行翻译",
+        "unsupportedLanguage": "不支持此语言",
+        "textTooLong": "文本太长，无法翻译",
+        "apiError": "翻译服务错误"
+      }
     }
   },
   "flashcards": {

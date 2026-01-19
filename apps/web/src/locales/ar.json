@@ -367,6 +367,29 @@
       "title": "ويكيبيديا",
       "notFound": "المقالة غير موجودة في ويكيبيديا",
       "readMore": "اقرأ المزيد على ويكيبيديا"
+    },
+    "translation": {
+      "title": "الترجمة",
+      "from": "من",
+      "to": "إلى",
+      "autoDetect": "اكتشاف تلقائي",
+      "swapLanguages": "تبديل اللغات",
+      "cannotSwapAuto": "لا يمكن التبديل عندما يكون المصدر اكتشاف تلقائي",
+      "original": "النص الأصلي",
+      "translated": "مترجم",
+      "translating": "جاري الترجمة...",
+      "invalidText": "يرجى تحديد نص صالح للترجمة",
+      "copy": "نسخ الترجمة",
+      "copied": "تم النسخ!",
+      "poweredBy": "مدعوم من MyMemory",
+      "error": {
+        "networkError": "تعذر الاتصال بخدمة الترجمة",
+        "rateLimited": "تم الوصول إلى حد الترجمة. يرجى المحاولة لاحقاً.",
+        "invalidText": "يرجى تحديد نص صالح للترجمة",
+        "unsupportedLanguage": "هذه اللغة غير مدعومة",
+        "textTooLong": "النص طويل جداً للترجمة",
+        "apiError": "خطأ في خدمة الترجمة"
+      }
     }
   },
   "flashcards": {

@@ -279,3 +279,56 @@ export {
 // Dictionary Popover Component
 export { DictionaryPopover } from "./DictionaryPopover";
 export type { DictionaryPopoverProps } from "./DictionaryPopover";
+
+// Translation Types and Utilities
+export type {
+  TranslationState,
+  TranslationErrorType,
+  TranslationResult,
+  LanguageOption,
+  TranslationSettings,
+  TranslationCacheEntry,
+} from "./translationTypes";
+export {
+  MYMEMORY_API_URL,
+  MAX_TRANSLATION_LENGTH,
+  MIN_TRANSLATION_LENGTH,
+  TRANSLATION_CACHE_TTL,
+  MAX_TRANSLATION_CACHE_ENTRIES,
+  TRANSLATION_CACHE_KEY,
+  TRANSLATION_SETTINGS_KEY,
+  SUPPORTED_LANGUAGES,
+  RTL_LANGUAGES,
+  DEFAULT_TRANSLATION_SETTINGS,
+  isValidTranslationText,
+  isSupportedLanguage,
+  isRtlLanguage,
+  getLanguageByCode,
+  getLanguageDisplayName,
+  prepareTextForTranslation,
+  getTranslationCacheKey,
+  createTranslationCacheEntry,
+  isTranslationCacheValid,
+  getTranslationCache,
+  setTranslationCache,
+  addTranslationToCache,
+  getTranslationFromCache,
+  clearTranslationCache,
+  getTranslationCacheSize,
+  loadTranslationSettings,
+  saveTranslationSettings,
+  updateTranslationSetting,
+  createTranslationError,
+  createTranslationSuccess,
+  buildMyMemoryUrl,
+  parseMyMemoryResponse,
+  getTranslationErrorMessage,
+  getLanguagePairDisplay,
+  swapLanguages,
+  getPopularLanguages,
+  getSortedLanguages,
+} from "./translationTypes";
+
+// Translation Popover Component
+export { TranslationPopover } from "./TranslationPopover";
+export type { TranslationPopoverProps } from "./TranslationPopover";

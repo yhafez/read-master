@@ -367,6 +367,29 @@
       "title": "Wikipedia",
       "notFound": "Hindi nahanap ang artikulo sa Wikipedia",
       "readMore": "Magbasa pa sa Wikipedia"
+    },
+    "translation": {
+      "title": "Pagsasalin",
+      "from": "Mula sa",
+      "to": "Papunta sa",
+      "autoDetect": "Auto-detect",
+      "swapLanguages": "Palitan ang mga wika",
+      "cannotSwapAuto": "Hindi mapalitan kapag auto-detect ang pinagmulan",
+      "original": "Orihinal",
+      "translated": "Naisalin",
+      "translating": "Nagsasalin...",
+      "invalidText": "Pumili ng wastong teksto na isasalin",
+      "copy": "Kopyahin ang salin",
+      "copied": "Nakopya na!",
+      "poweredBy": "Pinapagana ng MyMemory",
+      "error": {
+        "networkError": "Hindi makakonekta sa serbisyo ng pagsasalin",
+        "rateLimited": "Naabot na ang limitasyon ng pagsasalin. Subukan muli mamaya.",
+        "invalidText": "Pumili ng wastong teksto na isasalin",
+        "unsupportedLanguage": "Hindi sinusuportahan ang wikang ito",
+        "textTooLong": "Masyadong mahaba ang teksto para isalin",
+        "apiError": "Error sa serbisyo ng pagsasalin"
+      }
     }
   },
   "flashcards": {

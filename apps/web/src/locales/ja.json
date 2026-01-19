@@ -367,6 +367,29 @@
       "title": "ウィキペディア",
       "notFound": "ウィキペディアに記事が見つかりません",
       "readMore": "ウィキペディアで続きを読む"
+    },
+    "translation": {
+      "title": "翻訳",
+      "from": "翻訳元",
+      "to": "翻訳先",
+      "autoDetect": "自動検出",
+      "swapLanguages": "言語を入れ替え",
+      "cannotSwapAuto": "ソースが自動検出の場合は入れ替えできません",
+      "original": "原文",
+      "translated": "翻訳済み",
+      "translating": "翻訳中...",
+      "invalidText": "翻訳するテキストを選択してください",
+      "copy": "翻訳をコピー",
+      "copied": "コピーしました！",
+      "poweredBy": "MyMemory提供",
+      "error": {
+        "networkError": "翻訳サービスに接続できません",
+        "rateLimited": "翻訳制限に達しました。後でもう一度お試しください。",
+        "invalidText": "翻訳するテキストを選択してください",
+        "unsupportedLanguage": "この言語はサポートされていません",
+        "textTooLong": "テキストが長すぎて翻訳できません",
+        "apiError": "翻訳サービスエラー"
+      }
     }
   },
   "flashcards": {

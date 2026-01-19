@@ -367,6 +367,29 @@
       "title": "Wikipedia",
       "notFound": "Artículo no encontrado en Wikipedia",
       "readMore": "Leer más en Wikipedia"
+    },
+    "translation": {
+      "title": "Traducción",
+      "from": "De",
+      "to": "A",
+      "autoDetect": "Detectar automáticamente",
+      "swapLanguages": "Intercambiar idiomas",
+      "cannotSwapAuto": "No se puede intercambiar cuando el origen es detección automática",
+      "original": "Original",
+      "translated": "Traducido",
+      "translating": "Traduciendo...",
+      "invalidText": "Por favor seleccione texto válido para traducir",
+      "copy": "Copiar traducción",
+      "copied": "¡Copiado!",
+      "poweredBy": "Desarrollado por MyMemory",
+      "error": {
+        "networkError": "No se puede conectar al servicio de traducción",
+        "rateLimited": "Límite de traducción alcanzado. Por favor intente más tarde.",
+        "invalidText": "Por favor seleccione texto válido para traducir",
+        "unsupportedLanguage": "Este idioma no es compatible",
+        "textTooLong": "El texto es demasiado largo para traducir",
+        "apiError": "Error del servicio de traducción"
+      }
     }
   },
   "flashcards": {

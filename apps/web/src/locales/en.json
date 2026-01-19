@@ -368,6 +368,29 @@
       "title": "Wikipedia",
       "notFound": "Article not found on Wikipedia",
       "readMore": "Read more on Wikipedia"
+    },
+    "translation": {
+      "title": "Translation",
+      "from": "From",
+      "to": "To",
+      "autoDetect": "Auto-detect",
+      "swapLanguages": "Swap languages",
+      "cannotSwapAuto": "Cannot swap when source is auto-detect",
+      "original": "Original",
+      "translated": "Translated",
+      "translating": "Translating...",
+      "invalidText": "Please select valid text to translate",
+      "copy": "Copy translation",
+      "copied": "Copied!",
+      "poweredBy": "Powered by MyMemory",
+      "error": {
+        "networkError": "Unable to connect to translation service",
+        "rateLimited": "Translation limit reached. Please try again later.",
+        "invalidText": "Please select valid text to translate",
+        "unsupportedLanguage": "This language is not supported",
+        "textTooLong": "Text is too long to translate",
+        "apiError": "Translation service error"
+      }
     }
   },
   "flashcards": {
