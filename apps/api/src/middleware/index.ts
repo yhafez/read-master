@@ -125,3 +125,16 @@ export {
   // Utilities bundle
   loggerUtils,
 } from "./logger.js";
+
+export {
+  // Types
+  type RoleAuthenticatedRequest,
+  // Role checking functions
+  hasRole,
+  checkUserRole,
+  // Higher-order middleware
+  requireRole,
+  requireAdmin,
+  requireModerator,
+  requireSuperAdmin,
+} from "./requireAdmin.js";

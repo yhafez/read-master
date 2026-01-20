@@ -4793,7 +4793,7 @@
         "Clear error messages",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-003",

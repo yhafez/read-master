@@ -3,6 +3,84 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19 - 17:23]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: admin-002 - Create requireAdmin middleware for API protection
+
+WHAT WAS DONE:
+- Created `apps/api/src/middleware/requireAdmin.ts` (300 lines)
+  - Role hierarchy system: USER (0) < MODERATOR (1) < ADMIN (2) < SUPER_ADMIN (3)
+  - requireRole() - Generic middleware for any role requirement
+  - requireAdmin() - Requires ADMIN or SUPER_ADMIN
+  - requireModerator() - Requires MODERATOR, ADMIN, or SUPER_ADMIN
+  - requireSuperAdmin() - Requires SUPER_ADMIN only
+  - hasRole() - Utility to check role hierarchy
+  - checkUserRole() - Async utility to check user role from database
+  - Audit logging for all admin access attempts (success and failures)
+  - Clear error messages with role requirements
+  - Type-safe RoleAuthenticatedRequest with user role info
+- Updated `apps/api/src/middleware/index.ts`
+  - Exported all role-based middleware functions
+  - Exported RoleAuthenticatedRequest type
+- Created `apps/api/src/middleware/requireAdmin.test.ts` (19 tests)
+  - Role hierarchy validation tests
+  - requireRole tests with various roles
+  - requireAdmin tests (allows ADMIN, SUPER_ADMIN)
+  - requireModerator tests (allows MODERATOR, ADMIN, SUPER_ADMIN)
+  - requireSuperAdmin tests (allows SUPER_ADMIN only)
+  - Authentication failure tests
+  - Database lookup failure tests
+  - Insufficient permissions tests
+  - Audit logging tests
+
+WHY IT MATTERS:
+- Protects admin endpoints from unauthorized access
+- Enables role-based access control (RBAC) throughout the API
+- Provides granular permission levels (user, moderator, admin, super admin)
+- Logs all admin access attempts for security auditing
+- Gives clear error messages to help developers debug permission issues
+- Type-safe - TypeScript ensures correct usage
+- Foundation for all admin features (user management, content moderation, etc.)
+
+TECHNICAL DETAILS:
+- Built on top of existing `authenticateRequest` middleware
+- Fetches user from database to get role (not in JWT)
+- Uses role hierarchy for flexible permission checks
+- Higher roles automatically get lower role permissions
+- Logs include: userId, clerkId, role, endpoint, method, success/failure
+- 403 Forbidden for insufficient permissions
+- 401 Unauthorized for authentication failures
+- Works with Vercel serverless functions
+- Fully tested with 19 unit tests
+
+TESTS:
+- ✅ All 19 requireAdmin middleware tests pass
+- ✅ All 173 test files pass (4300 tests total)
+- ✅ Typecheck passed
+- ✅ Lint passed (0 errors)
+
+USAGE EXAMPLE:
+```typescript
+// Protect an admin endpoint
+import { requireAdmin } from '@/middleware';
+
+export default requireAdmin(async (req, res) => {
+  const { userRole, userDbId } = req; // Type-safe!
+  
+  // User is guaranteed to be ADMIN or SUPER_ADMIN here
+  // Implement admin functionality
+});
+```
+
+NEXT STEPS:
+- Use requireAdmin for admin analytics endpoints (admin-005)
+- Add admin dashboard UI
+- Implement user management endpoints
+- Add content moderation endpoints
+- Create audit log database table for persistent logging
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-19 - 16:53]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
