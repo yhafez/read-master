@@ -241,3 +241,38 @@ export {
   resolveProgressConflict,
   clearAllProgressData,
 } from "./offlineReadingProgressSync";
+
+// Offline annotation sync types and constants
+export type {
+  AnnotationOperation,
+  OfflineAnnotation,
+  CreateAnnotationOffline,
+  UpdateAnnotationOffline,
+  AnnotationSyncQueueItem,
+  AnnotationSyncStatus,
+} from "./offlineAnnotationSync";
+
+export {
+  ANNOTATIONS_DB_NAME,
+  ANNOTATIONS_DB_VERSION,
+  ANNOTATIONS_STORE_NAME,
+  ANNOTATION_SYNC_BATCH_SIZE,
+} from "./offlineAnnotationSync";
+
+// Offline annotation sync utilities
+export {
+  openAnnotationsDB,
+  getOfflineAnnotations,
+  getOfflineAnnotation,
+  saveOfflineAnnotation,
+  deleteOfflineAnnotation,
+  getAnnotationsNeedingSync,
+  createAnnotationOffline,
+  updateAnnotationOffline,
+  deleteAnnotationOffline,
+  getAnnotationSyncQueue,
+  removeAnnotationFromQueue,
+  getAnnotationSyncStatus,
+  syncAllAnnotations,
+  clearAllAnnotationData,
+} from "./offlineAnnotationSync";

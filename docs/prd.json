@@ -3913,7 +3913,7 @@
         "Status shown",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-006",

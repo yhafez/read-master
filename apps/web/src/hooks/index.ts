@@ -48,3 +48,9 @@ export {
   type UseOfflineReadingSyncOptions,
   type UseOfflineReadingSyncReturn,
 } from "./useOfflineReadingSync";
+
+export {
+  useOfflineAnnotationSync,
+  type UseOfflineAnnotationSyncOptions,
+  type UseOfflineAnnotationSyncReturn,
+} from "./useOfflineAnnotationSync";
