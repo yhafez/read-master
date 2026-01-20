@@ -210,7 +210,7 @@ export function CurriculumDetailPage(): React.ReactElement {
       const startIndex = progress?.currentItemIndex ?? 0;
       const sortedItems = curriculum.items.sort((a, b) => a.orderIndex - b.orderIndex);
       const item = sortedItems[startIndex];
-      
+
       if (item) {
         if (item.bookId) {
           navigate(`/books/${item.bookId}`);
@@ -434,7 +434,7 @@ export function CurriculumDetailPage(): React.ReactElement {
                   {curriculum.isFollowing ? "Following" : "Follow"}
                 </Button>
               </Stack>
-              
+
               {/* Navigation Buttons (when following and in progress) */}
               {curriculum.isFollowing && progress && (
                 <Stack direction="row" spacing={1} mt={2}>
