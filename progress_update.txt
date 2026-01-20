@@ -1,0 +1,105 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19 - 20:45]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: frontend-108 - Create revenue over time chart
+
+WHAT WAS DONE:
+- Created RevenueOverTimeChart component (398 lines)
+- Stacked area chart with revenue breakdown
+- Growth rate indicators with trend icons
+
+**RevenueOverTimeChart Component** (`src/components/admin/RevenueOverTimeChart.tsx`)
+
+**Features:**
+1. **Stacked Area Chart**
+   - New Subscriptions (primary blue gradient)
+   - Renewals (success green gradient)
+   - Upgrades (info blue gradient)
+   - Refunds (shown as negative, excluded from stack)
+
+2. **Key Metrics Display**
+   - MRR (Monthly Recurring Revenue) - formatted as currency
+   - ARR Projection (Annual Recurring Revenue) - MRR × 12
+   - Growth Rate with color-coded indicator
+     - Green with ↑ icon for positive growth
+     - Red with ↓ icon for negative growth
+     - Chip badge showing "Growing" or "Declining"
+
+3. **Date Range Selector**
+   - 7 Days (7D)
+   - 30 Days (30D) - default
+   - 90 Days (90D)
+   - 1 Year (1Y)
+
+4. **Interactive Features**
+   - Tooltips with exact dollar values ($X.XX)
+   - Gradient fills for visual appeal
+   - Smooth area interpolation
+   - Theme-aware colors
+
+5. **Responsive Design**
+   - Mobile: 300px height, stacked metrics, smaller fonts
+   - Desktop: 400px height, horizontal metrics layout
+   - Adaptive margins and layouts
+
+**Data Flow:**
+```typescript
+fetch("/api/admin/analytics/revenue")
+  → RevenueAnalytics with dailyRevenue[]
+  → Convert cents to dollars
+  → Filter by date range
+  → Format for recharts
+  → Render AreaChart with stacked areas
+```
+
+**Chart Configuration:**
+- LinearGradients for each revenue type
+- CartesianGrid with theme divider
+- XAxis with formatted dates
+- YAxis with dollar formatting ($X)
+- Tooltip with precise values ($X.XX)
+- Stacked areas (stackId="1") for cumulative view
+
+WHY IT MATTERS:
+- Visualizes revenue trends and composition
+- Shows MRR/ARR for subscription business metrics
+- Identifies revenue sources (new vs renewals vs upgrades)
+- Growth rate indicator for quick health check
+- Enables data-driven pricing and marketing decisions
+- Foundation for financial reporting
+
+TECHNICAL DETAILS:
+- Uses recharts AreaChart for stacked visualization
+- Currency formatting with Intl.NumberFormat
+- Gradient definitions with theme colors
+- MUI icons for trend indicators (TrendingUp/Down)
+- Responsive Stack for metrics layout
+- Type-safe with TypeScript interfaces
+
+TESTS:
+- ✅ Created RevenueOverTimeChart.test.tsx (1 test)
+- ✅ All 177 test files pass (4323 tests total)
+- ✅ Typecheck passed
+- ✅ Lint passed (0 errors)
+
+USAGE EXAMPLE:
+```typescript
+import { RevenueOverTimeChart } from "@/components/admin";
+
+function AdminDashboard() {
+  return (
+    <Box>
+      <RevenueOverTimeChart />
+    </Box>
+  );
+}
+```
+
+NEXT STEPS:
+- Create engagement chart (reading time, assessments)
+- Create AI costs chart
+- Create comprehensive admin dashboard page
+- Add export functionality (CSV, PNG)
+- Add comparison view (this month vs last month)
+- Add revenue forecasting
