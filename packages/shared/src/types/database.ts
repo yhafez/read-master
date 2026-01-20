@@ -18,6 +18,7 @@ export type {
   // User and authentication
   User,
   UserTier,
+  UserRole,
 
   // Book and content
   Book,

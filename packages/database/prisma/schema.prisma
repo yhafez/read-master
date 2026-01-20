@@ -33,6 +33,9 @@ model User {
   tierExpiresAt    DateTime?
   stripeCustomerId String?   @unique
 
+  // Admin & Moderation
+  role UserRole @default(USER)
+
   // Preferences stored as JSON for flexibility
   preferences Json @default("{}")
 
@@ -84,6 +87,7 @@ model User {
   @@index([username])
   @@index([deletedAt])
   @@index([tier]) // For tier-based queries
+  @@index([role]) // For admin/moderation queries
 }
 
 // =============================================================================
@@ -94,6 +98,13 @@ enum UserTier {
   FREE
   PRO
   SCHOLAR
+}
+
+enum UserRole {
+  USER          // Regular user
+  MODERATOR     // Can moderate content
+  ADMIN         // Can manage users and settings
+  SUPER_ADMIN   // Full system access
 }
 
 // =============================================================================

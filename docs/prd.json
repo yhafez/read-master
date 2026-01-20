@@ -4769,7 +4769,7 @@
         "Seed data includes admin user",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-002",
