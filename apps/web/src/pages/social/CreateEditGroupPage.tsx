@@ -98,7 +98,7 @@ export function CreateEditGroupPage(): React.ReactElement {
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const [maxMembers, setMaxMembers] = useState<number>(DEFAULT_MAX_MEMBERS);
-  
+
   // UI state
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -400,7 +400,7 @@ export function CreateEditGroupPage(): React.ReactElement {
           <Typography variant="body2" color="text.secondary" mb={2}>
             Control who can see and join your group
           </Typography>
-          
+
           <Stack spacing={3}>
             <FormControlLabel
               control={
@@ -424,9 +424,9 @@ export function CreateEditGroupPage(): React.ReactElement {
                 </Box>
               }
             />
-            
+
             <Divider />
-            
+
             <Box>
               <Typography variant="body1" gutterBottom>
                 Maximum Members: {maxMembers}
