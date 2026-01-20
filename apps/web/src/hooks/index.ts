@@ -54,3 +54,10 @@ export {
   type UseOfflineAnnotationSyncOptions,
   type UseOfflineAnnotationSyncReturn,
 } from "./useOfflineAnnotationSync";
+
+export {
+  useCurriculumProgress,
+  type CurriculumProgress,
+  type UpdateProgressInput,
+  type UseCurriculumProgressResult,
+} from "./useCurriculumProgress";

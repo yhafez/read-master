@@ -14,6 +14,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useCurriculumProgress } from "@/hooks";
 import {
   Box,
   Typography,
@@ -47,8 +48,11 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import EditIcon from "@mui/icons-material/Edit";
 import ShareIcon from "@mui/icons-material/Share";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LinkIcon from "@mui/icons-material/Link";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 // ============================================================================
 // Types
@@ -157,6 +161,19 @@ export function CurriculumDetailPage(): React.ReactElement {
     enabled: !!curriculumId,
   });
 
+  // Fetch and manage progress
+  const {
+    progress,
+    markItemComplete,
+    moveToNextItem,
+    moveToPreviousItem,
+    isUpdating,
+  } = useCurriculumProgress(
+    curriculumId || "",
+    curriculum?.totalItems || 0,
+    !!curriculum && curriculum.isFollowing
+  );
+
   // Follow/unfollow mutations
   const followMutation = useMutation({
     mutationFn: followCurriculum,
@@ -188,14 +205,17 @@ export function CurriculumDetailPage(): React.ReactElement {
   };
 
   const handleStartReading = () => {
-    // TODO: Implement start reading logic (track progress)
     if (curriculum && curriculum.items.length > 0) {
-      const firstItem = curriculum.items[0];
-      if (firstItem) {
-        if (firstItem.bookId) {
-          navigate(`/books/${firstItem.bookId}`);
-        } else if (firstItem.externalUrl) {
-          window.open(firstItem.externalUrl, "_blank");
+      // Start from current item or first item
+      const startIndex = progress?.currentItemIndex ?? 0;
+      const sortedItems = curriculum.items.sort((a, b) => a.orderIndex - b.orderIndex);
+      const item = sortedItems[startIndex];
+      
+      if (item) {
+        if (item.bookId) {
+          navigate(`/books/${item.bookId}`);
+        } else if (item.externalUrl) {
+          window.open(item.externalUrl, "_blank");
         }
       }
     }
@@ -250,9 +270,9 @@ export function CurriculumDetailPage(): React.ReactElement {
     );
   }
 
-  // Calculate progress (TODO: Get from API)
-  const progress = 0; // Placeholder
-  const completedItems = 0; // Placeholder
+  // Calculate progress from API
+  const percentComplete = progress?.percentComplete ?? 0;
+  const completedItems = progress?.completedItems ?? 0;
 
   return (
     <Box>
@@ -351,7 +371,7 @@ export function CurriculumDetailPage(): React.ReactElement {
                 </Grid>
                 <Grid item xs={6} sm={3}>
                   <Stack alignItems="center">
-                    <Typography variant="h5">{progress}%</Typography>
+                    <Typography variant="h5">{percentComplete}%</Typography>
                     <Typography variant="caption" color="text.secondary">
                       Progress
                     </Typography>
@@ -360,9 +380,9 @@ export function CurriculumDetailPage(): React.ReactElement {
               </Grid>
 
               {/* Progress Bar */}
-              {progress > 0 && (
+              {percentComplete > 0 && (
                 <Box mb={2}>
-                  <LinearProgress variant="determinate" value={progress} />
+                  <LinearProgress variant="determinate" value={percentComplete} />
                 </Box>
               )}
 
@@ -396,7 +416,7 @@ export function CurriculumDetailPage(): React.ReactElement {
                   fullWidth={isMobile}
                   disabled={curriculum.totalItems === 0}
                 >
-                  {progress > 0 ? "Continue" : "Start"}
+                  {percentComplete > 0 ? "Continue" : "Start"}
                 </Button>
                 <Button
                   variant={curriculum.isFollowing ? "outlined" : "contained"}
@@ -414,6 +434,33 @@ export function CurriculumDetailPage(): React.ReactElement {
                   {curriculum.isFollowing ? "Following" : "Follow"}
                 </Button>
               </Stack>
+              
+              {/* Navigation Buttons (when following and in progress) */}
+              {curriculum.isFollowing && progress && (
+                <Stack direction="row" spacing={1} mt={2}>
+                  <Button
+                    variant="outlined"
+                    startIcon={<NavigateBeforeIcon />}
+                    onClick={() => moveToPreviousItem()}
+                    disabled={progress.currentItemIndex === 0 || isUpdating}
+                    size="small"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    endIcon={<NavigateNextIcon />}
+                    onClick={() => moveToNextItem()}
+                    disabled={
+                      progress.currentItemIndex >= curriculum.totalItems - 1 ||
+                      isUpdating
+                    }
+                    size="small"
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              )}
             </CardContent>
           </Grid>
         </Grid>
@@ -522,10 +569,75 @@ export function CurriculumDetailPage(): React.ReactElement {
                         }
                       />
 
-                      {/* Completion Icon (TODO: integrate with progress tracking) */}
-                      <Tooltip title="Not started">
-                        <RadioButtonUncheckedIcon color="action" />
-                      </Tooltip>
+                      {/* Completion Status and Actions */}
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        {/* Completion Icon */}
+                        <Tooltip
+                          title={
+                            progress && index < progress.completedItems
+                              ? "Completed"
+                              : progress && index === progress.currentItemIndex
+                              ? "Current"
+                              : "Not started"
+                          }
+                        >
+                          {progress && index < progress.completedItems ? (
+                            <CheckCircleIcon color="success" />
+                          ) : progress && index === progress.currentItemIndex ? (
+                            <Box
+                              sx={{
+                                width: 24,
+                                height: 24,
+                                borderRadius: "50%",
+                                border: `2px solid ${theme.palette.primary.main}`,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  width: 12,
+                                  height: 12,
+                                  borderRadius: "50%",
+                                  bgcolor: theme.palette.primary.main,
+                                }}
+                              />
+                            </Box>
+                          ) : (
+                            <RadioButtonUncheckedIcon color="action" />
+                          )}
+                        </Tooltip>
+
+                        {/* Mark Complete Button (for current/completed items when following) */}
+                        {curriculum.isFollowing &&
+                          progress &&
+                          index <= progress.currentItemIndex && (
+                            <Tooltip
+                              title={
+                                index < progress.completedItems
+                                  ? "Already completed"
+                                  : "Mark as complete"
+                              }
+                            >
+                              <span>
+                                <IconButton
+                                  size="small"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    markItemComplete(index);
+                                  }}
+                                  disabled={
+                                    index < progress.completedItems || isUpdating
+                                  }
+                                  color="primary"
+                                >
+                                  <CheckCircleIcon fontSize="small" />
+                                </IconButton>
+                              </span>
+                            </Tooltip>
+                          )}
+                      </Stack>
                       </ListItemButton>
                     </ListItem>
                   </React.Fragment>
