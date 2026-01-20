@@ -3,6 +3,132 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19 - 18:05]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: admin-005 - Create admin analytics API endpoints
+
+WHAT WAS DONE:
+- Created 7 comprehensive admin analytics endpoints (1500+ lines total)
+  
+**1. GET /api/admin/analytics/overview** (280 lines)
+- High-level platform metrics dashboard
+- User counts (total, active, new users by period)
+- Tier distribution (FREE, PRO, SCHOLAR)
+- Revenue metrics (total, today, week, month)
+- Content metrics (books, annotations, flashcards, curriculums)
+- Engagement metrics (reading time, assessments, flashcards reviewed)
+- AI metrics (requests, cost, tokens)
+- Performance metrics (API response time, error count)
+
+**2. GET /api/admin/analytics/users** (160 lines)
+- Detailed user growth and retention
+- User counts by tier and role
+- Growth metrics (new users, churned, net growth)
+- Active users (7 day, 30 day)
+- Activity rate percentage
+- Daily growth data (last 30 days chart data)
+
+**3. GET /api/admin/analytics/revenue** (180 lines)
+- Revenue metrics and subscription data
+- Total revenue, monthly comparison, growth %
+- Subscription counts (total, PRO, SCHOLAR)
+- Revenue breakdown (new, renewals, upgrades, refunds)
+- Daily revenue data (last 30 days)
+- MRR (Monthly Recurring Revenue) calculation
+- ARR (Annual Recurring Revenue) projection
+
+**4. GET /api/admin/analytics/engagement** (170 lines)
+- User engagement and activity metrics
+- Reading metrics (time, books completed/added)
+- Content creation (annotations, flashcards, assessments)
+- Social engagement (forum, groups, curriculums)
+- Daily engagement data (last 30 days)
+- User activity distribution (7 day, 30 day, inactive)
+
+**5. GET /api/admin/analytics/features** (250 lines)
+- Feature adoption and usage metrics
+- Reading features (books, progress, annotations, TTS)
+- Learning features (flashcards, assessments, guides)
+- Social features (groups, forum, curriculums)
+- AI features (requests, enabled/disabled users)
+- Adoption rates (% of users using each feature)
+
+**6. GET /api/admin/analytics/ai-costs** (200 lines)
+- AI usage and cost metrics
+- Total costs, monthly comparison, growth %
+- Usage metrics (requests, tokens, average costs)
+- Feature breakdown (guides, explanations, assessments, flashcards)
+- Daily usage data (last 30 days)
+- Cost efficiency metrics (per user, per feature)
+
+**7. GET /api/admin/analytics/content** (260 lines)
+- Content library and moderation metrics
+- Books (total, by status, by source, word counts)
+- Annotations (total, by type, public/private)
+- Flashcards (total, by type, by status, reviews)
+- Curriculums (total, by visibility, follows, items per curriculum)
+- Forum content (posts, replies, votes, categories)
+- Groups (total, members, discussions, avg members)
+
+- All endpoints protected by `requireAdmin` middleware
+- Comprehensive error handling and logging
+- Type-safe response types exported
+- Created test file validating all endpoint exports
+
+WHY IT MATTERS:
+- Provides admins complete visibility into platform health
+- Enables data-driven decision making
+- Tracks revenue and growth metrics
+- Monitors feature adoption and engagement
+- Helps identify issues and opportunities
+- AI cost tracking for budget management
+- Content moderation and user behavior insights
+- Foundation for admin dashboard UI
+
+TECHNICAL DETAILS:
+- Uses Prisma aggregations for efficient data queries
+- Leverages DailyAnalytics table for historical data
+- Parallel Promise.all() for performance
+- 30-day time windows for trend analysis
+- Percentage calculations for adoption rates
+- MRR/ARR financial projections
+- Handles missing data gracefully (defaults to 0)
+- All queries filter out soft-deleted records
+
+TESTS:
+- ✅ Created overview.test.ts (14 tests)
+- ✅ All 174 test files pass (4314 tests total)
+- ✅ Typecheck passed
+- ✅ Lint passed (0 errors)
+
+USAGE EXAMPLE:
+```typescript
+// All endpoints are admin-protected
+GET /api/admin/analytics/overview
+GET /api/admin/analytics/users
+GET /api/admin/analytics/revenue
+GET /api/admin/analytics/engagement
+GET /api/admin/analytics/features
+GET /api/admin/analytics/ai-costs
+GET /api/admin/analytics/content
+
+// Response format:
+{
+  "success": true,
+  "data": { /* analytics data */ }
+}
+```
+
+NEXT STEPS:
+- Create admin dashboard UI to visualize these metrics
+- Add daily analytics cron job (admin-006)
+- Add export/download functionality
+- Add date range filters
+- Add real-time updates via WebSockets
+- Add custom metric dashboards
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-19 - 17:23]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -67,7 +193,7 @@ import { requireAdmin } from '@/middleware';
 
 export default requireAdmin(async (req, res) => {
   const { userRole, userDbId } = req; // Type-safe!
-  
+
   // User is guaranteed to be ADMIN or SUPER_ADMIN here
   // Implement admin functionality
 });

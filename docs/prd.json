@@ -4873,7 +4873,7 @@
         "Response times acceptable",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-006",
