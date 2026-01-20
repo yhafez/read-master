@@ -5034,7 +5034,7 @@
         "Responsive layout",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-111",
