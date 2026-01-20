@@ -27,7 +27,9 @@
     "expand": "توسيع",
     "collapse": "طي",
     "play": "تشغيل",
-    "pause": "إيقاف مؤقت"
+    "pause": "إيقاف مؤقت",
+    "add": "إضافة",
+    "saveChanges": "حفظ التغييرات"
   },
   "collections": {
     "title": "المجموعات",
@@ -1159,7 +1161,69 @@
     "detail": "تفاصيل المنهج",
     "placeholder": "سيظهر المنهج {{curriculumId}} هنا.",
     "create": "إنشاء منهج",
-    "browse": "تصفح المناهج"
+    "edit": "تعديل المنهج",
+    "browse": "تصفح المناهج",
+    "publish": "نشر المنهج",
+    "steps": {
+      "basicInfo": "معلومات أساسية",
+      "addContent": "إضافة محتوى",
+      "review": "مراجعة ونشر"
+    },
+    "form": {
+      "title": "العنوان",
+      "titleHelper": "أدخل عنواناً وصفياً (200 حرف كحد أقصى)",
+      "description": "الوصف",
+      "descriptionHelper": "صف ما سيتعلمه الطلاب (2000 حرف كحد أقصى)",
+      "category": "الفئة",
+      "difficulty": "الصعوبة",
+      "visibility": "الرؤية",
+      "tags": "الوسوم",
+      "tagsHelper": "اضغط Enter لإضافة وسوم (10 كحد أقصى)",
+      "coverImage": "رابط صورة الغلاف",
+      "coverImageHelper": "اختياري: رابط لصورة الغلاف",
+      "estimatedTime": "الوقت المقدر (بالدقائق)",
+      "estimatedTimeHelper": "كم من الوقت سيستغرق الإكمال؟"
+    },
+    "difficulty": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط",
+      "advanced": "متقدم",
+      "expert": "خبير"
+    },
+    "visibility": {
+      "private": "خاص (أنت فقط)",
+      "unlisted": "غير مدرج (أي شخص لديه الرابط)",
+      "public": "عام (مدرج علناً)"
+    },
+    "items": {
+      "title": "محتوى المنهج",
+      "add": "إضافة عنصر",
+      "addItem": "إضافة عنصر محتوى",
+      "editItem": "تعديل عنصر المحتوى",
+      "empty": "لم تتم إضافة محتوى بعد. أضف كتباً أو موارد خارجية للبدء.",
+      "type": "نوع المحتوى",
+      "typeBook": "كتاب من المكتبة",
+      "typeExternal": "مورد خارجي",
+      "selectBook": "اختر كتاباً",
+      "externalTitle": "عنوان المورد",
+      "externalUrl": "رابط المورد",
+      "notes": "ملاحظات (اختياري)",
+      "estimatedTime": "الوقت المقدر: {{minutes}} دقيقة",
+      "reorderHint": "اسحب العناصر لإعادة الترتيب"
+    },
+    "tierGate": {
+      "title": "ميزة Pro",
+      "description": "إنشاء المناهج متاح لمشتركي Pro و Scholar. قم بترقية حسابك لإنشاء ومشاركة مسارات تعليمية منظمة.",
+      "upgrade": "الترقية إلى Pro"
+    },
+    "review": {
+      "title": "راجع منهجك",
+      "basicInfo": "معلومات أساسية",
+      "content": "المحتوى",
+      "itemCount": "{{count}} عناصر محتوى",
+      "itemCount_one": "{{count}} عنصر محتوى",
+      "itemCount_other": "{{count}} عناصر محتوى"
+    }
   },
   "settings": {
     "title": "الإعدادات",

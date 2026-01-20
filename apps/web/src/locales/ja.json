@@ -27,7 +27,9 @@
     "expand": "展開",
     "collapse": "折りたたむ",
     "play": "再生",
-    "pause": "一時停止"
+    "pause": "一時停止",
+    "add": "追加",
+    "saveChanges": "変更を保存"
   },
   "collections": {
     "title": "コレクション",
@@ -1159,7 +1161,69 @@
     "detail": "Curriculum Details",
     "placeholder": "Curriculum {{curriculumId}} will appear here.",
     "create": "Create Curriculum",
-    "browse": "Browse Curriculums"
+    "edit": "Edit Curriculum",
+    "browse": "Browse Curriculums",
+    "publish": "Publish Curriculum",
+    "steps": {
+      "basicInfo": "Basic Information",
+      "addContent": "Add Content",
+      "review": "Review & Publish"
+    },
+    "form": {
+      "title": "Title",
+      "titleHelper": "Enter a descriptive title (max 200 characters)",
+      "description": "Description",
+      "descriptionHelper": "Describe what learners will gain (max 2000 characters)",
+      "category": "Category",
+      "difficulty": "Difficulty",
+      "visibility": "Visibility",
+      "tags": "Tags",
+      "tagsHelper": "Press Enter to add tags (max 10)",
+      "coverImage": "Cover Image URL",
+      "coverImageHelper": "Optional: URL to a cover image",
+      "estimatedTime": "Estimated Time (minutes)",
+      "estimatedTimeHelper": "How long will it take to complete?"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert"
+    },
+    "visibility": {
+      "private": "Private (Only you)",
+      "unlisted": "Unlisted (Anyone with link)",
+      "public": "Public (Listed publicly)"
+    },
+    "items": {
+      "title": "Curriculum Content",
+      "add": "Add Item",
+      "addItem": "Add Content Item",
+      "editItem": "Edit Content Item",
+      "empty": "No content added yet. Add books or external resources to get started.",
+      "type": "Content Type",
+      "typeBook": "Book from Library",
+      "typeExternal": "External Resource",
+      "selectBook": "Select a Book",
+      "externalTitle": "Resource Title",
+      "externalUrl": "Resource URL",
+      "notes": "Notes (optional)",
+      "estimatedTime": "Estimated Time: {{minutes}} minutes",
+      "reorderHint": "Drag items to reorder"
+    },
+    "tierGate": {
+      "title": "Pro Feature",
+      "description": "Creating curriculums is available for Pro and Scholar subscribers. Upgrade your account to create and share structured learning paths.",
+      "upgrade": "Upgrade to Pro"
+    },
+    "review": {
+      "title": "Review Your Curriculum",
+      "basicInfo": "Basic Information",
+      "content": "Content",
+      "itemCount": "{{count}} content items",
+      "itemCount_one": "{{count}} content item",
+      "itemCount_other": "{{count}} content items"
+    }
   },
   "settings": {
     "title": "Settings",

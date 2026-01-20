@@ -27,7 +27,9 @@
     "expand": "Palawakin",
     "collapse": "I-collapse",
     "play": "I-play",
-    "pause": "I-pause"
+    "pause": "I-pause",
+    "add": "Magdagdag",
+    "saveChanges": "I-save ang mga Pagbabago"
   },
   "collections": {
     "title": "Mga Koleksyon",
@@ -1156,10 +1158,72 @@
     }
   },
   "curriculums": {
-    "detail": "Curriculum Details",
-    "placeholder": "Curriculum {{curriculumId}} will appear here.",
-    "create": "Create Curriculum",
-    "browse": "Browse Curriculums"
+    "detail": "Mga Detalye ng Curriculum",
+    "placeholder": "Ang curriculum {{curriculumId}} ay lilitaw dito.",
+    "create": "Lumikha ng Curriculum",
+    "edit": "I-edit ang Curriculum",
+    "browse": "Mag-browse ng mga Curriculum",
+    "publish": "I-publish ang Curriculum",
+    "steps": {
+      "basicInfo": "Pangunahing Impormasyon",
+      "addContent": "Magdagdag ng Nilalaman",
+      "review": "Suriin at I-publish"
+    },
+    "form": {
+      "title": "Pamagat",
+      "titleHelper": "Maglagay ng naglalarawang pamagat (max 200 characters)",
+      "description": "Paglalarawan",
+      "descriptionHelper": "Ilarawan kung ano ang matututunan (max 2000 characters)",
+      "category": "Kategorya",
+      "difficulty": "Kahirapan",
+      "visibility": "Visibility",
+      "tags": "Mga Tag",
+      "tagsHelper": "Pindutin ang Enter para magdagdag ng tags (max 10)",
+      "coverImage": "Cover Image URL",
+      "coverImageHelper": "Opsyonal: URL sa cover image",
+      "estimatedTime": "Tinantyang Oras (minuto)",
+      "estimatedTimeHelper": "Gaano katagal para makumpleto?"
+    },
+    "difficulty": {
+      "beginner": "Nagsisimula",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Eksperto"
+    },
+    "visibility": {
+      "private": "Pribado (Ikaw lang)",
+      "unlisted": "Hindi nakalista (Sinuman na may link)",
+      "public": "Pampubliko (Nakalista publiko)"
+    },
+    "items": {
+      "title": "Nilalaman ng Curriculum",
+      "add": "Magdagdag ng Item",
+      "addItem": "Magdagdag ng Nilalaman",
+      "editItem": "I-edit ang Nilalaman",
+      "empty": "Walang naidagdag na nilalaman pa. Magdagdag ng mga aklat o external resources para magsimula.",
+      "type": "Uri ng Nilalaman",
+      "typeBook": "Aklat mula sa Library",
+      "typeExternal": "External Resource",
+      "selectBook": "Pumili ng Aklat",
+      "externalTitle": "Pamagat ng Resource",
+      "externalUrl": "URL ng Resource",
+      "notes": "Mga Tala (opsyonal)",
+      "estimatedTime": "Tinantyang Oras: {{minutes}} minuto",
+      "reorderHint": "I-drag ang mga item para i-reorder"
+    },
+    "tierGate": {
+      "title": "Pro Feature",
+      "description": "Ang paglikha ng mga curriculum ay available para sa mga Pro at Scholar subscribers. I-upgrade ang iyong account para lumikha at magbahagi ng structured learning paths.",
+      "upgrade": "Mag-upgrade sa Pro"
+    },
+    "review": {
+      "title": "Suriin ang Iyong Curriculum",
+      "basicInfo": "Pangunahing Impormasyon",
+      "content": "Nilalaman",
+      "itemCount": "{{count}} content items",
+      "itemCount_one": "{{count}} content item",
+      "itemCount_other": "{{count}} content items"
+    }
   },
   "settings": {
     "title": "Settings",

@@ -27,7 +27,9 @@
     "expand": "展开",
     "collapse": "折叠",
     "play": "播放",
-    "pause": "暂停"
+    "pause": "暂停",
+    "add": "添加",
+    "saveChanges": "保存更改"
   },
   "collections": {
     "title": "收藏夹",
@@ -1156,10 +1158,72 @@
     }
   },
   "curriculums": {
-    "detail": "Curriculum Details",
-    "placeholder": "Curriculum {{curriculumId}} will appear here.",
-    "create": "Create Curriculum",
-    "browse": "Browse Curriculums"
+    "detail": "课程详情",
+    "placeholder": "课程 {{curriculumId}} 将显示在此处。",
+    "create": "创建课程",
+    "edit": "编辑课程",
+    "browse": "浏览课程",
+    "publish": "发布课程",
+    "steps": {
+      "basicInfo": "基本信息",
+      "addContent": "添加内容",
+      "review": "审核并发布"
+    },
+    "form": {
+      "title": "标题",
+      "titleHelper": "输入描述性标题（最多200个字符）",
+      "description": "描述",
+      "descriptionHelper": "描述学习者将获得什么（最多2000个字符）",
+      "category": "类别",
+      "difficulty": "难度",
+      "visibility": "可见性",
+      "tags": "标签",
+      "tagsHelper": "按Enter添加标签（最多10个）",
+      "coverImage": "封面图片URL",
+      "coverImageHelper": "可选：封面图片的URL",
+      "estimatedTime": "预计时间（分钟）",
+      "estimatedTimeHelper": "完成需要多长时间？"
+    },
+    "difficulty": {
+      "beginner": "初学者",
+      "intermediate": "中级",
+      "advanced": "高级",
+      "expert": "专家"
+    },
+    "visibility": {
+      "private": "私密（仅您）",
+      "unlisted": "未列出（任何有链接的人）",
+      "public": "公开（公开列出）"
+    },
+    "items": {
+      "title": "课程内容",
+      "add": "添加项目",
+      "addItem": "添加内容项",
+      "editItem": "编辑内容项",
+      "empty": "尚未添加内容。添加书籍或外部资源以开始。",
+      "type": "内容类型",
+      "typeBook": "图书馆中的书籍",
+      "typeExternal": "外部资源",
+      "selectBook": "选择一本书",
+      "externalTitle": "资源标题",
+      "externalUrl": "资源URL",
+      "notes": "备注（可选）",
+      "estimatedTime": "预计时间：{{minutes}}分钟",
+      "reorderHint": "拖动项目以重新排序"
+    },
+    "tierGate": {
+      "title": "Pro功能",
+      "description": "创建课程适用于Pro和Scholar订阅者。升级您的帐户以创建和分享结构化的学习路径。",
+      "upgrade": "升级到Pro"
+    },
+    "review": {
+      "title": "审核您的课程",
+      "basicInfo": "基本信息",
+      "content": "内容",
+      "itemCount": "{{count}}个内容项",
+      "itemCount_one": "{{count}}个内容项",
+      "itemCount_other": "{{count}}个内容项"
+    }
   },
   "settings": {
     "title": "Settings",

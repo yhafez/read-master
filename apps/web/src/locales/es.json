@@ -27,7 +27,9 @@
     "expand": "Expandir",
     "collapse": "Contraer",
     "play": "Reproducir",
-    "pause": "Pausar"
+    "pause": "Pausar",
+    "add": "Agregar",
+    "saveChanges": "Guardar cambios"
   },
   "collections": {
     "title": "Colecciones",
@@ -1156,10 +1158,72 @@
     }
   },
   "curriculums": {
-    "detail": "Curriculum Details",
-    "placeholder": "Curriculum {{curriculumId}} will appear here.",
-    "create": "Create Curriculum",
-    "browse": "Browse Curriculums"
+    "detail": "Detalles del currículo",
+    "placeholder": "El currículo {{curriculumId}} aparecerá aquí.",
+    "create": "Crear currículo",
+    "edit": "Editar currículo",
+    "browse": "Explorar currículos",
+    "publish": "Publicar currículo",
+    "steps": {
+      "basicInfo": "Información básica",
+      "addContent": "Agregar contenido",
+      "review": "Revisar y publicar"
+    },
+    "form": {
+      "title": "Título",
+      "titleHelper": "Ingrese un título descriptivo (máx. 200 caracteres)",
+      "description": "Descripción",
+      "descriptionHelper": "Describe lo que aprenderán (máx. 2000 caracteres)",
+      "category": "Categoría",
+      "difficulty": "Dificultad",
+      "visibility": "Visibilidad",
+      "tags": "Etiquetas",
+      "tagsHelper": "Presiona Enter para agregar etiquetas (máx. 10)",
+      "coverImage": "URL de imagen de portada",
+      "coverImageHelper": "Opcional: URL de una imagen de portada",
+      "estimatedTime": "Tiempo estimado (minutos)",
+      "estimatedTimeHelper": "¿Cuánto tiempo tomará completarlo?"
+    },
+    "difficulty": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado",
+      "expert": "Experto"
+    },
+    "visibility": {
+      "private": "Privado (Solo tú)",
+      "unlisted": "No listado (Cualquiera con el enlace)",
+      "public": "Público (Listado públicamente)"
+    },
+    "items": {
+      "title": "Contenido del currículo",
+      "add": "Agregar elemento",
+      "addItem": "Agregar contenido",
+      "editItem": "Editar contenido",
+      "empty": "No hay contenido agregado. Agrega libros o recursos externos para comenzar.",
+      "type": "Tipo de contenido",
+      "typeBook": "Libro de la biblioteca",
+      "typeExternal": "Recurso externo",
+      "selectBook": "Seleccionar un libro",
+      "externalTitle": "Título del recurso",
+      "externalUrl": "URL del recurso",
+      "notes": "Notas (opcional)",
+      "estimatedTime": "Tiempo estimado: {{minutes}} minutos",
+      "reorderHint": "Arrastra elementos para reordenar"
+    },
+    "tierGate": {
+      "title": "Función Pro",
+      "description": "Crear currículos está disponible para suscriptores Pro y Scholar. Actualiza tu cuenta para crear y compartir rutas de aprendizaje estructuradas.",
+      "upgrade": "Actualizar a Pro"
+    },
+    "review": {
+      "title": "Revisa tu currículo",
+      "basicInfo": "Información básica",
+      "content": "Contenido",
+      "itemCount": "{{count}} elementos de contenido",
+      "itemCount_one": "{{count}} elemento de contenido",
+      "itemCount_other": "{{count}} elementos de contenido"
+    }
   },
   "settings": {
     "title": "Settings",

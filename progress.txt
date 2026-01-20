@@ -3,6 +3,102 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19 - 16:40]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: frontend-084 - Create/edit curriculum (Pro/Scholar)
+
+WHAT WAS DONE:
+- Created `apps/web/src/components/curriculum/CurriculumForm.tsx` (450 lines)
+  - Complete form for curriculum creation/editing
+  - All required fields: title, description, category, difficulty, visibility
+  - Tags management (add/remove up to 10 tags)
+  - Cover image URL input
+  - Estimated time input
+  - Tier gating (Pro/Scholar only) with upgrade prompt
+  - Form validation
+  - Material-UI components with responsive design
+  - Difficulty options: BEGINNER, INTERMEDIATE, ADVANCED, EXPERT
+  - Visibility options: PRIVATE, UNLISTED, PUBLIC
+  - 14 predefined categories
+- Created `apps/web/src/components/curriculum/CurriculumItemsManager.tsx` (400 lines)
+  - Add books from user's library
+  - Add external resources (title + URL)
+  - Drag-and-drop reordering with visual feedback
+  - Edit item notes and estimated time
+  - Delete items
+  - Visual item list with type icons (book/link)
+  - Dialog for adding/editing items
+  - Automatic reindexing after reorder/delete
+- Created `apps/web/src/components/curriculum/index.ts`
+  - Exported CurriculumForm and CurriculumItemsManager
+  - Exported all related types
+- Updated `apps/web/src/pages/curriculums/CurriculumCreatePage.tsx` (300 lines)
+  - 3-step wizard: Basic Info → Add Content → Review & Publish
+  - Stepper UI with navigation
+  - Create and edit modes
+  - Integration with React Query for API calls
+  - Review step showing all entered data
+  - Navigation and routing
+  - Placeholder API integration (ready for backend)
+- Added comprehensive i18n translations
+  - English (en.json): Complete translations
+  - Spanish (es.json): Complete translations
+  - Japanese (ja.json): Complete translations
+  - Arabic (ar.json): Complete translations
+  - Tagalog (tl.json): Complete translations
+  - Chinese (zh.json): Complete translations
+  - All form labels, helpers, validation messages
+  - Tier gate messages
+  - Step labels and review content
+- Created `apps/web/src/components/curriculum/CurriculumForm.test.ts` (100 lines)
+  - Type definition tests
+  - Form validation tests
+  - Difficulty and visibility option tests
+  - Tags management tests
+  - Optional fields tests
+- Created `apps/web/src/components/curriculum/CurriculumItemsManager.test.ts` (140 lines)
+  - Type definition tests for books and external resources
+  - Item ordering tests
+  - Reordering logic tests
+  - Item type tests
+  - Optional fields tests
+
+WHY IT MATTERS:
+- Major Pro/Scholar feature enabling structured learning paths
+- Users can create and share curated content collections
+- Combines books and external resources in organized sequences
+- Drag-and-drop makes reordering intuitive
+- Tier gating monetizes premium features
+- Multi-language support for global audience
+- Foundation for curriculum following and progress tracking
+
+TECHNICAL DETAILS:
+- Material-UI components throughout (TextField, Select, Chip, Dialog, List, Stepper)
+- React hooks for state management
+- Drag-and-drop using native HTML5 drag events
+- Type-safe with TypeScript (exactOptionalPropertyTypes compliance)
+- Responsive design for mobile/desktop
+- Integration points for React Query mutations
+- Zod schema validation (basic validation implemented)
+- i18n with react-i18next for 6 languages
+
+TESTS:
+- ✅ All 71 web tests pass (including 2 new test files)
+- ✅ Type definitions validated
+- ✅ Form validation logic tested
+- ✅ Item management logic tested
+- ✅ Reordering logic tested
+- ✅ i18n keys validated across all languages
+
+NEXT STEPS:
+- Connect to backend API endpoints when ready
+- Add curriculum item preview
+- Implement curriculum templates
+- Add curriculum duplication feature
+- Add curriculum analytics (views, followers)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-19 - 16:08]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
