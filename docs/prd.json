@@ -2674,7 +2674,7 @@
         "Privacy saves",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-059",
