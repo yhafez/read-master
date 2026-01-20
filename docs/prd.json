@@ -2893,7 +2893,7 @@
         "All fields save",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-068",
