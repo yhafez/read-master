@@ -4898,7 +4898,7 @@
         "Failures are logged and reported",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-106",
