@@ -3,6 +3,116 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-19 - 20:15]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: frontend-107 - Create users over time chart
+
+WHAT WAS DONE:
+- Installed recharts library (v3.6.0)
+- Created UsersOverTimeChart component (295 lines)
+- Integrated with admin analytics API
+
+**UsersOverTimeChart Component** (`src/components/admin/UsersOverTimeChart.tsx`)
+
+**Features:**
+1. **Multi-Line Chart**
+   - Total Users (primary line)
+   - Active Users (success color)
+   - New Users (info color)
+   - Churned Users (error color)
+
+2. **Date Range Selector**
+   - 7 Days (7D)
+   - 30 Days (30D) - default
+   - 90 Days (90D)
+   - 1 Year (1Y)
+   - Filters data dynamically based on selection
+
+3. **Interactive Features**
+   - Tooltips with exact values on hover
+   - Responsive legend
+   - Color-coded lines matching theme
+
+4. **Responsive Design**
+   - Mobile: 300px height, smaller fonts, no dots on lines
+   - Desktop: 400px height, full features
+   - Adaptive margins and layouts
+
+5. **State Handling**
+   - Loading state with spinner
+   - Error state with alert message
+   - No data state with info message
+   - Proper error boundary
+
+**Data Flow:**
+```typescript
+fetch("/api/admin/analytics/users")
+  → UserAnalytics with dailyGrowth[]
+  → Filter by date range
+  → Format for recharts
+  → Render LineChart
+```
+
+**API Integration:**
+- Fetches from `/api/admin/analytics/users` endpoint
+- Uses React Query with 5-minute stale time
+- Parses `dailyGrowth` array from response
+- Handles nested data structure: `response.data.data.dailyGrowth`
+
+**Chart Configuration:**
+- CartesianGrid with theme-aware divider color
+- XAxis with formatted dates (e.g., "Jan 10")
+- YAxis with theme-aware text colors
+- Tooltip with theme-aware background and border
+- Legend with responsive font size
+- Lines with `monotone` interpolation for smooth curves
+
+WHY IT MATTERS:
+- Visualizes user growth trends at a glance
+- Enables quick identification of growth/churn patterns
+- Supports data-driven decision making
+- Makes raw analytics data actionable
+- Foundation for admin dashboard UI
+- Demonstrates health of the platform
+
+TECHNICAL DETAILS:
+- Uses recharts v3.6.0 for production-ready charts
+- Integrates with MUI theme for consistent styling
+- Responsive using MUI breakpoints and ResponsiveContainer
+- React Query for efficient data fetching and caching
+- Date formatting with native Intl API
+- Date range filtering with array slicing
+- TypeScript for type safety
+
+TESTS:
+- ✅ Created UsersOverTimeChart.test.tsx (2 tests)
+- ✅ All 176 test files pass (4322 tests total)
+- ✅ Typecheck passed
+- ✅ Lint passed (0 errors)
+
+USAGE EXAMPLE:
+```typescript
+import { UsersOverTimeChart } from "@/components/admin";
+
+function AdminDashboard() {
+  return (
+    <Box>
+      <UsersOverTimeChart />
+    </Box>
+  );
+}
+```
+
+NEXT STEPS:
+- Create similar chart for revenue over time (frontend-108)
+- Add engagement chart (reading time, books completed)
+- Add AI costs chart
+- Create comprehensive admin dashboard page
+- Add export functionality (CSV, PNG)
+- Add comparison view (e.g., this month vs last month)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-19 - 19:30]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
