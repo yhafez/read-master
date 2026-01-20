@@ -54,7 +54,7 @@ type NotificationPreferences = {
   emailGroups: boolean;
   emailForum: boolean;
   emailWeeklySummary: boolean;
-  
+
   // Push notifications
   pushEnabled: boolean;
   pushAchievements: boolean;
@@ -76,7 +76,7 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   emailGroups: true,
   emailForum: true,
   emailWeeklySummary: true,
-  
+
   pushEnabled: false,
   pushAchievements: false,
   pushSocial: false,
@@ -171,12 +171,12 @@ export function NotificationPreferencesPage(): React.ReactElement {
     try {
       // TODO: Save preferences to backend API
       // This would be a PUT request to /api/users/me/notification-preferences
-      
+
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
       setSaveSuccess(true);
-      
+
       // Auto-hide success message after 3 seconds
       setTimeout(() => {
         setSaveSuccess(false);
