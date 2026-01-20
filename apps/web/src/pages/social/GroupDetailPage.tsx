@@ -194,9 +194,9 @@ export function GroupDetailPage(): React.ReactElement {
 
   const handleShare = () => {
     if (!group) return;
-    
+
     const url = `${window.location.origin}/groups/${groupId}`;
-    
+
     if (navigator.share) {
       const shareData: ShareData = {
         title: group.name,
