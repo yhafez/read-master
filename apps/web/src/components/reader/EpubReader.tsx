@@ -15,6 +15,7 @@ import {
   NavigateNext as NextIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { useReaderStore } from "@/stores/readerStore";
 import ePub from "epubjs";
 import type { Book, Rendition, NavItem } from "epubjs";
 import type {
@@ -59,6 +60,9 @@ export function EpubReader({
   const containerRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<Book | null>(null);
   const renditionRef = useRef<Rendition | null>(null);
+
+  // Get reading mode from store
+  const readingMode = useReaderStore((state) => state.settings.readingMode);
 
   const [state, setState] = useState<EpubReaderState>(INITIAL_READER_STATE);
 
@@ -167,12 +171,13 @@ export function EpubReader({
     const book = ePub(url);
     bookRef.current = book;
 
-    // Create rendition
+    // Create rendition with spread mode based on settings
+    // "spread" mode shows two pages side-by-side for desktop reading
     const rendition = book.renderTo(containerRef.current, {
       width: "100%",
       height: "100%",
-      spread: "none",
-      flow: "paginated",
+      spread: readingMode === "spread" ? "auto" : "none",
+      flow: readingMode === "scroll" ? "scrolled" : "paginated",
     });
     renditionRef.current = rendition;
 
@@ -239,6 +244,7 @@ export function EpubReader({
   }, [
     url,
     initialCfi,
+    readingMode,
     handleLocationChange,
     handleTextSelection,
     onError,

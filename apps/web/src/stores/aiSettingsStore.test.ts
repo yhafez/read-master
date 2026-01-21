@@ -77,6 +77,7 @@ describe("aiSettingsStore", () => {
         readingLevel: "intermediate",
         comprehensionFrequency: "sometimes",
         showUsageStats: true,
+        personality: expect.any(Object), // DEFAULT_PERSONALITY_SETTINGS
       });
     });
   });

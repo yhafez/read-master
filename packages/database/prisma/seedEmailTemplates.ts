@@ -15,6 +15,7 @@ import {
   type EmailTemplateDefinition,
 } from "../../../apps/api/src/services/templateLoader.js";
 
+/* eslint-disable no-console */
 async function seedEmailTemplate(templateDef: EmailTemplateDefinition) {
   console.log(`  Seeding template: ${templateDef.name}`);
 

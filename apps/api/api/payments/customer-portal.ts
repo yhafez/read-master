@@ -4,13 +4,20 @@
  * Creates a Stripe Customer Portal session for subscription management
  */
 
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelResponse } from "@vercel/node";
 import { z } from "zod";
 import { withAuth } from "../../src/middleware/auth.js";
 import type { AuthenticatedRequest } from "../../src/middleware/auth.js";
-import { sendError, sendSuccess, ErrorCodes } from "../../src/utils/response.js";
+import {
+  sendError,
+  sendSuccess,
+  ErrorCodes,
+} from "../../src/utils/response.js";
 import { logger } from "../../src/utils/logger.js";
-import { createCustomerPortalSession, isStripeConfigured } from "../../src/services/stripe.js";
+import {
+  createCustomerPortalSession,
+  isStripeConfigured,
+} from "../../src/services/stripe.js";
 import { getUserByClerkId } from "../../src/services/db.js";
 
 // ============================================================================
@@ -31,7 +38,12 @@ async function handler(
 ): Promise<void> {
   // Only allow POST
   if (req.method !== "POST") {
-    return sendError(res, ErrorCodes.METHOD_NOT_ALLOWED, "Method not allowed", 405);
+    return sendError(
+      res,
+      ErrorCodes.METHOD_NOT_ALLOWED,
+      "Method not allowed",
+      405
+    );
   }
 
   const { userId } = req.auth;

@@ -336,12 +336,34 @@ async function handler(
       return;
     }
 
+    // For text-based formats (DOC, DOCX, TXT, HTML), try to serve the extracted .txt file
+    // This provides pre-parsed content for the TextReader component
+    let actualFilePath = book.filePath;
+    const isTextFormat =
+      book.fileType === "DOC" ||
+      book.fileType === "DOCX" ||
+      book.fileType === "TXT" ||
+      book.fileType === "HTML";
+
+    if (isTextFormat) {
+      const textFilePath = `${book.filePath}.txt`;
+      const textFileInfo = await getFileInfo(textFilePath);
+      if (textFileInfo.exists) {
+        actualFilePath = textFilePath;
+        logger.debug("Serving extracted text content", {
+          bookId: validatedBookId,
+          originalPath: book.filePath,
+          textPath: textFilePath,
+        });
+      }
+    }
+
     // Get file info first (for size and range requests)
-    const fileInfo = await getFileInfo(book.filePath);
+    const fileInfo = await getFileInfo(actualFilePath);
     if (!fileInfo.exists || fileInfo.contentLength === undefined) {
       logger.error("Book file not found in storage", {
         bookId: validatedBookId,
-        filePath: book.filePath,
+        filePath: actualFilePath,
       });
       sendError(
         res,
@@ -354,21 +376,26 @@ async function handler(
 
     const totalSize = fileInfo.contentLength;
     const metadata = buildContentMetadata(
-      book.filePath,
+      actualFilePath,
       book.fileType,
       totalSize
     );
+
+    // Override content type for extracted text files
+    if (actualFilePath.endsWith(".txt")) {
+      metadata.contentType = "text/plain; charset=utf-8";
+    }
 
     // Parse Range header if present
     const rangeHeader = req.headers.range as string | undefined;
     const parsedRange = parseRangeHeader(rangeHeader, totalSize);
 
     // Get file content
-    const fileResult = await getFile(book.filePath);
+    const fileResult = await getFile(actualFilePath);
     if (!fileResult.success || !fileResult.data) {
       logger.error("Failed to retrieve book content", {
         bookId: validatedBookId,
-        filePath: book.filePath,
+        filePath: actualFilePath,
         error: fileResult.error,
       });
       sendError(

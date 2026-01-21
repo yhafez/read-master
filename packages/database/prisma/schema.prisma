@@ -67,6 +67,7 @@ model User {
   stats             UserStats?
   achievements      UserAchievement[]
   curriculums       Curriculum[] // Curriculums created by this user
+  readingLists      ReadingList[] // Personal reading lists created by this user
   curriculumFollows CurriculumFollow[] // Curriculums this user is following
   filterPresets     FilterPreset[] // Saved library filter presets
   ttsDownloads      TTSDownload[] // TTS audio downloads for books
@@ -168,6 +169,7 @@ model Book {
   flashcards      Flashcard[]
   curriculumItems CurriculumItem[] // Curriculum items that reference this book
   ttsDownloads    TTSDownload[] // TTS audio downloads for this book
+  readingListItems ReadingListItem[] // Reading list items that reference this book
 
   // Social relations
   readingGroups    ReadingGroup[]    @relation("CurrentGroupBook") // Reading groups currently reading this book
@@ -1292,6 +1294,70 @@ model AuditLog {
   @@index([entityType, entityId])
   @@index([action])
   @@index([entityType, action])
+}
+
+// =============================================================================
+// READING LISTS - Personal Collections
+// =============================================================================
+
+/// ReadingList - Personal, ordered, shareable collections of books
+/// Users can create custom lists like "Summer Reading", "Classics", etc.
+model ReadingList {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // List metadata
+  name        String  @db.VarChar(200)
+  description String? @db.Text
+  coverImage  String? // Optional cover image URL
+
+  // Visibility and sharing
+  isPublic  Boolean @default(false) // Can others view this list
+  shareCode String? @unique // Unique code for sharing (e.g., "abc123")
+
+  // Statistics (denormalized)
+  itemsCount Int @default(0)
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  items ReadingListItem[]
+
+  // Indexes
+  @@index([userId])
+  @@index([isPublic])
+  @@index([deletedAt])
+  @@index([createdAt])
+}
+
+/// ReadingListItem - Books in a reading list with ordering
+/// Junction table with additional metadata
+model ReadingListItem {
+  id     String @id @default(cuid())
+  listId String
+  list   ReadingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Ordering within the list
+  orderIndex Int // 0-indexed position in the list
+
+  // Optional notes for this book in this list
+  notes String? @db.Text
+
+  // Timestamp
+  addedAt DateTime @default(now())
+
+  // Unique constraint: one book per list
+  @@unique([listId, bookId])
+  // Indexes
+  @@index([listId])
+  @@index([bookId])
+  @@index([listId, orderIndex])
 }
 
 /// TTSDownload model - Tracks text-to-speech audio download jobs

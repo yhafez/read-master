@@ -16,6 +16,13 @@ import {
   Typography,
   IconButton,
   Tooltip,
+  Slider,
+  Popover,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import {
   NavigateBefore as PrevIcon,
@@ -23,8 +30,14 @@ import {
   FormatSize as FontSizeIcon,
   Add as AddIcon,
   Remove as RemoveIcon,
+  ViewWeek as ColumnWidthIcon,
+  TextFields as TypographyIcon,
+  Search as SearchIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { useReaderStore } from "@/stores/readerStore";
+import { TypographySettings } from "./TypographySettings";
+import { SearchInBook, type SearchMatch } from "./SearchInBook";
 import type {
   TextReaderProps,
   TextReaderState,
@@ -77,6 +90,26 @@ export function TextReader({
     ...INITIAL_TEXT_READER_STATE,
     highlights: externalHighlights,
   });
+
+  // Column width popover anchor
+  const [widthAnchorEl, setWidthAnchorEl] = useState<HTMLButtonElement | null>(
+    null
+  );
+
+  // Typography dialog state
+  const [typographyOpen, setTypographyOpen] = useState(false);
+
+  // Search state
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Get reader settings from store
+  const { settings, updateSettings } = useReaderStore((state) => ({
+    settings: state.settings,
+    updateSettings: state.updateSettings,
+  }));
+
+  const maxWidth = settings.maxWidth || 800; // Default to 800px if not set
+  const typography = settings.typography;
 
   // Update specific state properties
   const updateState = useCallback((updates: Partial<TextReaderState>) => {
@@ -255,6 +288,62 @@ export function TextReader({
     updateState({ fontSize: clampFontSize(state.fontSize - FONT_SIZE_STEP) });
   }, [state.fontSize, updateState]);
 
+  // Column width controls
+  const handleWidthClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setWidthAnchorEl(event.currentTarget);
+    },
+    []
+  );
+
+  const handleWidthClose = useCallback(() => {
+    setWidthAnchorEl(null);
+  }, []);
+
+  const handleWidthChange = useCallback(
+    (_event: Event, value: number | number[]) => {
+      const newWidth = Array.isArray(value) ? value[0] || 0 : value;
+      updateSettings({ maxWidth: newWidth });
+    },
+    [updateSettings]
+  );
+
+  const widthOpen = Boolean(widthAnchorEl);
+
+  // Typography dialog handlers
+  const handleTypographyOpen = useCallback(() => {
+    setTypographyOpen(true);
+  }, []);
+
+  const handleTypographyClose = useCallback(() => {
+    setTypographyOpen(false);
+  }, []);
+
+  // Search handlers
+  const handleSearchToggle = useCallback(() => {
+    setSearchOpen((prev) => !prev);
+  }, []);
+
+  const handleSearchClose = useCallback(() => {
+    setSearchOpen(false);
+  }, []);
+
+  const handleSearchMatchSelect = useCallback(
+    (match: SearchMatch) => {
+      // Scroll to the match position
+      const container = containerRef.current;
+      if (!container) return;
+
+      const scrollPos = getScrollPositionFromOffset(
+        match.startOffset,
+        content.length,
+        container.scrollHeight
+      );
+      container.scrollTo({ top: scrollPos, behavior: "smooth" });
+    },
+    [content.length]
+  );
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -298,9 +387,12 @@ export function TextReader({
           key={index}
           component="p"
           sx={{
-            mb: 2,
-            fontSize: `${state.fontSize}rem`,
-            lineHeight: state.lineHeight,
+            mb: `${typography.paragraphSpacing}em`,
+            fontSize: `${typography.fontSize}px`,
+            lineHeight: typography.lineHeight,
+            letterSpacing: `${typography.letterSpacing}em`,
+            wordSpacing: `${typography.wordSpacing}em`,
+            textAlign: typography.textAlign,
             whiteSpace: "pre-wrap",
             wordWrap: "break-word",
           }}
@@ -336,9 +428,12 @@ export function TextReader({
             key={paraIndex}
             component="p"
             sx={{
-              mb: 2,
-              fontSize: `${state.fontSize}rem`,
-              lineHeight: state.lineHeight,
+              mb: `${typography.paragraphSpacing}em`,
+              fontSize: `${typography.fontSize}px`,
+              lineHeight: typography.lineHeight,
+              letterSpacing: `${typography.letterSpacing}em`,
+              wordSpacing: `${typography.wordSpacing}em`,
+              textAlign: typography.textAlign,
               whiteSpace: "pre-wrap",
               wordWrap: "break-word",
             }}
@@ -399,9 +494,12 @@ export function TextReader({
           key={paraIndex}
           component="p"
           sx={{
-            mb: 2,
-            fontSize: `${state.fontSize}rem`,
-            lineHeight: state.lineHeight,
+            mb: `${typography.paragraphSpacing}em`,
+            fontSize: `${typography.fontSize}px`,
+            lineHeight: typography.lineHeight,
+            letterSpacing: `${typography.letterSpacing}em`,
+            wordSpacing: `${typography.wordSpacing}em`,
+            textAlign: typography.textAlign,
             whiteSpace: "pre-wrap",
             wordWrap: "break-word",
           }}
@@ -435,13 +533,7 @@ export function TextReader({
         </Typography>
       );
     });
-  }, [
-    paragraphs,
-    state.highlights,
-    state.fontSize,
-    state.lineHeight,
-    onHighlightRemove,
-  ]);
+  }, [paragraphs, state.highlights, typography, onHighlightRemove]);
 
   // Error state
   if (state.hasError) {
@@ -580,6 +672,50 @@ export function TextReader({
           </Tooltip>
         </Box>
 
+        {/* Separator */}
+        <Box
+          sx={{ borderLeft: 1, borderColor: "divider", height: 24, mx: 1 }}
+        />
+
+        {/* Column width control */}
+        <Tooltip title={t("reader.columnWidth") || "Column Width"}>
+          <IconButton
+            size="small"
+            onClick={handleWidthClick}
+            aria-label={t("reader.columnWidth") || "Adjust column width"}
+          >
+            <ColumnWidthIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        {/* Typography settings */}
+        <Tooltip title={t("reader.typography") || "Typography"}>
+          <IconButton
+            size="small"
+            onClick={handleTypographyOpen}
+            aria-label={t("reader.typography") || "Typography settings"}
+          >
+            <TypographyIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        {/* Separator */}
+        <Box
+          sx={{ borderLeft: 1, borderColor: "divider", height: 24, mx: 1 }}
+        />
+
+        {/* Search */}
+        <Tooltip title={t("reader.search") || "Search"}>
+          <IconButton
+            size="small"
+            onClick={handleSearchToggle}
+            aria-label={t("reader.search") || "Search in book"}
+            color={searchOpen ? "primary" : "default"}
+          >
+            <SearchIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
         {/* Progress display */}
         <Box sx={{ flex: 1 }} />
         {state.location && (
@@ -605,7 +741,7 @@ export function TextReader({
         <Box
           ref={contentRef}
           sx={{
-            maxWidth: 800,
+            maxWidth: maxWidth === 0 ? "100%" : maxWidth,
             mx: "auto",
             userSelect: "text",
           }}
@@ -614,6 +750,86 @@ export function TextReader({
           {renderContentWithHighlights()}
         </Box>
       </Box>
+
+      {/* Column width popover */}
+      <Popover
+        open={widthOpen}
+        anchorEl={widthAnchorEl}
+        onClose={handleWidthClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Box sx={{ p: 3, minWidth: 300 }}>
+          <Typography variant="subtitle2" gutterBottom>
+            {t("reader.columnWidth") || "Column Width"}
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
+            <Typography variant="caption" sx={{ minWidth: 70 }}>
+              {maxWidth === 0
+                ? t("reader.fullWidth") || "Full"
+                : `${maxWidth}px`}
+            </Typography>
+            <Slider
+              value={maxWidth}
+              onChange={handleWidthChange}
+              min={0}
+              max={1400}
+              step={50}
+              marks={[
+                { value: 0, label: t("reader.full") || "Full" },
+                { value: 600, label: "600" },
+                { value: 800, label: "800" },
+                { value: 1000, label: "1000" },
+                { value: 1200, label: "1200" },
+              ]}
+              valueLabelDisplay="auto"
+              sx={{ flex: 1 }}
+            />
+          </Box>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ mt: 1, display: "block" }}
+          >
+            {t("reader.columnWidthHelp") ||
+              "0 = Full width, 600-1200 = Optimal reading width"}
+          </Typography>
+        </Box>
+      </Popover>
+
+      {/* Typography settings dialog */}
+      <Dialog
+        open={typographyOpen}
+        onClose={handleTypographyClose}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {t("reader.typography") || "Typography Settings"}
+        </DialogTitle>
+        <DialogContent>
+          <TypographySettings />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleTypographyClose}>
+            {t("common.close") || "Close"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Search in book */}
+      <SearchInBook
+        content={content}
+        open={searchOpen}
+        onClose={handleSearchClose}
+        onMatchSelect={handleSearchMatchSelect}
+      />
 
       {/* Bottom progress bar */}
       {state.location && (

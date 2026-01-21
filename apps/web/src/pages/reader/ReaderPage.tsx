@@ -21,62 +21,39 @@ import {
 } from "@mui/icons-material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { EpubReader, PdfReader } from "@/components/reader";
+import { EpubReader, PdfReader, TextReader } from "@/components/reader";
+import { useBook, useBookContent } from "@/hooks/useBooks";
 import type {
   EpubLocation,
   TocItem,
   TextSelection,
   PdfLocation,
   PdfTextSelection,
+  TextLocation,
+  TextReaderSelection,
 } from "@/components/reader";
 import { useReaderStore } from "@/stores/readerStore";
 
 /**
- * Book data type for the reader
+ * Get file format from book fileType
  */
-interface BookData {
-  id: string;
-  title: string;
-  format: "epub" | "pdf" | "txt";
-  contentUrl: string;
-  initialCfi?: string | undefined;
-  initialPage?: number | undefined;
+function getBookFormat(
+  fileType: string | null | undefined
+): "epub" | "pdf" | "txt" | "doc" | "docx" {
+  if (!fileType) return "txt";
+  const type = fileType.toLowerCase();
+  if (type === "epub") return "epub";
+  if (type === "pdf") return "pdf";
+  if (type === "doc") return "doc";
+  if (type === "docx") return "docx";
+  return "txt";
 }
 
 /**
- * Mock function to get book data (will be replaced with React Query)
+ * Check if a format is text-based (needs content string)
  */
-function useMockBookData(bookId: string | undefined) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [book, setBook] = useState<BookData | null>(null);
-
-  useEffect(() => {
-    if (!bookId) {
-      setError("No book ID provided");
-      setIsLoading(false);
-      return;
-    }
-
-    // Simulate loading
-    const timer = setTimeout(() => {
-      // Mock book data - in production, this comes from the API
-      // Determine format based on bookId for testing (in production, comes from DB)
-      const isPdf = bookId.endsWith("-pdf") || bookId.includes("pdf");
-      setBook({
-        id: bookId,
-        title: "Sample Book",
-        format: isPdf ? "pdf" : "epub",
-        // This would be a real URL to the book content
-        contentUrl: `/api/books/${bookId}/content`,
-      });
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [bookId]);
-
-  return { book, isLoading, error };
+function isTextBasedFormat(format: string): boolean {
+  return format === "txt" || format === "doc" || format === "docx";
 }
 
 /**
@@ -95,8 +72,29 @@ export function ReaderPage(): React.ReactElement {
   const [toc, setToc] = useState<TocItem[]>([]);
   const [showSidebar, setShowSidebar] = useState(false);
 
-  // Mock book data (will be React Query in production)
-  const { book, isLoading, error } = useMockBookData(bookId);
+  // Fetch book metadata
+  const {
+    data: book,
+    isLoading: isLoadingBook,
+    error: bookError,
+  } = useBook(bookId || "");
+
+  // Determine if we need to fetch content (for text-based formats)
+  const format = book ? getBookFormat(book.fileType) : "epub";
+  const needsContentFetch = book && isTextBasedFormat(format);
+
+  // Fetch book content
+  const {
+    data: bookContent,
+    isLoading: isLoadingContent,
+    error: contentError,
+  } = useBookContent(bookId || "", {
+    enabled: !!needsContentFetch,
+  });
+
+  // Combine loading and error states
+  const isLoading = isLoadingBook || (needsContentFetch && isLoadingContent);
+  const error = bookError || contentError;
 
   // Handle EPUB location change from reader
   const handleEpubLocationChange = useCallback(
@@ -135,6 +133,29 @@ export function ReaderPage(): React.ReactElement {
   // Handle PDF text selection
   const handlePdfTextSelect = useCallback(
     (selection: PdfTextSelection) => {
+      setSelectedText(selection.text);
+      // TODO: Show annotation toolbar
+    },
+    [setSelectedText]
+  );
+
+  // Handle Text reader location change
+  const handleTextLocationChange = useCallback(
+    (location: TextLocation) => {
+      // Update store position (uses percentage * 100 as position)
+      updatePosition(
+        Math.round(location.percentage * 100),
+        `offset:${location.charOffset}`
+      );
+
+      // TODO: Sync to backend with debounce
+    },
+    [updatePosition]
+  );
+
+  // Handle Text reader text selection
+  const handleTextTextSelect = useCallback(
+    (selection: TextReaderSelection) => {
       setSelectedText(selection.text);
       // TODO: Show annotation toolbar
     },
@@ -217,7 +238,7 @@ export function ReaderPage(): React.ReactElement {
   }
 
   // Error state
-  if (error || !book) {
+  if (error || (!isLoading && !book)) {
     return (
       <Box
         sx={{
@@ -230,7 +251,7 @@ export function ReaderPage(): React.ReactElement {
         }}
       >
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error || t("common.error")}
+          {error?.message || t("common.error")}
         </Alert>
         <IconButton onClick={handleBack} color="primary">
           <BackIcon />
@@ -241,6 +262,25 @@ export function ReaderPage(): React.ReactElement {
       </Box>
     );
   }
+
+  // Must have book to render
+  if (!book) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Get content URL for EPUB/PDF
+  const contentUrl = `/api/books/${book.id}/content`;
 
   return (
     <Box
@@ -353,27 +393,37 @@ export function ReaderPage(): React.ReactElement {
 
         {/* Reader content */}
         <Box sx={{ flex: 1, overflow: "hidden" }}>
-          {book.format === "epub" && (
+          {format === "epub" && (
             <EpubReader
-              url={book.contentUrl}
-              initialCfi={book.initialCfi}
+              url={contentUrl}
               onLocationChange={handleEpubLocationChange}
               onTextSelect={handleEpubTextSelect}
               onLoad={handleEpubLoad}
               onError={handleError}
             />
           )}
-          {book.format === "pdf" && (
+          {format === "pdf" && (
             <PdfReader
-              url={book.contentUrl}
-              initialPage={book.initialPage}
+              url={contentUrl}
               onLocationChange={handlePdfLocationChange}
               onTextSelect={handlePdfTextSelect}
               onLoad={handlePdfLoad}
               onError={handleError}
             />
           )}
-          {book.format === "txt" && (
+          {isTextBasedFormat(format) && bookContent && (
+            <TextReader
+              content={bookContent}
+              contentType={
+                format === "docx" ? "docx" : format === "doc" ? "doc" : "plain"
+              }
+              initialOffset={0}
+              onLocationChange={handleTextLocationChange}
+              onTextSelect={handleTextTextSelect}
+              onError={handleError}
+            />
+          )}
+          {isTextBasedFormat(format) && !bookContent && isLoadingContent && (
             <Box
               sx={{
                 display: "flex",
@@ -382,8 +432,9 @@ export function ReaderPage(): React.ReactElement {
                 height: "100%",
               }}
             >
-              <Typography variant="body1" color="text.secondary">
-                {t("reader.placeholder", { bookId })}
+              <CircularProgress size={40} />
+              <Typography variant="body2" color="text.secondary" sx={{ ml: 2 }}>
+                {t("common.loading")}
               </Typography>
             </Box>
           )}

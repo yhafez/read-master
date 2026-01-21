@@ -520,6 +520,36 @@ async function handler(
       }
     }
 
+    // For text-based formats (DOC, DOCX, TXT, HTML), also store the parsed text content
+    // Stored with .txt extension alongside the original file for easy retrieval
+    if (
+      (fileType === "DOC" ||
+        fileType === "DOCX" ||
+        fileType === "TXT" ||
+        fileType === "HTML") &&
+      parsedResult.rawContent
+    ) {
+      const textBuffer = Buffer.from(parsedResult.rawContent, "utf-8");
+      // Store with .txt suffix: e.g., "books/userId/timestamp/file.docx" → "books/userId/timestamp/file.docx.txt"
+      const textKey = `${storageKey}.txt`;
+      const textResult = await storage.uploadFile(textKey, textBuffer, {
+        contentType: "text/plain; charset=utf-8",
+        metadata: {
+          userId: user.id,
+          originalFilename: `${file.filename}.txt`,
+          isExtractedContent: "true",
+        },
+      });
+
+      if (!textResult.success) {
+        logger.warn("Failed to upload extracted text content", {
+          userId: user.id,
+          error: textResult.error,
+        });
+        // Don't fail the upload, original file is still usable
+      }
+    }
+
     // Create book record in database
     const book = await db.book.create({
       data: {

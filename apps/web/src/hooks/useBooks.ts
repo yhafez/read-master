@@ -17,6 +17,7 @@ export interface Book {
   title: string;
   author: string;
   coverUrl?: string;
+  fileType?: "PDF" | "EPUB" | "DOC" | "DOCX" | "TXT" | "HTML" | null;
   status: "not_started" | "reading" | "completed" | "abandoned";
   progress: number;
   wordCount?: number;
@@ -112,6 +113,30 @@ const booksApi = {
     });
     if (!response.ok) {
       throw new Error("Failed to delete book");
+    }
+  },
+
+  /**
+   * Fetch book content (binary file or text content)
+   * For EPUB/PDF: returns the file URL for direct loading by reader libraries
+   * For DOC/DOCX/TXT: returns the parsed text content
+   */
+  async getBookContent(id: string): Promise<string> {
+    const response = await fetch(`/api/books/${id}/content`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch book content");
+    }
+
+    // Check content type to determine how to handle the response
+    const contentType = response.headers.get("content-type") || "";
+
+    if (contentType.includes("text/plain")) {
+      // For text-based formats, return the text content directly
+      return response.text();
+    } else {
+      // For binary formats (EPUB, PDF), return a blob URL
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
     }
   },
 };
@@ -227,6 +252,31 @@ export function useDeleteBook(
       // Invalidate book lists to refetch
       queryClient.invalidateQueries({ queryKey: queryKeys.books.lists() });
     },
+    ...options,
+  });
+}
+
+/**
+ * Hook to fetch book content (file or text)
+ *
+ * For EPUB/PDF: Returns a blob URL that can be loaded by reader libraries
+ * For DOC/DOCX/TXT: Returns the parsed text content as a string
+ *
+ * @example
+ * ```tsx
+ * const { data: content, isLoading } = useBookContent("book-123");
+ * ```
+ */
+export function useBookContent(
+  id: string,
+  options?: Omit<UseQueryOptions<string, Error>, "queryKey" | "queryFn">
+) {
+  return useQuery({
+    queryKey: [...queryKeys.books.detail(id), "content"],
+    queryFn: () => booksApi.getBookContent(id),
+    enabled: !!id,
+    // Content doesn't change often, cache for longer
+    staleTime: 1000 * 60 * 5, // 5 minutes
     ...options,
   });
 }

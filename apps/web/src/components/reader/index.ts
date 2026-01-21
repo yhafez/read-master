@@ -500,3 +500,7 @@ export type { NotesPanelProps } from "./NotesPanel";
 // Mobile Reader Toolbar
 export { MobileReaderToolbar } from "./MobileReaderToolbar";
 export type { MobileReaderToolbarProps } from "./MobileReaderToolbar";
+
+// Search In Book
+export { SearchInBook } from "./SearchInBook";
+export type { SearchInBookProps, SearchMatch } from "./SearchInBook";
