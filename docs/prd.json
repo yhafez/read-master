@@ -1969,7 +1969,7 @@
         "Export works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-031",
@@ -2271,7 +2271,7 @@
         "Quota enforced",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-043",
@@ -2600,7 +2600,7 @@
         "Accurate data",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-056",
@@ -2842,7 +2842,7 @@
         "Unblock works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-066",
@@ -3389,7 +3389,7 @@
         "Sorting works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-088",
@@ -3546,7 +3546,7 @@
         "Billing shown",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-095",
@@ -4744,7 +4744,7 @@
         "Cleanup job removes expired downloads",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-001",
@@ -5059,7 +5059,7 @@
         "Filters work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-112",
@@ -5085,7 +5085,7 @@
         "Downloads work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-007",
@@ -5140,7 +5140,7 @@
         "Maintenance mode works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     }
   ]
 }
