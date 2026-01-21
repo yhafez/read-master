@@ -108,14 +108,14 @@ export function initPostHog(): void {
   try {
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
-      
+
       // Autocapture
       autocapture: {
         dom_event_allowlist: ["click", "submit"], // Only capture clicks and form submissions
         url_allowlist: [window.location.origin], // Only our domain
         element_allowlist: ["button", "a"], // Only buttons and links
       },
-      
+
       // Session recording
       session_recording: {
         enabled: true,
@@ -125,40 +125,40 @@ export function initPostHog(): void {
         sampleRate: IS_PRODUCTION ? 0.1 : 1.0, // 10% sampling in production, 100% in dev
         minimumDuration: 5000, // Only record sessions longer than 5 seconds
       },
-      
+
       // Privacy
       mask_all_text: false, // Don't mask all text (too aggressive)
       mask_all_element_attributes: false,
-      
+
       // Performance
       loaded: (ph) => {
         logger.info("PostHog loaded successfully");
         isInitialized = true;
-        
+
         // Enable debug mode in development
         if (IS_DEVELOPMENT) {
           ph.debug();
         }
       },
-      
+
       // Feature flags
       bootstrap: {
         featureFlags: {}, // Will be populated by server
       },
-      
+
       // Other options
       persistence: "localStorage+cookie",
       disable_session_recording: false,
       disable_persistence: false,
       capture_pageview: true, // Automatically capture pageviews
       capture_pageleave: true, // Capture when user leaves page
-      
+
       // Advanced options
       property_blacklist: ["$initial_referrer", "$initial_referring_domain"], // Don't track these
       sanitize_properties: (properties) => {
         // Remove any properties that look like sensitive data
         const sanitized = { ...properties };
-        
+
         // Remove email-like properties
         Object.keys(sanitized).forEach((key) => {
           const value = String(sanitized[key]);
@@ -170,7 +170,7 @@ export function initPostHog(): void {
             delete sanitized[key];
           }
         });
-        
+
         return sanitized;
       },
     });
