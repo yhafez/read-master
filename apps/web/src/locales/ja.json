@@ -2116,5 +2116,55 @@
       "copied": "リンクをコピーしました！",
       "emailBody": "このカリキュラムをチェック: "
     }
+  },
+  "subscription": {
+    "tiers": {
+      "free": {
+        "name": "無料"
+      },
+      "pro": {
+        "name": "プロ"
+      },
+      "scholar": {
+        "name": "学者"
+      }
+    },
+    "features": {
+      "books": {
+        "free": "10冊",
+        "unlimited": "無制限の本"
+      },
+      "ai": {
+        "free": "月5つのAIガイド",
+        "unlimited": "無制限のAIガイド"
+      },
+      "flashcards": {
+        "free": "100枚のフラッシュカード",
+        "unlimited": "無制限のフラッシュカード"
+      },
+      "tts": {
+        "free": "基本TTS",
+        "openai": "OpenAI TTSボイス",
+        "elevenlabs": "ElevenLabsプレミアムボイス"
+      },
+      "downloads": "TTSダウンロード",
+      "downloads.pro": "月5回のTTSダウンロード",
+      "downloads.unlimited": "無制限のTTSダウンロード",
+      "support": {
+        "priority": "優先サポート",
+        "premium": "プレミアム1対1サポート"
+      },
+      "custom": "カスタムテーマと機能"
+    },
+    "currentPlan": "現在のプラン",
+    "manageBilling": "請求管理",
+    "upgradePlans": "プランをアップグレード",
+    "upgradeToPro": "プロにアップグレード",
+    "upgradeToScholar": "学者にアップグレード",
+    "upgradeSuccess": "サブスクリプションが正常に更新されました！新しい機能が利用可能になりました。",
+    "popular": "最も人気",
+    "billingHistory": "請求履歴",
+    "manageBillingPortalDescription": "請求ポータルで請求履歴を表示し、支払い方法を管理します。",
+    "viewBillingHistory": "請求履歴を表示"
   }
 }

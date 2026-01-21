@@ -2116,5 +2116,55 @@
     "syncError": "Sync failed ({{count}} items)",
     "pendingChanges": "{{count}} changes pending",
     "syncNow": "Sync now"
+  },
+  "subscription": {
+    "tiers": {
+      "free": {
+        "name": "مجاني"
+      },
+      "pro": {
+        "name": "احترافي"
+      },
+      "scholar": {
+        "name": "علمي"
+      }
+    },
+    "features": {
+      "books": {
+        "free": "10 كتب",
+        "unlimited": "كتب غير محدودة"
+      },
+      "ai": {
+        "free": "5 أدلة AI/شهر",
+        "unlimited": "أدلة AI غير محدودة"
+      },
+      "flashcards": {
+        "free": "100 بطاقة تعليمية",
+        "unlimited": "بطاقات تعليمية غير محدودة"
+      },
+      "tts": {
+        "free": "TTS أساسي",
+        "openai": "أصوات OpenAI TTS",
+        "elevenlabs": "أصوات ElevenLabs المميزة"
+      },
+      "downloads": "تنزيلات TTS",
+      "downloads.pro": "5 تنزيلات TTS/شهر",
+      "downloads.unlimited": "تنزيلات TTS غير محدودة",
+      "support": {
+        "priority": "دعم ذو أولوية",
+        "premium": "دعم مميز 1 إلى 1"
+      },
+      "custom": "سمات وميزات مخصصة"
+    },
+    "currentPlan": "الخطة الحالية",
+    "manageBilling": "إدارة الفواتير",
+    "upgradePlans": "ترقية خطتك",
+    "upgradeToPro": "الترقية إلى احترافي",
+    "upgradeToScholar": "الترقية إلى علمي",
+    "upgradeSuccess": "تم تحديث الاشتراك بنجاح! ميزاتك الجديدة متاحة الآن.",
+    "popular": "الأكثر شعبية",
+    "billingHistory": "سجل الفواتير",
+    "manageBillingPortalDescription": "اعرض سجل الفواتير وقم بإدارة طرق الدفع في بوابة الفواتير.",
+    "viewBillingHistory": "عرض سجل الفواتير"
   }
 }

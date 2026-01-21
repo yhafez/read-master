@@ -2116,5 +2116,55 @@
       "copied": "Nakopya na ang link!",
       "emailBody": "Tingnan ang kurikulumng ito: "
     }
+  },
+  "subscription": {
+    "tiers": {
+      "free": {
+        "name": "Libre"
+      },
+      "pro": {
+        "name": "Pro"
+      },
+      "scholar": {
+        "name": "Scholar"
+      }
+    },
+    "features": {
+      "books": {
+        "free": "10 libro",
+        "unlimited": "Walang limitasyong libro"
+      },
+      "ai": {
+        "free": "5 AI guide/buwan",
+        "unlimited": "Walang limitasyong AI guide"
+      },
+      "flashcards": {
+        "free": "100 flashcard",
+        "unlimited": "Walang limitasyong flashcard"
+      },
+      "tts": {
+        "free": "Basic TTS",
+        "openai": "OpenAI TTS Voices",
+        "elevenlabs": "ElevenLabs Premium Voices"
+      },
+      "downloads": "TTS Downloads",
+      "downloads.pro": "5 TTS download/buwan",
+      "downloads.unlimited": "Walang limitasyong TTS download",
+      "support": {
+        "priority": "Priority Support",
+        "premium": "Premium 1-on-1 Support"
+      },
+      "custom": "Custom themes at features"
+    },
+    "currentPlan": "Kasalukuyang Plan",
+    "manageBilling": "Pamahalaan ang Billing",
+    "upgradePlans": "I-upgrade ang Iyong Plan",
+    "upgradeToPro": "I-upgrade sa Pro",
+    "upgradeToScholar": "I-upgrade sa Scholar",
+    "upgradeSuccess": "Matagumpay na na-update ang subscription! Available na ang iyong mga bagong feature.",
+    "popular": "Pinaka-Popular",
+    "billingHistory": "Kasaysayan ng Billing",
+    "manageBillingPortalDescription": "Tingnan ang iyong kasaysayan ng billing at pamahalaan ang iyong mga paraan ng pagbabayad sa billing portal.",
+    "viewBillingHistory": "Tingnan ang Kasaysayan ng Billing"
   }
 }

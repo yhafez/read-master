@@ -2116,5 +2116,55 @@
       "copied": "¡Enlace copiado al portapapeles!",
       "emailBody": "Echa un vistazo a este currículo: "
     }
+  },
+  "subscription": {
+    "tiers": {
+      "free": {
+        "name": "Gratis"
+      },
+      "pro": {
+        "name": "Pro"
+      },
+      "scholar": {
+        "name": "Académico"
+      }
+    },
+    "features": {
+      "books": {
+        "free": "10 libros",
+        "unlimited": "Libros ilimitados"
+      },
+      "ai": {
+        "free": "5 guías de IA/mes",
+        "unlimited": "Guías de IA ilimitadas"
+      },
+      "flashcards": {
+        "free": "100 tarjetas de memoria",
+        "unlimited": "Tarjetas de memoria ilimitadas"
+      },
+      "tts": {
+        "free": "TTS básico",
+        "openai": "Voces TTS de OpenAI",
+        "elevenlabs": "Voces premium de ElevenLabs"
+      },
+      "downloads": "Descargas TTS",
+      "downloads.pro": "5 descargas TTS/mes",
+      "downloads.unlimited": "Descargas TTS ilimitadas",
+      "support": {
+        "priority": "Soporte prioritario",
+        "premium": "Soporte premium 1 a 1"
+      },
+      "custom": "Temas y funciones personalizadas"
+    },
+    "currentPlan": "Plan actual",
+    "manageBilling": "Gestionar facturación",
+    "upgradePlans": "Actualiza tu plan",
+    "upgradeToPro": "Actualizar a Pro",
+    "upgradeToScholar": "Actualizar a Académico",
+    "upgradeSuccess": "¡Suscripción actualizada con éxito! Tus nuevas funciones ya están disponibles.",
+    "popular": "Más popular",
+    "billingHistory": "Historial de facturación",
+    "manageBillingPortalDescription": "Ve tu historial de facturación y gestiona tus métodos de pago en el portal de facturación.",
+    "viewBillingHistory": "Ver historial de facturación"
   }
 }

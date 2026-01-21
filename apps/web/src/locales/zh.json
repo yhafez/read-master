@@ -2116,5 +2116,55 @@
       "copied": "链接已复制到剪贴板！",
       "emailBody": "查看这个课程："
     }
+  },
+  "subscription": {
+    "tiers": {
+      "free": {
+        "name": "免费"
+      },
+      "pro": {
+        "name": "专业版"
+      },
+      "scholar": {
+        "name": "学者版"
+      }
+    },
+    "features": {
+      "books": {
+        "free": "10本书",
+        "unlimited": "无限书籍"
+      },
+      "ai": {
+        "free": "每月5个AI指南",
+        "unlimited": "无限AI指南"
+      },
+      "flashcards": {
+        "free": "100个闪卡",
+        "unlimited": "无限闪卡"
+      },
+      "tts": {
+        "free": "基础TTS",
+        "openai": "OpenAI TTS语音",
+        "elevenlabs": "ElevenLabs高级语音"
+      },
+      "downloads": "TTS下载",
+      "downloads.pro": "每月5次TTS下载",
+      "downloads.unlimited": "无限TTS下载",
+      "support": {
+        "priority": "优先支持",
+        "premium": "高级一对一支持"
+      },
+      "custom": "自定义主题和功能"
+    },
+    "currentPlan": "当前计划",
+    "manageBilling": "管理账单",
+    "upgradePlans": "升级您的计划",
+    "upgradeToPro": "升级到专业版",
+    "upgradeToScholar": "升级到学者版",
+    "upgradeSuccess": "订阅更新成功！您的新功能现已可用。",
+    "popular": "最受欢迎",
+    "billingHistory": "账单历史",
+    "manageBillingPortalDescription": "在账单门户中查看您的账单历史并管理您的付款方式。",
+    "viewBillingHistory": "查看账单历史"
   }
 }

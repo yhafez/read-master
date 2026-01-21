@@ -2116,5 +2116,55 @@
       "aiCostProjected": "Projected Monthly",
       "forecast": "Forecast"
     }
+  },
+  "subscription": {
+    "tiers": {
+      "free": {
+        "name": "Free"
+      },
+      "pro": {
+        "name": "Pro"
+      },
+      "scholar": {
+        "name": "Scholar"
+      }
+    },
+    "features": {
+      "books": {
+        "free": "10 books",
+        "unlimited": "Unlimited books"
+      },
+      "ai": {
+        "free": "5 AI guides/month",
+        "unlimited": "Unlimited AI guides"
+      },
+      "flashcards": {
+        "free": "100 flashcards",
+        "unlimited": "Unlimited flashcards"
+      },
+      "tts": {
+        "free": "Basic TTS",
+        "openai": "OpenAI TTS Voices",
+        "elevenlabs": "ElevenLabs Premium Voices"
+      },
+      "downloads": "TTS Downloads",
+      "downloads.pro": "5 TTS downloads/month",
+      "downloads.unlimited": "Unlimited TTS downloads",
+      "support": {
+        "priority": "Priority Support",
+        "premium": "Premium 1-on-1 Support"
+      },
+      "custom": "Custom themes & features"
+    },
+    "currentPlan": "Current Plan",
+    "manageBilling": "Manage Billing",
+    "upgradePlans": "Upgrade Your Plan",
+    "upgradeToPro": "Upgrade to Pro",
+    "upgradeToScholar": "Upgrade to Scholar",
+    "upgradeSuccess": "Subscription updated successfully! Your new features are now available.",
+    "popular": "Most Popular",
+    "billingHistory": "Billing History",
+    "manageBillingPortalDescription": "View your billing history and manage your payment methods in the billing portal.",
+    "viewBillingHistory": "View Billing History"
   }
 }
