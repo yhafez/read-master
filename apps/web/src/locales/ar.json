@@ -29,7 +29,19 @@
     "play": "تشغيل",
     "pause": "إيقاف مؤقت",
     "add": "إضافة",
-    "saveChanges": "حفظ التغييرات"
+    "saveChanges": "حفظ التغييرات",
+    "share": "Share",
+    "update": "Update",
+    "copy": "Copy"
+  },
+  "curriculum": {
+    "share": {
+      "title": "Share Curriculum",
+      "linkLabel": "Share Link",
+      "socialLabel": "Share on Social Media",
+      "copied": "Link copied to clipboard!",
+      "emailBody": "Check out this curriculum: "
+    }
   },
   "collections": {
     "title": "المجموعات",
@@ -1063,12 +1075,62 @@
     "feed": "موجز النشاط"
   },
   "groups": {
+    "invite": {
+      "title": "Invite Members",
+      "button": "Invite",
+      "invitingTo": "Inviting to:",
+      "searchLabel": "Search for users",
+      "searchPlaceholder": "Enter username or email...",
+      "results": "Search Results",
+      "following": "Following",
+      "selected": "{{count}} selected",
+      "linkLabel": "Or share this invite link",
+      "linkHint": "Anyone with this link can request to join",
+      "send": "Send {{count}} Invitation(s)",
+      "copied": "Invite link copied!",
+      "sent": "{{count}} invitation(s) sent!"
+    },
+    "members": {
+      "title": "Manage Members",
+      "manage": "Manage",
+      "managing": "Managing members for:",
+      "totalCount": "{{count}} members",
+      "roleOwner": "Owner",
+      "roleAdmin": "Admin",
+      "roleMember": "Member",
+      "joined": "Joined",
+      "contributions": "{{count}} contributions",
+      "promoteToAdmin": "Promote to Admin",
+      "demoteToMember": "Demote to Member",
+      "remove": "Remove from Group",
+      "cannotRemoveSelf": "You cannot remove yourself from the group",
+      "removeFailed": "Failed to remove member",
+      "promoteFailed": "Failed to promote member",
+      "demoteFailed": "Failed to demote member"
+    },
+    "schedule": {
+      "title": "Reading Schedule",
+      "noBook": "No book selected",
+      "noBookHint": "Select a book to create a reading schedule",
+      "currentProgress": "Group Progress",
+      "pages": "pages",
+      "complete": "complete",
+      "nextMilestone": "Next Milestone",
+      "page": "Page",
+      "milestones": "Milestones",
+      "editTitle": "Edit Schedule",
+      "milestoneDescription": "Milestone Description",
+      "descriptionPlaceholder": "e.g., Complete Chapter 1-3",
+      "targetPage": "Target Page",
+      "targetDate": "Target Date"
+    },
     "detail": "تفاصيل المجموعة",
     "placeholder": "ستظهر تفاصيل المجموعة {{groupId}} هنا.",
     "discussions": "المناقشات",
     "discussionsPlaceholder": "ستظهر مناقشات المجموعة {{groupId}} هنا."
   },
   "forum": {
+    "markBestAnswer": "Mark as Best Answer",
     "title": "المنتدى",
     "category": "فئة المنتدى",
     "categoryPlaceholder": "ستظهر المواضيع في {{category}} هنا.",

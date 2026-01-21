@@ -91,11 +91,7 @@ describe("i18n configuration", () => {
 });
 
 describe("locale files", () => {
-  // TODO: Fix missing translations - approximately 52 keys are missing from non-English locales
-  // Missing keys include: common.copy, common.share, common.update, curriculum.share.*,
-  // forum.markBestAnswer, groups.invite.*, groups.members.*, groups.schedule.*
-  // This is a known issue that should be addressed in a dedicated i18n task
-  it.skip("should have matching keys across all locale files", async () => {
+  it("should have matching keys across all locale files", async () => {
     const en = await import("../locales/en.json");
     const ar = await import("../locales/ar.json");
     const es = await import("../locales/es.json");
