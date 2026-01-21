@@ -48,6 +48,33 @@
       }
     }
   },
+  "flashcards": {
+    "study": {
+      "title": "Study Session",
+      "shortcuts": "Keyboard Shortcuts"
+    },
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "description": "Use these keyboard shortcuts to study faster",
+      "keyColumn": "Key",
+      "actionColumn": "Action",
+      "keys": {
+        "space": "Space"
+      },
+      "actions": {
+        "showAnswer": "Show answer",
+        "rateAgain": "Rate: Again (forgot)",
+        "rateHard": "Rate: Hard (difficult)",
+        "rateGood": "Rate: Good (remembered)",
+        "rateEasy": "Rate: Easy (too easy)",
+        "undo": "Undo last rating",
+        "suspend": "Suspend card",
+        "edit": "Edit card",
+        "help": "Show this help",
+        "exit": "Exit study session"
+      }
+    }
+  },
   "collections": {
     "title": "Collections",
     "create": "New Collection",

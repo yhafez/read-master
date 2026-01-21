@@ -305,6 +305,9 @@ export const STUDY_SHORTCUTS = {
   RATE_GOOD: "3",
   RATE_EASY: "4",
   UNDO: "u",
+  SUSPEND: "s",
+  EDIT: "e",
+  HELP: "?",
   EXIT: "Escape",
 } as const;
 

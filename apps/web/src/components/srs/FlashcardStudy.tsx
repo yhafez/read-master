@@ -60,6 +60,7 @@ import {
   isValidRating,
   updateProgress,
 } from "./flashcardStudyTypes";
+import { KeyboardShortcutsDialog } from "./KeyboardShortcutsDialog";
 
 // =============================================================================
 // RATING BUTTONS COMPONENT
@@ -417,6 +418,7 @@ export function FlashcardStudy({
   const [cardStartTime, setCardStartTime] = useState(Date.now());
   const [summary, setSummary] = useState<StudySessionSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showShortcutsDialog, setShowShortcutsDialog] = useState(false);
 
   // Current card
   const currentCard = cards[currentCardIndex] ?? null;
@@ -618,24 +620,62 @@ export function FlashcardStudy({
         return;
       }
 
+      // Help dialog
+      if (e.key === STUDY_SHORTCUTS.HELP) {
+        e.preventDefault();
+        setShowShortcutsDialog(true);
+        return;
+      }
+
+      // Exit
+      if (e.key === STUDY_SHORTCUTS.EXIT) {
+        e.preventDefault();
+        onExit?.();
+        return;
+      }
+
+      // Show answer
       if (e.key === STUDY_SHORTCUTS.SHOW_ANSWER && state === "studying") {
         e.preventDefault();
         handleShowAnswer();
-      } else if (state === "showingAnswer") {
+        return;
+      }
+
+      // Rating shortcuts (when answer is showing)
+      if (state === "showingAnswer") {
         const rating = parseInt(e.key, 10);
         if (isValidRating(rating)) {
           e.preventDefault();
           void handleRate(rating);
+          return;
         }
-      } else if (e.key === STUDY_SHORTCUTS.EXIT) {
+      }
+
+      // TODO: Implement undo functionality
+      if (e.key.toLowerCase() === STUDY_SHORTCUTS.UNDO) {
         e.preventDefault();
-        onExit?.();
+        // TODO: Implement undo last rating
+        return;
+      }
+
+      // TODO: Implement suspend card functionality
+      if (e.key.toLowerCase() === STUDY_SHORTCUTS.SUSPEND) {
+        e.preventDefault();
+        // TODO: Implement suspend current card
+        return;
+      }
+
+      // TODO: Implement edit card functionality
+      if (e.key.toLowerCase() === STUDY_SHORTCUTS.EDIT) {
+        e.preventDefault();
+        // TODO: Implement edit current card
+        return;
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [state, handleShowAnswer, handleRate, onExit]);
+  }, [state, handleShowAnswer, handleRate, onExit, setShowShortcutsDialog]);
 
   // Handle study more
   const handleStudyMore = useCallback(() => {
@@ -718,7 +758,7 @@ export function FlashcardStudy({
         </Tooltip>
         <Typography variant="h6">{t("flashcards.study.title")}</Typography>
         <Tooltip title={t("flashcards.study.shortcuts")}>
-          <IconButton>
+          <IconButton onClick={() => setShowShortcutsDialog(true)}>
             <KeyboardIcon />
           </IconButton>
         </Tooltip>
@@ -760,6 +800,12 @@ export function FlashcardStudy({
           <CircularProgress size={24} />
         </Box>
       )}
+
+      {/* Keyboard Shortcuts Help Dialog */}
+      <KeyboardShortcutsDialog
+        open={showShortcutsDialog}
+        onClose={() => setShowShortcutsDialog(false)}
+      />
     </Box>
   );
 }
