@@ -93,8 +93,8 @@ describe("SendGrid Webhook Handler", () => {
       deletedAt: null,
     };
 
-    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail);
-    vi.mocked(db.email.update).mockResolvedValue({ ...mockEmail, deliveredAt: new Date() });
+    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
+    vi.mocked(db.email.update).mockResolvedValue({ ...mockEmail, deliveredAt: new Date() } as any);
 
     const events = [
       {
@@ -160,12 +160,12 @@ describe("SendGrid Webhook Handler", () => {
       deletedAt: null,
     };
 
-    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail);
+    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
     vi.mocked(db.email.update).mockResolvedValue({
       ...mockEmail,
       openedAt: new Date(),
       openCount: 1,
-    });
+    } as any);
 
     const events = [
       {
@@ -226,11 +226,11 @@ describe("SendGrid Webhook Handler", () => {
       deletedAt: null,
     };
 
-    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail);
+    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
     vi.mocked(db.email.update).mockResolvedValue({
       ...mockEmail,
       openCount: 2,
-    });
+    } as any);
 
     const events = [
       {
@@ -249,9 +249,9 @@ describe("SendGrid Webhook Handler", () => {
 
     await handler(mockRequest as VercelRequest, mockResponse as VercelResponse);
 
-    const updateCall = vi.mocked(db.email.update).mock.calls[0][0];
-    expect(updateCall.data).not.toHaveProperty("openedAt");
-    expect(updateCall.data).toHaveProperty("openCount", { increment: 1 });
+    const updateCall = vi.mocked(db.email.update).mock.calls[0]?.[0];
+    expect(updateCall?.data).not.toHaveProperty("openedAt");
+    expect(updateCall?.data).toHaveProperty("openCount", { increment: 1 });
   });
 
   it("should process click event and track URL", async () => {
@@ -286,7 +286,7 @@ describe("SendGrid Webhook Handler", () => {
       deletedAt: null,
     };
 
-    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail);
+    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
     vi.mocked(db.email.update).mockResolvedValue({
       ...mockEmail,
       clickedAt: new Date(),
@@ -296,7 +296,7 @@ describe("SendGrid Webhook Handler", () => {
         clickedUrls: ["https://example.com"],
         lastClickedUrl: "https://example.com",
       },
-    });
+    } as any);
 
     const events = [
       {
@@ -362,12 +362,12 @@ describe("SendGrid Webhook Handler", () => {
       deletedAt: null,
     };
 
-    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail);
+    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
     vi.mocked(db.email.update).mockResolvedValue({
       ...mockEmail,
       bouncedAt: new Date(),
       bounceReason: "Invalid recipient",
-    });
+    } as any);
 
     const events = [
       {
@@ -429,7 +429,7 @@ describe("SendGrid Webhook Handler", () => {
       deletedAt: null,
     };
 
-    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail);
+    vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
     vi.mocked(db.email.update).mockResolvedValue({
       ...mockEmail,
       unsubscribedAt: new Date(),
@@ -530,12 +530,12 @@ describe("SendGrid Webhook Handler", () => {
     };
 
     vi.mocked(db.email.findUnique)
-      .mockResolvedValueOnce(mockEmail1)
-      .mockResolvedValueOnce(mockEmail2);
+      .mockResolvedValueOnce(mockEmail1 as any)
+      .mockResolvedValueOnce(mockEmail2 as any);
 
     vi.mocked(db.email.update)
-      .mockResolvedValueOnce({ ...mockEmail1, deliveredAt: new Date() })
-      .mockResolvedValueOnce({ ...mockEmail2, openedAt: new Date(), openCount: 1 });
+      .mockResolvedValueOnce({ ...mockEmail1, deliveredAt: new Date() } as any)
+      .mockResolvedValueOnce({ ...mockEmail2, openedAt: new Date(), openCount: 1 } as any);
 
     const events = [
       {
