@@ -1121,6 +1121,7 @@ async function seedBooks(users: Array<{ id: string }>) {
 
   // Assign books to users in a round-robin fashion
   let bookCount = 0;
+  const seededBooks = [];
 
   for (let i = 0; i < SAMPLE_BOOKS.length; i++) {
     const bookData = SAMPLE_BOOKS[i];
@@ -1136,7 +1137,7 @@ async function seedBooks(users: Array<{ id: string }>) {
     });
 
     if (!existingBook) {
-      await prisma.book.create({
+      const book = await prisma.book.create({
         data: {
           userId: user.id,
           title: bookData.title,
@@ -1154,11 +1155,169 @@ async function seedBooks(users: Array<{ id: string }>) {
           status: bookData.status,
         },
       });
+      seededBooks.push(book);
       bookCount++;
+    } else {
+      seededBooks.push(existingBook);
     }
   }
 
   console.log(`   ✓ Seeded ${bookCount} books`);
+  return seededBooks;
+}
+
+/**
+ * Seed TTS downloads
+ */
+async function seedTTSDownloads(users: any[], books: any[]) {
+  console.log("📥 Seeding TTS downloads...");
+
+  let downloadCount = 0;
+
+  // Create sample downloads for Pro and Scholar users
+  const proUsers = users.filter((u) => u.tier === "PRO");
+  const scholarUsers = users.filter((u) => u.tier === "SCHOLAR");
+
+  // Pro user downloads (OpenAI TTS)
+  if (proUsers.length > 0 && books.length > 0) {
+    const proUser = proUsers[0];
+    const book1 = books[0];
+    const book2 = books[1];
+
+    // Completed download
+    await prisma.tTSDownload.upsert({
+      where: { id: "tts-download-pro-1" },
+      update: {},
+      create: {
+        id: "tts-download-pro-1",
+        userId: proUser.id,
+        bookId: book1.id,
+        bookTitle: book1.title,
+        status: "COMPLETED",
+        provider: "OPENAI",
+        voice: "alloy",
+        format: "MP3",
+        totalChunks: 15,
+        processedChunks: 15,
+        totalCharacters: 45000,
+        estimatedCost: 0.45,
+        actualCost: 0.43,
+        fileKey: `users/${proUser.id}/audio/downloads/tts-download-pro-1.mp3`,
+        fileSize: 5242880, // 5MB
+        downloadUrl: "https://example.com/download/tts-download-pro-1",
+        completedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+        expiresAt: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000), // 28 days from now
+      },
+    });
+    downloadCount++;
+
+    // Processing download
+    await prisma.tTSDownload.upsert({
+      where: { id: "tts-download-pro-2" },
+      update: {},
+      create: {
+        id: "tts-download-pro-2",
+        userId: proUser.id,
+        bookId: book2.id,
+        bookTitle: book2.title,
+        status: "PROCESSING",
+        provider: "OPENAI",
+        voice: "shimmer",
+        format: "MP3",
+        totalChunks: 20,
+        processedChunks: 12,
+        totalCharacters: 60000,
+        estimatedCost: 0.6,
+        actualCost: 0.36,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      },
+    });
+    downloadCount++;
+  }
+
+  // Scholar user downloads (ElevenLabs TTS)
+  if (scholarUsers.length > 0 && books.length > 2) {
+    const scholarUser = scholarUsers[0];
+    const book3 = books[2];
+    const book4 = books[3];
+
+    // Completed download with ElevenLabs
+    await prisma.tTSDownload.upsert({
+      where: { id: "tts-download-scholar-1" },
+      update: {},
+      create: {
+        id: "tts-download-scholar-1",
+        userId: scholarUser.id,
+        bookId: book3.id,
+        bookTitle: book3.title,
+        status: "COMPLETED",
+        provider: "ELEVENLABS",
+        voice: "rachel",
+        format: "MP3",
+        totalChunks: 25,
+        processedChunks: 25,
+        totalCharacters: 75000,
+        estimatedCost: 1.5,
+        actualCost: 1.48,
+        fileKey: `users/${scholarUser.id}/audio/downloads/tts-download-scholar-1.mp3`,
+        fileSize: 8388608, // 8MB
+        downloadUrl: "https://example.com/download/tts-download-scholar-1",
+        completedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+        expiresAt: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000),
+      },
+    });
+    downloadCount++;
+
+    // Failed download
+    await prisma.tTSDownload.upsert({
+      where: { id: "tts-download-scholar-2" },
+      update: {},
+      create: {
+        id: "tts-download-scholar-2",
+        userId: scholarUser.id,
+        bookId: book4.id,
+        bookTitle: book4.title,
+        status: "FAILED",
+        provider: "ELEVENLABS",
+        voice: "adam",
+        format: "MP3",
+        totalChunks: 18,
+        processedChunks: 10,
+        totalCharacters: 54000,
+        estimatedCost: 1.08,
+        actualCost: 0.6,
+        errorMessage:
+          "API rate limit exceeded. Please try again in a few minutes.",
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      },
+    });
+    downloadCount++;
+
+    // Pending download
+    await prisma.tTSDownload.upsert({
+      where: { id: "tts-download-scholar-3" },
+      update: {},
+      create: {
+        id: "tts-download-scholar-3",
+        userId: scholarUser.id,
+        bookId: book3.id,
+        bookTitle: book3.title,
+        status: "PENDING",
+        provider: "ELEVENLABS",
+        voice: "bella",
+        format: "OPUS",
+        totalChunks: 22,
+        processedChunks: 0,
+        totalCharacters: 66000,
+        estimatedCost: 1.32,
+        actualCost: 0,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      },
+    });
+    downloadCount++;
+  }
+
+  console.log(`   ✓ Seeded ${downloadCount} TTS downloads`);
 }
 
 async function main() {
@@ -1171,7 +1330,8 @@ async function main() {
     await seedAchievements();
     await seedForumCategories();
     const users = await seedUsers();
-    await seedBooks(users);
+    const books = await seedBooks(users);
+    await seedTTSDownloads(users, books);
     await seedDailyAnalytics();
 
     console.log("");
@@ -1182,6 +1342,7 @@ async function main() {
     console.log(`  - ${FORUM_CATEGORIES.length} forum categories`);
     console.log(`  - ${SAMPLE_USERS.length} sample users`);
     console.log(`  - ${SAMPLE_BOOKS.length} sample books`);
+    console.log(`  - 5 TTS downloads (various states)`);
     console.log(`  - 30 days of analytics data`);
     console.log("");
   } catch (error) {
