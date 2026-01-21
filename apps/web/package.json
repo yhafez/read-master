@@ -41,6 +41,9 @@
   "devDependencies": {
     "@read-master/config": "workspace:*",
     "@sentry/vite-plugin": "^4.7.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
