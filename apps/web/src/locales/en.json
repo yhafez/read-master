@@ -1148,6 +1148,21 @@
     "feed": "Activity Feed"
   },
   "groups": {
+    "invite": {
+      "title": "Invite Members",
+      "button": "Invite",
+      "invitingTo": "Inviting to:",
+      "searchLabel": "Search for users",
+      "searchPlaceholder": "Enter username or email...",
+      "results": "Search Results",
+      "following": "Following",
+      "selected": "{{count}} selected",
+      "linkLabel": "Or share this invite link",
+      "linkHint": "Anyone with this link can request to join",
+      "send": "Send {{count}} Invitation(s)",
+      "copied": "Invite link copied!",
+      "sent": "{{count}} invitation(s) sent!"
+    },
     "detail": "Group Details",
     "placeholder": "Group {{groupId}} details will appear here.",
     "discussions": "Discussions",

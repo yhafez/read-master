@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-react";
+import { InviteToGroupDialog } from "@/components/groups";
 import {
   Box,
   Typography,
@@ -110,6 +111,7 @@ export function GroupDetailPage(): React.ReactElement {
 
   // State
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showInviteDialog, setShowInviteDialog] = useState(false);
 
   // Fetch group data
   const {
@@ -372,6 +374,14 @@ export function GroupDetailPage(): React.ReactElement {
               <>
                 <Button
                   variant="outlined"
+                  startIcon={<PersonAddOutlined />}
+                  onClick={() => setShowInviteDialog(true)}
+                  fullWidth={isMobile}
+                >
+                  {t("groups.invite.button")}
+                </Button>
+                <Button
+                  variant="outlined"
                   startIcon={<EditOutlined />}
                   onClick={handleEdit}
                   fullWidth={isMobile}
@@ -525,6 +535,16 @@ export function GroupDetailPage(): React.ReactElement {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Invite Dialog */}
+      {group && (
+        <InviteToGroupDialog
+          open={showInviteDialog}
+          onClose={() => setShowInviteDialog(false)}
+          groupId={group.id}
+          groupName={group.name}
+        />
+      )}
     </Box>
   );
 }
