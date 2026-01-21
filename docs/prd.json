@@ -814,7 +814,7 @@
         "Revenue is tracked in analytics",
         "Tests verify all webhook scenarios"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "accessibility-audit-001",
