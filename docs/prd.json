@@ -4509,7 +4509,7 @@
         "Functions work",
         "Routes work"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-002",
@@ -4531,7 +4531,7 @@
         "Pooling works",
         "Backups configured"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-003",
@@ -4553,7 +4553,7 @@
         "Caching works",
         "Performance good"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-004",
@@ -4577,7 +4577,7 @@
         "Uploads/downloads work",
         "CDN works"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-005",
@@ -4601,7 +4601,7 @@
         "Typecheck runs",
         "Auto-deploy works"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-006",
@@ -4623,7 +4623,7 @@
         "Documented",
         "Secrets secure"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-007",
@@ -4647,7 +4647,7 @@
         "Uptime monitored",
         "Dashboards created"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-008",
@@ -4669,7 +4669,7 @@
         "DNS correct",
         "HTTPS works"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-009",
@@ -4693,7 +4693,7 @@
         "Assets minified",
         "CDN works"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-010",
@@ -4717,7 +4717,7 @@
         "Scaling documented",
         "Incident plan ready"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "db-tts-001",
@@ -5115,7 +5115,7 @@
         "User deletion works (soft delete)",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "admin-008",
