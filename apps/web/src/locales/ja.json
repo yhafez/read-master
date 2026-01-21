@@ -30,9 +30,9 @@
     "pause": "一時停止",
     "add": "追加",
     "saveChanges": "変更を保存",
-    "share": "Share",
-    "update": "Update",
-    "copy": "Copy"
+    "share": "共有",
+    "update": "更新",
+    "copy": "コピー"
   },
   "collections": {
     "title": "コレクション",
@@ -1071,53 +1071,53 @@
     "discussions": "Discussions",
     "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here.",
     "invite": {
-      "title": "Invite Members",
-      "button": "Invite",
-      "invitingTo": "Inviting to:",
-      "searchLabel": "Search for users",
-      "searchPlaceholder": "Enter username or email...",
-      "results": "Search Results",
-      "following": "Following",
-      "selected": "{{count}} selected",
-      "linkLabel": "Or share this invite link",
-      "linkHint": "Anyone with this link can request to join",
-      "send": "Send {{count}} Invitation(s)",
-      "copied": "Invite link copied!",
-      "sent": "{{count}} invitation(s) sent!"
+      "title": "メンバーを招待",
+      "button": "招待",
+      "invitingTo": "招待先:",
+      "searchLabel": "ユーザーを検索",
+      "searchPlaceholder": "ユーザー名またはメールアドレスを入力...",
+      "results": "検索結果",
+      "following": "フォロー中",
+      "selected": "{{count}}件選択中",
+      "linkLabel": "または、この招待リンクを共有",
+      "linkHint": "このリンクを持つ人は誰でも参加をリクエストできます",
+      "send": "{{count}}件の招待を送信",
+      "copied": "招待リンクをコピーしました！",
+      "sent": "{{count}}件の招待を送信しました！"
     },
     "members": {
-      "title": "Manage Members",
-      "manage": "Manage",
-      "managing": "Managing members for:",
-      "totalCount": "{{count}} members",
-      "roleOwner": "Owner",
-      "roleAdmin": "Admin",
-      "roleMember": "Member",
-      "joined": "Joined",
-      "contributions": "{{count}} contributions",
-      "promoteToAdmin": "Promote to Admin",
-      "demoteToMember": "Demote to Member",
-      "remove": "Remove from Group",
-      "cannotRemoveSelf": "You cannot remove yourself from the group",
-      "removeFailed": "Failed to remove member",
-      "promoteFailed": "Failed to promote member",
-      "demoteFailed": "Failed to demote member"
+      "title": "メンバー管理",
+      "manage": "管理",
+      "managing": "メンバー管理中:",
+      "totalCount": "{{count}}人のメンバー",
+      "roleOwner": "オーナー",
+      "roleAdmin": "管理者",
+      "roleMember": "メンバー",
+      "joined": "参加日",
+      "contributions": "{{count}}件の貢献",
+      "promoteToAdmin": "管理者に昇格",
+      "demoteToMember": "メンバーに降格",
+      "remove": "グループから削除",
+      "cannotRemoveSelf": "自分自身をグループから削除できません",
+      "removeFailed": "メンバーの削除に失敗しました",
+      "promoteFailed": "メンバーの昇格に失敗しました",
+      "demoteFailed": "メンバーの降格に失敗しました"
     },
     "schedule": {
-      "title": "Reading Schedule",
-      "noBook": "No book selected",
-      "noBookHint": "Select a book to create a reading schedule",
-      "currentProgress": "Group Progress",
-      "pages": "pages",
-      "complete": "complete",
-      "nextMilestone": "Next Milestone",
-      "page": "Page",
-      "milestones": "Milestones",
-      "editTitle": "Edit Schedule",
-      "milestoneDescription": "Milestone Description",
-      "descriptionPlaceholder": "e.g., Complete Chapter 1-3",
-      "targetPage": "Target Page",
-      "targetDate": "Target Date"
+      "title": "読書スケジュール",
+      "noBook": "本が選択されていません",
+      "noBookHint": "読書スケジュールを作成するには本を選択してください",
+      "currentProgress": "グループの進捗",
+      "pages": "ページ",
+      "complete": "完了",
+      "nextMilestone": "次のマイルストーン",
+      "page": "ページ",
+      "milestones": "マイルストーン",
+      "editTitle": "スケジュールを編集",
+      "milestoneDescription": "マイルストーンの説明",
+      "descriptionPlaceholder": "例: 第1〜3章を完了",
+      "targetPage": "目標ページ",
+      "targetDate": "目標日"
     }
   },
   "forum": {
@@ -1226,7 +1226,7 @@
         "general": "投稿に失敗しました。もう一度お試しください。"
       }
     },
-    "markBestAnswer": "Mark as Best Answer"
+    "markBestAnswer": "ベストアンサーにする"
   },
   "curriculums": {
     "detail": "Curriculum Details",
@@ -1994,11 +1994,11 @@
   },
   "curriculum": {
     "share": {
-      "title": "Share Curriculum",
-      "linkLabel": "Share Link",
-      "socialLabel": "Share on Social Media",
-      "copied": "Link copied to clipboard!",
-      "emailBody": "Check out this curriculum: "
+      "title": "カリキュラムを共有",
+      "linkLabel": "共有リンク",
+      "socialLabel": "ソーシャルメディアで共有",
+      "copied": "リンクをコピーしました！",
+      "emailBody": "このカリキュラムをチェック: "
     }
   }
 }

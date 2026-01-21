@@ -30,9 +30,9 @@
     "pause": "暂停",
     "add": "添加",
     "saveChanges": "保存更改",
-    "share": "Share",
-    "update": "Update",
-    "copy": "Copy"
+    "share": "分享",
+    "update": "更新",
+    "copy": "复制"
   },
   "collections": {
     "title": "收藏夹",
@@ -1071,53 +1071,53 @@
     "discussions": "Discussions",
     "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here.",
     "invite": {
-      "title": "Invite Members",
-      "button": "Invite",
-      "invitingTo": "Inviting to:",
-      "searchLabel": "Search for users",
-      "searchPlaceholder": "Enter username or email...",
-      "results": "Search Results",
-      "following": "Following",
-      "selected": "{{count}} selected",
-      "linkLabel": "Or share this invite link",
-      "linkHint": "Anyone with this link can request to join",
-      "send": "Send {{count}} Invitation(s)",
-      "copied": "Invite link copied!",
-      "sent": "{{count}} invitation(s) sent!"
+      "title": "邀请成员",
+      "button": "邀请",
+      "invitingTo": "邀请到：",
+      "searchLabel": "搜索用户",
+      "searchPlaceholder": "输入用户名或电子邮件...",
+      "results": "搜索结果",
+      "following": "关注中",
+      "selected": "已选择{{count}}个",
+      "linkLabel": "或分享此邀请链接",
+      "linkHint": "任何拥有此链接的人都可以请求加入",
+      "send": "发送{{count}}个邀请",
+      "copied": "邀请链接已复制！",
+      "sent": "已发送{{count}}个邀请！"
     },
     "members": {
-      "title": "Manage Members",
-      "manage": "Manage",
-      "managing": "Managing members for:",
-      "totalCount": "{{count}} members",
-      "roleOwner": "Owner",
-      "roleAdmin": "Admin",
-      "roleMember": "Member",
-      "joined": "Joined",
-      "contributions": "{{count}} contributions",
-      "promoteToAdmin": "Promote to Admin",
-      "demoteToMember": "Demote to Member",
-      "remove": "Remove from Group",
-      "cannotRemoveSelf": "You cannot remove yourself from the group",
-      "removeFailed": "Failed to remove member",
-      "promoteFailed": "Failed to promote member",
-      "demoteFailed": "Failed to demote member"
+      "title": "管理成员",
+      "manage": "管理",
+      "managing": "正在管理成员：",
+      "totalCount": "{{count}}位成员",
+      "roleOwner": "所有者",
+      "roleAdmin": "管理员",
+      "roleMember": "成员",
+      "joined": "加入时间",
+      "contributions": "{{count}}个贡献",
+      "promoteToAdmin": "晋升为管理员",
+      "demoteToMember": "降级为成员",
+      "remove": "从群组中移除",
+      "cannotRemoveSelf": "您不能将自己从群组中移除",
+      "removeFailed": "移除成员失败",
+      "promoteFailed": "晋升成员失败",
+      "demoteFailed": "降级成员失败"
     },
     "schedule": {
-      "title": "Reading Schedule",
-      "noBook": "No book selected",
-      "noBookHint": "Select a book to create a reading schedule",
-      "currentProgress": "Group Progress",
-      "pages": "pages",
-      "complete": "complete",
-      "nextMilestone": "Next Milestone",
-      "page": "Page",
-      "milestones": "Milestones",
-      "editTitle": "Edit Schedule",
-      "milestoneDescription": "Milestone Description",
-      "descriptionPlaceholder": "e.g., Complete Chapter 1-3",
-      "targetPage": "Target Page",
-      "targetDate": "Target Date"
+      "title": "阅读计划",
+      "noBook": "未选择书籍",
+      "noBookHint": "选择一本书以创建阅读计划",
+      "currentProgress": "群组进度",
+      "pages": "页",
+      "complete": "完成",
+      "nextMilestone": "下一个里程碑",
+      "page": "页",
+      "milestones": "里程碑",
+      "editTitle": "编辑计划",
+      "milestoneDescription": "里程碑描述",
+      "descriptionPlaceholder": "例如：完成第1-3章",
+      "targetPage": "目标页数",
+      "targetDate": "目标日期"
     }
   },
   "forum": {
@@ -1226,7 +1226,7 @@
         "general": "发布失败，请重试。"
       }
     },
-    "markBestAnswer": "Mark as Best Answer"
+    "markBestAnswer": "标记为最佳答案"
   },
   "curriculums": {
     "detail": "课程详情",
@@ -1994,11 +1994,11 @@
   },
   "curriculum": {
     "share": {
-      "title": "Share Curriculum",
-      "linkLabel": "Share Link",
-      "socialLabel": "Share on Social Media",
-      "copied": "Link copied to clipboard!",
-      "emailBody": "Check out this curriculum: "
+      "title": "分享课程",
+      "linkLabel": "分享链接",
+      "socialLabel": "在社交媒体上分享",
+      "copied": "链接已复制到剪贴板！",
+      "emailBody": "查看这个课程："
     }
   }
 }
