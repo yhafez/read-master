@@ -123,8 +123,8 @@ export async function sendEmail(
       data: {
         userId,
         toEmail: options.to,
-        toName: options.toName,
-        templateId: template?.id,
+        ...(options.toName !== undefined && { toName: options.toName }),
+        ...(template?.id !== undefined && { templateId: template.id }),
         subject: options.subject,
         htmlBody: options.htmlBody,
         textBody: options.textBody,
@@ -398,15 +398,15 @@ export async function sendTemplateEmail(
     // Send email
     return await sendEmail(userId, {
       to,
-      toName: options?.toName || undefined,
+      ...(options?.toName && { toName: options.toName }),
       subject: rendered.subject,
       htmlBody: rendered.htmlBody,
       textBody: rendered.textBody,
       category: template.category,
       templateName,
-      tags: options?.tags || undefined,
-      metadata: options?.metadata || undefined,
-      replyTo: options?.replyTo || undefined,
+      ...(options?.tags && { tags: options.tags }),
+      ...(options?.metadata && { metadata: options.metadata }),
+      ...(options?.replyTo && { replyTo: options.replyTo }),
     });
   } catch (error) {
     logger.error("Failed to send template email", {

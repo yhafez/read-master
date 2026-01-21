@@ -344,7 +344,7 @@ export async function sendStreakEmail(
 
     // Calculate average reading time
     const averageMinutes = user.stats
-      ? Math.round(user.stats.totalReadTime / 60 / streakDays)
+      ? Math.round(user.stats.totalReadingTime / 60 / streakDays)
       : 0;
 
     // Count books
@@ -358,7 +358,7 @@ export async function sendStreakEmail(
 
     const booksCompleted = user.stats?.booksCompleted || 0;
     const totalReadTime = user.stats
-      ? `${Math.floor(user.stats.totalReadTime / 3600)}h ${Math.floor((user.stats.totalReadTime % 3600) / 60)}m`
+      ? `${Math.floor(user.stats.totalReadingTime / 3600)}h ${Math.floor((user.stats.totalReadingTime % 3600) / 60)}m`
       : "0h 0m";
 
     // Send streak email
@@ -463,7 +463,6 @@ export async function sendBookCompletionEmail(
       ? `${Math.floor(progress.totalReadTime / 3600)}h ${Math.floor((progress.totalReadTime % 3600) / 60)}m`
       : "Unknown";
 
-    const pagesRead = book.pageCount || "Unknown";
     const wordsRead = book.wordCount
       ? book.wordCount.toLocaleString()
       : "Unknown";
@@ -482,7 +481,6 @@ export async function sendBookCompletionEmail(
         appUrl: APP_URL,
         year: new Date().getFullYear(),
         readingTime,
-        pagesRead: String(pagesRead),
         wordsRead: String(wordsRead),
         averageWpm: String(averageWpm),
         annotationCount: String(annotationCount),
@@ -750,7 +748,7 @@ export async function sendMilestoneEmail(
         title: string;
         description: string;
         getStats: (
-          user: typeof user
+          user: any
         ) => Array<{ label: string; value: string }>;
       }
     > = {
@@ -916,16 +914,28 @@ export async function sendWeeklyDigest(
       where: {
         userId,
         status: "COMPLETED",
-        completedAt: {
-          gte: startDate,
-          lte: endDate,
+        readingProgress: {
+          some: {
+            completedAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          },
         },
         deletedAt: null,
       },
       select: {
         title: true,
         author: true,
-        completedAt: true,
+        readingProgress: {
+          select: {
+            completedAt: true,
+          },
+          take: 1,
+          orderBy: {
+            completedAt: "desc",
+          },
+        },
       },
       take: 5,
     });
@@ -940,7 +950,15 @@ export async function sendWeeklyDigest(
       select: {
         title: true,
         author: true,
-        progress: true,
+        readingProgress: {
+          select: {
+            percentage: true,
+          },
+          take: 1,
+          orderBy: {
+            lastReadAt: "desc",
+          },
+        },
       },
       take: 5,
     });
@@ -989,7 +1007,7 @@ export async function sendWeeklyDigest(
         completedBooks: completedBooks.map((b) => ({
           title: b.title,
           author: b.author || "Unknown Author",
-          completedDate: b.completedAt?.toLocaleDateString("en-US", {
+          completedDate: b.readingProgress[0]?.completedAt?.toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
           }),
@@ -998,7 +1016,7 @@ export async function sendWeeklyDigest(
         inProgressBooks: inProgressBooks.map((b) => ({
           title: b.title,
           author: b.author || "Unknown Author",
-          progress: b.progress,
+          progress: b.readingProgress[0]?.percentage || 0,
         })),
         newAchievements: newAchievements.length,
         achievements: newAchievements.map((ua) => ({
@@ -1060,6 +1078,14 @@ export async function sendInactiveUserEmail(
             status: "READING",
             deletedAt: null,
           },
+          include: {
+            readingProgress: {
+              take: 1,
+              orderBy: {
+                lastReadAt: "desc",
+              },
+            },
+          },
           orderBy: {
             updatedAt: "desc",
           },
@@ -1078,7 +1104,7 @@ export async function sendInactiveUserEmail(
 
     // Check email preferences
     const prefs = await getEmailPreferences(userId);
-    if (!prefs.engagement) {
+    if (!prefs.achievementEmails) {
       logger.info("User has opted out of engagement emails", { userId });
       return {
         success: false,
@@ -1095,7 +1121,7 @@ export async function sendInactiveUserEmail(
           id: user.books[0].id,
           title: user.books[0].title,
           author: user.books[0].author,
-          progress: user.books[0].progress,
+          progress: user.books[0].readingProgress[0]?.percentage || 0,
         }
       : null;
 

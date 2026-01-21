@@ -172,7 +172,7 @@ export async function processDownload(
           format,
         });
 
-        audioBuffers.push(result.buffer);
+        audioBuffers.push(Buffer.from(result.audioBase64, "base64"));
         actualCost += result.cost;
 
         // Update progress
