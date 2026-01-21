@@ -1993,7 +1993,7 @@
         "Retry works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-032",
@@ -2624,7 +2624,7 @@
         "Date range works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-057",
@@ -2791,7 +2791,7 @@
         "Actions work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-064",
@@ -2816,7 +2816,7 @@
         "Badge shows",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-065",
@@ -3240,7 +3240,7 @@
         "Link works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-082",
@@ -3365,7 +3365,7 @@
         "Continuation works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-087",
@@ -3521,7 +3521,7 @@
         "Deletion works (with confirmation)",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-094",
@@ -3569,7 +3569,7 @@
         "Links work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-096",
@@ -3706,7 +3706,7 @@
         "Override works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-102",
@@ -3957,7 +3957,7 @@
         "Clicks work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-008",
