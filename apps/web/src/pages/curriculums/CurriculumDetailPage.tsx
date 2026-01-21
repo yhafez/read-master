@@ -11,10 +11,11 @@
  * - Stats (followers, items count)
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCurriculumProgress } from "@/hooks";
+import { ShareCurriculumDialog } from "@/components/curriculum";
 import {
   Box,
   Typography,
@@ -149,6 +150,7 @@ export function CurriculumDetailPage(): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const queryClient = useQueryClient();
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
 
   // Fetch curriculum
   const {
@@ -229,22 +231,8 @@ export function CurriculumDetailPage(): React.ReactElement {
     }
   };
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        const shareData: ShareData = { url };
-        if (curriculum?.title) shareData.title = curriculum.title;
-        if (curriculum?.description) shareData.text = curriculum.description;
-        await navigator.share(shareData);
-      } catch (_error) {
-        // User cancelled share
-      }
-    } else {
-      // Fallback: copy to clipboard
-      await navigator.clipboard.writeText(url);
-      // TODO: Show toast notification
-    }
+  const handleShare = () => {
+    setShareDialogOpen(true);
   };
 
   // Loading state
@@ -646,6 +634,16 @@ export function CurriculumDetailPage(): React.ReactElement {
           )}
         </CardContent>
       </Card>
+
+      {/* Share Dialog */}
+      {curriculum && (
+        <ShareCurriculumDialog
+          open={shareDialogOpen}
+          onClose={() => setShareDialogOpen(false)}
+          curriculumId={curriculum.id}
+          curriculumTitle={curriculum.title}
+        />
+      )}
     </Box>
   );
 }

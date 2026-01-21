@@ -31,7 +31,17 @@
     "add": "Add",
     "saveChanges": "Save Changes",
     "share": "Share",
-    "update": "Update"
+    "update": "Update",
+    "copy": "Copy"
+  },
+  "curriculum": {
+    "share": {
+      "title": "Share Curriculum",
+      "linkLabel": "Share Link",
+      "socialLabel": "Share on Social Media",
+      "copied": "Link copied to clipboard!",
+      "emailBody": "Check out this curriculum: "
+    }
   },
   "pwa": {
     "offline": {
