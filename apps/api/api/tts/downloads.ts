@@ -15,7 +15,7 @@ import {
   checkDownloadQuota,
   type TTSDownload,
   type DownloadStatus,
-} from "./download.js";
+} from "./downloadService.js";
 
 /** User tier type for downloads */
 type UserTier = "FREE" | "PRO" | "SCHOLAR";
@@ -132,9 +132,9 @@ export function toDownloadListItem(download: TTSDownload): DownloadListItem {
     totalCharacters: download.totalCharacters,
     estimatedCost: download.estimatedCost,
     actualCost: download.actualCost,
-    fileSize: download.fileSize,
-    downloadUrl: download.downloadUrl,
-    errorMessage: download.errorMessage,
+    fileSize: download.fileSize ?? undefined,
+    downloadUrl: download.downloadUrl ?? undefined,
+    errorMessage: download.errorMessage ?? undefined,
     createdAt: download.createdAt.toISOString(),
     completedAt: download.completedAt?.toISOString(),
     expiresAt: download.expiresAt.toISOString(),
@@ -144,15 +144,15 @@ export function toDownloadListItem(download: TTSDownload): DownloadListItem {
 /**
  * Get quota info for response
  */
-export function getQuotaInfo(
+export async function getQuotaInfo(
   userId: string,
   tier: UserTier
-): {
+): Promise<{
   used: number;
   limit: number | "unlimited";
   remaining: number | "unlimited";
-} {
-  const quota = checkDownloadQuota(userId, tier);
+}> {
+  const quota = await checkDownloadQuota(userId, tier);
   return {
     used: quota.used,
     limit: quota.limit === Infinity ? "unlimited" : quota.limit,
@@ -196,7 +196,7 @@ export default async function handler(
     const { limit, offset, status } = parseResult.data;
 
     // Get downloads
-    const downloads = getUserDownloads(user.id, {
+    const downloads = await getUserDownloads(user.id, {
       limit: limit + 1, // Fetch one extra to determine hasMore
       offset,
       ...(status ? { status: status as DownloadStatus } : {}),
@@ -210,7 +210,7 @@ export default async function handler(
     const downloadItems = resultsToReturn.map(toDownloadListItem);
 
     // Get quota info
-    const quotaInfo = getQuotaInfo(user.id, user.tier);
+    const quotaInfo = await getQuotaInfo(user.id, user.tier);
 
     // Log the request
     logger.info("TTS downloads list retrieved", {

@@ -12,287 +12,23 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
 import { logger } from "../../src/utils/logger.js";
+import { chunkText, calculateTTSCost } from "../../src/services/tts.js";
 import {
-  chunkText,
-  calculateTTSCost,
-  type TTSProvider,
+  checkDownloadQuota,
+  createDownloadRecord,
+  getTTSProviderForTier,
+  getDefaultVoice,
+  getNextMonthReset,
+  prismaProviderToService,
+  type DownloadStatus,
   type AudioFormat,
-} from "../../src/services/tts.js";
-import { storage } from "../../src/services/storage.js";
+} from "./downloadService.js";
 
 // ============================================================================
-// Types
+// Types (re-exported from service)
 // ============================================================================
 
-/**
- * Download status
- */
-export type DownloadStatus =
-  | "pending"
-  | "processing"
-  | "completed"
-  | "failed"
-  | "cancelled";
-
-/**
- * TTS Download record
- */
-export interface TTSDownload {
-  id: string;
-  userId: string;
-  bookId: string;
-  bookTitle: string;
-  status: DownloadStatus;
-  provider: TTSProvider;
-  voice: string;
-  format: AudioFormat;
-  totalChunks: number;
-  processedChunks: number;
-  totalCharacters: number;
-  estimatedCost: number;
-  actualCost: number;
-  fileKey?: string;
-  fileSize?: number;
-  downloadUrl?: string;
-  errorMessage?: string;
-  createdAt: Date;
-  updatedAt: Date;
-  completedAt?: Date;
-  expiresAt: Date;
-}
-
-/**
- * Monthly download quota by tier
- */
-export const DOWNLOAD_QUOTAS = {
-  FREE: 0, // Free users cannot download
-  PRO: 5, // Pro: 5 downloads per month
-  SCHOLAR: Infinity, // Scholar: unlimited
-} as const;
-
-/**
- * Download expiry time in days
- */
-export const DOWNLOAD_EXPIRY_DAYS = 30;
-
-// ============================================================================
-// In-Memory Storage (TODO: Move to database in future iteration)
-// ============================================================================
-
-/**
- * In-memory download records (for prototype - should be database)
- * Key: downloadId -> TTSDownload
- */
-export const downloadRecords = new Map<string, TTSDownload>();
-
-/**
- * User download counts per month (for prototype - should be database)
- * Key: userId-YYYY-MM -> count
- */
-export const userDownloadCounts = new Map<string, number>();
-
-// ============================================================================
-// Helper Functions
-// ============================================================================
-
-/**
- * Generate a unique download ID
- */
-export function generateDownloadId(): string {
-  const timestamp = Date.now().toString(36);
-  const random = Math.random().toString(36).substring(2, 8);
-  return `dl_${timestamp}_${random}`;
-}
-
-/**
- * Get the current month key for quota tracking
- */
-export function getMonthKey(userId: string): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0");
-  return `${userId}-${year}-${month}`;
-}
-
-/**
- * Get user's download count for current month
- */
-export function getUserMonthlyDownloads(userId: string): number {
-  const key = getMonthKey(userId);
-  return userDownloadCounts.get(key) || 0;
-}
-
-/**
- * Increment user's monthly download count
- */
-export function incrementUserDownloads(userId: string): void {
-  const key = getMonthKey(userId);
-  const current = userDownloadCounts.get(key) || 0;
-  userDownloadCounts.set(key, current + 1);
-}
-
-/**
- * Check if user has remaining download quota
- */
-export function checkDownloadQuota(
-  userId: string,
-  tier: keyof typeof DOWNLOAD_QUOTAS
-): { allowed: boolean; remaining: number; used: number; limit: number } {
-  const limit = DOWNLOAD_QUOTAS[tier];
-  const used = getUserMonthlyDownloads(userId);
-  const remaining = Math.max(0, limit - used);
-  const allowed = remaining > 0 || limit === Infinity;
-
-  return { allowed, remaining, used, limit };
-}
-
-/**
- * Get TTS provider for tier
- */
-export function getTTSProviderForTier(
-  tier: "FREE" | "PRO" | "SCHOLAR"
-): TTSProvider {
-  switch (tier) {
-    case "SCHOLAR":
-      return "elevenlabs";
-    case "PRO":
-      return "openai";
-    default:
-      return "web_speech";
-  }
-}
-
-/**
- * Calculate expiry date
- */
-export function calculateExpiryDate(): Date {
-  const expiry = new Date();
-  expiry.setDate(expiry.getDate() + DOWNLOAD_EXPIRY_DAYS);
-  return expiry;
-}
-
-/**
- * Build storage key for TTS download
- */
-export function buildDownloadKey(
-  userId: string,
-  downloadId: string,
-  format: AudioFormat
-): string {
-  return `users/${userId}/audio/downloads/${downloadId}.${format}`;
-}
-
-/**
- * Create a new download record
- */
-export function createDownloadRecord(params: {
-  userId: string;
-  bookId: string;
-  bookTitle: string;
-  provider: TTSProvider;
-  voice: string;
-  format: AudioFormat;
-  text: string;
-}): TTSDownload {
-  const { userId, bookId, bookTitle, provider, voice, format, text } = params;
-  const id = generateDownloadId();
-  const chunks = chunkText(text);
-  const totalCharacters = text.length;
-  const estimatedCost = calculateTTSCost(provider, totalCharacters);
-
-  const record: TTSDownload = {
-    id,
-    userId,
-    bookId,
-    bookTitle,
-    status: "pending",
-    provider,
-    voice,
-    format,
-    totalChunks: chunks.length,
-    processedChunks: 0,
-    totalCharacters,
-    estimatedCost,
-    actualCost: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    expiresAt: calculateExpiryDate(),
-  };
-
-  downloadRecords.set(id, record);
-  return record;
-}
-
-/**
- * Update download record status
- */
-export function updateDownloadStatus(
-  id: string,
-  updates: Partial<TTSDownload>
-): TTSDownload | null {
-  const record = downloadRecords.get(id);
-  if (!record) return null;
-
-  const updated: TTSDownload = {
-    ...record,
-    ...updates,
-    updatedAt: new Date(),
-  };
-
-  downloadRecords.set(id, updated);
-  return updated;
-}
-
-/**
- * Get download record by ID
- */
-export function getDownloadRecord(id: string): TTSDownload | null {
-  return downloadRecords.get(id) || null;
-}
-
-/**
- * Get all downloads for a user
- */
-export function getUserDownloads(
-  userId: string,
-  options?: {
-    limit?: number;
-    offset?: number;
-    status?: DownloadStatus;
-  }
-): TTSDownload[] {
-  const { limit = 50, offset = 0, status } = options || {};
-
-  let downloads = Array.from(downloadRecords.values())
-    .filter((d) => d.userId === userId)
-    .filter((d) => !status || d.status === status)
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
-  downloads = downloads.slice(offset, offset + limit);
-  return downloads;
-}
-
-/**
- * Delete a download record and its file
- */
-export async function deleteDownload(
-  id: string,
-  userId: string
-): Promise<boolean> {
-  const record = downloadRecords.get(id);
-  if (!record || record.userId !== userId) {
-    return false;
-  }
-
-  // Delete file from R2 if exists
-  if (record.fileKey) {
-    await storage.deleteFile(record.fileKey);
-  }
-
-  // Remove from records
-  downloadRecords.delete(id);
-  return true;
-}
+export type { DownloadStatus };
 
 // ============================================================================
 // Request Validation
@@ -303,7 +39,7 @@ const downloadRequestSchema = z.object({
   bookTitle: z.string().min(1, "Book title is required"),
   text: z.string().min(1, "Text content is required"),
   voice: z.string().optional(),
-  format: z.enum(["mp3", "opus", "aac", "flac", "wav", "pcm"]).default("mp3"),
+  format: z.enum(["MP3", "OPUS", "AAC", "FLAC", "WAV", "PCM"]).default("MP3"),
 });
 
 export type DownloadRequest = z.infer<typeof downloadRequestSchema>;
@@ -367,7 +103,7 @@ export default async function handler(
     }
 
     // Check quota
-    const quota = checkDownloadQuota(user.id, user.tier);
+    const quota = await checkDownloadQuota(user.id, user.tier);
     if (!quota.allowed) {
       res.status(429).json({
         error: "Monthly download limit reached",
@@ -393,20 +129,25 @@ export default async function handler(
 
     // Get provider for tier
     const provider = getTTSProviderForTier(user.tier);
+    const serviceProvider = prismaProviderToService(provider);
 
-    // Create download record
-    const download = createDownloadRecord({
+    // Calculate chunks for the text
+    const chunks = chunkText(text);
+    const totalCharacters = text.length;
+    const estimatedCost = calculateTTSCost(serviceProvider, totalCharacters);
+
+    // Create download record in database
+    const download = await createDownloadRecord({
       userId: user.id,
       bookId,
       bookTitle,
       provider,
       voice: voice || getDefaultVoice(provider),
-      format,
-      text,
+      format: format as AudioFormat,
+      totalChunks: chunks.length,
+      totalCharacters,
+      estimatedCost,
     });
-
-    // Increment user's download count
-    incrementUserDownloads(user.id);
 
     // Log the download creation
     logger.info("TTS download job created", {
@@ -459,33 +200,7 @@ export default async function handler(
 }
 
 // ============================================================================
-// Helper Functions
-// ============================================================================
-
-function getDefaultVoice(provider: TTSProvider): string {
-  switch (provider) {
-    case "openai":
-      return "alloy";
-    case "elevenlabs":
-      return "rachel";
-    default:
-      return "default";
-  }
-}
-
-function getNextMonthReset(): string {
-  const now = new Date();
-  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-  return nextMonth.toISOString();
-}
-
-// ============================================================================
 // Exports for Testing
 // ============================================================================
 
-export {
-  downloadRequestSchema,
-  getMockUser,
-  getDefaultVoice,
-  getNextMonthReset,
-};
+export { downloadRequestSchema, getMockUser };

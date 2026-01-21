@@ -7,7 +7,7 @@
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { logger } from "../../../src/utils/logger.js";
-import { getDownloadRecord, deleteDownload } from "../download.js";
+import { getDownloadRecord, deleteDownload } from "../downloadService.js";
 import { toDownloadListItem, type DownloadListItem } from "../downloads.js";
 
 // ============================================================================
@@ -67,7 +67,7 @@ async function handleGet(
   downloadId: string,
   userId: string
 ): Promise<void> {
-  const download = getDownloadRecord(downloadId);
+  const download = await getDownloadRecord(downloadId);
 
   if (!download) {
     res.status(404).json({ error: "Download not found" });
@@ -103,7 +103,7 @@ async function handleDelete(
   downloadId: string,
   userId: string
 ): Promise<void> {
-  const download = getDownloadRecord(downloadId);
+  const download = await getDownloadRecord(downloadId);
 
   if (!download) {
     res.status(404).json({ error: "Download not found" });
