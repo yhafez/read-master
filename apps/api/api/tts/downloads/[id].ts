@@ -5,8 +5,18 @@
  * DELETE: Delete a download and its associated file
  */
 
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelResponse } from "@vercel/node";
+import {
+  withAuth,
+  type AuthenticatedRequest,
+} from "../../../src/middleware/auth.js";
+import {
+  sendSuccess,
+  sendError,
+  ErrorCodes,
+} from "../../../src/utils/response.js";
 import { logger } from "../../../src/utils/logger.js";
+import { getUserByClerkId } from "../../../src/services/db.js";
 import { getDownloadRecord, deleteDownload } from "../downloadService.js";
 import { toDownloadListItem, type DownloadListItem } from "../downloads.js";
 
@@ -32,29 +42,6 @@ export interface DeleteResponse {
 }
 
 // ============================================================================
-// Mock User Data (for testing without full auth)
-// ============================================================================
-
-interface MockUser {
-  id: string;
-  tier: "FREE" | "PRO" | "SCHOLAR";
-}
-
-function getMockUser(req: VercelRequest): MockUser | null {
-  const userId = req.headers["x-user-id"] as string | undefined;
-  const tier = (req.headers["x-user-tier"] as string | undefined) || "PRO";
-
-  if (!userId) {
-    return null;
-  }
-
-  return {
-    id: userId,
-    tier: tier as "FREE" | "PRO" | "SCHOLAR",
-  };
-}
-
-// ============================================================================
 // Handlers
 // ============================================================================
 
@@ -62,7 +49,7 @@ function getMockUser(req: VercelRequest): MockUser | null {
  * GET handler - Get download details
  */
 async function handleGet(
-  _req: VercelRequest,
+  _req: AuthenticatedRequest,
   res: VercelResponse,
   downloadId: string,
   userId: string
@@ -70,13 +57,13 @@ async function handleGet(
   const download = await getDownloadRecord(downloadId);
 
   if (!download) {
-    res.status(404).json({ error: "Download not found" });
+    sendError(res, ErrorCodes.NOT_FOUND, "Download not found", 404);
     return;
   }
 
   // Check ownership
   if (download.userId !== userId) {
-    res.status(403).json({ error: "Access denied" });
+    sendError(res, ErrorCodes.FORBIDDEN, "Access denied", 403);
     return;
   }
 
@@ -91,14 +78,14 @@ async function handleGet(
     download: toDownloadListItem(download),
   };
 
-  res.status(200).json(response);
+  sendSuccess(res, response);
 }
 
 /**
  * DELETE handler - Delete download
  */
 async function handleDelete(
-  _req: VercelRequest,
+  _req: AuthenticatedRequest,
   res: VercelResponse,
   downloadId: string,
   userId: string
@@ -106,13 +93,13 @@ async function handleDelete(
   const download = await getDownloadRecord(downloadId);
 
   if (!download) {
-    res.status(404).json({ error: "Download not found" });
+    sendError(res, ErrorCodes.NOT_FOUND, "Download not found", 404);
     return;
   }
 
   // Check ownership
   if (download.userId !== userId) {
-    res.status(403).json({ error: "Access denied" });
+    sendError(res, ErrorCodes.FORBIDDEN, "Access denied", 403);
     return;
   }
 
@@ -120,7 +107,7 @@ async function handleDelete(
   const deleted = await deleteDownload(downloadId, userId);
 
   if (!deleted) {
-    res.status(500).json({ error: "Failed to delete download" });
+    sendError(res, ErrorCodes.INTERNAL_ERROR, "Failed to delete download", 500);
     return;
   }
 
@@ -137,15 +124,15 @@ async function handleDelete(
     downloadId,
   };
 
-  res.status(200).json(response);
+  sendSuccess(res, response);
 }
 
 // ============================================================================
 // Main Handler
 // ============================================================================
 
-export default async function handler(
-  req: VercelRequest,
+async function handler(
+  req: AuthenticatedRequest,
   res: VercelResponse
 ): Promise<void> {
   // Get download ID from path
@@ -153,14 +140,16 @@ export default async function handler(
   const downloadId = Array.isArray(id) ? id[0] : id;
 
   if (!downloadId) {
-    res.status(400).json({ error: "Download ID is required" });
+    sendError(res, ErrorCodes.VALIDATION_ERROR, "Download ID is required", 400);
     return;
   }
 
-  // Get user
-  const user = getMockUser(req);
+  const { userId } = req.auth;
+
+  // Get user from database
+  const user = await getUserByClerkId(userId);
   if (!user) {
-    res.status(401).json({ error: "Authentication required" });
+    sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
     return;
   }
 
@@ -173,25 +162,35 @@ export default async function handler(
         await handleDelete(req, res, downloadId, user.id);
         break;
       default:
-        res.setHeader("Allow", ["GET", "DELETE"]);
-        res.status(405).json({ error: "Method not allowed" });
+        sendError(
+          res,
+          ErrorCodes.VALIDATION_ERROR,
+          "Method not allowed. Use GET or DELETE.",
+          405
+        );
     }
   } catch (error) {
     logger.error("TTS download endpoint error", {
       method: req.method,
       downloadId,
+      userId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 
-    res.status(500).json({
-      error: "Internal server error",
+    sendError(res, ErrorCodes.INTERNAL_ERROR, "Internal server error", 500, {
       message: error instanceof Error ? error.message : "Unknown error",
     });
   }
 }
 
 // ============================================================================
+// Export with Auth Middleware
+// ============================================================================
+
+export default withAuth(handler);
+
+// ============================================================================
 // Exports for Testing
 // ============================================================================
 
-export { getMockUser, handleGet, handleDelete };
+export { handleGet, handleDelete };

@@ -9,9 +9,19 @@
  * - Returns job ID and status
  */
 
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelResponse } from "@vercel/node";
 import { z } from "zod";
+import {
+  withAuth,
+  type AuthenticatedRequest,
+} from "../../src/middleware/auth.js";
+import {
+  sendSuccess,
+  sendError,
+  ErrorCodes,
+} from "../../src/utils/response.js";
 import { logger } from "../../src/utils/logger.js";
+import { getUserByClerkId } from "../../src/services/db.js";
 import { chunkText, calculateTTSCost } from "../../src/services/tts.js";
 import {
   checkDownloadQuota,
@@ -45,83 +55,74 @@ const downloadRequestSchema = z.object({
 export type DownloadRequest = z.infer<typeof downloadRequestSchema>;
 
 // ============================================================================
-// Mock User Data (for testing without full auth)
-// ============================================================================
-
-interface MockUser {
-  id: string;
-  tier: "FREE" | "PRO" | "SCHOLAR";
-}
-
-function getMockUser(req: VercelRequest): MockUser | null {
-  // In production, this would use Clerk auth
-  // For now, use mock user from headers or defaults
-  const userId = req.headers["x-user-id"] as string | undefined;
-  const tier = (req.headers["x-user-tier"] as string | undefined) || "PRO";
-
-  if (!userId) {
-    return null;
-  }
-
-  return {
-    id: userId,
-    tier: tier as "FREE" | "PRO" | "SCHOLAR",
-  };
-}
-
-// ============================================================================
 // Handler
 // ============================================================================
 
-export default async function handler(
-  req: VercelRequest,
+async function handler(
+  req: AuthenticatedRequest,
   res: VercelResponse
 ): Promise<void> {
   // Only allow POST
   if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).json({ error: "Method not allowed" });
+    sendError(
+      res,
+      ErrorCodes.VALIDATION_ERROR,
+      "Method not allowed. Use POST.",
+      405
+    );
     return;
   }
 
+  const { userId } = req.auth;
+
   try {
-    // Get user (mock for now)
-    const user = getMockUser(req);
+    // Get user from database
+    const user = await getUserByClerkId(userId);
     if (!user) {
-      res.status(401).json({ error: "Authentication required" });
+      sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
       return;
     }
 
     // Free tier cannot download
     if (user.tier === "FREE") {
-      res.status(403).json({
-        error: "TTS downloads require Pro or Scholar subscription",
-        tier: user.tier,
-        upgradeRequired: true,
-      });
+      sendError(
+        res,
+        ErrorCodes.FORBIDDEN,
+        "TTS downloads require Pro or Scholar subscription",
+        403,
+        { tier: user.tier, upgradeRequired: true }
+      );
       return;
     }
 
     // Check quota
     const quota = await checkDownloadQuota(user.id, user.tier);
     if (!quota.allowed) {
-      res.status(429).json({
-        error: "Monthly download limit reached",
-        used: quota.used,
-        limit: quota.limit,
-        remaining: quota.remaining,
-        resetsAt: getNextMonthReset(),
-      });
+      sendError(
+        res,
+        ErrorCodes.RATE_LIMITED,
+        "Monthly download limit reached",
+        429,
+        {
+          used: quota.used,
+          limit: quota.limit,
+          remaining: quota.remaining,
+          resetsAt: getNextMonthReset(),
+        }
+      );
       return;
     }
 
     // Parse and validate request
     const parseResult = downloadRequestSchema.safeParse(req.body);
     if (!parseResult.success) {
-      res.status(400).json({
-        error: "Invalid request",
-        details: parseResult.error.flatten().fieldErrors,
-      });
+      sendError(
+        res,
+        ErrorCodes.VALIDATION_ERROR,
+        "Invalid request body",
+        400,
+        parseResult.error.flatten()
+      );
       return;
     }
 
@@ -164,43 +165,56 @@ export default async function handler(
     // For now, we just mark it as pending and return
 
     // Return success with job ID
-    res.status(201).json({
-      success: true,
-      download: {
-        id: download.id,
-        status: download.status,
-        provider: download.provider,
-        voice: download.voice,
-        format: download.format,
-        totalChunks: download.totalChunks,
-        totalCharacters: download.totalCharacters,
-        estimatedCost: download.estimatedCost,
-        expiresAt: download.expiresAt.toISOString(),
-        createdAt: download.createdAt.toISOString(),
+    sendSuccess(
+      res,
+      {
+        download: {
+          id: download.id,
+          status: download.status,
+          provider: download.provider,
+          voice: download.voice,
+          format: download.format,
+          totalChunks: download.totalChunks,
+          totalCharacters: download.totalCharacters,
+          estimatedCost: download.estimatedCost,
+          expiresAt: download.expiresAt.toISOString(),
+          createdAt: download.createdAt.toISOString(),
+        },
+        quota: {
+          used: quota.used + 1,
+          limit: quota.limit === Infinity ? "unlimited" : quota.limit,
+          remaining:
+            quota.limit === Infinity
+              ? "unlimited"
+              : Math.max(0, quota.remaining - 1),
+        },
       },
-      quota: {
-        used: quota.used + 1,
-        limit: quota.limit === Infinity ? "unlimited" : quota.limit,
-        remaining:
-          quota.limit === Infinity
-            ? "unlimited"
-            : Math.max(0, quota.remaining - 1),
-      },
-    });
+      201
+    );
   } catch (error) {
     logger.error("TTS download creation failed", {
+      userId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 
-    res.status(500).json({
-      error: "Failed to create download job",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
+    sendError(
+      res,
+      ErrorCodes.INTERNAL_ERROR,
+      "Failed to create download job",
+      500,
+      { message: error instanceof Error ? error.message : "Unknown error" }
+    );
   }
 }
+
+// ============================================================================
+// Export with Auth Middleware
+// ============================================================================
+
+export default withAuth(handler);
 
 // ============================================================================
 // Exports for Testing
 // ============================================================================
 
-export { downloadRequestSchema, getMockUser };
+export { downloadRequestSchema };

@@ -7,9 +7,19 @@
  * - Returns download metadata and status
  */
 
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelResponse } from "@vercel/node";
 import { z } from "zod";
+import {
+  withAuth,
+  type AuthenticatedRequest,
+} from "../../src/middleware/auth.js";
+import {
+  sendSuccess,
+  sendError,
+  ErrorCodes,
+} from "../../src/utils/response.js";
 import { logger } from "../../src/utils/logger.js";
+import { getUserByClerkId } from "../../src/services/db.js";
 import {
   getUserDownloads,
   checkDownloadQuota,
@@ -83,29 +93,6 @@ const querySchema = z.object({
 export type DownloadsQueryParams = z.infer<typeof querySchema>;
 
 // ============================================================================
-// Mock User Data (for testing without full auth)
-// ============================================================================
-
-interface MockUser {
-  id: string;
-  tier: "FREE" | "PRO" | "SCHOLAR";
-}
-
-function getMockUser(req: VercelRequest): MockUser | null {
-  const userId = req.headers["x-user-id"] as string | undefined;
-  const tier = (req.headers["x-user-tier"] as string | undefined) || "PRO";
-
-  if (!userId) {
-    return null;
-  }
-
-  return {
-    id: userId,
-    tier: tier as "FREE" | "PRO" | "SCHOLAR",
-  };
-}
-
-// ============================================================================
 // Helper Functions
 // ============================================================================
 
@@ -164,32 +151,41 @@ export async function getQuotaInfo(
 // Handler
 // ============================================================================
 
-export default async function handler(
-  req: VercelRequest,
+async function handler(
+  req: AuthenticatedRequest,
   res: VercelResponse
 ): Promise<void> {
   // Only allow GET
   if (req.method !== "GET") {
-    res.setHeader("Allow", ["GET"]);
-    res.status(405).json({ error: "Method not allowed" });
+    sendError(
+      res,
+      ErrorCodes.VALIDATION_ERROR,
+      "Method not allowed. Use GET.",
+      405
+    );
     return;
   }
 
+  const { userId } = req.auth;
+
   try {
-    // Get user (mock for now)
-    const user = getMockUser(req);
+    // Get user from database
+    const user = await getUserByClerkId(userId);
     if (!user) {
-      res.status(401).json({ error: "Authentication required" });
+      sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
       return;
     }
 
     // Parse and validate query params
     const parseResult = querySchema.safeParse(req.query);
     if (!parseResult.success) {
-      res.status(400).json({
-        error: "Invalid query parameters",
-        details: parseResult.error.flatten().fieldErrors,
-      });
+      sendError(
+        res,
+        ErrorCodes.VALIDATION_ERROR,
+        "Invalid query parameters",
+        400,
+        parseResult.error.flatten()
+      );
       return;
     }
 
@@ -234,21 +230,27 @@ export default async function handler(
       quota: quotaInfo,
     };
 
-    res.status(200).json(response);
+    sendSuccess(res, response);
   } catch (error) {
     logger.error("Failed to list TTS downloads", {
+      userId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 
-    res.status(500).json({
-      error: "Failed to list downloads",
+    sendError(res, ErrorCodes.INTERNAL_ERROR, "Failed to list downloads", 500, {
       message: error instanceof Error ? error.message : "Unknown error",
     });
   }
 }
 
 // ============================================================================
+// Export with Auth Middleware
+// ============================================================================
+
+export default withAuth(handler);
+
+// ============================================================================
 // Exports for Testing
 // ============================================================================
 
-export { querySchema, getMockUser };
+export { querySchema };
