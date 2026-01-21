@@ -327,20 +327,15 @@ function buildWhereClause(
     };
   }
 
-  // Search in title, author, description, and potentially content
-  // Note: Full-text content search requires rawContent field in DB
+  // Search in title, author, description, and full content
+  // Uses case-insensitive search across all text fields
   if (query.search) {
     const searchConditions: Prisma.BookWhereInput[] = [
       { title: { contains: query.search, mode: "insensitive" } },
       { author: { contains: query.search, mode: "insensitive" } },
       { description: { contains: query.search, mode: "insensitive" } },
+      { rawContent: { contains: query.search, mode: "insensitive" } }, // Full-text content search
     ];
-
-    // TODO: Add full-text content search when rawContent field is available
-    // This would require storing extracted text in the database
-    // searchConditions.push({
-    //   rawContent: { contains: query.search, mode: "insensitive" },
-    // });
 
     where.OR = searchConditions;
   }

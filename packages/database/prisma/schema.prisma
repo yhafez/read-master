@@ -146,6 +146,7 @@ model Book {
   wordCount         Int?
   estimatedReadTime Int? // minutes
   lexileScore       Float?
+  rawContent        String? @db.Text // Full text content for search (extracted from file)
 
   // Organization
   genre String?

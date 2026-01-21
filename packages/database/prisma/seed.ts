@@ -634,6 +634,8 @@ const SAMPLE_BOOKS = [
     genre: "Fiction",
     tags: ["classic", "american-literature", "1920s"],
     status: "COMPLETED" as const,
+    rawContent:
+      "In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since. Whenever you feel like criticizing anyone, he told me, just remember that all the people in this world haven't had the advantages that you've had. The Great Gatsby explores themes of decadence, idealism, resistance to change, social upheaval and excess, creating a portrait of the Jazz Age that has been described as a cautionary tale regarding the American Dream.",
   },
   {
     title: "1984",
@@ -648,6 +650,8 @@ const SAMPLE_BOOKS = [
     genre: "Fiction",
     tags: ["dystopian", "classic", "political"],
     status: "READING" as const,
+    rawContent:
+      "It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions. The telescreen received and transmitted simultaneously. Big Brother is watching you, the caption beneath it ran. In the year 1984, civilization has been damaged by war, civil conflict, and revolution. Airstrip One (formerly known as Great Britain) is a province of Oceania, one of the three totalitarian super-states that rule the world.",
   },
   {
     title: "Sapiens: A Brief History of Humankind",
@@ -663,6 +667,8 @@ const SAMPLE_BOOKS = [
     genre: "Non-Fiction",
     tags: ["history", "anthropology", "science"],
     status: "WANT_TO_READ" as const,
+    rawContent:
+      "About 70,000 years ago, Homo sapiens was still an insignificant animal minding its own business in a corner of Africa. In the following millennia, it transformed itself into the master of the entire planet and the terror of the ecosystem. How did we reach from there to here? What makes us capable of cooperating flexibly in large numbers? The Cognitive Revolution kickstarted history about 70,000 years ago. The Agricultural Revolution sped it up about 12,000 years ago. The Scientific Revolution, which got under way only 500 years ago, may well end history and start something completely different.",
   },
   {
     title: "Don Quixote",
@@ -677,6 +683,8 @@ const SAMPLE_BOOKS = [
     genre: "Fiction",
     tags: ["classic", "spanish-literature", "satire"],
     status: "READING" as const,
+    rawContent:
+      "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Don Quixote is considered one of the most influential works of literature and a founding work of modern Western literature. The novel explores themes of reality versus fantasy, the nature of truth, and the power of imagination. Through the misadventures of the delusional knight-errant Don Quixote and his faithful squire Sancho Panza, Cervantes creates a masterpiece of satire and social commentary.",
   },
   {
     title: "Atomic Habits",
@@ -690,6 +698,8 @@ const SAMPLE_BOOKS = [
     genre: "Self-Help",
     tags: ["productivity", "habits", "self-improvement"],
     status: "COMPLETED" as const,
+    rawContent:
+      "Habits are the compound interest of self-improvement. The same way that money multiplies through compound interest, the effects of your habits multiply as you repeat them. They seem to make little difference on any given day and yet the impact they deliver over the months and years can be enormous. Atomic Habits presents a proven framework for improving every day. James Clear reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results. The four laws of behavior change: Make it obvious, make it attractive, make it easy, make it satisfying.",
   },
 ];
 
@@ -1151,6 +1161,7 @@ async function seedBooks(users: Array<{ id: string }>) {
           language: bookData.language,
           wordCount: bookData.wordCount,
           estimatedReadTime: bookData.estimatedReadTime,
+          rawContent: bookData.rawContent,
           genre: bookData.genre,
           tags: bookData.tags,
           status: bookData.status,

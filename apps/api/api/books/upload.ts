@@ -563,6 +563,7 @@ async function handler(
         coverImage: coverImageUrl,
         wordCount: parsedResult.wordCount,
         estimatedReadTime: parsedResult.estimatedReadTime,
+        rawContent: parsedResult.rawContent ?? null, // Store full text for search
         genre: metadata.genre ?? null,
         tags: metadata.tags ?? [],
         language: metadata.language ?? "en",
