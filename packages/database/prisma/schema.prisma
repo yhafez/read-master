@@ -68,6 +68,7 @@ model User {
   curriculums       Curriculum[] // Curriculums created by this user
   curriculumFollows CurriculumFollow[] // Curriculums this user is following
   filterPresets     FilterPreset[] // Saved library filter presets
+  ttsDownloads      TTSDownload[] // TTS audio downloads for books
 
   // Social relations
   following         Follow[]             @relation("Following") // Users this user follows
@@ -161,6 +162,7 @@ model Book {
   assessments     Assessment[]
   flashcards      Flashcard[]
   curriculumItems CurriculumItem[] // Curriculum items that reference this book
+  ttsDownloads    TTSDownload[] // TTS audio downloads for this book
 
   // Social relations
   readingGroups    ReadingGroup[]    @relation("CurrentGroupBook") // Reading groups currently reading this book
@@ -1285,4 +1287,90 @@ model AuditLog {
   @@index([entityType, entityId])
   @@index([action])
   @@index([entityType, action])
+}
+
+/// TTSDownload model - Tracks text-to-speech audio download jobs
+/// Enables Pro/Scholar users to download full book audio for offline listening
+model TTSDownload {
+  id String @id @default(cuid())
+
+  // User and Book reference
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Book metadata (denormalized for convenience)
+  bookTitle String @db.VarChar(500)
+
+  // Download status
+  status DownloadStatus @default(PENDING)
+
+  // TTS configuration
+  provider TTSProvider
+  voice    String      @db.VarChar(100)
+  format   AudioFormat @default(MP3)
+
+  // Processing details
+  totalChunks     Int @default(0)
+  processedChunks Int @default(0)
+  totalCharacters Int @default(0)
+
+  // Cost tracking
+  estimatedCost Float @default(0)
+  actualCost    Float @default(0)
+
+  // File details (populated when completed)
+  fileKey  String? @db.VarChar(500) // R2 storage key
+  fileSize Int? // File size in bytes
+
+  // Download URL (signed, temporary)
+  downloadUrl String? @db.Text
+
+  // Error handling
+  errorMessage String? @db.Text
+
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime? // When processing finished
+  expiresAt   DateTime // Download link expiration (30 days from creation)
+
+  // Soft delete
+  deletedAt DateTime?
+
+  // Indexes for efficient queries
+  @@index([userId])
+  @@index([bookId])
+  @@index([userId, status])
+  @@index([userId, createdAt])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([deletedAt])
+}
+
+/// Enum for TTSDownload status
+enum DownloadStatus {
+  PENDING // Queued for processing
+  PROCESSING // Currently generating audio
+  COMPLETED // Successfully completed
+  FAILED // Processing failed
+  CANCELLED // User cancelled
+}
+
+/// Enum for TTS providers
+enum TTSProvider {
+  WEB_SPEECH // Free tier (client-side, not downloadable)
+  OPENAI // Pro tier (OpenAI TTS)
+  ELEVENLABS // Scholar tier (ElevenLabs)
+}
+
+/// Enum for audio formats
+enum AudioFormat {
+  MP3
+  OPUS
+  AAC
+  FLAC
+  WAV
+  PCM
 }
