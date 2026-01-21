@@ -83,6 +83,10 @@ model User {
   forumReplies ForumReply[] @relation("ForumReplies") // Forum replies created by this user
   forumVotes   ForumVote[]  @relation("ForumVotes") // Forum votes cast by this user
 
+  // Email relations
+  emails           Email[] // Emails sent to this user
+  emailPreferences UserEmailPreferences? // Email preferences
+
   // Indexes for common queries
   @@index([clerkId])
   @@index([email])
@@ -1373,4 +1377,166 @@ enum AudioFormat {
   FLAC
   WAV
   PCM
+}
+
+// =============================================================================
+// EMAIL MODELS - Email Marketing & Transactional Emails
+// =============================================================================
+
+/// EmailTemplate model - Store reusable email templates
+model EmailTemplate {
+  id String @id @default(cuid())
+
+  // Template identification
+  name        String  @unique @db.VarChar(100) // e.g., "welcome", "streak_7_days"
+  subject     String  @db.VarChar(200) // Email subject line (can include {{variables}})
+  description String? @db.Text // Internal description
+
+  // Template content
+  htmlBody String @db.Text // HTML version with {{handlebars}} syntax
+  textBody String @db.Text // Plain text version
+
+  // SendGrid integration
+  sendgridTemplateId String? @unique @db.VarChar(100) // SendGrid dynamic template ID (if using their templates)
+
+  // Template metadata
+  category EmailCategory // welcome, engagement, conversion, etc.
+  isActive Boolean       @default(true) // Can be disabled without deletion
+
+  // Usage tracking
+  sentCount Int @default(0) // How many times this template has been used
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Soft delete
+  deletedAt DateTime?
+
+  // Relations
+  emails Email[]
+
+  // Indexes
+  @@index([name])
+  @@index([category])
+  @@index([isActive])
+  @@index([deletedAt])
+}
+
+/// Email model - Track all sent emails for analytics and debugging
+model Email {
+  id String @id @default(cuid())
+
+  // Recipient information
+  userId  String
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  toEmail String  @db.VarChar(255) // Recipient email (denormalized for convenience)
+  toName  String? @db.VarChar(200) // Recipient name
+
+  // Email content
+  templateId String?
+  template   EmailTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  subject    String         @db.VarChar(200)
+  htmlBody   String         @db.Text
+  textBody   String         @db.Text
+
+  // Categorization
+  category EmailCategory
+  tags     String[] // Additional tags for filtering: ["onboarding", "day_1"]
+
+  // SendGrid tracking
+  sendgridMessageId String? @unique @db.VarChar(255) // SendGrid message ID for webhook matching
+  sendgridStatus    String? @db.VarChar(50) // processed, delivered, opened, clicked, etc.
+
+  // Email events (tracked via webhooks)
+  sentAt      DateTime? // When sent to SendGrid
+  deliveredAt DateTime? // When delivered to recipient
+  openedAt    DateTime? // First open
+  clickedAt   DateTime? // First click
+  bouncedAt   DateTime? // If bounced
+  failedAt    DateTime? // If failed to send
+
+  // Open/click tracking
+  openCount        Int @default(0) // Number of times opened
+  clickCount       Int @default(0) // Number of links clicked
+  uniqueClickCount Int @default(0) // Number of unique links clicked
+
+  // Error handling
+  errorMessage String? @db.Text
+  bounceReason String? @db.Text // Bounce/failure reason
+
+  // Unsubscribe tracking
+  unsubscribedAt DateTime?
+
+  // Metadata (JSON for flexibility)
+  metadata Json @default("{}") // Store template variables, campaign info, etc.
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Soft delete
+  deletedAt DateTime?
+
+  // Indexes for efficient queries
+  @@index([userId])
+  @@index([toEmail])
+  @@index([templateId])
+  @@index([category])
+  @@index([sendgridMessageId])
+  @@index([sendgridStatus])
+  @@index([sentAt])
+  @@index([deliveredAt])
+  @@index([openedAt])
+  @@index([userId, category])
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@index([deletedAt])
+}
+
+/// Enum for email categories
+enum EmailCategory {
+  TRANSACTIONAL // Immediate, user-triggered (password reset, verification)
+  WELCOME // Welcome series
+  ONBOARDING // Onboarding sequence
+  ENGAGEMENT // Re-engagement, streaks, achievements
+  CONVERSION // Upgrade prompts, feature discovery
+  DIGEST // Weekly/monthly summaries
+  ANNOUNCEMENT // Product updates, newsletters
+  SYSTEM // Admin alerts, errors
+}
+
+/// User model extension for email tracking
+model UserEmailPreferences {
+  id String @id @default(cuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Global opt-out
+  emailEnabled Boolean @default(true)
+
+  // Category preferences
+  marketingEmails      Boolean @default(true) // General marketing
+  productUpdates       Boolean @default(true) // Product announcements
+  weeklyDigest         Boolean @default(true) // Weekly progress summary
+  achievementEmails    Boolean @default(true) // Streaks, milestones
+  recommendationEmails Boolean @default(true) // Book recommendations
+  socialEmails         Boolean @default(true) // Comments, likes, follows
+
+  // Frequency preferences
+  digestFrequency String @default("weekly") // weekly, biweekly, monthly, never
+
+  // Unsubscribe tracking
+  unsubscribedAt   DateTime?
+  unsubscribeToken String?   @unique @db.VarChar(100) // For one-click unsubscribe
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
+  @@index([userId])
+  @@index([emailEnabled])
+  @@index([unsubscribeToken])
 }

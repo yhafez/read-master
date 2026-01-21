@@ -1,6 +1,6 @@
 /**
  * AI Personality Section Component
- * 
+ *
  * Allows users to customize how the AI assistant interacts with them:
  * - Personality type (Encouraging Tutor, Neutral Assistant, Socratic Guide)
  * - Custom tone
