@@ -33,6 +33,7 @@ import {
   Delete,
   Visibility,
   HighlightAlt,
+  Share as ShareIcon,
   Note,
   Bookmark,
   FilterList,
@@ -70,6 +71,8 @@ export interface AnnotationSidebarProps {
   onEdit: (annotation: Annotation) => void;
   /** Called when delete is requested */
   onDelete: (annotation: Annotation) => void;
+  /** Called when share is requested */
+  onShare: (annotation: Annotation) => void;
   /** Drawer width */
   width?: number;
 }
@@ -82,11 +85,13 @@ function AnnotationListItem({
   onClick,
   onEdit,
   onDelete,
+  onShare,
 }: {
   annotation: Annotation;
   onClick: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  onShare: () => void;
 }) {
   const { t } = useTranslation();
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
@@ -108,6 +113,11 @@ function AnnotationListItem({
   const handleDelete = () => {
     handleMenuClose();
     onDelete();
+  };
+
+  const handleShare = () => {
+    handleMenuClose();
+    onShare();
   };
 
   // Get display content
@@ -210,6 +220,10 @@ function AnnotationListItem({
           <Edit fontSize="small" sx={{ mr: 1 }} />
           {t("common.edit")}
         </MenuItem>
+        <MenuItem onClick={handleShare}>
+          <ShareIcon fontSize="small" sx={{ mr: 1 }} />
+          {t("common.share")}
+        </MenuItem>
         <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <Delete fontSize="small" sx={{ mr: 1 }} />
           {t("common.delete")}
@@ -226,6 +240,7 @@ export function AnnotationSidebar({
   onAnnotationClick,
   onEdit,
   onDelete,
+  onShare,
   width = 320,
 }: AnnotationSidebarProps) {
   const { t } = useTranslation();
@@ -448,6 +463,7 @@ export function AnnotationSidebar({
                 onClick={() => onAnnotationClick(annotation)}
                 onEdit={() => onEdit(annotation)}
                 onDelete={() => onDelete(annotation)}
+                onShare={() => onShare(annotation)}
               />
             ))}
           </List>

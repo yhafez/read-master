@@ -20,9 +20,9 @@ import { useState, useEffect } from "react";
 
 /**
  * Hook to detect if user has enabled high-contrast mode
- * 
+ *
  * Respects the system preference for high contrast (e.g. Windows High Contrast Mode)
- * 
+ *
  * @returns true if user prefers high contrast, false otherwise
  */
 export function useHighContrast(): boolean {

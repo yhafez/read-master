@@ -2767,7 +2767,7 @@
         "Shows in feed",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "frontend-063",

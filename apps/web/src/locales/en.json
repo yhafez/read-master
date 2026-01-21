@@ -29,7 +29,24 @@
     "play": "Play",
     "pause": "Pause",
     "add": "Add",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+    "share": "Share",
+    "update": "Update"
+  },
+  "reader": {
+    "annotations": {
+      "shareHighlight": "Share Highlight",
+      "sharePrivacy": "Who can see this?",
+      "sharing": "Sharing...",
+      "privacy": {
+        "public": "Public",
+        "publicDesc": "Anyone can see this highlight",
+        "friends": "Friends Only",
+        "friendsDesc": "Only your friends can see this",
+        "private": "Private",
+        "privateDesc": "Only you can see this"
+      }
+    }
   },
   "collections": {
     "title": "Collections",
