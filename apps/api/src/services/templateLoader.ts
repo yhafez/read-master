@@ -107,7 +107,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "WELCOME",
     templatePath: "welcome/welcome",
   },
-
+  
   // Onboarding
   {
     name: "onboarding_day1",
@@ -116,7 +116,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ONBOARDING",
     templatePath: "onboarding/day1-getting-started",
   },
-
+  
   // Engagement - Streaks
   {
     name: "streak_7_days",
@@ -125,7 +125,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/streak-7-days",
   },
-
+  
   // Engagement - Book Completion
   {
     name: "book_completed",
@@ -134,7 +134,34 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/book-completed",
   },
-
+  
+  // Engagement - Achievements
+  {
+    name: "achievement_unlocked",
+    subject: "🏆 Achievement Unlocked: {{achievementName}}",
+    description: "Notification when user unlocks an achievement",
+    category: "ENGAGEMENT",
+    templatePath: "engagement/achievement-unlocked",
+  },
+  
+  // Engagement - Milestones
+  {
+    name: "milestone_celebration",
+    subject: "🎉 Milestone Achieved: {{milestoneTitle}}",
+    description: "Celebration email for major milestones",
+    category: "ENGAGEMENT",
+    templatePath: "engagement/milestone-celebration",
+  },
+  
+  // Engagement - Inactive
+  {
+    name: "inactive_3_days",
+    subject: "We Miss You! 📚",
+    description: "Re-engagement email for 3-day inactive users",
+    category: "ENGAGEMENT",
+    templatePath: "engagement/inactive-3-days",
+  },
+  
   // Conversion
   {
     name: "upgrade_library_limit",
@@ -143,7 +170,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "CONVERSION",
     templatePath: "conversion/upgrade-library-limit",
   },
-
+  
   // Digest
   {
     name: "weekly_summary",

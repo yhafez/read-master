@@ -1346,7 +1346,7 @@ async function main() {
     console.log(`  - ${SAMPLE_BOOKS.length} sample books`);
     console.log(`  - 5 TTS downloads (various states)`);
     console.log(`  - 30 days of analytics data`);
-    console.log(`  - 6 email templates`);
+    console.log(`  - 10 email templates`);
     console.log("");
   } catch (error) {
     console.error("");
