@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-react";
-import { InviteToGroupDialog } from "@/components/groups";
+import { InviteToGroupDialog, ManageMembersDialog } from "@/components/groups";
 import {
   Box,
   Typography,
@@ -112,6 +112,7 @@ export function GroupDetailPage(): React.ReactElement {
   // State
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showInviteDialog, setShowInviteDialog] = useState(false);
+  const [showMembersDialog, setShowMembersDialog] = useState(false);
 
   // Fetch group data
   const {
@@ -331,6 +332,15 @@ export function GroupDetailPage(): React.ReactElement {
                 <Typography variant="caption" color="text.secondary">
                   {t("groups.members")}
                 </Typography>
+                {isOwner && (
+                  <Button
+                    size="small"
+                    onClick={() => setShowMembersDialog(true)}
+                    sx={{ mt: 1 }}
+                  >
+                    {t("groups.members.manage")}
+                  </Button>
+                )}
               </Stack>
             </Grid>
             <Grid item xs={4}>
@@ -543,6 +553,17 @@ export function GroupDetailPage(): React.ReactElement {
           onClose={() => setShowInviteDialog(false)}
           groupId={group.id}
           groupName={group.name}
+        />
+      )}
+
+      {/* Manage Members Dialog */}
+      {group && clerkUserId && (
+        <ManageMembersDialog
+          open={showMembersDialog}
+          onClose={() => setShowMembersDialog(false)}
+          groupId={group.id}
+          groupName={group.name}
+          currentUserId={clerkUserId}
         />
       )}
     </Box>
