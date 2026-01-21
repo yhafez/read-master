@@ -1134,7 +1134,9 @@
     "discussions": "Discussions",
     "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here."
   },
-  "forum": {
+    "forum": {
+      "bestAnswer": "Best Answer",
+      "markBestAnswer": "Mark as Best Answer",
     "title": "Forum",
     "category": "Forum Category",
     "categoryPlaceholder": "Posts in {{category}} will appear here.",

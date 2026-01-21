@@ -137,6 +137,8 @@ type ReplyItemProps = {
   onReply: (replyId: string) => void;
   onEdit: (reply: ForumReply) => void;
   onDelete: (replyId: string) => void;
+  onMarkBestAnswer?: ((replyId: string) => void) | undefined;
+  isPostAuthor?: boolean | undefined;
   currentUserId?: string | undefined;
 };
 
@@ -147,6 +149,8 @@ function ReplyItem({
   onReply,
   onEdit,
   onDelete,
+  onMarkBestAnswer,
+  isPostAuthor = false,
   currentUserId,
 }: ReplyItemProps): React.ReactElement {
   const { t } = useTranslation();
@@ -158,6 +162,7 @@ function ReplyItem({
   const hasChildren = childReplies.length > 0;
   const canNest = level < MAX_NESTING_LEVEL;
   const isAuthor = currentUserId === reply.author.id;
+  const canMarkBestAnswer = isPostAuthor && !reply.isBestAnswer;
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -180,6 +185,11 @@ function ReplyItem({
     handleMenuClose();
   };
 
+  const handleMarkBestAnswer = () => {
+    onMarkBestAnswer?.(reply.id);
+    handleMenuClose();
+  };
+
   return (
     <Box
       sx={{
@@ -188,7 +198,17 @@ function ReplyItem({
         pl: level > 0 ? 2 : 0,
       }}
     >
-      <Card sx={{ mb: 2 }}>
+      <Card
+        sx={{
+          mb: 2,
+          ...(reply.isBestAnswer && {
+            borderColor: "success.main",
+            borderWidth: 2,
+            borderStyle: "solid",
+            backgroundColor: "success.50",
+          }),
+        }}
+      >
         <CardContent>
           <Stack direction="row" alignItems="start" spacing={2}>
             {/* Avatar */}
@@ -276,7 +296,7 @@ function ReplyItem({
             </Box>
 
             {/* Actions Menu */}
-            {isAuthor && (
+            {(isAuthor || canMarkBestAnswer) && (
               <Box>
                 <IconButton size="small" onClick={handleMenuOpen}>
                   <MoreVertIcon />
@@ -286,14 +306,24 @@ function ReplyItem({
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem onClick={handleEdit}>
-                    <EditIcon fontSize="small" sx={{ mr: 1 }} />
-                    {t("common.edit")}
-                  </MenuItem>
-                  <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
-                    <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
-                    {t("common.delete")}
-                  </MenuItem>
+                  {canMarkBestAnswer && (
+                    <MenuItem onClick={handleMarkBestAnswer}>
+                      <CheckCircleIcon fontSize="small" sx={{ mr: 1 }} />
+                      {t("forum.markBestAnswer")}
+                    </MenuItem>
+                  )}
+                  {isAuthor && (
+                    <>
+                      <MenuItem onClick={handleEdit}>
+                        <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                        {t("common.edit")}
+                      </MenuItem>
+                      <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
+                        <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
+                        {t("common.delete")}
+                      </MenuItem>
+                    </>
+                  )}
                 </Menu>
               </Box>
             )}
@@ -314,6 +344,8 @@ function ReplyItem({
                 onReply={onReply}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                onMarkBestAnswer={onMarkBestAnswer}
+                isPostAuthor={isPostAuthor}
                 currentUserId={currentUserId}
               />
             ))}
@@ -401,6 +433,29 @@ export function ForumPostPage(): React.ReactElement {
       navigate(`/forum/category/${post.category.slug}`);
     } else {
       navigate("/forum");
+    }
+  };
+
+  const handleMarkBestAnswer = async (replyId: string) => {
+    if (!id) return;
+
+    try {
+      const response = await fetch(`/api/forum/posts/${id}/replies/${replyId}/best`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to mark best answer");
+      }
+
+      // Refresh post data
+      queryClient.invalidateQueries({ queryKey: ["forumPost", id] });
+    } catch (_error) {
+      // Error marking best answer - silently fail for now
+      // TODO: Add proper error handling with toast notification
     }
   };
 
@@ -649,18 +704,40 @@ export function ForumPostPage(): React.ReactElement {
         <Alert severity="info">{t("forum.noRepliesYet")}</Alert>
       ) : (
         <Box>
-          {topLevelReplies.map((reply: ForumReply) => (
-            <ReplyItem
-              key={reply.id}
-              reply={reply}
-              level={0}
-              replyTree={replyTree}
-              onReply={handleReply}
-              onEdit={handleEditReply}
-              onDelete={handleDeleteReply}
-              currentUserId={post.author.id} // TODO: Get actual current user ID
-            />
-          ))}
+          {/* Best Answer First */}
+          {topLevelReplies
+            .filter((r: ForumReply) => r.isBestAnswer)
+            .map((reply: ForumReply) => (
+              <ReplyItem
+                key={reply.id}
+                reply={reply}
+                level={0}
+                replyTree={replyTree}
+                onReply={handleReply}
+                onEdit={handleEditReply}
+                onDelete={handleDeleteReply}
+                onMarkBestAnswer={handleMarkBestAnswer}
+                isPostAuthor={post.author.id === post.author.id} // TODO: Compare with actual current user ID
+                currentUserId={post.author.id} // TODO: Get actual current user ID
+              />
+            ))}
+          {/* Other Replies */}
+          {topLevelReplies
+            .filter((r: ForumReply) => !r.isBestAnswer)
+            .map((reply: ForumReply) => (
+              <ReplyItem
+                key={reply.id}
+                reply={reply}
+                level={0}
+                replyTree={replyTree}
+                onReply={handleReply}
+                onEdit={handleEditReply}
+                onDelete={handleDeleteReply}
+                onMarkBestAnswer={handleMarkBestAnswer}
+                isPostAuthor={post.author.id === post.author.id} // TODO: Compare with actual current user ID
+                currentUserId={post.author.id} // TODO: Get actual current user ID
+              />
+            ))}
         </Box>
       )}
     </Box>
