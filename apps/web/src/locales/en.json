@@ -40,6 +40,15 @@
     },
     "online": {
       "title": "Back online"
+    },
+    "install": {
+      "title": "Install Read Master",
+      "description": "Install Read Master for a better reading experience.",
+      "benefit1": "Works offline - read anywhere",
+      "benefit2": "Faster loading and performance",
+      "benefit3": "Quick access from your home screen",
+      "install": "Install App",
+      "notNow": "Not Now"
     }
   },
   "reader": {

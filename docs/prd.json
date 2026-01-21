@@ -4002,7 +4002,7 @@
         "Onboarding displays",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-010",
