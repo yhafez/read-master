@@ -33,6 +33,15 @@
     "share": "Share",
     "update": "Update"
   },
+  "pwa": {
+    "offline": {
+      "title": "You're offline",
+      "description": "Some features may be limited. Changes will sync when you're back online."
+    },
+    "online": {
+      "title": "Back online"
+    }
+  },
   "reader": {
     "annotations": {
       "shareHighlight": "Share Highlight",

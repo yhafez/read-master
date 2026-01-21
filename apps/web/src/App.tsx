@@ -1,6 +1,7 @@
 import { AppRouter } from "@/router";
 import { ServiceWorkerUpdatePrompt } from "@/pwa";
 import { AchievementNotificationManager } from "@/components/common";
+import { OfflineIndicator } from "@/components/pwa";
 import { useRouteAnnouncements } from "@/hooks";
 
 export function App(): React.ReactElement {
@@ -12,6 +13,7 @@ export function App(): React.ReactElement {
       <AppRouter />
       <ServiceWorkerUpdatePrompt />
       <AchievementNotificationManager />
+      <OfflineIndicator />
     </>
   );
 }
