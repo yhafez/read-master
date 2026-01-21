@@ -18,10 +18,21 @@ import {
   Fullscreen as FullscreenIcon,
   FullscreenExit as FullscreenExitIcon,
   Menu as MenuIcon,
+  HighlightAlt as HighlightIcon,
+  FileDownload as ExportIcon,
 } from "@mui/icons-material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { EpubReader, PdfReader, TextReader } from "@/components/reader";
+import {
+  EpubReader,
+  PdfReader,
+  TextReader,
+  AnnotationToolbar,
+  AnnotationSidebar,
+  NoteEditorDialog,
+  AnnotationExportDialog,
+  useSelectionAnchor,
+} from "@/components/reader";
 import { useBook, useBookContent } from "@/hooks/useBooks";
 import type {
   EpubLocation,
@@ -31,8 +42,18 @@ import type {
   PdfTextSelection,
   TextLocation,
   TextReaderSelection,
+  Annotation,
+  TextSelectionInfo,
+  AnnotationAction,
+  HighlightColor,
+} from "@/components/reader";
+import {
+  createHighlightInput,
+  createNoteInput,
+  createBookmarkInput,
 } from "@/components/reader";
 import { useReaderStore } from "@/stores/readerStore";
+import { useAnnotationOperations } from "@/hooks/useAnnotations";
 
 /**
  * Get file format from book fileType
@@ -72,6 +93,19 @@ export function ReaderPage(): React.ReactElement {
   const [toc, setToc] = useState<TocItem[]>([]);
   const [showSidebar, setShowSidebar] = useState(false);
 
+  // Annotation state
+  const [selection, setSelection] = useState<TextSelectionInfo | null>(null);
+  const [showAnnotationToolbar, setShowAnnotationToolbar] = useState(false);
+  const [showAnnotationSidebar, setShowAnnotationSidebar] = useState(false);
+  const [noteDialogOpen, setNoteDialogOpen] = useState(false);
+  const [editingAnnotation, setEditingAnnotation] = useState<Annotation | null>(
+    null
+  );
+  const [exportDialogOpen, setExportDialogOpen] = useState(false);
+
+  // Get virtual anchor element for annotation toolbar positioning
+  const anchorEl = useSelectionAnchor(selection);
+
   // Fetch book metadata
   const {
     data: book,
@@ -95,6 +129,14 @@ export function ReaderPage(): React.ReactElement {
   // Combine loading and error states
   const isLoading = isLoadingBook || (needsContentFetch && isLoadingContent);
   const error = bookError || contentError;
+
+  // Fetch annotations for this book
+  const {
+    annotations,
+    create: createAnnotation,
+    update: updateAnnotation,
+    remove: removeAnnotation,
+  } = useAnnotationOperations(bookId || "");
 
   // Handle EPUB location change from reader
   const handleEpubLocationChange = useCallback(
@@ -121,20 +163,74 @@ export function ReaderPage(): React.ReactElement {
     [updatePosition]
   );
 
+  // Clear annotation selection and toolbar
+  const handleClearSelection = useCallback(() => {
+    setSelection(null);
+    setShowAnnotationToolbar(false);
+  }, []);
+
   // Handle EPUB text selection
   const handleEpubTextSelect = useCallback(
-    (selection: TextSelection) => {
-      setSelectedText(selection.text);
-      // TODO: Show annotation toolbar
+    (sel: TextSelection) => {
+      setSelectedText(sel.text);
+
+      // Get selection bounding box for toolbar positioning
+      const nativeSelection = window.getSelection();
+      if (!nativeSelection || nativeSelection.rangeCount === 0) return;
+
+      const range = nativeSelection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+
+      // Create TextSelectionInfo for annotation toolbar
+      // Note: For EPUB, we would need CFI to offset conversion
+      // For now, use estimated offsets
+      const selectionInfo: TextSelectionInfo = {
+        text: sel.text,
+        startOffset: 0, // TODO: Convert CFI to offset
+        endOffset: sel.text.length,
+        position: {
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height,
+        },
+      };
+
+      setSelection(selectionInfo);
+      setShowAnnotationToolbar(true);
     },
     [setSelectedText]
   );
 
   // Handle PDF text selection
   const handlePdfTextSelect = useCallback(
-    (selection: PdfTextSelection) => {
-      setSelectedText(selection.text);
-      // TODO: Show annotation toolbar
+    (sel: PdfTextSelection) => {
+      setSelectedText(sel.text);
+
+      // Get selection bounding box for toolbar positioning
+      const nativeSelection = window.getSelection();
+      if (!nativeSelection || nativeSelection.rangeCount === 0) return;
+
+      const range = nativeSelection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+
+      // Create TextSelectionInfo for annotation toolbar
+      // Note: For PDF, we would need page+rect to offset conversion
+      // For now, use estimated offsets
+      const selectionInfo: TextSelectionInfo = {
+        text: sel.text,
+        startOffset: 0, // TODO: Convert PDF position to offset
+        endOffset: sel.text.length,
+        position: {
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height,
+        },
+      };
+
+      setSelection(selectionInfo);
+      setShowAnnotationToolbar(true);
     },
     [setSelectedText]
   );
@@ -155,12 +251,139 @@ export function ReaderPage(): React.ReactElement {
 
   // Handle Text reader text selection
   const handleTextTextSelect = useCallback(
-    (selection: TextReaderSelection) => {
-      setSelectedText(selection.text);
-      // TODO: Show annotation toolbar
+    (sel: TextReaderSelection) => {
+      setSelectedText(sel.text);
+
+      // Get selection bounding box for toolbar positioning
+      const nativeSelection = window.getSelection();
+      if (!nativeSelection || nativeSelection.rangeCount === 0) return;
+
+      const range = nativeSelection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+
+      // Create TextSelectionInfo for annotation toolbar
+      const selectionInfo: TextSelectionInfo = {
+        text: sel.text,
+        startOffset: sel.startOffset,
+        endOffset: sel.endOffset,
+        position: {
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height,
+        },
+      };
+
+      setSelection(selectionInfo);
+      setShowAnnotationToolbar(true);
     },
     [setSelectedText]
   );
+
+  // Handle annotation toolbar actions
+  const handleAnnotationAction = useCallback(
+    (action: AnnotationAction, color?: HighlightColor) => {
+      if (!selection || !bookId) return;
+
+      switch (action) {
+        case "highlight":
+          {
+            // Create highlight annotation
+            const input = createHighlightInput(bookId, selection, color);
+            createAnnotation(input);
+            handleClearSelection();
+          }
+          break;
+
+        case "note":
+          // Open note editor dialog
+          setNoteDialogOpen(true);
+          break;
+
+        case "bookmark":
+          {
+            // Create bookmark at this position
+            const input = createBookmarkInput(bookId, selection.startOffset);
+            createAnnotation(input);
+            handleClearSelection();
+          }
+          break;
+
+        case "copy":
+          // Text is already copied by the toolbar
+          handleClearSelection();
+          break;
+
+        case "lookup":
+          // TODO: Open dictionary popover
+          // This would require dictionary integration
+          handleClearSelection();
+          break;
+
+        case "explain":
+          // TODO: Open AI explanation
+          // This would require AI integration
+          handleClearSelection();
+          break;
+      }
+    },
+    [selection, bookId, createAnnotation, handleClearSelection]
+  );
+
+  // Handle note save
+  const handleNoteSave = useCallback(
+    (note: string, isPublic: boolean) => {
+      if (!selection || !bookId) return;
+
+      if (editingAnnotation) {
+        // Update existing annotation
+        updateAnnotation(editingAnnotation.id, { note, isPublic });
+      } else {
+        // Create new note annotation
+        const input = createNoteInput(bookId, selection, note);
+        input.isPublic = isPublic;
+        createAnnotation(input);
+      }
+
+      setNoteDialogOpen(false);
+      setEditingAnnotation(null);
+      handleClearSelection();
+    },
+    [
+      selection,
+      bookId,
+      editingAnnotation,
+      createAnnotation,
+      updateAnnotation,
+      handleClearSelection,
+    ]
+  );
+
+  // Handle annotation sidebar actions
+  const handleAnnotationClick = useCallback((_annotation: Annotation) => {
+    // TODO: Navigate to annotation position in reader
+    // This would require scrolling/navigating to the annotation's position
+    setShowAnnotationSidebar(false);
+  }, []);
+
+  const handleAnnotationEdit = useCallback((annotation: Annotation) => {
+    setEditingAnnotation(annotation);
+    setNoteDialogOpen(true);
+  }, []);
+
+  const handleAnnotationDelete = useCallback(
+    (annotation: Annotation) => {
+      if (confirm("Delete this annotation?")) {
+        removeAnnotation(annotation.id);
+      }
+    },
+    [removeAnnotation]
+  );
+
+  const handleAnnotationShare = useCallback((_annotation: Annotation) => {
+    // TODO: Open share dialog
+    // This would show ShareHighlightDialog component
+  }, []);
 
   // Handle EPUB book load
   const handleEpubLoad = useCallback((loadedToc: TocItem[]) => {
@@ -327,6 +550,26 @@ export function ReaderPage(): React.ReactElement {
           {book.title}
         </Typography>
 
+        <Tooltip title={t("reader.annotations.title")}>
+          <IconButton
+            onClick={() => setShowAnnotationSidebar(true)}
+            aria-label={t("reader.annotations.title")}
+            color={annotations.length > 0 ? "primary" : "default"}
+          >
+            <HighlightIcon />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title={t("reader.export.title")}>
+          <IconButton
+            onClick={() => setExportDialogOpen(true)}
+            aria-label={t("reader.export.title")}
+            disabled={annotations.length === 0}
+          >
+            <ExportIcon />
+          </IconButton>
+        </Tooltip>
+
         <Tooltip title={t("reader.tableOfContents")}>
           <IconButton
             onClick={handleToggleSidebar}
@@ -440,6 +683,52 @@ export function ReaderPage(): React.ReactElement {
           )}
         </Box>
       </Box>
+
+      {/* Annotation Toolbar - appears on text selection */}
+      <AnnotationToolbar
+        selection={selection}
+        onAction={handleAnnotationAction}
+        onClose={handleClearSelection}
+        anchorEl={anchorEl}
+        open={showAnnotationToolbar && !!selection}
+        aiEnabled={true}
+        lookupEnabled={true}
+      />
+
+      {/* Note Editor Dialog */}
+      <NoteEditorDialog
+        open={noteDialogOpen}
+        onClose={() => {
+          setNoteDialogOpen(false);
+          setEditingAnnotation(null);
+        }}
+        onSave={handleNoteSave}
+        annotation={editingAnnotation || undefined}
+        selectedText={selection?.text}
+        mode={editingAnnotation ? "edit" : "create"}
+      />
+
+      {/* Annotation Sidebar */}
+      <AnnotationSidebar
+        open={showAnnotationSidebar}
+        onClose={() => setShowAnnotationSidebar(false)}
+        annotations={annotations}
+        onAnnotationClick={handleAnnotationClick}
+        onEdit={handleAnnotationEdit}
+        onDelete={handleAnnotationDelete}
+        onShare={handleAnnotationShare}
+      />
+
+      {/* Export Dialog */}
+      {book && (
+        <AnnotationExportDialog
+          open={exportDialogOpen}
+          onClose={() => setExportDialogOpen(false)}
+          annotations={annotations}
+          bookTitle={book.title}
+          bookAuthor={book.author || undefined}
+        />
+      )}
     </Box>
   );
 }
