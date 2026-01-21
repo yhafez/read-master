@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return sendError(
       res,
-      ErrorCodes.METHOD_NOT_ALLOWED,
+      ErrorCodes.VALIDATION_ERROR,
       "Method not allowed",
       405
     );

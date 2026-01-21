@@ -35,7 +35,7 @@ async function handler(
 ): Promise<void> {
   // Only allow POST
   if (req.method !== "POST") {
-    return sendError(res, ErrorCodes.METHOD_NOT_ALLOWED, "Method not allowed", 405);
+    return sendError(res, ErrorCodes.VALIDATION_ERROR, "Method not allowed", 405);
   }
 
   const { userId, clerkId } = req.auth;

@@ -129,7 +129,7 @@ export async function processDownload(
     // TODO: In production, fetch actual book content from file storage (R2/CloudFlare)
     // For now, use a placeholder based on book metadata
     const bookContent = `${download.book.title} by ${download.book.author || "Unknown Author"}. ${download.book.description || ""}`;
-    
+
     if (!bookContent.trim()) {
       await db.tTSDownload.update({
         where: { id: downloadId },

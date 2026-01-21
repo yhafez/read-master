@@ -232,7 +232,7 @@ export default async function handler(
 ): Promise<void> {
   // Only accept POST requests
   if (req.method !== "POST") {
-    return sendError(res, 405, "METHOD_NOT_ALLOWED", "Method not allowed");
+    return sendError(res, "VALIDATION_ERROR", "Method not allowed", 405);
   }
 
   try {
@@ -252,7 +252,7 @@ export default async function handler(
 
         if (!isValid) {
           logger.warn("Invalid webhook signature");
-          return sendError(res, 401, "UNAUTHORIZED", "Invalid signature");
+          return sendError(res, "UNAUTHORIZED", "Invalid signature", 401);
         }
       } else {
         logger.warn("Webhook signature headers missing");

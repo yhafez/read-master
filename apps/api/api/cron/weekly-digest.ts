@@ -27,7 +27,7 @@ export default async function handler(
 ): Promise<void> {
   // Only allow POST requests
   if (req.method !== "POST") {
-    return sendError(res, 405, "METHOD_NOT_ALLOWED", "Method not allowed");
+    return sendError(res, "VALIDATION_ERROR", "Method not allowed", 405);
   }
 
   // Verify cron secret
@@ -37,7 +37,7 @@ export default async function handler(
     logger.warn("Unauthorized cron job attempt", {
       path: "/api/cron/weekly-digest",
     });
-    return sendError(res, 401, "UNAUTHORIZED", "Unauthorized");
+    return sendError(res, "UNAUTHORIZED", "Unauthorized", 401);
   }
 
   let processed = 0;
@@ -113,6 +113,6 @@ export default async function handler(
       error: error instanceof Error ? error.message : String(error),
     });
 
-    sendError(res, 500, "INTERNAL_ERROR", "Failed to process weekly digests");
+    sendError(res, "INTERNAL_ERROR", "Failed to process weekly digests", 500);
   }
 }

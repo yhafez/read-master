@@ -28,7 +28,7 @@ export default async function handler(
 ): Promise<void> {
   // Only allow POST requests
   if (req.method !== "POST") {
-    return sendError(res, 405, "METHOD_NOT_ALLOWED", "Method not allowed");
+    return sendError(res, "VALIDATION_ERROR", "Method not allowed", 405);
   }
 
   // Verify cron secret (Vercel automatically adds this header)
@@ -38,7 +38,7 @@ export default async function handler(
     logger.warn("Unauthorized cron job attempt", {
       path: "/api/cron/onboarding-emails",
     });
-    return sendError(res, 401, "UNAUTHORIZED", "Unauthorized");
+    return sendError(res, "UNAUTHORIZED", "Unauthorized", 401);
   }
 
   try {
@@ -60,9 +60,9 @@ export default async function handler(
 
     sendError(
       res,
-      500,
       "INTERNAL_ERROR",
-      "Failed to process onboarding emails"
+      "Failed to process onboarding emails",
+      500
     );
   }
 }
