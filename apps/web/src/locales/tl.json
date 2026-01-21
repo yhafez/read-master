@@ -759,7 +759,10 @@
           "unknownError": "Nabigo ang paglikha ng download. Mangyaring subukan muli."
         }
       }
-    }
+    },
+    "viewMode": "Modo ng view",
+    "singlePage": "Isang pahina",
+    "twoPageSpread": "Dalawang pahinang spread"
   },
   "flashcards": {
     "title": "Flashcards",

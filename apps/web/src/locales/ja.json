@@ -759,7 +759,10 @@
           "unknownError": "ダウンロードの作成に失敗しました。もう一度お試しください。"
         }
       }
-    }
+    },
+    "viewMode": "表示モード",
+    "singlePage": "単一ページ",
+    "twoPageSpread": "見開き2ページ"
   },
   "flashcards": {
     "title": "フラッシュカード",

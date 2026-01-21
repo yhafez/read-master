@@ -759,7 +759,10 @@
           "unknownError": "Error al crear descarga. Por favor, inténtalo de nuevo."
         }
       }
-    }
+    },
+    "viewMode": "Modo de vista",
+    "singlePage": "Página única",
+    "twoPageSpread": "Vista de dos páginas"
   },
   "flashcards": {
     "title": "Tarjetas de memoria",

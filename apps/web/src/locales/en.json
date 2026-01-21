@@ -89,6 +89,9 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "zoomLevel": "Zoom level",
+    "viewMode": "View mode",
+    "singlePage": "Single page",
+    "twoPageSpread": "Two-page spread",
     "increaseFontSize": "Increase font size",
     "decreaseFontSize": "Decrease font size",
     "toolbar": {

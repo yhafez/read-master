@@ -18,6 +18,8 @@ import {
   Select,
   MenuItem,
   Tooltip,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import {
   NavigateBefore as PrevIcon,
@@ -26,6 +28,8 @@ import {
   ZoomOut as ZoomOutIcon,
   FirstPage as FirstPageIcon,
   LastPage as LastPageIcon,
+  MenuBook as SpreadIcon,
+  Description as SinglePageIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import * as pdfjsLib from "pdfjs-dist";
@@ -47,6 +51,7 @@ import {
   clampZoom,
   formatZoomPercent,
 } from "./pdfTypes";
+import { useReaderStore } from "@/stores/readerStore";
 
 // Configure PDF.js worker - use CDN for the worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -66,10 +71,20 @@ export function PdfReader({
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvas2Ref = useRef<HTMLCanvasElement>(null); // Second canvas for spread mode
   const textLayerRef = useRef<HTMLDivElement>(null);
   const pdfDocRef = useRef<PDFDocumentProxy | null>(null);
   const currentPageRef = useRef<PDFPageProxy | null>(null);
+  const currentPage2Ref = useRef<PDFPageProxy | null>(null); // Second page for spread mode
   const renderTaskRef = useRef<ReturnType<PDFPageProxy["render"]> | null>(null);
+  const renderTask2Ref = useRef<ReturnType<PDFPageProxy["render"]> | null>(
+    null
+  ); // Second render task for spread mode
+
+  // Get reading mode from store
+  const readingMode = useReaderStore((state) => state.settings.readingMode);
+  const updateSettings = useReaderStore((state) => state.updateSettings);
+  const isSpreadMode = readingMode === "spread";
 
   const [state, setState] = useState<PdfReaderState>({
     ...INITIAL_PDF_READER_STATE,
@@ -107,17 +122,23 @@ export function PdfReader({
     async (pageNumber: number) => {
       const pdfDoc = pdfDocRef.current;
       const canvas = canvasRef.current;
+      const canvas2 = canvas2Ref.current;
       const textLayer = textLayerRef.current;
 
       if (!pdfDoc || !canvas) return;
 
-      // Cancel any ongoing render task
+      // Cancel any ongoing render tasks
       if (renderTaskRef.current) {
         renderTaskRef.current.cancel();
         renderTaskRef.current = null;
       }
+      if (renderTask2Ref.current) {
+        renderTask2Ref.current.cancel();
+        renderTask2Ref.current = null;
+      }
 
       try {
+        // Render first page
         const page = await pdfDoc.getPage(pageNumber);
         currentPageRef.current = page;
 
@@ -135,7 +156,7 @@ export function PdfReader({
         // Clear previous content
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Render page
+        // Render first page
         const renderTask = page.render({
           canvasContext: context,
           viewport,
@@ -143,6 +164,31 @@ export function PdfReader({
         renderTaskRef.current = renderTask;
 
         await renderTask.promise;
+
+        // Render second page in spread mode
+        if (isSpreadMode && canvas2 && pageNumber < pdfDoc.numPages) {
+          const page2 = await pdfDoc.getPage(pageNumber + 1);
+          currentPage2Ref.current = page2;
+
+          const viewport2 = page2.getViewport({ scale: state.scale });
+          const context2 = canvas2.getContext("2d");
+          if (!context2) return;
+
+          canvas2.width = viewport2.width;
+          canvas2.height = viewport2.height;
+          canvas2.style.width = `${viewport2.width}px`;
+          canvas2.style.height = `${viewport2.height}px`;
+
+          context2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+          const renderTask2 = page2.render({
+            canvasContext: context2,
+            viewport: viewport2,
+          });
+          renderTask2Ref.current = renderTask2;
+
+          await renderTask2.promise;
+        }
 
         // Render text layer for selection
         if (textLayer) {
@@ -305,15 +351,19 @@ export function PdfReader({
 
   const goNext = useCallback(() => {
     if (state.location && state.canGoNext) {
-      goToPage(state.location.pageNumber + 1);
+      // In spread mode, jump by 2 pages
+      const increment = isSpreadMode ? 2 : 1;
+      goToPage(state.location.pageNumber + increment);
     }
-  }, [state.location, state.canGoNext, goToPage]);
+  }, [state.location, state.canGoNext, goToPage, isSpreadMode]);
 
   const goPrev = useCallback(() => {
     if (state.location && state.canGoPrev) {
-      goToPage(state.location.pageNumber - 1);
+      // In spread mode, jump by 2 pages
+      const decrement = isSpreadMode ? 2 : 1;
+      goToPage(Math.max(1, state.location.pageNumber - decrement));
     }
-  }, [state.location, state.canGoPrev, goToPage]);
+  }, [state.location, state.canGoPrev, goToPage, isSpreadMode]);
 
   const goToFirst = useCallback(() => {
     goToPage(1);
@@ -629,6 +679,37 @@ export function PdfReader({
           </Tooltip>
         </Box>
 
+        {/* Separator */}
+        <Box
+          sx={{ borderLeft: 1, borderColor: "divider", height: 24, mx: 1 }}
+        />
+
+        {/* View mode toggle */}
+        <ToggleButtonGroup
+          size="small"
+          value={readingMode === "spread" ? "spread" : "paginated"}
+          exclusive
+          onChange={(_e, value) => {
+            if (value) {
+              updateSettings({
+                readingMode: value as "paginated" | "spread",
+              });
+            }
+          }}
+          aria-label={t("reader.viewMode")}
+        >
+          <ToggleButton value="paginated" aria-label={t("reader.singlePage")}>
+            <Tooltip title={t("reader.singlePage")}>
+              <SinglePageIcon fontSize="small" />
+            </Tooltip>
+          </ToggleButton>
+          <ToggleButton value="spread" aria-label={t("reader.twoPageSpread")}>
+            <Tooltip title={t("reader.twoPageSpread")}>
+              <SpreadIcon fontSize="small" />
+            </Tooltip>
+          </ToggleButton>
+        </ToggleButtonGroup>
+
         {/* Progress display */}
         <Box sx={{ flex: 1 }} />
         <Typography variant="caption" color="text.secondary">
@@ -645,10 +726,13 @@ export function PdfReader({
           bgcolor: "grey.100",
           display: "flex",
           justifyContent: "center",
+          alignItems: "flex-start",
           p: 2,
+          gap: 2,
         }}
         data-testid="pdf-container"
       >
+        {/* First page/canvas */}
         <Box sx={{ position: "relative" }}>
           <canvas
             ref={canvasRef}
@@ -671,6 +755,19 @@ export function PdfReader({
             data-testid="pdf-text-layer"
           />
         </Box>
+
+        {/* Second page/canvas (only in spread mode) */}
+        {isSpreadMode &&
+          state.location &&
+          state.location.pageNumber < state.location.totalPages && (
+            <Box sx={{ position: "relative" }}>
+              <canvas
+                ref={canvas2Ref}
+                style={{ display: "block" }}
+                data-testid="pdf-canvas-2"
+              />
+            </Box>
+          )}
       </Box>
 
       {/* Bottom progress bar */}

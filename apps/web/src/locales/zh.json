@@ -759,7 +759,10 @@
           "unknownError": "创建下载失败。请重试。"
         }
       }
-    }
+    },
+    "viewMode": "查看模式",
+    "singlePage": "单页",
+    "twoPageSpread": "双页跨页"
   },
   "flashcards": {
     "title": "闪卡",
