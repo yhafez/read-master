@@ -3792,7 +3792,7 @@
         "Utilizes space well",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-001",
@@ -3933,7 +3933,7 @@
         "Retries work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-007",
@@ -3980,7 +3980,7 @@
         "Customizable",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "pwa-009",
