@@ -1298,6 +1298,828 @@ enum BounceType {
 
 ---
 
+#### 18. AI-Powered Development Pipeline
+
+**Description:** Users can submit feature requests and bug reports, which are automatically analyzed by AI to generate implementation PRs for manual review.
+
+**User Story:** As a user, I want to request features or report bugs and have AI automatically generate a fix or implementation for the development team to review, so that my feedback can be quickly acted upon.
+
+**Purpose:**
+
+- Crowdsource feature ideas from engaged users
+- Accelerate development cycle with AI-assisted code generation
+- Democratize product development by letting users contribute ideas
+- Reduce time from idea to implementation
+- Maintain code quality through human review of AI-generated code
+
+### Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  AI Development Pipeline                     │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                    ┌─────────┼─────────┐
+                    │         │         │
+        ┌───────────▼──┐  ┌───▼──────────┐
+        │ User Submit  │  │ AI Viability │
+        │ Request      │──│ Assessment   │
+        └──────────────┘  └───┬──────────┘
+                              │
+                    ┌─────────┴─────────┐
+                    │                   │
+          ┌─────────▼────────┐  ┌───────▼────────┐
+          │ VIABLE:          │  │ NOT VIABLE:    │
+          │ AI Implementation│  │ GitHub Issue   │
+          └─────────┬────────┘  └───────┬────────┘
+                    │                   │
+          ┌─────────▼────────┐  ┌───────▼────────┐
+          │ Code Generation  │  │ Human Dev      │
+          │ → Create PR      │  │ Picks Up       │
+          └─────────┬────────┘  └────────────────┘
+                    │
+          ┌─────────▼────────┐
+          │ Human Review     │
+          │ → Merge          │
+          └──────────────────┘
+```
+
+### Submission Interface
+
+**Features:**
+
+- [ ] Create public-facing feature request form
+- [ ] Create bug report form with:
+  - [ ] Title and description
+  - [ ] Steps to reproduce (for bugs)
+  - [ ] Expected vs. actual behavior
+  - [ ] User's environment (browser, OS, tier)
+  - [ ] Screenshots/videos upload
+  - [ ] Priority suggestion (low, medium, high)
+  - [ ] Category (reader, library, AI, SRS, social, etc.)
+- [ ] Duplicate detection using semantic search
+- [ ] Voting system for existing requests
+- [ ] Comment/discussion on requests
+- [ ] Status tracking (Submitted, Analyzing, In Review, Approved, Rejected, Implemented)
+- [ ] User notifications when status changes
+
+### AI Viability Assessment (Autonomous)
+
+**Purpose:** Automatically determine if a feature request can be implemented autonomously by AI or requires human developer intervention.
+
+**Autonomous Assessment Flow:**
+
+1. **Trigger:** Automatically runs when request receives 10+ upvotes OR admin clicks "Assess"
+2. **AI Analysis:** Evaluates request viability in seconds
+3. **Decision:** VIABLE (AI implements) or NOT VIABLE (human implements)
+4. **Action:**
+   - If VIABLE → Proceeds to code generation → Creates PR
+   - If NOT VIABLE → Creates detailed GitHub issue → Notifies team
+
+**Viability Criteria:**
+
+AI determines a request is **VIABLE** for autonomous implementation if ALL of these are true:
+
+- ✅ **Clear Scope:** Requirements are specific and well-defined
+- ✅ **Existing Patterns:** Similar functionality already exists in codebase
+- ✅ **Low Complexity:** Estimated ≤ 200 LOC, ≤ 5 files modified
+- ✅ **No Breaking Changes:** Doesn't modify core APIs or data structures
+- ✅ **No Security Risk:** Doesn't touch auth, payments, or sensitive data
+- ✅ **No External Dependencies:** Doesn't require new third-party APIs
+- ✅ **No Database Migration:** OR only simple additive migrations
+- ✅ **Testable:** Can be fully tested with existing test infrastructure
+- ✅ **UI Changes:** Follow existing component patterns (if applicable)
+
+AI determines a request is **NOT VIABLE** (requires human) if ANY of these are true:
+
+- ❌ **Vague Requirements:** Unclear what the user wants
+- ❌ **High Complexity:** >200 LOC or >5 files or architectural changes
+- ❌ **Novel Patterns:** Requires new design patterns or architecture
+- ❌ **Breaking Changes:** Modifies existing APIs, contracts, or schemas
+- ❌ **Security Sensitive:** Touches auth, payments, permissions, secrets
+- ❌ **External Integration:** Requires new third-party API integration
+- ❌ **Complex Migration:** Database schema changes affecting existing data
+- ❌ **Infrastructure:** Changes to deployment, CI/CD, or environment
+- ❌ **Experimental:** Requires research, prototyping, or A/B testing
+- ❌ **Cross-Platform:** Requires simultaneous web + mobile + desktop changes
+
+**Assessment Output:**
+
+```typescript
+{
+  viable: boolean,
+  confidence: number, // 0-100%
+  reasoning: string,
+  complexity_score: number, // 1-10
+  estimated_loc: number,
+  files_to_modify: string[],
+  risk_factors: string[],
+  recommended_action: 'AI_IMPLEMENT' | 'CREATE_ISSUE',
+  github_issue_title?: string,
+  github_issue_body?: string,
+  implementation_plan?: string // only if viable
+}
+```
+
+### AI Analysis & Code Generation
+
+**Analysis Phase (for VIABLE requests):**
+
+- [ ] **Context Gathering:**
+  - [ ] Analyze submission text using Claude
+  - [ ] Search codebase for relevant files
+  - [ ] Identify affected components/files
+  - [ ] Review existing tests
+  - [ ] Check coding standards (CLAUDE.md)
+  - [ ] Review database schema if needed
+  - [ ] Identify dependencies
+- [ ] **Feasibility Check:**
+  - [ ] Estimate complexity (simple, medium, complex, infeasible)
+  - [ ] Check for conflicts with existing features
+  - [ ] Identify breaking changes
+  - [ ] Calculate estimated impact
+  - [ ] Flag security/privacy concerns
+- [ ] **Implementation Planning:**
+  - [ ] Generate step-by-step plan
+  - [ ] Identify files to create/modify
+  - [ ] Plan database migrations if needed
+  - [ ] Plan test coverage
+  - [ ] Estimate lines of code
+
+### GitHub Issue Creation (for NOT VIABLE requests)
+
+**When AI determines a request is not viable for autonomous implementation:**
+
+1. **Generate Detailed Issue:**
+   - Title: Clear, actionable summary
+   - Description: Original user request with context
+   - Labels: feature-request (or bug), needs-human, complexity-high, etc.
+   - Assignee: Auto-assign based on category (reader → @frontend-team)
+   - Projects: Add to appropriate project board
+   - Milestones: Suggest milestone based on priority
+
+2. **Issue Content Includes:**
+   - Original user request (with link)
+   - Why AI cannot implement (reasoning)
+   - Suggested implementation approach
+   - Affected files/components
+   - Estimated complexity
+   - Risk factors
+   - Security considerations
+   - Testing requirements
+   - Documentation needs
+
+3. **Notify User:**
+   - Email: "Your request needs human expertise"
+   - Explain why (complexity, security, etc.)
+   - Link to GitHub issue to track progress
+   - Set realistic timeline expectations
+
+4. **Update Status:**
+   - FeatureRequest.status → ESCALATED_TO_HUMAN
+   - FeatureRequest.githubIssueUrl → Issue URL
+
+**Code Generation Phase (for VIABLE requests):**
+
+- [ ] **Implementation:**
+  - [ ] Generate all necessary code changes
+  - [ ] Follow project coding standards strictly
+  - [ ] Create new components/files as needed
+  - [ ] Update existing files with search/replace
+  - [ ] Generate database migrations
+  - [ ] Generate comprehensive tests
+  - [ ] Update documentation
+  - [ ] Add JSDoc/TSDoc comments
+- [ ] **Quality Checks:**
+  - [ ] Run TypeScript compiler
+  - [ ] Run ESLint
+  - [ ] Run Prettier
+  - [ ] Run all tests
+  - [ ] Check for console.log statements
+  - [ ] Verify no `any` types used
+  - [ ] Check accessibility compliance
+- [ ] **PR Creation:**
+  - [ ] Create feature branch
+  - [ ] Commit changes with conventional commit messages
+  - [ ] Push to GitHub
+  - [ ] Create PR with detailed description
+  - [ ] Link to original feature request
+  - [ ] Add labels (ai-generated, feature-request, bug-fix)
+  - [ ] Request review from maintainers
+
+### Review Dashboard
+
+**Admin Review Interface:**
+
+- [ ] View all AI-generated PRs
+- [ ] Filter by category, complexity, status
+- [ ] See original user request alongside code
+- [ ] View AI's analysis and reasoning
+- [ ] See test results and quality checks
+- [ ] Compare before/after code
+- [ ] Add review comments
+- [ ] Request AI to revise based on feedback
+- [ ] Approve and merge or reject with reason
+- [ ] Track which AI-generated features were merged
+
+### Database Models
+
+```prisma
+model FeatureRequest {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id])
+
+  type              RequestType
+  title             String
+  description       String    @db.Text
+  category          String
+  priority          Priority  @default(MEDIUM)
+
+  // For bug reports
+  stepsToReproduce  String?   @db.Text
+  expectedBehavior  String?   @db.Text
+  actualBehavior    String?   @db.Text
+  environment       Json?     // Browser, OS, version
+  screenshots       String[]
+
+  // AI analysis
+  status            RequestStatus @default(SUBMITTED)
+  aiAnalysis        Json?     // Feasibility, complexity, plan
+  estimatedLOC      Int?
+  complexity        Complexity?
+
+  // AI viability assessment
+  viabilityAssessment Json? // Full assessment object
+  isViableForAI     Boolean?
+  assessmentConfidence Float?
+
+  // GitHub integration
+  githubPrUrl       String?  // If AI implements
+  githubIssueUrl    String?  // If human needed
+  githubBranch      String?
+  prStatus          PrStatus?
+
+  // Engagement
+  upvotes           Int       @default(0)
+  downvotes         Int       @default(0)
+  commentCount      Int       @default(0)
+
+  // Tracking
+  submittedAt       DateTime  @default(now())
+  analyzedAt        DateTime?
+  reviewedAt        DateTime?
+  implementedAt     DateTime?
+  rejectedAt        DateTime?
+  rejectionReason   String?   @db.Text
+
+  deletedAt         DateTime?
+
+  comments          RequestComment[]
+  votes             RequestVote[]
+}
+
+enum RequestType {
+  FEATURE
+  BUG
+  ENHANCEMENT
+  DOCUMENTATION
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum RequestStatus {
+  SUBMITTED
+  ASSESSING_VIABILITY       // AI determining if it can implement
+  VIABLE_FOR_AI            // AI will implement
+  NOT_VIABLE_FOR_AI        // Human developer needed
+  ESCALATED_TO_HUMAN       // GitHub issue created
+  GENERATING_CODE          // AI is writing code
+  PR_CREATED               // PR is open
+  IN_REVIEW                // Human reviewing PR
+  REVISION_REQUESTED       // Changes requested
+  APPROVED                 // Ready to merge
+  REJECTED                 // Request denied
+  IMPLEMENTED              // Merged and deployed
+  IN_PROGRESS              // Human is working on it (for escalated)
+}
+
+enum Complexity {
+  SIMPLE       // < 50 LOC, no DB changes
+  MEDIUM       // 50-200 LOC, minor changes
+  COMPLEX      // 200-500 LOC, DB migrations
+  INFEASIBLE   // Not possible or requires major refactor
+}
+
+enum PrStatus {
+  OPEN
+  MERGED
+  CLOSED
+}
+
+model RequestComment {
+  id                String    @id @default(uuid())
+  requestId         String
+  request           FeatureRequest @relation(fields: [requestId], references: [id])
+  userId            String
+  user              User      @relation(fields: [userId], references: [id])
+
+  content           String    @db.Text
+  isAdminResponse   Boolean   @default(false)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime?
+}
+
+model RequestVote {
+  id                String    @id @default(uuid())
+  requestId         String
+  request           FeatureRequest @relation(fields: [requestId], references: [id])
+  userId            String
+  user              User      @relation(fields: [userId], references: [id])
+
+  value             Int       // 1 or -1
+
+  createdAt         DateTime  @default(now())
+
+  @@unique([userId, requestId])
+}
+
+model AICodeGeneration {
+  id                String    @id @default(uuid())
+  requestId         String
+
+  // AI usage tracking
+  model             String    // claude-opus-4, etc.
+  tokensUsed        Int
+  cost              Decimal   @db.Decimal(10, 6)
+  duration          Int       // seconds
+
+  // Generation details
+  filesModified     Int
+  filesCreated      Int
+  linesAdded        Int
+  linesRemoved      Int
+  testsGenerated    Int
+
+  // Quality checks
+  typecheckPassed   Boolean
+  lintPassed        Boolean
+  testsPassed       Boolean
+
+  // Outcome
+  success           Boolean
+  errorMessage      String?   @db.Text
+
+  generatedAt       DateTime  @default(now())
+}
+```
+
+### API Endpoints
+
+```
+// Public-facing
+POST   /api/feature-requests              # Submit new request
+GET    /api/feature-requests              # Browse all requests
+GET    /api/feature-requests/:id          # Get request details
+POST   /api/feature-requests/:id/vote     # Upvote/downvote
+POST   /api/feature-requests/:id/comment  # Add comment
+DELETE /api/feature-requests/:id/comment/:commentId
+
+// Admin-only
+POST   /api/admin/feature-requests/:id/analyze     # Trigger AI analysis
+POST   /api/admin/feature-requests/:id/generate    # Generate code
+POST   /api/admin/feature-requests/:id/revise      # Request AI revision
+POST   /api/admin/feature-requests/:id/approve     # Approve PR
+POST   /api/admin/feature-requests/:id/reject      # Reject request
+GET    /api/admin/feature-requests/dashboard       # Review dashboard
+
+// Webhooks
+POST   /api/webhooks/github                        # GitHub PR events
+```
+
+### AI Implementation Process
+
+**Step 0: Autonomous Viability Assessment**
+
+```typescript
+async function assessViability(requestId: string) {
+  const request = await getRequest(requestId);
+
+  // Gather context
+  const context = {
+    request,
+    existingPatterns: await findSimilarCode(request.description),
+    affectedFiles: await identifyAffectedFiles(request),
+    schema: await getDatabaseSchema(),
+    standards: await readFile('CLAUDE.md'),
+  };
+
+  // Ask Claude to assess viability
+  const assessment = await claude.assessViability({
+    prompt: VIABILITY_ASSESSMENT_PROMPT,
+    context,
+  });
+
+  // Store assessment
+  await updateRequest(requestId, {
+    viabilityAssessment: assessment,
+    isViableForAI: assessment.viable,
+    assessmentConfidence: assessment.confidence,
+    status: assessment.viable ? 'VIABLE_FOR_AI' : 'NOT_VIABLE_FOR_AI',
+  });
+
+  // Route based on viability
+  if (assessment.viable && assessment.confidence >= 80) {
+    // Proceed to implementation
+    await generateImplementation(requestId);
+  } else {
+    // Create GitHub issue for human developers
+    await createGitHubIssue(requestId, assessment);
+  }
+
+  return assessment;
+}
+
+async function createGitHubIssue(
+  requestId: string,
+  assessment: ViabilityAssessment
+) {
+  const request = await getRequest(requestId);
+
+  // Generate comprehensive issue
+  const issueBody = generateIssueBody(request, assessment);
+
+  // Create GitHub issue
+  const issue = await github.createIssue({
+    title: assessment.github_issue_title || request.title,
+    body: issueBody,
+    labels: [
+      request.type === 'BUG' ? 'bug' : 'feature-request',
+      'needs-human',
+      `complexity-${assessment.complexity_score > 7 ? 'high' : 'medium'}`,
+      `category-${request.category}`,
+    ],
+    assignees: getTeamForCategory(request.category),
+  });
+
+  // Update request
+  await updateRequest(requestId, {
+    githubIssueUrl: issue.url,
+    status: 'ESCALATED_TO_HUMAN',
+  });
+
+  // Notify user
+  await sendEmail(request.userId, {
+    template: 'feature_escalated_to_human',
+    data: { request, issue, assessment },
+  });
+
+  return issue;
+}
+
+function generateIssueBody(
+  request: FeatureRequest,
+  assessment: ViabilityAssessment
+): string {
+  return `
+## User Request
+
+**Submitted by:** @${request.user.username}
+**Upvotes:** ${request.upvotes}
+**Original Request:** ${getFeatureRequestUrl(request.id)}
+
+${request.description}
+
+---
+
+## Why Human Developer Needed
+
+${assessment.reasoning}
+
+**Complexity Score:** ${assessment.complexity_score}/10
+**Risk Factors:**
+${assessment.risk_factors.map(r => `- ⚠️ ${r}`).join('\n')}
+
+---
+
+## AI Suggested Implementation Approach
+
+${assessment.implementation_plan || 'No specific plan suggested'}
+
+**Estimated Scope:**
+- Lines of Code: ~${assessment.estimated_loc}
+- Files to Modify: ${assessment.files_to_modify.length}
+- Database Changes: ${assessment.requires_migration ? 'Yes' : 'No'}
+
+**Affected Files:**
+${assessment.files_to_modify.map(f => `- \`${f}\``).join('\n')}
+
+---
+
+## Additional Context
+
+**Category:** ${request.category}
+**Priority:** ${request.priority}
+**User Tier:** ${request.user.tier}
+
+${request.stepsToReproduce ? `
+### Steps to Reproduce (Bug)
+${request.stepsToReproduce}
+` : ''}
+
+---
+
+*This issue was automatically generated by the AI Development Pipeline.*
+  `.trim();
+}
+```
+
+**Step 1: Analysis (for viable requests)**
+
+```typescript
+async function analyzeFeatureRequest(requestId: string) {
+  // Fetch request
+  const request = await getRequest(requestId);
+
+  // Search codebase for relevant context
+  const relevantFiles = await semanticCodeSearch(request.description);
+
+  // Gather context
+  const context = {
+    request,
+    codebaseContext: relevantFiles,
+    schema: await getDatabaseSchema(),
+    standards: await readFile('CLAUDE.md'),
+  };
+
+  // Ask Claude to analyze
+  const analysis = await claude.analyze({
+    prompt: FEATURE_ANALYSIS_PROMPT,
+    context,
+  });
+
+  // Store analysis
+  await updateRequest(requestId, {
+    aiAnalysis: analysis,
+    complexity: analysis.complexity,
+    estimatedLOC: analysis.estimatedLOC,
+    status: 'PLANNED',
+  });
+
+  return analysis;
+}
+```
+
+**Step 2: Code Generation**
+
+```typescript
+async function generateImplementation(requestId: string) {
+  const request = await getRequest(requestId);
+  const analysis = request.aiAnalysis;
+
+  // Generate code with Claude
+  const implementation = await claude.generateCode({
+    prompt: CODE_GENERATION_PROMPT,
+    plan: analysis.plan,
+    standards: codingStandards,
+    files: analysis.filesToModify,
+  });
+
+  // Apply changes to local clone
+  const branch = `ai/feature-${requestId}`;
+  await git.createBranch(branch);
+
+  for (const change of implementation.changes) {
+    if (change.action === 'create') {
+      await writeFile(change.path, change.content);
+    } else if (change.action === 'modify') {
+      await searchReplace(change.path, change.oldContent, change.newContent);
+    }
+  }
+
+  // Run quality checks
+  const checks = await runQualityChecks();
+
+  if (!checks.passed) {
+    // Ask AI to fix issues
+    await reviseCode(checks.errors);
+  }
+
+  // Commit and push
+  await git.commit(`feat: ${request.title}\n\nAI-generated from feature request #${requestId}`);
+  await git.push(branch);
+
+  // Create PR
+  const pr = await github.createPR({
+    title: `[AI] ${request.title}`,
+    body: generatePRDescription(request, analysis),
+    head: branch,
+    base: 'main',
+  });
+
+  // Update request
+  await updateRequest(requestId, {
+    githubPrUrl: pr.url,
+    githubBranch: branch,
+    prStatus: 'OPEN',
+    status: 'IN_REVIEW',
+  });
+
+  return pr;
+}
+```
+
+**Step 3: Review Loop**
+
+```typescript
+async function requestRevision(requestId: string, feedback: string) {
+  const request = await getRequest(requestId);
+
+  // Ask Claude to revise based on feedback
+  const revision = await claude.reviseCode({
+    originalPR: request.githubPrUrl,
+    feedback,
+    context: await getGitDiff(request.githubBranch),
+  });
+
+  // Apply revisions
+  await applyChanges(revision.changes);
+  await git.commit(`fix: address review feedback`);
+  await git.push(request.githubBranch);
+
+  // Update PR
+  await github.addComment(request.githubPrUrl,
+    `Updated implementation based on review feedback.`
+  );
+
+  return revision;
+}
+```
+
+### Safety & Quality Controls
+
+**Pre-Generation Checks:**
+
+- [ ] Request must have 10+ upvotes (for features)
+- [ ] Bug reports must have reproduction steps
+- [ ] Admin must approve before AI generation
+- [ ] Complexity must be <= COMPLEX
+- [ ] No security-sensitive changes without extra review
+
+**Code Generation Limits:**
+
+- [ ] Max 500 LOC per PR
+- [ ] Max 10 files modified
+- [ ] No changes to auth/payment code without manual review
+- [ ] No database schema changes to core tables
+- [ ] No changes to .env or secrets
+- [ ] No package.json changes without review
+
+**Quality Gates:**
+
+- [ ] TypeScript must compile
+- [ ] All tests must pass (existing + new)
+- [ ] ESLint must pass
+- [ ] No `any` types allowed
+- [ ] No console.log statements
+- [ ] Test coverage must not decrease
+- [ ] Accessibility checks must pass
+
+**Manual Review Required:**
+
+- [ ] All PRs reviewed by human before merge
+- [ ] Security-sensitive changes require two reviews
+- [ ] Database migrations require DBA review
+- [ ] Breaking changes require product owner approval
+
+### User Experience
+
+**Submission Flow:**
+
+1. User clicks "Request Feature" in app footer
+2. Fill out form with title, description, category
+3. AI shows similar existing requests (avoid duplicates)
+4. Submit request
+5. Receive confirmation with tracking link
+6. Get email notification when status changes
+
+**Request Page:**
+
+- [ ] Title, description, category, priority
+- [ ] Submitted by (user profile link)
+- [ ] Status badge with progress indicator
+- [ ] Upvote/downvote buttons
+- [ ] Comment section
+- [ ] "Subscribe to updates" toggle
+- [ ] Admin-only: AI analysis summary
+- [ ] Admin-only: Action buttons (Analyze, Generate, Approve, Reject)
+
+**Notifications:**
+
+- [ ] Email when request is analyzed
+- [ ] Email when PR is created
+- [ ] Email when implemented and deployed
+- [ ] In-app notification for status updates
+- [ ] Optional: Slack/Discord webhook for admins
+
+### Analytics & Tracking
+
+**Metrics:**
+
+- [ ] Requests submitted per week
+- [ ] Requests by category
+- [ ] Average time from submission to implementation
+- [ ] AI generation success rate
+- [ ] PR merge rate for AI-generated code
+- [ ] Cost per request (AI tokens)
+- [ ] Most requested features
+- [ ] Top requesting users
+- [ ] Community engagement (votes, comments)
+
+**Dashboard:**
+
+- [ ] Total requests (open, in review, implemented, rejected)
+- [ ] AI generation statistics
+- [ ] Quality metrics (tests pass rate, review cycles)
+- [ ] Cost tracking (AI usage)
+- [ ] User engagement metrics
+
+### Acceptance Criteria
+
+- [ ] Users can submit feature requests and bug reports
+- [ ] Duplicate detection prevents redundant submissions
+- [ ] Voting system allows community prioritization
+- [ ] **AI automatically assesses viability when 10+ upvotes reached**
+- [ ] **VIABLE requests → AI generates code and creates PR automatically**
+- [ ] **NOT VIABLE requests → AI creates detailed GitHub issue**
+- [ ] AI viability assessment is accurate (>80% confidence threshold)
+- [ ] Generated code follows all project standards
+- [ ] All quality checks pass before PR creation
+- [ ] GitHub issues are comprehensive and actionable
+- [ ] Issues are auto-assigned to correct team members
+- [ ] Admins can review and approve/reject PRs
+- [ ] Admins can request revisions from AI
+- [ ] Users are notified of status changes (both paths)
+- [ ] All AI-generated PRs are clearly labeled
+- [ ] All AI-created issues are clearly labeled
+- [ ] Cost tracking works for AI usage
+- [ ] Analytics dashboard shows request metrics
+- [ ] Analytics show AI vs. human implementation ratio
+- [ ] Tests cover all functionality
+- [ ] Documentation explains both paths
+
+### Limitations & Considerations
+
+**What AI Can Generate:**
+
+- ✅ New UI components (following existing patterns)
+- ✅ Bug fixes in existing code
+- ✅ New API endpoints (following REST conventions)
+- ✅ Database migrations (non-breaking)
+- ✅ Tests for new functionality
+- ✅ Documentation updates
+- ✅ Utility functions
+- ✅ Style/UI enhancements
+
+**What Requires Manual Implementation:**
+
+- ❌ Major architectural changes
+- ❌ Security-critical features
+- ❌ Payment processing changes
+- ❌ Breaking API changes
+- ❌ Core authentication flow changes
+- ❌ Complex AI model training
+- ❌ Infrastructure changes
+- ❌ Third-party integrations (first time)
+
+**Edge Cases:**
+
+- Conflicting feature requests (AI flags conflicts)
+- Requests that require external APIs (AI notes in analysis)
+- Requests that break existing functionality (AI warns)
+- Overly vague requests (AI asks clarifying questions)
+- Malicious requests (profanity filter, admin review)
+
+### Future Enhancements
+
+- [ ] AI learns from merged PRs to improve future generations
+- [ ] Multi-step features broken into smaller PRs
+- [ ] AI suggests alternative implementations
+- [ ] AI estimates business impact of features
+- [ ] Integration with product roadmap
+- [ ] Automated deployment after approval
+- [ ] AI writes release notes
+- [ ] Community reputation system for high-quality requests
+
+---
+
 ### Nice-to-Have Features (Post-MVP)
 
 - Integration with Kindle, Google Play Books, Apple Books

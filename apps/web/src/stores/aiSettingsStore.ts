@@ -34,6 +34,37 @@ export const comprehensionFrequencies = [
 export type ComprehensionFrequency = (typeof comprehensionFrequencies)[number];
 
 /**
+ * AI personality types
+ */
+export const aiPersonalities = [
+  "encouraging_tutor",
+  "neutral_assistant",
+  "socratic_guide",
+] as const;
+export type AIPersonality = (typeof aiPersonalities)[number];
+
+/**
+ * Verbosity levels for AI responses
+ */
+export const verbosityLevels = [
+  "concise",
+  "balanced",
+  "detailed",
+  "comprehensive",
+] as const;
+export type VerbosityLevel = (typeof verbosityLevels)[number];
+
+/**
+ * Language complexity preferences
+ */
+export const languageComplexities = [
+  "simplify",
+  "match_level",
+  "challenge_me",
+] as const;
+export type LanguageComplexity = (typeof languageComplexities)[number];
+
+/**
  * AI feature toggles
  */
 export interface AIFeatureToggles {
@@ -52,6 +83,22 @@ export interface AIFeatureToggles {
 }
 
 /**
+ * AI personality settings
+ */
+export interface AIPersonalitySettings {
+  /** Selected AI personality */
+  personality: AIPersonality;
+  /** Custom tone instructions (optional) */
+  customTone?: string;
+  /** Verbosity level for responses */
+  verbosity: VerbosityLevel;
+  /** Language complexity preference */
+  languageComplexity: LanguageComplexity;
+  /** Enable proactive suggestions */
+  proactiveSuggestions: boolean;
+}
+
+/**
  * AI settings interface
  */
 export interface AISettings {
@@ -65,6 +112,8 @@ export interface AISettings {
   comprehensionFrequency: ComprehensionFrequency;
   /** Whether to show usage statistics in settings */
   showUsageStats: boolean;
+  /** AI personality customization */
+  personality: AIPersonalitySettings;
 }
 
 /**
@@ -80,6 +129,17 @@ export const DEFAULT_FEATURE_TOGGLES: AIFeatureToggles = {
 };
 
 /**
+ * Default personality settings
+ */
+export const DEFAULT_PERSONALITY_SETTINGS: AIPersonalitySettings = {
+  personality: "encouraging_tutor",
+  customTone: undefined,
+  verbosity: "balanced",
+  languageComplexity: "match_level",
+  proactiveSuggestions: true,
+};
+
+/**
  * Default AI settings
  */
 export const DEFAULT_AI_SETTINGS: AISettings = {
@@ -88,6 +148,7 @@ export const DEFAULT_AI_SETTINGS: AISettings = {
   readingLevel: "intermediate",
   comprehensionFrequency: "sometimes",
   showUsageStats: true,
+  personality: DEFAULT_PERSONALITY_SETTINGS,
 };
 
 /**
@@ -210,6 +271,18 @@ interface AISettingsState extends AISettings {
   setComprehensionFrequency: (freq: ComprehensionFrequency) => void;
   /** Set show usage stats preference */
   setShowUsageStats: (show: boolean) => void;
+  /** Set AI personality */
+  setPersonality: (personality: AIPersonality) => void;
+  /** Set custom tone */
+  setCustomTone: (tone: string | undefined) => void;
+  /** Set verbosity level */
+  setVerbosity: (verbosity: VerbosityLevel) => void;
+  /** Set language complexity */
+  setLanguageComplexity: (complexity: LanguageComplexity) => void;
+  /** Set proactive suggestions toggle */
+  setProactiveSuggestions: (enabled: boolean) => void;
+  /** Update all personality settings */
+  updatePersonalitySettings: (settings: Partial<AIPersonalitySettings>) => void;
   /** Reset all settings to defaults */
   resetSettings: () => void;
   /** Check if a feature is enabled (respects global toggle) */
@@ -286,6 +359,54 @@ export const useAISettingsStore = create<AISettingsState>()(
       setShowUsageStats: (show) =>
         set(() => ({
           showUsageStats: show,
+        })),
+
+      setPersonality: (personality) =>
+        set((state) => ({
+          personality: {
+            ...state.personality,
+            personality,
+          },
+        })),
+
+      setCustomTone: (tone) =>
+        set((state) => ({
+          personality: {
+            ...state.personality,
+            customTone: tone,
+          },
+        })),
+
+      setVerbosity: (verbosity) =>
+        set((state) => ({
+          personality: {
+            ...state.personality,
+            verbosity,
+          },
+        })),
+
+      setLanguageComplexity: (complexity) =>
+        set((state) => ({
+          personality: {
+            ...state.personality,
+            languageComplexity: complexity,
+          },
+        })),
+
+      setProactiveSuggestions: (enabled) =>
+        set((state) => ({
+          personality: {
+            ...state.personality,
+            proactiveSuggestions: enabled,
+          },
+        })),
+
+      updatePersonalitySettings: (settings) =>
+        set((state) => ({
+          personality: {
+            ...state.personality,
+            ...settings,
+          },
         })),
 
       resetSettings: () =>

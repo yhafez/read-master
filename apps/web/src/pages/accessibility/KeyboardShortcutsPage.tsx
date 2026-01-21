@@ -1,6 +1,6 @@
 /**
  * Keyboard Shortcuts Help Page
- * 
+ *
  * Documents all keyboard shortcuts available in Read Master
  * for improved accessibility and power user efficiency
  */

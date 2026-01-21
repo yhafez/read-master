@@ -1,6 +1,6 @@
 /**
  * Accessibility Statement Page
- * 
+ *
  * Documents Read Master's commitment to accessibility
  * and provides contact information for accessibility concerns (WCAG 2.2 AAA)
  */

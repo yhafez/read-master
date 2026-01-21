@@ -41,6 +41,7 @@ import type {
   ReadingLevel,
   ComprehensionFrequency,
 } from "@/stores";
+import { AIPersonalitySection } from "./AIPersonalitySection";
 
 /**
  * Feature toggle item component
@@ -424,6 +425,9 @@ export function SettingsAIPage(): React.ReactElement {
             />
           </CardContent>
         </Card>
+
+        {/* AI Personality Customization */}
+        <AIPersonalitySection />
 
         {/* Reset Settings */}
         <Card>
