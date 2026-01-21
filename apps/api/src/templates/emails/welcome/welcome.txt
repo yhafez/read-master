@@ -1,0 +1,36 @@
+Welcome to Read Master, {{firstName}}! 🎉
+
+We're thrilled to have you join our community of passionate readers!
+
+Read Master is your all-in-one platform for:
+
+• Reading Enhancement: Upload books, track progress, and improve comprehension
+• AI-Powered Learning: Get personalized insights, assessments, and flashcards
+• Social Reading: Join book clubs, share notes, and connect with readers
+• Progress Tracking: Build reading streaks, earn achievements, and level up
+
+GET STARTED IN 3 STEPS:
+
+1. Add Your First Book
+   Upload a PDF, EPUB, or paste text to get started.
+
+2. Start Reading
+   Use our distraction-free reader with annotations and AI assistance.
+
+3. Track Your Progress
+   Build your reading streak and unlock achievements!
+
+👉 Add Your First Book: {{appUrl}}/library
+
+───────────────────────────────────────
+
+NEED HELP GETTING STARTED?
+
+Check out our quick start guide or join our community forum to connect with other readers.
+
+• Quick Start Guide: {{appUrl}}/help
+• Community Forum: {{appUrl}}/forum
+• Explore Features: {{appUrl}}/features
+
+Happy reading!
+The Read Master Team

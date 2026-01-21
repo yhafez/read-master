@@ -1,0 +1,35 @@
+🔥 You're on Fire, {{firstName}}!
+
+7-DAY READING STREAK ACHIEVED!
+
+        🔥🔥🔥
+        7 DAYS
+Reading every day for a week!
+
+Congratulations on maintaining your reading habit for 7 consecutive days! You've earned:
+
+🏆 Week Warrior Badge
+   +100 XP
+
+💡 New Insight:
+   You're reading {{averageMinutes}} minutes per day on average.
+
+───────────────────────────────────────
+
+KEEP THE MOMENTUM GOING!
+
+Studies show that it takes 21 days to form a habit. You're 1/3 of the way there!
+
+👉 Continue Reading: {{appUrl}}/reader
+
+───────────────────────────────────────
+
+YOUR READING STATS:
+
+• 📖 Books in progress: {{booksInProgress}}
+• ✅ Books completed: {{booksCompleted}}
+• ⏱️ Total reading time: {{totalReadingTime}}
+• 📊 Current level: {{userLevel}}
+
+Keep up the amazing work!
+The Read Master Team

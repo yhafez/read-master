@@ -11,6 +11,7 @@
 // Console logging is intentionally used in seed scripts for progress feedback
 
 import { PrismaClient } from "@prisma/client";
+import { seedEmailTemplates } from "./seedEmailTemplates.js";
 
 const prisma = new PrismaClient();
 
@@ -1333,6 +1334,7 @@ async function main() {
     const books = await seedBooks(users);
     await seedTTSDownloads(users, books);
     await seedDailyAnalytics();
+    await seedEmailTemplates();
 
     console.log("");
     console.log("✅ Database seeded successfully!");
@@ -1344,6 +1346,7 @@ async function main() {
     console.log(`  - ${SAMPLE_BOOKS.length} sample books`);
     console.log(`  - 5 TTS downloads (various states)`);
     console.log(`  - 30 days of analytics data`);
+    console.log(`  - 6 email templates`);
     console.log("");
   } catch (error) {
     console.error("");

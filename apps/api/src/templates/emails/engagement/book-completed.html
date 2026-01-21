@@ -1,0 +1,54 @@
+<h2>🎉 Congratulations, {{firstName}}!</h2>
+
+<p><strong>You finished "{{bookTitle}}"!</strong></p>
+
+<div class="text-center" style="padding: 32px 0;">
+  <div style="font-size: 64px; line-height: 1;">📚✨</div>
+  <div style="font-size: 24px; font-weight: 600; margin-top: 16px;">
+    Book Completed!
+  </div>
+</div>
+
+<p>Way to go! You've just finished reading "{{bookTitle}}" by {{bookAuthor}}.</p>
+
+<div class="highlight-box">
+  <p><strong>📊 Your Reading Stats:</strong></p>
+  <ul style="margin: 0; padding-left: 20px;">
+    <li>Reading time: {{readingTime}}</li>
+    <li>Pages read: {{pagesRead}}</li>
+    <li>Words read: {{wordsRead}}</li>
+    <li>Average speed: {{averageWpm}} WPM</li>
+  </ul>
+</div>
+
+<h3>What's Next?</h3>
+
+<p><strong>📝 Take an Assessment</strong><br />
+Test your comprehension and earn bonus XP!</p>
+
+<div class="text-center">
+  <a href="{{appUrl}}/books/{{bookId}}/assess" class="button">Take Assessment</a>
+</div>
+
+<p><strong>🗂️ Review Your Notes</strong><br />
+You made {{annotationCount}} annotations while reading.</p>
+
+<div class="text-center">
+  <a href="{{appUrl}}/books/{{bookId}}/annotations" class="button button-secondary">View Annotations</a>
+</div>
+
+<p><strong>📚 Find Your Next Read</strong><br />
+Keep the momentum going with another book!</p>
+
+<div class="text-center">
+  <a href="{{appUrl}}/library" class="button button-secondary">Browse Library</a>
+</div>
+
+<hr class="divider" />
+
+<p class="text-muted">
+  <strong>Achievement Unlocked:</strong> Book Finisher (+50 XP)
+</p>
+
+<p>Happy reading!<br />
+<strong>The Read Master Team</strong></p>

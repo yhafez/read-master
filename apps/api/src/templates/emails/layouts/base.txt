@@ -1,0 +1,16 @@
+═══════════════════════════════════════
+📚 READ MASTER
+═══════════════════════════════════════
+
+{{content}}
+
+═══════════════════════════════════════
+
+© {{year}} Read Master. All rights reserved.
+
+Unsubscribe: {{unsubscribeUrl}}
+Email Preferences: {{preferencesUrl}}
+Visit Website: https://readmaster.ai
+
+Read Master
+Building better readers, one book at a time.

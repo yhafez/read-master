@@ -1,0 +1,59 @@
+Your Week in Reading, {{firstName}}! 📊
+
+Here's a summary of your reading progress from {{startDate}} to {{endDate}}.
+
+THIS WEEK'S STATS:
+
+📖 Reading Time: {{readingTime}}
+📄 Pages Read: {{pagesRead}}
+✅ Books Completed: {{booksCompleted}}
+🔥 Current Streak: {{currentStreak}} days
+⭐ XP Earned: +{{xpEarned}}
+
+───────────────────────────────────────
+
+{{#if booksCompleted > 0}}
+BOOKS YOU FINISHED:
+
+{{#each completedBooks}}
+• "{{this.title}}" by {{this.author}}
+  Completed {{this.completedDate}}
+{{/each}}
+{{/if}}
+
+{{#if booksInProgress > 0}}
+CURRENTLY READING:
+
+{{#each inProgressBooks}}
+• "{{this.title}}" by {{this.author}}
+  {{this.progress}}% complete
+{{/each}}
+{{/if}}
+
+👉 View Full Stats: {{appUrl}}/stats
+
+───────────────────────────────────────
+
+{{#if newAchievements > 0}}
+🏆 NEW ACHIEVEMENTS:
+
+{{#each achievements}}
+• {{this.name}}
+  {{this.description}}
+{{/each}}
+{{/if}}
+
+───────────────────────────────────────
+
+KEEP THE MOMENTUM GOING!
+
+You've been doing great! Here are some suggestions for this week:
+
+• 📚 Continue reading "{{topBook}}"
+• 🎯 Maintain your {{currentStreak}}-day streak
+• 📝 Review your annotations and create flashcards
+
+👉 Continue Reading: {{appUrl}}/reader
+
+Happy reading!
+The Read Master Team

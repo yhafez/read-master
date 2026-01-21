@@ -1,0 +1,38 @@
+Let's Get You Started, {{firstName}}! 📖
+
+Yesterday you joined Read Master, and we're excited to help you get the most out of your reading journey!
+
+YOUR FIRST DAY CHECKLIST:
+
+✓ Account Created
+  You're all set up and ready to go!
+
+📚 Add Your First Book
+  Upload a PDF, EPUB, or paste text to start reading.
+
+👉 Upload a Book Now: {{appUrl}}/library/add
+
+───────────────────────────────────────
+
+POPULAR WAYS TO ADD BOOKS:
+
+1. Upload Files
+   Drag and drop PDF or EPUB files directly into Read Master.
+
+2. Paste Text
+   Copy and paste articles, essays, or any text content.
+
+3. Import from URL
+   Add online articles and web content with one click.
+
+4. Browse Library (Coming Soon)
+   Access thousands of public domain books.
+
+───────────────────────────────────────
+
+PRO TIP:
+
+"Start with something short! A single article or short story is perfect for trying out Read Master's features."
+
+See you in the app!
+The Read Master Team

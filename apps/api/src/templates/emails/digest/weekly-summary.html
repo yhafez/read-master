@@ -1,0 +1,76 @@
+<h2>Your Week in Reading, {{firstName}}! 📊</h2>
+
+<p>Here's a summary of your reading progress from {{startDate}} to {{endDate}}.</p>
+
+<div class="highlight-box">
+  <h3 style="margin-top: 0;">This Week's Stats:</h3>
+  <table width="100%" cellpadding="8" cellspacing="0" style="margin: 0;">
+    <tr>
+      <td><strong>📖 Reading Time:</strong></td>
+      <td align="right">{{readingTime}}</td>
+    </tr>
+    <tr>
+      <td><strong>📄 Pages Read:</strong></td>
+      <td align="right">{{pagesRead}}</td>
+    </tr>
+    <tr>
+      <td><strong>✅ Books Completed:</strong></td>
+      <td align="right">{{booksCompleted}}</td>
+    </tr>
+    <tr>
+      <td><strong>🔥 Current Streak:</strong></td>
+      <td align="right">{{currentStreak}} days</td>
+    </tr>
+    <tr>
+      <td><strong>⭐ XP Earned:</strong></td>
+      <td align="right">+{{xpEarned}}</td>
+    </tr>
+  </table>
+</div>
+
+{{#if booksCompleted > 0}}
+<h3>Books You Finished:</h3>
+{{#each completedBooks}}
+<p><strong>"{{this.title}}"</strong> by {{this.author}}<br />
+<span class="text-muted">Completed {{this.completedDate}}</span></p>
+{{/each}}
+{{/if}}
+
+{{#if booksInProgress > 0}}
+<h3>Currently Reading:</h3>
+{{#each inProgressBooks}}
+<p><strong>"{{this.title}}"</strong> by {{this.author}}<br />
+<span class="text-muted">{{this.progress}}% complete</span></p>
+{{/each}}
+{{/if}}
+
+<div class="text-center">
+  <a href="{{appUrl}}/stats" class="button">View Full Stats</a>
+</div>
+
+<hr class="divider" />
+
+{{#if newAchievements > 0}}
+<h3>🏆 New Achievements:</h3>
+{{#each achievements}}
+<p><strong>{{this.name}}</strong><br />
+<span class="text-muted">{{this.description}}</span></p>
+{{/each}}
+{{/if}}
+
+<h3>Keep the Momentum Going!</h3>
+
+<p>You've been doing great! Here are some suggestions for this week:</p>
+
+<ul>
+  <li>📚 Continue reading "{{topBook}}"</li>
+  <li>🎯 Maintain your {{currentStreak}}-day streak</li>
+  <li>📝 Review your annotations and create flashcards</li>
+</ul>
+
+<div class="text-center">
+  <a href="{{appUrl}}/reader" class="button">Continue Reading</a>
+</div>
+
+<p>Happy reading!<br />
+<strong>The Read Master Team</strong></p>

@@ -1,0 +1,35 @@
+You've Hit Your Library Limit, {{firstName}} 📚
+
+Great news! You're getting the most out of Read Master. You've reached the 3-book limit for free accounts.
+
+YOUR CURRENT LIBRARY:
+• 📖 {{bookCount}}/3 books
+• 🎯 Ready to add more!
+
+───────────────────────────────────────
+
+UPGRADE TO PRO FOR UNLIMITED BOOKS
+
+With Read Master Pro, you'll unlock:
+
+• ✨ Unlimited Library: Add as many books as you want
+• 🤖 Advanced AI Features: Unlimited assessments and flashcards
+• 🎙️ Premium TTS: High-quality text-to-speech with OpenAI voices
+• 📊 Advanced Analytics: Detailed reading insights and progress tracking
+• 🎨 Custom Themes: Personalize your reading experience
+
+👉 Upgrade to Pro - $9.99/month:
+{{appUrl}}/settings/subscription?utm_source=email&utm_campaign=library_limit
+
+───────────────────────────────────────
+
+NOT READY TO UPGRADE?
+
+You can remove a book from your library to make room for a new one.
+
+👉 Manage Library: {{appUrl}}/library
+
+Pro tip: Upgrading to Pro pays for itself if you read just 1 book per month!
+
+Happy reading!
+The Read Master Team

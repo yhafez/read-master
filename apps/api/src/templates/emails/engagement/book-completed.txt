@@ -1,0 +1,40 @@
+🎉 Congratulations, {{firstName}}!
+
+YOU FINISHED "{{bookTitle}}"!
+
+        📚✨
+   Book Completed!
+
+Way to go! You've just finished reading "{{bookTitle}}" by {{bookAuthor}}.
+
+───────────────────────────────────────
+
+📊 YOUR READING STATS:
+
+• Reading time: {{readingTime}}
+• Pages read: {{pagesRead}}
+• Words read: {{wordsRead}}
+• Average speed: {{averageWpm}} WPM
+
+───────────────────────────────────────
+
+WHAT'S NEXT?
+
+📝 Take an Assessment
+   Test your comprehension and earn bonus XP!
+   👉 {{appUrl}}/books/{{bookId}}/assess
+
+🗂️ Review Your Notes
+   You made {{annotationCount}} annotations while reading.
+   👉 {{appUrl}}/books/{{bookId}}/annotations
+
+📚 Find Your Next Read
+   Keep the momentum going with another book!
+   👉 {{appUrl}}/library
+
+───────────────────────────────────────
+
+🏆 Achievement Unlocked: Book Finisher (+50 XP)
+
+Happy reading!
+The Read Master Team
