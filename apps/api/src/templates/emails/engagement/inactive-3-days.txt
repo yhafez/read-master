@@ -1,0 +1,35 @@
+We Miss You, {{firstName}}! 📚
+
+It's been a few days since we've seen you in Read Master. We hope everything is going well!
+
+YOUR READING SNAPSHOT:
+
+• {{booksInProgress}} book(s) waiting for you
+• {{currentStreak}} day streak (keep it alive!)
+• Level {{userLevel}} - {{xpToNextLevel}} XP to next level
+
+───────────────────────────────────────
+
+PICK UP WHERE YOU LEFT OFF:
+
+{{#if lastBook}}
+You were reading "{{lastBook.title}}" by {{lastBook.author}}.
+You're {{lastBook.progress}}% through!
+
+👉 Continue Reading: {{appUrl}}/books/{{lastBook.id}}/reader
+{{else}}
+Start a new book and keep your reading momentum going!
+
+👉 Browse Your Library: {{appUrl}}/library
+{{/if}}
+
+───────────────────────────────────────
+
+DID YOU KNOW?
+
+"Reading just 15 minutes a day can expose you to over 1 million words per year!"
+
+Even a short reading session today can help maintain your streak and keep you progressing toward your goals.
+
+See you soon!
+The Read Master Team

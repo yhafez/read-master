@@ -1,0 +1,42 @@
+<h2>We Miss You, {{firstName}}! 📚</h2>
+
+<p>It's been a few days since we've seen you in Read Master. We hope everything is going well!</p>
+
+<div class="highlight-box">
+  <p><strong>Your Reading Snapshot:</strong></p>
+  <ul style="margin: 0; padding-left: 20px;">
+    <li>{{booksInProgress}} book(s) waiting for you</li>
+    <li>{{currentStreak}} day streak (keep it alive!)</li>
+    <li>Level {{userLevel}} - {{xpToNextLevel}} XP to next level</li>
+  </ul>
+</div>
+
+<h3>Pick Up Where You Left Off:</h3>
+
+{{#if lastBook}}
+<p>You were reading <strong>"{{lastBook.title}}"</strong> by {{lastBook.author}}.<br />
+<span class="text-muted">You're {{lastBook.progress}}% through!</span></p>
+
+<div class="text-center">
+  <a href="{{appUrl}}/books/{{lastBook.id}}/reader" class="button">Continue Reading</a>
+</div>
+{{else}}
+<p>Start a new book and keep your reading momentum going!</p>
+
+<div class="text-center">
+  <a href="{{appUrl}}/library" class="button">Browse Your Library</a>
+</div>
+{{/if}}
+
+<hr class="divider" />
+
+<h3>Did You Know?</h3>
+
+<p class="text-muted">
+  <em>"Reading just 15 minutes a day can expose you to over 1 million words per year!"</em>
+</p>
+
+<p>Even a short reading session today can help maintain your streak and keep you progressing toward your goals.</p>
+
+<p>See you soon!<br />
+<strong>The Read Master Team</strong></p>
