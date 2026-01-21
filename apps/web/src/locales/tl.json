@@ -716,6 +716,48 @@
         "networkError": "Network error habang ginagawa ang speech",
         "rateLimited": "Masyadong maraming requests, subukan ulit mamaya",
         "unauthorized": "I-upgrade ang iyong plan para gamitin ang mga premium na boses"
+      },
+      "downloads": {
+        "title": "Mga Audio Download",
+        "downloadBook": "I-download ang Audio",
+        "downloading": "Nag-download...",
+        "downloadComplete": "Kumpleto ang Download",
+        "downloadFailed": "Nabigo ang Download",
+        "status": {
+          "PENDING": "Nakapila",
+          "PROCESSING": "Pinoproseso",
+          "COMPLETED": "Handa na",
+          "FAILED": "Nabigo",
+          "CANCELLED": "Kinansela"
+        },
+        "format": "Format ng Audio",
+        "quality": "Kalidad",
+        "estimatedSize": "Tinantyang Laki",
+        "estimatedCost": "Tinantyang Gastos",
+        "expiresAt": "Mag-expire",
+        "progress": "Progreso",
+        "downloadFile": "I-download ang File",
+        "deleteDownload": "Tanggalin",
+        "confirmDelete": "Sigurado ka bang gusto mong tanggalin ang download na ito?",
+        "noDownloads": "Wala pang audio downloads",
+        "createFirst": "Lumikha ng iyong unang audiobook download para makinig offline",
+        "quota": {
+          "title": "Buwan-buwan na Quota",
+          "used": "{{used}} sa {{limit}} ang ginamit",
+          "unlimited": "Walang Hangganan",
+          "upgradeRequired": "Mag-upgrade sa Pro o Scholar para mag-download ng mga audiobook",
+          "limitReached": "Naabot na ang buwan-buwan na limitasyon sa download",
+          "resetsOn": "Mag-reset sa {{date}}"
+        },
+        "errors": {
+          "quotaExceeded": "Naabot na ang buwan-buwan na limitasyon sa download. Mag-upgrade sa Scholar para sa walang hanggang downloads.",
+          "tierRequired": "Ang audio downloads ay nangangailangan ng Pro o Scholar subscription",
+          "bookNotFound": "Hindi nahanap ang libro",
+          "invalidFormat": "Ang napiling format ng audio ay hindi wasto",
+          "processingFailed": "Nabigo ang pagproseso ng audio. Mangyaring subukan muli.",
+          "downloadExpired": "Ang download na ito ay nag-expire na",
+          "unknownError": "Nabigo ang paglikha ng download. Mangyaring subukan muli."
+        }
       }
     }
   },

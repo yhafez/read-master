@@ -716,6 +716,48 @@
         "networkError": "Error de red al generar el habla",
         "rateLimited": "Demasiadas solicitudes, intente de nuevo más tarde",
         "unauthorized": "Actualice su plan para usar voces premium"
+      },
+      "downloads": {
+        "title": "Descargas de Audio",
+        "downloadBook": "Descargar Audio",
+        "downloading": "Descargando...",
+        "downloadComplete": "Descarga Completa",
+        "downloadFailed": "Descarga Fallida",
+        "status": {
+          "PENDING": "En Cola",
+          "PROCESSING": "Procesando",
+          "COMPLETED": "Listo",
+          "FAILED": "Fallido",
+          "CANCELLED": "Cancelado"
+        },
+        "format": "Formato de Audio",
+        "quality": "Calidad",
+        "estimatedSize": "Tamaño Estimado",
+        "estimatedCost": "Costo Estimado",
+        "expiresAt": "Expira",
+        "progress": "Progreso",
+        "downloadFile": "Descargar Archivo",
+        "deleteDownload": "Eliminar",
+        "confirmDelete": "¿Estás seguro de que quieres eliminar esta descarga?",
+        "noDownloads": "Aún no hay descargas de audio",
+        "createFirst": "Crea tu primera descarga de audiolibro para escuchar sin conexión",
+        "quota": {
+          "title": "Cuota Mensual",
+          "used": "{{used}} de {{limit}} usado",
+          "unlimited": "Ilimitado",
+          "upgradeRequired": "Actualiza a Pro o Scholar para descargar audiolibros",
+          "limitReached": "Límite mensual de descargas alcanzado",
+          "resetsOn": "Se restablece el {{date}}"
+        },
+        "errors": {
+          "quotaExceeded": "Límite mensual de descargas alcanzado. Actualiza a Scholar para descargas ilimitadas.",
+          "tierRequired": "Las descargas de audio requieren suscripción Pro o Scholar",
+          "bookNotFound": "Libro no encontrado",
+          "invalidFormat": "Formato de audio no válido seleccionado",
+          "processingFailed": "Error al procesar audio. Por favor, inténtalo de nuevo.",
+          "downloadExpired": "Esta descarga ha expirado",
+          "unknownError": "Error al crear descarga. Por favor, inténtalo de nuevo."
+        }
       }
     }
   },

@@ -716,6 +716,48 @@
         "networkError": "音声生成中にネットワークエラーが発生しました",
         "rateLimited": "リクエストが多すぎます。後でもう一度お試しください",
         "unauthorized": "プレミアム音声を使用するにはプランをアップグレードしてください"
+      },
+      "downloads": {
+        "title": "オーディオダウンロード",
+        "downloadBook": "オーディオをダウンロード",
+        "downloading": "ダウンロード中...",
+        "downloadComplete": "ダウンロード完了",
+        "downloadFailed": "ダウンロード失敗",
+        "status": {
+          "PENDING": "待機中",
+          "PROCESSING": "処理中",
+          "COMPLETED": "準備完了",
+          "FAILED": "失敗",
+          "CANCELLED": "キャンセル済み"
+        },
+        "format": "オーディオ形式",
+        "quality": "品質",
+        "estimatedSize": "推定サイズ",
+        "estimatedCost": "推定コスト",
+        "expiresAt": "有効期限",
+        "progress": "進捗",
+        "downloadFile": "ファイルをダウンロード",
+        "deleteDownload": "削除",
+        "confirmDelete": "このダウンロードを削除してもよろしいですか？",
+        "noDownloads": "オーディオダウンロードはまだありません",
+        "createFirst": "オフラインで聴くために最初のオーディオブックダウンロードを作成してください",
+        "quota": {
+          "title": "月間クォータ",
+          "used": "{{limit}}中{{used}}使用",
+          "unlimited": "無制限",
+          "upgradeRequired": "オーディオブックをダウンロードするにはProまたはScholarにアップグレードしてください",
+          "limitReached": "月間ダウンロード制限に達しました",
+          "resetsOn": "{{date}}にリセット"
+        },
+        "errors": {
+          "quotaExceeded": "月間ダウンロード制限に達しました。無制限ダウンロードにはScholarにアップグレードしてください。",
+          "tierRequired": "オーディオダウンロードにはProまたはScholarサブスクリプションが必要です",
+          "bookNotFound": "本が見つかりません",
+          "invalidFormat": "無効なオーディオ形式が選択されました",
+          "processingFailed": "オーディオの処理に失敗しました。もう一度お試しください。",
+          "downloadExpired": "このダウンロードは期限切れです",
+          "unknownError": "ダウンロードの作成に失敗しました。もう一度お試しください。"
+        }
       }
     }
   },

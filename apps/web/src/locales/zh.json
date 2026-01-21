@@ -716,6 +716,48 @@
         "networkError": "生成语音时网络错误",
         "rateLimited": "请求过多，请稍后重试",
         "unauthorized": "升级您的计划以使用高级声音"
+      },
+      "downloads": {
+        "title": "音频下载",
+        "downloadBook": "下载音频",
+        "downloading": "下载中...",
+        "downloadComplete": "下载完成",
+        "downloadFailed": "下载失败",
+        "status": {
+          "PENDING": "排队中",
+          "PROCESSING": "处理中",
+          "COMPLETED": "准备就绪",
+          "FAILED": "失败",
+          "CANCELLED": "已取消"
+        },
+        "format": "音频格式",
+        "quality": "质量",
+        "estimatedSize": "估计大小",
+        "estimatedCost": "估计成本",
+        "expiresAt": "过期时间",
+        "progress": "进度",
+        "downloadFile": "下载文件",
+        "deleteDownload": "删除",
+        "confirmDelete": "您确定要删除此下载吗？",
+        "noDownloads": "尚无音频下载",
+        "createFirst": "创建您的第一个有声书下载以离线收听",
+        "quota": {
+          "title": "每月配额",
+          "used": "已使用 {{used}} / {{limit}}",
+          "unlimited": "无限制",
+          "upgradeRequired": "升级到Pro或Scholar以下载有声书",
+          "limitReached": "已达到每月下载限制",
+          "resetsOn": "重置于 {{date}}"
+        },
+        "errors": {
+          "quotaExceeded": "已达到每月下载限制。升级到Scholar以获得无限下载。",
+          "tierRequired": "音频下载需要Pro或Scholar订阅",
+          "bookNotFound": "未找到书籍",
+          "invalidFormat": "选择的音频格式无效",
+          "processingFailed": "处理音频失败。请重试。",
+          "downloadExpired": "此下载已过期",
+          "unknownError": "创建下载失败。请重试。"
+        }
       }
     }
   },
