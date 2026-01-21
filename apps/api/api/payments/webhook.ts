@@ -214,8 +214,8 @@ async function handleSubscriptionCreated(
       metadata: {
         tier,
         status: subscription.status,
-        currentPeriodStart: subscription.current_period_start,
-        currentPeriodEnd: subscription.current_period_end,
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000).toISOString(),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000).toISOString(),
       },
     },
   });
@@ -297,8 +297,8 @@ async function handleSubscriptionUpdated(
         entityType: "Subscription",
         entityId: subscription.id,
         metadata: {
-          cancelAt: subscription.cancel_at,
-          periodEnd: subscription.current_period_end,
+          cancelAt: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
+          periodEnd: new Date((subscription as any).current_period_end * 1000).toISOString(),
         },
       },
     });
@@ -371,7 +371,7 @@ async function handleInvoicePaymentSucceeded(
   invoice: Stripe.Invoice
 ): Promise<void> {
   const customerId = invoice.customer as string;
-  const subscriptionId = invoice.subscription as string;
+  const subscriptionId = (invoice as any).subscription as string;
 
   // Find user by customer ID
   const user = await db.user.findFirst({
@@ -406,19 +406,10 @@ async function handleInvoicePaymentSucceeded(
     },
     create: {
       date: today,
-      activeUsers: 0,
-      newUsers: 0,
-      totalBooks: 0,
-      totalReadingSessions: 0,
-      totalAnnotations: 0,
-      totalFlashcards: 0,
-      aiRequestsCount: 0,
-      aiTokensUsed: 0,
-      aiCost: 0,
-      revenue: amountPaid,
+      totalRevenueCents: amountPaid,
     },
     update: {
-      revenue: {
+      totalRevenueCents: {
         increment: amountPaid,
       },
     },

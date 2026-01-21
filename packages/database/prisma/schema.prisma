@@ -29,9 +29,10 @@ model User {
   bio         String? @db.Text // User bio for profile
 
   // Subscription & Tier
-  tier             UserTier  @default(FREE)
-  tierExpiresAt    DateTime?
-  stripeCustomerId String?   @unique
+  tier                  UserTier  @default(FREE)
+  tierExpiresAt         DateTime?
+  stripeCustomerId      String?   @unique
+  stripeSubscriptionId  String?   @unique
 
   // Admin & Moderation
   role UserRole @default(USER)

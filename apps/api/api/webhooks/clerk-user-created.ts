@@ -39,7 +39,7 @@ export default async function handler(
 ): Promise<void> {
   // Only allow POST requests
   if (req.method !== "POST") {
-    return sendError(res, 405, "METHOD_NOT_ALLOWED", "Method not allowed");
+    return sendError(res, "VALIDATION_ERROR", "Method not allowed", 405);
   }
 
   try {
@@ -48,9 +48,9 @@ export default async function handler(
       logger.error("CLERK_WEBHOOK_SECRET not configured");
       return sendError(
         res,
-        500,
         "CONFIGURATION_ERROR",
-        "Webhook secret not configured"
+        "Webhook secret not configured",
+        500
       );
     }
 
@@ -60,7 +60,7 @@ export default async function handler(
 
     if (!svix_id || !svix_timestamp || !svix_signature) {
       logger.warn("Missing svix headers");
-      return sendError(res, 400, "BAD_REQUEST", "Missing svix headers");
+      return sendError(res, "BAD_REQUEST", "Missing svix headers", 400);
     }
 
     // Create webhook instance
@@ -88,7 +88,7 @@ export default async function handler(
 
     if (!primaryEmail) {
       logger.error("No email found for user", { clerkId: clerkUser.id });
-      return sendError(res, 400, "BAD_REQUEST", "No email found");
+      return sendError(res, "BAD_REQUEST", "No email found", 400);
     }
 
     // Check if user already exists
@@ -109,14 +109,15 @@ export default async function handler(
       data: {
         clerkId: clerkUser.id,
         email: primaryEmail.email_address,
-        username: clerkUser.username,
-        firstName: clerkUser.first_name,
-        lastName: clerkUser.last_name,
+        username: clerkUser.username || null,
+        firstName: clerkUser.first_name || null,
+        lastName: clerkUser.last_name || null,
         displayName:
           clerkUser.first_name ||
           clerkUser.username ||
-          primaryEmail.email_address.split("@")[0],
-        avatarUrl: clerkUser.profile_image_url,
+          primaryEmail.email_address.split("@")[0] ||
+          null,
+        avatarUrl: clerkUser.profile_image_url || null,
         tier: "FREE", // Default to free tier
         role: "USER", // Default role
       },

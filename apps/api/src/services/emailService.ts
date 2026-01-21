@@ -130,7 +130,7 @@ export async function sendEmail(
         textBody: options.textBody,
         category: options.category,
         tags: options.tags || [],
-        metadata: options.metadata || {},
+        metadata: (options.metadata || {}) as any,
       },
     });
 
@@ -159,10 +159,10 @@ export async function sendEmail(
     }
 
     // Send via SendGrid
-    const msg = {
+    const msg: any = {
       to: {
         email: options.to,
-        name: options.toName,
+        ...(options.toName && { name: options.toName }),
       },
       from: {
         email: SENDGRID_FROM_EMAIL,
@@ -171,7 +171,7 @@ export async function sendEmail(
       subject: options.subject,
       text: options.textBody,
       html: options.htmlBody,
-      replyTo: options.replyTo,
+      ...(options.replyTo && { replyTo: options.replyTo }),
       categories: [options.category, ...(options.tags || [])],
       customArgs: {
         emailId: email.id,
@@ -398,15 +398,15 @@ export async function sendTemplateEmail(
     // Send email
     return await sendEmail(userId, {
       to,
-      toName: options?.toName,
+      toName: options?.toName || undefined,
       subject: rendered.subject,
       htmlBody: rendered.htmlBody,
       textBody: rendered.textBody,
       category: template.category,
       templateName,
-      tags: options?.tags,
-      metadata: options?.metadata,
-      replyTo: options?.replyTo,
+      tags: options?.tags || undefined,
+      metadata: options?.metadata || undefined,
+      replyTo: options?.replyTo || undefined,
     });
   } catch (error) {
     logger.error("Failed to send template email", {

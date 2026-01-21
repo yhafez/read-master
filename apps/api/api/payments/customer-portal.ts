@@ -21,8 +21,6 @@ const CustomerPortalSchema = z.object({
   returnUrl: z.string().url().optional(),
 });
 
-type CustomerPortalInput = z.infer<typeof CustomerPortalSchema>;
-
 // ============================================================================
 // Handler
 // ============================================================================
@@ -36,7 +34,7 @@ async function handler(
     return sendError(res, ErrorCodes.METHOD_NOT_ALLOWED, "Method not allowed", 405);
   }
 
-  const { userId, clerkId } = req.auth;
+  const { userId } = req.auth;
 
   try {
     // Check if Stripe is configured
@@ -66,7 +64,7 @@ async function handler(
     const { returnUrl } = parseResult.data;
 
     // Get user details
-    const user = await getUserByClerkId(clerkId);
+    const user = await getUserByClerkId(userId);
 
     if (!user) {
       return sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
