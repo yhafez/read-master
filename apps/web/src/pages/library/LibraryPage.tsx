@@ -3,6 +3,7 @@
  */
 
 import { useState, useCallback, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -27,6 +28,10 @@ import { useTranslation } from "react-i18next";
 import { useBooks, usePrefetchBook, useDeleteBook } from "@/hooks/useBooks";
 import type { Book, BookListFilters } from "@/hooks/useBooks";
 import { useUIStore } from "@/stores/uiStore";
+import {
+  filtersToSearchParams,
+  searchParamsToFilters,
+} from "@/utils/filterUrlParams";
 import {
   LibraryToolbar,
   LibraryFilterPanel,
@@ -58,19 +63,30 @@ export function LibraryPage(): React.ReactElement {
     (state) => state.preferences.compactLibraryView
   );
 
+  // URL search params
+  const [searchParams, setSearchParams] = useSearchParams();
+
   // Load persisted sort preferences on mount
   const initialSortPrefs = useMemo(() => loadSortPreferences(), []);
+
+  // Initialize filters from URL params or defaults
+  const [filters, setFilters] = useState<LibraryFilters>(() => {
+    const urlFilters = searchParamsToFilters(
+      searchParams,
+      DEFAULT_LIBRARY_FILTERS
+    );
+    return {
+      ...urlFilters,
+      sort: initialSortPrefs.field,
+      order: initialSortPrefs.order,
+    };
+  });
 
   // Local UI state
   const [viewMode, setViewMode] = useState<LibraryViewMode>(
     compactLibraryView ? "list" : "grid"
   );
   const [filterPanelOpen, setFilterPanelOpen] = useState(!isMobile);
-  const [filters, setFilters] = useState<LibraryFilters>(() => ({
-    ...DEFAULT_LIBRARY_FILTERS,
-    sort: initialSortPrefs.field,
-    order: initialSortPrefs.order,
-  }));
   const [page, setPage] = useState(1);
   const [addBookModalOpen, setAddBookModalOpen] = useState(false);
   const [filterPresetsDialogOpen, setFilterPresetsDialogOpen] = useState(false);
@@ -123,10 +139,16 @@ export function LibraryPage(): React.ReactElement {
 
   const handleFiltersChange = useCallback(
     (newFilters: Partial<LibraryFilters>) => {
-      setFilters((prev) => ({ ...prev, ...newFilters }));
+      setFilters((prev) => {
+        const updated = { ...prev, ...newFilters };
+        // Update URL params
+        const params = filtersToSearchParams(updated);
+        setSearchParams(params, { replace: true });
+        return updated;
+      });
       setPage(1); // Reset to first page on filter change
     },
-    []
+    [setSearchParams]
   );
 
   const handleAddBookClick = useCallback(() => {
@@ -198,43 +220,53 @@ export function LibraryPage(): React.ReactElement {
 
   const handleRemoveFilter = useCallback(
     (filterKey: keyof LibraryFilters, value?: string) => {
-      if (filterKey === "genres" && value) {
-        setFilters((prev) => ({
-          ...prev,
-          genres: prev.genres.filter((g) => g !== value),
-        }));
-      } else if (filterKey === "tags" && value) {
-        setFilters((prev) => ({
-          ...prev,
-          tags: prev.tags.filter((t) => t !== value),
-        }));
-      } else if (
-        filterKey === "dateAdded" ||
-        filterKey === "dateStarted" ||
-        filterKey === "dateCompleted"
-      ) {
-        setFilters((prev) => ({
-          ...prev,
-          [filterKey]: { from: null, to: null },
-        }));
-      } else if (filterKey === "status") {
-        setFilters((prev) => ({ ...prev, status: "all" }));
-      } else if (filterKey === "progress") {
-        setFilters((prev) => ({ ...prev, progress: "all" }));
-      } else if (filterKey === "fileType") {
-        setFilters((prev) => ({ ...prev, fileType: "all" }));
-      } else if (filterKey === "source") {
-        setFilters((prev) => ({ ...prev, source: "all" }));
-      }
+      setFilters((prev) => {
+        let updated = { ...prev };
+
+        if (filterKey === "genres" && value) {
+          updated = {
+            ...prev,
+            genres: prev.genres.filter((g) => g !== value),
+          };
+        } else if (filterKey === "tags" && value) {
+          updated = {
+            ...prev,
+            tags: prev.tags.filter((t) => t !== value),
+          };
+        } else if (
+          filterKey === "dateAdded" ||
+          filterKey === "dateStarted" ||
+          filterKey === "dateCompleted"
+        ) {
+          updated = {
+            ...prev,
+            [filterKey]: { from: null, to: null },
+          };
+        } else if (filterKey === "status") {
+          updated = { ...prev, status: "all" };
+        } else if (filterKey === "progress") {
+          updated = { ...prev, progress: "all" };
+        } else if (filterKey === "fileType") {
+          updated = { ...prev, fileType: "all" };
+        } else if (filterKey === "source") {
+          updated = { ...prev, source: "all" };
+        }
+
+        // Update URL params
+        const params = filtersToSearchParams(updated);
+        setSearchParams(params, { replace: true });
+        return updated;
+      });
       setPage(1); // Reset to first page
     },
-    []
+    [setSearchParams]
   );
 
   const handleClearAllFilters = useCallback(() => {
     setFilters(DEFAULT_LIBRARY_FILTERS);
+    setSearchParams(new URLSearchParams(), { replace: true });
     setPage(1);
-  }, []);
+  }, [setSearchParams]);
 
   const handleLoadPreset = useCallback(
     (presetFilters: Partial<LibraryFilters>) => {
