@@ -373,7 +373,19 @@
       "continueReading": "Magpatuloy sa Pagbabasa",
       "startReading": "Magsimulang Magbasa"
     },
-    "activeFilters": "Aktibong mga filter"
+    "activeFilters": "Aktibong mga filter",
+    "filterPresets": {
+      "title": "Mga Preset ng Filter",
+      "saveTitle": "I-save ang Kasalukuyang mga Filter",
+      "nameLabel": "Pangalan ng Preset",
+      "descriptionLabel": "Paglalarawan",
+      "descriptionPlaceholder": "Opsyonal na paglalarawan para sa preset ng filter na ito",
+      "saveCurrentFilters": "I-save ang Kasalukuyang mga Filter",
+      "noPresets": "Wala pang naka-save na mga preset ng filter. I-save ang iyong kasalukuyang mga filter upang lumikha ng isa.",
+      "default": "Default na preset",
+      "toggleDefault": "I-toggle ang default na preset",
+      "confirmDelete": "Sigurado ka bang gusto mong tanggalin ang preset ng filter na ito?"
+    }
   },
   "reader": {
     "title": "Reader",

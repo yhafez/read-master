@@ -299,13 +299,13 @@
       "wantToRead": "Quiero Leer",
       "abandoned": "Abandonados",
       "progress": {
+        "100": "Completado (100%)",
         "label": "Progreso",
         "all": "Todo el Progreso",
         "0-25": "0-25%",
         "26-50": "26-50%",
         "51-75": "51-75%",
-        "76-99": "76-99%",
-        "100": "Completado (100%)"
+        "76-99": "76-99%"
       },
       "fileType": {
         "label": "Tipo de Archivo",
@@ -373,6 +373,18 @@
       "progress": "{{percent}}% completo",
       "continueReading": "Continuar Leyendo",
       "startReading": "Comenzar a Leer"
+    },
+    "filterPresets": {
+      "title": "Preajustes de Filtro",
+      "saveTitle": "Guardar Filtros Actuales",
+      "nameLabel": "Nombre del Preajuste",
+      "descriptionLabel": "Descripción",
+      "descriptionPlaceholder": "Descripción opcional para este preajuste de filtro",
+      "saveCurrentFilters": "Guardar Filtros Actuales",
+      "noPresets": "Aún no hay preajustes de filtro guardados. Guarda tus filtros actuales para crear uno.",
+      "default": "Preajuste predeterminado",
+      "toggleDefault": "Alternar preajuste predeterminado",
+      "confirmDelete": "¿Estás seguro de que deseas eliminar este preajuste de filtro?"
     }
   },
   "reader": {

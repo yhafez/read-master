@@ -33,6 +33,7 @@ import {
   LibraryGrid,
   AddBookModal,
   ActiveFilterChips,
+  FilterPresetsDialog,
   DEFAULT_LIBRARY_FILTERS,
   loadSortPreferences,
   saveSortPreferences,
@@ -72,6 +73,7 @@ export function LibraryPage(): React.ReactElement {
   }));
   const [page, setPage] = useState(1);
   const [addBookModalOpen, setAddBookModalOpen] = useState(false);
+  const [filterPresetsDialogOpen, setFilterPresetsDialogOpen] = useState(false);
 
   // Bulk actions state
   const [bulkMode, setBulkMode] = useState(false);
@@ -234,6 +236,15 @@ export function LibraryPage(): React.ReactElement {
     setPage(1);
   }, []);
 
+  const handleLoadPreset = useCallback(
+    (presetFilters: Partial<LibraryFilters>) => {
+      setFilters((prev) => ({ ...prev, ...presetFilters }));
+      setPage(1);
+      setFilterPresetsDialogOpen(false);
+    },
+    []
+  );
+
   // Check if we have any books at all (for empty state vs no results)
   const hasNoBooks = !isLoading && books.length === 0 && page === 1;
 
@@ -321,6 +332,7 @@ export function LibraryPage(): React.ReactElement {
           filters={filters}
           onFiltersChange={handleFiltersChange}
           availableTags={[]} // TODO: Fetch user's tags from API
+          onFilterPresetsClick={() => setFilterPresetsDialogOpen(true)}
         />
 
         {/* Books Grid/List */}
@@ -365,6 +377,14 @@ export function LibraryPage(): React.ReactElement {
       <AddBookModal
         open={addBookModalOpen}
         onClose={() => setAddBookModalOpen(false)}
+      />
+
+      {/* Filter Presets Dialog */}
+      <FilterPresetsDialog
+        open={filterPresetsDialogOpen}
+        onClose={() => setFilterPresetsDialogOpen(false)}
+        currentFilters={filters}
+        onLoadPreset={handleLoadPreset}
       />
     </Box>
   );

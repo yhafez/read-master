@@ -62,3 +62,7 @@ export {
   ActiveFilterChips,
   type ActiveFilterChipsProps,
 } from "./ActiveFilterChips";
+export {
+  FilterPresetsDialog,
+  type FilterPresetsDialogProps,
+} from "./FilterPresetsDialog";

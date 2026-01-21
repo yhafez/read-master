@@ -373,7 +373,19 @@
       "continueReading": "読書を続ける",
       "startReading": "読み始める"
     },
-    "activeFilters": "アクティブフィルター"
+    "activeFilters": "アクティブフィルター",
+    "filterPresets": {
+      "title": "フィルタープリセット",
+      "saveTitle": "現在のフィルターを保存",
+      "nameLabel": "プリセット名",
+      "descriptionLabel": "説明",
+      "descriptionPlaceholder": "このフィルタープリセットのオプションの説明",
+      "saveCurrentFilters": "現在のフィルターを保存",
+      "noPresets": "保存されたフィルタープリセットがまだありません。現在のフィルターを保存して作成してください。",
+      "default": "デフォルトプリセット",
+      "toggleDefault": "デフォルトプリセットを切り替え",
+      "confirmDelete": "このフィルタープリセットを削除してもよろしいですか？"
+    }
   },
   "reader": {
     "title": "Reader",

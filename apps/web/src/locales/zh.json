@@ -373,7 +373,19 @@
       "continueReading": "继续阅读",
       "startReading": "开始阅读"
     },
-    "activeFilters": "活动筛选器"
+    "activeFilters": "活动筛选器",
+    "filterPresets": {
+      "title": "筛选器预设",
+      "saveTitle": "保存当前筛选器",
+      "nameLabel": "预设名称",
+      "descriptionLabel": "描述",
+      "descriptionPlaceholder": "此筛选器预设的可选描述",
+      "saveCurrentFilters": "保存当前筛选器",
+      "noPresets": "尚无保存的筛选器预设。保存您当前的筛选器以创建一个。",
+      "default": "默认预设",
+      "toggleDefault": "切换默认预设",
+      "confirmDelete": "您确定要删除此筛选器预设吗？"
+    }
   },
   "reader": {
     "title": "Reader",

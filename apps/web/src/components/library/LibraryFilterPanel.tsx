@@ -20,6 +20,7 @@ import {
   MenuItem,
   type SelectChangeEvent,
 } from "@mui/material";
+import { Bookmark as BookmarkIcon } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -66,6 +67,8 @@ export interface LibraryFilterPanelProps {
   onFiltersChange: (filters: Partial<LibraryFilters>) => void;
   /** Available tags from user's books */
   availableTags?: string[];
+  /** Callback when filter presets button is clicked */
+  onFilterPresetsClick?: () => void;
 }
 
 export function LibraryFilterPanel({
@@ -74,6 +77,7 @@ export function LibraryFilterPanel({
   filters,
   onFiltersChange,
   availableTags = [],
+  onFilterPresetsClick,
 }: LibraryFilterPanelProps): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -181,6 +185,22 @@ export function LibraryFilterPanel({
           </Button>
         )}
       </Box>
+
+      {/* Filter Presets Button */}
+      {onFilterPresetsClick && (
+        <>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<BookmarkIcon />}
+            onClick={onFilterPresetsClick}
+            sx={{ mb: 2 }}
+          >
+            {t("library.filterPresets.title")}
+          </Button>
+          <Divider sx={{ mb: 2 }} />
+        </>
+      )}
 
       <Divider sx={{ mb: 2 }} />
 

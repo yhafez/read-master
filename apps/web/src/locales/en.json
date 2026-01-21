@@ -409,6 +409,18 @@
       "continueReading": "Continue Reading",
       "startReading": "Start Reading"
     },
+    "filterPresets": {
+      "title": "Filter Presets",
+      "saveTitle": "Save Current Filters",
+      "nameLabel": "Preset Name",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Optional description for this filter preset",
+      "saveCurrentFilters": "Save Current Filters",
+      "noPresets": "No saved filter presets yet. Save your current filters to create one.",
+      "default": "Default preset",
+      "toggleDefault": "Toggle default preset",
+      "confirmDelete": "Are you sure you want to delete this filter preset?"
+    },
     "advancedSearch": {
       "title": "Advanced Search",
       "searchPlaceholder": "Search by title, author, or content...",
