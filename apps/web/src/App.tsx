@@ -4,6 +4,7 @@ import {
   AchievementNotificationManager,
   SentryUserSync,
   PostHogUserSync,
+  SkipNavigation,
 } from "@/components/common";
 import { OfflineIndicator, InstallPrompt } from "@/components/pwa";
 import { useRouteAnnouncements } from "@/hooks";
@@ -14,6 +15,7 @@ export function App(): React.ReactElement {
 
   return (
     <>
+      <SkipNavigation />
       <SentryUserSync />
       <PostHogUserSync />
       <AppRouter />

@@ -34,3 +34,4 @@ export {
 export { SentryUserSync } from "./SentryUserSync";
 
 export { PostHogUserSync } from "./PostHogUserSync";
+export { SkipNavigation } from "./SkipNavigation";

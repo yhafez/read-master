@@ -66,6 +66,10 @@ export const ROUTES = {
   ADMIN: "/admin",
   ADMIN_DASHBOARD: "/admin/dashboard",
 
+  // Accessibility
+  ACCESSIBILITY_STATEMENT: "/accessibility-statement",
+  KEYBOARD_SHORTCUTS: "/keyboard-shortcuts",
+
   // 404
   NOT_FOUND: "*",
 } as const;
@@ -141,6 +145,8 @@ export const PUBLIC_ROUTES: readonly RoutePath[] = [
   ROUTES.FORUM_CATEGORY,
   ROUTES.FORUM_POST,
   ROUTES.CURRICULUM_BROWSE,
+  ROUTES.ACCESSIBILITY_STATEMENT,
+  ROUTES.KEYBOARD_SHORTCUTS,
 ] as const;
 
 /**

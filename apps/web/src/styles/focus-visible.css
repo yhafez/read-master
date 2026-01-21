@@ -1,0 +1,142 @@
+/**
+ * Enhanced Focus Indicators (WCAG 2.4.7 AAA)
+ * 
+ * Provides visible focus indicators for keyboard navigation
+ * with high contrast (7:1) for better accessibility
+ */
+
+/* Global focus styles */
+*:focus-visible {
+  outline: 3px solid #2196F3; /* Primary blue */
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Button focus styles */
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+}
+
+/* Link focus styles */
+a:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* Input focus styles */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.15);
+}
+
+/* Radio and checkbox focus styles */
+input[type="radio"]:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 3px;
+}
+
+/* MUI component focus overrides */
+.MuiButton-root:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+}
+
+.MuiIconButton-root:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+}
+
+.MuiChip-root:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+}
+
+.MuiTab-root:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+}
+
+/* Card/Paper focus styles for interactive elements */
+.MuiCard-root[tabindex]:focus-visible,
+.MuiPaper-root[tabindex]:focus-visible {
+  outline: 3px solid #2196F3;
+  outline-offset: 2px;
+}
+
+/* Dark mode focus styles */
+@media (prefers-color-scheme: dark) {
+  *:focus-visible {
+    outline-color: #90CAF9; /* Lighter blue for dark mode */
+  }
+
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline-color: #90CAF9;
+    box-shadow: 0 0 0 4px rgba(144, 202, 249, 0.2);
+  }
+
+  a:focus-visible {
+    outline-color: #90CAF9;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline-color: #90CAF9;
+    border-color: #90CAF9;
+    box-shadow: 0 0 0 4px rgba(144, 202, 249, 0.15);
+  }
+
+  input[type="radio"]:focus-visible,
+  input[type="checkbox"]:focus-visible {
+    outline-color: #90CAF9;
+  }
+
+  .MuiButton-root:focus-visible {
+    outline-color: #90CAF9;
+    box-shadow: 0 0 0 4px rgba(144, 202, 249, 0.2);
+  }
+
+  .MuiIconButton-root:focus-visible {
+    outline-color: #90CAF9;
+  }
+
+  .MuiChip-root:focus-visible {
+    outline-color: #90CAF9;
+  }
+
+  .MuiTab-root:focus-visible {
+    outline-color: #90CAF9;
+  }
+
+  .MuiCard-root[tabindex]:focus-visible,
+  .MuiPaper-root[tabindex]:focus-visible {
+    outline-color: #90CAF9;
+  }
+}
+
+/* High contrast mode (Windows High Contrast, etc.) */
+@media (prefers-contrast: high) {
+  *:focus-visible {
+    outline-width: 4px;
+    outline-offset: 3px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *:focus-visible {
+    transition: none;
+  }
+}

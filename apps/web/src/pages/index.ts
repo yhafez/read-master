@@ -74,3 +74,6 @@ export { UserStatsPage, AchievementsPage } from "./stats";
 
 // Admin
 export { AdminDashboardPage, AdminProtectedRoute } from "./admin";
+
+// Accessibility
+export { AccessibilityStatementPage, KeyboardShortcutsPage } from "./accessibility";

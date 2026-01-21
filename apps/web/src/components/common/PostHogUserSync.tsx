@@ -20,10 +20,15 @@ export function PostHogUserSync(): null {
       const email = user.primaryEmailAddress?.emailAddress;
       const tier = (user.publicMetadata?.tier as string) || "FREE";
 
-      identifyUser(userId, {
-        email,
+      const properties: Record<string, string> = {
         tier: tier as "FREE" | "PRO" | "SCHOLAR",
-      });
+      };
+
+      if (email) {
+        properties.email = email;
+      }
+
+      identifyUser(userId, properties);
 
       logger.debug("User identified in PostHog", { userId, tier });
     } else if (!isSignedIn) {

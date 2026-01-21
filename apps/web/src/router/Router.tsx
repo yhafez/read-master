@@ -48,6 +48,8 @@ import {
   AchievementsPage,
   AdminDashboardPage,
   AdminProtectedRoute,
+  AccessibilityStatementPage,
+  KeyboardShortcutsPage,
 } from "@/pages";
 
 /**
@@ -288,6 +290,16 @@ function createAppRouter() {
               element: <AdminDashboardPage />,
             },
           ],
+        },
+
+        // Accessibility pages (public)
+        {
+          path: ROUTES.ACCESSIBILITY_STATEMENT,
+          element: <AccessibilityStatementPage />,
+        },
+        {
+          path: ROUTES.KEYBOARD_SHORTCUTS,
+          element: <KeyboardShortcutsPage />,
         },
 
         // 404 - catch all unmatched routes
