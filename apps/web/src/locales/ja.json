@@ -2180,5 +2180,19 @@
       "noResults": "ユーザーが見つかりませんでした",
       "moreResults": "{{total}}件中{{count}}件を表示"
     }
+  },
+  "share": {
+    "native": "共有...",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "reddit": "Reddit",
+    "copyLink": "リンクをコピー"
+  },
+  "common": {
+    "share": "共有",
+    "copiedToClipboard": "クリップボードにコピーしました！",
+    "copyFailed": "リンクのコピーに失敗しました"
   }
 }

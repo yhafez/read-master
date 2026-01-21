@@ -2180,5 +2180,19 @@
       "noResults": "Walang nahanap na users",
       "moreResults": "Nagpapakita ng {{count}} sa {{total}} resulta"
     }
+  },
+  "share": {
+    "native": "Ibahagi...",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "reddit": "Reddit",
+    "copyLink": "Kopyahin ang Link"
+  },
+  "common": {
+    "share": "Ibahagi",
+    "copiedToClipboard": "Nakopya sa clipboard!",
+    "copyFailed": "Hindi makopya ang link"
   }
 }

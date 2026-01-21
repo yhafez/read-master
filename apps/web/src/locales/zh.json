@@ -2180,5 +2180,19 @@
       "noResults": "未找到用户",
       "moreResults": "显示 {{count}} / {{total}} 个结果"
     }
+  },
+  "share": {
+    "native": "分享...",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "reddit": "Reddit",
+    "copyLink": "复制链接"
+  },
+  "common": {
+    "share": "分享",
+    "copiedToClipboard": "已复制到剪贴板！",
+    "copyFailed": "复制链接失败"
   }
 }

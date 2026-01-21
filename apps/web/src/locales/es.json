@@ -2180,5 +2180,19 @@
       "noResults": "No se encontraron usuarios",
       "moreResults": "Mostrando {{count}} de {{total}} resultados"
     }
+  },
+  "share": {
+    "native": "Compartir...",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "reddit": "Reddit",
+    "copyLink": "Copiar enlace"
+  },
+  "common": {
+    "share": "Compartir",
+    "copiedToClipboard": "¡Copiado al portapapeles!",
+    "copyFailed": "Error al copiar el enlace"
   }
 }

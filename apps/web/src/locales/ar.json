@@ -2180,5 +2180,19 @@
       "noResults": "لم يتم العثور على مستخدمين",
       "moreResults": "عرض {{count}} من {{total}} نتيجة"
     }
+  },
+  "share": {
+    "native": "مشاركة...",
+    "twitter": "تويتر",
+    "facebook": "فيسبوك",
+    "linkedin": "لينكد إن",
+    "whatsapp": "واتساب",
+    "reddit": "ريديت",
+    "copyLink": "نسخ الرابط"
+  },
+  "common": {
+    "share": "مشاركة",
+    "copiedToClipboard": "تم النسخ إلى الحافظة!",
+    "copyFailed": "فشل نسخ الرابط"
   }
 }

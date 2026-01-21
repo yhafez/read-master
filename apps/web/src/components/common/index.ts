@@ -1,4 +1,5 @@
 export { LanguageSwitcher } from "./LanguageSwitcher";
+export { ShareButton } from "./ShareButton";
 
 export {
   FocusTrap,
