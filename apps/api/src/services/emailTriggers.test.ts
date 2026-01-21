@@ -68,9 +68,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
         emailId: "email-123",
@@ -130,9 +132,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
         emailId: "email-123",
@@ -178,9 +182,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
         emailId: "email-123",
@@ -270,7 +276,7 @@ describe("Email Triggers", () => {
         "sendOnboardingEmail"
       );
 
-      const _results = await emailTriggers.processOnboardingSequence();
+      await emailTriggers.processOnboardingSequence();
 
       // User processed but email not sent (already sent)
       expect(sendOnboardingEmailSpy).not.toHaveBeenCalled();
@@ -325,9 +331,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.count).mockResolvedValue(2);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
@@ -388,6 +396,8 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
       const mockBook = {
@@ -395,7 +405,6 @@ describe("Email Triggers", () => {
         userId: "user-123",
         title: "Test Book",
         author: "Test Author",
-        pageCount: 300,
         wordCount: 80000,
         description: null,
         coverImage: null,
@@ -405,40 +414,35 @@ describe("Email Triggers", () => {
         filePath: null,
         fileType: null,
         language: "en",
-        estimatedReadingTime: 240,
-        difficulty: "INTERMEDIATE",
-        genres: [],
+        estimatedReadTime: 240,
+        lexileScore: null,
+        genre: null,
         tags: [],
         status: "COMPLETED",
-        progress: 100,
-        aiEnabled: true,
-        publicationYear: 2023,
-        isbn: null,
-        publisher: null,
-        edition: null,
+        isPublic: false,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
-        completedAt: new Date(),
       };
 
       const mockProgress = {
         id: "progress-1",
         userId: "user-123",
         bookId: "book-123",
-        currentPage: 300,
-        currentChapter: 20,
-        progress: 100,
-        totalReadingTime: 14400, // 4 hours
+        currentPosition: 80000,
+        percentage: 100,
+        totalReadTime: 14400, // 4 hours
         lastReadAt: new Date(),
+        startedAt: new Date(Date.now() - 4 * 60 * 60 * 1000),
+        completedAt: new Date(),
         averageWpm: 250,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
-      vi.mocked(db.book.findUnique).mockResolvedValue(mockBook);
-      vi.mocked(db.readingProgress.findFirst).mockResolvedValue(mockProgress);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
+      vi.mocked(db.book.findUnique).mockResolvedValue(mockBook as any);
+      vi.mocked(db.readingProgress.findFirst).mockResolvedValue(mockProgress as any);
       vi.mocked(db.annotation.count).mockResolvedValue(15);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
@@ -491,9 +495,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.count).mockResolvedValue(3);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
@@ -541,9 +547,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
 
       const result = await emailTriggers.sendLibraryLimitEmail("user-123");
 
@@ -630,26 +638,22 @@ describe("Email Triggers", () => {
             id: "book-123",
             title: "Test Book",
             author: "Test Author",
-            progress: 45,
-            status: "IN_PROGRESS",
+            description: null,
+            coverImage: null,
+            status: "READING",
             userId: "user-123",
             filePath: "/test.epub",
-            fileFormat: "EPUB",
-            fileSize: 1024,
+            fileType: "EPUB",
             language: "en",
-            genres: [],
-            tags: [],
-            notes: null,
-            annotations: [],
-            source: "UPLOAD",
-            coverUrl: null,
             wordCount: null,
-            pageCount: null,
-            currentPage: null,
-            totalPages: null,
-            lastOpenedAt: null,
-            startedAt: null,
-            completedAt: null,
+            estimatedReadTime: null,
+            lexileScore: null,
+            genre: null,
+            tags: [],
+            source: "UPLOAD",
+            sourceId: null,
+            sourceUrl: null,
+            isPublic: false,
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null,
@@ -657,16 +661,21 @@ describe("Email Triggers", () => {
         ],
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.count).mockResolvedValue(2);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: true,
-        conversion: true,
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: true,
+        productUpdates: true,
+        weeklyDigest: true,
+        achievementEmails: true,
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -746,16 +755,21 @@ describe("Email Triggers", () => {
         books: [],
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.count).mockResolvedValue(0);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: true,
-        conversion: true,
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: true,
+        productUpdates: true,
+        weeklyDigest: true,
+        achievementEmails: true,
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -824,16 +838,21 @@ describe("Email Triggers", () => {
         books: [],
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.count).mockResolvedValue(1);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: true,
-        conversion: true,
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: true,
+        productUpdates: true,
+        weeklyDigest: true,
+        achievementEmails: true,
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -886,15 +905,20 @@ describe("Email Triggers", () => {
         books: [],
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: false, // Opted out
-        conversion: true,
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: true,
+        productUpdates: true,
+        weeklyDigest: true,
+        achievementEmails: false, // Opted out
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -933,17 +957,24 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: true,
-        conversion: true,
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: true,
+        productUpdates: true,
+        weeklyDigest: true,
+        achievementEmails: true,
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -1000,9 +1031,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
 
       const result = await emailTriggers.sendAIUpgradeEmail("user-123");
 
@@ -1036,17 +1069,24 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: true,
-        conversion: false, // Opted out
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: false, // Opted out
+        productUpdates: false, // Opted out
+        weeklyDigest: true,
+        achievementEmails: true,
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -1085,17 +1125,24 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({
+        id: "prefs-123",
         userId: "user-123",
-        welcome: true,
-        onboarding: true,
-        engagement: true,
-        conversion: true,
-        digest: true,
-        unsubscribedAll: false,
+        emailEnabled: true,
+        marketingEmails: true,
+        productUpdates: true,
+        weeklyDigest: true,
+        achievementEmails: true,
+        recommendationEmails: true,
+        socialEmails: true,
+        digestFrequency: "weekly",
+        unsubscribedAt: null,
+        unsubscribeToken: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -1154,9 +1201,11 @@ describe("Email Triggers", () => {
         deletedAt: null,
         tierExpiresAt: null,
         stripeCustomerId: null,
+        bio: null,
+        stripeSubscriptionId: null,
       };
 
-      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser);
+      vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
 
       const result = await emailTriggers.sendTTSUpgradeEmail("user-123");
 
