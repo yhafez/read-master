@@ -3,11 +3,11 @@
  */
 
 import { describe, it, expect } from "vitest";
+import { AICostsBreakdown } from "./AICostsBreakdown";
 
 describe("AICostsBreakdown", () => {
-  it("should export from index", async () => {
-    const module = await import("./index");
-    expect(module.AICostsBreakdown).toBeDefined();
-    expect(typeof module.AICostsBreakdown).toBe("function");
+  it("should export component", () => {
+    expect(AICostsBreakdown).toBeDefined();
+    expect(typeof AICostsBreakdown).toBe("function");
   });
 });

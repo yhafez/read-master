@@ -15,5132 +15,1324 @@
     "enforcement": "Do NOT commit if any feedback loop fails. Fix issues first."
   },
   "sprint_info": {
-    "description": "All tasks active. Complete Read Master MVP to production.",
-    "current_sprint_focus": "Full stack completion - API, Frontend, PWA, Testing, Deployment",
+    "description": "Remaining tasks to complete Read Master MVP. Focus on monitoring, analytics, email marketing, and enhancements.",
+    "current_sprint_focus": "Sentry error tracking, PostHog analytics, email marketing funnel, library enhancements, payment integration, accessibility, and native apps",
     "completed_count": 99,
-    "total_tasks": 193,
-    "active_tasks": 193,
-    "new_tasks_added": 135
+    "total_tasks": 138,
+    "active_tasks": 39,
+    "new_tasks_added": 39
   },
   "tasks": [
     {
-      "id": "api-books-007",
-      "category": "api-books",
-      "phase": "4b-books-api",
+      "id": "library-filters-001",
+      "category": "library",
+      "phase": "high-priority",
       "priority": "critical",
-      "description": "Implement POST /api/books/upload endpoint",
+      "description": "Complete advanced library filtering system",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create api/books/upload.ts",
-        "Accept file upload (multipart/form-data)",
-        "Validate file type and size (max 50MB)",
-        "Check tier limits (free: 3 books)",
-        "Parse file based on type",
-        "Upload to R2",
-        "Create Book record in database",
-        "Return book data",
-        "Handle errors",
-        "Write tests"
+        "Add filter by reading progress percentage ranges (0-25%, 26-50%, 51-75%, 76-99%, 100%)",
+        "Add filter by file type (EPUB, PDF, DOC, DOCX, TXT, HTML)",
+        "Add filter by source (Upload, URL, Paste, Google Books, Open Library)",
+        "Add filter by date added/started/completed with date pickers",
+        "Implement combine multiple filters logic",
+        "Add save search queries feature (favorite filters)",
+        "Create FilterPresets model in database",
+        "Update LibraryFilters component with new filter options",
+        "Add filter pills/chips to show active filters",
+        "Add clear all filters button",
+        "Persist filter state in URL query params",
+        "Write comprehensive tests for all filter combinations"
       ],
       "acceptance_criteria": [
-        "Endpoint accepts file uploads",
-        "File size limit is enforced",
-        "Tier limits are checked",
-        "Files are parsed correctly",
-        "Books are stored in R2 and DB",
-        "Tests verify all scenarios"
+        "All filter types work independently",
+        "Multiple filters can be combined",
+        "Filter presets can be saved and loaded",
+        "URL reflects current filter state",
+        "Filter state persists across page reloads",
+        "Clear filters button resets all filters",
+        "Tests cover all filter combinations"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "api-books-008",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement POST /api/books/import-url endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/import-url.ts",
-        "Validate URL format",
-        "Fetch content from URL",
-        "Extract text (handle HTML, articles)",
-        "Check tier limits",
-        "Create Book record",
-        "Store content for personal use",
-        "Return book data",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "URL import works",
-        "HTML/article extraction works",
-        "Tier limits are enforced",
-        "Content is stored correctly",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-009",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement POST /api/books/paste endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/paste.ts",
-        "Accept text and metadata in body",
-        "Validate with Zod schema",
-        "Check tier limits",
-        "Calculate word count",
-        "Create Book record",
-        "Return book data",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Can create book from pasted text",
-        "Validation works",
-        "Tier limits are enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-010",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement GET /api/books/search endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/search.ts",
-        "Accept search query",
-        "Search Google Books API",
-        "Search Open Library API",
-        "Combine and deduplicate results",
-        "Cache results in Redis",
-        "Return normalized results",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Searches both APIs",
-        "Results are combined and deduplicated",
-        "Caching works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-011",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement POST /api/books/add-from-library endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/add-from-library.ts",
-        "Accept book ID and source (Google Books or Open Library)",
-        "Fetch book metadata",
-        "Fetch content if available (public domain)",
-        "Check tier limits",
-        "Create Book record",
-        "Store content if available",
-        "Return book data",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Can add books from external libraries",
-        "Metadata is fetched correctly",
-        "Public domain content is stored",
-        "Tier limits are enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-012",
-      "category": "api-books",
-      "phase": "4b-books-api",
+      "id": "tts-downloads-001",
+      "category": "tts",
+      "phase": "high-priority",
       "priority": "critical",
-      "description": "Implement GET /api/books endpoint with filtering and pagination",
+      "description": "Implement TTS audio file downloads for Pro/Scholar tiers",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create api/books/index.ts for GET",
-        "Accept query params: status, tags, genre, search, sort, page, limit",
-        "Build Prisma query with filters",
-        "Apply soft delete filter",
-        "Implement sorting options",
-        "Use pagination utilities",
-        "Return paginated results",
-        "Write tests"
+        "Create POST /api/tts/generate-audio endpoint",
+        "Implement server-side audio generation using OpenAI TTS",
+        "Implement server-side audio generation using ElevenLabs",
+        "Store generated audio files in R2 with expiration",
+        "Create DownloadedAudio model in database",
+        "Track download limits per tier (Pro: 5/month, Scholar: unlimited)",
+        "Add download button to reader TTS controls",
+        "Add download progress indicator",
+        "Add downloads management page to show all downloaded audio",
+        "Support MP3 and M4A formats",
+        "Add download expiration (30 days) and cleanup cron job",
+        "Write tests for download limits and generation"
       ],
       "acceptance_criteria": [
-        "Listing works with all filters",
-        "Pagination works correctly",
-        "Soft deletes are excluded",
-        "Sorting works",
-        "Tests verify all scenarios"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-013",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement GET /api/books/:id endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/[id].ts for GET",
-        "Fetch book with chapters",
-        "Include reading progress for current user",
-        "Check user has access to book",
-        "Return 404 if not found or no access",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Book details are returned with chapters",
-        "Reading progress is included",
-        "Access control works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-014",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement PUT /api/books/:id endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/[id].ts for PUT",
-        "Validate update data with Zod",
-        "Check user owns the book",
-        "Update book metadata",
-        "Handle status changes",
-        "Log audit trail",
-        "Return updated book",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Book updates work",
-        "Validation is enforced",
-        "Only owner can update",
-        "Audit log is created",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-015",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement DELETE /api/books/:id endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/[id].ts for DELETE",
-        "Check user owns the book",
-        "Soft delete book (set deletedAt)",
-        "Soft delete related annotations, flashcards",
-        "Log audit trail",
-        "Return success response",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Soft delete works",
-        "Related data is soft deleted",
-        "Only owner can delete",
-        "Audit log is created",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-books-016",
-      "category": "api-books",
-      "phase": "4b-books-api",
-      "priority": "medium",
-      "description": "Implement GET /api/books/:id/content endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/books/[id]/content.ts",
-        "Check user has access to book",
-        "Fetch content from R2 or database",
-        "Support range requests for large files",
-        "Stream content to client",
-        "Set appropriate headers",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Content is streamed correctly",
-        "Range requests work",
-        "Access control is enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-reading-001",
-      "category": "api-reading",
-      "phase": "4b-books-api",
-      "priority": "critical",
-      "description": "Implement reading progress tracking endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/reading/progress.ts for GET and PUT",
-        "GET: Fetch reading progress for a book",
-        "PUT: Update reading position, calculate percentage",
-        "Track total read time",
-        "Update lastReadAt timestamp",
-        "Handle completion (set completedAt)",
-        "Award XP on completion",
-        "Check for achievements",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Progress tracking works",
-        "Percentage is calculated correctly",
-        "Completion is detected",
-        "XP and achievements are awarded",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-annotations-001",
-      "category": "api-annotations",
-      "phase": "4b-books-api",
-      "priority": "high",
-      "description": "Implement annotation CRUD endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/annotations/index.ts",
-        "POST: Create annotation (highlight, note, bookmark)",
-        "GET: List annotations for a book with filters",
-        "PUT: Update annotation",
-        "DELETE: Soft delete annotation",
-        "Validate with Zod schemas",
-        "Apply profanity filter to notes",
-        "Support public/private annotations",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "All annotation types work",
-        "CRUD operations function correctly",
-        "Profanity filter is applied",
-        "Privacy settings work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-001",
-      "category": "frontend-foundation",
-      "phase": "5a-foundation",
-      "priority": "critical",
-      "description": "Set up MUI theme with multiple modes (light/dark/sepia/high-contrast)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create theme configuration in apps/web/src/theme/",
-        "Define color palettes for all four modes",
-        "Configure typography scale",
-        "Set up component overrides",
-        "Create ThemeProvider wrapper",
-        "Add theme toggle functionality",
-        "Verify WCAG AAA contrast ratios (7:1) for high-contrast",
-        "Write tests for theme switching"
-      ],
-      "acceptance_criteria": [
-        "All four theme modes work",
-        "High-contrast mode meets WCAG AAA",
-        "Theme persists across sessions",
-        "Tests verify theme switching"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-002",
-      "category": "frontend-foundation",
-      "phase": "5a-foundation",
-      "priority": "critical",
-      "description": "Set up React Router with all routes and protected route handling",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Install and configure React Router",
-        "Define all routes from SPECIFICATIONS.md",
-        "Create MainLayout component (sidebar, header)",
-        "Create ReaderLayout component (minimal UI)",
-        "Set up protected route wrapper",
-        "Add 404 page",
-        "Test navigation between routes",
-        "Write tests for routing"
-      ],
-      "acceptance_criteria": [
-        "All routes from spec are defined",
-        "Layouts render correctly",
-        "Protected routes work",
-        "Navigation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-003",
-      "category": "frontend-foundation",
-      "phase": "5a-foundation",
-      "priority": "critical",
-      "description": "Integrate Clerk authentication with sign-in/sign-up UI",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up ClerkProvider in main App",
-        "Create sign-in page",
-        "Create sign-up page",
-        "Configure OAuth (Google, Apple)",
-        "Add auth loading states",
-        "Test full authentication flow",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Sign up/in works with email",
-        "OAuth works with Google and Apple",
-        "Protected routes redirect correctly",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-004",
-      "category": "frontend-foundation",
-      "phase": "5a-foundation",
-      "priority": "high",
-      "description": "Set up React Query with proper configuration",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Configure QueryClient with defaults",
-        "Set up QueryClientProvider",
-        "Add React Query DevTools (dev only)",
-        "Create example query hook for books",
-        "Test query invalidation",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "React Query is configured",
-        "DevTools work in development",
-        "Query hooks work correctly",
-        "Invalidation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-005",
-      "category": "frontend-foundation",
-      "phase": "5a-foundation",
-      "priority": "high",
-      "description": "Create Zustand stores for UI and reader state",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create stores/uiStore.ts (theme, sidebar, language)",
-        "Create stores/readerStore.ts (current book, position, settings)",
-        "Implement persistence with localStorage",
-        "Write comprehensive tests for both stores",
-        "Document store usage patterns"
-      ],
-      "acceptance_criteria": [
-        "Both stores are functional",
-        "State persists across sessions",
-        "Tests achieve 100% coverage",
-        "Documentation is clear"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-006",
-      "category": "frontend-library",
-      "phase": "5b-library",
-      "priority": "high",
-      "description": "Create Library page with grid/list view and filters",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create LibraryPage component",
-        "Implement grid and list view layouts",
-        "Add view toggle button",
-        "Add filter sidebar (status, genre, tags)",
-        "Add search bar",
-        "Add sort dropdown",
-        "Make fully responsive",
-        "Add empty state",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Both views render correctly",
-        "Filters work correctly",
-        "Search works",
-        "Responsive on all screen sizes",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-007",
-      "category": "frontend-library",
-      "phase": "5b-library",
-      "priority": "high",
-      "description": "Create BookCard component with progress and quick actions",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create BookCard component",
-        "Display cover, title, author",
-        "Show progress bar",
-        "Add status badge",
-        "Add quick actions (read, delete)",
-        "Style hover/focus states",
-        "Ensure keyboard accessibility",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Card displays all info correctly",
-        "Progress bar shows correctly",
-        "Actions work",
-        "Fully keyboard accessible",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-008",
-      "category": "frontend-library",
-      "phase": "5b-library",
-      "priority": "critical",
-      "description": "Create AddBookModal with tabs for upload/URL/paste/search",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create AddBookModal component",
-        "Implement tab navigation (4 tabs)",
-        "Create upload tab with drag-and-drop",
-        "Create URL import tab",
-        "Create paste text tab",
-        "Create search tab (Google Books + Open Library)",
-        "Add validation and error handling",
-        "Show loading states",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "All tabs function correctly",
-        "File upload works (all formats)",
-        "Search returns results",
-        "Error handling works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-009",
-      "category": "frontend-reader",
-      "phase": "5c-reader",
-      "priority": "critical",
-      "description": "Integrate epub.js for EPUB rendering",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Install and configure epub.js",
-        "Create EpubReader component",
-        "Implement page navigation (prev/next)",
-        "Handle text selection",
-        "Sync reading position with backend",
-        "Make responsive",
-        "Handle errors gracefully",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "EPUB files render correctly",
-        "Navigation works",
-        "Position is tracked and synced",
-        "Responsive layout",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-010",
-      "category": "frontend-reader",
-      "phase": "5c-reader",
-      "priority": "critical",
-      "description": "Integrate PDF.js for PDF rendering",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Install and configure PDF.js",
-        "Create PdfReader component",
-        "Implement page navigation",
-        "Add zoom controls",
-        "Handle text selection",
-        "Make responsive",
-        "Handle errors gracefully",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "PDF files render correctly",
-        "Navigation and zoom work",
-        "Text selection works",
-        "Responsive layout",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-001",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "critical",
-      "description": "Set up Vercel AI SDK with Anthropic Claude",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create src/services/ai.ts",
-        "Configure Vercel AI SDK",
-        "Set up Anthropic provider",
-        "Create streamCompletion helper",
-        "Implement token counting",
-        "Implement cost calculation",
-        "Create logging wrapper for AI calls",
-        "Test streaming works"
-      ],
-      "acceptance_criteria": [
-        "AI SDK is configured correctly",
-        "Streaming works",
-        "Token usage is tracked",
-        "Costs are calculated",
-        "All calls are logged"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-002",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "critical",
-      "description": "Create AI prompt templates package",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create packages/ai/src/prompts/v1/ directory",
-        "Create preReadingGuide.ts prompt template",
-        "Create explain.ts prompt template",
-        "Create comprehensionCheck.ts prompt template",
-        "Create assessment.ts prompt template",
-        "Create gradeAnswer.ts prompt template",
-        "Create generateFlashcards.ts prompt template",
-        "Export all prompts",
-        "Include user reading level in prompts"
-      ],
-      "acceptance_criteria": [
-        "All prompt templates exist",
-        "Prompts adapt to user level",
-        "Prompts can be imported in API",
-        "Templates are well-structured"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-003",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "critical",
-      "description": "Implement POST /api/ai/pre-reading-guide endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/pre-reading-guide.ts",
-        "Check user has AI enabled",
-        "Check rate limits",
-        "Fetch book content",
-        "Use pre-reading guide prompt",
-        "Stream AI response",
-        "Parse response into structured data",
-        "Save to PreReadingGuide table",
-        "Log usage and cost",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Guide generates correctly",
-        "Streaming works",
-        "Data is saved to database",
-        "Usage is logged",
-        "Rate limits are enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-004",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "high",
-      "description": "Implement POST /api/ai/explain endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/explain.ts",
-        "Accept selected text and book context",
-        "Check rate limits and AI enabled",
-        "Use explain prompt with context",
-        "Stream response",
-        "Log usage",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Explanations are contextual",
-        "Streaming works",
-        "Rate limits enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-005",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "high",
-      "description": "Implement POST /api/ai/ask endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/ask.ts",
-        "Accept question and selected text",
-        "Include book context",
-        "Check rate limits",
-        "Stream AI response",
-        "Log usage",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Questions are answered correctly",
-        "Context is maintained",
-        "Streaming works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-006",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "high",
-      "description": "Implement POST /api/ai/comprehension-check endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/comprehension-check.ts",
-        "Accept recently read content",
-        "Generate quick question",
-        "Return question with options",
-        "Track question in database",
-        "Log usage",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Questions are relevant",
-        "Format is correct",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-007",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "high",
-      "description": "Implement POST /api/ai/assessment endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/assessment.ts",
-        "Accept book ID and assessment type",
-        "Generate questions covering all Bloom's levels",
-        "Adapt difficulty to user level",
-        "Return structured assessment",
-        "Save to Assessment table",
-        "Log usage",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "All Bloom's levels are covered",
-        "Difficulty adapts to user",
-        "Questions are high quality",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-008",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "high",
-      "description": "Implement POST /api/ai/grade-answer endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/grade-answer.ts",
-        "Accept question, correct answer, user answer",
-        "Use AI to grade short answer",
-        "Provide detailed feedback",
-        "Calculate score",
-        "Update assessment record",
-        "Update user comprehension data",
-        "Log usage",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Grading is fair and consistent",
-        "Feedback is helpful",
-        "Scores are accurate",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-ai-009",
-      "category": "api-ai",
-      "phase": "4c-ai-api",
-      "priority": "high",
-      "description": "Implement POST /api/ai/generate-flashcards endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/ai/generate-flashcards.ts",
-        "Accept text and card type preferences",
-        "Generate flashcards for vocabulary, concepts, comprehension",
-        "Check for duplicates",
-        "Create Flashcard records",
-        "Return generated cards",
-        "Log usage",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Cards are high quality",
-        "Duplicates are avoided",
-        "Multiple card types work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-srs-001",
-      "category": "api-srs",
-      "phase": "4d-srs-api",
-      "priority": "critical",
-      "description": "Implement flashcard CRUD endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/flashcards/index.ts",
-        "GET: List user's flashcards with filters",
-        "POST: Create manual flashcard",
-        "PUT: Update flashcard",
-        "DELETE: Soft delete (suspend)",
-        "Support filtering by book, status, tags",
-        "Implement pagination",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "CRUD operations work",
-        "Filtering works correctly",
-        "Pagination works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-srs-002",
-      "category": "api-srs",
-      "phase": "4d-srs-api",
-      "priority": "critical",
-      "description": "Implement GET /api/flashcards/due endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/flashcards/due.ts",
-        "Fetch cards where dueDate <= now",
-        "Order by priority (overdue first, then by dueDate)",
-        "Respect user's daily limit setting",
-        "Return cards with context",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Due cards are returned correctly",
-        "Ordering is correct",
-        "Daily limit is respected",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-srs-003",
-      "category": "api-srs",
-      "phase": "4d-srs-api",
-      "priority": "critical",
-      "description": "Implement POST /api/flashcards/:id/review endpoint with SM-2",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/flashcards/[id]/review.ts",
-        "Accept rating (1-4)",
-        "Calculate new interval using SM-2 from shared package",
-        "Update easeFactor, interval, repetitions, dueDate",
-        "Update status (NEW -> LEARNING -> REVIEW)",
-        "Create FlashcardReview record",
-        "Award XP based on rating",
-        "Check for achievements",
-        "Update UserStats",
-        "Write tests with all rating scenarios"
-      ],
-      "acceptance_criteria": [
-        "SM-2 calculations are correct for all ratings",
-        "Card state updates properly",
-        "XP is awarded",
-        "Review is logged",
-        "Tests cover all scenarios"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-srs-004",
-      "category": "api-srs",
-      "phase": "4d-srs-api",
-      "priority": "medium",
-      "description": "Implement GET /api/flashcards/stats endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/flashcards/stats.ts",
-        "Calculate retention rate",
-        "Count cards by status",
-        "Get review history",
-        "Calculate streak",
-        "Return statistics",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "All statistics are accurate",
-        "Retention rate is calculated correctly",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-gamification-001",
-      "category": "api-gamification",
-      "phase": "4d-srs-api",
-      "priority": "high",
-      "description": "Implement GET /api/stats endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/stats/index.ts",
-        "Fetch user's UserStats",
-        "Calculate current level from XP",
-        "Include progress to next level",
-        "Return all gamification stats",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Stats are returned correctly",
-        "Level calculation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-gamification-002",
-      "category": "api-gamification",
-      "phase": "4d-srs-api",
-      "priority": "high",
-      "description": "Implement achievements system endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/achievements/index.ts",
-        "GET: List all achievements with user's unlock status",
-        "POST /check: Check and award new achievements",
-        "Implement achievement criteria checking",
-        "Award XP when unlocking",
-        "Create UserAchievement records",
-        "Return newly unlocked achievements",
-        "Write tests for all achievement types"
-      ],
-      "acceptance_criteria": [
-        "All achievements are checkable",
-        "Unlocking works correctly",
-        "XP is awarded",
-        "Tests verify all achievement types"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-gamification-003",
-      "category": "api-gamification",
-      "phase": "4d-srs-api",
-      "priority": "medium",
-      "description": "Implement GET /api/leaderboard endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/leaderboard/index.ts",
-        "Support global and friends leaderboards",
-        "Filter by timeframe (weekly, monthly, all-time)",
-        "Sort by metric (XP, books, streak)",
-        "Only include users who opted in",
-        "Highlight current user",
-        "Implement pagination",
-        "Cache results",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Leaderboard filtering works",
-        "Privacy is respected (opt-in only)",
-        "Current user is highlighted",
-        "Caching works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-tts-001",
-      "category": "api-tts",
-      "phase": "4e-tts-api",
-      "priority": "high",
-      "description": "Implement POST /api/tts/speak endpoint with tier-based providers",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/tts/speak.ts",
-        "Check user's subscription tier",
-        "Free: Return config for Web Speech API (client-side)",
-        "Pro: Use OpenAI TTS API and stream audio",
-        "Scholar: Use ElevenLabs API and stream audio",
-        "Track usage",
-        "Handle errors",
-        "Write tests for all tiers"
-      ],
-      "acceptance_criteria": [
-        "Free tier returns browser config",
-        "Pro tier streams OpenAI audio",
-        "Scholar tier streams ElevenLabs audio",
-        "Usage is tracked",
-        "Tests cover all tiers"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-tts-002",
-      "category": "api-tts",
-      "phase": "4e-tts-api",
-      "priority": "medium",
-      "description": "Create TTS service for OpenAI and ElevenLabs",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create src/services/tts.ts",
-        "Implement OpenAI TTS integration",
-        "Implement ElevenLabs integration",
-        "Handle text chunking for long content",
-        "Stream audio responses",
-        "Handle rate limits",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Both providers work correctly",
-        "Long text is chunked properly",
-        "Streaming works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-tts-003",
-      "category": "api-tts",
-      "phase": "4e-tts-api",
-      "priority": "medium",
-      "description": "Implement GET /api/tts/voices endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/tts/voices.ts",
-        "Return available voices based on tier",
-        "Free: Browser default voices",
-        "Pro: OpenAI voices (alloy, echo, fable, onyx, nova, shimmer)",
-        "Scholar: ElevenLabs premium voices",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Voices are returned per tier",
-        "All voice options are available",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-tts-004",
-      "category": "api-tts",
-      "phase": "4e-tts-api",
-      "priority": "medium",
-      "description": "Implement full book audio download endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/tts/download.ts for POST",
-        "Check download quota (Pro: 5/month, Scholar: unlimited)",
-        "Create background job for generation",
-        "Generate audio in chunks",
-        "Combine chunks into final file",
-        "Upload to R2",
-        "Track download in database",
-        "Return job ID",
-        "Create api/tts/downloads.ts for GET (list downloads)",
-        "Create api/tts/downloads/[id].ts for DELETE",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
+        "Pro users can download 5 books/month",
+        "Scholar users have unlimited downloads",
+        "Audio files are stored in R2",
+        "Downloads expire after 30 days",
+        "Both MP3 and M4A formats supported",
+        "Download progress shows correctly",
         "Download limits are enforced",
-        "Audio generation works",
-        "Files are stored in R2",
-        "Status tracking works",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "api-social-001",
-      "category": "api-social",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement user profile endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/users/[username].ts",
-        "GET: Fetch public profile",
-        "Check privacy settings",
-        "Return stats if shared",
-        "Return reading activity if shared",
-        "Return achievements",
-        "Hide private info",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Public profiles work",
-        "Privacy settings are respected",
-        "Private data is hidden",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-social-002",
-      "category": "api-social",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement follow/unfollow endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/users/[id]/follow.ts",
-        "POST: Create follow relationship",
-        "DELETE: Remove follow relationship",
-        "Prevent duplicate follows",
-        "Update follower counts",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Following works",
-        "Unfollowing works",
-        "No duplicates allowed",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-social-003",
-      "category": "api-social",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement followers/following list endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/users/[id]/followers.ts",
-        "Create api/users/[id]/following.ts",
-        "Implement pagination",
-        "Support search",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Lists work correctly",
-        "Pagination works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-social-004",
-      "category": "api-social",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement activity feed endpoint",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/feed.ts",
-        "Fetch activity from followed users",
-        "Include: reading completions, achievements, shared highlights",
-        "Respect privacy settings",
-        "Implement pagination",
-        "Cache results",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Feed shows relevant activity",
-        "Privacy is respected",
-        "Pagination works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-groups-001",
-      "category": "api-groups",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement reading groups CRUD endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/groups/index.ts",
-        "POST: Create group (Pro/Scholar only)",
-        "GET: List groups (public + user's private)",
-        "Support search and filters",
-        "Implement pagination",
-        "Create api/groups/[id].ts for GET, PUT, DELETE",
-        "Apply profanity filter to names/descriptions",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Group creation is tier-locked",
-        "CRUD operations work",
-        "Profanity filter is applied",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-groups-002",
-      "category": "api-groups",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement group membership endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/groups/[id]/join.ts",
-        "POST: Join group or accept invite",
-        "Check if public or has invite",
-        "Create membership record",
-        "Create api/groups/[id]/leave.ts",
-        "DELETE: Leave group (unless owner)",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Joining works",
-        "Leaving works",
-        "Owner cannot leave",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-groups-003",
-      "category": "api-groups",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement group discussions endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/groups/[id]/discussions.ts",
-        "POST: Create discussion thread",
-        "GET: List discussions",
-        "Apply profanity filter",
-        "Create api/discussions/[id]/replies.ts",
-        "POST: Reply to discussion",
-        "Support nested replies",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Discussions work",
-        "Replies work with nesting",
-        "Profanity filter is applied",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-forum-001",
-      "category": "api-forum",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement forum category and post listing endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/forum/categories.ts for GET",
-        "Create api/forum/posts.ts for GET",
-        "Support filtering by category",
-        "Support sorting (recent, popular, unanswered)",
-        "Implement pagination",
-        "Cache results",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Categories list correctly",
-        "Posts list with filters",
-        "Sorting works",
-        "Pagination works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-forum-002",
-      "category": "api-forum",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement forum post CRUD endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/forum/posts.ts for POST",
-        "Validate with Zod schema",
-        "Apply profanity filter",
-        "Create post record",
-        "Create api/forum/posts/[id].ts for GET, PUT, DELETE",
-        "Include replies in GET",
-        "Increment view count",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Post creation works",
-        "Profanity filter is applied",
-        "CRUD operations work",
-        "View counting works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-forum-003",
-      "category": "api-forum",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement forum reply and voting endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/forum/posts/[id]/replies.ts for POST",
-        "Support nested replies (parentReplyId)",
-        "Apply profanity filter",
-        "Create api/forum/posts/[id]/vote.ts",
-        "Create api/forum/replies/[id]/vote.ts",
-        "Handle upvote/downvote",
-        "Prevent duplicate votes",
-        "Update vote counts",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Replies work with nesting",
-        "Voting works for posts and replies",
-        "No duplicate votes",
-        "Counts update correctly",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-forum-004",
-      "category": "api-forum",
-      "phase": "4f-social-api",
-      "priority": "medium",
-      "description": "Implement forum moderation endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/forum/replies/[id]/best-answer.ts",
-        "Allow OP to mark best answer",
-        "Create api/forum/report.ts",
-        "Handle content reports",
-        "Queue for moderator review",
-        "Create moderator endpoints for review",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Best answer marking works",
-        "Reporting works",
-        "Moderation queue works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-curriculum-001",
-      "category": "api-curriculums",
-      "phase": "4g-curriculum-api",
-      "priority": "medium",
-      "description": "Implement curriculum CRUD endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/curriculums/index.ts",
-        "POST: Create curriculum (Pro/Scholar only)",
-        "GET: List user's curriculums",
-        "Apply profanity filter to title/description",
-        "Create api/curriculums/[id].ts for GET, PUT, DELETE",
-        "Include items in GET",
-        "Include follow status",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Creation is tier-locked",
-        "CRUD operations work",
-        "Profanity filter is applied",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-curriculum-002",
-      "category": "api-curriculums",
-      "phase": "4g-curriculum-api",
-      "priority": "medium",
-      "description": "Implement curriculum browse and search endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/curriculums/browse.ts",
-        "Support filtering by category, difficulty",
-        "Support sorting (popularity, recent, rating)",
-        "Implement search",
-        "Implement pagination",
-        "Only show public curriculums",
-        "Cache results",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Browsing works with filters",
-        "Search works",
-        "Sorting works",
-        "Only public curriculums shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-curriculum-003",
-      "category": "api-curriculums",
-      "phase": "4g-curriculum-api",
-      "priority": "medium",
-      "description": "Implement curriculum items endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/curriculums/[id]/items.ts",
-        "POST: Add item to curriculum",
-        "Support reordering items",
-        "Create api/curriculums/[id]/items/[itemId].ts",
-        "PUT: Update item",
-        "DELETE: Remove item",
-        "Maintain order integrity",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Items can be added",
-        "Reordering works",
-        "CRUD operations work",
-        "Order is maintained",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-curriculum-004",
-      "category": "api-curriculums",
-      "phase": "4g-curriculum-api",
-      "priority": "medium",
-      "description": "Implement curriculum follow/progress endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/curriculums/[id]/follow.ts",
-        "POST: Follow curriculum",
-        "DELETE: Unfollow",
-        "Create api/curriculums/[id]/progress.ts",
-        "PUT: Update progress through curriculum",
-        "Track currentItemIndex",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Following works",
-        "Progress tracking works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "api-cron-001",
-      "category": "api-cron",
-      "phase": "4g-curriculum-api",
-      "priority": "low",
-      "description": "Implement cron job endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create api/cron/srs-reminders.ts",
-        "Send email reminders for due flashcards",
-        "Create api/cron/streak-check.ts",
-        "Check and update streaks daily",
-        "Award streak achievements",
-        "Create api/cron/cleanup-expired.ts",
-        "Clean up expired downloads",
-        "Clean up old audit logs",
-        "Verify cron jobs are configured in vercel.json",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "All cron jobs are implemented",
-        "Jobs run on schedule",
-        "Tests verify job logic"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-011",
-      "category": "frontend-reader",
-      "phase": "5c",
+      "id": "ai-personality-001",
+      "category": "ai",
+      "phase": "high-priority",
       "priority": "high",
-      "description": "Text reader for DOC/DOCX/pasted content",
+      "description": "Create AI personality customization UI",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create TextReader",
-        "Handle all text types",
-        "Add highlighting",
-        "Sync position",
-        "Tests"
+        "Create SettingsAIPage component",
+        "Add personality selector (Encouraging Tutor, Neutral Assistant, Socratic Guide)",
+        "Add custom tone text input",
+        "Add verbosity level slider (Concise to Detailed)",
+        "Add language complexity selector (Match my level, Challenge me, Simplify)",
+        "Add proactive suggestions toggle",
+        "Add comprehension check frequency selector (Never, Sometimes, Always)",
+        "Store AI preferences in User.preferences JSON field",
+        "Update AI prompt templates to use personality settings",
+        "Add preview feature to test AI personality",
+        "Add reset to defaults button",
+        "Write tests for settings persistence"
       ],
       "acceptance_criteria": [
-        "Renders correctly",
-        "Highlighting works",
-        "Position syncs",
+        "All personality options are selectable",
+        "Settings save to database correctly",
+        "AI responses adapt to personality settings",
+        "Preview shows difference between personalities",
+        "Settings persist across sessions",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-012",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "critical",
-      "description": "Typography controls (font, size, spacing)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create settings panel",
-        "Font selector+OpenDyslexic",
-        "Size/height/spacing sliders",
-        "Persist",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All controls work",
-        "Settings persist",
-        "Applied to all readers",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-013",
-      "category": "frontend-reader",
-      "phase": "5c",
+      "id": "email-001",
+      "category": "email-marketing",
+      "phase": "high-priority",
       "priority": "high",
-      "description": "Progress tracking UI (%, time, speed)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Progress component",
-        "Position/percentage",
-        "Time remaining",
-        "WPM calculation",
-        "Sync",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Progress accurate",
-        "Time calculated",
-        "Speed tracked",
-        "Syncs",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-014",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "high",
-      "description": "Annotation UI (highlights, notes, bookmarks)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Toolbar",
-        "Selection handling",
-        "Color picker",
-        "Note editor",
-        "Bookmarks",
-        "Sidebar",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Highlighting works",
-        "Notes work",
-        "Bookmarks work",
-        "CRUD works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-015",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "medium",
-      "description": "Annotation export (MD, PDF)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Export dialog",
-        "Generate MD",
-        "Generate PDF with jsPDF",
-        "Context",
-        "Filter",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "MD export works",
-        "PDF export works",
-        "Context included",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-016",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "medium",
-      "description": "Dictionary & Wikipedia lookup",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Dictionary component",
-        "Free dict API",
-        "Wikipedia lookup",
-        "Popover",
-        "Cache",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Dictionary works",
-        "Wikipedia works",
-        "Popover displays",
-        "Cache works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-017",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "medium",
-      "description": "Translation feature",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Translate popover",
-        "Google Translate API",
-        "Language selector",
-        "Cache",
-        "Persist",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Translation works",
-        "Configurable language",
-        "Cached",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-018",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "low",
-      "description": "Advanced reading (speed/focus/bionic)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Speed reading RSVP",
-        "WPM slider",
-        "Focus mode",
-        "Bionic reading",
-        "Toggles",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Speed mode works",
-        "Focus works",
-        "Bionic works",
-        "Toggleable",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-019",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "medium",
-      "description": "Keyboard shortcuts & gestures",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Define mappings",
-        "Navigation shortcuts",
-        "Annotation shortcuts",
-        "Mobile gestures",
-        "Help dialog",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Shortcuts work",
-        "Gestures work",
-        "Help shows all",
-        "Configurable",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-020",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "medium",
-      "description": "Split-screen notes panel",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Notes panel",
-        "Split layout",
-        "Edit in panel",
-        "Search",
-        "Filters",
-        "Resizable",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Layout works",
-        "Editing works",
-        "Search works",
-        "Filters work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-021",
-      "category": "frontend-reader",
-      "phase": "5c",
-      "priority": "low",
-      "description": "Two-page spread view (desktop)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Two-page component",
-        "Width detection",
-        "Side-by-side rendering",
-        "Page turns",
-        "Toggle",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Works on desktop",
-        "Navigation correct",
-        "Toggle works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-022",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "critical",
-      "description": "Pre-reading guide UI",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Guide component",
-        "Generate button",
-        "Streaming",
-        "Display sections",
-        "Collapsible",
-        "Regenerate",
-        "Cache",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Generation works",
-        "Streaming displays",
-        "Sections show",
-        "Regeneration works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-023",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "critical",
-      "description": "'Explain this' in reader",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Explain button",
-        "Popover",
-        "Send to API",
-        "Stream response",
-        "Follow-up",
-        "Cache",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Button appears",
-        "Streams correctly",
-        "Follow-ups work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-024",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "high",
-      "description": "AI chat sidebar",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Chat sidebar",
-        "Toggle",
-        "History",
-        "Send messages",
-        "Stream",
-        "Context",
-        "Persist",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Sidebar works",
-        "Messages send",
-        "Responses stream",
-        "Context included",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-025",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "high",
-      "description": "Comprehension check-ins",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Check dialog",
-        "Trigger on progress",
-        "Fetch question",
-        "Display options",
-        "Submit",
-        "Feedback",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Triggers correctly",
-        "Questions display",
-        "Feedback shown",
-        "Can disable",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-026",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "high",
-      "description": "Assessment generation & taking",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Assessment page",
-        "Generate button",
-        "Display questions",
-        "Timer",
-        "Submit",
-        "Grade",
-        "Results",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Generation works",
-        "Types display",
-        "Grading works",
-        "Results shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-027",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "medium",
-      "description": "Assessment history & results",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "History component",
-        "List assessments",
-        "Scores",
-        "Bloom's breakdown",
-        "View details",
-        "Retake",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "History displays",
-        "Detailed results viewable",
-        "Progress shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-028",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "high",
-      "description": "AI flashcard generation",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Generate button",
-        "Dialog",
-        "Type selector",
-        "Send to API",
-        "Preview",
-        "Edit",
-        "Save",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Generation works",
-        "Types selectable",
-        "Preview works",
-        "Saves correctly",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-029",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "medium",
-      "description": "AI settings page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Settings page",
-        "Global toggle",
-        "Feature toggles",
-        "Frequency control",
-        "Usage stats",
-        "Level pref",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Settings configurable",
-        "Global toggle works",
-        "Stats display",
-        "Persists",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-030",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "low",
-      "description": "AI usage dashboard",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Dashboard",
-        "Fetch usage",
-        "Tokens per feature",
-        "Costs",
-        "Charts",
-        "Limits",
-        "Export CSV",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Usage displays",
-        "Charts show trends",
-        "Limits visible",
-        "Export works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-031",
-      "category": "frontend-ai",
-      "phase": "5d",
-      "priority": "low",
-      "description": "AI loading & error handling",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Loading spinner",
-        "Skeleton screens",
-        "Progress indicators",
-        "Error boundary",
-        "Rate limits",
-        "Retry",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Loading clear",
-        "Errors handled",
-        "Retry works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-032",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "critical",
-      "description": "Flashcard deck list",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Decks page",
-        "Display grouped by book",
-        "Card counts",
-        "Due counts",
-        "Filters",
-        "Search",
-        "Study button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Decks display",
-        "Counts accurate",
-        "Filters work",
-        "Navigation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-033",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "critical",
-      "description": "Flashcard study interface with SM-2",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Study page",
-        "Fetch due cards",
-        "Display front",
-        "Show answer",
-        "4 ratings",
-        "Submit",
-        "Progress",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Flow works",
-        "All ratings work",
-        "Progress tracked",
-        "Completion shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-034",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "high",
-      "description": "Manual flashcard creation",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create dialog",
-        "Front/back fields",
-        "Type selector",
-        "Tags",
-        "Link book",
-        "Validate",
-        "Submit",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Form validates",
-        "Creation works",
-        "All fields saved",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-035",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "high",
-      "description": "Flashcard editing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Edit dialog",
-        "Load data",
-        "Edit fields",
-        "Validate",
-        "Submit",
-        "Success message",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Can edit all fields",
-        "Validation works",
-        "Updates save",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-036",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "medium",
-      "description": "Flashcard browse/search",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Browse page",
-        "List with pagination",
-        "Search",
-        "Filters",
-        "Sort",
-        "Bulk actions",
-        "Details",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Browse lists all",
-        "Search works",
-        "Filters work",
-        "Bulk actions work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-037",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "high",
-      "description": "Flashcard statistics",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Stats dashboard",
-        "Fetch stats",
-        "Retention rate",
-        "By status",
-        "History chart",
-        "Streak",
-        "Due cards",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All stats display",
-        "Charts render",
-        "Updates realtime",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-038",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "medium",
-      "description": "SRS settings",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Settings page",
-        "Daily limit",
-        "New cards limit",
-        "Notifications",
-        "Reminder time",
-        "Auto-play",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Settings configurable",
-        "Persist",
-        "Limits enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-039",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "low",
-      "description": "Flashcard keyboard shortcuts",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Add shortcuts",
-        "Space=show",
-        "1/2/3/4=rate",
-        "U=undo",
-        "S=suspend",
-        "E=edit",
-        "Help dialog",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All shortcuts work",
-        "Help shows shortcuts",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-040",
-      "category": "frontend-srs",
-      "phase": "5e",
-      "priority": "medium",
-      "description": "Flashcard import/export",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Import dialog",
-        "CSV support",
-        "Parse/validate",
-        "Preview",
-        "Create bulk",
-        "Export dialog",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "CSV import works",
-        "CSV export works",
-        "Validation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-041",
-      "category": "frontend-tts",
-      "phase": "5f",
-      "priority": "high",
-      "description": "TTS controls in reader",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "TTS controls",
-        "Toggle",
-        "Play/pause",
-        "Voice selector",
-        "Fetch voices",
-        "Web Speech fallback",
-        "Highlight text",
-        "Speed",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Works all tiers",
-        "Voice selection works",
-        "Highlighting works",
-        "Persists",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-042",
-      "category": "frontend-tts",
-      "phase": "5f",
-      "priority": "medium",
-      "description": "Full book audio download",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Download dialog",
-        "Show quota",
-        "Est time",
-        "Voice selector",
-        "Submit",
-        "Progress",
-        "Download",
-        "List",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Request works",
-        "Progress shown",
-        "Can download",
-        "Quota enforced",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-043",
-      "category": "frontend-tts",
-      "phase": "5f",
-      "priority": "medium",
-      "description": "TTS settings",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Settings page",
-        "Tier features",
-        "Default voice",
-        "Default speed",
-        "Auto-play",
-        "Highlight color",
-        "Quota",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Settings configurable",
-        "Tier clear",
-        "Persists",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-044",
-      "category": "frontend-tts",
-      "phase": "5f",
-      "priority": "low",
-      "description": "TTS error handling",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Handle API failures",
-        "Fallback to browser",
-        "Error messages",
-        "Retry",
-        "Unsupported browsers",
-        "Compatibility",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Errors handled",
-        "Fallback works",
-        "Users informed",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-045",
-      "category": "frontend-library",
-      "phase": "5b",
-      "priority": "critical",
-      "description": "Advanced book search with filters",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Search dialog",
-        "Full-text search",
-        "Filter by status",
-        "By genre",
-        "By tags",
-        "By progress",
-        "By dates",
-        "By type",
-        "Combine filters",
-        "Result count",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Full-text works",
-        "All filters work",
-        "Filters combine",
-        "Results update",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-046",
-      "category": "frontend-library",
-      "phase": "5b",
-      "priority": "high",
-      "description": "Library sort options",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Sort dropdown",
-        "By title",
-        "By author",
-        "By date added",
-        "By last read",
-        "By progress",
-        "By rating",
-        "Persist",
-        "Tests"
-      ],
-      "acceptance_criteria": ["All sorts work", "Persists", "Tests pass"],
-      "passes": true
-    },
-    {
-      "id": "frontend-047",
-      "category": "frontend-library",
-      "phase": "5b",
-      "priority": "high",
-      "description": "Collections/folders system",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Collections page",
-        "Create button",
-        "Create/edit dialog",
-        "Nested collections",
-        "Drag/drop",
-        "View books",
-        "Remove",
-        "Rename/delete",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Can create",
-        "Add/remove works",
-        "Nesting works",
-        "Drag/drop works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-048",
-      "category": "frontend-library",
-      "phase": "5b",
-      "priority": "high",
-      "description": "Custom shelves",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Shelves page",
-        "Create shelf",
-        "Multiple shelves",
-        "Add to multiple",
-        "Show by shelf",
-        "Reorder",
-        "Delete",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Shelves created",
-        "Multiple shelves work",
-        "Reordering works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-049",
-      "category": "frontend-library",
-      "phase": "5b",
-      "priority": "medium",
-      "description": "Reading lists",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Lists page",
-        "Create list",
-        "Ordered lists",
-        "Add books",
-        "Reorder",
-        "Progress",
-        "Share",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Lists created",
-        "Reordering works",
-        "Sharing works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-050",
-      "category": "frontend-library",
-      "phase": "5b",
-      "priority": "medium",
-      "description": "Bulk actions for books",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Checkbox mode",
-        "Multi-select",
-        "Bulk to collection",
-        "Bulk to shelf",
-        "Bulk status",
-        "Bulk tags",
-        "Bulk delete",
-        "Confirmations",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Multi-select works",
-        "All bulk actions work",
-        "Confirmations shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-051",
-      "category": "frontend-stats",
-      "phase": "5g",
-      "priority": "high",
-      "description": "User stats dashboard",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Stats dashboard",
-        "Fetch stats",
-        "XP/level display",
-        "Progress to next level",
-        "Books read",
-        "Reading time",
-        "Streak",
-        "Charts",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Stats display",
-        "Level calculated",
-        "Charts render",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-052",
-      "category": "frontend-stats",
-      "phase": "5g",
-      "priority": "high",
-      "description": "Achievements display",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Achievements page",
-        "List all",
-        "Show unlock status",
-        "Show criteria",
-        "Progress bars",
-        "Unlock animations",
-        "Filter locked/unlocked",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All achievements shown",
-        "Status correct",
-        "Progress shown",
-        "Animations work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-053",
-      "category": "frontend-stats",
-      "phase": "5g",
-      "priority": "medium",
-      "description": "Achievement unlock notifications",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Achievement toast",
-        "Show on unlock",
-        "Animation",
-        "Sound effect",
-        "Link to achievements page",
-        "Dismiss",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Toasts show on unlock",
-        "Animations work",
-        "Links work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-054",
-      "category": "frontend-stats",
-      "phase": "5g",
-      "priority": "medium",
-      "description": "Leaderboard page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Leaderboard page",
-        "Global/friends toggle",
-        "Timeframe selector",
-        "Metric selector",
-        "Display rankings",
-        "Highlight user",
-        "Pagination",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Global works",
-        "Friends works",
-        "Timeframes work",
-        "User highlighted",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-055",
-      "category": "frontend-stats",
-      "phase": "5g",
-      "priority": "low",
-      "description": "Reading analytics dashboard",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Analytics page",
-        "Books over time chart",
-        "Reading time chart",
-        "Genres breakdown",
-        "Authors read",
-        "Avg book length",
-        "Completion rate",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All analytics display",
-        "Charts render",
-        "Accurate data",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-056",
-      "category": "frontend-stats",
-      "phase": "5g",
-      "priority": "low",
-      "description": "Export reading data",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Export dialog",
-        "Select data types",
-        "Format selector (CSV/JSON)",
-        "Date range",
-        "Generate",
-        "Download",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Export generates",
-        "All formats work",
-        "Date range works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-057",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "medium",
-      "description": "User profile page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Profile page",
-        "Display username/avatar",
-        "Show stats (if public)",
-        "Show achievements",
-        "Show reading activity",
-        "Show followers/following",
-        "Edit profile button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Profile displays",
-        "Privacy respected",
-        "Editable",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-058",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "medium",
-      "description": "Edit profile page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Edit page",
-        "Avatar upload",
-        "Bio editor",
-        "Privacy settings",
-        "Social links",
-        "Save changes",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All fields editable",
-        "Avatar upload works",
-        "Privacy saves",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-059",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "medium",
-      "description": "Follow/unfollow functionality",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Follow button on profiles",
-        "Handle follow/unfollow",
-        "Update counts",
-        "Show following status",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Follow works",
-        "Unfollow works",
-        "Counts update",
-        "Status correct",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-060",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "medium",
-      "description": "Followers/following lists",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Lists page",
-        "Display followers",
-        "Display following",
-        "Pagination",
-        "Search",
-        "Unfollow from list",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Lists display",
-        "Search works",
-        "Unfollow works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-061",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "medium",
-      "description": "Activity feed",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Feed page",
-        "Fetch from API",
-        "Display activities (completions, achievements, highlights)",
-        "Pagination",
-        "Filters",
-        "Refresh",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Feed displays",
-        "Activities shown",
-        "Pagination works",
-        "Filters work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-062",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "low",
-      "description": "Share highlights feature",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Share button on highlights",
-        "Privacy selector (public/friends/private)",
-        "Share confirmation",
-        "Show shared highlights in feed",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Sharing works",
-        "Privacy respected",
-        "Shows in feed",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-063",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "low",
-      "description": "User search",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Search page",
-        "Search by username",
-        "Search by name",
-        "Display results",
-        "View profile link",
-        "Follow from results",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Search works",
-        "Results display",
-        "Actions work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-064",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "low",
-      "description": "Notifications page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Notifications page",
-        "List notifications (follows, achievements, mentions)",
-        "Mark as read",
-        "Delete",
-        "Real-time updates",
-        "Badge count",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Notifications list",
-        "Mark read works",
-        "Real-time works",
-        "Badge shows",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-065",
-      "category": "frontend-social",
-      "phase": "5h",
-      "priority": "low",
-      "description": "Block/report users",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Block button",
-        "Block confirmation",
-        "Report dialog",
-        "Report reasons",
-        "Submit report",
-        "Blocked users list",
-        "Unblock",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Blocking works",
-        "Reporting works",
-        "List shows blocked",
-        "Unblock works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-066",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "medium",
-      "description": "Reading groups list page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Groups page",
-        "Display all groups (public + user's)",
-        "Show member counts",
-        "Show activity",
-        "Search",
-        "Filters (public/private)",
-        "Create button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Groups list",
-        "Search works",
-        "Filters work",
-        "Navigation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-067",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "medium",
-      "description": "Create/edit reading group",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create/edit dialog",
-        "Name/description fields",
-        "Privacy selector",
-        "Book selection",
-        "Cover image upload",
-        "Save",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Creation works",
-        "Editing works",
-        "All fields save",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-068",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "medium",
-      "description": "Reading group details page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Group page",
-        "Display info",
-        "Member list",
-        "Current book",
-        "Discussions list",
-        "Join/leave button",
-        "Invite button (if owner)",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Info displays",
-        "Members shown",
-        "Discussions shown",
-        "Actions work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-069",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "medium",
-      "description": "Group discussions",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Discussions section",
-        "Create discussion",
-        "List discussions",
-        "View discussion with replies",
-        "Reply to discussion",
-        "Nested replies",
-        "Edit/delete own",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Create works",
-        "List displays",
-        "Replies work",
-        "Nesting works",
-        "Edit/delete work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-070",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "low",
-      "description": "Group invitations",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Invite dialog",
-        "Search users",
-        "Send invites",
-        "Pending invites list",
-        "Accept/decline invitations",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Sending works",
-        "Receiving works",
-        "Accept/decline work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-071",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "low",
-      "description": "Group member management (owner)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Members page for owners",
-        "List members with roles",
-        "Promote to moderator",
-        "Remove members",
-        "Transfer ownership",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "List shows roles",
-        "Promotion works",
-        "Removal works",
-        "Transfer works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-072",
-      "category": "frontend-groups",
-      "phase": "5i",
-      "priority": "low",
-      "description": "Group reading schedule",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Schedule component",
-        "Set reading pace",
-        "Milestones (chapters/pages per week)",
-        "Progress tracking",
-        "Reminders",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Schedule creation works",
-        "Tracking works",
-        "Reminders work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-073",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "medium",
-      "description": "Forum home page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Forum page",
-        "List categories",
-        "Show post counts",
-        "Show recent activity",
-        "Popular posts section",
-        "Search bar",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Categories list",
-        "Counts correct",
-        "Activity shown",
-        "Search works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-074",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "medium",
-      "description": "Forum category view",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Category page",
-        "List posts in category",
-        "Sort options (recent, popular, unanswered)",
-        "Filters",
-        "Pagination",
-        "Create post button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Posts list",
-        "Sorting works",
-        "Filters work",
-        "Pagination works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-075",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "high",
-      "description": "Create/edit forum post",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create/edit page",
-        "Title/content fields",
-        "Category selector",
-        "Tags input",
-        "Rich text editor",
-        "Preview",
-        "Submit",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Creation works",
-        "Editing works",
-        "Rich text works",
-        "Preview works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-076",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "high",
-      "description": "Forum post detail view",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Post page",
-        "Display post with formatting",
-        "Author info",
-        "Timestamp",
-        "View count",
-        "Vote buttons",
-        "Reply button",
-        "Replies list",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Post displays",
-        "Formatting correct",
-        "Voting works",
-        "Replies shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-077",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "medium",
-      "description": "Forum replies with nesting",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Reply component",
-        "Reply form",
-        "Nested replies display (3 levels)",
-        "Collapse/expand threads",
-        "Quote reply",
-        "Edit/delete own",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Replies work",
-        "Nesting works (3 levels)",
-        "Collapse works",
-        "Edit/delete work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-078",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "medium",
-      "description": "Forum voting system",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Vote buttons",
-        "Upvote/downvote",
-        "Update counts",
-        "Prevent duplicates",
-        "Show user's vote",
-        "Sort by votes",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Voting works",
-        "No duplicates",
-        "Counts update",
-        "Sorting works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-079",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "low",
-      "description": "Best answer marking",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Mark as best answer button (OP only)",
-        "Best answer badge",
-        "Show at top of replies",
-        "Highlight",
-        "Unmark",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Marking works",
-        "Badge shows",
-        "Positioned correctly",
-        "Unmarking works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-080",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "low",
-      "description": "Forum moderation UI",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Report button",
-        "Report dialog",
-        "Moderator dashboard (if moderator)",
-        "Review reports",
-        "Close/delete posts",
-        "Ban users",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Reporting works",
-        "Moderation tools work",
-        "Actions apply",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-081",
-      "category": "frontend-forum",
-      "phase": "5j",
-      "priority": "low",
-      "description": "Forum user profiles & reputation",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "User profile in forum",
-        "Show post count",
-        "Show reputation score",
-        "Show badges",
-        "Link to main profile",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Profile displays",
-        "Reputation shown",
-        "Badges shown",
-        "Link works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-082",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "medium",
-      "description": "Curriculum browse page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Browse page",
-        "List public curriculums",
-        "Categories",
-        "Difficulty filters",
-        "Search",
-        "Sort (popular, recent, rating)",
-        "Follow button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "List displays",
-        "Filters work",
-        "Search works",
-        "Sorting works",
-        "Follow works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-083",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "medium",
-      "description": "Curriculum detail view",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Curriculum page",
-        "Display info",
-        "Items list with order",
-        "Progress indicator",
-        "Follow/unfollow button",
-        "Start/continue button",
-        "Reviews section",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Info displays",
-        "Items shown in order",
-        "Progress shown",
-        "Actions work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-084",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "high",
-      "description": "Create/edit curriculum (Pro/Scholar)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create/edit page",
-        "Title/description",
-        "Category/difficulty",
-        "Privacy selector",
-        "Add items (books, articles)",
-        "Reorder items",
-        "Save",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Creation works (tier-gated)",
-        "Editing works",
-        "Reordering works",
-        "Saves correctly",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-085",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "medium",
-      "description": "Curriculum progress tracking",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Progress component",
-        "Current item indicator",
-        "Percentage complete",
-        "Mark item complete button",
-        "Next item button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Progress accurate",
-        "Marking works",
-        "Navigation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-086",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "low",
-      "description": "My curriculums page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "My curriculums page",
-        "Created tab",
-        "Following tab",
-        "Display with progress",
-        "Continue button",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Both tabs work",
-        "Progress shown",
-        "Continuation works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-087",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "low",
-      "description": "Curriculum reviews/ratings",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Reviews section",
-        "Leave review (if followed)",
-        "Star rating",
-        "Comment",
-        "Display reviews",
-        "Sort reviews",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Review submission works",
-        "Display works",
-        "Sorting works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-088",
-      "category": "frontend-curriculum",
-      "phase": "5k",
-      "priority": "low",
-      "description": "Curriculum sharing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Share button",
-        "Generate share link",
-        "Copy link",
-        "Social media share buttons",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Share link works",
-        "Copy works",
-        "Social share works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-089",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "high",
-      "description": "General settings page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Settings page",
-        "Language selector",
-        "Timezone",
-        "Display name",
-        "Email notifications toggle",
-        "Save",
-        "Tests"
-      ],
-      "acceptance_criteria": ["All settings work", "Persist", "Tests pass"],
-      "passes": true
-    },
-    {
-      "id": "frontend-090",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "high",
-      "description": "Reader preferences page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Reader settings",
-        "Default theme",
-        "Default font/size",
-        "Auto-save progress",
-        "Page turn animation",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All preferences configurable",
-        "Persist",
-        "Apply to reader",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-091",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "medium",
-      "description": "Privacy settings page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Privacy settings",
-        "Profile visibility",
-        "Activity visibility",
-        "Show in leaderboard toggle",
-        "Block list",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All privacy settings work",
-        "Enforced correctly",
-        "Block list works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-092",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "medium",
-      "description": "Notification preferences",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Notification settings",
-        "Email notifications toggles",
-        "Push notification toggles (if PWA)",
-        "Notification types",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All toggles work",
-        "Email prefs save",
-        "Push prefs save",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-093",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "low",
-      "description": "Account management page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Account page",
-        "Change password",
-        "Linked accounts (OAuth)",
-        "Delete account button",
-        "Deletion confirmation",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Password change works",
-        "OAuth display works",
-        "Deletion works (with confirmation)",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-094",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "low",
-      "description": "Subscription management page (tiers)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Subscription page",
-        "Show current tier",
-        "Tier comparison table",
-        "Upgrade/downgrade buttons",
-        "Billing history",
-        "Cancel subscription",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Tier shown correctly",
-        "Upgrade works",
-        "Downgrade works",
-        "Billing shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-095",
-      "category": "frontend-settings",
-      "phase": "5l",
-      "priority": "low",
-      "description": "Data & privacy page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Data page",
-        "Download my data button",
-        "Data export options",
-        "Privacy policy link",
-        "Terms link",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Export works",
-        "All options work",
-        "Links work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-096",
-      "category": "frontend-a11y",
-      "phase": "5m",
-      "priority": "critical",
-      "description": "WCAG 2.2 AAA compliance audit",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Run accessibility audit",
-        "Fix color contrast issues (7:1 for AAA)",
-        "Add ARIA labels",
-        "Keyboard navigation",
-        "Screen reader testing",
-        "Document compliance",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Audit passes WCAG AAA",
-        "All issues fixed",
-        "Keyboard nav works",
-        "Screen reader works",
-        "Documented"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-097",
-      "category": "frontend-a11y",
-      "phase": "5m",
-      "priority": "high",
-      "description": "Focus management & indicators",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Visible focus indicators",
-        "Focus trap in modals",
-        "Restore focus on close",
-        "Skip links",
-        "Focus management",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Focus always visible",
-        "Traps work",
-        "Restoration works",
-        "Skip links work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-098",
-      "category": "frontend-a11y",
-      "phase": "5m",
-      "priority": "high",
-      "description": "Screen reader announcements",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Announce route changes",
-        "Announce dynamic content",
-        "Announce errors",
-        "Announce successes",
-        "Live regions",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All announcements work",
-        "Live regions work",
-        "SR testing passes",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-099",
-      "category": "frontend-a11y",
-      "phase": "5m",
-      "priority": "medium",
-      "description": "Reduce motion support",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Detect prefers-reduced-motion",
-        "Disable animations if set",
-        "Disable parallax",
-        "Disable auto-play",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Detection works",
-        "Animations respect setting",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-100",
-      "category": "frontend-a11y",
-      "phase": "5m",
-      "priority": "medium",
-      "description": "High contrast mode enhancements",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test high-contrast theme",
-        "Enhance contrast further",
-        "Test with Windows high-contrast",
-        "Border emphasis",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "High-contrast excellent",
-        "Windows compatible",
-        "Borders clear",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-101",
-      "category": "frontend-a11y",
-      "phase": "5m",
-      "priority": "low",
-      "description": "Accessibility settings page",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "A11y settings",
-        "Font size override",
-        "High-contrast toggle",
-        "Reduce motion toggle",
-        "Screen reader optimizations",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All settings work",
-        "Override works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-102",
-      "category": "frontend-mobile",
-      "phase": "5n",
-      "priority": "critical",
-      "description": "Mobile-responsive layouts",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Audit all pages",
-        "Make responsive (320px-1920px)",
-        "Test on mobile devices",
-        "Fix layout issues",
-        "Touch targets 44x44px",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All pages responsive",
-        "Touch targets adequate",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-103",
-      "category": "frontend-mobile",
-      "phase": "5n",
-      "priority": "high",
-      "description": "Mobile navigation & menu",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Hamburger menu",
-        "Drawer navigation",
-        "Bottom navigation bar",
-        "Responsive header",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Mobile nav works",
-        "Drawer works",
-        "Bottom nav works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-104",
-      "category": "frontend-mobile",
-      "phase": "5n",
-      "priority": "high",
-      "description": "Mobile reader optimizations",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Optimize reader for mobile",
-        "Touch gestures (swipe to turn)",
-        "Mobile toolbar",
-        "Performance optimizations",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Reader works well on mobile",
-        "Gestures work",
-        "Performance good",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "frontend-105",
-      "category": "frontend-mobile",
-      "phase": "5n",
-      "priority": "medium",
-      "description": "Tablet-specific layouts",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Optimize for tablet sizes (768px-1024px)",
-        "Two-column layouts",
-        "Sidebar visibility",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Tablet layouts work",
-        "Utilizes space well",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-001",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "critical",
-      "description": "Service worker setup",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create service worker",
-        "Register SW",
-        "Cache strategy setup",
-        "Update handling",
-        "Version management",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "SW registers",
-        "Caching works",
-        "Updates handled",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-002",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "critical",
-      "description": "Offline page caching",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Cache app shell",
-        "Cache static assets",
-        "Cache routes",
-        "Fallback offline page",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "App shell cached",
-        "Assets cached",
-        "Offline page works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-003",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "critical",
-      "description": "Book download for offline reading",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Download book button",
-        "Store in IndexedDB",
-        "Display offline badge",
-        "List downloaded books",
-        "Remove download",
-        "Storage quota management",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Download works",
-        "Storage works",
-        "Badge shows",
-        "List works",
-        "Removal works",
-        "Quota managed",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-004",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "high",
-      "description": "Offline reading progress sync",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Track progress offline",
-        "Queue progress updates",
-        "Sync when online",
-        "Conflict resolution",
-        "Sync status indicator",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Offline tracking works",
-        "Queuing works",
-        "Sync works",
-        "Conflicts resolved",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-005",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "high",
-      "description": "Offline annotations sync",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create annotations offline",
-        "Store in IndexedDB",
-        "Queue for sync",
-        "Sync when online",
-        "Show sync status",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Offline creation works",
-        "Stored locally",
-        "Sync works",
-        "Status shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-006",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "medium",
-      "description": "Background sync for progress",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up background sync",
-        "Register sync on progress change",
-        "Handle sync event",
-        "Retry failed syncs",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Background sync works",
-        "Retries work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-007",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "medium",
-      "description": "Push notifications setup",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Request notification permission",
-        "Subscribe to push",
-        "Handle push events",
-        "Display notifications",
-        "Click handling",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Permission works",
-        "Subscription works",
-        "Notifications display",
-        "Clicks work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-008",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "medium",
-      "description": "SRS reminder notifications",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Send push for due cards",
-        "Notification content",
-        "Click opens app to flashcards",
-        "Customize frequency",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Reminders sent",
-        "Content correct",
-        "Navigation works",
-        "Customizable",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-009",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "low",
-      "description": "Install prompt & onboarding",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Show install prompt",
-        "Install button",
-        "Before install prompt handling",
-        "Post-install onboarding",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Prompt shows",
-        "Install works",
-        "Onboarding displays",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "pwa-010",
-      "category": "pwa",
-      "phase": "6a",
-      "priority": "low",
-      "description": "Offline indicator & status",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Detect online/offline",
-        "Show offline indicator",
-        "Disable online-only features",
-        "Explain limitations",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Detection works",
-        "Indicator shows",
-        "Features disabled appropriately",
-        "Clear messaging",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-001",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "critical",
-      "description": "E2E: User sign up and onboarding",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up Playwright",
-        "Test sign up flow",
-        "Test email verification",
-        "Test onboarding steps",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Sign up works E2E",
-        "Verification works",
-        "Onboarding works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-002",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "critical",
-      "description": "E2E: Add book and start reading",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test upload",
-        "Test import from URL",
-        "Test paste",
-        "Test library",
-        "Test opening reader",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All add methods work E2E",
-        "Library displays",
-        "Reader opens",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-003",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "critical",
-      "description": "E2E: Reading with annotations",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test reader",
-        "Test highlighting",
-        "Test notes",
-        "Test bookmarks",
-        "Test syncing",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Reader works E2E",
-        "All annotation types work",
-        "Syncing works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-004",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "high",
-      "description": "E2E: AI features flow",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test pre-reading guide",
-        "Test explain",
-        "Test ask questions",
-        "Test comprehension checks",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All AI features work E2E",
-        "Streaming works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-005",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "high",
-      "description": "E2E: SRS flashcard flow",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test card creation",
-        "Test study session",
-        "Test SM-2 algorithm",
-        "Test stats",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Cards work E2E",
-        "Study works",
-        "Algorithm works",
-        "Stats correct",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-006",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "high",
-      "description": "E2E: Assessment taking",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test assessment generation",
-        "Test taking assessment",
-        "Test grading",
-        "Test results",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Generation works E2E",
-        "Taking works",
-        "Grading correct",
-        "Results shown",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-007",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "E2E: Social features",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test profile",
-        "Test following",
-        "Test activity feed",
-        "Test groups",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Profile works E2E",
-        "Following works",
-        "Feed works",
-        "Groups work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-008",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "E2E: Forum usage",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test browsing forum",
-        "Test creating post",
-        "Test replying",
-        "Test voting",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Forum works E2E",
-        "Posts work",
-        "Replies work",
-        "Voting works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-009",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "Integration: API endpoints",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test all API endpoints",
-        "Test authentication",
-        "Test error handling",
-        "Test rate limiting",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All endpoints tested",
-        "Auth works",
-        "Errors handled",
-        "Rate limits work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-010",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "Integration: Database operations",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test CRUD operations",
-        "Test transactions",
-        "Test soft deletes",
-        "Test relations",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All DB ops tested",
-        "Transactions work",
-        "Soft deletes work",
-        "Relations work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-011",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "low",
-      "description": "Visual regression testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up visual testing",
-        "Snapshot all pages",
-        "Test across browsers",
-        "Automated comparison",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Visual tests set up",
-        "Snapshots work",
-        "Comparison automated",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-012",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "Performance testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up Lighthouse CI",
-        "Test page load times",
-        "Test reader performance",
-        "Test bundle size",
-        "Optimize",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Lighthouse runs in CI",
-        "Load times good",
-        "Reader performant",
-        "Bundle optimized",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-013",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "Accessibility testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up axe-core",
-        "Test all pages",
-        "Test color contrast",
-        "Test keyboard nav",
-        "Test screen readers",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Axe tests pass",
-        "Contrast good",
-        "Keyboard works",
-        "SR works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-014",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "low",
-      "description": "Cross-browser testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test Chrome",
-        "Test Firefox",
-        "Test Safari",
-        "Test Edge",
-        "Test mobile browsers",
-        "Document compatibility",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All browsers tested",
-        "Issues documented",
-        "Major browsers work",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-015",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "low",
-      "description": "Mobile device testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test iOS",
-        "Test Android",
-        "Test various screen sizes",
-        "Test touch interactions",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "iOS works",
-        "Android works",
-        "All sizes work",
-        "Touch works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-016",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "Security testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test XSS prevention",
-        "Test CSRF protection",
-        "Test SQL injection prevention",
-        "Test authentication",
-        "Penetration test",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "XSS prevented",
-        "CSRF protected",
-        "SQL injection blocked",
-        "Auth secure",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-017",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "medium",
-      "description": "Load testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up k6 or similar",
-        "Test concurrent users",
-        "Test API under load",
-        "Test database under load",
-        "Identify bottlenecks",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Load tests run",
-        "Handles expected load",
-        "Bottlenecks identified",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-018",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "low",
-      "description": "Internationalization testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test all 6 languages",
-        "Test RTL layouts (Arabic)",
-        "Test date/time formatting",
-        "Test translations coverage",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All languages work",
-        "RTL works",
-        "Formatting correct",
-        "Complete translations",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-019",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "low",
-      "description": "Error boundary testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test error boundaries",
-        "Test crash reporting",
-        "Test user-friendly errors",
-        "Test recovery",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Boundaries catch errors",
-        "Reporting works",
-        "Errors friendly",
-        "Recovery works",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "test-020",
-      "category": "testing",
-      "phase": "7a",
-      "priority": "low",
-      "description": "Data migration testing",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Test database migrations",
-        "Test data integrity",
-        "Test rollback",
-        "Test with production-like data",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Migrations work",
-        "Data intact",
-        "Rollback works",
-        "Production-ready",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-001",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "critical",
-      "description": "Vercel project configuration",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create Vercel project",
-        "Configure build settings",
-        "Set environment variables",
-        "Configure serverless functions",
-        "Configure routes",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Project configured",
-        "Build works",
-        "Env vars set",
-        "Functions work",
-        "Routes work"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-002",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "critical",
-      "description": "Database deployment setup",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up Vercel Postgres",
-        "Run migrations on production",
-        "Set up connection pooling",
-        "Configure backups",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Postgres set up",
-        "Migrations run",
-        "Pooling works",
-        "Backups configured"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-003",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "critical",
-      "description": "Redis deployment (Upstash)",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up Upstash Redis",
-        "Configure production connection",
-        "Test caching in production",
-        "Monitor performance",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Upstash configured",
-        "Connection works",
-        "Caching works",
-        "Performance good"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-004",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "critical",
-      "description": "R2 storage deployment",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Configure Cloudflare R2",
-        "Set up buckets",
-        "Configure CORS",
-        "Test uploads/downloads",
-        "Set up CDN",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "R2 configured",
-        "Buckets created",
-        "CORS works",
-        "Uploads/downloads work",
-        "CDN works"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-005",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "high",
-      "description": "CI/CD pipeline setup",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up GitHub Actions",
-        "Automated testing on PR",
-        "Automated linting",
-        "Automated typecheck",
-        "Deploy on merge to main",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "GH Actions configured",
-        "Tests run on PR",
-        "Linting runs",
-        "Typecheck runs",
-        "Auto-deploy works"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-006",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "high",
-      "description": "Environment management",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up development environment",
-        "Set up staging environment",
-        "Set up production environment",
-        "Document env vars",
-        "Secrets management",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "All envs set up",
-        "Documented",
-        "Secrets secure"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-007",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "high",
-      "description": "Monitoring and logging setup",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Set up Vercel Analytics",
-        "Set up error tracking (Sentry)",
-        "Set up logging (Winston)",
-        "Set up uptime monitoring",
-        "Dashboards",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Analytics works",
-        "Error tracking works",
-        "Logging works",
-        "Uptime monitored",
-        "Dashboards created"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-008",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "medium",
-      "description": "Custom domain & SSL",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Configure custom domain",
-        "Set up SSL certificate",
-        "Configure DNS",
-        "Test HTTPS",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Domain works",
-        "SSL works",
-        "DNS correct",
-        "HTTPS works"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-009",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "medium",
-      "description": "Performance optimizations",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Enable Vercel Edge caching",
-        "Optimize images",
-        "Enable compression",
-        "Minify assets",
-        "CDN configuration",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Edge caching works",
-        "Images optimized",
-        "Compression enabled",
-        "Assets minified",
-        "CDN works"
-      ],
-      "passes": true
-    },
-    {
-      "id": "deploy-010",
-      "category": "deployment",
-      "phase": "8a",
-      "priority": "low",
-      "description": "Documentation & runbooks",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Deployment documentation",
-        "Troubleshooting guide",
-        "Rollback procedures",
-        "Scaling guide",
-        "Incident response",
-        "Tests"
-      ],
-      "acceptance_criteria": [
-        "Docs complete",
-        "Troubleshooting clear",
-        "Rollback documented",
-        "Scaling documented",
-        "Incident plan ready"
-      ],
-      "passes": true
-    },
-    {
-      "id": "db-tts-001",
-      "category": "database",
-      "phase": "discovery",
-      "priority": "medium",
-      "description": "Add TTSDownload database model for persistent storage",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Add TTSDownload model to Prisma schema",
-        "Include fields: id, userId, bookId, status, provider, voice, format",
-        "Include fields: totalChunks, processedChunks, totalCharacters",
-        "Include fields: estimatedCost, actualCost, fileKey, fileSize, downloadUrl",
-        "Include fields: errorMessage, createdAt, updatedAt, completedAt, expiresAt",
-        "Run migration",
-        "Update download endpoints to use database",
-        "Add cleanup cron job for expired downloads",
-        "Write tests for database integration"
-      ],
-      "acceptance_criteria": [
-        "TTSDownload model exists in schema",
-        "Migrations run successfully",
-        "Endpoints persist to database",
-        "Cleanup job removes expired downloads",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "admin-001",
-      "category": "admin",
-      "phase": "9-admin",
-      "priority": "high",
-      "description": "Add UserRole enum and admin role to User model",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Add UserRole enum (USER, MODERATOR, ADMIN, SUPER_ADMIN) to schema",
-        "Add role field to User model with default USER",
-        "Create migration",
-        "Update seed data to include admin user",
-        "Update User type in shared package",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "UserRole enum exists with all values",
-        "User model has role field",
-        "Migration runs successfully",
-        "Seed data includes admin user",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "admin-002",
-      "category": "admin",
-      "phase": "9-admin",
-      "priority": "high",
-      "description": "Create requireAdmin middleware for API protection",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create apps/api/src/middleware/requireAdmin.ts",
-        "Check user role from auth context",
-        "Throw ForbiddenError if not ADMIN or SUPER_ADMIN",
-        "Add audit logging for admin access attempts",
-        "Export middleware",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "Middleware blocks non-admin users",
-        "Middleware allows ADMIN and SUPER_ADMIN",
-        "Audit logs are created",
-        "Clear error messages",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "admin-003",
-      "category": "admin",
-      "phase": "9-admin",
-      "priority": "critical",
-      "description": "Create DailyAnalytics model for time-series data",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Add DailyAnalytics model to schema",
-        "Include date, user metrics, revenue metrics, engagement, AI costs",
-        "Add unique constraint on date",
-        "Add index on date for queries",
-        "Create migration",
-        "Update seed data with sample analytics",
-        "Write tests"
-      ],
-      "acceptance_criteria": [
-        "DailyAnalytics model exists",
-        "All metric fields included",
-        "Constraints and indexes work",
-        "Seed data includes sample analytics",
-        "Tests pass"
-      ],
-      "passes": true
-    },
-    {
-      "id": "admin-004",
-      "category": "admin",
-      "phase": "9-admin",
-      "priority": "critical",
-      "description": "Create analytics service with metrics calculation",
-      "defer_to_next_sprint": false,
-      "steps": [
-        "Create apps/api/src/services/analytics.ts",
-        "Implement getUserStats (total, active, by tier)",
-        "Implement getRevenueStats (MRR, ARR, by tier)",
-        "Implement getEngagementStats (DAU, WAU, MAU, sessions)",
-        "Implement getFeatureUsageStats (AI, SRS, TTS, social)",
-        "Implement getAICostStats (total cost, per user, tokens)",
-        "Implement getContentStats (popular books, genres)",
-        "Add caching for expensive queries",
+      "description": "Set up email service provider integration and database models",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Choose email service provider (SendGrid recommended)",
+        "Create SendGrid account and get API key",
+        "Set up domain authentication (SPF, DKIM, DMARC)",
+        "Create EmailPreferences model in Prisma schema",
+        "Create EmailCampaign model in Prisma schema",
+        "Create EmailLog model in Prisma schema",
+        "Add EmailFrequency, CampaignType, CampaignStatus, EmailStatus, BounceType enums",
+        "Run database migration",
+        "Create email service wrapper in apps/api/src/services/email.ts",
+        "Implement sendEmail function",
+        "Implement webhook handler for email events",
+        "Create POST /api/email/webhook endpoint",
+        "Handle delivered, opened, clicked, bounced, unsubscribed events",
+        "Update EmailLog records based on webhooks",
+        "Add email service configuration to env variables",
         "Write comprehensive tests"
       ],
       "acceptance_criteria": [
-        "All stats functions implemented",
-        "Calculations are accurate",
-        "Performance is acceptable (< 5s)",
-        "Caching works correctly",
-        "Tests verify all calculations"
+        "Email service provider is configured",
+        "Domain authentication is complete",
+        "Database models are created",
+        "Email can be sent via API",
+        "Webhooks are processed correctly",
+        "Email status is tracked in database",
+        "Tests verify all functionality"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "admin-005",
-      "category": "admin",
-      "phase": "9-admin",
+      "id": "email-002",
+      "category": "email-marketing",
+      "phase": "high-priority",
       "priority": "high",
-      "description": "Create admin analytics API endpoints",
+      "description": "Create email templates and template system",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create GET /api/admin/analytics/overview",
-        "Create GET /api/admin/analytics/users",
-        "Create GET /api/admin/analytics/revenue",
-        "Create GET /api/admin/analytics/engagement",
-        "Create GET /api/admin/analytics/features",
-        "Create GET /api/admin/analytics/ai-costs",
-        "Create GET /api/admin/analytics/content",
-        "Apply requireAdmin middleware to all",
-        "Add response caching (5 min)",
-        "Write tests"
+        "Set up email template directory structure",
+        "Create base email layout template (HTML + plain text)",
+        "Add responsive CSS framework (MJML or Foundation for Emails)",
+        "Create template for welcome email",
+        "Create template for onboarding emails (7 variations)",
+        "Create template for streak reminders",
+        "Create template for achievement notifications",
+        "Create template for weekly digest",
+        "Create template for re-engagement emails (4 variations)",
+        "Create template for conversion emails (4 variations)",
+        "Create template for newsletter",
+        "Add personalization variable support ({{firstName}}, etc.)",
+        "Add dynamic content blocks",
+        "Implement template rendering engine",
+        "Test templates across email clients (Litmus or Email on Acid)",
+        "Ensure dark mode support",
+        "Add unsubscribe footer to all templates",
+        "Write template rendering tests"
       ],
       "acceptance_criteria": [
-        "All endpoints return correct data",
-        "Admin-only access enforced",
-        "Caching works",
-        "Response times acceptable",
+        "All email templates are created",
+        "Templates are responsive on mobile",
+        "Dark mode works correctly",
+        "Personalization variables work",
+        "Templates render correctly in major email clients",
+        "Unsubscribe link is present in all templates",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "admin-006",
-      "category": "admin",
-      "phase": "9-admin",
+      "id": "email-003",
+      "category": "email-marketing",
+      "phase": "high-priority",
       "priority": "high",
-      "description": "Create daily analytics cron job",
+      "description": "Implement welcome and onboarding email sequence",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create api/cron/daily-analytics.ts",
-        "Calculate all metrics for previous day",
-        "Store in DailyAnalytics table",
-        "Handle errors gracefully",
-        "Send notification on failure",
-        "Configure in vercel.json (runs at midnight UTC)",
-        "Write tests"
+        "Create email trigger system in apps/api/src/services/emailTriggers.ts",
+        "Implement event listener for user.created",
+        "Send welcome email immediately on signup",
+        "Create cron job to check for day 1 onboarding trigger",
+        "Send 'Add first book' email on day 1",
+        "Create cron job to check for day 2 onboarding trigger",
+        "Send 'AI features' email on day 2",
+        "Create cron job to check for day 3 onboarding trigger",
+        "Send 'Progress tracking' email on day 3",
+        "Create cron job to check for day 5 onboarding trigger",
+        "Send 'Social features' email on day 5",
+        "Create cron job to check for day 7 onboarding trigger",
+        "Send 'Week 1 recap' email with user stats on day 7",
+        "Create cron job to check for day 14 onboarding trigger",
+        "Send 'Pro features preview' email on day 14",
+        "Ensure emails respect user preferences",
+        "Track email opens and clicks",
+        "Write tests for onboarding sequence"
       ],
       "acceptance_criteria": [
-        "Cron job runs daily",
-        "Metrics calculated correctly",
-        "Data stored in database",
-        "Failures are logged and reported",
+        "Welcome email sends immediately",
+        "All onboarding emails send on schedule",
+        "Emails are personalized with user data",
+        "User preferences are respected",
+        "Email tracking works",
+        "Cron jobs run reliably",
+        "Tests verify all triggers"
+      ],
+      "passes": false
+    },
+    {
+      "id": "email-004",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "high",
+      "description": "Implement engagement email campaigns",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create trigger for reading streak achievements (7, 30, 100, 365 days)",
+        "Send streak celebration email",
+        "Create trigger for book completion",
+        "Send book completion celebration email",
+        "Create trigger for achievement unlocked",
+        "Send achievement notification email",
+        "Create cron job for weekly digest (Monday 8am per timezone)",
+        "Generate weekly reading stats for digest",
+        "Send weekly digest email",
+        "Create trigger for milestone achievements (10 books, 100 flashcards, etc.)",
+        "Send milestone celebration email",
+        "Add social sharing links to celebration emails",
+        "Ensure all engagement emails respect preferences",
+        "Write tests for engagement triggers"
+      ],
+      "acceptance_criteria": [
+        "Streak emails send on achievement",
+        "Book completion emails send correctly",
+        "Achievement emails send on unlock",
+        "Weekly digest generates and sends",
+        "Milestone emails send correctly",
+        "All emails are personalized",
+        "Preferences are respected",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-106",
-      "category": "frontend-admin",
-      "phase": "9-admin",
-      "priority": "critical",
-      "description": "Create admin dashboard page with overview metrics",
+      "id": "email-005",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "high",
+      "description": "Implement re-engagement campaigns for inactive users",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create AdminDashboardPage component",
-        "Add route protection (admin-only)",
-        "Fetch analytics data from API",
-        "Create MetricCard component for KPIs",
-        "Display total users, MRR, AI costs",
-        "Display active users, conversion rate",
-        "Add auto-refresh (every 60 seconds)",
-        "Add loading and error states",
-        "Make responsive",
-        "Write tests"
+        "Create cron job to identify inactive users (runs daily)",
+        "Implement 3-day inactive detection and email",
+        "Send 'We miss you' email with pending flashcards count",
+        "Implement 7-day inactive detection and email",
+        "Send 'Streak reminder' email with one-click resume link",
+        "Implement 14-day inactive detection and email",
+        "Send 'What's stopping you?' email with survey link",
+        "Create simple survey page for inactive user feedback",
+        "Implement 30-day inactive detection and email",
+        "Send final re-engagement email with special offer",
+        "Track re-engagement email effectiveness",
+        "Add unsubscribe option prominent in re-engagement emails",
+        "Ensure users don't get duplicate re-engagement emails",
+        "Write tests for inactive user detection and emails"
       ],
       "acceptance_criteria": [
-        "Dashboard only accessible to admins",
-        "All key metrics display correctly",
-        "Auto-refresh works",
-        "Responsive on all screen sizes",
+        "Inactive users are detected correctly",
+        "Re-engagement emails send on schedule",
+        "Email timing is accurate (3, 7, 14, 30 days)",
+        "Survey page works",
+        "No duplicate emails sent",
+        "Unsubscribe is easy",
+        "Tests verify all scenarios"
+      ],
+      "passes": false
+    },
+    {
+      "id": "email-006",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "high",
+      "description": "Implement conversion campaigns for free tier users",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create trigger for library limit reached (3 books)",
+        "Send upgrade prompt email highlighting Pro benefits",
+        "Create trigger for AI interaction limit reached (5 per day)",
+        "Send AI upgrade email showing Pro/Scholar benefits",
+        "Create 7-day free tier check",
+        "Send feature discovery email highlighting locked features",
+        "Create 14-day free tier check",
+        "Calculate user value (books, AI calls, flashcards used)",
+        "Send value demonstration email with upgrade ROI",
+        "Include success stories from Pro users",
+        "Add clear upgrade CTAs with tracking",
+        "Implement conversion tracking from email to upgrade",
+        "A/B test different subject lines and content",
+        "Write tests for conversion triggers"
+      ],
+      "acceptance_criteria": [
+        "Library limit email sends correctly",
+        "AI limit email sends correctly",
+        "Feature discovery email sends at 7 days",
+        "Value demonstration email sends at 14 days",
+        "Conversion tracking works",
+        "A/B testing framework works",
+        "Upgrade CTAs are tracked",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-107",
-      "category": "frontend-admin",
-      "phase": "9-admin",
-      "priority": "high",
-      "description": "Create users over time chart",
+      "id": "email-007",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "medium",
+      "description": "Create email preferences management page",
       "defer_to_next_sprint": false,
       "steps": [
-        "Install charting library (recharts or similar)",
-        "Create UsersOverTimeChart component",
-        "Fetch time-series data from API",
-        "Display line chart with total and active users",
-        "Add date range selector (7d, 30d, 90d, 1y)",
-        "Add tooltips with exact values",
-        "Handle loading and error states",
-        "Make responsive",
-        "Write tests"
+        "Create SettingsEmailPage component",
+        "Display current email preferences",
+        "Add toggle for onboarding emails",
+        "Add toggle for engagement emails",
+        "Add toggle for re-engagement emails",
+        "Add toggle for marketing emails",
+        "Add toggle for newsletter",
+        "Add toggle for achievement notifications",
+        "Add toggle for weekly digest",
+        "Add email frequency selector (immediate, daily, weekly)",
+        "Add preferred send time picker",
+        "Create PUT /api/users/email-preferences endpoint",
+        "Save preferences to EmailPreferences model",
+        "Create one-click unsubscribe endpoint",
+        "Add resubscribe functionality",
+        "Ensure all email sends respect preferences",
+        "Write tests for preferences page"
       ],
       "acceptance_criteria": [
-        "Chart displays correctly",
+        "All email preferences are configurable",
+        "Preferences save correctly",
+        "Unsubscribe works with one click",
+        "Resubscribe works",
+        "Email sends respect preferences",
+        "UI is intuitive",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "email-008",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "medium",
+      "description": "Implement email analytics dashboard for admin",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create AdminEmailAnalyticsPage component",
+        "Display total emails sent (all time, 30 days)",
+        "Show open rate percentage and chart",
+        "Show click-through rate percentage and chart",
+        "Show conversion rate (email to upgrade)",
+        "Show unsubscribe rate",
+        "Show bounce rate (hard and soft)",
+        "Show spam complaint rate",
+        "Create campaign performance table",
+        "Add filter by campaign type",
+        "Add filter by date range",
+        "Show top performing emails",
+        "Show worst performing emails",
+        "Create email funnel visualization",
+        "Add export to CSV functionality",
+        "Create GET /api/admin/analytics/email endpoint",
+        "Write tests for analytics calculations"
+      ],
+      "acceptance_criteria": [
+        "All email metrics are displayed",
+        "Charts render correctly",
+        "Filters work",
+        "Campaign comparison works",
+        "Export to CSV works",
         "Data is accurate",
-        "Date range selector works",
-        "Responsive layout",
         "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "email-009",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "medium",
+      "description": "Implement newsletter system",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create AdminNewsletterPage for composing newsletters",
+        "Add rich text editor (TipTap or similar)",
+        "Support newsletter sections (intro, tips, features, stories, etc.)",
+        "Add image upload for newsletter",
+        "Create preview functionality",
+        "Add send test email feature",
+        "Implement newsletter scheduling",
+        "Create recipient segmentation selector",
+        "Store newsletter in EmailCampaign model",
+        "Create cron job to send scheduled newsletters",
+        "Send to newsletter subscribers only",
+        "Track newsletter performance",
+        "Add newsletter archive page (public)",
+        "Create POST /api/admin/newsletter endpoint",
+        "Write tests for newsletter system"
+      ],
+      "acceptance_criteria": [
+        "Newsletter can be composed in admin panel",
+        "Rich text editing works",
+        "Preview shows accurate rendering",
+        "Test emails can be sent",
+        "Newsletters can be scheduled",
+        "Segmentation works",
+        "Archive is accessible",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "email-010",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "low",
+      "description": "Implement email segmentation system",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create segment builder UI in admin panel",
+        "Support segment by user tier (Free, Pro, Scholar)",
+        "Support segment by engagement level (active, inactive, at-risk)",
+        "Support segment by reading behavior (frequency, genres)",
+        "Support segment by feature usage (AI, SRS, social)",
+        "Support segment by lifecycle stage (new, active, churned)",
+        "Support segment by geography/timezone",
+        "Allow combining multiple criteria",
+        "Save custom segments to database",
+        "Create Segment model in Prisma",
+        "Implement segment evaluation engine",
+        "Show segment size preview",
+        "Allow targeting campaigns to segments",
+        "Write tests for segmentation logic"
+      ],
+      "acceptance_criteria": [
+        "Segments can be created with multiple criteria",
+        "Segment size is calculated accurately",
+        "Segments can be saved and reused",
+        "Campaigns can target segments",
+        "Segment evaluation is performant",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "email-011",
+      "category": "email-marketing",
+      "phase": "high-priority",
+      "priority": "low",
+      "description": "Implement A/B testing for emails",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add A/B test configuration to EmailCampaign model",
+        "Support testing subject lines (A vs B)",
+        "Support testing email content (A vs B)",
+        "Support testing send times",
+        "Split recipients into test groups (50/50 or custom)",
+        "Send test variant A to first group",
+        "Send test variant B to second group",
+        "Track performance of each variant",
+        "Calculate statistical significance",
+        "Display A/B test results in admin dashboard",
+        "Auto-select winner after threshold reached",
+        "Support multi-variant testing (A/B/C)",
+        "Write tests for A/B testing logic"
+      ],
+      "acceptance_criteria": [
+        "A/B tests can be configured",
+        "Recipients are split correctly",
+        "Both variants send",
+        "Performance is tracked separately",
+        "Statistical significance is calculated",
+        "Winner selection works",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "sentry-001",
+      "category": "monitoring",
+      "phase": "high-priority",
+      "priority": "critical",
+      "description": "Integrate Sentry for error tracking and performance monitoring",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create Sentry account and projects (web, api)",
+        "Install @sentry/react in apps/web",
+        "Install @sentry/node in apps/api",
+        "Configure Sentry in apps/web/src/main.tsx",
+        "Add Sentry.init with DSN, environment, integrations",
+        "Configure BrowserTracing integration",
+        "Configure Replay integration for session recordings",
+        "Set up source maps for production builds",
+        "Configure Vite to upload source maps to Sentry",
+        "Configure Sentry in apps/api",
+        "Add Sentry error boundary to React app",
+        "Wrap all API endpoints with Sentry error handler",
+        "Configure context data (user, tags, extras)",
+        "Set up release tracking with git commits",
+        "Configure performance monitoring (tracesSampleRate)",
+        "Add custom error tags (tier, feature, page)",
+        "Set up alerts for critical errors (Slack/email)",
+        "Configure error grouping rules",
+        "Add breadcrumbs for user actions",
+        "Test error reporting in development",
+        "Add SENTRY_DSN to environment variables",
+        "Write documentation for Sentry usage"
+      ],
+      "acceptance_criteria": [
+        "Errors are captured from frontend",
+        "Errors are captured from backend API",
+        "Source maps are uploaded correctly",
+        "User context is included in errors",
+        "Performance traces are captured",
+        "Releases are tracked with git SHA",
+        "Alerts are sent for critical errors",
+        "Error grouping works correctly",
+        "Session replays are available",
+        "Documentation is complete"
       ],
       "passes": true
     },
     {
-      "id": "frontend-108",
-      "category": "frontend-admin",
-      "phase": "9-admin",
+      "id": "sentry-002",
+      "category": "monitoring",
+      "phase": "high-priority",
       "priority": "high",
-      "description": "Create revenue over time chart",
+      "description": "Set up Sentry performance monitoring and optimization",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create RevenueOverTimeChart component",
-        "Fetch revenue time-series data",
-        "Display line chart with MRR trends",
-        "Add breakdown by tier (stacked area chart)",
-        "Add date range selector",
-        "Add tooltips with values",
-        "Show growth rate indicators",
-        "Make responsive",
-        "Write tests"
+        "Configure transaction sampling strategy",
+        "Add custom spans for database queries",
+        "Add custom spans for external API calls (AI, TTS)",
+        "Track API endpoint performance",
+        "Track component render performance",
+        "Set up performance budgets",
+        "Create performance dashboard in Sentry",
+        "Configure alerts for slow transactions (>3s)",
+        "Configure alerts for high error rates (>5%)",
+        "Track Core Web Vitals (LCP, FID, CLS)",
+        "Add performance monitoring to reader interface",
+        "Track EPUB/PDF rendering performance",
+        "Track flashcard review performance",
+        "Identify and tag slow queries",
+        "Set up custom metrics for business logic",
+        "Write performance optimization guide"
       ],
       "acceptance_criteria": [
-        "Chart displays MRR trends",
-        "Tier breakdown works",
-        "Growth rates calculated correctly",
-        "Responsive layout",
-        "Tests pass"
+        "All API endpoints are traced",
+        "Database queries are tracked",
+        "External API calls are monitored",
+        "Core Web Vitals are captured",
+        "Slow transactions trigger alerts",
+        "Performance dashboard is useful",
+        "Optimization guide is documented"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-109",
-      "category": "frontend-admin",
-      "phase": "9-admin",
+      "id": "posthog-001",
+      "category": "analytics",
+      "phase": "high-priority",
+      "priority": "critical",
+      "description": "Integrate PostHog for product analytics and feature flags",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create PostHog account (or set up self-hosted)",
+        "Install posthog-js in apps/web",
+        "Initialize PostHog in apps/web/src/lib/analytics.ts",
+        "Configure autocapture for clicks and pageviews",
+        "Set up user identification with Clerk user ID",
+        "Create event tracking wrapper functions",
+        "Track key user events (signup, login, book_added, book_completed)",
+        "Track reading session events (start, pause, resume, complete)",
+        "Track AI feature usage (explain, chat, assessment, flashcards)",
+        "Track SRS events (card_reviewed, streak_updated)",
+        "Track social events (follow, group_join, post_created)",
+        "Track conversion events (upgrade_initiated, upgrade_completed)",
+        "Set up custom properties (tier, reading_level, streak)",
+        "Configure session recording with privacy settings",
+        "Mask sensitive data (passwords, emails, credit cards)",
+        "Set up feature flags infrastructure",
+        "Create feature flag for new features rollout",
+        "Add POSTHOG_KEY to environment variables",
+        "Test event tracking in development",
+        "Write analytics tracking guide"
+      ],
+      "acceptance_criteria": [
+        "PostHog is initialized correctly",
+        "User identification works",
+        "All key events are tracked",
+        "Custom properties are included",
+        "Session recordings capture user behavior",
+        "Sensitive data is masked",
+        "Feature flags can be toggled",
+        "Documentation is complete"
+      ],
+      "passes": false
+    },
+    {
+      "id": "posthog-002",
+      "category": "analytics",
+      "phase": "high-priority",
+      "priority": "high",
+      "description": "Implement PostHog funnels, cohorts, and experimentation",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create onboarding funnel in PostHog",
+        "Track steps: signup -> add_book -> start_reading -> complete_chapter",
+        "Create conversion funnel (free -> upgrade_view -> upgrade_complete)",
+        "Create reading engagement funnel",
+        "Set up cohorts for user segmentation",
+        "Create cohort: Active readers (read 3+ times/week)",
+        "Create cohort: At-risk users (no activity 7+ days)",
+        "Create cohort: Power users (Pro/Scholar, daily active)",
+        "Create cohort: Free tier users (hit limits)",
+        "Set up A/B tests for key features",
+        "Implement A/B test: Email subject lines",
+        "Implement A/B test: Onboarding flow variations",
+        "Implement A/B test: Upgrade CTA placement",
+        "Create conversion dashboards",
+        "Set up retention analysis",
+        "Configure insights and trends",
+        "Set up automated reports",
+        "Write experimentation playbook"
+      ],
+      "acceptance_criteria": [
+        "All funnels are created and tracking",
+        "Cohorts are defined and updating",
+        "A/B tests can be run",
+        "Conversion rates are visible",
+        "Retention is tracked over time",
+        "Insights are actionable",
+        "Playbook is documented"
+      ],
+      "passes": false
+    },
+    {
+      "id": "posthog-003",
+      "category": "analytics",
+      "phase": "high-priority",
+      "priority": "high",
+      "description": "Integrate PostHog feature flags with application",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Create feature flag service in apps/web/src/lib/featureFlags.ts",
+        "Implement useFeatureFlag hook",
+        "Add feature flag loading state handling",
+        "Create feature flags for experimental features",
+        "Flag: new_reader_interface (gradual rollout)",
+        "Flag: advanced_ai_features (Pro/Scholar only)",
+        "Flag: beta_mobile_app (invite only)",
+        "Flag: new_onboarding_flow (A/B test)",
+        "Implement flag-based conditional rendering",
+        "Add admin toggle to override flags (for testing)",
+        "Set up flag analytics (usage, impact)",
+        "Create flag documentation in code",
+        "Implement graceful fallbacks",
+        "Add flag status to admin dashboard",
+        "Test flag toggles in development",
+        "Write feature flag best practices guide"
+      ],
+      "acceptance_criteria": [
+        "Feature flags control feature visibility",
+        "Flags can be toggled in PostHog dashboard",
+        "Gradual rollouts work correctly",
+        "A/B tests use flags",
+        "Flags are documented",
+        "Admin can see flag status",
+        "Best practices guide is complete"
+      ],
+      "passes": false
+    },
+    {
+      "id": "analytics-integration-001",
+      "category": "analytics",
+      "phase": "high-priority",
       "priority": "medium",
-      "description": "Create feature usage table/chart",
+      "description": "Create unified analytics dashboard combining all data sources",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create FeatureUsageTable component",
-        "Fetch feature usage stats from API",
-        "Display table with feature name, usage %, trend",
-        "Add sorting by usage/trend",
-        "Add filters (tier, date range)",
-        "Visualize with horizontal bar chart",
-        "Highlight low-usage features",
-        "Make responsive",
-        "Write tests"
+        "Create AdminAnalyticsOverviewPage combining all sources",
+        "Display Sentry error rate and trending errors",
+        "Display PostHog top events and conversion funnels",
+        "Display in-house business metrics (revenue, growth)",
+        "Create unified health score calculation",
+        "Combine error rate + engagement + revenue into score",
+        "Add quick links to Sentry and PostHog dashboards",
+        "Create alerts system using combined data",
+        "Alert: High error rate + low engagement = critical issue",
+        "Alert: Spike in events + no errors = viral growth",
+        "Alert: High churn + errors in specific feature = investigate",
+        "Create API endpoint to fetch combined metrics",
+        "Add data refresh/sync functionality",
+        "Create weekly executive summary email",
+        "Include key metrics from all sources",
+        "Add trend indicators (up/down/stable)",
+        "Write analytics interpretation guide"
       ],
       "acceptance_criteria": [
-        "All features listed with usage stats",
-        "Sorting works",
-        "Filters work",
-        "Low-usage features highlighted",
-        "Tests pass"
+        "All three data sources are visible",
+        "Health score updates in real-time",
+        "Alerts fire based on combined data",
+        "Executive summary emails send weekly",
+        "Dashboard is actionable",
+        "Interpretation guide is clear"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-110",
-      "category": "frontend-admin",
-      "phase": "9-admin",
+      "id": "analytics-integration-002",
+      "category": "analytics",
+      "phase": "high-priority",
       "priority": "medium",
-      "description": "Create AI costs breakdown visualization",
+      "description": "Implement analytics-driven automated actions",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create AICostsDashboard component",
-        "Display total costs and cost per user",
-        "Show breakdown by feature (pie chart)",
-        "Show cost trends over time (line chart)",
-        "Show tokens used by feature",
-        "Add cost efficiency metrics",
-        "Add alerts for unusual spikes",
-        "Make responsive",
+        "Create analytics automation service",
+        "Implement: High error rate -> Pause feature rollout",
+        "Implement: Low conversion in funnel -> Trigger re-engagement email",
+        "Implement: User inactive 7 days -> Add to re-engagement cohort",
+        "Implement: Crash on specific device -> Notify team immediately",
+        "Implement: A/B test reaches significance -> Auto-select winner",
+        "Implement: Performance degradation -> Scale infrastructure",
+        "Create automation rules engine",
+        "Add rule: IF error_rate > 5% THEN alert + rollback",
+        "Add rule: IF funnel_conversion < 10% THEN optimize",
+        "Add rule: IF session_recording shows confusion THEN improve UX",
+        "Set up automated performance regression testing",
+        "Create automated health checks",
+        "Log all automated actions for audit",
+        "Add manual override for automations",
+        "Write automation playbook"
+      ],
+      "acceptance_criteria": [
+        "Automations respond to analytics data",
+        "Feature rollouts can be paused automatically",
+        "Re-engagement is triggered automatically",
+        "A/B test winners are selected automatically",
+        "All actions are logged",
+        "Manual override works",
+        "Playbook documents all automations"
+      ],
+      "passes": false
+    },
+    {
+      "id": "payments-001",
+      "category": "payments",
+      "phase": "high-priority",
+      "priority": "critical",
+      "description": "Implement Stripe payment integration",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Set up Stripe account and get API keys",
+        "Create Stripe products for Pro and Scholar tiers",
+        "Create POST /api/payments/create-checkout-session endpoint",
+        "Create POST /api/payments/webhook endpoint for Stripe events",
+        "Handle subscription.created webhook",
+        "Handle subscription.updated webhook",
+        "Handle subscription.deleted webhook",
+        "Handle invoice.payment_succeeded webhook",
+        "Handle invoice.payment_failed webhook",
+        "Create upgrade flow UI in SettingsSubscriptionPage",
+        "Create Stripe customer portal link",
+        "Add billing history display",
+        "Add cancel subscription flow with confirmation",
+        "Update DailyAnalytics to track revenue from Stripe",
+        "Add payment method management",
+        "Write comprehensive webhook tests"
+      ],
+      "acceptance_criteria": [
+        "Users can upgrade to Pro or Scholar",
+        "Payments are processed via Stripe",
+        "User tier is updated after successful payment",
+        "Webhooks handle all subscription events",
+        "Users can manage billing in customer portal",
+        "Cancel subscription works with proper off-boarding",
+        "Revenue is tracked in analytics",
+        "Tests verify all webhook scenarios"
+      ],
+      "passes": false
+    },
+    {
+      "id": "accessibility-audit-001",
+      "category": "accessibility",
+      "phase": "high-priority",
+      "priority": "high",
+      "description": "Conduct full WCAG 2.2 AAA accessibility audit",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Run automated accessibility testing (axe-core, WAVE)",
+        "Test with screen readers (NVDA, JAWS, VoiceOver)",
+        "Verify keyboard navigation on all pages",
+        "Check color contrast ratios (7:1 for AAA)",
+        "Verify focus indicators are visible",
+        "Test skip navigation links",
+        "Verify all images have alt text",
+        "Check form labels and error messages",
+        "Test with 200% zoom and 400% zoom",
+        "Verify touch targets are 44x44px minimum",
+        "Test reduced motion preferences",
+        "Document all issues found",
+        "Fix all critical and high-priority issues",
+        "Create accessibility statement page",
+        "Add keyboard shortcuts help page"
+      ],
+      "acceptance_criteria": [
+        "All automated tests pass",
+        "Screen readers can navigate all features",
+        "Keyboard navigation works everywhere",
+        "All color contrasts meet 7:1 ratio",
+        "Focus indicators are clearly visible",
+        "No content loss at 400% zoom",
+        "All touch targets meet minimum size",
+        "Accessibility statement is published"
+      ],
+      "passes": false
+    },
+    {
+      "id": "reader-two-page-001",
+      "category": "reader",
+      "phase": "high-priority",
+      "priority": "medium",
+      "description": "Implement two-page spread view for desktop",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add spread mode toggle to reader settings",
+        "Update EpubReader to support spread: 'auto' mode",
+        "Update PdfReader to render two pages side-by-side",
+        "Add responsive breakpoint (only enable on desktop)",
+        "Ensure pagination works correctly in spread mode",
+        "Update progress tracking for spread view",
+        "Add keyboard shortcuts ([ ] to toggle spread)",
+        "Persist spread preference per user",
+        "Handle odd page counts gracefully",
+        "Write tests for spread mode"
+      ],
+      "acceptance_criteria": [
+        "Two-page spread works for EPUB",
+        "Two-page spread works for PDF",
+        "Only available on desktop (>1200px width)",
+        "Page navigation works in spread mode",
+        "Progress tracking is accurate",
+        "Preference persists across sessions",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "reader-column-width-001",
+      "category": "reader",
+      "phase": "high-priority",
+      "priority": "medium",
+      "description": "Add column width control to reader",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add column width slider to typography settings",
+        "Implement max-width control (400px - 1200px)",
+        "Add preset widths (Narrow, Medium, Wide, Full)",
+        "Apply column width to EPUB reader",
+        "Apply column width to text reader",
+        "Center content when width is constrained",
+        "Persist column width preference",
+        "Add to reader settings panel",
         "Write tests"
       ],
       "acceptance_criteria": [
-        "Cost breakdown is accurate",
-        "Charts display correctly",
-        "Alerts work for spikes",
-        "Responsive layout",
+        "Column width can be adjusted",
+        "Presets work correctly",
+        "Width applies to all reader types",
+        "Content is centered properly",
+        "Preference persists",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-111",
-      "category": "frontend-admin",
-      "phase": "9-admin",
+      "id": "library-bulk-001",
+      "category": "library",
+      "phase": "medium-priority",
+      "priority": "medium",
+      "description": "Implement bulk operations for library management",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add multi-select checkboxes to LibraryPage",
+        "Add select all/deselect all buttons",
+        "Create bulk actions toolbar (appears when items selected)",
+        "Implement bulk add to collection",
+        "Implement bulk add to shelf",
+        "Implement bulk change status",
+        "Implement bulk add tags",
+        "Implement bulk delete with confirmation dialog",
+        "Add progress indicator for bulk operations",
+        "Create POST /api/books/bulk-update endpoint",
+        "Add undo feature for accidental bulk operations",
+        "Write tests for all bulk operations"
+      ],
+      "acceptance_criteria": [
+        "Multiple books can be selected",
+        "Bulk add to collection works",
+        "Bulk status change works",
+        "Bulk tag addition works",
+        "Bulk delete requires confirmation",
+        "Progress is shown for long operations",
+        "Undo works for recent operations",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "library-reading-lists-001",
+      "category": "library",
+      "phase": "medium-priority",
+      "priority": "medium",
+      "description": "Complete reading lists functionality",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Verify ReadingListsPage component functionality",
+        "Verify ReadingListDetailPage component functionality",
+        "Create ReadingList model in database if missing",
+        "Implement ordered list of books",
+        "Add drag-and-drop reordering",
+        "Add shareable reading list links",
+        "Add reading list privacy settings (Private, Unlisted, Public)",
+        "Add reading list discovery page",
+        "Add follow/save reading lists from others",
+        "Track progress through reading lists",
+        "Write comprehensive tests"
+      ],
+      "acceptance_criteria": [
+        "Reading lists can be created",
+        "Books can be reordered",
+        "Lists can be shared via link",
+        "Public lists are discoverable",
+        "Progress tracking works",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "reader-search-001",
+      "category": "reader",
+      "phase": "medium-priority",
+      "priority": "medium",
+      "description": "Implement search within book feature",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Add search icon to reader toolbar",
+        "Create search modal/panel component",
+        "Implement full-text search for EPUB",
+        "Implement full-text search for PDF",
+        "Implement full-text search for text content",
+        "Display search results with context",
+        "Highlight search term in results",
+        "Navigate to search result when clicked",
+        "Highlight search term in reader view",
+        "Add next/previous result navigation",
+        "Show result count (X of Y results)",
+        "Support regex and case-sensitive options",
+        "Write tests for search functionality"
+      ],
+      "acceptance_criteria": [
+        "Search works for all file types",
+        "Results show context snippets",
+        "Navigation to results works",
+        "Search terms are highlighted",
+        "Case-sensitive and regex options work",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "moderation-001",
+      "category": "moderation",
+      "phase": "medium-priority",
+      "priority": "medium",
+      "description": "Implement content moderation tools",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Integrate profanity filter library (bad-words or similar)",
+        "Apply filter to forum posts and replies",
+        "Apply filter to group discussions",
+        "Apply filter to user bios and display names",
+        "Add report functionality for inappropriate content",
+        "Create moderation queue page for moderators",
+        "Add automatic flagging for spam patterns",
+        "Create user warning system",
+        "Implement temporary bans (timeouts)",
+        "Add moderation action audit logging",
+        "Create ModeratedContent model in database",
+        "Add appeal process for users",
+        "Write tests for moderation"
+      ],
+      "acceptance_criteria": [
+        "Profanity is filtered in public content",
+        "Spam patterns are detected",
+        "Moderators can review flagged content",
+        "Users can be warned or banned",
+        "All moderation actions are logged",
+        "Appeal process works",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "mobile-gestures-001",
+      "category": "mobile",
+      "phase": "medium-priority",
+      "priority": "medium",
+      "description": "Enhance mobile touch gestures",
+      "defer_to_next_sprint": false,
+      "steps": [
+        "Implement swipe left/right for page navigation",
+        "Implement pinch-to-zoom for images",
+        "Implement double-tap to zoom",
+        "Implement long-press for context menu",
+        "Add haptic feedback for gestures (if supported)",
+        "Implement pull-to-refresh on library page",
+        "Add swipe actions on list items (delete, archive)",
+        "Ensure gestures don't conflict with native browser gestures",
+        "Add gesture tutorial on first use",
+        "Make gestures configurable in settings",
+        "Write tests for gesture handling"
+      ],
+      "acceptance_criteria": [
+        "All gestures work on mobile web",
+        "Gestures are smooth and responsive",
+        "No conflicts with browser gestures",
+        "Tutorial explains gestures to new users",
+        "Gestures can be disabled in settings",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "tts-sleep-timer-001",
+      "category": "tts",
+      "phase": "medium-priority",
       "priority": "low",
-      "description": "Create user cohort analysis view",
+      "description": "Add sleep timer to TTS controls",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create CohortAnalysisView component",
-        "Fetch cohort data from API",
-        "Display retention cohort table",
-        "Color-code retention rates",
-        "Add cohort comparison",
-        "Add filters (date range, tier)",
-        "Make responsive",
+        "Add sleep timer button to TTSControls",
+        "Create sleep timer modal/popover",
+        "Add preset durations (5, 10, 15, 30, 45, 60 minutes)",
+        "Add custom duration input",
+        "Add timer countdown display",
+        "Implement fade out effect (last 30 seconds)",
+        "Stop playback when timer expires",
+        "Add cancel timer button",
+        "Show timer in notification if supported",
+        "Persist timer preference",
         "Write tests"
       ],
       "acceptance_criteria": [
-        "Cohort table displays correctly",
-        "Retention rates calculated correctly",
-        "Color coding helps identify trends",
-        "Filters work",
+        "Timer can be set with presets or custom duration",
+        "Countdown displays correctly",
+        "Playback stops when timer expires",
+        "Fade out effect works smoothly",
+        "Timer can be cancelled",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "frontend-112",
-      "category": "frontend-admin",
-      "phase": "9-admin",
+      "id": "wikipedia-lookup-001",
+      "category": "reader",
+      "phase": "medium-priority",
       "priority": "low",
-      "description": "Create analytics export functionality",
+      "description": "Implement Wikipedia quick lookup",
       "defer_to_next_sprint": false,
       "steps": [
-        "Create ExportDialog component",
-        "Add export format selector (CSV, PDF, JSON)",
-        "Add date range selector",
-        "Add metric selector (which metrics to include)",
-        "Generate export on server",
-        "Trigger download",
-        "Add email option for large exports",
+        "Add Wikipedia lookup option to text selection menu",
+        "Integrate Wikipedia API",
+        "Create WikipediaPopover component",
+        "Fetch article summary from Wikipedia",
+        "Display summary with images",
+        "Add 'Read more on Wikipedia' link",
+        "Support multiple languages based on user preference",
+        "Cache Wikipedia results in Redis",
+        "Handle disambiguation pages",
+        "Add loading and error states",
         "Write tests"
       ],
       "acceptance_criteria": [
-        "All formats work (CSV, PDF, JSON)",
-        "Date range filtering works",
-        "Metric selection works",
-        "Downloads work",
+        "Wikipedia lookup works on selected text",
+        "Article summaries display correctly",
+        "Images are shown when available",
+        "Link to full article works",
+        "Supports user's preferred language",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "admin-007",
+      "id": "mobile-apps-001",
+      "category": "mobile-apps",
+      "phase": "lower-priority",
+      "priority": "low",
+      "description": "Develop React Native mobile apps for iOS and Android",
+      "defer_to_next_sprint": true,
+      "steps": [
+        "Set up React Native project with Expo or bare workflow",
+        "Configure monorepo structure (apps/mobile/)",
+        "Set up shared component library",
+        "Implement navigation (React Navigation)",
+        "Port authentication flow (Clerk or native OAuth)",
+        "Port library page with native list components",
+        "Port reader interface with native PDF/EPUB viewers",
+        "Implement native TTS using device APIs",
+        "Port SRS flashcards with swipe gestures",
+        "Implement native notifications",
+        "Add biometric authentication (Face ID, Touch ID)",
+        "Set up push notifications (Firebase Cloud Messaging)",
+        "Configure deep linking",
+        "Implement offline sync with background tasks",
+        "Add native share functionality",
+        "Set up iOS App Store metadata and screenshots",
+        "Set up Google Play Store metadata and screenshots",
+        "Configure CI/CD for app builds (Fastlane or EAS Build)",
+        "Submit to App Store and Play Store",
+        "Write platform-specific tests"
+      ],
+      "acceptance_criteria": [
+        "iOS app installs and runs on iPhone/iPad",
+        "Android app installs and runs on devices",
+        "Feature parity with web app (all MVP features)",
+        "Native UI feels performant",
+        "Push notifications work",
+        "Offline mode works",
+        "Apps pass store review guidelines",
+        "Tests pass on both platforms"
+      ],
+      "passes": false
+    },
+    {
+      "id": "desktop-apps-001",
+      "category": "desktop-apps",
+      "phase": "lower-priority",
+      "priority": "low",
+      "description": "Develop Electron desktop apps for macOS, Windows, and Linux",
+      "defer_to_next_sprint": true,
+      "steps": [
+        "Set up Electron project structure (apps/desktop/)",
+        "Configure Electron Builder for multi-platform builds",
+        "Wrap web app in Electron with minimal changes",
+        "Implement native menu bar (File, Edit, View, Window, Help)",
+        "Add keyboard shortcuts for all features",
+        "Implement auto-updates (electron-updater)",
+        "Add native file system access for imports",
+        "Implement system tray icon and menu",
+        "Add native notifications",
+        "Configure deep linking (open read:// URLs)",
+        "Optimize for each platform (macOS, Windows, Linux)",
+        "Create installer/DMG for macOS",
+        "Create installer for Windows (NSIS or Squirrel)",
+        "Create AppImage/DEB/RPM for Linux",
+        "Code sign macOS app (Apple Developer Certificate)",
+        "Code sign Windows app (Windows certificate)",
+        "Set up CI/CD for builds (GitHub Actions)",
+        "Distribute via GitHub Releases or auto-update server",
+        "Write integration tests"
+      ],
+      "acceptance_criteria": [
+        "macOS app runs on Intel and Apple Silicon",
+        "Windows app runs on Windows 10+",
+        "Linux app runs on major distros",
+        "Feature parity with web app",
+        "Auto-updates work",
+        "Native menus and shortcuts work",
+        "Apps are code-signed",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "doc-docx-support-001",
+      "category": "reader",
+      "phase": "lower-priority",
+      "priority": "low",
+      "description": "Add DOC/DOCX file parsing support",
+      "defer_to_next_sprint": true,
+      "steps": [
+        "Integrate mammoth.js or docx library for parsing",
+        "Add DOC/DOCX parsing to book upload service",
+        "Extract text content from DOC files",
+        "Extract text content from DOCX files",
+        "Preserve basic formatting (bold, italic, headings)",
+        "Extract embedded images",
+        "Handle tables and lists",
+        "Convert to HTML or plain text for storage",
+        "Add DOC/DOCX support to reader interface",
+        "Update file type validation in upload endpoint",
+        "Write tests for DOC/DOCX parsing"
+      ],
+      "acceptance_criteria": [
+        "DOC files can be uploaded",
+        "DOCX files can be uploaded",
+        "Text is extracted correctly",
+        "Basic formatting is preserved",
+        "Images are extracted and displayed",
+        "Tables render correctly",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "nested-folders-001",
+      "category": "library",
+      "phase": "lower-priority",
+      "priority": "low",
+      "description": "Implement nested folder hierarchy for library",
+      "defer_to_next_sprint": true,
+      "steps": [
+        "Update Collection model to support parent-child relationships",
+        "Add parentId field to Collection",
+        "Implement tree structure for collections",
+        "Create folder navigation breadcrumbs",
+        "Add expand/collapse functionality",
+        "Implement drag-and-drop to move books between folders",
+        "Add drag-and-drop to move folders",
+        "Show folder depth limit (max 5 levels)",
+        "Add move dialog for multi-select",
+        "Update LibraryPage to show folder tree",
+        "Persist folder expanded/collapsed state",
+        "Write tests for nested operations"
+      ],
+      "acceptance_criteria": [
+        "Folders can have sub-folders",
+        "Books can be organized in nested structure",
+        "Drag-and-drop works for moving items",
+        "Breadcrumbs show current location",
+        "Folder state persists",
+        "Tests pass"
+      ],
+      "passes": false
+    },
+    {
+      "id": "analytics-visualizations-001",
       "category": "admin",
-      "phase": "9-admin",
-      "priority": "medium",
-      "description": "Create admin user management page",
-      "defer_to_next_sprint": false,
+      "phase": "lower-priority",
+      "priority": "low",
+      "description": "Add advanced analytics visualizations",
+      "defer_to_next_sprint": true,
       "steps": [
-        "Create GET /api/admin/users endpoint with pagination",
-        "Create PUT /api/admin/users/:id/role endpoint",
-        "Create PUT /api/admin/users/:id/tier endpoint",
-        "Create DELETE /api/admin/users/:id endpoint",
-        "Create AdminUsersPage component",
-        "Display users table with search/filter",
-        "Add role management UI",
-        "Add tier management UI",
-        "Add user deletion with confirmation",
-        "Add audit logging",
-        "Write tests"
+        "Create reading calendar heatmap component",
+        "Implement cohort retention table",
+        "Create user journey funnel visualization",
+        "Add geographic heatmap for user distribution",
+        "Create skill radar chart for Bloom's taxonomy",
+        "Add reading time heatmap (by day/hour)",
+        "Implement goal progress bars",
+        "Add custom dashboard layout with drag-and-drop",
+        "Create widget system for customizable dashboards",
+        "Add export to CSV for all charts",
+        "Add export to PNG for charts",
+        "Write tests for visualizations"
       ],
       "acceptance_criteria": [
-        "User list displays with pagination",
-        "Search and filters work",
-        "Role changes work with audit trail",
-        "Tier changes work",
-        "User deletion works (soft delete)",
+        "All visualizations render correctly",
+        "Heatmaps show data accurately",
+        "Dashboard is customizable",
+        "Export functions work",
+        "Visualizations are responsive",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     },
     {
-      "id": "admin-008",
+      "id": "predictive-analytics-001",
       "category": "admin",
-      "phase": "9-admin",
+      "phase": "lower-priority",
       "priority": "low",
-      "description": "Create admin settings page",
-      "defer_to_next_sprint": false,
+      "description": "Implement predictive analytics",
+      "defer_to_next_sprint": true,
       "steps": [
-        "Create AdminSettingsPage component",
-        "Add feature flags management",
-        "Add system notifications",
-        "Add maintenance mode toggle",
-        "Add rate limit configuration",
-        "Add API key management",
-        "Save settings to database",
-        "Write tests"
+        "Research ML models for churn prediction",
+        "Collect training data (user behavior, engagement)",
+        "Implement churn prediction model",
+        "Calculate churn risk score per user",
+        "Create LTV (Lifetime Value) forecasting model",
+        "Implement retention probability calculations",
+        "Add automated insights generation",
+        "Create PredictiveMetrics model in database",
+        "Add predictive metrics to admin dashboard",
+        "Implement automated email alerts for at-risk users",
+        "Add A/B testing framework",
+        "Track experiment results",
+        "Write tests for predictions"
       ],
       "acceptance_criteria": [
-        "All settings are configurable",
-        "Changes persist correctly",
-        "Maintenance mode works",
+        "Churn prediction identifies at-risk users",
+        "LTV forecasts are reasonably accurate",
+        "Automated insights are generated",
+        "Admin can see predictive metrics",
+        "A/B testing framework works",
         "Tests pass"
       ],
-      "passes": true
+      "passes": false
     }
   ]
 }

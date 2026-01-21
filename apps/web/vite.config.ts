@@ -1,10 +1,11 @@
 import react from "@vitejs/plugin-react";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { resolve } from "path";
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig({
-  plugins: [
+export default defineConfig(({ mode }) => {
+  const plugins: PluginOption[] = [
     react(),
     VitePWA({
       registerType: "prompt",
@@ -148,18 +149,43 @@ export default defineConfig({
         type: "module",
       },
     }),
-  ],
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
+  ];
+
+  // Upload source maps to Sentry in production builds
+  if (mode === "production" && process.env.SENTRY_AUTH_TOKEN) {
+    plugins.push(
+      sentryVitePlugin({
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT || "read-master-web",
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        release: {
+          name: process.env.VITE_APP_VERSION || "unknown",
+          uploadLegacySourcemaps: false,
+        },
+        sourcemaps: {
+          assets: "./dist/**",
+          ignore: ["**/node_modules/**"],
+          filesToDeleteAfterUpload: ["**/*.js.map", "**/*.mjs.map"],
+        },
+        telemetry: false,
+      })
+    );
+  }
+
+  return {
+    plugins,
+    resolve: {
+      alias: {
+        "@": resolve(__dirname, "./src"),
+      },
     },
-  },
-  server: {
-    port: 3000,
-    open: true,
-  },
-  build: {
-    outDir: "dist",
-    sourcemap: true,
-  },
+    server: {
+      port: 3000,
+      open: true,
+    },
+    build: {
+      outDir: "dist",
+      sourcemap: true,
+    },
+  };
 });

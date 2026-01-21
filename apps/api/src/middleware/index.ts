@@ -138,3 +138,12 @@ export {
   requireModerator,
   requireSuperAdmin,
 } from "./requireAdmin.js";
+
+export {
+  // Types
+  type SentryRequest,
+  // Higher-order middleware
+  withSentry,
+  // Utilities
+  compose,
+} from "./sentry.js";

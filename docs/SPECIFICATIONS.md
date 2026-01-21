@@ -612,6 +612,692 @@ Read Master is built as a cross-platform application available on:
 
 ---
 
+#### 16. Monitoring & Analytics Infrastructure
+
+**Description:** Comprehensive monitoring and analytics system using Sentry, PostHog, and in-house analytics.
+
+**User Story:** As a product owner, I need complete visibility into errors, user behavior, and business metrics to make data-driven decisions and ensure platform reliability.
+
+### Architecture Overview
+
+**Hybrid Approach:**
+
+- **Sentry:** Error tracking and performance monitoring
+- **PostHog:** Product analytics, feature flags, and experimentation
+- **In-House:** Business intelligence and custom metrics
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Read Master Analytics                    │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                    ┌─────────┼─────────┐
+                    │         │         │
+                    ▼         ▼         ▼
+            ┌───────────┬──────────┬────────────┐
+            │  Sentry   │ PostHog  │ In-House   │
+            │  (Errors) │ (Product)│ (Business) │
+            └───────────┴──────────┴────────────┘
+                 │           │            │
+                 │           │            │
+    ┌────────────┴───┐  ┌────┴────┐  ┌───┴────────┐
+    │ • JS Errors    │  │ • Events│  │ • Revenue  │
+    │ • API Errors   │  │ • Funnels│  │ • Growth   │
+    │ • Performance  │  │ • A/B    │  │ • Reading  │
+    │ • Crashes      │  │ • Flags  │  │ • Email    │
+    │ • Source Maps  │  │ • Session│  │ • Custom   │
+    └────────────────┘  └─────────┘  └────────────┘
+```
+
+### Sentry Integration
+
+**Purpose:** Error tracking and performance monitoring
+
+**Features:**
+
+- [ ] **Frontend Error Tracking**
+  - [ ] Capture JavaScript errors
+  - [ ] Capture unhandled promise rejections
+  - [ ] Source map support for debugging
+  - [ ] Error boundary integration
+  - [ ] User context (tier, ID, reading state)
+  - [ ] Breadcrumbs for user actions
+- [ ] **Backend Error Tracking**
+  - [ ] Capture API endpoint errors
+  - [ ] Capture database errors
+  - [ ] Capture external API failures (AI, TTS)
+  - [ ] Request context and stack traces
+  - [ ] Error grouping and deduplication
+- [ ] **Performance Monitoring**
+  - [ ] Track API response times
+  - [ ] Track database query performance
+  - [ ] Track external API latency
+  - [ ] Track Core Web Vitals (LCP, FID, CLS)
+  - [ ] Custom spans for business logic
+  - [ ] Performance budgets and alerts
+- [ ] **Release Tracking**
+  - [ ] Git commit integration
+  - [ ] Deploy notifications
+  - [ ] Regression detection
+  - [ ] Release health scores
+- [ ] **Alerting**
+  - [ ] Critical error alerts (Slack/Email)
+  - [ ] High error rate alerts (>5%)
+  - [ ] Slow transaction alerts (>3s)
+  - [ ] New error type alerts
+
+**Configuration:**
+
+```typescript
+Sentry.init({
+  dsn: SENTRY_DSN,
+  environment: NODE_ENV,
+  integrations: [new Sentry.BrowserTracing(), new Sentry.Replay()],
+  tracesSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+});
+```
+
+### PostHog Integration
+
+**Purpose:** Product analytics, feature flags, and experimentation
+
+**Features:**
+
+- [ ] **Event Tracking**
+  - [ ] Autocapture clicks and pageviews
+  - [ ] Custom event tracking (book_added, book_completed, etc.)
+  - [ ] User identification (Clerk ID)
+  - [ ] Custom properties (tier, streak, reading_level)
+  - [ ] Event buffering and batching
+- [ ] **Session Recording**
+  - [ ] Capture user sessions with playback
+  - [ ] Privacy controls (mask sensitive data)
+  - [ ] Filter by error occurrence
+  - [ ] Filter by user segment
+  - [ ] Console log capture
+- [ ] **Funnels**
+  - [ ] Onboarding funnel (signup → first_book → first_read)
+  - [ ] Conversion funnel (free → upgrade_view → upgrade_complete)
+  - [ ] Engagement funnel (login → feature_use → return)
+  - [ ] Drop-off analysis
+  - [ ] Conversion rate tracking
+- [ ] **Cohorts**
+  - [ ] Active readers (3+ sessions/week)
+  - [ ] At-risk users (no activity 7+ days)
+  - [ ] Power users (Pro/Scholar, daily active)
+  - [ ] Feature-specific cohorts (AI users, SRS users)
+  - [ ] Lifecycle stage cohorts (new, active, churned)
+- [ ] **Feature Flags**
+  - [ ] Toggle features on/off remotely
+  - [ ] Gradual rollout (% of users)
+  - [ ] User segment targeting
+  - [ ] A/B test variations
+  - [ ] Kill switch for problematic features
+- [ ] **A/B Testing**
+  - [ ] Email subject line testing
+  - [ ] Onboarding flow variations
+  - [ ] Upgrade CTA placement testing
+  - [ ] Feature UX testing
+  - [ ] Statistical significance calculation
+  - [ ] Automatic winner selection
+- [ ] **Retention Analysis**
+  - [ ] Day 1, 7, 30 retention rates
+  - [ ] Cohort retention curves
+  - [ ] Feature impact on retention
+  - [ ] Churn prediction
+
+**Key Events to Track:**
+
+- User lifecycle: `signup`, `onboarding_complete`, `first_book`, `first_read`
+- Reading: `reading_session_start`, `chapter_complete`, `book_complete`
+- AI features: `ai_explain`, `ai_chat`, `ai_assessment`, `ai_flashcards`
+- SRS: `card_reviewed`, `streak_updated`, `achievement_earned`
+- Social: `user_followed`, `group_joined`, `post_created`
+- Conversion: `upgrade_viewed`, `upgrade_started`, `upgrade_complete`
+
+### In-House Analytics
+
+**Purpose:** Business intelligence and custom metrics unique to Read Master
+
+**Keep In-House:**
+
+- [ ] Admin analytics dashboard (already implemented)
+- [ ] DailyAnalytics model (time-series business data)
+- [ ] Email marketing analytics (open rates, conversions)
+- [ ] Reading comprehension metrics (Bloom's taxonomy scores)
+- [ ] SRS effectiveness metrics (retention rates)
+- [ ] Reading speed and progress analytics
+- [ ] Revenue and subscription metrics
+- [ ] Custom reports for stakeholders
+
+**Rationale:**
+
+- Full control and data privacy
+- Custom metrics specific to reading comprehension
+- No per-event costs
+- Integration with existing database
+- Already implemented and working
+
+### Unified Analytics Dashboard
+
+**Features:**
+
+- [ ] **Combined Health Score**
+  - Aggregate: Error rate + Engagement + Revenue
+  - Traffic light indicator (Green/Yellow/Red)
+  - Trend over time
+- [ ] **Quick Metrics Panel**
+  - Sentry: Error count, error rate, slow transactions
+  - PostHog: Active users, conversion rate, top events
+  - In-House: Revenue, growth, books read
+- [ ] **Intelligent Alerts**
+  - High errors + Low engagement = Critical issue
+  - Spike in events + No errors = Viral growth
+  - High churn + Errors in feature = Investigate
+  - Performance degradation = Scale infrastructure
+- [ ] **Executive Summary**
+  - Weekly email with key metrics
+  - Trends and insights
+  - Action items
+  - Links to detailed dashboards
+- [ ] **Cross-Platform Links**
+  - Direct links to Sentry issues
+  - Direct links to PostHog insights
+  - Direct links to in-house reports
+
+### Automated Actions
+
+**Analytics-Driven Automation:**
+
+- [ ] **Error Response**
+  - High error rate → Pause feature rollout
+  - Critical crash → Page on-call engineer
+  - Performance degradation → Scale infrastructure
+- [ ] **User Engagement**
+  - Low funnel conversion → Trigger optimization
+  - User inactive 7 days → Add to re-engagement cohort
+  - High feature adoption → Promote in newsletter
+- [ ] **Experimentation**
+  - A/B test significant → Auto-select winner
+  - Feature flag issues → Automatic rollback
+  - Poor performance → Disable beta features
+- [ ] **Business Logic**
+  - Churn risk detected → Trigger retention campaign
+  - Power user identified → Offer community role
+  - Free user hits limits → Conversion email
+
+### Acceptance Criteria
+
+- [ ] Sentry captures all frontend and backend errors
+- [ ] Source maps work in production for debugging
+- [ ] Performance monitoring tracks all critical paths
+- [ ] PostHog tracks all key user events
+- [ ] Feature flags control feature rollout
+- [ ] A/B tests run and measure impact
+- [ ] Session recordings help identify UX issues
+- [ ] Funnels show conversion bottlenecks
+- [ ] Cohorts enable targeted campaigns
+- [ ] Unified dashboard shows health at a glance
+- [ ] Alerts fire appropriately (not too noisy)
+- [ ] Weekly executive summary is actionable
+- [ ] Automated actions respond correctly
+- [ ] All three systems integrate seamlessly
+- [ ] Documentation is comprehensive
+
+---
+
+#### 17. Email Marketing Funnel
+
+**Description:** Automated email marketing system for user engagement, retention, and conversion.
+
+**User Story:** As a product owner, I want an automated email system that nurtures users through their journey, from onboarding to becoming power users, while respecting their preferences and privacy.
+
+**Purpose:**
+
+- Improve user onboarding and activation
+- Increase engagement and retention
+- Drive conversions from Free to Pro/Scholar
+- Re-engage inactive users
+- Build community through newsletters
+- Educate users about features
+
+### Email Sequences
+
+#### Welcome & Onboarding Series
+
+**Trigger:** New user signs up
+
+- [ ] **Day 0 (Immediate):** Welcome email
+  - Confirm account creation
+  - Quick start guide (add first book, start reading)
+  - Link to video tutorial
+  - Set reading goal
+- [ ] **Day 1:** First book guidance
+  - "Have you added your first book?"
+  - Explain import options (upload, URL, search)
+  - Highlight public domain library
+- [ ] **Day 2:** AI features introduction
+  - Explain pre-reading guides
+  - Show "Explain this" feature
+  - Introduce comprehension checks
+- [ ] **Day 3:** Progress tracking
+  - Explain reading analytics
+  - Show reading streak feature
+  - Introduce flashcards/SRS
+- [ ] **Day 5:** Social features
+  - Invite to join reading groups
+  - Browse public curriculums
+  - Follow other readers
+- [ ] **Day 7:** Week 1 recap
+  - Show their progress
+  - Celebrate achievements
+  - Suggest next steps
+- [ ] **Day 14:** Pro features preview
+  - Highlight Pro benefits
+  - Show Scholar features
+  - Offer 7-day trial
+
+#### Engagement Campaigns
+
+**Trigger:** Active users
+
+- [ ] **Reading streak emails**
+  - Trigger: 7-day, 30-day, 100-day, 365-day streaks
+  - Celebrate achievement
+  - Share on social media prompt
+- [ ] **Book completion celebration**
+  - Trigger: Complete a book
+  - Congratulate user
+  - Request book review
+  - Suggest similar books
+- [ ] **Achievement unlocked**
+  - Trigger: Earn significant achievement
+  - Showcase achievement
+  - Compare to community
+  - Display on profile prompt
+- [ ] **Weekly reading digest**
+  - Sent: Every Monday 8am user's timezone
+  - Books read this week
+  - Time spent reading
+  - Flashcards reviewed
+  - Leaderboard position
+- [ ] **Milestone celebrations**
+  - 10 books completed
+  - 100 flashcards mastered
+  - 1,000 pages read
+  - 100 hours reading time
+
+#### Re-engagement Campaigns
+
+**Trigger:** Inactive users
+
+- [ ] **3 days inactive:** "We miss you"
+  - Your books are waiting
+  - Show pending flashcard reviews
+  - Highlight new features
+- [ ] **7 days inactive:** "Your reading streak"
+  - Streak about to break reminder
+  - Quick 5-minute reading suggestion
+  - One-click resume reading
+- [ ] **14 days inactive:** "What's stopping you?"
+  - Survey: Why haven't you been reading?
+  - Offer help/support
+  - Feature highlights you may have missed
+- [ ] **30 days inactive:** Last attempt
+  - Special offer (if applicable)
+  - Success stories from other users
+  - No-pressure check-in
+  - Easy unsubscribe option
+
+#### Conversion Campaigns
+
+**Trigger:** Free tier users
+
+- [ ] **Library limit reached**
+  - Trigger: 3rd book added (at limit)
+  - Explain Pro benefits
+  - Show unlimited library
+  - Limited-time discount
+- [ ] **AI interaction limit reached**
+  - Trigger: 5 AI calls in a day
+  - Explain Pro/Scholar AI limits
+  - Show AI features
+  - Upgrade call-to-action
+- [ ] **Feature discovery**
+  - Trigger: 7 days on free tier
+  - Highlight locked features
+  - Show what they're missing
+  - Success stories from Pro users
+- [ ] **Value demonstration**
+  - Trigger: 14 days on free tier
+  - Calculate value received (books, AI, flashcards)
+  - ROI of upgrading
+  - Payment options
+
+#### Educational Newsletter
+
+**Frequency:** Bi-weekly (1st and 15th of month)
+
+- [ ] Reading strategies and tips
+- [ ] Feature deep dives
+- [ ] User success stories
+- [ ] Book recommendations
+- [ ] Community highlights
+- [ ] Platform updates
+- [ ] Reading challenges
+
+### Email Management Features
+
+#### User Preferences
+
+- [ ] Email preferences page in settings
+- [ ] Granular subscription controls:
+  - [ ] Onboarding emails (on/off)
+  - [ ] Engagement emails (on/off)
+  - [ ] Re-engagement emails (on/off)
+  - [ ] Marketing emails (on/off)
+  - [ ] Newsletter (on/off)
+  - [ ] Achievement notifications (on/off)
+  - [ ] Weekly digest (on/off)
+- [ ] Email frequency control (immediate, daily digest, weekly digest)
+- [ ] Preferred send time
+- [ ] One-click unsubscribe from any email
+- [ ] Resubscribe option
+
+#### Segmentation
+
+- [ ] Segment by user tier (Free, Pro, Scholar)
+- [ ] Segment by engagement level (active, inactive, at-risk)
+- [ ] Segment by reading behavior (frequency, genres, time of day)
+- [ ] Segment by feature usage (AI users, SRS users, social users)
+- [ ] Segment by lifecycle stage (new, onboarding, active, churned)
+- [ ] Segment by geography/timezone
+- [ ] Custom segments for campaigns
+
+#### Email Templates
+
+- [ ] Responsive HTML templates
+- [ ] Consistent branding (logo, colors, typography)
+- [ ] Dark mode support
+- [ ] Plain text fallback
+- [ ] Personalization variables:
+  - [ ] {{firstName}}
+  - [ ] {{booksRead}}
+  - [ ] {{readingStreak}}
+  - [ ] {{unreadFlashcards}}
+  - [ ] {{tier}}
+  - [ ] {{lastBook}}
+- [ ] Dynamic content blocks
+- [ ] CTA buttons with tracking
+- [ ] Unsubscribe footer (required by law)
+
+#### Analytics & Tracking
+
+- [ ] Email sent count
+- [ ] Open rate (per email, per campaign)
+- [ ] Click-through rate (CTR)
+- [ ] Conversion rate
+- [ ] Unsubscribe rate
+- [ ] Bounce rate (hard and soft)
+- [ ] Spam complaint rate
+- [ ] Revenue attribution
+- [ ] A/B testing capability
+- [ ] Cohort analysis (email impact on retention)
+- [ ] Funnel visualization
+
+### Technical Implementation
+
+#### Email Service Provider Integration
+
+**Options:** SendGrid, AWS SES, Mailgun, Postmark
+
+- [ ] API integration for sending
+- [ ] Webhook handling for events:
+  - [ ] Delivered
+  - [ ] Opened
+  - [ ] Clicked
+  - [ ] Bounced
+  - [ ] Unsubscribed
+  - [ ] Spam reported
+- [ ] Template management
+- [ ] Suppression list management
+- [ ] Rate limiting
+
+#### Database Models
+
+```prisma
+// Email preferences
+model EmailPreferences {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id])
+
+  // Subscription preferences
+  onboardingEmails      Boolean  @default(true)
+  engagementEmails      Boolean  @default(true)
+  reengagementEmails    Boolean  @default(true)
+  marketingEmails       Boolean  @default(true)
+  newsletter            Boolean  @default(true)
+  achievementNotifs     Boolean  @default(true)
+  weeklyDigest          Boolean  @default(true)
+
+  // Frequency
+  frequency             EmailFrequency @default(IMMEDIATE)
+  preferredSendTime     String?  // HH:MM format in user's timezone
+
+  // Unsubscribe tracking
+  unsubscribedAt        DateTime?
+  unsubscribeReason     String?
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+enum EmailFrequency {
+  IMMEDIATE
+  DAILY_DIGEST
+  WEEKLY_DIGEST
+}
+
+// Email campaigns
+model EmailCampaign {
+  id                    String   @id @default(cuid())
+  name                  String
+  description           String?
+  type                  CampaignType
+  segmentCriteria       Json     // Rules for who receives this
+
+  subject               String
+  preheader             String?
+  templateId            String
+  templateVariables     Json     @default("{}")
+
+  status                CampaignStatus @default(DRAFT)
+  scheduledFor          DateTime?
+  sentAt                DateTime?
+
+  // Stats
+  recipientCount        Int      @default(0)
+  sentCount             Int      @default(0)
+  deliveredCount        Int      @default(0)
+  openedCount           Int      @default(0)
+  clickedCount          Int      @default(0)
+  unsubscribedCount     Int      @default(0)
+  bouncedCount          Int      @default(0)
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  emails                EmailLog[]
+}
+
+enum CampaignType {
+  ONBOARDING
+  ENGAGEMENT
+  REENGAGEMENT
+  CONVERSION
+  NEWSLETTER
+  TRANSACTIONAL
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  PAUSED
+  CANCELLED
+}
+
+// Individual email log
+model EmailLog {
+  id                    String   @id @default(cuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id])
+  campaignId            String?
+  campaign              EmailCampaign? @relation(fields: [campaignId], references: [id])
+
+  emailType             String   // welcome, streak_reminder, etc.
+  subject               String
+
+  // Delivery tracking
+  providerMessageId     String?
+  status                EmailStatus @default(PENDING)
+  sentAt                DateTime?
+  deliveredAt           DateTime?
+  openedAt              DateTime?
+  clickedAt             DateTime?
+  bouncedAt             DateTime?
+  unsubscribedAt        DateTime?
+
+  // Error tracking
+  errorMessage          String?
+  bounceType            BounceType?
+
+  createdAt             DateTime @default(now())
+
+  @@index([userId])
+  @@index([campaignId])
+  @@index([emailType])
+  @@index([status])
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  BOUNCED
+  UNSUBSCRIBED
+  FAILED
+}
+
+enum BounceType {
+  HARD       // Permanent failure (invalid email)
+  SOFT       // Temporary failure (mailbox full)
+  COMPLAINT  // Marked as spam
+}
+```
+
+#### Scheduled Email Processing
+
+- [ ] Cron job: Process email queue (every 5 minutes)
+- [ ] Cron job: Send weekly digests (Monday 8am per timezone)
+- [ ] Cron job: Send newsletter (1st and 15th of month)
+- [ ] Cron job: Check for inactive users (daily)
+- [ ] Background job: Process triggered emails (real-time)
+
+#### Trigger System
+
+- [ ] Event-based triggers:
+  - User signs up
+  - Book completed
+  - Achievement earned
+  - Streak milestone
+  - Tier limit reached
+  - Subscription upgraded/downgraded
+  - User becomes inactive (3, 7, 14, 30 days)
+- [ ] Time-based triggers:
+  - Days since signup
+  - Days since last login
+  - Specific date/time
+  - Recurring schedule
+- [ ] Condition-based triggers:
+  - User tier matches
+  - Feature usage matches
+  - Reading behavior matches
+  - Segment membership
+
+### Compliance & Best Practices
+
+#### Legal Requirements
+
+- [ ] **CAN-SPAM Act (US) compliance:**
+  - [ ] Include physical address in footer
+  - [ ] Clear unsubscribe link in every email
+  - [ ] Honor unsubscribe within 10 days
+  - [ ] Accurate subject lines (no misleading)
+  - [ ] Identify message as advertisement
+- [ ] **GDPR (EU) compliance:**
+  - [ ] Explicit consent for marketing emails
+  - [ ] Clear privacy policy link
+  - [ ] Right to access email data
+  - [ ] Right to deletion
+  - [ ] Data processing transparency
+- [ ] **CASL (Canada) compliance:**
+  - [ ] Express or implied consent
+  - [ ] Clear identification of sender
+  - [ ] Unsubscribe mechanism
+
+#### Deliverability Best Practices
+
+- [ ] Authenticate domain (SPF, DKIM, DMARC)
+- [ ] Warm up new IP addresses
+- [ ] Maintain sender reputation
+- [ ] Clean email lists regularly
+- [ ] Remove hard bounces immediately
+- [ ] Honor suppression lists
+- [ ] Avoid spam trigger words
+- [ ] Maintain good text-to-image ratio
+- [ ] Include plain text version
+- [ ] Test emails before sending
+- [ ] Monitor blacklists
+- [ ] Segment sending by engagement
+
+#### Content Best Practices
+
+- [ ] Personalized subject lines
+- [ ] Clear, compelling copy
+- [ ] Single clear call-to-action
+- [ ] Mobile-responsive design
+- [ ] Fast-loading images
+- [ ] Accessible HTML (alt text, semantic markup)
+- [ ] Test across email clients
+- [ ] A/B test subject lines and content
+- [ ] Optimal send times per segment
+- [ ] Respect user preferences
+
+### Acceptance Criteria
+
+- [ ] All email sequences are implemented
+- [ ] Email preferences are fully customizable
+- [ ] Segmentation system works correctly
+- [ ] Email templates are responsive and branded
+- [ ] Analytics track all key metrics
+- [ ] Unsubscribe process is one-click
+- [ ] Bounces and spam reports are handled
+- [ ] All emails comply with legal requirements
+- [ ] Deliverability rate >95%
+- [ ] Open rate >20% (industry average: 21.5%)
+- [ ] Click rate >2% (industry average: 2.3%)
+- [ ] Unsubscribe rate <0.5%
+- [ ] Spam complaint rate <0.1%
+- [ ] Tests verify all email triggers
+
+---
+
 ### Nice-to-Have Features (Post-MVP)
 
 - Integration with Kindle, Google Play Books, Apple Books
@@ -1886,6 +2572,33 @@ CLOUDFLARE_R2_ENDPOINT=
 
 # External APIs
 GOOGLE_BOOKS_API_KEY=
+
+# Monitoring & Analytics
+# Sentry
+SENTRY_DSN=
+SENTRY_AUTH_TOKEN=  # For source map uploads
+VITE_SENTRY_DSN=    # Frontend
+
+# PostHog
+VITE_POSTHOG_KEY=
+POSTHOG_API_KEY=    # For server-side events
+
+# Email Service Provider (choose one)
+# SendGrid
+SENDGRID_API_KEY=
+SENDGRID_FROM_EMAIL=
+SENDGRID_FROM_NAME=
+
+# AWS SES (alternative)
+AWS_SES_REGION=
+AWS_SES_ACCESS_KEY=
+AWS_SES_SECRET_KEY=
+AWS_SES_FROM_EMAIL=
+
+# Mailgun (alternative)
+MAILGUN_API_KEY=
+MAILGUN_DOMAIN=
+MAILGUN_FROM_EMAIL=
 
 # Optional
 SENTRY_DSN=

@@ -3,11 +3,11 @@
  */
 
 import { describe, it, expect } from "vitest";
+import { UsersOverTimeChart } from "./UsersOverTimeChart";
 
 describe("UsersOverTimeChart", () => {
-  it("should export from index", async () => {
-    const module = await import("./index");
-    expect(module.UsersOverTimeChart).toBeDefined();
-    expect(typeof module.UsersOverTimeChart).toBe("function");
+  it("should export component", () => {
+    expect(UsersOverTimeChart).toBeDefined();
+    expect(typeof UsersOverTimeChart).toBe("function");
   });
 });

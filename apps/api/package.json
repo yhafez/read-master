@@ -21,6 +21,7 @@
     "@read-master/ai": "workspace:^",
     "@read-master/database": "workspace:^",
     "@read-master/shared": "workspace:^",
+    "@sentry/node": "^10.35.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.36.1",
     "ai": "^6.0.39",

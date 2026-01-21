@@ -30,3 +30,5 @@ export {
   SyncStatusWithLabel,
   type SyncStatusIndicatorProps,
 } from "./SyncStatusIndicator";
+
+export { SentryUserSync } from "./SentryUserSync";
