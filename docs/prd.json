@@ -631,7 +631,7 @@
         "Feature flags can be toggled",
         "Documentation is complete"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "posthog-002",
