@@ -421,6 +421,23 @@
       "toggleDefault": "Toggle default preset",
       "confirmDelete": "Are you sure you want to delete this filter preset?"
     },
+    "bulkActions": {
+      "changeStatus": "Change Status",
+      "addTags": "Add Tags",
+      "addToCollection": "Add to Collection",
+      "addToShelf": "Add to Shelf",
+      "delete": "Delete",
+      "changeStatusTitle": "Change Status for Selected Books",
+      "changeStatusDescription": "Change the reading status for {{count}} selected books",
+      "addTagsTitle": "Add Tags to Selected Books",
+      "addTagsDescription": "Add tags to {{count}} selected books",
+      "tagName": "Tag Name",
+      "addToBooks": "Add to {{count}} Books",
+      "addToCollectionTitle": "Add to Collection",
+      "addToShelfTitle": "Add to Shelf",
+      "collectionFeatureComingSoon": "Collection feature coming soon!",
+      "shelfFeatureComingSoon": "Shelf feature coming soon!"
+    },
     "advancedSearch": {
       "title": "Advanced Search",
       "searchPlaceholder": "Search by title, author, or content...",

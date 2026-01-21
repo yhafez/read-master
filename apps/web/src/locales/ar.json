@@ -394,6 +394,23 @@
       "default": "الإعداد الافتراضي",
       "toggleDefault": "تبديل الإعداد الافتراضي",
       "confirmDelete": "هل أنت متأكد أنك تريد حذف إعداد التصفية هذا؟"
+    },
+    "bulkActions": {
+      "changeStatus": "تغيير الحالة",
+      "addTags": "إضافة وسوم",
+      "addToCollection": "إضافة إلى مجموعة",
+      "addToShelf": "إضافة إلى رف",
+      "delete": "حذف",
+      "changeStatusTitle": "تغيير حالة الكتب المحددة",
+      "changeStatusDescription": "تغيير حالة القراءة لـ {{count}} كتاب محدد",
+      "addTagsTitle": "إضافة وسوم للكتب المحددة",
+      "addTagsDescription": "إضافة وسوم لـ {{count}} كتاب محدد",
+      "tagName": "اسم الوسم",
+      "addToBooks": "إضافة إلى {{count}} كتاب",
+      "addToCollectionTitle": "إضافة إلى مجموعة",
+      "addToShelfTitle": "إضافة إلى رف",
+      "collectionFeatureComingSoon": "ميزة المجموعات قريباً!",
+      "shelfFeatureComingSoon": "ميزة الرفوف قريباً!"
     }
   },
   "reader": {

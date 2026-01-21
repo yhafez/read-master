@@ -385,6 +385,23 @@
       "default": "デフォルトプリセット",
       "toggleDefault": "デフォルトプリセットを切り替え",
       "confirmDelete": "このフィルタープリセットを削除してもよろしいですか？"
+    },
+    "bulkActions": {
+      "changeStatus": "ステータスを変更",
+      "addTags": "タグを追加",
+      "addToCollection": "コレクションに追加",
+      "addToShelf": "本棚に追加",
+      "delete": "削除",
+      "changeStatusTitle": "選択した本のステータスを変更",
+      "changeStatusDescription": "{{count}}冊の選択した本の読書ステータスを変更します",
+      "addTagsTitle": "選択した本にタグを追加",
+      "addTagsDescription": "{{count}}冊の選択した本にタグを追加します",
+      "tagName": "タグ名",
+      "addToBooks": "{{count}}冊の本に追加",
+      "addToCollectionTitle": "コレクションに追加",
+      "addToShelfTitle": "本棚に追加",
+      "collectionFeatureComingSoon": "コレクション機能は近日公開予定です！",
+      "shelfFeatureComingSoon": "本棚機能は近日公開予定です！"
     }
   },
   "reader": {

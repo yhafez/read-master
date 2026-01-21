@@ -66,3 +66,4 @@ export {
   FilterPresetsDialog,
   type FilterPresetsDialogProps,
 } from "./FilterPresetsDialog";
+export { BulkActionsMenu, type BulkActionsMenuProps } from "./BulkActionsMenu";

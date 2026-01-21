@@ -385,6 +385,23 @@
       "default": "默认预设",
       "toggleDefault": "切换默认预设",
       "confirmDelete": "您确定要删除此筛选器预设吗？"
+    },
+    "bulkActions": {
+      "changeStatus": "更改状态",
+      "addTags": "添加标签",
+      "addToCollection": "添加到收藏",
+      "addToShelf": "添加到书架",
+      "delete": "删除",
+      "changeStatusTitle": "更改所选图书的状态",
+      "changeStatusDescription": "更改{{count}}本所选图书的阅读状态",
+      "addTagsTitle": "向所选图书添加标签",
+      "addTagsDescription": "向{{count}}本所选图书添加标签",
+      "tagName": "标签名称",
+      "addToBooks": "添加到{{count}}本图书",
+      "addToCollectionTitle": "添加到收藏",
+      "addToShelfTitle": "添加到书架",
+      "collectionFeatureComingSoon": "收藏功能即将推出！",
+      "shelfFeatureComingSoon": "书架功能即将推出！"
     }
   },
   "reader": {

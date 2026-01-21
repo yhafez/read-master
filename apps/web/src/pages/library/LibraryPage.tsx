@@ -22,11 +22,13 @@ import {
   CheckBox as CheckBoxIcon,
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
   Close as CloseIcon,
+  MoreVert as MoreVertIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
 import { useBooks, usePrefetchBook, useDeleteBook } from "@/hooks/useBooks";
 import type { Book, BookListFilters } from "@/hooks/useBooks";
+import { useBulkUpdateStatus, useBulkAddTags } from "@/hooks/useBulkOperations";
 import { useUIStore } from "@/stores/uiStore";
 import {
   filtersToSearchParams,
@@ -47,6 +49,7 @@ import {
   type SortOption,
   type SortOrder,
 } from "@/components/library";
+import { BulkActionsMenu } from "@/components/library/BulkActionsMenu";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -94,6 +97,8 @@ export function LibraryPage(): React.ReactElement {
   // Bulk actions state
   const [bulkMode, setBulkMode] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState<Set<string>>(new Set());
+  const [bulkActionsAnchor, setBulkActionsAnchor] =
+    useState<HTMLElement | null>(null);
 
   // Convert local filters to API filters
   const apiFilters: BookListFilters = useMemo(
@@ -116,6 +121,10 @@ export function LibraryPage(): React.ReactElement {
 
   // Delete mutation
   const deleteBook = useDeleteBook();
+
+  // Bulk operations mutations
+  const bulkUpdateStatus = useBulkUpdateStatus();
+  const bulkAddTags = useBulkAddTags();
 
   // Handlers
   const handleViewModeChange = useCallback((mode: LibraryViewMode) => {
@@ -215,8 +224,68 @@ export function LibraryPage(): React.ReactElement {
       });
       setSelectedBooks(new Set());
       setBulkMode(false);
+      setBulkActionsAnchor(null);
     }
   }, [selectedBooks, deleteBook, t]);
+
+  const handleBulkActionsClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (selectedBooks.size > 0) {
+        setBulkActionsAnchor(event.currentTarget);
+      }
+    },
+    [selectedBooks.size]
+  );
+
+  const handleBulkActionsClose = useCallback(() => {
+    setBulkActionsAnchor(null);
+  }, []);
+
+  const handleBulkChangeStatus = useCallback(
+    (status: string) => {
+      if (selectedBooks.size === 0) return;
+
+      bulkUpdateStatus.mutate(
+        {
+          bookIds: Array.from(selectedBooks),
+          status,
+        },
+        {
+          onSuccess: (result) => {
+            if (result.successCount > 0) {
+              // Success toast could be shown here
+              setSelectedBooks(new Set());
+              setBulkMode(false);
+            }
+          },
+        }
+      );
+    },
+    [selectedBooks, bulkUpdateStatus]
+  );
+
+  const handleBulkAddTags = useCallback(
+    (tags: string[]) => {
+      if (selectedBooks.size === 0) return;
+
+      bulkAddTags.mutate(
+        {
+          bookIds: Array.from(selectedBooks),
+          tags,
+        },
+        {
+          onSuccess: (result) => {
+            if (result.successCount > 0) {
+              // Success toast could be shown here
+              setSelectedBooks(new Set());
+              setBulkMode(false);
+            }
+          },
+        }
+      );
+    },
+    [selectedBooks, bulkAddTags]
+  );
 
   const handleRemoveFilter = useCallback(
     (filterKey: keyof LibraryFilters, value?: string) => {
@@ -329,6 +398,14 @@ export function LibraryPage(): React.ReactElement {
                 : t("common.selectAll")}
             </Button>
             <Button
+              variant="outlined"
+              startIcon={<MoreVertIcon />}
+              onClick={handleBulkActionsClick}
+              disabled={selectedBooks.size === 0}
+            >
+              {t("library.bulkActions")}
+            </Button>
+            <Button
               variant="contained"
               color="error"
               startIcon={<DeleteIcon />}
@@ -417,6 +494,17 @@ export function LibraryPage(): React.ReactElement {
         onClose={() => setFilterPresetsDialogOpen(false)}
         currentFilters={filters}
         onLoadPreset={handleLoadPreset}
+      />
+
+      {/* Bulk Actions Menu */}
+      <BulkActionsMenu
+        anchorEl={bulkActionsAnchor}
+        open={Boolean(bulkActionsAnchor)}
+        onClose={handleBulkActionsClose}
+        selectedCount={selectedBooks.size}
+        onBulkDelete={handleBulkDelete}
+        onBulkChangeStatus={handleBulkChangeStatus}
+        onBulkAddTags={handleBulkAddTags}
       />
     </Box>
   );

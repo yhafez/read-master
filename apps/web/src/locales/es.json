@@ -385,6 +385,23 @@
       "default": "Preajuste predeterminado",
       "toggleDefault": "Alternar preajuste predeterminado",
       "confirmDelete": "¿Estás seguro de que deseas eliminar este preajuste de filtro?"
+    },
+    "bulkActions": {
+      "changeStatus": "Cambiar Estado",
+      "addTags": "Agregar Etiquetas",
+      "addToCollection": "Agregar a Colección",
+      "addToShelf": "Agregar a Estante",
+      "delete": "Eliminar",
+      "changeStatusTitle": "Cambiar Estado de Libros Seleccionados",
+      "changeStatusDescription": "Cambiar el estado de lectura de {{count}} libros seleccionados",
+      "addTagsTitle": "Agregar Etiquetas a Libros Seleccionados",
+      "addTagsDescription": "Agregar etiquetas a {{count}} libros seleccionados",
+      "tagName": "Nombre de Etiqueta",
+      "addToBooks": "Agregar a {{count}} Libros",
+      "addToCollectionTitle": "Agregar a Colección",
+      "addToShelfTitle": "Agregar a Estante",
+      "collectionFeatureComingSoon": "¡Función de colecciones próximamente!",
+      "shelfFeatureComingSoon": "¡Función de estantes próximamente!"
     }
   },
   "reader": {

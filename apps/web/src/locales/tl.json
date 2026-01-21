@@ -385,6 +385,23 @@
       "default": "Default na preset",
       "toggleDefault": "I-toggle ang default na preset",
       "confirmDelete": "Sigurado ka bang gusto mong tanggalin ang preset ng filter na ito?"
+    },
+    "bulkActions": {
+      "changeStatus": "Baguhin ang Status",
+      "addTags": "Magdagdag ng mga Tag",
+      "addToCollection": "Idagdag sa Koleksyon",
+      "addToShelf": "Idagdag sa Shelf",
+      "delete": "Tanggalin",
+      "changeStatusTitle": "Baguhin ang Status ng mga Napiling Aklat",
+      "changeStatusDescription": "Baguhin ang status ng pagbasa para sa {{count}} napiling aklat",
+      "addTagsTitle": "Magdagdag ng mga Tag sa Napiling mga Aklat",
+      "addTagsDescription": "Magdagdag ng mga tag sa {{count}} napiling aklat",
+      "tagName": "Pangalan ng Tag",
+      "addToBooks": "Idagdag sa {{count}} mga Aklat",
+      "addToCollectionTitle": "Idagdag sa Koleksyon",
+      "addToShelfTitle": "Idagdag sa Shelf",
+      "collectionFeatureComingSoon": "Ang feature ng koleksyon ay paparating na!",
+      "shelfFeatureComingSoon": "Ang feature ng shelf ay paparating na!"
     }
   },
   "reader": {
