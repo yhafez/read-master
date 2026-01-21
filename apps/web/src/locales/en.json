@@ -82,7 +82,49 @@
       "voice": "Voice",
       "notSupportedHelp": "Try using a modern browser like Chrome, Firefox, or Safari for text-to-speech support.",
       "noVoicesHelp": "No voices are available. Please check your browser settings or try restarting your browser.",
-      "unauthorizedHelp": "Upgrade to Pro or Scholar tier to access premium AI voices with natural speech."
+      "unauthorizedHelp": "Upgrade to Pro or Scholar tier to access premium AI voices with natural speech.",
+      "downloads": {
+        "title": "Audio Downloads",
+        "downloadBook": "Download Audio",
+        "downloading": "Downloading...",
+        "downloadComplete": "Download Complete",
+        "downloadFailed": "Download Failed",
+        "status": {
+          "PENDING": "Queued",
+          "PROCESSING": "Processing",
+          "COMPLETED": "Ready",
+          "FAILED": "Failed",
+          "CANCELLED": "Cancelled"
+        },
+        "format": "Audio Format",
+        "quality": "Quality",
+        "estimatedSize": "Estimated Size",
+        "estimatedCost": "Estimated Cost",
+        "expiresAt": "Expires",
+        "progress": "Progress",
+        "downloadFile": "Download File",
+        "deleteDownload": "Delete",
+        "confirmDelete": "Are you sure you want to delete this download?",
+        "noDownloads": "No audio downloads yet",
+        "createFirst": "Create your first audiobook download to listen offline",
+        "quota": {
+          "title": "Monthly Quota",
+          "used": "{{used}} of {{limit}} used",
+          "unlimited": "Unlimited",
+          "upgradeRequired": "Upgrade to Pro or Scholar to download audiobooks",
+          "limitReached": "Monthly download limit reached",
+          "resetsOn": "Resets on {{date}}"
+        },
+        "errors": {
+          "quotaExceeded": "Monthly download limit reached. Upgrade to Scholar for unlimited downloads.",
+          "tierRequired": "Audio downloads require Pro or Scholar subscription",
+          "bookNotFound": "Book not found",
+          "invalidFormat": "Invalid audio format selected",
+          "processingFailed": "Failed to process audio. Please try again.",
+          "downloadExpired": "This download has expired",
+          "unknownError": "Failed to create download. Please try again."
+        }
+      }
     }
   },
   "flashcards": {
