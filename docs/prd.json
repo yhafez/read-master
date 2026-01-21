@@ -4047,7 +4047,7 @@
         "Onboarding works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-002",
@@ -4070,7 +4070,7 @@
         "Reader opens",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-003",
@@ -4093,7 +4093,7 @@
         "Syncing works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-004",
@@ -4114,7 +4114,7 @@
         "Streaming works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-005",
@@ -4137,7 +4137,7 @@
         "Stats correct",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-006",
@@ -4160,7 +4160,7 @@
         "Results shown",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-007",
@@ -4183,7 +4183,7 @@
         "Groups work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-008",
@@ -4206,7 +4206,7 @@
         "Voting works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-009",
@@ -4229,7 +4229,7 @@
         "Rate limits work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-010",
@@ -4252,7 +4252,7 @@
         "Relations work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-011",
@@ -4274,7 +4274,7 @@
         "Comparison automated",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-012",
@@ -4298,7 +4298,7 @@
         "Bundle optimized",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-013",
@@ -4322,7 +4322,7 @@
         "SR works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-014",
@@ -4346,7 +4346,7 @@
         "Major browsers work",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-015",
@@ -4369,7 +4369,7 @@
         "Touch works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-016",
@@ -4393,7 +4393,7 @@
         "Auth secure",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-017",
@@ -4416,7 +4416,7 @@
         "Bottlenecks identified",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-018",
@@ -4439,7 +4439,7 @@
         "Complete translations",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-019",
@@ -4462,7 +4462,7 @@
         "Recovery works",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "test-020",
@@ -4485,7 +4485,7 @@
         "Production-ready",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "deploy-001",
