@@ -361,7 +361,10 @@ describe("TTSDownloadManager", () => {
       renderComponent();
 
       const deleteButtons = screen.getAllByLabelText(/delete/i);
-      fireEvent.click(deleteButtons[0]);
+      const deleteButton = deleteButtons[0];
+      if (deleteButton) {
+        fireEvent.click(deleteButton);
+      }
 
       expect(
         screen.getByText(/are you sure you want to delete this download/i)
@@ -390,7 +393,10 @@ describe("TTSDownloadManager", () => {
 
       // Open delete dialog
       const deleteButtons = screen.getAllByLabelText(/delete/i);
-      fireEvent.click(deleteButtons[0]);
+      const deleteButton = deleteButtons[0];
+      if (deleteButton) {
+        fireEvent.click(deleteButton);
+      }
 
       // Confirm delete
       const confirmButton = screen.getByText(/^delete$/i);
@@ -421,7 +427,10 @@ describe("TTSDownloadManager", () => {
 
       // Open delete dialog
       const deleteButtons = screen.getAllByLabelText(/delete/i);
-      fireEvent.click(deleteButtons[0]);
+      const deleteButton = deleteButtons[0];
+      if (deleteButton) {
+        fireEvent.click(deleteButton);
+      }
 
       // Cancel
       const cancelButton = screen.getByText(/cancel/i);

@@ -2,7 +2,7 @@
  * React Query hooks for Stripe payment operations
  */
 
-import { useMutation } from "@tantml:react-query";
+import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/api";
 import { logger } from "@/lib/logger";
 

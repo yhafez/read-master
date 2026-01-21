@@ -368,13 +368,17 @@ export const useAISettingsStore = create<AISettingsState>()(
           },
         })),
 
-      setCustomTone: (tone) =>
-        set((state) => ({
-          personality: {
-            ...state.personality,
-            customTone: tone,
-          },
-        })),
+      setCustomTone: (tone) => {
+        set((state) => {
+          const newPersonality = { ...state.personality };
+          if (tone) {
+            newPersonality.customTone = tone;
+          } else {
+            delete newPersonality.customTone;
+          }
+          return { personality: newPersonality };
+        });
+      },
 
       setVerbosity: (verbosity) =>
         set((state) => ({

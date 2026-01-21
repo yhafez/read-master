@@ -117,13 +117,9 @@ export function initPostHog(): void {
       },
 
       // Session recording
-      session_recording: {
-        enabled: true,
+    session_recording: {
         maskAllInputs: true, // Mask all input fields for privacy
         maskTextSelector: '[data-sensitive]', // Mask elements with data-sensitive attribute
-        recordCrossOriginIframes: false,
-        sampleRate: IS_PRODUCTION ? 0.1 : 1.0, // 10% sampling in production, 100% in dev
-        minimumDuration: 5000, // Only record sessions longer than 5 seconds
       },
 
       // Privacy

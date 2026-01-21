@@ -70,6 +70,7 @@ describe("PostHog Analytics", () => {
       // Simulate PostHog init
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -90,6 +91,7 @@ describe("PostHog Analytics", () => {
     it("should track events without properties", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -104,6 +106,7 @@ describe("PostHog Analytics", () => {
     it("should identify user with properties", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -126,6 +129,7 @@ describe("PostHog Analytics", () => {
     it("should update user properties", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -146,6 +150,7 @@ describe("PostHog Analytics", () => {
     it("should reset user data on logout", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -160,6 +165,7 @@ describe("PostHog Analytics", () => {
     it("should check if feature is enabled", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -175,6 +181,7 @@ describe("PostHog Analytics", () => {
     it("should get feature flag value for multivariate flags", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -189,6 +196,7 @@ describe("PostHog Analytics", () => {
     it("should return false if feature flag check fails", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -207,6 +215,7 @@ describe("PostHog Analytics", () => {
     it("should start session recording", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -219,6 +228,7 @@ describe("PostHog Analytics", () => {
     it("should stop session recording", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -235,6 +245,7 @@ describe("PostHog Analytics", () => {
 
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -245,6 +256,7 @@ describe("PostHog Analytics", () => {
     it("should get PostHog instance after init", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       expect(getPostHog()).toBeNull();
@@ -259,6 +271,7 @@ describe("PostHog Analytics", () => {
     it("should handle errors in event tracking gracefully", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();
@@ -276,6 +289,7 @@ describe("PostHog Analytics", () => {
     it("should handle errors in user identification gracefully", () => {
       vi.mocked(posthog.init).mockImplementation((_key, options: any) => {
         options.loaded?.(posthog);
+        return posthog as any;
       });
 
       initPostHog();

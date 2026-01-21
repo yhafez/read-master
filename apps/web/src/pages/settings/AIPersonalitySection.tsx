@@ -33,7 +33,6 @@ import {
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import { useState, useCallback } from "react";
-import { useTranslation } from "react-i18next";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import SchoolIcon from "@mui/icons-material/School";
 import PsychologyIcon from "@mui/icons-material/Psychology";
@@ -68,14 +67,8 @@ const VERBOSITY_LABELS: Record<VerbosityLevel, string> = {
   comprehensive: "Comprehensive",
 };
 
-const LANGUAGE_COMPLEXITY_LABELS: Record<LanguageComplexity, string> = {
-  simplify: "Simplify for me",
-  match_level: "Match my level",
-  challenge_me: "Challenge me",
-};
 
 export function AIPersonalitySection(): React.ReactElement {
-  const { t } = useTranslation();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewText, setPreviewText] = useState("");
 
@@ -87,7 +80,6 @@ export function AIPersonalitySection(): React.ReactElement {
     setVerbosity,
     setLanguageComplexity,
     setProactiveSuggestions,
-    updatePersonalitySettings,
   } = useAISettingsStore();
 
   // Handlers
@@ -114,7 +106,10 @@ export function AIPersonalitySection(): React.ReactElement {
         "detailed",
         "comprehensive",
       ];
-      setVerbosity(verbosityMap[value as number]);
+      const newVerbosity = verbosityMap[value as number];
+      if (newVerbosity) {
+        setVerbosity(newVerbosity);
+      }
     },
     [setVerbosity]
   );

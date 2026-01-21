@@ -187,5 +187,11 @@ export default defineConfig(({ mode }) => {
       outDir: "dist",
       sourcemap: true,
     },
+    test: {
+      globals: true,
+      environment: "jsdom",
+      setupFiles: ["./src/tests/setup.ts"],
+      css: true,
+    },
   };
 });

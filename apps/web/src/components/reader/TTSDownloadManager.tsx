@@ -42,7 +42,6 @@ import { format } from "date-fns";
 import {
   useTTSDownloads,
   useDeleteTTSDownload,
-  type TTSDownload,
   type DownloadStatus,
 } from "@/hooks/useTTSDownloads";
 
@@ -252,8 +251,8 @@ export function TTSDownloadManager({ userTier }: TTSDownloadManagerProps) {
                       </Box>
 
                       <Stack direction="row" spacing={1} alignItems="center">
+                        {statusDisplay.icon}
                         <Chip
-                          icon={statusDisplay.icon}
                           label={statusDisplay.label}
                           color={statusDisplay.color}
                           size="small"

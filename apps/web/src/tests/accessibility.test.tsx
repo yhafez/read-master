@@ -19,8 +19,14 @@ function expectNoViolations(results: { violations: unknown[] }) {
 }
 
 // Helper to run axe
-async function runAxe(container: Element, options?: axe.RunOptions) {
-  return await axe.run(container, options);
+async function runAxe(
+  container: Element,
+  options?: axe.RunOptions
+): Promise<axe.AxeResults> {
+  if (options) {
+    return await axe.run(container, options);
+  }
+  return await axe.run(container);
 }
 
 // Test wrapper with all providers
