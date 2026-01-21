@@ -14,6 +14,7 @@ import {
   Chip,
   IconButton,
   Tooltip,
+  Checkbox,
   useTheme,
 } from "@mui/material";
 import {
@@ -36,6 +37,12 @@ export interface BookCardProps {
   onDelete?: ((book: Book) => void) | undefined;
   /** Callback for mouse enter (prefetch) */
   onMouseEnter?: (() => void) | undefined;
+  /** Whether bulk selection mode is active */
+  bulkMode?: boolean | undefined;
+  /** Whether this book is selected */
+  isSelected?: boolean | undefined;
+  /** Callback when book is selected/deselected */
+  onSelect?: ((bookId: string) => void) | undefined;
 }
 
 /**
@@ -79,6 +86,9 @@ export function BookCard({
   viewMode,
   onDelete,
   onMouseEnter,
+  bulkMode = false,
+  isSelected = false,
+  onSelect,
 }: BookCardProps): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -95,7 +105,16 @@ export function BookCard({
   };
 
   const handleCardClick = () => {
-    navigate(`/reader/${book.id}`);
+    if (bulkMode) {
+      onSelect?.(book.id);
+    } else {
+      navigate(`/reader/${book.id}`);
+    }
+  };
+
+  const handleCheckboxClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onSelect?.(book.id);
   };
 
   // Placeholder image for books without covers
@@ -112,9 +131,21 @@ export function BookCard({
           "&:hover": {
             boxShadow: theme.shadows[4],
           },
+          ...(bulkMode && isSelected && {
+            bgcolor: "action.selected",
+          }),
         }}
         onMouseEnter={onMouseEnter}
       >
+        {bulkMode && (
+          <Box sx={{ p: 2 }}>
+            <Checkbox
+              checked={isSelected}
+              onClick={handleCheckboxClick}
+              sx={{ p: 0 }}
+            />
+          </Box>
+        )}
         <CardActionArea
           onClick={handleCardClick}
           sx={{ display: "flex", justifyContent: "flex-start" }}
@@ -199,9 +230,24 @@ export function BookCard({
         "&:hover": {
           boxShadow: theme.shadows[4],
         },
+        ...(bulkMode && isSelected && {
+          bgcolor: "action.selected",
+        }),
       }}
       onMouseEnter={onMouseEnter}
     >
+      {bulkMode && (
+        <Box sx={{ position: "absolute", top: 8, left: 8, zIndex: 1 }}>
+          <Checkbox
+            checked={isSelected}
+            onClick={handleCheckboxClick}
+            sx={{
+              bgcolor: "background.paper",
+              "&:hover": { bgcolor: "background.paper" },
+            }}
+          />
+        </Box>
+      )}
       <CardActionArea onClick={handleCardClick} sx={{ flex: 1 }}>
         <CardMedia
           component="img"

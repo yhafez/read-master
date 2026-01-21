@@ -24,6 +24,7 @@ import {
   ViewList as ListIcon,
   FilterList as FilterIcon,
   Add as AddIcon,
+  CheckBox as CheckBoxIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
@@ -51,6 +52,8 @@ export interface LibraryToolbarProps {
   onAddBookClick: () => void;
   /** Whether filter panel is open */
   isFilterOpen: boolean;
+  /** Callback when bulk mode button is clicked */
+  onBulkModeClick?: (() => void) | undefined;
 }
 
 export function LibraryToolbar({
@@ -64,6 +67,7 @@ export function LibraryToolbar({
   onFilterClick,
   onAddBookClick,
   isFilterOpen,
+  onBulkModeClick,
 }: LibraryToolbarProps): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -188,6 +192,18 @@ export function LibraryToolbar({
           <ListIcon />
         </ToggleButton>
       </ToggleButtonGroup>
+
+      {/* Bulk Select Button */}
+      {onBulkModeClick && (
+        <Tooltip title={t("library.bulkSelect")}>
+          <IconButton
+            onClick={onBulkModeClick}
+            aria-label={t("library.bulkSelect")}
+          >
+            <CheckBoxIcon />
+          </IconButton>
+        </Tooltip>
+      )}
 
       {/* Add Book Button */}
       <Tooltip title={t("library.addBook")}>

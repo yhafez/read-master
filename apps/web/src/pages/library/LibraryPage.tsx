@@ -10,7 +10,18 @@ import {
   useMediaQuery,
   useTheme,
   Alert,
+  Paper,
+  Stack,
+  Button,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
+import {
+  Delete as DeleteIcon,
+  CheckBox as CheckBoxIcon,
+  CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
+  Close as CloseIcon,
+} from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
 import { useBooks, usePrefetchBook, useDeleteBook } from "@/hooks/useBooks";
@@ -60,6 +71,10 @@ export function LibraryPage(): React.ReactElement {
   }));
   const [page, setPage] = useState(1);
   const [addBookModalOpen, setAddBookModalOpen] = useState(false);
+  
+  // Bulk actions state
+  const [bulkMode, setBulkMode] = useState(false);
+  const [selectedBooks, setSelectedBooks] = useState<Set<string>>(new Set());
 
   // Convert local filters to API filters
   const apiFilters: BookListFilters = useMemo(
@@ -132,9 +147,47 @@ export function LibraryPage(): React.ReactElement {
     []
   );
 
+  const handleBulkModeToggle = useCallback(() => {
+    setBulkMode((prev) => !prev);
+    setSelectedBooks(new Set()); // Clear selection when toggling
+  }, []);
+
+  const handleBookSelect = useCallback((bookId: string) => {
+    setSelectedBooks((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(bookId)) {
+        newSet.delete(bookId);
+      } else {
+        newSet.add(bookId);
+      }
+      return newSet;
+    });
+  }, []);
+
   // Calculate total pages
   const totalPages = booksData?.pagination?.totalPages ?? 1;
   const books = booksData?.data ?? [];
+
+  const handleSelectAll = useCallback(() => {
+    if (selectedBooks.size === books.length) {
+      setSelectedBooks(new Set());
+    } else {
+      setSelectedBooks(new Set(books.map((b) => b.id)));
+    }
+  }, [books, selectedBooks.size]);
+
+  const handleBulkDelete = useCallback(() => {
+    if (selectedBooks.size === 0) return;
+    
+    if (window.confirm(t("library.confirmBulkDelete", { count: selectedBooks.size }))) {
+      // Delete all selected books
+      selectedBooks.forEach((bookId) => {
+        deleteBook.mutate(bookId);
+      });
+      setSelectedBooks(new Set());
+      setBulkMode(false);
+    }
+  }, [selectedBooks, deleteBook, t]);
 
   // Check if we have any books at all (for empty state vs no results)
   const hasNoBooks = !isLoading && books.length === 0 && page === 1;
@@ -147,18 +200,50 @@ export function LibraryPage(): React.ReactElement {
       </Typography>
 
       {/* Toolbar */}
-      <LibraryToolbar
-        viewMode={viewMode}
-        onViewModeChange={handleViewModeChange}
-        searchQuery={filters.search}
-        onSearchChange={handleSearchChange}
-        sortBy={filters.sort}
-        sortOrder={filters.order}
-        onSortChange={handleSortChange}
-        onFilterClick={handleFilterPanelToggle}
-        onAddBookClick={handleAddBookClick}
-        isFilterOpen={filterPanelOpen}
-      />
+      {!bulkMode ? (
+        <LibraryToolbar
+          viewMode={viewMode}
+          onViewModeChange={handleViewModeChange}
+          searchQuery={filters.search}
+          onSearchChange={handleSearchChange}
+          sortBy={filters.sort}
+          sortOrder={filters.order}
+          onSortChange={handleSortChange}
+          onFilterClick={handleFilterPanelToggle}
+          onAddBookClick={handleAddBookClick}
+          isFilterOpen={filterPanelOpen}
+          onBulkModeClick={handleBulkModeToggle}
+        />
+      ) : (
+        <Paper sx={{ p: 2, mb: 2 }}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Tooltip title={t("common.close")}>
+              <IconButton onClick={handleBulkModeToggle}>
+                <CloseIcon />
+              </IconButton>
+            </Tooltip>
+            <Typography variant="h6">
+              {t("library.selectedCount", { count: selectedBooks.size })}
+            </Typography>
+            <Box sx={{ flex: 1 }} />
+            <Button
+              startIcon={selectedBooks.size === books.length ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+              onClick={handleSelectAll}
+            >
+              {selectedBooks.size === books.length ? t("common.deselectAll") : t("common.selectAll")}
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={handleBulkDelete}
+              disabled={selectedBooks.size === 0}
+            >
+              {t("library.deleteSelected")}
+            </Button>
+          </Stack>
+        </Paper>
+      )}
 
       {/* Error State */}
       {isError && (
@@ -187,6 +272,9 @@ export function LibraryPage(): React.ReactElement {
             onDeleteBook={handleDeleteBook}
             onPrefetchBook={prefetchBook}
             onAddBookClick={hasNoBooks ? handleAddBookClick : undefined}
+            bulkMode={bulkMode}
+            selectedBooks={selectedBooks}
+            onBookSelect={handleBookSelect}
           />
 
           {/* Pagination */}

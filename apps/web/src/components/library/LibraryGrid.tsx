@@ -30,6 +30,12 @@ export interface LibraryGridProps {
   onPrefetchBook?: ((bookId: string) => void) | undefined;
   /** Callback when add book button is clicked (for empty state) */
   onAddBookClick?: (() => void) | undefined;
+  /** Whether bulk selection mode is active */
+  bulkMode?: boolean | undefined;
+  /** Set of selected book IDs */
+  selectedBooks?: Set<string> | undefined;
+  /** Callback when a book is selected/deselected */
+  onBookSelect?: ((bookId: string) => void) | undefined;
 }
 
 /**
@@ -139,6 +145,9 @@ export function LibraryGrid({
   onDeleteBook,
   onPrefetchBook,
   onAddBookClick,
+  bulkMode = false,
+  selectedBooks = new Set(),
+  onBookSelect,
 }: LibraryGridProps): React.ReactElement {
   // Loading state
   if (isLoading) {
@@ -184,6 +193,9 @@ export function LibraryGrid({
             viewMode={viewMode}
             onDelete={onDeleteBook}
             onMouseEnter={() => onPrefetchBook?.(book.id)}
+            bulkMode={bulkMode}
+            isSelected={selectedBooks.has(book.id)}
+            onSelect={onBookSelect}
           />
         ))}
       </Box>
@@ -200,6 +212,9 @@ export function LibraryGrid({
             viewMode={viewMode}
             onDelete={onDeleteBook}
             onMouseEnter={() => onPrefetchBook?.(book.id)}
+            bulkMode={bulkMode}
+            isSelected={selectedBooks.has(book.id)}
+            onSelect={onBookSelect}
           />
         </Grid>
       ))}
