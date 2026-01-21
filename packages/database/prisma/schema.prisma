@@ -67,6 +67,7 @@ model User {
   achievements      UserAchievement[]
   curriculums       Curriculum[] // Curriculums created by this user
   curriculumFollows CurriculumFollow[] // Curriculums this user is following
+  filterPresets     FilterPreset[] // Saved library filter presets
 
   // Social relations
   following         Follow[]             @relation("Following") // Users this user follows
@@ -101,10 +102,10 @@ enum UserTier {
 }
 
 enum UserRole {
-  USER          // Regular user
-  MODERATOR     // Can moderate content
-  ADMIN         // Can manage users and settings
-  SUPER_ADMIN   // Full system access
+  USER // Regular user
+  MODERATOR // Can moderate content
+  ADMIN // Can manage users and settings
+  SUPER_ADMIN // Full system access
 }
 
 // =============================================================================
@@ -175,6 +176,37 @@ model Book {
   @@index([deletedAt])
   @@index([source])
   @@index([tags])
+}
+
+/// FilterPreset model - Stores saved library filter combinations for users
+/// Allows users to save and quickly apply complex filter combinations
+model FilterPreset {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Preset metadata
+  name        String  @db.VarChar(100) // User-defined name for the preset
+  description String? @db.VarChar(500) // Optional description
+  isDefault   Boolean @default(false) // Whether this is the user's default filter
+
+  // Filter configuration stored as JSON
+  // Contains: status, progress ranges, file types, sources, date ranges, genres, tags, author, sort, order
+  filters Json
+
+  // Usage tracking
+  useCount Int       @default(0) // Number of times this preset has been applied
+  lastUsed DateTime? // Last time this preset was used
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Indexes
+  @@index([userId])
+  @@index([userId, isDefault])
+  @@index([userId, deletedAt])
 }
 
 /// Chapter model - Stores chapter/section information for books
