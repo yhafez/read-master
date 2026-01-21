@@ -18,11 +18,11 @@ const TEMPLATES_DIR = path.join(__dirname, "../templates/emails");
  */
 function loadTemplateFile(templatePath: string): string {
   const fullPath = path.join(TEMPLATES_DIR, templatePath);
-  
+
   if (!fs.existsSync(fullPath)) {
     throw new Error(`Template file not found: ${templatePath}`);
   }
-  
+
   return fs.readFileSync(fullPath, "utf-8");
 }
 
@@ -35,7 +35,7 @@ export function wrapWithLayout(
 ): string {
   const layoutPath = format === "html" ? "layouts/base.html" : "layouts/base.txt";
   const layout = loadTemplateFile(layoutPath);
-  
+
   // Replace {{content}} placeholder with actual content
   return layout.replace("{{content}}", content);
 }
@@ -49,7 +49,7 @@ export function loadTemplate(templateName: string): {
 } {
   const htmlContent = loadTemplateFile(`${templateName}.html`);
   const textContent = loadTemplateFile(`${templateName}.txt`);
-  
+
   return {
     html: wrapWithLayout(htmlContent, "html"),
     text: wrapWithLayout(textContent, "txt"),
@@ -61,15 +61,15 @@ export function loadTemplate(templateName: string): {
  */
 export function listTemplates(): string[] {
   const templates: string[] = [];
-  
+
   function scanDirectory(dir: string, prefix = "") {
     const items = fs.readdirSync(path.join(TEMPLATES_DIR, dir));
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item);
       const fullPath = path.join(TEMPLATES_DIR, itemPath);
       const stat = fs.statSync(fullPath);
-      
+
       if (stat.isDirectory()) {
         // Skip layouts directory
         if (item !== "layouts") {
@@ -82,7 +82,7 @@ export function listTemplates(): string[] {
       }
     }
   }
-  
+
   scanDirectory("");
   return templates;
 }
@@ -107,7 +107,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "WELCOME",
     templatePath: "welcome/welcome",
   },
-  
+
   // Onboarding
   {
     name: "onboarding_day1",
@@ -116,7 +116,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ONBOARDING",
     templatePath: "onboarding/day1-getting-started",
   },
-  
+
   // Engagement - Streaks
   {
     name: "streak_7_days",
@@ -125,7 +125,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/streak-7-days",
   },
-  
+
   // Engagement - Book Completion
   {
     name: "book_completed",
@@ -134,7 +134,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/book-completed",
   },
-  
+
   // Conversion
   {
     name: "upgrade_library_limit",
@@ -143,7 +143,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "CONVERSION",
     templatePath: "conversion/upgrade-library-limit",
   },
-  
+
   // Digest
   {
     name: "weekly_summary",

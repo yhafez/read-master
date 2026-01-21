@@ -17,11 +17,11 @@ import {
 
 async function seedEmailTemplate(templateDef: EmailTemplateDefinition) {
   console.log(`  Seeding template: ${templateDef.name}`);
-  
+
   try {
     // Load template content
     const { html, text } = loadTemplate(templateDef.templatePath);
-    
+
     // Upsert template
     await db.emailTemplate.upsert({
       where: { name: templateDef.name },
@@ -44,7 +44,7 @@ async function seedEmailTemplate(templateDef: EmailTemplateDefinition) {
         isActive: true,
       },
     });
-    
+
     console.log(`    ✓ ${templateDef.name}`);
   } catch (error) {
     console.error(`    ✗ Failed to seed ${templateDef.name}:`, error);
@@ -53,11 +53,11 @@ async function seedEmailTemplate(templateDef: EmailTemplateDefinition) {
 
 export async function seedEmailTemplates() {
   console.log("\n📧 Seeding Email Templates...");
-  
+
   for (const template of EMAIL_TEMPLATES) {
     await seedEmailTemplate(template);
   }
-  
+
   console.log(`✓ Seeded ${EMAIL_TEMPLATES.length} email templates\n`);
 }
 
