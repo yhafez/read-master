@@ -32,7 +32,6 @@ interface ProcessDownloadResult {
 // Constants
 // ============================================================================
 
-const MAX_RETRIES = 3;
 const CHUNK_DELAY_MS = 500; // Delay between processing chunks to avoid rate limits
 
 // ============================================================================
@@ -127,18 +126,20 @@ export async function processDownload(
       data: { status: "PROCESSING", updatedAt: new Date() },
     });
 
-    // Get book content (in real implementation, fetch from storage/database)
-    const bookContent = download.book.content || "";
-    if (!bookContent) {
+    // TODO: In production, fetch actual book content from file storage (R2/CloudFlare)
+    // For now, use a placeholder based on book metadata
+    const bookContent = `${download.book.title} by ${download.book.author || "Unknown Author"}. ${download.book.description || ""}`;
+    
+    if (!bookContent.trim()) {
       await db.tTSDownload.update({
         where: { id: downloadId },
         data: {
           status: "FAILED",
-          errorMessage: "Book content not available",
+          errorMessage: "Book content is empty",
           updatedAt: new Date(),
         },
       });
-      return { success: false, downloadId, error: "No book content" };
+      return { success: false, downloadId, error: "Empty book content" };
     }
 
     // Chunk the text
@@ -161,6 +162,7 @@ export async function processDownload(
 
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
+      if (!chunk) continue;
 
       try {
         // Generate audio for this chunk
@@ -170,7 +172,7 @@ export async function processDownload(
           format,
         });
 
-        audioBuffers.push(result.audioData);
+        audioBuffers.push(result.buffer);
         actualCost += result.cost;
 
         // Update progress

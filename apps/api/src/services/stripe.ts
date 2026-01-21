@@ -23,7 +23,7 @@ if (!STRIPE_API_KEY && process.env.NODE_ENV !== "test") {
 // ============================================================================
 
 export const stripe = new Stripe(STRIPE_API_KEY, {
-  apiVersion: "2024-12-18.acacia",
+  apiVersion: "2025-12-15.clover",
   typescript: true,
   appInfo: {
     name: "Read Master",
@@ -209,7 +209,7 @@ export async function cancelSubscription(
 
     logger.info("Subscription cancelled at period end", {
       subscriptionId,
-      periodEnd: subscription.current_period_end,
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
     });
 
     return subscription;

@@ -45,7 +45,7 @@ export async function sendWelcomeEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["onboarding", "welcome"],
         metadata: {
           trigger: "user_signup",
@@ -158,7 +158,7 @@ export async function sendOnboardingEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["onboarding", `day${day}`],
         metadata: {
           trigger: "onboarding_sequence",
@@ -377,7 +377,7 @@ export async function sendStreakEmail(
         userLevel: String(user.stats?.level || 1),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["engagement", "streak", `streak_${streakDays}`],
         metadata: {
           trigger: "streak_milestone",
@@ -488,7 +488,7 @@ export async function sendBookCompletionEmail(
         annotationCount: String(annotationCount),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["engagement", "book_completed"],
         metadata: {
           trigger: "book_completed",
@@ -569,7 +569,7 @@ export async function sendLibraryLimitEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["conversion", "library_limit"],
         metadata: {
           trigger: "library_limit_reached",
@@ -683,7 +683,7 @@ export async function sendAchievementEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["engagement", "achievement"],
         metadata: {
           trigger: "achievement_unlocked",
@@ -847,7 +847,7 @@ export async function sendMilestoneEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["engagement", "milestone", milestoneType],
         metadata: {
           trigger: "milestone_achieved",
@@ -1010,7 +1010,7 @@ export async function sendWeeklyDigest(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["digest", "weekly_summary"],
         metadata: {
           trigger: "weekly_digest",
@@ -1122,7 +1122,7 @@ export async function sendInactiveUserEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["engagement", "re-engagement", `inactive_${daysInactive}_days`],
         metadata: {
           trigger: "inactive_user",
@@ -1190,7 +1190,7 @@ export async function sendAIUpgradeEmail(
 
     // Check email preferences
     const prefs = await getEmailPreferences(userId);
-    if (!prefs.conversion) {
+    if (!prefs.marketingEmails) {
       logger.info("User has opted out of conversion emails", { userId });
       return {
         success: false,
@@ -1210,7 +1210,7 @@ export async function sendAIUpgradeEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["conversion", "upgrade", "ai_features"],
         metadata: {
           trigger: "ai_feature_limit",
@@ -1278,7 +1278,7 @@ export async function sendTTSUpgradeEmail(
 
     // Check email preferences
     const prefs = await getEmailPreferences(userId);
-    if (!prefs.conversion) {
+    if (!prefs.marketingEmails) {
       logger.info("User has opted out of conversion emails", { userId });
       return {
         success: false,
@@ -1298,7 +1298,7 @@ export async function sendTTSUpgradeEmail(
         year: new Date().getFullYear(),
       },
       {
-        toName: user.displayName || undefined,
+        toName: user.displayName || "",
         tags: ["conversion", "upgrade", "tts_features"],
         metadata: {
           trigger: "tts_download_limit",
