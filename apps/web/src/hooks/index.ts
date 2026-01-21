@@ -42,6 +42,7 @@ export {
 } from "./useScreenReaderAnnouncement";
 
 export { useGestureDetection } from "./useGestureDetection";
+export { useReducedMotion } from "./useReducedMotion";
 
 export {
   useOfflineReadingSync,

@@ -30,9 +30,17 @@ function getComponentOverrides(
             : "2px solid currentColor",
           outlineOffset: "2px",
         },
-        // Smooth scrolling for better UX
+        // Smooth scrolling for better UX (respects prefers-reduced-motion)
         html: {
           scrollBehavior: "smooth",
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          "*": {
+            animationDuration: "0.01ms !important",
+            animationIterationCount: "1 !important",
+            transitionDuration: "0.01ms !important",
+            scrollBehavior: "auto !important",
+          },
         },
         // Better touch targets
         "button, a, input, select, textarea": {
