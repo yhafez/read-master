@@ -11,7 +11,7 @@
 
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Box,
   Typography,
@@ -46,10 +46,10 @@ import {
   Person as PersonIcon,
   Visibility as ViewIcon,
   ChatBubbleOutline as CommentIcon,
-  TrendingUp as TrendingIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { formatDistanceToNow } from "date-fns";
+import { VoteButtons } from "@/components/forum";
 
 // ============================================================================
 // Types
@@ -110,9 +110,11 @@ function formatRelativeTime(date: Date): string {
 /**
  * Build a nested reply tree from flat reply list
  */
-function buildReplyTree(replies: ForumReply[]): Map<string | null, ForumReply[]> {
+function buildReplyTree(
+  replies: ForumReply[]
+): Map<string | null, ForumReply[]> {
   const tree = new Map<string | null, ForumReply[]>();
-  
+
   replies.forEach((reply) => {
     const parentId = reply.parentReplyId;
     if (!tree.has(parentId)) {
@@ -120,7 +122,7 @@ function buildReplyTree(replies: ForumReply[]): Map<string | null, ForumReply[]>
     }
     tree.get(parentId)!.push(reply);
   });
-  
+
   return tree;
 }
 
@@ -190,7 +192,11 @@ function ReplyItem({
         <CardContent>
           <Stack direction="row" alignItems="start" spacing={2}>
             {/* Avatar */}
-            <Avatar {...(reply.author.avatarUrl ? { src: reply.author.avatarUrl } : {})}>
+            <Avatar
+              {...(reply.author.avatarUrl
+                ? { src: reply.author.avatarUrl }
+                : {})}
+            >
               <PersonIcon />
             </Avatar>
 
@@ -216,37 +222,56 @@ function ReplyItem({
                 )}
               </Stack>
 
-              <Typography variant="body2" sx={{ mb: 2, whiteSpace: "pre-wrap" }}>
-                {reply.content}
-              </Typography>
+              <Stack direction="row" spacing={2}>
+                {/* Vote Buttons */}
+                <VoteButtons
+                  voteScore={reply.upvotes}
+                  upvotes={reply.upvotes}
+                  userVote={0} // TODO: Get user's vote from API response
+                  onVote={async () => {
+                    // TODO: Implement reply voting API
+                    // POST /api/forum/posts/:postId/replies/:replyId/vote
+                  }}
+                  size="small"
+                />
 
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Stack direction="row" spacing={0.5} alignItems="center">
-                  <TrendingIcon fontSize="small" />
-                  <Typography variant="caption">{reply.upvotes}</Typography>
-                </Stack>
-                
-                {canNest && (
-                  <Button
-                    size="small"
-                    startIcon={<ReplyIcon />}
-                    onClick={() => onReply(reply.id)}
+                {/* Reply Content and Actions */}
+                <Box flex={1}>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: 2, whiteSpace: "pre-wrap" }}
                   >
-                    {t("forum.reply")}
-                  </Button>
-                )}
+                    {reply.content}
+                  </Typography>
 
-                {hasChildren && (
-                  <Button
-                    size="small"
-                    startIcon={collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-                    onClick={() => setCollapsed(!collapsed)}
-                  >
-                    {collapsed
-                      ? t("forum.showReplies", { count: childReplies.length })
-                      : t("forum.hideReplies")}
-                  </Button>
-                )}
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    {canNest && (
+                      <Button
+                        size="small"
+                        startIcon={<ReplyIcon />}
+                        onClick={() => onReply(reply.id)}
+                      >
+                        {t("forum.reply")}
+                      </Button>
+                    )}
+
+                    {hasChildren && (
+                      <Button
+                        size="small"
+                        startIcon={
+                          collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />
+                        }
+                        onClick={() => setCollapsed(!collapsed)}
+                      >
+                        {collapsed
+                          ? t("forum.showReplies", {
+                              count: childReplies.length,
+                            })
+                          : t("forum.hideReplies")}
+                      </Button>
+                    )}
+                  </Stack>
+                </Box>
               </Stack>
             </Box>
 
@@ -309,6 +334,7 @@ export function ForumPostPage(): React.ReactElement {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const queryClient = useQueryClient();
 
   // State
   const [replyContent, setReplyContent] = useState("");
@@ -343,6 +369,31 @@ export function ForumPostPage(): React.ReactElement {
   // Build reply tree
   const replyTree = post ? buildReplyTree(post.replies) : new Map();
   const topLevelReplies = replyTree.get(null) || [];
+
+  // Vote mutation
+  const voteMutation = useMutation({
+    mutationFn: async ({ value }: { value: number }) => {
+      const method = value === 0 ? "DELETE" : "POST";
+      const url = `/api/forum/posts/${id}/vote`;
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        ...(value !== 0 && { body: JSON.stringify({ value }) }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to vote");
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forumPost", id] });
+    },
+  });
 
   // Handlers
   const handleBack = () => {
@@ -465,7 +516,13 @@ export function ForumPostPage(): React.ReactElement {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           {/* Header */}
-          <Stack direction="row" alignItems="center" spacing={1} mb={2} flexWrap="wrap">
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            mb={2}
+            flexWrap="wrap"
+          >
             <Typography variant="h4" component="h1" sx={{ flex: 1 }}>
               {post.title}
             </Typography>
@@ -487,7 +544,9 @@ export function ForumPostPage(): React.ReactElement {
 
           {/* Author Info */}
           <Stack direction="row" alignItems="center" spacing={2} mb={2}>
-            <Avatar {...(post.author.avatarUrl ? { src: post.author.avatarUrl } : {})}>
+            <Avatar
+              {...(post.author.avatarUrl ? { src: post.author.avatarUrl } : {})}
+            >
               <PersonIcon />
             </Avatar>
             <Box>
@@ -502,31 +561,42 @@ export function ForumPostPage(): React.ReactElement {
 
           <Divider sx={{ my: 2 }} />
 
-          {/* Post Content */}
-          <Typography variant="body1" sx={{ mb: 2, whiteSpace: "pre-wrap" }}>
-            {post.content}
-          </Typography>
+          {/* Post Content and Voting */}
+          <Stack direction="row" spacing={2}>
+            {/* Vote Buttons */}
+            <VoteButtons
+              voteScore={post.upvotes}
+              upvotes={post.upvotes}
+              userVote={0} // TODO: Get user's vote from API response
+              onVote={(value) => voteMutation.mutate({ value })}
+              size="large"
+            />
 
-          {/* Post Stats */}
-          <Stack direction="row" spacing={3} flexWrap="wrap">
-            <Stack direction="row" spacing={0.5} alignItems="center">
-              <ViewIcon fontSize="small" />
-              <Typography variant="caption">
-                {post.viewCount} {t("forum.views")}
+            {/* Post Content */}
+            <Box flex={1}>
+              <Typography
+                variant="body1"
+                sx={{ mb: 2, whiteSpace: "pre-wrap" }}
+              >
+                {post.content}
               </Typography>
-            </Stack>
-            <Stack direction="row" spacing={0.5} alignItems="center">
-              <CommentIcon fontSize="small" />
-              <Typography variant="caption">
-                {post.repliesCount} {t("forum.replies")}
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing={0.5} alignItems="center">
-              <TrendingIcon fontSize="small" />
-              <Typography variant="caption">
-                {post.upvotes} {t("forum.upvotes")}
-              </Typography>
-            </Stack>
+
+              {/* Post Stats */}
+              <Stack direction="row" spacing={3} flexWrap="wrap">
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <ViewIcon fontSize="small" />
+                  <Typography variant="caption">
+                    {post.viewCount} {t("forum.views")}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <CommentIcon fontSize="small" />
+                  <Typography variant="caption">
+                    {post.repliesCount} {t("forum.replies")}
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Box>
           </Stack>
         </CardContent>
       </Card>
@@ -544,8 +614,8 @@ export function ForumPostPage(): React.ReactElement {
               {editingReply
                 ? t("forum.editReply")
                 : replyingTo
-                ? t("forum.replyToComment")
-                : t("forum.addReply")}
+                  ? t("forum.replyToComment")
+                  : t("forum.addReply")}
             </Typography>
             <TextField
               fullWidth
