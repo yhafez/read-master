@@ -2166,5 +2166,19 @@
     "billingHistory": "Billing History",
     "manageBillingPortalDescription": "View your billing history and manage your payment methods in the billing portal.",
     "viewBillingHistory": "View Billing History"
+  },
+  "social": {
+    "follow": "Follow",
+    "following": "Following",
+    "followers": "followers",
+    "unfollow": "Unfollow",
+    "search": {
+      "title": "Search Users",
+      "placeholder": "Search by username or name...",
+      "error": "Failed to search users",
+      "minChars": "Enter at least 2 characters to search",
+      "noResults": "No users found",
+      "moreResults": "Showing {{count}} of {{total}} results"
+    }
   }
 }

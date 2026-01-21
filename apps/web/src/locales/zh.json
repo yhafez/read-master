@@ -2166,5 +2166,19 @@
     "billingHistory": "账单历史",
     "manageBillingPortalDescription": "在账单门户中查看您的账单历史并管理您的付款方式。",
     "viewBillingHistory": "查看账单历史"
+  },
+  "social": {
+    "follow": "关注",
+    "following": "正在关注",
+    "followers": "关注者",
+    "unfollow": "取消关注",
+    "search": {
+      "title": "搜索用户",
+      "placeholder": "按用户名或姓名搜索...",
+      "error": "搜索用户失败",
+      "minChars": "至少输入2个字符进行搜索",
+      "noResults": "未找到用户",
+      "moreResults": "显示 {{count}} / {{total}} 个结果"
+    }
   }
 }

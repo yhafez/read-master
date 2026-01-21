@@ -2166,5 +2166,19 @@
     "billingHistory": "سجل الفواتير",
     "manageBillingPortalDescription": "اعرض سجل الفواتير وقم بإدارة طرق الدفع في بوابة الفواتير.",
     "viewBillingHistory": "عرض سجل الفواتير"
+  },
+  "social": {
+    "follow": "متابعة",
+    "following": "يتابع",
+    "followers": "متابعون",
+    "unfollow": "إلغاء المتابعة",
+    "search": {
+      "title": "البحث عن المستخدمين",
+      "placeholder": "البحث باسم المستخدم أو الاسم...",
+      "error": "فشل البحث عن المستخدمين",
+      "minChars": "أدخل حرفين على الأقل للبحث",
+      "noResults": "لم يتم العثور على مستخدمين",
+      "moreResults": "عرض {{count}} من {{total}} نتيجة"
+    }
   }
 }

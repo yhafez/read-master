@@ -2166,5 +2166,19 @@
     "billingHistory": "Kasaysayan ng Billing",
     "manageBillingPortalDescription": "Tingnan ang iyong kasaysayan ng billing at pamahalaan ang iyong mga paraan ng pagbabayad sa billing portal.",
     "viewBillingHistory": "Tingnan ang Kasaysayan ng Billing"
+  },
+  "social": {
+    "follow": "Sundan",
+    "following": "Sumusunod",
+    "followers": "tagasunod",
+    "unfollow": "Huwag sundan",
+    "search": {
+      "title": "Maghanap ng Users",
+      "placeholder": "Maghanap gamit ang username o pangalan...",
+      "error": "Hindi makahanap ng users",
+      "minChars": "Maglagay ng kahit 2 character para maghanap",
+      "noResults": "Walang nahanap na users",
+      "moreResults": "Nagpapakita ng {{count}} sa {{total}} resulta"
+    }
   }
 }

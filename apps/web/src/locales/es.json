@@ -2166,5 +2166,19 @@
     "billingHistory": "Historial de facturación",
     "manageBillingPortalDescription": "Ve tu historial de facturación y gestiona tus métodos de pago en el portal de facturación.",
     "viewBillingHistory": "Ver historial de facturación"
+  },
+  "social": {
+    "follow": "Seguir",
+    "following": "Siguiendo",
+    "followers": "seguidores",
+    "unfollow": "Dejar de seguir",
+    "search": {
+      "title": "Buscar Usuarios",
+      "placeholder": "Buscar por nombre de usuario o nombre...",
+      "error": "Error al buscar usuarios",
+      "minChars": "Ingresa al menos 2 caracteres para buscar",
+      "noResults": "No se encontraron usuarios",
+      "moreResults": "Mostrando {{count}} de {{total}} resultados"
+    }
   }
 }

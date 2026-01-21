@@ -2166,5 +2166,19 @@
     "billingHistory": "請求履歴",
     "manageBillingPortalDescription": "請求ポータルで請求履歴を表示し、支払い方法を管理します。",
     "viewBillingHistory": "請求履歴を表示"
+  },
+  "social": {
+    "follow": "フォロー",
+    "following": "フォロー中",
+    "followers": "フォロワー",
+    "unfollow": "フォロー解除",
+    "search": {
+      "title": "ユーザーを検索",
+      "placeholder": "ユーザー名または名前で検索...",
+      "error": "ユーザーの検索に失敗しました",
+      "minChars": "検索するには2文字以上入力してください",
+      "noResults": "ユーザーが見つかりませんでした",
+      "moreResults": "{{total}}件中{{count}}件を表示"
+    }
   }
 }
