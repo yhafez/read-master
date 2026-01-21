@@ -344,21 +344,21 @@ export async function sendStreakEmail(
 
     // Calculate average reading time
     const averageMinutes = user.stats
-      ? Math.round(user.stats.totalReadingTime / 60 / streakDays)
+      ? Math.round(user.stats.totalReadTime / 60 / streakDays)
       : 0;
 
     // Count books
     const booksInProgress = await db.book.count({
       where: {
         userId,
-        status: "IN_PROGRESS",
+        status: "READING",
         deletedAt: null,
       },
     });
 
     const booksCompleted = user.stats?.booksCompleted || 0;
-    const totalReadingTime = user.stats
-      ? `${Math.floor(user.stats.totalReadingTime / 3600)}h ${Math.floor((user.stats.totalReadingTime % 3600) / 60)}m`
+    const totalReadTime = user.stats
+      ? `${Math.floor(user.stats.totalReadTime / 3600)}h ${Math.floor((user.stats.totalReadTime % 3600) / 60)}m`
       : "0h 0m";
 
     // Send streak email
@@ -373,7 +373,7 @@ export async function sendStreakEmail(
         averageMinutes: String(averageMinutes),
         booksInProgress: String(booksInProgress),
         booksCompleted: String(booksCompleted),
-        totalReadingTime,
+        totalReadTime,
         userLevel: String(user.stats?.level || 1),
       },
       {
@@ -459,8 +459,8 @@ export async function sendBookCompletionEmail(
     });
 
     // Calculate reading stats
-    const readingTime = progress?.totalReadingTime
-      ? `${Math.floor(progress.totalReadingTime / 3600)}h ${Math.floor((progress.totalReadingTime % 3600) / 60)}m`
+    const readingTime = progress?.totalReadTime
+      ? `${Math.floor(progress.totalReadTime / 3600)}h ${Math.floor((progress.totalReadTime % 3600) / 60)}m`
       : "Unknown";
 
     const pagesRead = book.pageCount || "Unknown";
@@ -769,7 +769,7 @@ export async function sendMilestoneEmail(
           },
           {
             label: "⏱️ Reading Time",
-            value: `${Math.floor((user.stats?.totalReadingTime || 0) / 3600)}h`,
+            value: `${Math.floor((user.stats?.totalReadTime || 0) / 3600)}h`,
           },
           { label: "📊 Current Level", value: String(user.stats?.level || 1) },
         ],
@@ -934,7 +934,7 @@ export async function sendWeeklyDigest(
     const inProgressBooks = await db.book.findMany({
       where: {
         userId,
-        status: "IN_PROGRESS",
+        status: "READING",
         deletedAt: null,
       },
       select: {
@@ -1057,7 +1057,7 @@ export async function sendInactiveUserEmail(
         stats: true,
         books: {
           where: {
-            status: "IN_PROGRESS",
+            status: "READING",
             deletedAt: null,
           },
           orderBy: {
@@ -1110,7 +1110,7 @@ export async function sendInactiveUserEmail(
       {
         userName: user.firstName || user.displayName || "there",
         booksInProgress: await db.book.count({
-          where: { userId, status: "IN_PROGRESS", deletedAt: null },
+          where: { userId, status: "READING", deletedAt: null },
         }),
         booksCompleted: user.stats?.booksCompleted || 0,
         lastStreak: user.stats?.longestStreak || 0,
