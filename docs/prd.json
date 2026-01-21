@@ -53,7 +53,7 @@
         "Clear filters button resets all filters",
         "Tests cover all filter combinations"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "tts-downloads-001",
@@ -86,7 +86,7 @@
         "Download limits are enforced",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "ai-personality-001",
