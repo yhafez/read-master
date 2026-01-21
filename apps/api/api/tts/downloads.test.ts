@@ -5,7 +5,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelResponse } from "@vercel/node";
 import * as downloadService from "./downloadService.js";
 
 // Mock dependencies
@@ -14,26 +14,14 @@ vi.mock("../../src/middleware/auth.js");
 vi.mock("../../src/services/db.js");
 
 describe("TTS Download Endpoints", () => {
-  let mockReq: Partial<VercelRequest>;
   let mockRes: Partial<VercelResponse>;
-  let statusCode: number;
-  let responseBody: unknown;
 
   beforeEach(() => {
     vi.clearAllMocks();
 
-    statusCode = 200;
-    responseBody = null;
-
     mockRes = {
-      status: vi.fn((code: number) => {
-        statusCode = code;
-        return mockRes as VercelResponse;
-      }),
-      json: vi.fn((body: unknown) => {
-        responseBody = body;
-        return mockRes as VercelResponse;
-      }),
+      status: vi.fn(() => mockRes as VercelResponse),
+      json: vi.fn(() => mockRes as VercelResponse),
       setHeader: vi.fn(),
     };
   });
@@ -74,7 +62,7 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.getUserDownloads).mockResolvedValue(
-        mockDownloads
+        mockDownloads as any
       );
       vi.mocked(downloadService.checkDownloadQuota).mockResolvedValue(
         mockQuota
@@ -134,7 +122,7 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.getDownloadRecord).mockResolvedValue(
-        mockDownload
+        mockDownload as any
       );
 
       const result = await downloadService.getDownloadRecord("dl_123");
@@ -178,13 +166,13 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.getDownloadRecord).mockResolvedValue(
-        mockDownload
+        mockDownload as any
       );
-      vi.mocked(downloadService.deleteDownload).mockResolvedValue();
+      vi.mocked(downloadService.deleteDownload).mockResolvedValue(true);
 
-      await downloadService.deleteDownload("dl_123");
+      await downloadService.deleteDownload("dl_123", "user_1");
 
-      expect(downloadService.deleteDownload).toHaveBeenCalledWith("dl_123");
+      expect(downloadService.deleteDownload).toHaveBeenCalledWith("dl_123", "user_1");
     });
   });
 
@@ -222,10 +210,10 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.checkDownloadQuota).mockResolvedValue(
-        mockQuota
+        mockQuota as any
       );
       vi.mocked(downloadService.createDownloadRecord).mockResolvedValue(
-        mockDownload
+        mockDownload as any
       );
 
       const quota = await downloadService.checkDownloadQuota("user_1", "PRO");
@@ -274,7 +262,7 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.checkDownloadQuota).mockResolvedValue(
-        mockQuota
+        mockQuota as any
       );
 
       const quota = await downloadService.checkDownloadQuota(
@@ -320,7 +308,7 @@ describe("TTS Download Endpoints", () => {
         remaining: Infinity,
         used: 999,
         limit: "unlimited",
-      });
+      } as any);
 
       const quota = await downloadService.checkDownloadQuota(
         "user_1",

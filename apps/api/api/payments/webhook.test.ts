@@ -5,7 +5,7 @@
  * Integration tests should be done with Stripe CLI and test mode.
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import type Stripe from "stripe";
 
 // Mock database
@@ -76,7 +76,7 @@ describe("Stripe Webhook Event Processing", () => {
 
   describe("customer.subscription.created event", () => {
     it("should extract subscription details", () => {
-      const mockSubscription: Partial<Stripe.Subscription> = {
+      const mockSubscription = {
         id: "sub_test_123",
         customer: "cus_test_123",
         status: "active",
@@ -91,32 +91,32 @@ describe("Stripe Webhook Event Processing", () => {
               } as Stripe.Price,
             } as Stripe.SubscriptionItem,
           ],
-        } as Stripe.ApiList<Stripe.SubscriptionItem>,
+        } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         metadata: {
           userId: "user_123",
         },
         current_period_start: 1234567890,
         current_period_end: 1234567890,
-      };
+      } as Partial<Stripe.Subscription>;
 
       expect(mockSubscription.status).toBe("active");
-      expect(mockSubscription.items.data[0].price.id).toBe("price_pro_monthly");
-      expect(mockSubscription.items.data[0].price.unit_amount).toBe(999);
+      expect(mockSubscription.items?.data[0]?.price.id).toBe("price_pro_monthly");
+      expect(mockSubscription.items?.data[0]?.price.unit_amount).toBe(999);
       expect(mockSubscription.metadata?.userId).toBe("user_123");
     });
 
     it("should handle subscription without userId in metadata", () => {
-      const mockSubscription: Partial<Stripe.Subscription> = {
+      const mockSubscription = {
         id: "sub_test_456",
         customer: "cus_test_456",
         status: "active",
         items: {
           data: [],
-        } as Stripe.ApiList<Stripe.SubscriptionItem>,
+        } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         // No metadata.userId
         current_period_start: 1234567890,
         current_period_end: 1234567890,
-      };
+      } as Partial<Stripe.Subscription>;
 
       // Should fallback to finding user by customer ID
       expect(mockSubscription.metadata?.userId).toBeUndefined();
@@ -133,7 +133,7 @@ describe("Stripe Webhook Event Processing", () => {
     });
 
     it("should detect cancellation scheduled for period end", () => {
-      const mockSubscription: Partial<Stripe.Subscription> = {
+      const mockSubscription = {
         id: "sub_test_123",
         customer: "cus_test_123",
         status: "active",
@@ -142,7 +142,7 @@ describe("Stripe Webhook Event Processing", () => {
         current_period_end: 1234567890,
         items: {
           data: [],
-        } as Stripe.ApiList<Stripe.SubscriptionItem>,
+        } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         current_period_start: 1234567890,
       };
 
@@ -154,7 +154,7 @@ describe("Stripe Webhook Event Processing", () => {
 
   describe("customer.subscription.deleted event", () => {
     it("should contain cancellation details", () => {
-      const mockSubscription: Partial<Stripe.Subscription> = {
+      const mockSubscription = {
         id: "sub_test_123",
         customer: "cus_test_123",
         status: "canceled",
@@ -162,10 +162,10 @@ describe("Stripe Webhook Event Processing", () => {
         ended_at: 1234567890,
         items: {
           data: [],
-        } as Stripe.ApiList<Stripe.SubscriptionItem>,
+        } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         current_period_start: 1234567890,
         current_period_end: 1234567890,
-      };
+      } as Partial<Stripe.Subscription>;
 
       expect(mockSubscription.status).toBe("canceled");
       expect(mockSubscription.canceled_at).toBeTruthy();
@@ -175,7 +175,7 @@ describe("Stripe Webhook Event Processing", () => {
 
   describe("invoice.payment_succeeded event", () => {
     it("should contain payment details", () => {
-      const mockInvoice: Partial<Stripe.Invoice> = {
+      const mockInvoice = {
         id: "in_test_123",
         customer: "cus_test_123",
         subscription: "sub_test_123",
@@ -183,7 +183,7 @@ describe("Stripe Webhook Event Processing", () => {
         currency: "usd",
         number: "INV-001",
         status: "paid",
-      };
+      } as Partial<Stripe.Invoice>;
 
       expect(mockInvoice.amount_paid).toBe(999);
       expect(mockInvoice.currency).toBe("usd");
@@ -343,33 +343,33 @@ describe("Stripe Webhook Event Processing", () => {
 
   describe("error scenarios", () => {
     it("should handle missing customer ID gracefully", () => {
-      const mockSubscription: Partial<Stripe.Subscription> = {
+      const mockSubscription = {
         id: "sub_test_123",
         customer: undefined as any,
         status: "active",
         items: {
           data: [],
-        } as Stripe.ApiList<Stripe.SubscriptionItem>,
+        } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         current_period_start: 1234567890,
         current_period_end: 1234567890,
-      };
+      } as Partial<Stripe.Subscription>;
 
       expect(mockSubscription.customer).toBeUndefined();
     });
 
     it("should handle empty subscription items", () => {
-      const mockSubscription: Partial<Stripe.Subscription> = {
+      const mockSubscription = {
         id: "sub_test_123",
         customer: "cus_test_123",
         status: "active",
         items: {
           data: [],
-        } as Stripe.ApiList<Stripe.SubscriptionItem>,
+        } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         current_period_start: 1234567890,
         current_period_end: 1234567890,
-      };
+      } as Partial<Stripe.Subscription>;
 
-      expect(mockSubscription.items.data.length).toBe(0);
+      expect(mockSubscription.items?.data.length).toBe(0);
     });
   });
 });

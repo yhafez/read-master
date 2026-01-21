@@ -433,7 +433,7 @@ describe("SendGrid Webhook Handler", () => {
     vi.mocked(db.email.update).mockResolvedValue({
       ...mockEmail,
       unsubscribedAt: new Date(),
-    });
+    } as any);
 
     const mockPrefs = {
       id: "pref-1",

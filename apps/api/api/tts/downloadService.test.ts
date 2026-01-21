@@ -53,7 +53,7 @@ describe("TTS Download Service", () => {
         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       };
 
-      vi.mocked(db.tTSDownload.create).mockResolvedValue(mockDownload);
+      vi.mocked(db.tTSDownload.create).mockResolvedValue(mockDownload as any);
 
       const result = await downloadService.createDownloadRecord({
         userId: "user_1",
@@ -202,15 +202,15 @@ describe("TTS Download Service", () => {
         expiresAt: new Date(),
       };
 
-      vi.mocked(db.tTSDownload.update).mockResolvedValue(mockUpdated);
+      vi.mocked(db.tTSDownload.update).mockResolvedValue(mockUpdated as any);
 
       const result = await downloadService.updateDownloadStatus("dl_123", {
         status: "PROCESSING",
         processedChunks: 5,
       });
 
-      expect(result.status).toBe("PROCESSING");
-      expect(result.processedChunks).toBe(5);
+      expect(result?.status).toBe("PROCESSING");
+      expect(result?.processedChunks).toBe(5);
     });
   });
 

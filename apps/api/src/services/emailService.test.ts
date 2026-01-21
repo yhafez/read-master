@@ -3,7 +3,6 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import sgMail from "@sendgrid/mail";
 import * as emailService from "./emailService.js";
 import { db } from "./db.js";
 
@@ -157,12 +156,12 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.email.create).mockResolvedValue(mockEmail);
+      vi.mocked(db.email.create).mockResolvedValue(mockEmail as any);
       vi.mocked(db.email.update).mockResolvedValue({
         ...mockEmail,
         sendgridStatus: "logged",
         sentAt: new Date(),
-      });
+      } as any);
 
       const result = await emailService.sendEmail(mockUserId, mockEmailOptions);
 
@@ -214,12 +213,12 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.email.create).mockResolvedValue(mockEmail);
+      vi.mocked(db.email.create).mockResolvedValue(mockEmail as any);
       vi.mocked(db.email.update).mockResolvedValue({
         ...mockEmail,
         sendgridStatus: "logged",
         sentAt: new Date(),
-      });
+      } as any);
 
       const result = await emailService.sendEmail(mockUserId, mockEmailOptions);
 
@@ -275,7 +274,7 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate);
+      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate as any);
 
       const result = await emailService.renderTemplate({
         templateName: "welcome",
@@ -304,7 +303,7 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate);
+      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate as any);
 
       const result = await emailService.renderTemplate({
         templateName: "welcome",
@@ -344,7 +343,7 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate);
+      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate as any);
       vi.mocked(db.userEmailPreferences.findUnique).mockResolvedValue(null);
 
       const mockEmail = {
@@ -378,12 +377,12 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.email.create).mockResolvedValue(mockEmail);
+      vi.mocked(db.email.create).mockResolvedValue(mockEmail as any);
       vi.mocked(db.email.update).mockResolvedValue({
         ...mockEmail,
         sendgridStatus: "logged",
         sentAt: new Date(),
-      });
+      } as any);
 
       const result = await emailService.sendTemplateEmail(
         "user-123",
