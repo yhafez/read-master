@@ -6,10 +6,14 @@ import "@/i18n";
 import { App } from "./App";
 import { QueryProvider } from "./lib";
 import { ErrorBoundary, initSentry } from "./lib/sentry";
+import { initPostHog } from "./lib/analytics";
 import { AppThemeProvider } from "./theme";
 
 // Initialize Sentry before React renders
 initSentry();
+
+// Initialize PostHog analytics
+initPostHog();
 
 const rootElement = document.getElementById("root");
 

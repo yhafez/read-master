@@ -32,3 +32,5 @@ export {
 } from "./SyncStatusIndicator";
 
 export { SentryUserSync } from "./SentryUserSync";
+
+export { PostHogUserSync } from "./PostHogUserSync";

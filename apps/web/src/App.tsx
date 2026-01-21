@@ -3,6 +3,7 @@ import { ServiceWorkerUpdatePrompt } from "@/pwa";
 import {
   AchievementNotificationManager,
   SentryUserSync,
+  PostHogUserSync,
 } from "@/components/common";
 import { OfflineIndicator, InstallPrompt } from "@/components/pwa";
 import { useRouteAnnouncements } from "@/hooks";
@@ -14,6 +15,7 @@ export function App(): React.ReactElement {
   return (
     <>
       <SentryUserSync />
+      <PostHogUserSync />
       <AppRouter />
       <ServiceWorkerUpdatePrompt />
       <AchievementNotificationManager />
