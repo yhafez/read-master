@@ -2,786 +2,410 @@
  * Forum Post Detail Page
  *
  * Displays a single forum post with:
- * - Post content with markdown formatting
- * - Author info and timestamp
- * - View count
- * - Voting (upvote/downvote)
- * - Reply form
- * - Threaded replies with nesting
- * - Best answer marking (for OP)
+ * - Post content and metadata
+ * - Nested replies (up to 3 levels)
+ * - Reply creation
+ * - Collapse/expand threads
+ * - Edit/delete own posts and replies
  */
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import {
-  Alert,
-  Avatar,
   Box,
-  Button,
+  Typography,
   Card,
   CardContent,
-  Chip,
-  CircularProgress,
-  Collapse,
-  Divider,
-  IconButton,
-  Paper,
-  Skeleton,
   Stack,
+  Chip,
+  Avatar,
+  Button,
+  IconButton,
   TextField,
-  Tooltip,
-  Typography,
+  Divider,
+  Breadcrumbs,
+  Link,
+  Collapse,
+  useTheme,
+  useMediaQuery,
+  Skeleton,
+  Alert,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import {
   ArrowBack as ArrowBackIcon,
-  ThumbUp as ThumbUpIcon,
-  ThumbUpOutlined as ThumbUpOutlinedIcon,
-  ThumbDown as ThumbDownIcon,
-  ThumbDownOutlined as ThumbDownOutlinedIcon,
-  Visibility as ViewIcon,
   Reply as ReplyIcon,
+  MoreVert as MoreVertIcon,
   Edit as EditIcon,
+  Delete as DeleteIcon,
   ExpandMore as ExpandMoreIcon,
   ExpandLess as ExpandLessIcon,
   CheckCircle as CheckCircleIcon,
-  CheckCircleOutline as CheckCircleOutlineIcon,
-  Send as SendIcon,
-  Schedule as ScheduleIcon,
+  Person as PersonIcon,
+  Visibility as ViewIcon,
+  ChatBubbleOutline as CommentIcon,
+  TrendingUp as TrendingIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
 
-import { routeHelpers } from "@/router/routes";
-import {
-  applyVote,
-  buildReplyTree,
-  calculateVoteScore,
-  canEditPost,
-  canEditReply,
-  canMarkBestAnswer,
-  formatRelativeTime,
-  formatVoteScore,
-  getRelativeTime,
-  getVoteScoreColor,
-  renderMarkdownContent,
-  sortReplies,
-  MAX_REPLY_DEPTH,
-  type ForumPostDetail,
-  type ForumReply,
-  type ReplySortOrder,
-  type VoteState,
-  type VoteType,
-} from "./forumPostUtils";
+// ============================================================================
+// Types
+// ============================================================================
 
-// =============================================================================
-// MOCK DATA (Will be replaced with API calls)
-// =============================================================================
-
-const MOCK_CURRENT_USER_ID = "user-1";
-
-const MOCK_POST: ForumPostDetail = {
-  id: "post-1",
-  title: "Best practices for improving reading comprehension?",
-  content: `I've been using Read Master for a few weeks now and I'm amazed at how much it has helped my comprehension.
-
-**Here are some tips I've discovered:**
-
-1. Use the pre-reading guides before starting any book
-2. Take notes as you read using the annotation feature
-3. Review flashcards daily - even just 10 minutes helps
-
-Has anyone else found other techniques that work well?
-
-I'm particularly interested in:
-- Speed reading techniques
-- How to handle difficult vocabulary
-- Best practices for non-fiction vs fiction
-
-Looking forward to hearing your thoughts!`,
-  categoryId: "c1",
-  categoryName: "General Discussion",
-  categorySlug: "general-discussion",
-  authorId: "user-1",
-  authorName: "BookLover42",
-  authorAvatar: null,
-  createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-  updatedAt: null,
-  viewCount: 156,
-  upvotes: 23,
-  downvotes: 2,
-  userVote: null,
-  replyCount: 8,
-  isOwnPost: true,
-  bestAnswerId: "reply-2",
+type ForumReply = {
+  id: string;
+  content: string;
+  author: {
+    id: string;
+    username: string;
+    displayName: string | null;
+    avatarUrl: string | null;
+  };
+  parentReplyId: string | null;
+  upvotes: number;
+  isBestAnswer: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
 
-const MOCK_REPLIES: ForumReply[] = [
-  {
-    id: "reply-1",
-    content:
-      "Great tips! I also find that using the AI explain feature helps a lot with complex passages.",
-    authorId: "user-2",
-    authorName: "ReadingEnthusiast",
-    authorAvatar: null,
-    createdAt: new Date(Date.now() - 1.5 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: null,
-    upvotes: 12,
-    downvotes: 0,
-    userVote: "up",
-    parentReplyId: null,
-    isBestAnswer: false,
-  },
-  {
-    id: "reply-2",
-    content: `For **speed reading**, I recommend:
-
-- Practice with easier texts first
-- Use a pointer (finger or cursor) to guide your eyes
-- Chunk words together instead of reading word-by-word
-
-The comprehension checks in Read Master are really helpful for making sure you're not sacrificing understanding for speed.`,
-    authorId: "user-3",
-    authorName: "SpeedReader101",
-    authorAvatar: null,
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: null,
-    upvotes: 28,
-    downvotes: 1,
-    userVote: null,
-    parentReplyId: null,
-    isBestAnswer: true,
-  },
-  {
-    id: "reply-3",
-    content: "Thanks for sharing these tips! Very helpful.",
-    authorId: "user-4",
-    authorName: "NewReader",
-    authorAvatar: null,
-    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
-    updatedAt: null,
-    upvotes: 3,
-    downvotes: 0,
-    userVote: null,
-    parentReplyId: "reply-1",
-    isBestAnswer: false,
-  },
-  {
-    id: "reply-4",
-    content: "I second this! The AI explanations are game-changing.",
-    authorId: "user-5",
-    authorName: "BookwormPro",
-    authorAvatar: null,
-    createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
-    updatedAt: null,
-    upvotes: 5,
-    downvotes: 0,
-    userVote: null,
-    parentReplyId: "reply-1",
-    isBestAnswer: false,
-  },
-];
-
-// =============================================================================
-// SUB-COMPONENTS
-// =============================================================================
-
-interface VoteButtonsProps {
-  state: VoteState;
-  onVote: (vote: VoteType) => void;
-  disabled?: boolean;
-  size?: "small" | "medium";
-}
-
-function VoteButtons({
-  state,
-  onVote,
-  disabled = false,
-  size = "medium",
-}: VoteButtonsProps): React.ReactElement {
-  const { t } = useTranslation();
-  const scoreColor = getVoteScoreColor(state.score);
-
-  return (
-    <Stack direction="row" alignItems="center" spacing={0.5}>
-      <Tooltip title={t("forum.post.upvote")}>
-        <span>
-          <IconButton
-            size={size}
-            onClick={() => onVote("up")}
-            disabled={disabled}
-            color={state.userVote === "up" ? "primary" : "default"}
-            aria-label={t("forum.post.upvote")}
-          >
-            {state.userVote === "up" ? (
-              <ThumbUpIcon fontSize={size} />
-            ) : (
-              <ThumbUpOutlinedIcon fontSize={size} />
-            )}
-          </IconButton>
-        </span>
-      </Tooltip>
-      <Typography
-        variant={size === "small" ? "body2" : "body1"}
-        fontWeight="medium"
-        color={scoreColor === "inherit" ? "text.primary" : `${scoreColor}.main`}
-        sx={{ minWidth: 32, textAlign: "center" }}
-      >
-        {formatVoteScore(state.score)}
-      </Typography>
-      <Tooltip title={t("forum.post.downvote")}>
-        <span>
-          <IconButton
-            size={size}
-            onClick={() => onVote("down")}
-            disabled={disabled}
-            color={state.userVote === "down" ? "error" : "default"}
-            aria-label={t("forum.post.downvote")}
-          >
-            {state.userVote === "down" ? (
-              <ThumbDownIcon fontSize={size} />
-            ) : (
-              <ThumbDownOutlinedIcon fontSize={size} />
-            )}
-          </IconButton>
-        </span>
-      </Tooltip>
-    </Stack>
-  );
-}
-
-interface ReplyFormProps {
-  onSubmit: (content: string) => Promise<void>;
-  onCancel: () => void;
-  placeholder?: string;
-  autoFocus?: boolean;
-}
-
-function ReplyForm({
-  onSubmit,
-  onCancel,
-  placeholder,
-  autoFocus = false,
-}: ReplyFormProps): React.ReactElement {
-  const { t } = useTranslation();
-  const [content, setContent] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async () => {
-    if (!content.trim()) {
-      setError(t("forum.post.reply.contentRequired"));
-      return;
-    }
-
-    setIsSubmitting(true);
-    setError(null);
-
-    try {
-      await onSubmit(content);
-      setContent("");
-    } catch {
-      setError(t("forum.post.reply.submitError"));
-    } finally {
-      setIsSubmitting(false);
-    }
+type ForumPost = {
+  id: string;
+  title: string;
+  content: string;
+  category: {
+    slug: string;
+    name: string;
+    color: string | null;
   };
+  author: {
+    id: string;
+    username: string;
+    displayName: string | null;
+    avatarUrl: string | null;
+  };
+  repliesCount: number;
+  viewCount: number;
+  upvotes: number;
+  isPinned: boolean;
+  isLocked: boolean;
+  isAnswered: boolean;
+  isBestAnswer: boolean;
+  replies: ForumReply[];
+  createdAt: string;
+};
 
-  return (
-    <Stack spacing={1.5}>
-      <TextField
-        multiline
-        minRows={3}
-        maxRows={10}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder={placeholder ?? t("forum.post.reply.placeholder")}
-        disabled={isSubmitting}
-        error={Boolean(error)}
-        helperText={error}
-        autoFocus={autoFocus}
-        fullWidth
-      />
-      <Stack direction="row" spacing={1} justifyContent="flex-end">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={onCancel}
-          disabled={isSubmitting}
-        >
-          {t("common.cancel")}
-        </Button>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={handleSubmit}
-          disabled={isSubmitting || !content.trim()}
-          startIcon={
-            isSubmitting ? (
-              <CircularProgress size={16} color="inherit" />
-            ) : (
-              <SendIcon />
-            )
-          }
-        >
-          {isSubmitting ? t("common.submitting") : t("forum.post.reply.submit")}
-        </Button>
-      </Stack>
-    </Stack>
-  );
+const MAX_NESTING_LEVEL = 3;
+
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
+function formatRelativeTime(date: Date): string {
+  return formatDistanceToNow(date, { addSuffix: true });
 }
 
-interface ReplyItemProps {
+/**
+ * Build a nested reply tree from flat reply list
+ */
+function buildReplyTree(replies: ForumReply[]): Map<string | null, ForumReply[]> {
+  const tree = new Map<string | null, ForumReply[]>();
+  
+  replies.forEach((reply) => {
+    const parentId = reply.parentReplyId;
+    if (!tree.has(parentId)) {
+      tree.set(parentId, []);
+    }
+    tree.get(parentId)!.push(reply);
+  });
+  
+  return tree;
+}
+
+// ============================================================================
+// Reply Component
+// ============================================================================
+
+type ReplyItemProps = {
   reply: ForumReply;
-  depth: number;
-  postAuthorId: string;
-  currentUserId: string;
-  canMarkBest: boolean;
-  onVote: (replyId: string, vote: VoteType) => void;
-  onReply: (replyId: string, content: string) => Promise<void>;
-  onMarkBestAnswer: (replyId: string) => void;
-}
+  level: number;
+  replyTree: Map<string | null, ForumReply[]>;
+  onReply: (replyId: string) => void;
+  onEdit: (reply: ForumReply) => void;
+  onDelete: (replyId: string) => void;
+  currentUserId?: string | undefined;
+};
 
 function ReplyItem({
   reply,
-  depth,
-  postAuthorId,
-  currentUserId,
-  canMarkBest,
-  onVote,
+  level,
+  replyTree,
   onReply,
-  onMarkBestAnswer,
+  onEdit,
+  onDelete,
+  currentUserId,
 }: ReplyItemProps): React.ReactElement {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [showReplyForm, setShowReplyForm] = useState(false);
+  const theme = useTheme();
+  const [collapsed, setCollapsed] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const voteState: VoteState = useMemo(
-    () => ({
-      upvotes: reply.upvotes,
-      downvotes: reply.downvotes,
-      userVote: reply.userVote,
-      score: calculateVoteScore(reply.upvotes, reply.downvotes),
-    }),
-    [reply.upvotes, reply.downvotes, reply.userVote]
-  );
+  const childReplies = replyTree.get(reply.id) || [];
+  const hasChildren = childReplies.length > 0;
+  const canNest = level < MAX_NESTING_LEVEL;
+  const isAuthor = currentUserId === reply.author.id;
 
-  const relativeTime = useMemo(
-    () => getRelativeTime(reply.createdAt),
-    [reply.createdAt]
-  );
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
 
-  const timeDisplay = useMemo(
-    () =>
-      formatRelativeTime(relativeTime, (key, opts) =>
-        t(key, opts as Record<string, string>)
-      ),
-    [relativeTime, t]
-  );
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
-  const renderedContent = useMemo(
-    () => renderMarkdownContent(reply.content),
-    [reply.content]
-  );
+  const handleEdit = () => {
+    onEdit(reply);
+    handleMenuClose();
+  };
 
-  const canEdit = canEditReply(reply, currentUserId);
-  const canReplyNested = depth < MAX_REPLY_DEPTH;
-  const hasNestedReplies = reply.replies && reply.replies.length > 0;
-
-  const handleReplySubmit = async (content: string) => {
-    await onReply(reply.id, content);
-    setShowReplyForm(false);
+  const handleDelete = () => {
+    if (window.confirm(t("forum.confirmDeleteReply"))) {
+      onDelete(reply.id);
+    }
+    handleMenuClose();
   };
 
   return (
     <Box
       sx={{
-        pl: depth > 0 ? 2 : 0,
-        borderLeft: depth > 0 ? 2 : 0,
-        borderColor: "divider",
+        ml: level > 0 ? 4 : 0,
+        borderLeft: level > 0 ? `2px solid ${theme.palette.divider}` : "none",
+        pl: level > 0 ? 2 : 0,
       }}
     >
-      <Paper
-        variant={reply.isBestAnswer ? "outlined" : "elevation"}
-        elevation={0}
-        sx={{
-          p: 2,
-          mb: 1,
-          bgcolor: reply.isBestAnswer
-            ? "success.main"
-            : depth % 2 === 0
-              ? "background.paper"
-              : "action.hover",
-          borderColor: reply.isBestAnswer ? "success.main" : undefined,
-          ...(reply.isBestAnswer && {
-            "& .MuiTypography-root": { color: "success.contrastText" },
-            "& .MuiIconButton-root": { color: "success.contrastText" },
-          }),
-        }}
-      >
-        {/* Best Answer Badge */}
-        {reply.isBestAnswer && (
-          <Chip
-            icon={<CheckCircleIcon />}
-            label={t("forum.post.bestAnswer")}
-            color="success"
-            size="small"
-            sx={{ mb: 1 }}
-          />
-        )}
+      <Card sx={{ mb: 2 }}>
+        <CardContent>
+          <Stack direction="row" alignItems="start" spacing={2}>
+            {/* Avatar */}
+            <Avatar {...(reply.author.avatarUrl ? { src: reply.author.avatarUrl } : {})}>
+              <PersonIcon />
+            </Avatar>
 
-        {/* Author Row */}
-        <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1 }}>
-          <Avatar sx={{ width: 28, height: 28 }} src={reply.authorAvatar || ""}>
-            {reply.authorName[0]}
-          </Avatar>
-          <Typography variant="subtitle2" fontWeight="medium">
-            {reply.authorName}
-          </Typography>
-          {reply.authorId === postAuthorId && (
-            <Chip
-              label={t("forum.post.op")}
-              size="small"
-              color="primary"
-              variant="outlined"
-              sx={{ height: 20 }}
-            />
-          )}
-          <Stack direction="row" alignItems="center" spacing={0.5}>
-            <ScheduleIcon sx={{ fontSize: 14, color: "text.secondary" }} />
-            <Typography variant="caption" color="text.secondary">
-              {timeDisplay}
-            </Typography>
+            {/* Content */}
+            <Box flex={1}>
+              <Stack direction="row" alignItems="center" spacing={1} mb={1}>
+                <Typography variant="subtitle2" fontWeight="bold">
+                  {reply.author.displayName || reply.author.username}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  •
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {formatRelativeTime(new Date(reply.createdAt))}
+                </Typography>
+                {reply.isBestAnswer && (
+                  <Chip
+                    icon={<CheckCircleIcon />}
+                    label={t("forum.bestAnswer")}
+                    size="small"
+                    color="success"
+                  />
+                )}
+              </Stack>
+
+              <Typography variant="body2" sx={{ mb: 2, whiteSpace: "pre-wrap" }}>
+                {reply.content}
+              </Typography>
+
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <TrendingIcon fontSize="small" />
+                  <Typography variant="caption">{reply.upvotes}</Typography>
+                </Stack>
+                
+                {canNest && (
+                  <Button
+                    size="small"
+                    startIcon={<ReplyIcon />}
+                    onClick={() => onReply(reply.id)}
+                  >
+                    {t("forum.reply")}
+                  </Button>
+                )}
+
+                {hasChildren && (
+                  <Button
+                    size="small"
+                    startIcon={collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                    onClick={() => setCollapsed(!collapsed)}
+                  >
+                    {collapsed
+                      ? t("forum.showReplies", { count: childReplies.length })
+                      : t("forum.hideReplies")}
+                  </Button>
+                )}
+              </Stack>
+            </Box>
+
+            {/* Actions Menu */}
+            {isAuthor && (
+              <Box>
+                <IconButton size="small" onClick={handleMenuOpen}>
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem onClick={handleEdit}>
+                    <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                    {t("common.edit")}
+                  </MenuItem>
+                  <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
+                    <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
+                    {t("common.delete")}
+                  </MenuItem>
+                </Menu>
+              </Box>
+            )}
           </Stack>
-        </Stack>
-
-        {/* Content */}
-        <Box
-          sx={{
-            "& p": { my: 0.5 },
-            "& strong": { fontWeight: 600 },
-            "& code": {
-              bgcolor: "action.selected",
-              px: 0.5,
-              borderRadius: 0.5,
-              fontFamily: "monospace",
-            },
-            "& pre": {
-              bgcolor: "action.selected",
-              p: 1.5,
-              borderRadius: 1,
-              overflow: "auto",
-            },
-            "& blockquote": {
-              borderLeft: 3,
-              borderColor: "divider",
-              pl: 2,
-              ml: 0,
-              color: "text.secondary",
-              fontStyle: "italic",
-            },
-            "& a": { color: "primary.main" },
-            "& ul, & ol": { pl: 2.5, my: 0.5 },
-          }}
-          dangerouslySetInnerHTML={{ __html: renderedContent }}
-        />
-
-        {/* Actions */}
-        <Stack
-          direction="row"
-          spacing={1}
-          alignItems="center"
-          sx={{ mt: 1.5 }}
-          flexWrap="wrap"
-        >
-          <VoteButtons
-            state={voteState}
-            onVote={(vote) => onVote(reply.id, vote)}
-            size="small"
-          />
-
-          {canReplyNested && (
-            <Button
-              size="small"
-              startIcon={<ReplyIcon />}
-              onClick={() => setShowReplyForm(!showReplyForm)}
-            >
-              {t("forum.post.reply.action")}
-            </Button>
-          )}
-
-          {canEdit && (
-            <IconButton
-              size="small"
-              onClick={() => navigate(routeHelpers.forumEdit(reply.id))}
-              aria-label={t("common.edit")}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          )}
-
-          {canMarkBest && !reply.isBestAnswer && (
-            <Tooltip title={t("forum.post.markBestAnswer")}>
-              <IconButton
-                size="small"
-                onClick={() => onMarkBestAnswer(reply.id)}
-                aria-label={t("forum.post.markBestAnswer")}
-              >
-                <CheckCircleOutlineIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          )}
-
-          {hasNestedReplies && (
-            <Button
-              size="small"
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              endIcon={isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-            >
-              {isCollapsed
-                ? t("forum.post.showReplies", {
-                    count: reply.replies?.length ?? 0,
-                  })
-                : t("forum.post.hideReplies")}
-            </Button>
-          )}
-        </Stack>
-
-        {/* Reply Form */}
-        <Collapse in={showReplyForm}>
-          <Box sx={{ mt: 2 }}>
-            <ReplyForm
-              onSubmit={handleReplySubmit}
-              onCancel={() => setShowReplyForm(false)}
-              placeholder={t("forum.post.reply.replyTo", {
-                name: reply.authorName,
-              })}
-              autoFocus
-            />
-          </Box>
-        </Collapse>
-      </Paper>
+        </CardContent>
+      </Card>
 
       {/* Nested Replies */}
-      <Collapse in={!isCollapsed}>
-        {hasNestedReplies &&
-          reply.replies!.map((nestedReply) => (
-            <ReplyItem
-              key={nestedReply.id}
-              reply={nestedReply}
-              depth={depth + 1}
-              postAuthorId={postAuthorId}
-              currentUserId={currentUserId}
-              canMarkBest={canMarkBest}
-              onVote={onVote}
-              onReply={onReply}
-              onMarkBestAnswer={onMarkBestAnswer}
-            />
-          ))}
-      </Collapse>
+      {hasChildren && (
+        <Collapse in={!collapsed}>
+          <Box>
+            {childReplies.map((childReply) => (
+              <ReplyItem
+                key={childReply.id}
+                reply={childReply}
+                level={level + 1}
+                replyTree={replyTree}
+                onReply={onReply}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                currentUserId={currentUserId}
+              />
+            ))}
+          </Box>
+        </Collapse>
+      )}
     </Box>
   );
 }
 
-// =============================================================================
-// MAIN COMPONENT
-// =============================================================================
+// ============================================================================
+// Main Component
+// ============================================================================
 
 export function ForumPostPage(): React.ReactElement {
+  const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { postId } = useParams<{ postId: string }>();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // State
-  const [post, setPost] = useState<ForumPostDetail | null>(null);
-  const [replies, setReplies] = useState<ForumReply[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [sortOrder, setSortOrder] = useState<ReplySortOrder>("best");
-  const [showMainReplyForm, setShowMainReplyForm] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [editingReply, setEditingReply] = useState<ForumReply | null>(null);
 
-  // Load post data
-  useEffect(() => {
-    const loadPost = async () => {
-      setIsLoading(true);
-      setError(null);
+  // Fetch post data
+  const {
+    data: postData,
+    isLoading,
+    error,
+  } = useQuery<{ post: ForumPost }, Error>({
+    queryKey: ["forumPost", id],
+    queryFn: async () => {
+      const response = await fetch(`/api/forum/posts/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      try {
-        // TODO: Replace with actual API call
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setPost(MOCK_POST);
-        setReplies(MOCK_REPLIES);
-      } catch {
-        setError(t("forum.post.loadError"));
-      } finally {
-        setIsLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch forum post");
       }
-    };
 
-    if (postId) {
-      loadPost();
-    }
-  }, [postId, t]);
+      return response.json();
+    },
+    enabled: !!id,
+  });
 
-  // Derived state
-  const postVoteState: VoteState = useMemo(() => {
-    if (!post) {
-      return { upvotes: 0, downvotes: 0, userVote: null, score: 0 };
-    }
-    return {
-      upvotes: post.upvotes,
-      downvotes: post.downvotes,
-      userVote: post.userVote,
-      score: calculateVoteScore(post.upvotes, post.downvotes),
-    };
-  }, [post]);
+  const post = postData?.post;
 
-  const nestedReplies = useMemo(() => {
-    const tree = buildReplyTree(replies);
-    return sortReplies(tree, sortOrder);
-  }, [replies, sortOrder]);
-
-  const bestAnswer = useMemo(
-    () =>
-      post?.bestAnswerId
-        ? replies.find((r) => r.id === post.bestAnswerId)
-        : null,
-    [post?.bestAnswerId, replies]
-  );
-
-  const postRelativeTime = useMemo(
-    () => (post ? getRelativeTime(post.createdAt) : null),
-    [post]
-  );
-
-  const postTimeDisplay = useMemo(
-    () =>
-      postRelativeTime
-        ? formatRelativeTime(postRelativeTime, (key, opts) =>
-            t(key, opts as Record<string, string>)
-          )
-        : "",
-    [postRelativeTime, t]
-  );
-
-  const renderedPostContent = useMemo(
-    () => (post ? renderMarkdownContent(post.content) : ""),
-    [post]
-  );
+  // Build reply tree
+  const replyTree = post ? buildReplyTree(post.replies) : new Map();
+  const topLevelReplies = replyTree.get(null) || [];
 
   // Handlers
-  const handlePostVote = useCallback(
-    (vote: VoteType) => {
-      if (!post) return;
-      const newState = applyVote(postVoteState, vote);
-      setPost({
-        ...post,
-        upvotes: newState.upvotes,
-        downvotes: newState.downvotes,
-        userVote: newState.userVote,
-      });
-      // TODO: API call
-    },
-    [post, postVoteState]
-  );
+  const handleBack = () => {
+    if (post) {
+      navigate(`/forum/category/${post.category.slug}`);
+    } else {
+      navigate("/forum");
+    }
+  };
 
-  const handleReplyVote = useCallback((replyId: string, vote: VoteType) => {
-    setReplies((prev) =>
-      prev.map((reply) => {
-        if (reply.id === replyId) {
-          const currentState: VoteState = {
-            upvotes: reply.upvotes,
-            downvotes: reply.downvotes,
-            userVote: reply.userVote,
-            score: calculateVoteScore(reply.upvotes, reply.downvotes),
-          };
-          const newState = applyVote(currentState, vote);
-          return {
-            ...reply,
-            upvotes: newState.upvotes,
-            downvotes: newState.downvotes,
-            userVote: newState.userVote,
-          };
-        }
-        return reply;
-      })
-    );
-    // TODO: API call
-  }, []);
+  const handleReply = (parentReplyId: string | null) => {
+    setReplyingTo(parentReplyId);
+    setEditingReply(null);
+  };
 
-  const handleMainReply = useCallback(async (content: string) => {
-    // TODO: API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const newReply: ForumReply = {
-      id: `reply-${Date.now()}`,
-      content,
-      authorId: MOCK_CURRENT_USER_ID,
-      authorName: "You",
-      authorAvatar: null,
-      createdAt: new Date().toISOString(),
-      updatedAt: null,
-      upvotes: 0,
-      downvotes: 0,
-      userVote: null,
-      parentReplyId: null,
-      isBestAnswer: false,
-    };
-    setReplies((prev) => [newReply, ...prev]);
-    setShowMainReplyForm(false);
-  }, []);
+  const handleSubmitReply = async () => {
+    if (!replyContent.trim()) return;
 
-  const handleNestedReply = useCallback(
-    async (parentReplyId: string, content: string) => {
-      // TODO: API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const newReply: ForumReply = {
-        id: `reply-${Date.now()}`,
-        content,
-        authorId: MOCK_CURRENT_USER_ID,
-        authorName: "You",
-        authorAvatar: null,
-        createdAt: new Date().toISOString(),
-        updatedAt: null,
-        upvotes: 0,
-        downvotes: 0,
-        userVote: null,
-        parentReplyId,
-        isBestAnswer: false,
-      };
-      setReplies((prev) => [...prev, newReply]);
-    },
-    []
-  );
+    // TODO: Call API to create reply
+    // POST /api/forum/posts/:id/replies
+    // with { content: replyContent, parentReplyId: replyingTo }
 
-  const handleMarkBestAnswer = useCallback(
-    (replyId: string) => {
-      if (!post) return;
-      // Update post's best answer
-      setPost({ ...post, bestAnswerId: replyId });
-      // Update replies
-      setReplies((prev) =>
-        prev.map((reply) => ({
-          ...reply,
-          isBestAnswer: reply.id === replyId,
-        }))
-      );
-      // TODO: API call
-    },
-    [post]
-  );
+    setReplyContent("");
+    setReplyingTo(null);
+  };
 
-  const handleBack = useCallback(() => {
-    navigate(-1);
-  }, [navigate]);
+  const handleEditReply = (reply: ForumReply) => {
+    setEditingReply(reply);
+    setReplyContent(reply.content);
+    setReplyingTo(null);
+  };
+
+  const handleUpdateReply = async () => {
+    if (!editingReply || !replyContent.trim()) return;
+
+    // TODO: Call API to update reply
+    // PUT /api/forum/posts/:postId/replies/:replyId
+    // with { content: replyContent }
+
+    setReplyContent("");
+    setEditingReply(null);
+  };
+
+  const handleDeleteReply = async (_replyId: string) => {
+    // TODO: Call API to delete reply
+    // DELETE /api/forum/posts/:postId/replies/:replyId
+  };
+
+  const handleCancelReply = () => {
+    setReplyContent("");
+    setReplyingTo(null);
+    setEditingReply(null);
+  };
 
   // Loading state
   if (isLoading) {
     return (
-      <Box sx={{ maxWidth: 900, mx: "auto", px: 2, py: 3 }}>
-        <Stack spacing={3}>
-          <Skeleton variant="rectangular" height={40} width={200} />
-          <Skeleton variant="rectangular" height={200} />
-          <Skeleton variant="rectangular" height={100} />
-          <Skeleton variant="rectangular" height={100} />
+      <Box>
+        <Skeleton variant="rectangular" height={200} sx={{ mb: 3 }} />
+        <Stack spacing={2}>
+          {[1, 2, 3].map((i) => (
+            <Skeleton key={i} variant="rectangular" height={150} />
+          ))}
         </Stack>
       </Box>
     );
@@ -790,241 +414,185 @@ export function ForumPostPage(): React.ReactElement {
   // Error state
   if (error || !post) {
     return (
-      <Box sx={{ maxWidth: 900, mx: "auto", px: 2, py: 3 }}>
-        <Alert severity="error">{error ?? t("forum.post.notFound")}</Alert>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          onClick={handleBack}
-          sx={{ mt: 2 }}
-        >
-          {t("common.goBack")}
+      <Box>
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {t("forum.postNotFound")}
+        </Alert>
+        <Button variant="outlined" onClick={handleBack}>
+          {t("common.back")}
         </Button>
       </Box>
     );
   }
 
-  const canEdit = canEditPost(post, MOCK_CURRENT_USER_ID);
-  const canMarkBest = canMarkBestAnswer(post, MOCK_CURRENT_USER_ID);
-
   return (
-    <Box sx={{ maxWidth: 900, mx: "auto", px: 2, py: 3 }}>
-      {/* Header */}
-      <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
-        <IconButton onClick={handleBack} aria-label={t("common.back")}>
-          <ArrowBackIcon />
-        </IconButton>
-        <Chip
-          label={post.categoryName}
-          size="small"
-          component={RouterLink}
-          to={routeHelpers.forumCategory(post.categorySlug)}
-          clickable
-        />
-      </Stack>
+    <Box>
+      {/* Breadcrumbs */}
+      <Breadcrumbs sx={{ mb: 2 }}>
+        <Link
+          component="button"
+          variant="body2"
+          onClick={() => navigate("/forum")}
+          sx={{ cursor: "pointer" }}
+        >
+          {t("forum.community")}
+        </Link>
+        <Link
+          component="button"
+          variant="body2"
+          onClick={() => navigate(`/forum/category/${post.category.slug}`)}
+          sx={{ cursor: "pointer" }}
+        >
+          {post.category.name}
+        </Link>
+        <Typography variant="body2" color="text.primary">
+          {post.title}
+        </Typography>
+      </Breadcrumbs>
 
-      {/* Post Card */}
+      {/* Back Button (Mobile) */}
+      {isMobile && (
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={handleBack}
+          sx={{ mb: 2 }}
+        >
+          {t("common.back")}
+        </Button>
+      )}
+
+      {/* Post Content */}
       <Card sx={{ mb: 3 }}>
         <CardContent>
-          {/* Title */}
-          <Typography
-            variant="h5"
-            component="h1"
-            gutterBottom
-            fontWeight="bold"
-          >
-            {post.title}
-          </Typography>
+          {/* Header */}
+          <Stack direction="row" alignItems="center" spacing={1} mb={2} flexWrap="wrap">
+            <Typography variant="h4" component="h1" sx={{ flex: 1 }}>
+              {post.title}
+            </Typography>
+            {post.isPinned && (
+              <Chip label={t("forum.pinned")} size="small" color="primary" />
+            )}
+            {post.isAnswered && (
+              <Chip
+                icon={<CheckCircleIcon />}
+                label={t("forum.answered")}
+                size="small"
+                color="success"
+              />
+            )}
+            {post.isLocked && (
+              <Chip label={t("forum.locked")} size="small" color="default" />
+            )}
+          </Stack>
 
-          {/* Meta Row */}
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            flexWrap="wrap"
-            sx={{ mb: 2 }}
-          >
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Avatar
-                sx={{ width: 32, height: 32 }}
-                src={post.authorAvatar || ""}
-              >
-                {post.authorName[0]}
-              </Avatar>
-              <Typography variant="body2" fontWeight="medium">
-                {post.authorName}
+          {/* Author Info */}
+          <Stack direction="row" alignItems="center" spacing={2} mb={2}>
+            <Avatar {...(post.author.avatarUrl ? { src: post.author.avatarUrl } : {})}>
+              <PersonIcon />
+            </Avatar>
+            <Box>
+              <Typography variant="subtitle2" fontWeight="bold">
+                {post.author.displayName || post.author.username}
               </Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing={0.5}>
-              <ScheduleIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-              <Typography variant="body2" color="text.secondary">
-                {postTimeDisplay}
+              <Typography variant="caption" color="text.secondary">
+                {formatRelativeTime(new Date(post.createdAt))}
               </Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing={0.5}>
-              <ViewIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-              <Typography variant="body2" color="text.secondary">
-                {t("forum.views", { count: post.viewCount })}
-              </Typography>
-            </Stack>
+            </Box>
           </Stack>
 
           <Divider sx={{ my: 2 }} />
 
-          {/* Content */}
-          <Box
-            sx={{
-              "& p": { my: 1 },
-              "& strong": { fontWeight: 600 },
-              "& code": {
-                bgcolor: "action.hover",
-                px: 0.5,
-                borderRadius: 0.5,
-                fontFamily: "monospace",
-              },
-              "& pre": {
-                bgcolor: "action.hover",
-                p: 2,
-                borderRadius: 1,
-                overflow: "auto",
-              },
-              "& blockquote": {
-                borderLeft: 4,
-                borderColor: "divider",
-                pl: 2,
-                ml: 0,
-                color: "text.secondary",
-                fontStyle: "italic",
-              },
-              "& a": { color: "primary.main" },
-              "& ul, & ol": { pl: 3, my: 1 },
-              "& li": { my: 0.5 },
-            }}
-            dangerouslySetInnerHTML={{ __html: renderedPostContent }}
-          />
+          {/* Post Content */}
+          <Typography variant="body1" sx={{ mb: 2, whiteSpace: "pre-wrap" }}>
+            {post.content}
+          </Typography>
 
-          <Divider sx={{ my: 2 }} />
-
-          {/* Actions Row */}
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            justifyContent="space-between"
-            flexWrap="wrap"
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <VoteButtons state={postVoteState} onVote={handlePostVote} />
-              <Button
-                startIcon={<ReplyIcon />}
-                onClick={() => setShowMainReplyForm(!showMainReplyForm)}
-              >
-                {t("forum.reply")}
-              </Button>
+          {/* Post Stats */}
+          <Stack direction="row" spacing={3} flexWrap="wrap">
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <ViewIcon fontSize="small" />
+              <Typography variant="caption">
+                {post.viewCount} {t("forum.views")}
+              </Typography>
             </Stack>
-            {canEdit && (
-              <Button
-                startIcon={<EditIcon />}
-                onClick={() => navigate(routeHelpers.forumEdit(post.id))}
-              >
-                {t("common.edit")}
-              </Button>
-            )}
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <CommentIcon fontSize="small" />
+              <Typography variant="caption">
+                {post.repliesCount} {t("forum.replies")}
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <TrendingIcon fontSize="small" />
+              <Typography variant="caption">
+                {post.upvotes} {t("forum.upvotes")}
+              </Typography>
+            </Stack>
           </Stack>
         </CardContent>
       </Card>
 
-      {/* Main Reply Form */}
-      <Collapse in={showMainReplyForm}>
-        <Paper sx={{ p: 2, mb: 3 }}>
-          <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
-            {t("forum.post.reply.writeReply")}
-          </Typography>
-          <ReplyForm
-            onSubmit={handleMainReply}
-            onCancel={() => setShowMainReplyForm(false)}
-          />
-        </Paper>
-      </Collapse>
+      {/* Replies Section */}
+      <Typography variant="h5" component="h2" mb={2}>
+        {t("forum.replies")} ({post.repliesCount})
+      </Typography>
 
-      {/* Best Answer (shown first if exists) */}
-      {bestAnswer && (
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="h6" sx={{ mb: 1.5 }}>
-            {t("forum.post.bestAnswer")}
-          </Typography>
-          <ReplyItem
-            reply={bestAnswer}
-            depth={0}
-            postAuthorId={post.authorId}
-            currentUserId={MOCK_CURRENT_USER_ID}
-            canMarkBest={false}
-            onVote={handleReplyVote}
-            onReply={handleNestedReply}
-            onMarkBestAnswer={handleMarkBestAnswer}
-          />
-        </Box>
+      {/* Reply Form */}
+      {!post.isLocked && (
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="subtitle2" mb={2}>
+              {editingReply
+                ? t("forum.editReply")
+                : replyingTo
+                ? t("forum.replyToComment")
+                : t("forum.addReply")}
+            </Typography>
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              value={replyContent}
+              onChange={(e) => setReplyContent(e.target.value)}
+              placeholder={t("forum.replyPlaceholder")}
+              sx={{ mb: 2 }}
+            />
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                onClick={editingReply ? handleUpdateReply : handleSubmitReply}
+                disabled={!replyContent.trim()}
+              >
+                {editingReply ? t("common.update") : t("forum.postReply")}
+              </Button>
+              {(replyingTo || editingReply) && (
+                <Button variant="outlined" onClick={handleCancelReply}>
+                  {t("common.cancel")}
+                </Button>
+              )}
+            </Stack>
+          </CardContent>
+        </Card>
       )}
 
-      {/* Replies Section */}
-      <Box>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mb: 2 }}
-        >
-          <Typography variant="h6">
-            {t("forum.replies", { count: replies.length })}
-          </Typography>
-          <Stack direction="row" spacing={1}>
-            {(["best", "newest", "oldest"] as ReplySortOrder[]).map((order) => (
-              <Chip
-                key={order}
-                label={t(`forum.post.sort.${order}`)}
-                size="small"
-                variant={sortOrder === order ? "filled" : "outlined"}
-                onClick={() => setSortOrder(order)}
-                clickable
-              />
-            ))}
-          </Stack>
-        </Stack>
-
-        {/* Reply List */}
-        {nestedReplies.length > 0 ? (
-          <Stack spacing={1}>
-            {nestedReplies
-              .filter((r) => r.id !== post.bestAnswerId)
-              .map((reply) => (
-                <ReplyItem
-                  key={reply.id}
-                  reply={reply}
-                  depth={0}
-                  postAuthorId={post.authorId}
-                  currentUserId={MOCK_CURRENT_USER_ID}
-                  canMarkBest={canMarkBest}
-                  onVote={handleReplyVote}
-                  onReply={handleNestedReply}
-                  onMarkBestAnswer={handleMarkBestAnswer}
-                />
-              ))}
-          </Stack>
-        ) : (
-          <Paper sx={{ p: 4, textAlign: "center" }}>
-            <Typography color="text.secondary">
-              {t("forum.post.noReplies")}
-            </Typography>
-            <Button
-              variant="contained"
-              startIcon={<ReplyIcon />}
-              onClick={() => setShowMainReplyForm(true)}
-              sx={{ mt: 2 }}
-            >
-              {t("forum.post.beFirstToReply")}
-            </Button>
-          </Paper>
-        )}
-      </Box>
+      {/* Replies List */}
+      {topLevelReplies.length === 0 ? (
+        <Alert severity="info">{t("forum.noRepliesYet")}</Alert>
+      ) : (
+        <Box>
+          {topLevelReplies.map((reply: ForumReply) => (
+            <ReplyItem
+              key={reply.id}
+              reply={reply}
+              level={0}
+              replyTree={replyTree}
+              onReply={handleReply}
+              onEdit={handleEditReply}
+              onDelete={handleDeleteReply}
+              currentUserId={post.author.id} // TODO: Get actual current user ID
+            />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }

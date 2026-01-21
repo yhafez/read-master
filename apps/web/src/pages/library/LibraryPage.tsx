@@ -71,7 +71,7 @@ export function LibraryPage(): React.ReactElement {
   }));
   const [page, setPage] = useState(1);
   const [addBookModalOpen, setAddBookModalOpen] = useState(false);
-  
+
   // Bulk actions state
   const [bulkMode, setBulkMode] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState<Set<string>>(new Set());
@@ -178,7 +178,7 @@ export function LibraryPage(): React.ReactElement {
 
   const handleBulkDelete = useCallback(() => {
     if (selectedBooks.size === 0) return;
-    
+
     if (window.confirm(t("library.confirmBulkDelete", { count: selectedBooks.size }))) {
       // Delete all selected books
       selectedBooks.forEach((bookId) => {
