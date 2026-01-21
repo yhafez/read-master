@@ -30,6 +30,25 @@ function getComponentOverrides(
             : "2px solid currentColor",
           outlineOffset: "2px",
         },
+        // High contrast mode enhancements
+        ...(isHighContrast && {
+          // Add borders to all interactive elements for clarity
+          "button, a, input, select, textarea": {
+            border: "2px solid currentColor !important",
+          },
+          // Emphasize card boundaries
+          ".MuiCard-root, .MuiPaper-root": {
+            border: "2px solid currentColor !important",
+          },
+          // Emphasize dividers
+          ".MuiDivider-root": {
+            borderWidth: "2px !important",
+          },
+          // Emphasize icons
+          ".MuiSvgIcon-root": {
+            filter: "contrast(1.5)",
+          },
+        }),
         // Smooth scrolling for better UX (respects prefers-reduced-motion)
         html: {
           scrollBehavior: "smooth",

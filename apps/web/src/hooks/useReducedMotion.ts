@@ -20,9 +20,9 @@ import { useState, useEffect } from "react";
 
 /**
  * Hook to detect if user prefers reduced motion
- * 
+ *
  * Respects the system preference for reduced motion (e.g. macOS "Reduce motion" setting)
- * 
+ *
  * @returns true if user prefers reduced motion, false otherwise
  */
 export function useReducedMotion(): boolean {

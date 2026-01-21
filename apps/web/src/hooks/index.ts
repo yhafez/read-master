@@ -43,6 +43,7 @@ export {
 
 export { useGestureDetection } from "./useGestureDetection";
 export { useReducedMotion } from "./useReducedMotion";
+export { useHighContrast } from "./useHighContrast";
 
 export {
   useOfflineReadingSync,
