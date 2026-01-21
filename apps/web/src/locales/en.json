@@ -1181,6 +1181,22 @@
       "promoteFailed": "Failed to promote member",
       "demoteFailed": "Failed to demote member"
     },
+    "schedule": {
+      "title": "Reading Schedule",
+      "noBook": "No book selected",
+      "noBookHint": "Select a book to create a reading schedule",
+      "currentProgress": "Group Progress",
+      "pages": "pages",
+      "complete": "complete",
+      "nextMilestone": "Next Milestone",
+      "page": "Page",
+      "milestones": "Milestones",
+      "editTitle": "Edit Schedule",
+      "milestoneDescription": "Milestone Description",
+      "descriptionPlaceholder": "e.g., Complete Chapter 1-3",
+      "targetPage": "Target Page",
+      "targetDate": "Target Date"
+    },
     "detail": "Group Details",
     "placeholder": "Group {{groupId}} details will appear here.",
     "discussions": "Discussions",

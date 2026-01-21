@@ -14,7 +14,11 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-react";
-import { InviteToGroupDialog, ManageMembersDialog } from "@/components/groups";
+import {
+  InviteToGroupDialog,
+  ManageMembersDialog,
+  GroupReadingSchedule,
+} from "@/components/groups";
 import {
   Box,
   Typography,
@@ -470,6 +474,23 @@ export function GroupDetailPage(): React.ReactElement {
           </CardContent>
         </Card>
       )}
+
+      {/* Reading Schedule */}
+      <Box sx={{ mb: 3 }}>
+        <GroupReadingSchedule
+          groupId={group.id}
+          currentBook={
+            group.currentBook
+              ? {
+                  id: group.currentBook.id,
+                  title: group.currentBook.title,
+                  totalPages: 300, // TODO: Get from book data
+                }
+              : null
+          }
+          canEdit={isOwner}
+        />
+      </Box>
 
       {/* Owner Info */}
       <Card sx={{ mb: 3 }}>
