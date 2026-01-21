@@ -1,0 +1,64 @@
+AI-Powered Reading Awaits 🤖
+
+Hi {{userName}},
+
+We noticed you've been exploring our AI features. Ready to unlock the FULL POWER of Claude AI for your reading? 🚀
+
+{{#if trigger}}
+{{#if trigger.aiQuestionsUsed}}
+You've used {{trigger.aiQuestionsUsed}} of your free AI questions. Upgrade for unlimited access!
+{{else if trigger.feature}}
+You tried to use {{trigger.feature}} – a Pro feature. Upgrade to unlock it!
+{{/if}}
+{{/if}}
+
+WHAT YOU'LL GET WITH PRO AI FEATURES
+
+💬 Unlimited AI Chat
+Ask unlimited questions about any book. Get instant, context-aware answers from Claude AI.
+
+📝 Smart Summaries
+Get AI-generated summaries of chapters, sections, or entire books in seconds.
+
+🧠 Key Insights
+Extract main themes, character analysis, and critical takeaways automatically.
+
+🎓 Vocabulary Builder
+AI-powered definitions, usage examples, and etymology for any word.
+
+✨ Custom AI Personality
+Tune the AI's tone, verbosity, and language complexity to match your preferences.
+
+🔍 Context-Aware Search
+Find information across your entire library with AI-powered semantic search.
+
+FREE VS. PRO AI
+
+Feature              | Free  | Pro
+---------------------|-------|----------
+AI Questions/Day     | 5     | Unlimited
+AI Summaries         | ❌    | ✅
+Key Insights         | ❌    | ✅
+Custom AI Personality| ❌    | ✅
+Semantic Search      | Basic | Advanced
+
+UNLOCK PRO AI FEATURES
+$9.99/month
+Cancel anytime • 30-day money-back guarantee
+
+Upgrade to Pro: {{appUrl}}/settings/subscription?plan=pro
+
+---
+
+"The AI features completely transformed how I read. I understand complex books faster, remember more, and actually enjoy the process. Worth every penny!"
+- Sarah M., Pro Member
+
+---
+
+Questions? Contact our support team: {{appUrl}}/support
+
+Happy reading,
+The Read Master Team
+
+Email Preferences: {{appUrl}}/settings/email-preferences
+Unsubscribe: {{unsubscribeUrl}}

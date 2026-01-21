@@ -77,9 +77,12 @@ export {
 } from "./aiSettingsStore";
 export type {
   AIFeatureToggles,
+  AIPersonality,
   AISettings,
   ComprehensionFrequency,
+  LanguageComplexity,
   ReadingLevel,
+  VerbosityLevel,
 } from "./aiSettingsStore";
 
 export {

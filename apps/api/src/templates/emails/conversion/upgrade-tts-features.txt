@@ -1,0 +1,70 @@
+Listen Anywhere, Anytime 🎧
+
+Hi {{userName}},
+
+We noticed you've been using our text-to-speech features. Ready to unlock PROFESSIONAL-QUALITY AUDIO for all your books? 🎵
+
+{{#if trigger}}
+{{#if trigger.downloadsUsed}}
+You've used {{trigger.downloadsUsed}} of your {{trigger.downloadsLimit}} audio downloads this month. Upgrade for more!
+{{else if trigger.feature}}
+You tried to use {{trigger.feature}} – a Pro feature. Upgrade to unlock it!
+{{/if}}
+{{/if}}
+
+WHAT YOU'LL GET WITH PRO AUDIO
+
+🎙️ Premium Voices
+Access professional-grade voices from OpenAI and ElevenLabs. Natural, expressive, human-like narration.
+
+💾 Unlimited Downloads
+Download audio versions of unlimited books per month (Free: 3/month, Pro: 20/month, Scholar: Unlimited).
+
+📱 Offline Listening
+Download and listen offline on any device. Perfect for commutes, flights, and workouts.
+
+⚙️ Audio Customization
+Adjust speed, pitch, voice, and quality. Multiple audio formats (MP3, M4A, OGG).
+
+🔊 High-Quality Audio
+Crystal-clear 128kbps+ audio quality. Studio-grade production for the best listening experience.
+
+⏱️ Fast Processing
+Priority audio generation queue. Get your audiobooks in minutes, not hours.
+
+FREE VS. PRO AUDIO
+
+Feature             | Free        | Pro
+--------------------|-------------|----------------
+Downloads/Month     | 3           | 20
+Voice Options       | Basic (1)   | Premium (10+)
+Audio Quality       | Standard    | High (128kbps+)
+Processing Priority | Normal      | Fast
+Offline Downloads   | 7 days      | 30 days
+
+PERFECT FOR
+🚗 Commuters
+🏃 Exercisers
+✈️ Travelers
+👨‍💼 Busy Professionals
+
+UNLOCK PRO AUDIO
+$9.99/month
+Cancel anytime • 30-day money-back guarantee
+
+Upgrade to Pro: {{appUrl}}/settings/subscription?plan=pro
+
+---
+
+"Game changer for my reading habit! I now 'read' 2-3 books during my commute every week. The audio quality is amazing, and the voices sound so natural."
+- Michael T., Pro Member
+
+---
+
+Questions? Contact our support team: {{appUrl}}/support
+
+Happy listening,
+The Read Master Team
+
+Email Preferences: {{appUrl}}/settings/email-preferences
+Unsubscribe: {{unsubscribeUrl}}

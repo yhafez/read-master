@@ -133,7 +133,6 @@ export const DEFAULT_FEATURE_TOGGLES: AIFeatureToggles = {
  */
 export const DEFAULT_PERSONALITY_SETTINGS: AIPersonalitySettings = {
   personality: "encouraging_tutor",
-  customTone: undefined,
   verbosity: "balanced",
   languageComplexity: "match_level",
   proactiveSuggestions: true,

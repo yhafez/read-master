@@ -26,11 +26,11 @@ import {
   CheckCircle as CheckIcon,
   Cancel as CancelIcon,
   Star as StarIcon,
-  Workspace as ScholarIcon,
+  Workspaces as ScholarIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import {
   useCreateCheckoutSession,
   useCreateBillingPortalSession,
@@ -65,7 +65,7 @@ interface TierInfo {
 
 export function SettingsSubscriptionPage(): React.ReactElement {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 

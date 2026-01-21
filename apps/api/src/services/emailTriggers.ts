@@ -5,7 +5,11 @@
  */
 
 import { db } from "./db.js";
-import { sendTemplateEmail, type SendEmailResult } from "./emailService.js";
+import {
+  sendTemplateEmail,
+  getEmailPreferences,
+  type SendEmailResult,
+} from "./emailService.js";
 import { logger } from "../utils/logger.js";
 
 const APP_URL = process.env.VITE_APP_URL || "https://readmaster.ai";
@@ -13,7 +17,9 @@ const APP_URL = process.env.VITE_APP_URL || "https://readmaster.ai";
 /**
  * Send welcome email immediately after user signup
  */
-export async function sendWelcomeEmail(userId: string): Promise<SendEmailResult> {
+export async function sendWelcomeEmail(
+  userId: string
+): Promise<SendEmailResult> {
   try {
     // Get user info
     const user = await db.user.findUnique({
@@ -238,10 +244,13 @@ export async function processOnboardingSequence(): Promise<{
         },
       });
 
-      logger.info(`Found ${users.length} users for day ${step.day} onboarding`, {
-        day: step.day,
-        count: users.length,
-      });
+      logger.info(
+        `Found ${users.length} users for day ${step.day} onboarding`,
+        {
+          day: step.day,
+          count: users.length,
+        }
+      );
 
       // Send onboarding email to each user
       for (const user of users) {
@@ -455,7 +464,9 @@ export async function sendBookCompletionEmail(
       : "Unknown";
 
     const pagesRead = book.pageCount || "Unknown";
-    const wordsRead = book.wordCount ? book.wordCount.toLocaleString() : "Unknown";
+    const wordsRead = book.wordCount
+      ? book.wordCount.toLocaleString()
+      : "Unknown";
     const averageWpm = progress?.averageWpm || "Unknown";
 
     // Send completion email
@@ -513,7 +524,9 @@ export async function sendBookCompletionEmail(
 /**
  * Send library limit reached email (conversion)
  */
-export async function sendLibraryLimitEmail(userId: string): Promise<SendEmailResult> {
+export async function sendLibraryLimitEmail(
+  userId: string
+): Promise<SendEmailResult> {
   try {
     // Get user info
     const user = await db.user.findUnique({
@@ -736,7 +749,9 @@ export async function sendMilestoneEmail(
         icon: string;
         title: string;
         description: string;
-        getStats: (user: typeof user) => Array<{ label: string; value: string }>;
+        getStats: (
+          user: typeof user
+        ) => Array<{ label: string; value: string }>;
       }
     > = {
       books_completed: {
@@ -744,9 +759,18 @@ export async function sendMilestoneEmail(
         title: "Books Completed",
         description: `You've completed ${milestoneValue} books on Read Master!`,
         getStats: (user) => [
-          { label: "📖 Books Completed", value: String(user.stats?.booksCompleted || 0) },
-          { label: "📄 Total Words Read", value: (user.stats?.totalWordsRead || 0).toLocaleString() },
-          { label: "⏱️ Reading Time", value: `${Math.floor((user.stats?.totalReadingTime || 0) / 3600)}h` },
+          {
+            label: "📖 Books Completed",
+            value: String(user.stats?.booksCompleted || 0),
+          },
+          {
+            label: "📄 Total Words Read",
+            value: (user.stats?.totalWordsRead || 0).toLocaleString(),
+          },
+          {
+            label: "⏱️ Reading Time",
+            value: `${Math.floor((user.stats?.totalReadingTime || 0) / 3600)}h`,
+          },
           { label: "📊 Current Level", value: String(user.stats?.level || 1) },
         ],
       },
@@ -755,9 +779,18 @@ export async function sendMilestoneEmail(
         title: "Flashcards Created",
         description: `You've created ${milestoneValue} flashcards!`,
         getStats: (user) => [
-          { label: "🎴 Cards Created", value: String(user.stats?.totalCardsCreated || 0) },
-          { label: "📝 Cards Reviewed", value: String(user.stats?.totalCardsReviewed || 0) },
-          { label: "🎯 Retention Rate", value: `${Math.round((user.stats?.averageRetention || 0) * 100)}%` },
+          {
+            label: "🎴 Cards Created",
+            value: String(user.stats?.totalCardsCreated || 0),
+          },
+          {
+            label: "📝 Cards Reviewed",
+            value: String(user.stats?.totalCardsReviewed || 0),
+          },
+          {
+            label: "🎯 Retention Rate",
+            value: `${Math.round((user.stats?.averageRetention || 0) * 100)}%`,
+          },
           { label: "📊 Current Level", value: String(user.stats?.level || 1) },
         ],
       },
@@ -766,9 +799,18 @@ export async function sendMilestoneEmail(
         title: "Reading Streak",
         description: `Amazing! You've maintained a ${milestoneValue}-day reading streak!`,
         getStats: (user) => [
-          { label: "🔥 Current Streak", value: `${user.stats?.currentStreak || 0} days` },
-          { label: "🏆 Longest Streak", value: `${user.stats?.longestStreak || 0} days` },
-          { label: "📖 Books Completed", value: String(user.stats?.booksCompleted || 0) },
+          {
+            label: "🔥 Current Streak",
+            value: `${user.stats?.currentStreak || 0} days`,
+          },
+          {
+            label: "🏆 Longest Streak",
+            value: `${user.stats?.longestStreak || 0} days`,
+          },
+          {
+            label: "📖 Books Completed",
+            value: String(user.stats?.booksCompleted || 0),
+          },
           { label: "📊 Current Level", value: String(user.stats?.level || 1) },
         ],
       },
@@ -844,7 +886,9 @@ export async function sendMilestoneEmail(
 /**
  * Send weekly digest email
  */
-export async function sendWeeklyDigest(userId: string): Promise<SendEmailResult> {
+export async function sendWeeklyDigest(
+  userId: string
+): Promise<SendEmailResult> {
   try {
     // Get user info
     const user = await db.user.findUnique({
@@ -933,7 +977,10 @@ export async function sendWeeklyDigest(userId: string): Promise<SendEmailResult>
           month: "short",
           day: "numeric",
         }),
-        endDate: endDate.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+        endDate: endDate.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
         readingTime,
         pagesRead,
         booksCompleted: String(completedBooks.length),
@@ -993,4 +1040,423 @@ export async function sendWeeklyDigest(userId: string): Promise<SendEmailResult>
       error: error instanceof Error ? error.message : "Unknown error",
     };
   }
+}
+
+/**
+ * Send re-engagement email for inactive users
+ */
+export async function sendInactiveUserEmail(
+  userId: string,
+  daysInactive: 3 | 7 | 30
+): Promise<SendEmailResult> {
+  try {
+    // Get user info with books
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      include: {
+        stats: true,
+        books: {
+          where: {
+            status: "IN_PROGRESS",
+            deletedAt: null,
+          },
+          orderBy: {
+            updatedAt: "desc",
+          },
+          take: 1,
+        },
+      },
+    });
+
+    if (!user) {
+      logger.error("User not found for inactive email", { userId });
+      return {
+        success: false,
+        error: "User not found",
+      };
+    }
+
+    // Check email preferences
+    const prefs = await getEmailPreferences(userId);
+    if (!prefs.engagement) {
+      logger.info("User has opted out of engagement emails", { userId });
+      return {
+        success: false,
+        error: "User opted out",
+      };
+    }
+
+    // Get template name based on days inactive
+    const templateName = `inactive_${daysInactive}_days`;
+
+    // Get current book if available
+    const currentBook = user.books[0]
+      ? {
+          id: user.books[0].id,
+          title: user.books[0].title,
+          author: user.books[0].author,
+          progress: user.books[0].progress,
+        }
+      : null;
+
+    // Determine if we should show upgrade offer (for 30-day inactive)
+    const showUpgradeOffer = daysInactive === 30 && user.tier === "FREE";
+
+    // Send re-engagement email
+    const result = await sendTemplateEmail(
+      userId,
+      templateName,
+      user.email,
+      {
+        userName: user.firstName || user.displayName || "there",
+        booksInProgress: await db.book.count({
+          where: { userId, status: "IN_PROGRESS", deletedAt: null },
+        }),
+        booksCompleted: user.stats?.booksCompleted || 0,
+        lastStreak: user.stats?.longestStreak || 0,
+        totalXP: user.stats?.totalXP || 0,
+        level: user.stats?.level || 1,
+        currentBook,
+        showUpgradeOffer,
+        appUrl: APP_URL,
+        year: new Date().getFullYear(),
+      },
+      {
+        toName: user.displayName || undefined,
+        tags: ["engagement", "re-engagement", `inactive_${daysInactive}_days`],
+        metadata: {
+          trigger: "inactive_user",
+          daysInactive,
+          timestamp: new Date().toISOString(),
+        },
+      }
+    );
+
+    if (result.success) {
+      logger.info("Inactive user email sent", {
+        userId,
+        daysInactive,
+        emailId: result.emailId,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    logger.error("Error sending inactive user email", {
+      error: error instanceof Error ? error.message : String(error),
+      userId,
+      daysInactive,
+    });
+
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Send AI features upgrade email
+ */
+export async function sendAIUpgradeEmail(
+  userId: string,
+  trigger?: {
+    aiQuestionsUsed?: number;
+    feature?: string;
+  }
+): Promise<SendEmailResult> {
+  try {
+    // Get user info
+    const user = await db.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      logger.error("User not found for AI upgrade email", { userId });
+      return {
+        success: false,
+        error: "User not found",
+      };
+    }
+
+    // Only send to free users
+    if (user.tier !== "FREE") {
+      logger.info("User is already on paid tier", { userId, tier: user.tier });
+      return {
+        success: false,
+        error: "User not on free tier",
+      };
+    }
+
+    // Check email preferences
+    const prefs = await getEmailPreferences(userId);
+    if (!prefs.conversion) {
+      logger.info("User has opted out of conversion emails", { userId });
+      return {
+        success: false,
+        error: "User opted out",
+      };
+    }
+
+    // Send AI upgrade email
+    const result = await sendTemplateEmail(
+      userId,
+      "upgrade_ai_features",
+      user.email,
+      {
+        userName: user.firstName || user.displayName || "there",
+        trigger,
+        appUrl: APP_URL,
+        year: new Date().getFullYear(),
+      },
+      {
+        toName: user.displayName || undefined,
+        tags: ["conversion", "upgrade", "ai_features"],
+        metadata: {
+          trigger: "ai_feature_limit",
+          aiQuestionsUsed: trigger?.aiQuestionsUsed,
+          feature: trigger?.feature,
+          timestamp: new Date().toISOString(),
+        },
+      }
+    );
+
+    if (result.success) {
+      logger.info("AI upgrade email sent", {
+        userId,
+        emailId: result.emailId,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    logger.error("Error sending AI upgrade email", {
+      error: error instanceof Error ? error.message : String(error),
+      userId,
+    });
+
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Send TTS features upgrade email
+ */
+export async function sendTTSUpgradeEmail(
+  userId: string,
+  trigger?: {
+    downloadsUsed?: number;
+    downloadsLimit?: number;
+    feature?: string;
+  }
+): Promise<SendEmailResult> {
+  try {
+    // Get user info
+    const user = await db.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      logger.error("User not found for TTS upgrade email", { userId });
+      return {
+        success: false,
+        error: "User not found",
+      };
+    }
+
+    // Only send to free users
+    if (user.tier !== "FREE") {
+      logger.info("User is already on paid tier", { userId, tier: user.tier });
+      return {
+        success: false,
+        error: "User not on free tier",
+      };
+    }
+
+    // Check email preferences
+    const prefs = await getEmailPreferences(userId);
+    if (!prefs.conversion) {
+      logger.info("User has opted out of conversion emails", { userId });
+      return {
+        success: false,
+        error: "User opted out",
+      };
+    }
+
+    // Send TTS upgrade email
+    const result = await sendTemplateEmail(
+      userId,
+      "upgrade_tts_features",
+      user.email,
+      {
+        userName: user.firstName || user.displayName || "there",
+        trigger,
+        appUrl: APP_URL,
+        year: new Date().getFullYear(),
+      },
+      {
+        toName: user.displayName || undefined,
+        tags: ["conversion", "upgrade", "tts_features"],
+        metadata: {
+          trigger: "tts_download_limit",
+          downloadsUsed: trigger?.downloadsUsed,
+          downloadsLimit: trigger?.downloadsLimit,
+          feature: trigger?.feature,
+          timestamp: new Date().toISOString(),
+        },
+      }
+    );
+
+    if (result.success) {
+      logger.info("TTS upgrade email sent", {
+        userId,
+        emailId: result.emailId,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    logger.error("Error sending TTS upgrade email", {
+      error: error instanceof Error ? error.message : String(error),
+      userId,
+    });
+
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Process re-engagement campaigns (to be called by cron)
+ * Sends emails to users who have been inactive for 3, 7, or 30 days
+ */
+export async function processReEngagementCampaigns(): Promise<{
+  processed: number;
+  sent: number;
+  failed: number;
+}> {
+  let processed = 0;
+  let sent = 0;
+  let failed = 0;
+
+  try {
+    logger.info("Starting re-engagement campaigns processing");
+
+    // Define inactivity periods to target
+    const inactivityPeriods: Array<{ days: 3 | 7 | 30 }> = [
+      { days: 3 },
+      { days: 7 },
+      { days: 30 },
+    ];
+
+    for (const period of inactivityPeriods) {
+      // Calculate target date (last activity)
+      const targetDate = new Date();
+      targetDate.setDate(targetDate.getDate() - period.days);
+
+      // Start of day
+      const startOfDay = new Date(targetDate);
+      startOfDay.setHours(0, 0, 0, 0);
+
+      // End of day
+      const endOfDay = new Date(targetDate);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      // Find users who were last active on this day
+      // Note: This requires a lastActiveAt field on User model
+      // For now, we'll use updatedAt as a proxy
+      const users = await db.user.findMany({
+        where: {
+          updatedAt: {
+            gte: startOfDay,
+            lte: endOfDay,
+          },
+          deletedAt: null,
+        },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          displayName: true,
+        },
+        take: 1000, // Limit to 1000 users per run
+      });
+
+      logger.info(
+        `Found ${users.length} inactive users for ${period.days}-day re-engagement`,
+        {
+          days: period.days,
+          count: users.length,
+        }
+      );
+
+      // Send re-engagement email to each user
+      for (const user of users) {
+        processed++;
+
+        // Check if user has already received this specific re-engagement email recently
+        const existingEmail = await db.email.findFirst({
+          where: {
+            userId: user.id,
+            templateId: {
+              in: await db.emailTemplate
+                .findMany({
+                  where: { name: `inactive_${period.days}_days` },
+                  select: { id: true },
+                })
+                .then((templates) => templates.map((t) => t.id)),
+            },
+            sentAt: {
+              gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Last 7 days
+            },
+            deletedAt: null,
+          },
+        });
+
+        if (existingEmail) {
+          logger.info(
+            "User already received this re-engagement email recently",
+            {
+              userId: user.id,
+              days: period.days,
+            }
+          );
+          continue;
+        }
+
+        // Send the email
+        const result = await sendInactiveUserEmail(user.id, period.days);
+
+        if (result.success) {
+          sent++;
+        } else {
+          failed++;
+        }
+
+        // Rate limiting: wait 200ms between emails
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+    }
+
+    logger.info("Re-engagement campaigns processing complete", {
+      processed,
+      sent,
+      failed,
+    });
+  } catch (error) {
+    logger.error("Error processing re-engagement campaigns", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  return {
+    processed,
+    sent,
+    failed,
+  };
 }

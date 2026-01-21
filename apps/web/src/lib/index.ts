@@ -13,6 +13,17 @@ export {
 } from "./queryClient";
 
 export {
+  apiRequest,
+  apiGet,
+  apiPost,
+  apiPut,
+  apiPatch,
+  apiDelete,
+  ApiError,
+  type ApiRequestOptions,
+} from "./api";
+
+export {
   QueryProvider,
   TestQueryProvider,
   useTestQueryClient,

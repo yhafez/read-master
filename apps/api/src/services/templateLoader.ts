@@ -33,7 +33,8 @@ export function wrapWithLayout(
   content: string,
   format: "html" | "txt" = "html"
 ): string {
-  const layoutPath = format === "html" ? "layouts/base.html" : "layouts/base.txt";
+  const layoutPath =
+    format === "html" ? "layouts/base.html" : "layouts/base.txt";
   const layout = loadTemplateFile(layoutPath);
 
   // Replace {{content}} placeholder with actual content
@@ -107,7 +108,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "WELCOME",
     templatePath: "welcome/welcome",
   },
-  
+
   // Onboarding
   {
     name: "onboarding_day1",
@@ -116,7 +117,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ONBOARDING",
     templatePath: "onboarding/day1-getting-started",
   },
-  
+
   // Engagement - Streaks
   {
     name: "streak_7_days",
@@ -125,16 +126,16 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/streak-7-days",
   },
-  
+
   // Engagement - Book Completion
   {
     name: "book_completed",
-    subject: "🎉 Congratulations! You Finished \"{{bookTitle}}\"",
+    subject: '🎉 Congratulations! You Finished "{{bookTitle}}"',
     description: "Celebration email when user completes a book",
     category: "ENGAGEMENT",
     templatePath: "engagement/book-completed",
   },
-  
+
   // Engagement - Achievements
   {
     name: "achievement_unlocked",
@@ -143,7 +144,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/achievement-unlocked",
   },
-  
+
   // Engagement - Milestones
   {
     name: "milestone_celebration",
@@ -152,7 +153,7 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/milestone-celebration",
   },
-  
+
   // Engagement - Inactive
   {
     name: "inactive_3_days",
@@ -161,7 +162,21 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "ENGAGEMENT",
     templatePath: "engagement/inactive-3-days",
   },
-  
+  {
+    name: "inactive_7_days",
+    subject: "We Miss You! 📚",
+    description: "Re-engagement email for 7-day inactive users",
+    category: "ENGAGEMENT",
+    templatePath: "engagement/inactive-7-days",
+  },
+  {
+    name: "inactive_30_days",
+    subject: "Your Reading Journey Awaits 🌟",
+    description: "Re-engagement email for 30-day inactive users",
+    category: "ENGAGEMENT",
+    templatePath: "engagement/inactive-30-days",
+  },
+
   // Conversion
   {
     name: "upgrade_library_limit",
@@ -170,7 +185,21 @@ export const EMAIL_TEMPLATES: EmailTemplateDefinition[] = [
     category: "CONVERSION",
     templatePath: "conversion/upgrade-library-limit",
   },
-  
+  {
+    name: "upgrade_ai_features",
+    subject: "🤖 Unlock AI-Powered Reading with Pro",
+    description: "Upgrade prompt when user tries AI features",
+    category: "CONVERSION",
+    templatePath: "conversion/upgrade-ai-features",
+  },
+  {
+    name: "upgrade_tts_features",
+    subject: "🎧 Listen Anywhere with Premium Audio",
+    description: "Upgrade prompt when user hits TTS download limit",
+    category: "CONVERSION",
+    templatePath: "conversion/upgrade-tts-features",
+  },
+
   // Digest
   {
     name: "weekly_summary",

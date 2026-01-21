@@ -1,0 +1,39 @@
+We Miss You! 📚
+
+Hi {{userName}},
+
+It's been a week since we've seen you on Read Master. We hope everything is going well! 🌟
+
+Your reading progress is still here, waiting for you:
+
+YOUR READING JOURNEY
+📖 {{booksInProgress}} books in progress
+✅ {{booksCompleted}} books completed
+🔥 {{lastStreak}} day reading streak (let's rebuild it!)
+⭐ {{totalXP}} XP earned
+
+{{#if currentBook}}
+PICK UP WHERE YOU LEFT OFF
+{{currentBook.title}}
+{{currentBook.progress}}% complete
+
+Continue reading: {{appUrl}}/reader/{{currentBook.id}}
+{{/if}}
+
+Why come back today?
+• 📚 Just 10 minutes of reading can reduce stress by 68%
+• 🧠 Keep your mind sharp and vocabulary growing
+• 🎯 Maintain your momentum and rebuild your streak
+• 🏆 Unlock new achievements and earn XP
+
+Return to your library: {{appUrl}}/library
+
+"A reader lives a thousand lives before he dies. The man who never reads lives only one." – George R.R. Martin
+
+---
+
+Happy reading,
+The Read Master Team
+
+Email Preferences: {{appUrl}}/settings/email-preferences
+Unsubscribe: {{unsubscribeUrl}}

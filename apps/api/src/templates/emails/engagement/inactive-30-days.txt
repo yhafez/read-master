@@ -1,0 +1,48 @@
+Your Journey Awaits 🌟
+
+Hi {{userName}},
+
+It's been a month since you last visited Read Master. Life gets busy – we get it! But your reading journey is still here, ready for your return. 📚
+
+WHAT YOU'VE ACCOMPLISHED SO FAR
+🏆 {{booksCompleted}} Books Completed
+⭐ {{totalXP}} XP earned • Level {{level}}
+
+Here's what you're missing:
+• 📖 {{booksInProgress}} unfinished books waiting to reveal their endings
+• 🎯 New features like AI-powered summaries and audio downloads
+• 🏆 New achievements to unlock and goals to reach
+• 🌍 Community discussions and book recommendations
+• 📚 Fresh perspectives and new knowledge from thousands of books
+
+{{#if currentBook}}
+YOUR LAST BOOK
+{{currentBook.title}}
+{{#if currentBook.author}}by {{currentBook.author}}{{/if}}
+{{currentBook.progress}}% complete
+
+Finish this book: {{appUrl}}/reader/{{currentBook.id}}
+{{/if}}
+
+{{#if showUpgradeOffer}}
+🎁 WELCOME BACK OFFER
+We'd love to have you back! Upgrade to Pro and get:
+• Unlimited books in your library
+• AI-powered summaries and insights
+• Advanced text-to-speech features
+• Priority support
+
+Explore Pro Features: {{appUrl}}/settings/subscription
+{{/if}}
+
+Welcome back – start reading: {{appUrl}}/library
+
+Still not ready? No problem! We'll keep your account and progress safe.
+
+If you'd like to stop receiving these emails, adjust your preferences: {{appUrl}}/settings/email-preferences
+Or unsubscribe: {{unsubscribeUrl}}
+
+---
+
+We'd love to see you again,
+The Read Master Team

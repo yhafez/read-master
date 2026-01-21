@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Reading Journey Awaits</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center;">
+      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">Your Journey Awaits 🌟</h1>
+      <p style="margin: 10px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px;">Come back to the stories you love</p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 40px 30px;">
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">Hi {{userName}},</p>
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        It's been a month since you last visited Read Master. Life gets busy – we get it! But your reading journey is still here, ready for your return. 📚
+      </p>
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        <strong>What you've accomplished so far:</strong>
+      </p>
+
+      <!-- Achievement Box -->
+      <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; margin: 0 0 30px; border-radius: 8px; text-align: center;">
+        <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 15px; margin-bottom: 15px;">
+          <span style="font-size: 48px;">🏆</span>
+        </div>
+        <h3 style="margin: 0 0 15px; color: #ffffff; font-size: 24px; font-weight: 700;">{{booksCompleted}} Books Completed</h3>
+        <p style="margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 16px;">{{totalXP}} XP earned • Level {{level}}</p>
+      </div>
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        <strong>Here's what you're missing:</strong>
+      </p>
+
+      <ul style="margin: 0 0 30px; padding-left: 20px; color: #555555; font-size: 15px; line-height: 1.8;">
+        <li style="margin: 0 0 12px;">📖 <strong>{{booksInProgress}} unfinished books</strong> waiting to reveal their endings</li>
+        <li style="margin: 0 0 12px;">🎯 <strong>New features</strong> like AI-powered summaries and audio downloads</li>
+        <li style="margin: 0 0 12px;">🏆 <strong>New achievements</strong> to unlock and goals to reach</li>
+        <li style="margin: 0 0 12px;">🌍 <strong>Community discussions</strong> and book recommendations</li>
+        <li style="margin: 0 0 12px;">📚 <strong>Fresh perspectives</strong> and new knowledge from thousands of books</li>
+      </ul>
+
+      {{#if currentBook}}
+      <!-- Current Book Reminder -->
+      <div style="background-color: #f8f9fa; border: 2px solid #667eea; padding: 25px; margin: 0 0 30px; border-radius: 8px;">
+        <p style="margin: 0 0 10px; color: #666666; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">YOUR LAST BOOK</p>
+        <h3 style="margin: 0 0 5px; color: #333333; font-size: 20px; font-weight: 600;">{{currentBook.title}}</h3>
+        {{#if currentBook.author}}
+        <p style="margin: 0 0 15px; color: #666666; font-size: 14px;">by {{currentBook.author}}</p>
+        {{/if}}
+        <div style="background-color: #e9ecef; height: 8px; border-radius: 4px; margin: 0 0 10px; overflow: hidden;">
+          <div style="background-color: #667eea; height: 100%; width: {{currentBook.progress}}%; transition: width 0.3s ease;"></div>
+        </div>
+        <p style="margin: 0 0 20px; color: #666666; font-size: 14px;">{{currentBook.progress}}% complete</p>
+        <a href="{{appUrl}}/reader/{{currentBook.id}}" style="display: inline-block; background-color: #667eea; color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 6px; font-weight: 600; font-size: 16px;">Finish This Book →</a>
+      </div>
+      {{/if}}
+
+      <!-- Special Offer (Optional) -->
+      {{#if showUpgradeOffer}}
+      <div style="background-color: #fff9e6; border-left: 4px solid #ffd700; padding: 20px; margin: 0 0 30px; border-radius: 4px;">
+        <h3 style="margin: 0 0 10px; color: #333333; font-size: 18px; font-weight: 600;">🎁 Welcome Back Offer</h3>
+        <p style="margin: 0 0 15px; color: #555555; font-size: 15px; line-height: 1.6;">
+          We'd love to have you back! Upgrade to <strong>Pro</strong> and get:
+        </p>
+        <ul style="margin: 0 0 15px; padding-left: 20px; color: #555555; font-size: 14px; line-height: 1.6;">
+          <li>Unlimited books in your library</li>
+          <li>AI-powered summaries and insights</li>
+          <li>Advanced text-to-speech features</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="{{appUrl}}/settings/subscription" style="color: #667eea; text-decoration: none; font-weight: 600; font-size: 15px;">Explore Pro Features →</a>
+      </div>
+      {{/if}}
+
+      <!-- Main CTA -->
+      <div style="text-align: center; margin: 0 0 30px;">
+        <a href="{{appUrl}}/library" style="display: inline-block; background-color: #667eea; color: #ffffff; text-decoration: none; padding: 18px 50px; border-radius: 8px; font-weight: 600; font-size: 18px; box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);">Welcome Back – Start Reading</a>
+      </div>
+
+      <p style="margin: 0 0 10px; color: #666666; font-size: 14px; line-height: 1.6; text-align: center;">
+        Still not ready? No problem! We'll keep your account and progress safe.
+      </p>
+      <p style="margin: 0; color: #999999; font-size: 13px; line-height: 1.6; text-align: center;">
+        If you'd like to stop receiving these emails, you can <a href="{{appUrl}}/settings/email-preferences" style="color: #667eea; text-decoration: none;">adjust your preferences</a> or <a href="{{unsubscribeUrl}}" style="color: #999999; text-decoration: none;">unsubscribe</a>.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
+      <p style="margin: 0 0 10px; color: #666666; font-size: 14px;">
+        We'd love to see you again,<br>
+        <strong>The Read Master Team</strong>
+      </p>
+      <p style="margin: 20px 0 0; color: #999999; font-size: 12px;">
+        <a href="{{appUrl}}/settings/email-preferences" style="color: #667eea; text-decoration: none;">Email Preferences</a> |
+        <a href="{{unsubscribeUrl}}" style="color: #999999; text-decoration: none;">Unsubscribe</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

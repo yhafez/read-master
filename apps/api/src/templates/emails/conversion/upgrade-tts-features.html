@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unlock Premium Audio</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px 20px; text-align: center;">
+      <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 20px; margin-bottom: 20px;">
+        <span style="font-size: 64px;">🎧</span>
+      </div>
+      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">Listen Anywhere, Anytime</h1>
+      <p style="margin: 10px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px;">Premium audio features at your fingertips</p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 40px 30px;">
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">Hi {{userName}},</p>
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        We noticed you've been using our text-to-speech features. Ready to unlock <strong>professional-quality audio</strong> for all your books? 🎵
+      </p>
+
+      {{#if trigger}}
+      <div style="background-color: #fff9e6; border-left: 4px solid #ffd700; padding: 20px; margin: 0 0 30px; border-radius: 4px;">
+        <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">
+          {{#if trigger.downloadsUsed}}
+          You've used <strong>{{trigger.downloadsUsed}}</strong> of your {{trigger.downloadsLimit}} audio downloads this month. Upgrade for more!
+          {{else if trigger.feature}}
+          You tried to use <strong>{{trigger.feature}}</strong> – a Pro feature. Upgrade to unlock it!
+          {{/if}}
+        </p>
+      </div>
+      {{/if}}
+
+      <h2 style="margin: 0 0 20px; color: #333333; font-size: 22px; font-weight: 600;">What You'll Get with Pro Audio</h2>
+
+      <!-- Feature List -->
+      <div style="margin: 0 0 30px;">
+        <!-- Feature 1 -->
+        <div style="display: flex; margin: 0 0 20px;">
+          <div style="flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+            <span style="font-size: 24px;">🎙️</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 5px; color: #333333; font-size: 18px; font-weight: 600;">Premium Voices</h3>
+            <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">Access professional-grade voices from OpenAI and ElevenLabs. Natural, expressive, human-like narration.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div style="display: flex; margin: 0 0 20px;">
+          <div style="flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+            <span style="font-size: 24px;">💾</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 5px; color: #333333; font-size: 18px; font-weight: 600;">Unlimited Downloads</h3>
+            <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">Download audio versions of unlimited books per month (Free: 3/month, Pro: 20/month, Scholar: Unlimited).</p>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div style="display: flex; margin: 0 0 20px;">
+          <div style="flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+            <span style="font-size: 24px;">📱</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 5px; color: #333333; font-size: 18px; font-weight: 600;">Offline Listening</h3>
+            <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">Download and listen offline on any device. Perfect for commutes, flights, and workouts.</p>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div style="display: flex; margin: 0 0 20px;">
+          <div style="flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+            <span style="font-size: 24px;">⚙️</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 5px; color: #333333; font-size: 18px; font-weight: 600;">Audio Customization</h3>
+            <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">Adjust speed, pitch, voice, and quality. Multiple audio formats (MP3, M4A, OGG).</p>
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div style="display: flex; margin: 0 0 20px;">
+          <div style="flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+            <span style="font-size: 24px;">🔊</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 5px; color: #333333; font-size: 18px; font-weight: 600;">High-Quality Audio</h3>
+            <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">Crystal-clear 128kbps+ audio quality. Studio-grade production for the best listening experience.</p>
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div style="display: flex; margin: 0 0 20px;">
+          <div style="flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+            <span style="font-size: 24px;">⏱️</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 5px; color: #333333; font-size: 18px; font-weight: 600;">Fast Processing</h3>
+            <p style="margin: 0; color: #666666; font-size: 15px; line-height: 1.6;">Priority audio generation queue. Get your audiobooks in minutes, not hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Table -->
+      <h3 style="margin: 0 0 20px; color: #333333; font-size: 20px; font-weight: 600; text-align: center;">Free vs. Pro Audio</h3>
+
+      <table style="width: 100%; border-collapse: collapse; margin: 0 0 30px; border: 1px solid #e9ecef;">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="padding: 12px; text-align: left; color: #666666; font-size: 14px; font-weight: 600; border-bottom: 2px solid #e9ecef;">Feature</th>
+            <th style="padding: 12px; text-align: center; color: #666666; font-size: 14px; font-weight: 600; border-bottom: 2px solid #e9ecef;">Free</th>
+            <th style="padding: 12px; text-align: center; color: #f5576c; font-size: 14px; font-weight: 600; border-bottom: 2px solid #f5576c;">Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 12px; color: #333333; font-size: 14px; border-bottom: 1px solid #e9ecef;">Downloads/Month</td>
+            <td style="padding: 12px; text-align: center; color: #666666; font-size: 14px; border-bottom: 1px solid #e9ecef;">3</td>
+            <td style="padding: 12px; text-align: center; color: #f5576c; font-size: 14px; font-weight: 600; border-bottom: 1px solid #e9ecef;">20</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; color: #333333; font-size: 14px; border-bottom: 1px solid #e9ecef;">Voice Options</td>
+            <td style="padding: 12px; text-align: center; color: #666666; font-size: 14px; border-bottom: 1px solid #e9ecef;">Basic (1)</td>
+            <td style="padding: 12px; text-align: center; color: #f5576c; font-size: 14px; font-weight: 600; border-bottom: 1px solid #e9ecef;">Premium (10+)</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; color: #333333; font-size: 14px; border-bottom: 1px solid #e9ecef;">Audio Quality</td>
+            <td style="padding: 12px; text-align: center; color: #666666; font-size: 14px; border-bottom: 1px solid #e9ecef;">Standard</td>
+            <td style="padding: 12px; text-align: center; color: #f5576c; font-size: 14px; font-weight: 600; border-bottom: 1px solid #e9ecef;">High (128kbps+)</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; color: #333333; font-size: 14px; border-bottom: 1px solid #e9ecef;">Processing Priority</td>
+            <td style="padding: 12px; text-align: center; color: #666666; font-size: 14px; border-bottom: 1px solid #e9ecef;">Normal</td>
+            <td style="padding: 12px; text-align: center; color: #f5576c; font-size: 14px; font-weight: 600; border-bottom: 1px solid #e9ecef;">Fast</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; color: #333333; font-size: 14px;">Offline Downloads</td>
+            <td style="padding: 12px; text-align: center; color: #666666; font-size: 14px;">7 days</td>
+            <td style="padding: 12px; text-align: center; color: #f5576c; font-size: 14px; font-weight: 600;">30 days</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Use Cases -->
+      <h3 style="margin: 0 0 20px; color: #333333; font-size: 20px; font-weight: 600;">Perfect For</h3>
+
+      <div style="display: flex; margin: 0 0 30px;">
+        <div style="flex: 1; text-align: center; padding: 0 10px;">
+          <span style="font-size: 48px; display: block; margin-bottom: 10px;">🚗</span>
+          <p style="margin: 0; color: #666666; font-size: 14px;">Commuters</p>
+        </div>
+        <div style="flex: 1; text-align: center; padding: 0 10px;">
+          <span style="font-size: 48px; display: block; margin-bottom: 10px;">🏃</span>
+          <p style="margin: 0; color: #666666; font-size: 14px;">Exercisers</p>
+        </div>
+        <div style="flex: 1; text-align: center; padding: 0 10px;">
+          <span style="font-size: 48px; display: block; margin-bottom: 10px;">✈️</span>
+          <p style="margin: 0; color: #666666; font-size: 14px;">Travelers</p>
+        </div>
+        <div style="flex: 1; text-align: center; padding: 0 10px;">
+          <span style="font-size: 48px; display: block; margin-bottom: 10px;">👨‍💼</span>
+          <p style="margin: 0; color: #666666; font-size: 14px;">Busy Professionals</p>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; margin: 0 0 30px; border-radius: 8px; text-align: center;">
+        <p style="margin: 0 0 10px; color: rgba(255, 255, 255, 0.9); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">UNLOCK PRO AUDIO</p>
+        <h3 style="margin: 0 0 5px; color: #ffffff; font-size: 36px; font-weight: 700;">$9.99<span style="font-size: 18px; font-weight: 400;">/month</span></h3>
+        <p style="margin: 0 0 20px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Cancel anytime • 30-day money-back guarantee</p>
+        <a href="{{appUrl}}/settings/subscription?plan=pro" style="display: inline-block; background-color: #ffffff; color: #f5576c; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-weight: 600; font-size: 18px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">Upgrade to Pro →</a>
+      </div>
+
+      <!-- Testimonial -->
+      <div style="background-color: #f8f9fa; padding: 25px; margin: 0 0 30px; border-radius: 8px; border-left: 4px solid #f5576c;">
+        <p style="margin: 0 0 15px; color: #333333; font-size: 16px; line-height: 1.6; font-style: italic;">
+          "Game changer for my reading habit! I now 'read' 2-3 books during my commute every week. The audio quality is amazing, and the voices sound so natural."
+        </p>
+        <p style="margin: 0; color: #666666; font-size: 14px;">
+          <strong>Michael T.</strong>, Pro Member
+        </p>
+      </div>
+
+      <p style="margin: 0 0 20px; color: #666666; font-size: 14px; line-height: 1.6; text-align: center;">
+        Questions? <a href="{{appUrl}}/support" style="color: #f5576c; text-decoration: none;">Contact our support team</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
+      <p style="margin: 0 0 10px; color: #666666; font-size: 14px;">
+        Happy listening,<br>
+        <strong>The Read Master Team</strong>
+      </p>
+      <p style="margin: 20px 0 0; color: #999999; font-size: 12px;">
+        <a href="{{appUrl}}/settings/email-preferences" style="color: #f5576c; text-decoration: none;">Email Preferences</a> |
+        <a href="{{unsubscribeUrl}}" style="color: #999999; text-decoration: none;">Unsubscribe</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

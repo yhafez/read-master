@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We Miss You!</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center;">
+      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">We Miss You! 📚</h1>
+      <p style="margin: 10px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px;">Your reading journey is waiting</p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 40px 30px;">
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">Hi {{userName}},</p>
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        It's been a week since we've seen you on Read Master. We hope everything is going well! 🌟
+      </p>
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        Your reading progress is still here, waiting for you:
+      </p>
+
+      <!-- Stats Box -->
+      <div style="background-color: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 0 0 30px; border-radius: 4px;">
+        <h3 style="margin: 0 0 15px; color: #333333; font-size: 18px; font-weight: 600;">Your Reading Journey</h3>
+        <ul style="margin: 0; padding: 0; list-style: none; color: #555555; font-size: 15px; line-height: 1.8;">
+          <li style="margin: 0 0 8px;">📖 <strong>{{booksInProgress}}</strong> books in progress</li>
+          <li style="margin: 0 0 8px;">✅ <strong>{{booksCompleted}}</strong> books completed</li>
+          <li style="margin: 0 0 8px;">🔥 <strong>{{lastStreak}}</strong> day reading streak (let's rebuild it!)</li>
+          <li style="margin: 0 0 8px;">⭐ <strong>{{totalXP}} XP</strong> earned</li>
+        </ul>
+      </div>
+
+      {{#if currentBook}}
+      <!-- Current Book Reminder -->
+      <div style="background-color: #fff9e6; border: 1px solid #ffd700; padding: 20px; margin: 0 0 30px; border-radius: 4px; text-align: center;">
+        <p style="margin: 0 0 10px; color: #666666; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">PICK UP WHERE YOU LEFT OFF</p>
+        <h3 style="margin: 0 0 10px; color: #333333; font-size: 20px; font-weight: 600;">{{currentBook.title}}</h3>
+        <p style="margin: 0 0 15px; color: #666666; font-size: 15px;">{{currentBook.progress}}% complete</p>
+        <a href="{{appUrl}}/reader/{{currentBook.id}}" style="display: inline-block; background-color: #667eea; color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 6px; font-weight: 600; font-size: 16px; margin-top: 10px;">Continue Reading →</a>
+      </div>
+      {{/if}}
+
+      <p style="margin: 0 0 20px; color: #333333; font-size: 16px; line-height: 1.6;">
+        <strong>Why come back today?</strong>
+      </p>
+
+      <ul style="margin: 0 0 30px; padding-left: 20px; color: #555555; font-size: 15px; line-height: 1.8;">
+        <li style="margin: 0 0 8px;">📚 Just <strong>10 minutes</strong> of reading can reduce stress by 68%</li>
+        <li style="margin: 0 0 8px;">🧠 Keep your mind sharp and vocabulary growing</li>
+        <li style="margin: 0 0 8px;">🎯 Maintain your momentum and rebuild your streak</li>
+        <li style="margin: 0 0 8px;">🏆 Unlock new achievements and earn XP</li>
+      </ul>
+
+      <!-- CTA Button -->
+      <div style="text-align: center; margin: 0 0 30px;">
+        <a href="{{appUrl}}/library" style="display: inline-block; background-color: #667eea; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-weight: 600; font-size: 18px; box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);">Return to Your Library</a>
+      </div>
+
+      <p style="margin: 0; color: #666666; font-size: 14px; line-height: 1.6; text-align: center; font-style: italic;">
+        "A reader lives a thousand lives before he dies. The man who never reads lives only one." – George R.R. Martin
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
+      <p style="margin: 0 0 10px; color: #666666; font-size: 14px;">
+        Happy reading,<br>
+        <strong>The Read Master Team</strong>
+      </p>
+      <p style="margin: 20px 0 0; color: #999999; font-size: 12px;">
+        <a href="{{appUrl}}/settings/email-preferences" style="color: #667eea; text-decoration: none;">Email Preferences</a> |
+        <a href="{{unsubscribeUrl}}" style="color: #999999; text-decoration: none;">Unsubscribe</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -35,6 +35,7 @@ describe("TTSDownloadButton", () => {
   const defaultProps = {
     bookId: "book_123",
     bookTitle: "Test Book",
+    bookText: "This is the text content of the book.",
     userTier: "PRO" as const,
   };
 
