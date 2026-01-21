@@ -322,6 +322,7 @@
     "listView": "List view",
     "filterPanel": "Filter books",
     "clearFilters": "Clear filters",
+    "activeFilters": "Active filters",
     "status": "Status",
     "genre": "Genre",
     "tags": "Tags",
@@ -331,7 +332,48 @@
       "reading": "Currently Reading",
       "completed": "Completed",
       "wantToRead": "Want to Read",
-      "abandoned": "Abandoned"
+      "abandoned": "Abandoned",
+      "progress": {
+        "label": "Progress",
+        "all": "All Progress",
+        "0-25": "0-25%",
+        "26-50": "26-50%",
+        "51-75": "51-75%",
+        "76-99": "76-99%",
+        "100": "Completed (100%)"
+      },
+      "fileType": {
+        "label": "File Type",
+        "all": "All Types",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "DOC",
+        "docx": "DOCX",
+        "txt": "Text",
+        "html": "HTML"
+      },
+      "source": {
+        "label": "Source",
+        "all": "All Sources",
+        "upload": "Uploaded",
+        "url": "Imported from URL",
+        "paste": "Pasted Text",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library"
+      },
+      "dateAdded": {
+        "label": "Date Added"
+      },
+      "dateStarted": {
+        "label": "Date Started Reading"
+      },
+      "dateCompleted": {
+        "label": "Date Completed"
+      },
+      "dateRange": {
+        "from": "From",
+        "to": "To"
+      }
     },
     "sort": {
       "dateAdded": "Date Added",
@@ -1202,9 +1244,9 @@
     "discussions": "Discussions",
     "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here."
   },
-    "forum": {
-      "bestAnswer": "Best Answer",
-      "markBestAnswer": "Mark as Best Answer",
+  "forum": {
+    "bestAnswer": "Best Answer",
+    "markBestAnswer": "Mark as Best Answer",
     "title": "Forum",
     "category": "Forum Category",
     "categoryPlaceholder": "Posts in {{category}} will appear here.",

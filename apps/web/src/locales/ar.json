@@ -296,6 +296,7 @@
     "listView": "عرض القائمة",
     "filterPanel": "تصفية الكتب",
     "clearFilters": "مسح الفلاتر",
+    "activeFilters": "الفلاتر النشطة",
     "status": "الحالة",
     "genre": "النوع",
     "tags": "الوسوم",
@@ -305,7 +306,48 @@
       "reading": "قيد القراءة",
       "completed": "مكتملة",
       "wantToRead": "أريد قراءتها",
-      "abandoned": "متروكة"
+      "abandoned": "متروكة",
+      "progress": {
+        "label": "التقدم",
+        "all": "كل التقدم",
+        "0-25": "0-25%",
+        "26-50": "26-50%",
+        "51-75": "51-75%",
+        "76-99": "76-99%",
+        "100": "مكتمل (100%)"
+      },
+      "fileType": {
+        "label": "نوع الملف",
+        "all": "كل الأنواع",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "DOC",
+        "docx": "DOCX",
+        "txt": "نص",
+        "html": "HTML"
+      },
+      "source": {
+        "label": "المصدر",
+        "all": "كل المصادر",
+        "upload": "تم الرفع",
+        "url": "مستورد من URL",
+        "paste": "نص ملصق",
+        "googleBooks": "كتب جوجل",
+        "openLibrary": "المكتبة المفتوحة"
+      },
+      "dateAdded": {
+        "label": "تاريخ الإضافة"
+      },
+      "dateStarted": {
+        "label": "تاريخ بدء القراءة"
+      },
+      "dateCompleted": {
+        "label": "تاريخ الإكمال"
+      },
+      "dateRange": {
+        "from": "من",
+        "to": "إلى"
+      }
     },
     "sort": {
       "dateAdded": "تاريخ الإضافة",

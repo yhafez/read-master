@@ -58,3 +58,7 @@ export {
   type AdvancedBookSearchProps,
 } from "./AdvancedBookSearch";
 export { AddBookModal, type AddBookModalProps } from "./addBook";
+export {
+  ActiveFilterChips,
+  type ActiveFilterChipsProps,
+} from "./ActiveFilterChips";

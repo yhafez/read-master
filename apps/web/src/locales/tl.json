@@ -296,7 +296,48 @@
       "reading": "Kasalukuyang Binabasa",
       "completed": "Tapos Na",
       "wantToRead": "Gustong Basahin",
-      "abandoned": "Inabandona"
+      "abandoned": "Inabandona",
+      "progress": {
+        "100": "Kumpleto (100%)",
+        "label": "Pag-unlad",
+        "all": "Lahat ng Pag-unlad",
+        "0-25": "0-25%",
+        "26-50": "26-50%",
+        "51-75": "51-75%",
+        "76-99": "76-99%"
+      },
+      "fileType": {
+        "label": "Uri ng File",
+        "all": "Lahat ng Uri",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "DOC",
+        "docx": "DOCX",
+        "txt": "Teksto",
+        "html": "HTML"
+      },
+      "source": {
+        "label": "Pinagmulan",
+        "all": "Lahat ng Pinagmulan",
+        "upload": "Na-upload",
+        "url": "Na-import mula sa URL",
+        "paste": "Nakadikit na Teksto",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library"
+      },
+      "dateAdded": {
+        "label": "Petsa ng Pagdagdag"
+      },
+      "dateStarted": {
+        "label": "Petsa ng Pagsimula ng Pagbabasa"
+      },
+      "dateCompleted": {
+        "label": "Petsa ng Pagkumpleto"
+      },
+      "dateRange": {
+        "from": "Mula",
+        "to": "Hanggang"
+      }
     },
     "sort": {
       "dateAdded": "Petsa ng Pagdagdag",
@@ -331,7 +372,8 @@
       "progress": "{{percent}}% tapos",
       "continueReading": "Magpatuloy sa Pagbabasa",
       "startReading": "Magsimulang Magbasa"
-    }
+    },
+    "activeFilters": "Aktibong mga filter"
   },
   "reader": {
     "title": "Reader",

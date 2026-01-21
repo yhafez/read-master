@@ -296,7 +296,48 @@
       "reading": "読書中",
       "completed": "完了",
       "wantToRead": "読みたい",
-      "abandoned": "中断"
+      "abandoned": "中断",
+      "progress": {
+        "100": "完了 (100%)",
+        "label": "進捗",
+        "all": "すべての進捗",
+        "0-25": "0-25%",
+        "26-50": "26-50%",
+        "51-75": "51-75%",
+        "76-99": "76-99%"
+      },
+      "fileType": {
+        "label": "ファイルタイプ",
+        "all": "すべてのタイプ",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "DOC",
+        "docx": "DOCX",
+        "txt": "テキスト",
+        "html": "HTML"
+      },
+      "source": {
+        "label": "ソース",
+        "all": "すべてのソース",
+        "upload": "アップロード済み",
+        "url": "URLからインポート",
+        "paste": "貼り付けテキスト",
+        "googleBooks": "Google ブックス",
+        "openLibrary": "Open Library"
+      },
+      "dateAdded": {
+        "label": "追加日"
+      },
+      "dateStarted": {
+        "label": "読書開始日"
+      },
+      "dateCompleted": {
+        "label": "完了日"
+      },
+      "dateRange": {
+        "from": "開始",
+        "to": "終了"
+      }
     },
     "sort": {
       "dateAdded": "追加日",
@@ -331,7 +372,8 @@
       "progress": "{{percent}}% 完了",
       "continueReading": "読書を続ける",
       "startReading": "読み始める"
-    }
+    },
+    "activeFilters": "アクティブフィルター"
   },
   "reader": {
     "title": "Reader",

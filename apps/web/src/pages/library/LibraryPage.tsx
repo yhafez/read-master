@@ -32,6 +32,7 @@ import {
   LibraryFilterPanel,
   LibraryGrid,
   AddBookModal,
+  ActiveFilterChips,
   DEFAULT_LIBRARY_FILTERS,
   loadSortPreferences,
   saveSortPreferences,
@@ -179,7 +180,11 @@ export function LibraryPage(): React.ReactElement {
   const handleBulkDelete = useCallback(() => {
     if (selectedBooks.size === 0) return;
 
-    if (window.confirm(t("library.confirmBulkDelete", { count: selectedBooks.size }))) {
+    if (
+      window.confirm(
+        t("library.confirmBulkDelete", { count: selectedBooks.size })
+      )
+    ) {
       // Delete all selected books
       selectedBooks.forEach((bookId) => {
         deleteBook.mutate(bookId);
@@ -188,6 +193,46 @@ export function LibraryPage(): React.ReactElement {
       setBulkMode(false);
     }
   }, [selectedBooks, deleteBook, t]);
+
+  const handleRemoveFilter = useCallback(
+    (filterKey: keyof LibraryFilters, value?: string) => {
+      if (filterKey === "genres" && value) {
+        setFilters((prev) => ({
+          ...prev,
+          genres: prev.genres.filter((g) => g !== value),
+        }));
+      } else if (filterKey === "tags" && value) {
+        setFilters((prev) => ({
+          ...prev,
+          tags: prev.tags.filter((t) => t !== value),
+        }));
+      } else if (
+        filterKey === "dateAdded" ||
+        filterKey === "dateStarted" ||
+        filterKey === "dateCompleted"
+      ) {
+        setFilters((prev) => ({
+          ...prev,
+          [filterKey]: { from: null, to: null },
+        }));
+      } else if (filterKey === "status") {
+        setFilters((prev) => ({ ...prev, status: "all" }));
+      } else if (filterKey === "progress") {
+        setFilters((prev) => ({ ...prev, progress: "all" }));
+      } else if (filterKey === "fileType") {
+        setFilters((prev) => ({ ...prev, fileType: "all" }));
+      } else if (filterKey === "source") {
+        setFilters((prev) => ({ ...prev, source: "all" }));
+      }
+      setPage(1); // Reset to first page
+    },
+    []
+  );
+
+  const handleClearAllFilters = useCallback(() => {
+    setFilters(DEFAULT_LIBRARY_FILTERS);
+    setPage(1);
+  }, []);
 
   // Check if we have any books at all (for empty state vs no results)
   const hasNoBooks = !isLoading && books.length === 0 && page === 1;
@@ -227,10 +272,18 @@ export function LibraryPage(): React.ReactElement {
             </Typography>
             <Box sx={{ flex: 1 }} />
             <Button
-              startIcon={selectedBooks.size === books.length ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+              startIcon={
+                selectedBooks.size === books.length ? (
+                  <CheckBoxIcon />
+                ) : (
+                  <CheckBoxOutlineBlankIcon />
+                )
+              }
               onClick={handleSelectAll}
             >
-              {selectedBooks.size === books.length ? t("common.deselectAll") : t("common.selectAll")}
+              {selectedBooks.size === books.length
+                ? t("common.deselectAll")
+                : t("common.selectAll")}
             </Button>
             <Button
               variant="contained"
@@ -251,6 +304,13 @@ export function LibraryPage(): React.ReactElement {
           {error?.message || t("errors.serverError")}
         </Alert>
       )}
+
+      {/* Active Filter Chips */}
+      <ActiveFilterChips
+        filters={filters}
+        onRemoveFilter={handleRemoveFilter}
+        onClearAll={handleClearAllFilters}
+      />
 
       {/* Main Content Area */}
       <Box sx={{ display: "flex", gap: 2 }}>

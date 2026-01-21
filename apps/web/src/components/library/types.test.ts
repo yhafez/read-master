@@ -27,6 +27,12 @@ describe("Library Types", () => {
         order: "desc",
         genres: [],
         tags: [],
+        progress: "all",
+        fileType: "all",
+        source: "all",
+        dateAdded: { from: null, to: null },
+        dateStarted: { from: null, to: null },
+        dateCompleted: { from: null, to: null },
       });
     });
 
@@ -199,6 +205,12 @@ describe("Library Types", () => {
         order: "asc",
         genres: ["fiction", "mystery"],
         tags: ["favorite", "to-read"],
+        progress: "all",
+        fileType: "all",
+        source: "all",
+        dateAdded: { from: null, to: null },
+        dateStarted: { from: null, to: null },
+        dateCompleted: { from: null, to: null },
       };
 
       expect(filters.status).toBe("reading");

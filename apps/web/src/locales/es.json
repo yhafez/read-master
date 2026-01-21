@@ -287,6 +287,7 @@
     "listView": "Vista de lista",
     "filterPanel": "Filtrar libros",
     "clearFilters": "Limpiar filtros",
+    "activeFilters": "Filtros activos",
     "status": "Estado",
     "genre": "Género",
     "tags": "Etiquetas",
@@ -296,7 +297,48 @@
       "reading": "Leyendo Actualmente",
       "completed": "Completados",
       "wantToRead": "Quiero Leer",
-      "abandoned": "Abandonados"
+      "abandoned": "Abandonados",
+      "progress": {
+        "label": "Progreso",
+        "all": "Todo el Progreso",
+        "0-25": "0-25%",
+        "26-50": "26-50%",
+        "51-75": "51-75%",
+        "76-99": "76-99%",
+        "100": "Completado (100%)"
+      },
+      "fileType": {
+        "label": "Tipo de Archivo",
+        "all": "Todos los Tipos",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "doc": "DOC",
+        "docx": "DOCX",
+        "txt": "Texto",
+        "html": "HTML"
+      },
+      "source": {
+        "label": "Fuente",
+        "all": "Todas las Fuentes",
+        "upload": "Subido",
+        "url": "Importado desde URL",
+        "paste": "Texto Pegado",
+        "googleBooks": "Google Books",
+        "openLibrary": "Open Library"
+      },
+      "dateAdded": {
+        "label": "Fecha de Agregado"
+      },
+      "dateStarted": {
+        "label": "Fecha de Inicio de Lectura"
+      },
+      "dateCompleted": {
+        "label": "Fecha de Completado"
+      },
+      "dateRange": {
+        "from": "Desde",
+        "to": "Hasta"
+      }
     },
     "sort": {
       "dateAdded": "Fecha Agregado",

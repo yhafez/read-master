@@ -16,11 +16,28 @@ import {
   Drawer,
   useMediaQuery,
   useTheme,
+  Select,
+  MenuItem,
+  type SelectChangeEvent,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useTranslation } from "react-i18next";
 
-import type { StatusFilter, LibraryFilters } from "./types";
-import { STATUS_FILTERS } from "./types";
+import type {
+  StatusFilter,
+  LibraryFilters,
+  ProgressRangeFilter,
+  FileTypeFilter,
+  SourceFilter,
+} from "./types";
+import {
+  STATUS_FILTERS,
+  PROGRESS_FILTERS,
+  FILE_TYPE_FILTERS,
+  SOURCE_FILTERS,
+} from "./types";
 
 /**
  * Common genres for books
@@ -80,18 +97,56 @@ export function LibraryFilterPanel({
     onFiltersChange({ tags: newTags });
   };
 
+  const handleProgressChange = (event: SelectChangeEvent) => {
+    onFiltersChange({ progress: event.target.value as ProgressRangeFilter });
+  };
+
+  const handleFileTypeChange = (event: SelectChangeEvent) => {
+    onFiltersChange({ fileType: event.target.value as FileTypeFilter });
+  };
+
+  const handleSourceChange = (event: SelectChangeEvent) => {
+    onFiltersChange({ source: event.target.value as SourceFilter });
+  };
+
+  const handleDateRangeChange = (
+    type: "dateAdded" | "dateStarted" | "dateCompleted",
+    field: "from" | "to",
+    value: Date | null
+  ) => {
+    const currentRange = filters[type];
+    onFiltersChange({
+      [type]: { ...currentRange, [field]: value },
+    });
+  };
+
   const handleClearFilters = () => {
     onFiltersChange({
       status: "all",
       genres: [],
       tags: [],
+      progress: "all",
+      fileType: "all",
+      source: "all",
+      dateAdded: { from: null, to: null },
+      dateStarted: { from: null, to: null },
+      dateCompleted: { from: null, to: null },
     });
   };
 
   const hasActiveFilters =
     filters.status !== "all" ||
     filters.genres.length > 0 ||
-    filters.tags.length > 0;
+    filters.tags.length > 0 ||
+    filters.progress !== "all" ||
+    filters.fileType !== "all" ||
+    filters.source !== "all" ||
+    filters.dateAdded.from !== null ||
+    filters.dateAdded.to !== null ||
+    filters.dateStarted.from !== null ||
+    filters.dateStarted.to !== null ||
+    filters.dateCompleted.from !== null ||
+    filters.dateCompleted.to !== null;
 
   const filterContent = (
     <Box
@@ -197,6 +252,180 @@ export function LibraryFilterPanel({
           </FormControl>
         </>
       )}
+
+      <Divider sx={{ mb: 2 }} />
+
+      {/* Progress Filter */}
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <FormLabel sx={{ mb: 1 }}>
+          {t("library.filters.progress.label")}
+        </FormLabel>
+        <Select
+          size="small"
+          value={filters.progress}
+          onChange={handleProgressChange}
+          aria-label={t("library.filters.progress.label")}
+        >
+          {PROGRESS_FILTERS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {t(option.labelKey)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <Divider sx={{ mb: 2 }} />
+
+      {/* File Type Filter */}
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <FormLabel sx={{ mb: 1 }}>
+          {t("library.filters.fileType.label")}
+        </FormLabel>
+        <Select
+          size="small"
+          value={filters.fileType}
+          onChange={handleFileTypeChange}
+          aria-label={t("library.filters.fileType.label")}
+        >
+          {FILE_TYPE_FILTERS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {t(option.labelKey)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <Divider sx={{ mb: 2 }} />
+
+      {/* Source Filter */}
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <FormLabel sx={{ mb: 1 }}>
+          {t("library.filters.source.label")}
+        </FormLabel>
+        <Select
+          size="small"
+          value={filters.source}
+          onChange={handleSourceChange}
+          aria-label={t("library.filters.source.label")}
+        >
+          {SOURCE_FILTERS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {t(option.labelKey)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <Divider sx={{ mb: 2 }} />
+
+      {/* Date Range Filters */}
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+          <FormLabel component="legend" sx={{ mb: 1 }}>
+            {t("library.filters.dateAdded.label")}
+          </FormLabel>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <DatePicker
+              label={t("library.filters.dateRange.from")}
+              value={filters.dateAdded.from}
+              onChange={(date) =>
+                handleDateRangeChange("dateAdded", "from", date)
+              }
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
+            />
+            <DatePicker
+              label={t("library.filters.dateRange.to")}
+              value={filters.dateAdded.to}
+              onChange={(date) =>
+                handleDateRangeChange("dateAdded", "to", date)
+              }
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
+            />
+          </Box>
+        </FormControl>
+
+        <Divider sx={{ mb: 2 }} />
+
+        <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+          <FormLabel component="legend" sx={{ mb: 1 }}>
+            {t("library.filters.dateStarted.label")}
+          </FormLabel>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <DatePicker
+              label={t("library.filters.dateRange.from")}
+              value={filters.dateStarted.from}
+              onChange={(date) =>
+                handleDateRangeChange("dateStarted", "from", date)
+              }
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
+            />
+            <DatePicker
+              label={t("library.filters.dateRange.to")}
+              value={filters.dateStarted.to}
+              onChange={(date) =>
+                handleDateRangeChange("dateStarted", "to", date)
+              }
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
+            />
+          </Box>
+        </FormControl>
+
+        <Divider sx={{ mb: 2 }} />
+
+        <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+          <FormLabel component="legend" sx={{ mb: 1 }}>
+            {t("library.filters.dateCompleted.label")}
+          </FormLabel>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <DatePicker
+              label={t("library.filters.dateRange.from")}
+              value={filters.dateCompleted.from}
+              onChange={(date) =>
+                handleDateRangeChange("dateCompleted", "from", date)
+              }
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
+            />
+            <DatePicker
+              label={t("library.filters.dateRange.to")}
+              value={filters.dateCompleted.to}
+              onChange={(date) =>
+                handleDateRangeChange("dateCompleted", "to", date)
+              }
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
+            />
+          </Box>
+        </FormControl>
+      </LocalizationProvider>
     </Box>
   );
 
