@@ -703,8 +703,8 @@ export function ReaderPage(): React.ReactElement {
           setEditingAnnotation(null);
         }}
         onSave={handleNoteSave}
-        annotation={editingAnnotation || undefined}
-        selectedText={selection?.text}
+        {...(editingAnnotation && { annotation: editingAnnotation })}
+        {...(selection?.text && { selectedText: selection.text })}
         mode={editingAnnotation ? "edit" : "create"}
       />
 
@@ -726,7 +726,7 @@ export function ReaderPage(): React.ReactElement {
           onClose={() => setExportDialogOpen(false)}
           annotations={annotations}
           bookTitle={book.title}
-          bookAuthor={book.author || undefined}
+          {...(book.author && { bookAuthor: book.author })}
         />
       )}
     </Box>
