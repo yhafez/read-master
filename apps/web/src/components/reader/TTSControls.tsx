@@ -25,6 +25,7 @@ import {
   Typography,
   Stack,
   Alert,
+  Button,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -373,11 +374,28 @@ export function TTSControls({
   // Group voices for select menu
   const groupedVoices = groupVoicesByProvider(voices);
 
-  // Render error alert
+  // Render non-recoverable error alert
   if (error && !isRecoverableError(error)) {
     return (
       <Alert severity="error" sx={{ m: 1 }}>
-        {getTTSErrorMessage(error)}
+        <Typography variant="body2" gutterBottom>
+          {getTTSErrorMessage(error)}
+        </Typography>
+        {error.type === "not_supported" && (
+          <Typography variant="caption" color="text.secondary">
+            {t("reader.tts.notSupportedHelp")}
+          </Typography>
+        )}
+        {error.type === "no_voices" && (
+          <Typography variant="caption" color="text.secondary">
+            {t("reader.tts.noVoicesHelp")}
+          </Typography>
+        )}
+        {error.type === "unauthorized" && (
+          <Typography variant="caption" color="text.secondary">
+            {t("reader.tts.unauthorizedHelp")}
+          </Typography>
+        )}
       </Alert>
     );
   }
@@ -484,7 +502,19 @@ export function TTSControls({
 
       {/* Error message */}
       {error && isRecoverableError(error) && (
-        <Alert severity="warning" sx={{ mt: 1 }} onClose={() => setError(null)}>
+        <Alert
+          severity="warning"
+          sx={{ mt: 1 }}
+          onClose={() => setError(null)}
+          action={
+            <Button color="inherit" size="small" onClick={() => {
+              setError(null);
+              togglePlayPause();
+            }}>
+              {t("common.retry")}
+            </Button>
+          }
+        >
           {getTTSErrorMessage(error)}
         </Alert>
       )}

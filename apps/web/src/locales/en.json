@@ -46,6 +46,15 @@
         "private": "Private",
         "privateDesc": "Only you can see this"
       }
+    },
+    "tts": {
+      "play": "Play",
+      "pause": "Pause",
+      "stop": "Stop",
+      "voice": "Voice",
+      "notSupportedHelp": "Try using a modern browser like Chrome, Firefox, or Safari for text-to-speech support.",
+      "noVoicesHelp": "No voices are available. Please check your browser settings or try restarting your browser.",
+      "unauthorizedHelp": "Upgrade to Pro or Scholar tier to access premium AI voices with natural speech."
     }
   },
   "flashcards": {
