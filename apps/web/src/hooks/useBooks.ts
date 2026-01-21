@@ -39,6 +39,25 @@ export interface BookListFilters {
   order?: "asc" | "desc" | undefined;
   page?: number | undefined;
   limit?: number | undefined;
+  // Additional filters
+  fileType?: "PDF" | "EPUB" | "DOC" | "DOCX" | "TXT" | "HTML" | undefined;
+  source?:
+    | "UPLOAD"
+    | "URL"
+    | "PASTE"
+    | "GOOGLE_BOOKS"
+    | "OPEN_LIBRARY"
+    | undefined;
+  progressMin?: number | undefined;
+  progressMax?: number | undefined;
+  dateAddedFrom?: Date | undefined;
+  dateAddedTo?: Date | undefined;
+  dateStartedFrom?: Date | undefined;
+  dateStartedTo?: Date | undefined;
+  dateCompletedFrom?: Date | undefined;
+  dateCompletedTo?: Date | undefined;
+  genre?: string | undefined;
+  tags?: string | undefined; // Comma-separated tags
 }
 
 export interface PaginatedResponse<T> {
@@ -67,6 +86,28 @@ const booksApi = {
     if (filters?.order) params.set("order", filters.order);
     if (filters?.page) params.set("page", String(filters.page));
     if (filters?.limit) params.set("limit", String(filters.limit));
+
+    // Additional filters
+    if (filters?.fileType) params.set("fileType", filters.fileType);
+    if (filters?.source) params.set("source", filters.source);
+    if (filters?.progressMin !== undefined)
+      params.set("progressMin", String(filters.progressMin));
+    if (filters?.progressMax !== undefined)
+      params.set("progressMax", String(filters.progressMax));
+    if (filters?.dateAddedFrom)
+      params.set("dateAddedFrom", filters.dateAddedFrom.toISOString());
+    if (filters?.dateAddedTo)
+      params.set("dateAddedTo", filters.dateAddedTo.toISOString());
+    if (filters?.dateStartedFrom)
+      params.set("dateStartedFrom", filters.dateStartedFrom.toISOString());
+    if (filters?.dateStartedTo)
+      params.set("dateStartedTo", filters.dateStartedTo.toISOString());
+    if (filters?.dateCompletedFrom)
+      params.set("dateCompletedFrom", filters.dateCompletedFrom.toISOString());
+    if (filters?.dateCompletedTo)
+      params.set("dateCompletedTo", filters.dateCompletedTo.toISOString());
+    if (filters?.genre) params.set("genre", filters.genre);
+    if (filters?.tags) params.set("tags", filters.tags);
 
     const response = await fetch(`/api/books?${params.toString()}`);
     if (!response.ok) {

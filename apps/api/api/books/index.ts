@@ -113,6 +113,22 @@ type SortDirection = (typeof VALID_SORT_DIRECTIONS)[number];
 // ============================================================================
 
 /**
+ * Valid file types
+ */
+const VALID_FILE_TYPES = ["PDF", "EPUB", "DOC", "DOCX", "TXT", "HTML"] as const;
+
+/**
+ * Valid source types
+ */
+const VALID_SOURCES = [
+  "UPLOAD",
+  "URL",
+  "PASTE",
+  "GOOGLE_BOOKS",
+  "OPEN_LIBRARY",
+] as const;
+
+/**
  * Query parameters validation schema
  */
 const listBooksQuerySchema = z.object({
@@ -146,7 +162,47 @@ const listBooksQuerySchema = z.object({
       `Search query must be at most ${MAX_SEARCH_LENGTH} characters`
     )
     .optional()
-    .describe("Search in title, author, and description"),
+    .describe("Search in title, author, description, and content"),
+
+  // Additional filters
+  fileType: z.enum(VALID_FILE_TYPES).optional().describe("Filter by file type"),
+  source: z.enum(VALID_SOURCES).optional().describe("Filter by book source"),
+  progressMin: z.coerce
+    .number()
+    .min(0)
+    .max(100)
+    .optional()
+    .describe("Minimum reading progress percentage"),
+  progressMax: z.coerce
+    .number()
+    .min(0)
+    .max(100)
+    .optional()
+    .describe("Maximum reading progress percentage"),
+  dateAddedFrom: z.coerce
+    .date()
+    .optional()
+    .describe("Filter books added after this date"),
+  dateAddedTo: z.coerce
+    .date()
+    .optional()
+    .describe("Filter books added before this date"),
+  dateStartedFrom: z.coerce
+    .date()
+    .optional()
+    .describe("Filter books started after this date"),
+  dateStartedTo: z.coerce
+    .date()
+    .optional()
+    .describe("Filter books started before this date"),
+  dateCompletedFrom: z.coerce
+    .date()
+    .optional()
+    .describe("Filter books completed after this date"),
+  dateCompletedTo: z.coerce
+    .date()
+    .optional()
+    .describe("Filter books completed before this date"),
 
   // Sorting
   sort: z.enum(VALID_SORT_OPTIONS).default("createdAt").describe("Sort field"),
@@ -212,13 +268,81 @@ function buildWhereClause(
     };
   }
 
-  // Search in title, author, and description
+  // Filter by file type
+  if (query.fileType) {
+    where.fileType = query.fileType;
+  }
+
+  // Filter by source
+  if (query.source) {
+    where.source = query.source;
+  }
+
+  // Filter by progress range
+  if (query.progressMin !== undefined || query.progressMax !== undefined) {
+    where.readingProgress = {
+      some: {
+        userId,
+        ...(query.progressMin !== undefined && {
+          progressPercent: { gte: query.progressMin },
+        }),
+        ...(query.progressMax !== undefined && {
+          progressPercent: { lte: query.progressMax },
+        }),
+      },
+    };
+  }
+
+  // Filter by date added range
+  if (query.dateAddedFrom || query.dateAddedTo) {
+    where.createdAt = {
+      ...(query.dateAddedFrom && { gte: query.dateAddedFrom }),
+      ...(query.dateAddedTo && { lte: query.dateAddedTo }),
+    };
+  }
+
+  // Filter by date started range
+  if (query.dateStartedFrom || query.dateStartedTo) {
+    where.readingProgress = {
+      some: {
+        userId,
+        startedAt: {
+          ...(query.dateStartedFrom && { gte: query.dateStartedFrom }),
+          ...(query.dateStartedTo && { lte: query.dateStartedTo }),
+        },
+      },
+    };
+  }
+
+  // Filter by date completed range
+  if (query.dateCompletedFrom || query.dateCompletedTo) {
+    where.readingProgress = {
+      some: {
+        userId,
+        completedAt: {
+          ...(query.dateCompletedFrom && { gte: query.dateCompletedFrom }),
+          ...(query.dateCompletedTo && { lte: query.dateCompletedTo }),
+        },
+      },
+    };
+  }
+
+  // Search in title, author, description, and potentially content
+  // Note: Full-text content search requires rawContent field in DB
   if (query.search) {
-    where.OR = [
+    const searchConditions: Prisma.BookWhereInput[] = [
       { title: { contains: query.search, mode: "insensitive" } },
       { author: { contains: query.search, mode: "insensitive" } },
       { description: { contains: query.search, mode: "insensitive" } },
     ];
+
+    // TODO: Add full-text content search when rawContent field is available
+    // This would require storing extracted text in the database
+    // searchConditions.push({
+    //   rawContent: { contains: query.search, mode: "insensitive" },
+    // });
+
+    where.OR = searchConditions;
   }
 
   return where;

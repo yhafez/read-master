@@ -109,6 +109,43 @@ export function LibraryPage(): React.ReactElement {
       order: filters.order,
       page,
       limit: ITEMS_PER_PAGE,
+      // Additional filters
+      fileType: filters.fileType === "all" ? undefined : filters.fileType,
+      source: filters.source === "all" ? undefined : filters.source,
+      genre: filters.genres.length > 0 ? filters.genres[0] : undefined, // API supports single genre
+      tags: filters.tags.length > 0 ? filters.tags.join(",") : undefined,
+      // Progress range
+      progressMin:
+        filters.progress === "0-25"
+          ? 0
+          : filters.progress === "26-50"
+            ? 26
+            : filters.progress === "51-75"
+              ? 51
+              : filters.progress === "76-99"
+                ? 76
+                : filters.progress === "100"
+                  ? 100
+                  : undefined,
+      progressMax:
+        filters.progress === "0-25"
+          ? 25
+          : filters.progress === "26-50"
+            ? 50
+            : filters.progress === "51-75"
+              ? 75
+              : filters.progress === "76-99"
+                ? 99
+                : filters.progress === "100"
+                  ? 100
+                  : undefined,
+      // Date ranges
+      dateAddedFrom: filters.dateAdded.from || undefined,
+      dateAddedTo: filters.dateAdded.to || undefined,
+      dateStartedFrom: filters.dateStarted.from || undefined,
+      dateStartedTo: filters.dateStarted.to || undefined,
+      dateCompletedFrom: filters.dateCompleted.from || undefined,
+      dateCompletedTo: filters.dateCompleted.to || undefined,
     }),
     [filters, page]
   );
