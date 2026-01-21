@@ -6,10 +6,10 @@
  */
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { AnnotationType } from "@read-master/database";
 
 import type {
   Annotation,
+  AnnotationType,
   CreateAnnotationInput,
   UpdateAnnotationInput,
 } from "@/components/reader/annotationTypes";
