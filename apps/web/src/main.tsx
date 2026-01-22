@@ -3,12 +3,14 @@ import { createRoot } from "react-dom/client";
 
 import "@/i18n";
 import "./styles/focus-visible.css";
+import "./styles/accessibility.css";
 
 import { App } from "./App";
 import { QueryProvider } from "./lib";
 import { ErrorBoundary, initSentry } from "./lib/sentry";
 import { initPostHog } from "./lib/analytics";
 import { AppThemeProvider } from "./theme";
+import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 
 // Initialize Sentry before React renders
 initSentry();
@@ -66,7 +68,9 @@ createRoot(rootElement).render(
     >
       <QueryProvider>
         <AppThemeProvider>
-          <App />
+          <AccessibilityProvider>
+            <App />
+          </AccessibilityProvider>
         </AppThemeProvider>
       </QueryProvider>
     </ErrorBoundary>

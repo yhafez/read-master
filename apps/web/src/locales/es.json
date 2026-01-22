@@ -1,38 +1,8 @@
 {
   "common": {
-    "appName": "Read Master",
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "close": "Close",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "search": "Search",
-    "filter": "Filter",
-    "sort": "Sort",
-    "submit": "Submit",
-    "confirm": "Confirm",
-    "yes": "Yes",
-    "no": "No",
-    "retry": "Reintentar",
-    "create": "Crear",
-    "moreOptions": "Más opciones",
-    "filters": "Filtros",
-    "clearFilters": "Limpiar filtros",
-    "rowsPerPage": "Filas por página:",
-    "expand": "Expandir",
-    "collapse": "Contraer",
-    "play": "Reproducir",
-    "pause": "Pausar",
-    "add": "Agregar",
-    "saveChanges": "Guardar cambios",
     "share": "Compartir",
-    "update": "Actualizar",
-    "copy": "Copiar"
+    "copiedToClipboard": "¡Copiado al portapapeles!",
+    "copyFailed": "Error al copiar el enlace"
   },
   "collections": {
     "title": "Colecciones",
@@ -1207,7 +1177,18 @@
     "user": "{{username}}'s Profile"
   },
   "social": {
-    "feed": "Activity Feed"
+    "follow": "Seguir",
+    "following": "Siguiendo",
+    "followers": "seguidores",
+    "unfollow": "Dejar de seguir",
+    "search": {
+      "title": "Buscar Usuarios",
+      "placeholder": "Buscar por nombre de usuario o nombre...",
+      "error": "Error al buscar usuarios",
+      "minChars": "Ingresa al menos 2 caracteres para buscar",
+      "noResults": "No se encontraron usuarios",
+      "moreResults": "Mostrando {{count}} de {{total}} resultados"
+    }
   },
   "groups": {
     "detail": "Group Details",
@@ -1775,7 +1756,51 @@
     "loading": "Loading content, please wait",
     "loadingComplete": "Content loaded",
     "error": "Error: {{message}}",
-    "success": "Success: {{message}}"
+    "success": "Success: {{message}}",
+    "skipToMain": "Skip to main content",
+    "skipToNav": "Skip to navigation",
+    "skipToSearch": "Skip to search",
+    "skipLinks": "Skip navigation links",
+    "settings": {
+      "title": "Accessibility Settings",
+      "description": "Customize your reading experience for better accessibility",
+      "dyslexiaFont": "Dyslexia-Friendly Font",
+      "dyslexiaFontDesc": "Use OpenDyslexic font with enhanced letter spacing",
+      "highContrast": "High Contrast Mode",
+      "highContrastDesc": "Increase contrast for better visibility",
+      "reducedMotion": "Reduce Motion",
+      "reducedMotionDesc": "Minimize animations and transitions",
+      "enhancedFocus": "Enhanced Focus Indicators",
+      "enhancedFocusDesc": "Show prominent outlines when navigating with keyboard",
+      "fontScale": "Text Size",
+      "fontScaleDesc": "Scale text size from 80% to 200%",
+      "lineSpacing": "Line Spacing",
+      "lineSpacingDesc": "Adjust space between lines for easier reading",
+      "letterSpacing": "Letter Spacing",
+      "letterSpacingDesc": "Adjust space between letters",
+      "wordSpacing": "Word Spacing",
+      "wordSpacingDesc": "Adjust space between words",
+      "reset": "Reset to Defaults",
+      "apply": "Apply Changes"
+    },
+    "keyboard": {
+      "title": "Keyboard Shortcuts",
+      "description": "Navigate efficiently using your keyboard",
+      "navigation": "Navigation",
+      "reader": "Reader",
+      "general": "General",
+      "nextPage": "Next Page",
+      "prevPage": "Previous Page",
+      "openToc": "Open Table of Contents",
+      "toggleFullscreen": "Toggle Fullscreen",
+      "search": "Search",
+      "increaseFontSize": "Increase Font Size",
+      "decreaseFontSize": "Decrease Font Size",
+      "toggleTheme": "Toggle Theme",
+      "openSettings": "Open Settings",
+      "save": "Save",
+      "escape": "Close/Cancel"
+    }
   },
   "ai": {
     "cached": "Cached",
@@ -2195,20 +2220,6 @@
     "manageBillingPortalDescription": "Ve tu historial de facturación y gestiona tus métodos de pago en el portal de facturación.",
     "viewBillingHistory": "Ver historial de facturación"
   },
-  "social": {
-    "follow": "Seguir",
-    "following": "Siguiendo",
-    "followers": "seguidores",
-    "unfollow": "Dejar de seguir",
-    "search": {
-      "title": "Buscar Usuarios",
-      "placeholder": "Buscar por nombre de usuario o nombre...",
-      "error": "Error al buscar usuarios",
-      "minChars": "Ingresa al menos 2 caracteres para buscar",
-      "noResults": "No se encontraron usuarios",
-      "moreResults": "Mostrando {{count}} de {{total}} resultados"
-    }
-  },
   "share": {
     "native": "Compartir...",
     "twitter": "Twitter",
@@ -2217,11 +2228,6 @@
     "whatsapp": "WhatsApp",
     "reddit": "Reddit",
     "copyLink": "Copiar enlace"
-  },
-  "common": {
-    "share": "Compartir",
-    "copiedToClipboard": "¡Copiado al portapapeles!",
-    "copyFailed": "Error al copiar el enlace"
   },
   "stats": {
     "analytics": {

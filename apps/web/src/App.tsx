@@ -5,6 +5,7 @@ import {
   SentryUserSync,
   PostHogUserSync,
   SkipNavigation,
+  SkipLinks,
 } from "@/components/common";
 import { OfflineIndicator, InstallPrompt } from "@/components/pwa";
 import { useRouteAnnouncements } from "@/hooks";
@@ -15,6 +16,7 @@ export function App(): React.ReactElement {
 
   return (
     <>
+      <SkipLinks />
       <SkipNavigation />
       <SentryUserSync />
       <PostHogUserSync />

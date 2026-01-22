@@ -8,3 +8,4 @@ export { SettingsSRSPage } from "./SettingsSRSPage";
 export { SettingsNotificationsPage } from "./SettingsNotificationsPage";
 export { SettingsPrivacyPage } from "./SettingsPrivacyPage";
 export { SettingsSubscriptionPage } from "./SettingsSubscriptionPage";
+export { SettingsAccessibilityPage } from "./SettingsAccessibilityPage";

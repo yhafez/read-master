@@ -67,6 +67,7 @@ export {
   SettingsAIPage,
   SettingsTTSPage,
   SettingsSRSPage,
+  SettingsAccessibilityPage,
   SettingsNotificationsPage,
   SettingsPrivacyPage,
   SettingsSubscriptionPage,

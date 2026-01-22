@@ -1,0 +1,260 @@
+/**
+ * Accessibility Styles
+ *
+ * Global CSS for accessibility features:
+ * - Dyslexia-friendly fonts
+ * - High contrast mode
+ * - Reduced motion
+ * - Enhanced focus indicators
+ * - Font scaling
+ */
+
+/* ==================== Dyslexia-Friendly Font ==================== */
+
+/**
+ * OpenDyslexic font (loaded from CDN for demo; should be self-hosted in production)
+ */
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
+
+.dyslexia-font,
+.dyslexia-font * {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
+  font-weight: 400 !important;
+}
+
+.dyslexia-font {
+  --dyslexia-letter-spacing: 0.12em;
+  --dyslexia-word-spacing: 0.16em;
+  --dyslexia-line-height: 1.8;
+}
+
+.dyslexia-font body,
+.dyslexia-font p,
+.dyslexia-font div,
+.dyslexia-font span {
+  letter-spacing: var(--dyslexia-letter-spacing) !important;
+  word-spacing: var(--dyslexia-word-spacing) !important;
+  line-height: var(--dyslexia-line-height) !important;
+}
+
+/* ==================== High Contrast Mode ==================== */
+
+.high-contrast {
+  --high-contrast-bg: #000000;
+  --high-contrast-text: #FFFFFF;
+  --high-contrast-primary: #FFFF00;
+  --high-contrast-secondary: #00FFFF;
+  --high-contrast-border: #FFFFFF;
+  --high-contrast-link: #00FF00;
+  --high-contrast-focus: #FF00FF;
+}
+
+.high-contrast {
+  background-color: var(--high-contrast-bg) !important;
+  color: var(--high-contrast-text) !important;
+}
+
+.high-contrast * {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: var(--high-contrast-border) !important;
+}
+
+.high-contrast a {
+  color: var(--high-contrast-link) !important;
+  text-decoration: underline !important;
+}
+
+.high-contrast button,
+.high-contrast [role="button"] {
+  background-color: var(--high-contrast-primary) !important;
+  color: var(--high-contrast-bg) !important;
+  border: 2px solid var(--high-contrast-border) !important;
+}
+
+.high-contrast button:hover,
+.high-contrast [role="button"]:hover {
+  background-color: var(--high-contrast-secondary) !important;
+}
+
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  background-color: var(--high-contrast-bg) !important;
+  color: var(--high-contrast-text) !important;
+  border: 2px solid var(--high-contrast-border) !important;
+}
+
+/* ==================== Reduced Motion ==================== */
+
+.reduced-motion,
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Respect system preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==================== Enhanced Focus Indicators ==================== */
+
+.enhanced-focus *:focus,
+.enhanced-focus *:focus-visible {
+  outline: 3px solid #0066FF !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.25) !important;
+}
+
+.enhanced-focus a:focus,
+.enhanced-focus button:focus,
+.enhanced-focus input:focus,
+.enhanced-focus select:focus,
+.enhanced-focus textarea:focus {
+  outline: 3px solid #0066FF !important;
+  outline-offset: 2px !important;
+}
+
+/* ==================== Font Scaling ==================== */
+
+:root {
+  --accessibility-font-scale: 1.0;
+  --accessibility-line-spacing: 1.5;
+  --accessibility-letter-spacing: 0em;
+  --accessibility-word-spacing: 0em;
+}
+
+body {
+  font-size: calc(16px * var(--accessibility-font-scale));
+  line-height: var(--accessibility-line-spacing);
+  letter-spacing: var(--accessibility-letter-spacing);
+  word-spacing: var(--accessibility-word-spacing);
+}
+
+/* ==================== Screen Reader Only ==================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==================== Focus Within Indicator ==================== */
+
+.focus-within-indicator:focus-within {
+  outline: 2px solid #0066FF;
+  outline-offset: 2px;
+}
+
+/* ==================== Keyboard Navigation Hints ==================== */
+
+[data-keyboard-hint]::after {
+  content: attr(data-keyboard-hint);
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+[data-keyboard-hint]:focus::after,
+[data-keyboard-hint]:hover::after {
+  opacity: 1;
+}
+
+/* ==================== High Contrast Images ==================== */
+
+.high-contrast img,
+.high-contrast svg {
+  filter: contrast(1.5) brightness(1.2) !important;
+}
+
+/* ==================== Accessible Tables ==================== */
+
+table caption {
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+th[scope="col"] {
+  border-bottom: 2px solid currentColor;
+}
+
+th[scope="row"] {
+  border-right: 2px solid currentColor;
+}
+
+/* ==================== Accessible Forms ==================== */
+
+label {
+  cursor: pointer;
+}
+
+input[required] + label::after,
+label[for] input[required]::after {
+  content: " *";
+  color: #d32f2f;
+}
+
+.form-error {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.form-helper {
+  color: #666;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+/* ==================== Accessible Buttons ==================== */
+
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==================== Print Styles ==================== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+}

@@ -43,6 +43,7 @@ import {
   SettingsAIPage,
   SettingsTTSPage,
   SettingsSRSPage,
+  SettingsAccessibilityPage,
   SettingsNotificationsPage,
   SettingsPrivacyPage,
   SettingsSubscriptionPage,
@@ -261,6 +262,10 @@ function createAppRouter() {
             {
               path: ROUTES.SETTINGS_SRS,
               element: <SettingsSRSPage />,
+            },
+            {
+              path: ROUTES.SETTINGS_ACCESSIBILITY,
+              element: <SettingsAccessibilityPage />,
             },
             {
               path: ROUTES.SETTINGS_NOTIFICATIONS,

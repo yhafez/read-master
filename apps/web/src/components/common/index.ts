@@ -1,4 +1,5 @@
 export { LanguageSwitcher } from "./LanguageSwitcher";
+export { SkipLinks } from "./SkipLinks";
 export { ShareButton } from "./ShareButton";
 
 export {

@@ -46,6 +46,15 @@ export { useReducedMotion } from "./useReducedMotion";
 export { useHighContrast } from "./useHighContrast";
 
 export {
+  useScreenReaderAnnouncement as useA11yAnnouncement,
+  useFocusTrap as useA11yFocusTrap,
+  useSkipLink as useA11ySkipLink,
+  useKeyboardShortcut,
+  useAccessibleId,
+  useReducedMotion as useA11yReducedMotion,
+} from "./useAccessibility";
+
+export {
   useOfflineReadingSync,
   type UseOfflineReadingSyncOptions,
   type UseOfflineReadingSyncReturn,
