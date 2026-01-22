@@ -61,6 +61,7 @@ export const ROUTES = {
   // Stats
   STATS: "/stats",
   ACHIEVEMENTS: "/achievements",
+  ANALYTICS: "/analytics",
 
   // Admin
   ADMIN: "/admin",

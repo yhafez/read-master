@@ -2198,5 +2198,30 @@
     "share": "Share",
     "copiedToClipboard": "Copied to clipboard!",
     "copyFailed": "Failed to copy link"
+  },
+  "stats": {
+    "analytics": {
+      "title": "Enhanced Analytics",
+      "description": "Track your reading habits with detailed charts and insights",
+      "readingTime": "Reading Time",
+      "readingSpeed": "Reading Speed Trends",
+      "completions": "Book Completions",
+      "totalTime": "Total Time",
+      "avgPerDay": "Avg Per Day",
+      "sessions": "Sessions",
+      "avgWpm": "Avg WPM",
+      "currentWpm": "Current Avg WPM",
+      "overallWpm": "Overall Avg WPM",
+      "improvement": "Improvement",
+      "fastestWpm": "Fastest WPM",
+      "speedByGenre": "Speed by Genre",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "completionRate": "Completion Rate",
+      "avgTimeToComplete": "Avg Time",
+      "booksByStatus": "Books by Status",
+      "topGenres": "Top Genres",
+      "errorLoading": "Failed to load analytics data"
+    }
   }
 }

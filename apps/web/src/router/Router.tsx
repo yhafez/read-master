@@ -46,6 +46,7 @@ import {
   SettingsSubscriptionPage,
   UserStatsPage,
   AchievementsPage,
+  AnalyticsChartsPage,
   AdminDashboardPage,
   AdminProtectedRoute,
   AccessibilityStatementPage,
@@ -269,6 +270,10 @@ function createAppRouter() {
             {
               path: ROUTES.ACHIEVEMENTS,
               element: <AchievementsPage />,
+            },
+            {
+              path: ROUTES.ANALYTICS,
+              element: <AnalyticsChartsPage />,
             },
           ],
         },

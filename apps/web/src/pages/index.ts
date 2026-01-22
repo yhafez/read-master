@@ -70,10 +70,13 @@ export {
 } from "./settings";
 
 // Stats
-export { UserStatsPage, AchievementsPage } from "./stats";
+export { UserStatsPage, AchievementsPage, AnalyticsChartsPage } from "./stats";
 
 // Admin
 export { AdminDashboardPage, AdminProtectedRoute } from "./admin";
 
 // Accessibility
-export { AccessibilityStatementPage, KeyboardShortcutsPage } from "./accessibility";
+export {
+  AccessibilityStatementPage,
+  KeyboardShortcutsPage,
+} from "./accessibility";
