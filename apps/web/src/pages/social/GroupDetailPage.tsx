@@ -18,6 +18,7 @@ import {
   InviteToGroupDialog,
   ManageMembersDialog,
   GroupReadingSchedule,
+  GroupBooksPanel,
 } from "@/components/groups";
 import {
   Box,
@@ -240,7 +241,12 @@ export function GroupDetailPage(): React.ReactElement {
   // Loading state
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="60vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -267,10 +273,12 @@ export function GroupDetailPage(): React.ReactElement {
   if (!group) {
     return (
       <Box>
-        <Alert severity="info">
-          {t("groups.notFound")}
-        </Alert>
-        <Button variant="outlined" onClick={() => navigate("/groups")} sx={{ mt: 2 }}>
+        <Alert severity="info">{t("groups.notFound")}</Alert>
+        <Button
+          variant="outlined"
+          onClick={() => navigate("/groups")}
+          sx={{ mt: 2 }}
+        >
           {t("groups.backToGroups")}
         </Button>
       </Box>
@@ -278,7 +286,8 @@ export function GroupDetailPage(): React.ReactElement {
   }
 
   const isOwner = group.owner.id === clerkUserId;
-  const isFull = group.maxMembers !== null && group.membersCount >= group.maxMembers;
+  const isFull =
+    group.maxMembers !== null && group.membersCount >= group.maxMembers;
 
   return (
     <Box>
@@ -294,7 +303,13 @@ export function GroupDetailPage(): React.ReactElement {
         )}
         <CardContent>
           <Stack direction="row" spacing={2} alignItems="flex-start" mb={2}>
-            <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 64, height: 64 }}>
+            <Avatar
+              sx={{
+                bgcolor: theme.palette.primary.main,
+                width: 64,
+                height: 64,
+              }}
+            >
               <GroupOutlined sx={{ fontSize: 32 }} />
             </Avatar>
             <Box flex={1}>
@@ -304,19 +319,30 @@ export function GroupDetailPage(): React.ReactElement {
               <Stack direction="row" spacing={1} flexWrap="wrap" mb={1}>
                 <Chip
                   icon={group.isPublic ? <PublicOutlined /> : <LockOutlined />}
-                  label={group.isPublic ? t("common.public") : t("common.private")}
+                  label={
+                    group.isPublic ? t("common.public") : t("common.private")
+                  }
                   size="small"
                   color={group.isPublic ? "success" : "default"}
                 />
                 {group.isMember && (
-                  <Chip label={t("groups.member")} size="small" color="primary" />
+                  <Chip
+                    label={t("groups.member")}
+                    size="small"
+                    color="primary"
+                  />
                 )}
                 {isOwner && (
-                  <Chip label={t("groups.owner")} size="small" color="secondary" />
+                  <Chip
+                    label={t("groups.owner")}
+                    size="small"
+                    color="secondary"
+                  />
                 )}
               </Stack>
               <Typography variant="caption" color="text.secondary">
-                {t("common.created")} {formatRelativeTime(new Date(group.createdAt))}
+                {t("common.created")}{" "}
+                {formatRelativeTime(new Date(group.createdAt))}
               </Typography>
             </Box>
           </Stack>
@@ -359,7 +385,9 @@ export function GroupDetailPage(): React.ReactElement {
             <Grid item xs={4}>
               <Stack alignItems="center">
                 <BookOutlined fontSize="large" color="primary" />
-                <Typography variant="h6">{group.currentBook ? "1" : "0"}</Typography>
+                <Typography variant="h6">
+                  {group.currentBook ? "1" : "0"}
+                </Typography>
                 <Typography variant="caption" color="text.secondary">
                   {t("groups.currentBook")}
                 </Typography>
@@ -372,9 +400,13 @@ export function GroupDetailPage(): React.ReactElement {
             {!isOwner && (
               <Button
                 variant={group.isMember ? "outlined" : "contained"}
-                startIcon={group.isMember ? <ExitToAppOutlined /> : <PersonAddOutlined />}
+                startIcon={
+                  group.isMember ? <ExitToAppOutlined /> : <PersonAddOutlined />
+                }
                 onClick={handleJoinLeave}
-                disabled={joinLeaveMutation.isPending || (!group.isMember && isFull)}
+                disabled={
+                  joinLeaveMutation.isPending || (!group.isMember && isFull)
+                }
                 fullWidth={isMobile}
               >
                 {group.isMember
@@ -475,6 +507,15 @@ export function GroupDetailPage(): React.ReactElement {
         </Card>
       )}
 
+      {/* Group Reading List */}
+      <Box sx={{ mb: 3 }}>
+        <GroupBooksPanel
+          groupId={group.id}
+          canEdit={isOwner}
+          onAddBook={() => navigate(`/groups/${groupId}/books/add`)}
+        />
+      </Box>
+
       {/* Reading Schedule */}
       <Box sx={{ mb: 3 }}>
         <GroupReadingSchedule
@@ -518,10 +559,13 @@ export function GroupDetailPage(): React.ReactElement {
       {/* Discussions Preview */}
       <Card>
         <CardContent>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
-            <Typography variant="h6">
-              {t("groups.discussions")}
-            </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={2}
+          >
+            <Typography variant="h6">{t("groups.discussions")}</Typography>
             <Button
               variant="text"
               endIcon={<ChatBubbleOutline />}
@@ -531,9 +575,7 @@ export function GroupDetailPage(): React.ReactElement {
             </Button>
           </Stack>
           {group.discussionsCount === 0 ? (
-            <Alert severity="info">
-              {t("groups.noDiscussions")}
-            </Alert>
+            <Alert severity="info">{t("groups.noDiscussions")}</Alert>
           ) : (
             <Typography variant="body2" color="text.secondary">
               {t("groups.discussionCount", { count: group.discussionsCount })}
@@ -562,7 +604,9 @@ export function GroupDetailPage(): React.ReactElement {
             color="error"
             disabled={deleteMutation.isPending}
           >
-            {deleteMutation.isPending ? t("common.deleting") : t("common.delete")}
+            {deleteMutation.isPending
+              ? t("common.deleting")
+              : t("common.delete")}
           </Button>
         </DialogActions>
       </Dialog>

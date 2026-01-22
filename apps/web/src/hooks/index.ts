@@ -135,3 +135,4 @@ export {
 } from "./useForum";
 export * from "./useStudyGuide";
 export * from "./useNewLeaderboard";
+export * from "./useGroupBooks";

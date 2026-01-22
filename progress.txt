@@ -3,6 +3,109 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 16:00]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: social-bookclubs-001 - Book Clubs Enhancement (Continued: Frontend UI)
+
+WHAT WAS DONE:
+✅ **Created useGroupBooks Hook** (`apps/web/src/hooks/useGroupBooks.ts`)
+- React Query hook for fetching group books from API
+- Hooks for add, update, and remove operations
+- Query key factory for proper cache invalidation
+- Helper functions for status colors, labels, and sorting
+- Full TypeScript typing for all operations
+
+✅ **Created GroupBooksPanel Component** (`apps/web/src/components/groups/GroupBooksPanel.tsx`)
+- Displays the group's reading list with book cards
+- Shows book cover, title, author, status, and schedule dates
+- Edit dialog for updating book status and schedule
+- Delete confirmation dialog
+- Loading, error, and empty states
+- Admin-only edit/delete controls
+
+✅ **Integrated GroupBooksPanel into GroupDetailPage**
+- Added GroupBooksPanel to the group detail page
+- Panel shows between current book section and reading schedule
+- Supports "Add Book" navigation for admins
+
+✅ **Created Tests** (30 tests, all passing)
+- `apps/web/src/hooks/useGroupBooks.test.ts`
+- Tests cover:
+  - Query key generation
+  - Status color mapping (CURRENT→primary, COMPLETED→success, etc.)
+  - Status label mapping
+  - Book sorting by status priority and order index
+  - Type structure validation
+
+WHY IT MATTERS:
+- **Book Club Reading Lists**: Groups can now view/manage their scheduled reading list
+- **Visual Status Tracking**: Clear visual indicators for book status (current, upcoming, completed)
+- **Schedule Management**: Admins can update start/end dates and target pages
+- **Connected to Backend**: Uses the API created in previous iteration
+
+TECHNICAL DETAILS:
+**useGroupBooks Hook:**
+- Uses React Query for data fetching and caching
+- Proper cache invalidation on mutations
+- Query key factory pattern for consistent cache management
+- Helper functions for UI rendering (colors, labels, sorting)
+
+**GroupBooksPanel Component:**
+- Follows existing component patterns (MUI, i18n, responsive)
+- Edit dialog with form for status, dates, target page
+- Proper loading states and error handling
+- Admin-only controls based on canEdit prop
+
+REMAINING WORK (social-bookclubs-001):
+- [ ] Add Book to Group dialog (with book search)
+- [ ] Discussion scheduling UI with calendar
+- [ ] Email notifications for upcoming discussions
+- [ ] Club invitation system enhancement
+- [ ] i18n translations for new keys
+
+DISCOVERIES:
+- Existing ReadingGroup and GroupBook models work well together
+- The API from previous iteration integrates smoothly with frontend
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, pre-existing warnings in unrelated files)
+✅ pnpm vitest run - 4274 tests pass
+  - New tests: 30/30 passed
+  - All existing tests continue to pass
+
+FILES CREATED:
+- apps/web/src/hooks/useGroupBooks.ts (270 lines)
+- apps/web/src/hooks/useGroupBooks.test.ts (270 lines)
+- apps/web/src/components/groups/GroupBooksPanel.tsx (300 lines)
+
+FILES MODIFIED:
+- apps/web/src/components/groups/index.ts (export GroupBooksPanel)
+- apps/web/src/hooks/index.ts (export useGroupBooks)
+- apps/web/src/pages/social/GroupDetailPage.tsx (added GroupBooksPanel)
+
+NEXT RECOMMENDED TASKS:
+1. **social-bookclubs-001** (continued) - Complete remaining UI
+   - Add book dialog with search
+   - Discussion scheduling calendar
+
+2. **email-marketing-001** - Build email marketing funnel
+   - Discussion reminders
+   - Weekly digest for book clubs
+
+3. **payments-stripe-complete-001** - Complete Stripe integration
+   - Subscription management
+   - Usage limits
+
+SPRINT STATUS:
+- In Progress (155/174 tasks complete - 89.1%)
+- 19 active tasks remaining
+- social-bookclubs-001: Backend + frontend panel complete, remaining UI pending
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 15:45]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
