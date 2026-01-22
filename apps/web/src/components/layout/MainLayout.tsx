@@ -29,7 +29,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 
 import { ROUTES } from "@/router/routes";
-import { LanguageSwitcher } from "@/components/common";
+import { LanguageSwitcher, SkipLinks } from "@/components/common";
 import { MobileBottomNav } from "./MobileBottomNav";
 
 const DRAWER_WIDTH = 240;
@@ -103,7 +103,12 @@ export function MainLayout(): React.ReactElement {
   );
 
   const drawerContent = (
-    <Box sx={{ overflow: "auto" }}>
+    <Box
+      sx={{ overflow: "auto" }}
+      component="nav"
+      role="navigation"
+      id="navigation"
+    >
       <Box
         sx={{
           p: 2,
@@ -154,83 +159,94 @@ export function MainLayout(): React.ReactElement {
   );
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      {/* App Bar */}
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
-          ml: { md: `${DRAWER_WIDTH}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label={t("nav.openMenu")}
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            {t("common.appName")}
-          </Typography>
-          <LanguageSwitcher />
-        </Toolbar>
-      </AppBar>
+    <>
+      <SkipLinks />
+      <Box sx={{ display: "flex", minHeight: "100vh" }}>
+        {/* App Bar */}
+        <AppBar
+          position="fixed"
+          sx={{
+            width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+            ml: { md: `${DRAWER_WIDTH}px` },
+          }}
+          role="banner"
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label={t("nav.openMenu")}
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              {t("common.appName")}
+            </Typography>
+            <LanguageSwitcher />
+          </Toolbar>
+        </AppBar>
 
-      {/* Mobile Drawer */}
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile
-        }}
-        sx={{
-          display: { xs: "block", md: "none" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: DRAWER_WIDTH,
-          },
-        }}
-      >
-        {drawerContent}
-      </Drawer>
+        {/* Mobile Drawer */}
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile
+          }}
+          sx={{
+            display: { xs: "block", md: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: DRAWER_WIDTH,
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
 
-      {/* Desktop Drawer */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: "none", md: "block" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: DRAWER_WIDTH,
-          },
-        }}
-        open
-      >
-        {drawerContent}
-      </Drawer>
+        {/* Desktop Drawer */}
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: "none", md: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: DRAWER_WIDTH,
+            },
+          }}
+          open
+        >
+          {drawerContent}
+        </Drawer>
 
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: { xs: 2, sm: 3 }, // Less padding on mobile
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
-          mt: "64px", // AppBar height
-          mb: { xs: `${MOBILE_BOTTOM_NAV_HEIGHT}px`, md: 0 }, // Space for bottom nav on mobile
-        }}
-      >
-        <Outlet />
+        {/* Main Content */}
+        <Box
+          component="main"
+          id="main-content"
+          role="main"
+          sx={{
+            flexGrow: 1,
+            p: { xs: 2, sm: 3 }, // Less padding on mobile
+            width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+            mt: "64px", // AppBar height
+            mb: { xs: `${MOBILE_BOTTOM_NAV_HEIGHT}px`, md: 0 }, // Space for bottom nav on mobile
+          }}
+        >
+          <Outlet />
+        </Box>
+
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav />
       </Box>
-
-      {/* Mobile Bottom Navigation */}
-      <MobileBottomNav />
-    </Box>
+    </>
   );
 }
 
