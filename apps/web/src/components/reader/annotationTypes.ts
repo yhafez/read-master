@@ -74,6 +74,10 @@ export interface AnnotationBase {
   note?: string;
   /** Whether the annotation is public */
   isPublic: boolean;
+  /** Number of likes */
+  likeCount: number;
+  /** Whether current user has liked this annotation */
+  isLikedByCurrentUser: boolean;
   /** Created timestamp */
   createdAt: string;
   /** Updated timestamp */

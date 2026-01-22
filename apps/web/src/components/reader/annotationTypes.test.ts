@@ -46,6 +46,8 @@ const mockHighlight: HighlightAnnotation = {
   color: "yellow",
   note: "A note on the highlight",
   isPublic: false,
+  likeCount: 0,
+  isLikedByCurrentUser: false,
   createdAt: "2024-01-01T10:00:00Z",
   updatedAt: "2024-01-01T10:00:00Z",
 };
@@ -59,6 +61,8 @@ const mockNote: NoteAnnotation = {
   note: "This is a standalone note",
   selectedText: "Some selected text",
   isPublic: true,
+  likeCount: 0,
+  isLikedByCurrentUser: false,
   createdAt: "2024-01-02T10:00:00Z",
   updatedAt: "2024-01-02T10:00:00Z",
 };
@@ -71,6 +75,8 @@ const mockBookmark: BookmarkAnnotation = {
   endOffset: 200,
   note: "Important section",
   isPublic: false,
+  likeCount: 0,
+  isLikedByCurrentUser: false,
   createdAt: "2024-01-03T10:00:00Z",
   updatedAt: "2024-01-03T10:00:00Z",
 };

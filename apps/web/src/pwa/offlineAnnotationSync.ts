@@ -290,6 +290,8 @@ export async function createAnnotationOffline(
       color: input.color || "yellow",
       ...(input.note && { note: input.note }),
       isPublic: input.isPublic ?? false,
+      likeCount: 0,
+      isLikedByCurrentUser: false,
       createdAt: now,
       updatedAt: now,
     };
@@ -303,6 +305,8 @@ export async function createAnnotationOffline(
       ...(input.text && { selectedText: input.text }),
       note: input.note || "",
       isPublic: input.isPublic ?? false,
+      likeCount: 0,
+      isLikedByCurrentUser: false,
       createdAt: now,
       updatedAt: now,
     };
@@ -314,6 +318,8 @@ export async function createAnnotationOffline(
       startOffset: input.startOffset,
       endOffset: input.endOffset,
       isPublic: input.isPublic ?? false,
+      likeCount: 0,
+      isLikedByCurrentUser: false,
       createdAt: now,
       updatedAt: now,
     };
@@ -357,6 +363,8 @@ export async function updateAnnotationOffline(
       color: input.color ?? existing.color,
       ...(newNote && { note: newNote }),
       isPublic: input.isPublic ?? existing.isPublic,
+      likeCount: existing.likeCount,
+      isLikedByCurrentUser: existing.isLikedByCurrentUser,
       createdAt: existing.createdAt,
       updatedAt: now,
     };
@@ -370,6 +378,8 @@ export async function updateAnnotationOffline(
       ...(existing.selectedText && { selectedText: existing.selectedText }),
       note: input.note ?? existing.note,
       isPublic: input.isPublic ?? existing.isPublic,
+      likeCount: existing.likeCount,
+      isLikedByCurrentUser: existing.isLikedByCurrentUser,
       createdAt: existing.createdAt,
       updatedAt: now,
     };
@@ -381,6 +391,8 @@ export async function updateAnnotationOffline(
       startOffset: existing.startOffset,
       endOffset: existing.endOffset,
       isPublic: input.isPublic ?? existing.isPublic,
+      likeCount: existing.likeCount,
+      isLikedByCurrentUser: existing.isLikedByCurrentUser,
       createdAt: existing.createdAt,
       updatedAt: now,
     };

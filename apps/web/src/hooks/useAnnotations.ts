@@ -84,6 +84,32 @@ async function deleteAnnotation(id: string): Promise<void> {
   }
 }
 
+/**
+ * Like an annotation
+ */
+async function likeAnnotation(id: string): Promise<void> {
+  const response = await fetch(`/api/annotations/${id}/like`, {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to like annotation");
+  }
+}
+
+/**
+ * Unlike an annotation
+ */
+async function unlikeAnnotation(id: string): Promise<void> {
+  const response = await fetch(`/api/annotations/${id}/like`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to unlike annotation");
+  }
+}
+
 // ============================================================================
 // React Query Hooks
 // ============================================================================
@@ -160,6 +186,40 @@ export function useDeleteAnnotation(bookId: string) {
 }
 
 /**
+ * Hook to like an annotation
+ */
+export function useLikeAnnotation(bookId: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: likeAnnotation,
+    onSuccess: () => {
+      // Invalidate annotations query to refetch
+      queryClient.invalidateQueries({
+        queryKey: annotationKeys.book(bookId),
+      });
+    },
+  });
+}
+
+/**
+ * Hook to unlike an annotation
+ */
+export function useUnlikeAnnotation(bookId: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: unlikeAnnotation,
+    onSuccess: () => {
+      // Invalidate annotations query to refetch
+      queryClient.invalidateQueries({
+        queryKey: annotationKeys.book(bookId),
+      });
+    },
+  });
+}
+
+/**
  * Hook providing all annotation operations
  */
 export function useAnnotationOperations(bookId: string) {
@@ -167,6 +227,8 @@ export function useAnnotationOperations(bookId: string) {
   const createMutation = useCreateAnnotation(bookId);
   const updateMutation = useUpdateAnnotation(bookId);
   const deleteMutation = useDeleteAnnotation(bookId);
+  const likeMutation = useLikeAnnotation(bookId);
+  const unlikeMutation = useUnlikeAnnotation(bookId);
 
   return {
     // Data
@@ -179,10 +241,14 @@ export function useAnnotationOperations(bookId: string) {
     update: (id: string, input: UpdateAnnotationInput) =>
       updateMutation.mutate({ id, input }),
     remove: deleteMutation.mutate,
+    like: likeMutation.mutate,
+    unlike: unlikeMutation.mutate,
 
     // Loading states
     isCreating: createMutation.isPending,
     isUpdating: updateMutation.isPending,
     isDeleting: deleteMutation.isPending,
+    isLiking: likeMutation.isPending,
+    isUnliking: unlikeMutation.isPending,
   };
 }

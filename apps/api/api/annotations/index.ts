@@ -88,6 +88,8 @@ type AnnotationResponse = {
   note: string | null;
   color: string | null;
   isPublic: boolean;
+  likeCount: number;
+  isLikedByCurrentUser: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -110,20 +112,30 @@ type AnnotationListResponse = {
 /**
  * Format annotation for API response
  */
-function formatAnnotationResponse(annotation: {
-  id: string;
-  bookId: string;
-  userId: string;
-  type: AnnotationType;
-  startOffset: number;
-  endOffset: number;
-  selectedText: string | null;
-  note: string | null;
-  color: string | null;
-  isPublic: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}): AnnotationResponse {
+function formatAnnotationResponse(
+  annotation: {
+    id: string;
+    bookId: string;
+    userId: string;
+    type: AnnotationType;
+    startOffset: number;
+    endOffset: number;
+    selectedText: string | null;
+    note: string | null;
+    color: string | null;
+    isPublic: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    _count?: { likes: number };
+    likes?: { userId: string }[];
+  },
+  currentUserId?: string
+): AnnotationResponse {
+  const likeCount = annotation._count?.likes || 0;
+  const isLikedByCurrentUser = currentUserId
+    ? annotation.likes?.some((like) => like.userId === currentUserId) || false
+    : false;
+
   return {
     id: annotation.id,
     bookId: annotation.bookId,
@@ -135,6 +147,8 @@ function formatAnnotationResponse(annotation: {
     note: annotation.note,
     color: annotation.color,
     isPublic: annotation.isPublic,
+    likeCount,
+    isLikedByCurrentUser,
     createdAt: annotation.createdAt.toISOString(),
     updatedAt: annotation.updatedAt.toISOString(),
   };
@@ -335,6 +349,15 @@ async function handleCreate(
   // Create annotation
   const annotation = await db.annotation.create({
     data: annotationData,
+    include: {
+      _count: {
+        select: { likes: true },
+      },
+      likes: {
+        where: { userId: user.id },
+        select: { userId: true },
+      },
+    },
   });
 
   // Log the creation
@@ -346,7 +369,7 @@ async function handleCreate(
     isPublic: data.isPublic,
   });
 
-  sendSuccess(res, formatAnnotationResponse(annotation), 201);
+  sendSuccess(res, formatAnnotationResponse(annotation, user.id), 201);
 }
 
 /**
@@ -445,6 +468,15 @@ async function handleList(
     orderBy,
     skip,
     take: query.limit,
+    include: {
+      _count: {
+        select: { likes: true },
+      },
+      likes: {
+        where: { userId: user.id },
+        select: { userId: true },
+      },
+    },
   });
 
   // Log the request
@@ -458,7 +490,7 @@ async function handleList(
   // Return paginated response
   sendPaginated(
     res,
-    annotations.map(formatAnnotationResponse),
+    annotations.map((a) => formatAnnotationResponse(a, user.id)),
     query.page,
     query.limit,
     total
@@ -576,6 +608,15 @@ async function handleUpdate(
   const updatedAnnotation = await db.annotation.update({
     where: { id: annotationId },
     data: updateData,
+    include: {
+      _count: {
+        select: { likes: true },
+      },
+      likes: {
+        where: { userId: user.id },
+        select: { userId: true },
+      },
+    },
   });
 
   // Log the update
@@ -586,7 +627,7 @@ async function handleUpdate(
     fieldsUpdated: Object.keys(updateData),
   });
 
-  sendSuccess(res, formatAnnotationResponse(updatedAnnotation));
+  sendSuccess(res, formatAnnotationResponse(updatedAnnotation, user.id));
 }
 
 /**
