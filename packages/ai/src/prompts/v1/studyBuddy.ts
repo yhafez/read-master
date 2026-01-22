@@ -13,6 +13,15 @@ import { formatBookContext, getReadingLevelDescription } from "../utils.js";
 // TYPES
 // =============================================================================
 
+/**
+ * Conversation message type
+ */
+export type ConversationMessage = {
+  role: "user" | "assistant";
+  content: string;
+  timestamp?: string;
+};
+
 export type StudyBuddyInput = {
   /** Book context information */
   book: BookContext;
@@ -31,11 +40,7 @@ export type StudyBuddyInput = {
   userMessage: string;
 
   /** Conversation history (last 10 messages) */
-  conversationHistory?: Array<{
-    role: "user" | "assistant";
-    content: string;
-    timestamp: string;
-  }>;
+  conversationHistory?: Array<ConversationMessage>;
 
   /** User's recent highlights/notes from this book */
   recentAnnotations?: Array<{

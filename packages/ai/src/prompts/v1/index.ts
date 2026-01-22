@@ -88,6 +88,7 @@ export {
   validateStudyBuddyInput,
   type StudyBuddyInput,
   type StudyBuddyOutput,
+  type ConversationMessage,
 } from "./studyBuddy.js";
 
 // Discussion Questions

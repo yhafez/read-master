@@ -63,3 +63,41 @@ export {
   type UpdateProgressInput,
   type UseCurriculumProgressResult,
 } from "./useCurriculumProgress";
+
+export {
+  useStudyBuddy,
+  type StudyBuddyRequest,
+  type StudyBuddyResponse,
+  type ReadingPosition,
+  type RecentAnnotation,
+} from "./useStudyBuddy";
+
+export {
+  useDiscussionQuestions,
+  type DiscussionQuestionsRequest,
+  type DiscussionQuestionsResponse,
+  type Section,
+  type Progress,
+} from "./useDiscussionQuestions";
+
+export {
+  useSummarizeNotes,
+  type SummarizeNotesRequest,
+  type SummarizeNotesResponse,
+  type AnnotationForSummary,
+} from "./useSummarizeNotes";
+
+export {
+  useAssessDifficulty,
+  type AssessDifficultyRequest,
+  type AssessDifficultyResponse,
+  type ReadingLevel,
+} from "./useAssessDifficulty";
+
+export {
+  usePersonalizedRecommendations,
+  type PersonalizedRecommendationsRequest,
+  type PersonalizedRecommendationsResponse,
+  type UserPreferences,
+  type ReadingGoals,
+} from "./usePersonalizedRecommendations";
