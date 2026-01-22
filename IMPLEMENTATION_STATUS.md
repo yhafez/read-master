@@ -189,6 +189,8 @@
   - Threaded comments
   - Upvote/downvote system
   - Moderation tools
+  - **Complete React Query hooks** (useForumCategories, useForumPosts, useForumReplies, useVotePost, useVoteReply, useMarkBestAnswer) ✨ NEW
+  - **Report content functionality** (ReportDialog component with i18n support) ✨ NEW
 
 ### **🤖 AI Features** ✨ **ENHANCED with Advanced AI!**
 
@@ -409,6 +411,7 @@ All core MVP features are **100% complete** for the Web platform:
 - PUT /api/curriculums/:id/items/:itemId - Update item
 - DELETE /api/curriculums/:id/items/:itemId - Remove item
 - PUT /api/curriculums/:id/items/reorder - Reorder items
+- **POST /api/curriculums/:id/clone** - Clone curriculum templates ✨ NEW
 
 **Frontend**: ✅ **COMPLETE** (100%)
 
@@ -421,10 +424,11 @@ All core MVP features are **100% complete** for the Web platform:
   - useDeleteCurriculum - Delete
   - useFollowCurriculum - Follow
   - useUnfollowCurriculum - Unfollow
+  - **useCloneCurriculum** - Clone templates ✨ NEW
 - ✅ **useCurriculumProgress** - Progress tracking hook
 - ✅ **CurriculumCreatePage** - Create/edit UI with stepper
 - ✅ **CurriculumDetailPage** - View, follow, track progress
-- ✅ **CurriculumBrowsePage** - Discover public curriculums
+- ✅ **CurriculumBrowsePage** - Discover public curriculums with clone button ✨ NEW
 - ✅ **Type system** - Complete TypeScript alignment with backend
 
 **Features**:
@@ -443,6 +447,9 @@ All core MVP features are **100% complete** for the Web platform:
 12. ✅ Categories and tags
 13. ✅ Optional items support
 14. ✅ Estimated time tracking
+15. ✅ **Official curriculum templates** - 6 pre-made templates ✨ NEW
+16. ✅ **Clone curriculum templates** - One-click template cloning ✨ NEW
+17. ✅ **Auto-progress** - Automatic item completion when books finished ✨ NEW
 
 ---
 
