@@ -177,6 +177,7 @@ model Book {
   // Social relations
   readingGroups    ReadingGroup[]    @relation("CurrentGroupBook") // Reading groups currently reading this book
   groupDiscussions GroupDiscussion[] @relation("GroupBookDiscussions") // Discussions about this book
+  groupBooks       GroupBook[]       @relation("GroupBooks") // Book club scheduled readings
 
   // Forum relations
   forumPosts ForumPost[] @relation("ForumBookPosts") // Forum posts about this book
@@ -993,6 +994,7 @@ model ReadingGroup {
   // Relations
   members     ReadingGroupMember[]
   discussions GroupDiscussion[]
+  groupBooks  GroupBook[] // Books scheduled for the group to read
 
   // Indexes
   @@index([userId])
@@ -1000,6 +1002,47 @@ model ReadingGroup {
   @@index([deletedAt])
   @@index([membersCount])
   @@index([createdAt])
+}
+
+/// GroupBook - Books scheduled for a reading group
+/// Tracks the reading schedule for each book in the group
+model GroupBook {
+  id      String       @id @default(cuid())
+  groupId String
+  group   ReadingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  bookId  String
+  book    Book         @relation("GroupBooks", fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Schedule
+  startDate   DateTime? // When the group starts reading this book
+  endDate     DateTime? // Target completion date
+  targetPage  Int? // Current target page for the group
+  status      GroupBookStatus @default(UPCOMING) // Reading status
+
+  // Order in the reading list
+  orderIndex Int @default(0)
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Unique constraint: each book can only be in a group's list once
+  @@unique([groupId, bookId])
+  // Indexes
+  @@index([groupId])
+  @@index([bookId])
+  @@index([groupId, status])
+  @@index([groupId, orderIndex])
+  @@index([startDate])
+  @@index([endDate])
+}
+
+/// GroupBookStatus - Status of a book in a reading group
+enum GroupBookStatus {
+  UPCOMING // Scheduled to read in the future
+  CURRENT // Currently being read by the group
+  COMPLETED // Finished reading
+  SKIPPED // Decided not to read
 }
 
 /// ReadingGroupMember - Membership in a reading group
@@ -1051,6 +1094,10 @@ model GroupDiscussion {
   isPinned Boolean @default(false) // Pinned at top of group
   isLocked Boolean @default(false) // Prevent new replies
 
+  // Scheduled discussion support
+  scheduledAt DateTime? // When the discussion is scheduled to take place (null = immediate)
+  isScheduled Boolean   @default(false) // Whether this is a scheduled discussion
+
   // Statistics (denormalized)
   repliesCount Int       @default(0)
   lastReplyAt  DateTime?
@@ -1069,6 +1116,8 @@ model GroupDiscussion {
   @@index([bookId])
   @@index([groupId, isPinned])
   @@index([groupId, lastReplyAt])
+  @@index([groupId, scheduledAt]) // For calendar view of scheduled discussions
+  @@index([scheduledAt]) // For finding upcoming discussions across all groups
   @@index([deletedAt])
 }
 

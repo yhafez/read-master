@@ -3,6 +3,118 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 15:45]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: social-bookclubs-001 - Book Clubs Enhancement (Partial: Database & API)
+
+WHAT WAS DONE:
+✅ **Created GroupBook Prisma Model**
+- Added `GroupBook` model to schema.prisma for tracking scheduled books in groups
+- Fields: groupId, bookId, startDate, endDate, targetPage, status, orderIndex
+- Status enum: UPCOMING, CURRENT, COMPLETED, SKIPPED
+- Unique constraint on groupId+bookId
+- Proper indexes for efficient queries (by status, orderIndex, dates)
+
+✅ **Enhanced GroupDiscussion Model**
+- Added `scheduledAt` field for scheduling discussions
+- Added `isScheduled` boolean flag
+- Added index on scheduledAt for calendar view queries
+
+✅ **Added GroupBook Relation to Book Model**
+- Books can now be referenced in multiple reading groups
+- Relation named "GroupBooks" for clarity
+
+✅ **Created /api/groups/:id/books API Endpoint**
+- GET: List books in group's reading list with pagination and status filter
+- POST: Add book to group (requires OWNER/ADMIN role)
+- PUT: Update book schedule, status, or order (requires OWNER/ADMIN role)
+- DELETE: Remove book from group (requires OWNER/ADMIN role)
+- Proper Zod validation for all inputs
+- Cache invalidation on mutations
+- Comprehensive logging
+
+✅ **Created Tests** (90 tests, all passing)
+- Created `apps/api/api/groups/[id]/books.test.ts`
+- Tests cover:
+  - Schema validation for list, add, update operations
+  - Permission checking (hasAdminPermission)
+  - Cache key building
+  - Response mapping functions
+  - Integration scenarios
+  - Edge cases
+  - Status workflow testing
+
+WHY IT MATTERS:
+- **Book Club Scheduling**: Groups can now schedule reading lists with dates
+- **Coordinated Reading**: Members can see target pages and deadlines
+- **Progress Tracking**: Status workflow (UPCOMING → CURRENT → COMPLETED) tracks group progress
+- **Scheduled Discussions**: Foundation laid for discussion calendar feature
+
+TECHNICAL DETAILS:
+**Database Schema:**
+- GroupBook model with proper foreign keys to ReadingGroup and Book
+- GroupBookStatus enum for reading workflow
+- Enhanced GroupDiscussion with scheduling support
+
+**API Design:**
+- RESTful endpoints following existing patterns
+- Role-based access control (OWNER/ADMIN only for mutations)
+- Zod schemas for input validation
+- Pagination support for listing
+
+**Test Coverage:**
+- 90 unit tests covering all helper functions
+- Schema validation tests for all endpoints
+- Integration scenario tests
+
+REMAINING WORK (social-bookclubs-001):
+- [ ] Frontend UI components (BookClubsPage, BookClubDetailPage)
+- [ ] Discussion scheduling UI with calendar
+- [ ] Email notifications for upcoming discussions
+- [ ] Club invitation system
+- [ ] i18n translations
+
+DISCOVERIES:
+- Existing ReadingGroup model serves as the Book Club base
+- GroupDiscussion already supports book-specific discussions
+- The infrastructure is well-designed for these enhancements
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, 65 warnings in unrelated files)
+✅ pnpm vitest run - 90 new tests pass
+  - Pre-existing localStorage test failures remain (176 failures, unrelated)
+
+FILES CREATED:
+- apps/api/api/groups/[id]/books.ts (625 lines)
+- apps/api/api/groups/[id]/books.test.ts (521 lines)
+
+FILES MODIFIED:
+- packages/database/prisma/schema.prisma (added GroupBook model, enhanced GroupDiscussion)
+
+NEXT RECOMMENDED TASKS:
+1. **social-bookclubs-001** (continued) - Build Book Clubs UI
+   - Frontend components for browsing/creating clubs
+   - Discussion scheduling calendar
+   - Member management UI
+
+2. **email-marketing-001** - Build email marketing funnel
+   - Discussion reminder emails
+   - Weekly digest for book clubs
+
+3. **payments-stripe-complete-001** - Complete Stripe integration
+   - Subscription management
+   - Usage limits
+
+SPRINT STATUS:
+- In Progress (155/174 tasks complete - 89.1%)
+- 19 active tasks remaining
+- social-bookclubs-001: Backend models and API complete, UI pending
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 15:25]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
