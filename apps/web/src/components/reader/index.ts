@@ -461,6 +461,9 @@ export {
 // TTS Controls Component
 export { TTSControls } from "./TTSControls";
 
+// TTS Download Button Component
+export { TTSDownloadButton } from "./TTSDownloadButton";
+
 // Notes Panel Types and Utilities
 export type {
   PanelPosition,

@@ -12,6 +12,7 @@ import {
   CircularProgress,
   Alert,
   Tooltip,
+  Badge,
 } from "@mui/material";
 import {
   ArrowBack as BackIcon,
@@ -20,9 +21,11 @@ import {
   Menu as MenuIcon,
   HighlightAlt as HighlightIcon,
   FileDownload as ExportIcon,
+  VolumeUp as TTSIcon,
 } from "@mui/icons-material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useUser } from "@clerk/clerk-react";
 import {
   EpubReader,
   PdfReader,
@@ -31,6 +34,8 @@ import {
   AnnotationSidebar,
   NoteEditorDialog,
   AnnotationExportDialog,
+  TTSControls,
+  TTSDownloadButton,
   useSelectionAnchor,
 } from "@/components/reader";
 import { useBook, useBookContent } from "@/hooks/useBooks";
@@ -84,6 +89,7 @@ export function ReaderPage(): React.ReactElement {
   const { t } = useTranslation();
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
+  const { user } = useUser();
 
   // Reader store
   const { isFullscreen, toggleFullscreen, setSelectedText, updatePosition } =
@@ -98,6 +104,9 @@ export function ReaderPage(): React.ReactElement {
   const [showAnnotationToolbar, setShowAnnotationToolbar] = useState(false);
   const [showAnnotationSidebar, setShowAnnotationSidebar] = useState(false);
   const [noteDialogOpen, setNoteDialogOpen] = useState(false);
+
+  // TTS state
+  const [showTTSControls, setShowTTSControls] = useState(false);
   const [editingAnnotation, setEditingAnnotation] = useState<Annotation | null>(
     null
   );
@@ -556,7 +565,9 @@ export function ReaderPage(): React.ReactElement {
             aria-label={t("reader.annotations.title")}
             color={annotations.length > 0 ? "primary" : "default"}
           >
-            <HighlightIcon />
+            <Badge badgeContent={annotations.length} color="primary">
+              <HighlightIcon />
+            </Badge>
           </IconButton>
         </Tooltip>
 
@@ -569,6 +580,29 @@ export function ReaderPage(): React.ReactElement {
             <ExportIcon />
           </IconButton>
         </Tooltip>
+
+        <Tooltip title={t("reader.tts.title", "Text-to-Speech")}>
+          <IconButton
+            onClick={() => setShowTTSControls(!showTTSControls)}
+            aria-label={t("reader.tts.title", "Text-to-Speech")}
+            color={showTTSControls ? "primary" : "default"}
+          >
+            <TTSIcon />
+          </IconButton>
+        </Tooltip>
+
+        {bookContent && (
+          <TTSDownloadButton
+            bookId={bookId || ""}
+            bookTitle={book.title}
+            bookText={bookContent}
+            userTier={
+              (user?.publicMetadata?.tier as "FREE" | "PRO" | "SCHOLAR") ||
+              "FREE"
+            }
+            disabled={false}
+          />
+        )}
 
         <Tooltip title={t("reader.tableOfContents")}>
           <IconButton
@@ -728,6 +762,48 @@ export function ReaderPage(): React.ReactElement {
           bookTitle={book.title}
           {...(book.author && { bookAuthor: book.author })}
         />
+      )}
+
+      {/* TTS Controls - Collapsible panel */}
+      {showTTSControls && bookContent && (
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            bgcolor: "background.paper",
+            borderTop: 1,
+            borderColor: "divider",
+            boxShadow: 3,
+            zIndex: 1200,
+            p: 2,
+          }}
+        >
+          <TTSControls
+            text={bookContent}
+            tier={
+              user?.publicMetadata?.tier === "PRO"
+                ? "pro"
+                : user?.publicMetadata?.tier === "SCHOLAR"
+                  ? "scholar"
+                  : "free"
+            }
+            onPlaybackChange={(_state) => {
+              // TTS playback state changed
+              // Could be used to update UI state
+            }}
+            onPositionChange={(position) => {
+              if (position) {
+                // Could use this to highlight current word during playback
+              }
+            }}
+            onError={(_error) => {
+              // TTS error occurred
+              // Could show error toast to user
+            }}
+          />
+        </Box>
       )}
     </Box>
   );

@@ -154,6 +154,10 @@
         "type": "Type"
       }
     },
+    "tts": {
+      "title": "Text-to-Speech",
+      "download": "Download Audio"
+    },
     "notes": {
       "title": "Notes Panel",
       "togglePosition": "Toggle panel position",
