@@ -2315,5 +2315,42 @@
       "status": "Status",
       "empty": "No participants yet"
     }
+  },
+  "translation": {
+    "compareTranslations": "Ihambing ang mga Pagsasalin",
+    "enableComparison": "Paganahin ang paghahambing ng pagsasalin",
+    "disableComparison": "Huwag paganahin ang paghahambing ng pagsasalin",
+    "originalLanguage": "Orihinal:",
+    "translationLanguage": "Pagsasalin:",
+    "selectOriginal": "Pumili ng Orihinal na Teksto",
+    "selectTranslation": "Pumili ng Pagsasalin",
+    "startComparison": "Simulan ang Paghahambing",
+    "segmentsFound": "{{count}} mga bahaging tugma",
+    "alignmentMode": "Paraan ng Pag-align",
+    "alignByParagraph": "I-align ayon sa Talata",
+    "alignBySentence": "I-align ayon sa Pangungusap",
+    "manualAlignment": "Manwal na Pag-align",
+    "displayOptions": "Mga Opsyon sa Pagpapakita",
+    "highlightMatches": "I-highlight ang mga Tugma",
+    "showConfidence": "Ipakita ang mga Marka ng Katiyakan",
+    "syncScroll": "I-sync ang Pag-scroll",
+    "selectBooksHint": "Piliin ang orihinal at pagsasalin upang ihambing"
+  },
+  "splitScreen": {
+    "controls": "Split Screen",
+    "modes": {
+      "single": "Isang Tanawin",
+      "vertical": "Magkatabi",
+      "horizontal": "Nakapatong"
+    },
+    "swapPanes": "Palitan ang mga Panel",
+    "selectLeftBook": "Pumili ng Kaliwang Aklat",
+    "selectRightBook": "Pumili ng Kanang Aklat",
+    "synchronization": "Pag-synchronize",
+    "syncScroll": "I-sync ang Pag-scroll",
+    "syncPage": "I-sync ang Paglipat ng Pahina",
+    "splitRatio": "Ratio ng Paghahati",
+    "resetRatio": "I-reset sa 50/50",
+    "selectBooksHint": "Pumili ng mga aklat para sa parehong panel upang paganahin ang lahat ng features"
   }
 }

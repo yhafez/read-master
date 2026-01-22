@@ -2315,5 +2315,42 @@
       "status": "Status",
       "empty": "No participants yet"
     }
+  },
+  "translation": {
+    "compareTranslations": "比较翻译",
+    "enableComparison": "启用翻译比较",
+    "disableComparison": "禁用翻译比较",
+    "originalLanguage": "原文：",
+    "translationLanguage": "翻译：",
+    "selectOriginal": "选择原文",
+    "selectTranslation": "选择翻译",
+    "startComparison": "开始比较",
+    "segmentsFound": "匹配了{{count}}个段落",
+    "alignmentMode": "对齐模式",
+    "alignByParagraph": "按段落对齐",
+    "alignBySentence": "按句子对齐",
+    "manualAlignment": "手动对齐",
+    "displayOptions": "显示选项",
+    "highlightMatches": "高亮匹配项",
+    "showConfidence": "显示置信度分数",
+    "syncScroll": "同步滚动",
+    "selectBooksHint": "选择原文和翻译进行比较"
+  },
+  "splitScreen": {
+    "controls": "分屏",
+    "modes": {
+      "single": "单一视图",
+      "vertical": "并排显示",
+      "horizontal": "堆叠显示"
+    },
+    "swapPanes": "交换窗格",
+    "selectLeftBook": "选择左侧书籍",
+    "selectRightBook": "选择右侧书籍",
+    "synchronization": "同步",
+    "syncScroll": "同步滚动",
+    "syncPage": "同步翻页",
+    "splitRatio": "分屏比例",
+    "resetRatio": "重置为50/50",
+    "selectBooksHint": "为两个窗格选择书籍以启用所有功能"
   }
 }

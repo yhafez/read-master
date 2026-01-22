@@ -2315,5 +2315,42 @@
       "status": "Status",
       "empty": "No participants yet"
     }
+  },
+  "translation": {
+    "compareTranslations": "Comparar Traducciones",
+    "enableComparison": "Activar comparación de traducciones",
+    "disableComparison": "Desactivar comparación de traducciones",
+    "originalLanguage": "Original:",
+    "translationLanguage": "Traducción:",
+    "selectOriginal": "Seleccionar Texto Original",
+    "selectTranslation": "Seleccionar Traducción",
+    "startComparison": "Iniciar Comparación",
+    "segmentsFound": "{{count}} segmentos coincidentes",
+    "alignmentMode": "Modo de Alineación",
+    "alignByParagraph": "Alinear por Párrafo",
+    "alignBySentence": "Alinear por Oración",
+    "manualAlignment": "Alineación Manual",
+    "displayOptions": "Opciones de Visualización",
+    "highlightMatches": "Resaltar Coincidencias",
+    "showConfidence": "Mostrar Puntuaciones de Confianza",
+    "syncScroll": "Sincronizar Desplazamiento",
+    "selectBooksHint": "Seleccione el original y la traducción para comparar"
+  },
+  "splitScreen": {
+    "controls": "Pantalla Dividida",
+    "modes": {
+      "single": "Vista Única",
+      "vertical": "Lado a Lado",
+      "horizontal": "Apilado"
+    },
+    "swapPanes": "Intercambiar Paneles",
+    "selectLeftBook": "Seleccionar Libro Izquierdo",
+    "selectRightBook": "Seleccionar Libro Derecho",
+    "synchronization": "Sincronización",
+    "syncScroll": "Sincronizar Desplazamiento",
+    "syncPage": "Sincronizar Cambio de Página",
+    "splitRatio": "Proporción de División",
+    "resetRatio": "Restablecer a 50/50",
+    "selectBooksHint": "Seleccione libros para ambos paneles para activar todas las funciones"
   }
 }

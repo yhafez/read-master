@@ -236,3 +236,4 @@ export {
 } from "./ttsSettingsStore";
 export type { PartialTTSSettings, TTSSettings } from "./ttsSettingsStore";
 export * from "./useSplitScreenStore";
+export * from "./useTranslationStore";

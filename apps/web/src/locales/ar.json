@@ -2353,5 +2353,42 @@
       "status": "Status",
       "empty": "No participants yet"
     }
+  },
+  "translation": {
+    "compareTranslations": "مقارنة الترجمات",
+    "enableComparison": "تفعيل مقارنة الترجمات",
+    "disableComparison": "إيقاف مقارنة الترجمات",
+    "originalLanguage": "النص الأصلي:",
+    "translationLanguage": "الترجمة:",
+    "selectOriginal": "اختر النص الأصلي",
+    "selectTranslation": "اختر الترجمة",
+    "startComparison": "بدء المقارنة",
+    "segmentsFound": "{{count}} مقطع متطابق",
+    "alignmentMode": "نوع المحاذاة",
+    "alignByParagraph": "محاذاة حسب الفقرة",
+    "alignBySentence": "محاذاة حسب الجملة",
+    "manualAlignment": "محاذاة يدوية",
+    "displayOptions": "خيارات العرض",
+    "highlightMatches": "تمييز التطابقات",
+    "showConfidence": "إظهار نسبة الثقة",
+    "syncScroll": "مزامنة التمرير",
+    "selectBooksHint": "اختر النص الأصلي والترجمة للمقارنة"
+  },
+  "splitScreen": {
+    "controls": "الشاشة المنقسمة",
+    "modes": {
+      "single": "عرض واحد",
+      "vertical": "جنباً إلى جنب",
+      "horizontal": "متراص"
+    },
+    "swapPanes": "تبديل الأجزاء",
+    "selectLeftBook": "اختر الكتاب الأيسر",
+    "selectRightBook": "اختر الكتاب الأيمن",
+    "synchronization": "المزامنة",
+    "syncScroll": "مزامنة التمرير",
+    "syncPage": "مزامنة تقليب الصفحات",
+    "splitRatio": "نسبة التقسيم",
+    "resetRatio": "إعادة تعيين إلى 50/50",
+    "selectBooksHint": "اختر كتباً لكلا الجزئين لتفعيل جميع المزايا"
   }
 }

@@ -2315,5 +2315,42 @@
       "status": "Status",
       "empty": "No participants yet"
     }
+  },
+  "translation": {
+    "compareTranslations": "翻訳を比較",
+    "enableComparison": "翻訳比較を有効にする",
+    "disableComparison": "翻訳比較を無効にする",
+    "originalLanguage": "原文:",
+    "translationLanguage": "翻訳:",
+    "selectOriginal": "原文を選択",
+    "selectTranslation": "翻訳を選択",
+    "startComparison": "比較を開始",
+    "segmentsFound": "{{count}}個のセグメントが一致しました",
+    "alignmentMode": "アライメントモード",
+    "alignByParagraph": "段落ごとに揃える",
+    "alignBySentence": "文ごとに揃える",
+    "manualAlignment": "手動アライメント",
+    "displayOptions": "表示オプション",
+    "highlightMatches": "一致をハイライト",
+    "showConfidence": "信頼度スコアを表示",
+    "syncScroll": "スクロールを同期",
+    "selectBooksHint": "原文と翻訳の両方を選択して比較してください"
+  },
+  "splitScreen": {
+    "controls": "分割画面",
+    "modes": {
+      "single": "単一ビュー",
+      "vertical": "並べて表示",
+      "horizontal": "積み重ね表示"
+    },
+    "swapPanes": "ペインを入れ替え",
+    "selectLeftBook": "左の本を選択",
+    "selectRightBook": "右の本を選択",
+    "synchronization": "同期",
+    "syncScroll": "スクロールを同期",
+    "syncPage": "ページめくりを同期",
+    "splitRatio": "分割比率",
+    "resetRatio": "50/50にリセット",
+    "selectBooksHint": "すべての機能を有効にするには、両方のペインで本を選択してください"
   }
 }

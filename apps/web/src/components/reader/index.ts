@@ -512,3 +512,7 @@ export type { SearchInBookProps, SearchMatch } from "./SearchInBook";
 export { SplitScreenControls } from "./SplitScreenControls";
 export { SplitScreenReader } from "./SplitScreenReader";
 export { SplitScreenBookSelector } from "./SplitScreenBookSelector";
+
+// Translation Comparison
+export { TranslationControls } from "./TranslationControls";
+export { TranslationHighlighter } from "./TranslationHighlighter";

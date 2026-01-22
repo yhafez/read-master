@@ -2357,5 +2357,42 @@
       "status": "Status",
       "empty": "No participants yet"
     }
+  },
+  "translation": {
+    "compareTranslations": "Compare Translations",
+    "enableComparison": "Enable translation comparison",
+    "disableComparison": "Disable translation comparison",
+    "originalLanguage": "Original:",
+    "translationLanguage": "Translation:",
+    "selectOriginal": "Select Original Text",
+    "selectTranslation": "Select Translation",
+    "startComparison": "Start Comparison",
+    "segmentsFound": "{{count}} segments matched",
+    "alignmentMode": "Alignment Mode",
+    "alignByParagraph": "Align by Paragraph",
+    "alignBySentence": "Align by Sentence",
+    "manualAlignment": "Manual Alignment",
+    "displayOptions": "Display Options",
+    "highlightMatches": "Highlight Matches",
+    "showConfidence": "Show Confidence Scores",
+    "syncScroll": "Sync Scrolling",
+    "selectBooksHint": "Select both original and translation to compare"
+  },
+  "splitScreen": {
+    "controls": "Split Screen",
+    "modes": {
+      "single": "Single View",
+      "vertical": "Side by Side",
+      "horizontal": "Stacked"
+    },
+    "swapPanes": "Swap Panes",
+    "selectLeftBook": "Select Left Book",
+    "selectRightBook": "Select Right Book",
+    "synchronization": "Synchronization",
+    "syncScroll": "Sync Scrolling",
+    "syncPage": "Sync Page Turns",
+    "splitRatio": "Split Ratio",
+    "resetRatio": "Reset to 50/50",
+    "selectBooksHint": "Select books for both panes to enable all features"
   }
 }
