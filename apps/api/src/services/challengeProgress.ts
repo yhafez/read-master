@@ -116,7 +116,7 @@ export async function updateChallengeProgress(
               longestStreak: 0,
               booksCompleted: 0,
               totalReadingTime: 0,
-              flashcardsCreated: 0,
+              totalCardsCreated: 0,
               assessmentsCompleted: 0,
             },
             update: {
@@ -174,7 +174,7 @@ export async function onBookCompleted(
     userId,
     type: "BOOK_COMPLETED",
     value: 1,
-    genre: book.genre ?? undefined,
+    ...(book.genre && { genre: book.genre }),
   });
 
   // Update words read challenge if word count is available

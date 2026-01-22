@@ -245,5 +245,5 @@ async function handler(
 
 export default async function (req: VercelRequest, res: VercelResponse) {
   const authReq = await optionalAuth(req);
-  return handler(authReq as AuthenticatedRequest, res);
+  return handler(authReq as unknown as AuthenticatedRequest, res);
 }

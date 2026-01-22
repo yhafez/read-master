@@ -395,7 +395,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
   if (req.method === "GET") {
     // GET requests support optional auth
     const authReq = await optionalAuth(req);
-    return handler(authReq as AuthenticatedRequest, res);
+    return handler(authReq as unknown as AuthenticatedRequest, res);
   } else {
     // POST requests require authentication
     return withAuth(handler)(req, res);

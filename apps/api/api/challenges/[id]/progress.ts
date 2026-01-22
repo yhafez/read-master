@@ -242,7 +242,7 @@ async function handlePut(
               longestStreak: 0,
               booksCompleted: 0,
               totalReadingTime: 0,
-              flashcardsCreated: 0,
+              totalCardsCreated: 0,
               assessmentsCompleted: 0,
             },
             update: {

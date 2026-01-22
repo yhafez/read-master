@@ -79,3 +79,60 @@ export {
   type GenerateFlashcardsOutput,
   type GeneratedFlashcard,
 } from "./generateFlashcards.js";
+
+// Study Buddy
+export {
+  studyBuddyPrompt,
+  generateStudyBuddyPrompt,
+  parseStudyBuddyResponse,
+  validateStudyBuddyInput,
+  type StudyBuddyInput,
+  type StudyBuddyOutput,
+} from "./studyBuddy.js";
+
+// Discussion Questions
+export {
+  discussionQuestionsPrompt,
+  generateDiscussionQuestionsPrompt,
+  parseDiscussionQuestionsResponse,
+  validateDiscussionQuestionsInput,
+  type DiscussionQuestionsInput,
+  type DiscussionQuestionsOutput,
+  type DiscussionQuestion,
+} from "./discussionQuestions.js";
+
+// Summarize Notes
+export {
+  summarizeNotesPrompt,
+  generateSummarizeNotesPrompt,
+  parseSummarizeNotesResponse,
+  validateSummarizeNotesInput,
+  type SummarizeNotesInput,
+  type SummarizeNotesOutput,
+  type Annotation as NoteInput,
+  type NoteSummary,
+} from "./summarizeNotes.js";
+
+// Assess Difficulty
+export {
+  assessDifficultyPrompt,
+  generateAssessDifficultyPrompt,
+  parseAssessDifficultyResponse,
+  validateAssessDifficultyInput,
+  type AssessDifficultyInput,
+  type AssessDifficultyOutput,
+  type DifficultyMetrics,
+  type ReaderMatch,
+} from "./assessDifficulty.js";
+
+// Personalized Recommendations
+export {
+  personalizedRecommendationsPrompt,
+  generatePersonalizedRecommendationsPrompt,
+  parsePersonalizedRecommendationsResponse,
+  validatePersonalizedRecommendationsInput,
+  type PersonalizedRecommendationsInput,
+  type PersonalizedRecommendationsOutput,
+  type ReadingHistoryItem,
+  type BookRecommendation,
+} from "./personalizedRecommendations.js";
