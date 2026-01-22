@@ -507,3 +507,8 @@ export type { MobileReaderToolbarProps } from "./MobileReaderToolbar";
 // Search In Book
 export { SearchInBook } from "./SearchInBook";
 export type { SearchInBookProps, SearchMatch } from "./SearchInBook";
+
+// Split Screen
+export { SplitScreenControls } from "./SplitScreenControls";
+export { SplitScreenReader } from "./SplitScreenReader";
+export { SplitScreenBookSelector } from "./SplitScreenBookSelector";

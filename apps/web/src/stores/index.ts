@@ -235,3 +235,4 @@ export {
   VOLUME_RANGE,
 } from "./ttsSettingsStore";
 export type { PartialTTSSettings, TTSSettings } from "./ttsSettingsStore";
+export * from "./useSplitScreenStore";
