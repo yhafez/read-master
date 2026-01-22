@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useReaderStore } from "@/stores/readerStore";
 import ePub from "epubjs";
 import type { Book, Rendition, NavItem } from "epubjs";
+import { TTSControls } from "./TTSControls";
 import type {
   EpubReaderProps,
   EpubReaderState,
@@ -65,6 +66,7 @@ export function EpubReader({
   const readingMode = useReaderStore((state) => state.settings.readingMode);
 
   const [state, setState] = useState<EpubReaderState>(INITIAL_READER_STATE);
+  const [currentPageText, setCurrentPageText] = useState<string>("");
 
   // Update specific state properties
   const updateState = useCallback((updates: Partial<EpubReaderState>) => {
@@ -111,9 +113,45 @@ export function EpubReader({
       });
 
       onLocationChange?.(location);
+
+      // Extract text for TTS
+      void extractCurrentPageText();
     },
-    [onLocationChange, updateState]
+    [onLocationChange, updateState, extractCurrentPageText]
   );
+
+  // Extract text from current page for TTS
+  const extractCurrentPageText = useCallback(() => {
+    const rendition = renditionRef.current;
+    if (!rendition || !rendition.manager || !rendition.manager.container) {
+      setCurrentPageText("");
+      return;
+    }
+
+    try {
+      // Get the current iframe's document
+      const iframe = rendition.manager.container.querySelector("iframe");
+      if (!iframe || !iframe.contentDocument) {
+        setCurrentPageText("");
+        return;
+      }
+
+      const doc = iframe.contentDocument;
+      const body = doc.body;
+
+      if (!body) {
+        setCurrentPageText("");
+        return;
+      }
+
+      // Extract text content from the visible body
+      const text = body.textContent || body.innerText || "";
+      setCurrentPageText(text.trim());
+    } catch (error) {
+      console.error("Error extracting EPUB text:", error);
+      setCurrentPageText("");
+    }
+  }, []);
 
   // Handle text selection
   const handleTextSelection = useCallback(
@@ -431,6 +469,9 @@ export function EpubReader({
           </IconButton>
         </Box>
       </Box>
+
+      {/* TTS Controls */}
+      <TTSControls text={currentPageText} />
 
       {/* Progress indicator */}
       {state.location && (

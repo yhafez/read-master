@@ -72,6 +72,9 @@ export {
   SettingsSubscriptionPage,
 } from "./settings";
 
+// TTS
+export { TTSDownloadsPage } from "./TTSDownloadsPage";
+
 // Stats
 export { UserStatsPage, AchievementsPage, AnalyticsChartsPage } from "./stats";
 

@@ -83,6 +83,25 @@ export interface TTSSettings {
   autoScroll: boolean;
   /** Preferred language code for voice selection */
   preferredLanguage: string;
+  /** Sleep timer duration in minutes (0 = disabled) */
+  sleepTimerMinutes: number;
+}
+
+/**
+ * Sleep timer preset durations (in minutes)
+ */
+export const SLEEP_TIMER_PRESETS = [0, 15, 30, 45, 60, 90, 120] as const;
+
+/**
+ * Sleep timer state
+ */
+export interface SleepTimerState {
+  /** Whether timer is active */
+  isActive: boolean;
+  /** Remaining time in seconds */
+  remainingSeconds: number;
+  /** Timer end timestamp */
+  endTime: number | null;
 }
 
 /**
@@ -183,6 +202,7 @@ export const DEFAULT_TTS_SETTINGS: TTSSettings = {
   highlightText: true,
   autoScroll: true,
   preferredLanguage: "en",
+  sleepTimerMinutes: 0,
 };
 
 /**
@@ -859,4 +879,29 @@ export function canUseVoice(
   const requiredTier = getTierForVoice(voiceId);
   const tierRank = { free: 0, pro: 1, scholar: 2 };
   return tierRank[userTier] >= tierRank[requiredTier];
+}
+
+// ============================================================================
+// Sleep Timer Utilities
+// ============================================================================
+
+/**
+ * Format seconds into MM:SS format
+ */
+export function formatSleepTimerTime(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
+
+/**
+ * Get label for sleep timer preset
+ */
+export function getSleepTimerLabel(minutes: number): string {
+  if (minutes === 0) return "Off";
+  if (minutes < 60) return `${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  const remainingMins = minutes % 60;
+  if (remainingMins === 0) return `${hours}h`;
+  return `${hours}h ${remainingMins}m`;
 }

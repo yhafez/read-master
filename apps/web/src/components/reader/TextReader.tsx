@@ -38,6 +38,7 @@ import { useTranslation } from "react-i18next";
 import { useReaderStore } from "@/stores/readerStore";
 import { TypographySettings } from "./TypographySettings";
 import { SearchInBook, type SearchMatch } from "./SearchInBook";
+import { TTSControls } from "./TTSControls";
 import type {
   TextReaderProps,
   TextReaderState,
@@ -726,6 +727,9 @@ export function TextReader({
           </Typography>
         )}
       </Box>
+
+      {/* TTS Controls */}
+      <TTSControls text={content} />
 
       {/* Content container */}
       <Box

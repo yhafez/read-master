@@ -62,6 +62,9 @@ export const ROUTES = {
   SETTINGS_PRIVACY: "/settings/privacy",
   SETTINGS_SUBSCRIPTION: "/settings/subscription",
 
+  // TTS
+  TTS_DOWNLOADS: "/tts/downloads",
+
   // Stats
   STATS: "/stats",
   ACHIEVEMENTS: "/achievements",
@@ -136,8 +139,10 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.SETTINGS_NOTIFICATIONS,
   ROUTES.SETTINGS_PRIVACY,
   ROUTES.SETTINGS_SUBSCRIPTION,
+  ROUTES.TTS_DOWNLOADS,
   ROUTES.STATS,
   ROUTES.ACHIEVEMENTS,
+  ROUTES.ANALYTICS,
 ] as const;
 
 /**

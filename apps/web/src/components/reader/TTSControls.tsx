@@ -35,6 +35,7 @@ import VolumeDownIcon from "@mui/icons-material/VolumeDown";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import SpeedIcon from "@mui/icons-material/Speed";
 import SettingsIcon from "@mui/icons-material/Settings";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useTranslation } from "react-i18next";
 import type {
   TTSControlsProps,
@@ -43,12 +44,14 @@ import type {
   TTSPlaybackState,
   TTSPosition,
   TTSError,
+  SleepTimerState,
 } from "./ttsTypes";
 import {
   DEFAULT_TTS_SETTINGS,
   RATE_RANGE,
   VOLUME_RANGE,
   RATE_PRESETS,
+  SLEEP_TIMER_PRESETS,
   isWebSpeechSupported,
   getAllWebSpeechVoices,
   findWebSpeechVoiceById,
@@ -61,6 +64,8 @@ import {
   saveTTSSettings,
   formatRate,
   formatVolume,
+  formatSleepTimerTime,
+  getSleepTimerLabel,
   createTTSError,
   getTTSErrorMessage,
   isRecoverableError,
@@ -92,10 +97,16 @@ export function TTSControls({
   const [error, setError] = useState<TTSError | null>(null);
   const [voicesLoaded, setVoicesLoaded] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [sleepTimer, setSleepTimer] = useState<SleepTimerState>({
+    isActive: false,
+    remainingSeconds: 0,
+    endTime: null,
+  });
 
   // Refs
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const synthRef = useRef<SpeechSynthesis | null>(null);
+  const sleepTimerIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load settings and voices on mount
   useEffect(() => {
@@ -364,6 +375,65 @@ export function TTSControls({
     [updateSetting]
   );
 
+  // Sleep timer functions
+  const startSleepTimer = useCallback(
+    (minutes: number) => {
+      if (minutes === 0) {
+        cancelSleepTimer();
+        return;
+      }
+
+      const endTime = Date.now() + minutes * 60 * 1000;
+      setSleepTimer({
+        isActive: true,
+        remainingSeconds: minutes * 60,
+        endTime,
+      });
+      updateSetting("sleepTimerMinutes", minutes);
+    },
+    [updateSetting]
+  );
+
+  const cancelSleepTimer = useCallback(() => {
+    if (sleepTimerIntervalRef.current) {
+      clearInterval(sleepTimerIntervalRef.current);
+      sleepTimerIntervalRef.current = null;
+    }
+    setSleepTimer({
+      isActive: false,
+      remainingSeconds: 0,
+      endTime: null,
+    });
+    updateSetting("sleepTimerMinutes", 0);
+  }, [updateSetting]);
+
+  // Sleep timer countdown effect
+  useEffect(() => {
+    if (!sleepTimer.isActive || !sleepTimer.endTime) return;
+
+    sleepTimerIntervalRef.current = setInterval(() => {
+      const now = Date.now();
+      const remaining = Math.max(0, Math.ceil((sleepTimer.endTime! - now) / 1000));
+
+      if (remaining === 0) {
+        // Timer expired - stop playback
+        stop();
+        cancelSleepTimer();
+      } else {
+        setSleepTimer((prev) => ({
+          ...prev,
+          remainingSeconds: remaining,
+        }));
+      }
+    }, 1000);
+
+    return () => {
+      if (sleepTimerIntervalRef.current) {
+        clearInterval(sleepTimerIntervalRef.current);
+      }
+    };
+  }, [sleepTimer.isActive, sleepTimer.endTime, stop, cancelSleepTimer]);
+
   // Get volume icon based on level
   const getVolumeIcon = () => {
     if (settings.volume === 0) return <VolumeOffIcon />;
@@ -484,6 +554,36 @@ export function TTSControls({
               <Typography variant="body2" color="text.secondary">
                 {formatVolume(settings.volume)}
               </Typography>
+            </Box>
+          </Tooltip>
+        )}
+
+        {/* Sleep timer */}
+        {!compact && (
+          <Tooltip
+            title={
+              sleepTimer.isActive
+                ? `${t("reader.tts.sleepTimer")}: ${formatSleepTimerTime(sleepTimer.remainingSeconds)}`
+                : t("reader.tts.sleepTimer")
+            }
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                minWidth: 60,
+              }}
+            >
+              <AccessTimeIcon
+                fontSize="small"
+                color={sleepTimer.isActive ? "primary" : "action"}
+              />
+              {sleepTimer.isActive && (
+                <Typography variant="body2" color="primary">
+                  {formatSleepTimerTime(sleepTimer.remainingSeconds)}
+                </Typography>
+              )}
             </Box>
           </Tooltip>
         )}
@@ -612,6 +712,43 @@ export function TTSControls({
               />
               <VolumeUpIcon fontSize="small" color="action" />
             </Stack>
+          </Box>
+
+          {/* Sleep timer selector */}
+          <Box>
+            <Typography gutterBottom variant="body2">
+              {t("reader.tts.sleepTimer")}
+              {sleepTimer.isActive &&
+                ` (${formatSleepTimerTime(sleepTimer.remainingSeconds)})`}
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap">
+              {SLEEP_TIMER_PRESETS.map((minutes) => (
+                <Button
+                  key={minutes}
+                  size="small"
+                  variant={
+                    settings.sleepTimerMinutes === minutes
+                      ? "contained"
+                      : "outlined"
+                  }
+                  onClick={() => startSleepTimer(minutes)}
+                  disabled={disabled}
+                  sx={{ minWidth: "fit-content" }}
+                >
+                  {getSleepTimerLabel(minutes)}
+                </Button>
+              ))}
+            </Stack>
+            {sleepTimer.isActive && (
+              <Button
+                size="small"
+                color="error"
+                onClick={cancelSleepTimer}
+                sx={{ mt: 1 }}
+              >
+                {t("reader.tts.cancelTimer")}
+              </Button>
+            )}
           </Box>
         </Box>
       </Collapse>

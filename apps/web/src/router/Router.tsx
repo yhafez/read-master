@@ -46,6 +46,7 @@ import {
   SettingsNotificationsPage,
   SettingsPrivacyPage,
   SettingsSubscriptionPage,
+  TTSDownloadsPage,
   UserStatsPage,
   AchievementsPage,
   AnalyticsChartsPage,
@@ -272,6 +273,12 @@ function createAppRouter() {
             {
               path: ROUTES.SETTINGS_SUBSCRIPTION,
               element: <SettingsSubscriptionPage />,
+            },
+
+            // TTS
+            {
+              path: ROUTES.TTS_DOWNLOADS,
+              element: <TTSDownloadsPage />,
             },
 
             // Stats

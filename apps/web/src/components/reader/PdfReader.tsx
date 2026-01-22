@@ -52,6 +52,7 @@ import {
   formatZoomPercent,
 } from "./pdfTypes";
 import { useReaderStore } from "@/stores/readerStore";
+import { TTSControls } from "./TTSControls";
 
 // Configure PDF.js worker - use CDN for the worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -91,6 +92,7 @@ export function PdfReader({
     scale: clampZoom(initialScale),
   });
   const [pageInput, setPageInput] = useState(String(initialPage));
+  const [currentPageText, setCurrentPageText] = useState<string>("");
 
   // Update specific state properties
   const updateState = useCallback((updates: Partial<PdfReaderState>) => {
@@ -115,6 +117,49 @@ export function PdfReader({
       onLocationChange?.(location);
     },
     [onLocationChange, updateState]
+  );
+
+  // Extract text from current page(s) for TTS
+  const extractPageText = useCallback(
+    async (pageNumber: number) => {
+      const pdfDoc = pdfDocRef.current;
+      if (!pdfDoc) return;
+
+      try {
+        // Extract text from first page
+        const page = await pdfDoc.getPage(pageNumber);
+        const textContent = await page.getTextContent();
+        let text = textContent.items
+          .map((item) => {
+            if ("str" in item) {
+              return (item as { str: string }).str;
+            }
+            return "";
+          })
+          .join(" ");
+
+        // Extract text from second page in spread mode
+        if (isSpreadMode && pageNumber < pdfDoc.numPages) {
+          const page2 = await pdfDoc.getPage(pageNumber + 1);
+          const textContent2 = await page2.getTextContent();
+          const text2 = textContent2.items
+            .map((item) => {
+              if ("str" in item) {
+                return (item as { str: string }).str;
+              }
+              return "";
+            })
+            .join(" ");
+          text = `${text} ${text2}`;
+        }
+
+        setCurrentPageText(text);
+      } catch (error) {
+        console.error("Error extracting page text:", error);
+        setCurrentPageText("");
+      }
+    },
+    [isSpreadMode]
   );
 
   // Render a specific page
@@ -237,6 +282,9 @@ export function PdfReader({
         // Update location
         updateLocation(pageNumber, pdfDoc.numPages);
         setPageInput(String(pageNumber));
+        
+        // Extract text for TTS
+        void extractPageText(pageNumber);
       } catch (err) {
         // Ignore cancelled render tasks
         if (err instanceof Error && err.message === "Rendering cancelled") {
@@ -254,7 +302,7 @@ export function PdfReader({
         onError?.(error);
       }
     },
-    [state.scale, updateLocation, updateState, onError]
+    [state.scale, updateLocation, updateState, onError, extractPageText, isSpreadMode]
   );
 
   // Initialize PDF document
@@ -716,6 +764,9 @@ export function PdfReader({
           {state.location && formatZoomPercent(state.scale)}
         </Typography>
       </Box>
+
+      {/* TTS Controls */}
+      <TTSControls text={currentPageText} />
 
       {/* PDF container */}
       <Box
