@@ -55,6 +55,9 @@ export {
   CurriculumBrowsePage,
 } from "./curriculums";
 
+// Challenges
+export { ChallengesPage, ChallengeDetailPage } from "./challenges";
+
 // Settings
 export {
   SettingsPage,

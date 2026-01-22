@@ -67,6 +67,7 @@ model User {
   flashcards        Flashcard[]
   stats             UserStats?
   achievements      UserAchievement[]
+  challengeParticipations ChallengeParticipant[] // Challenges this user is participating in
   curriculums       Curriculum[] // Curriculums created by this user
   readingLists      ReadingList[] // Personal reading lists created by this user
   curriculumFollows CurriculumFollow[] // Curriculums this user is following
@@ -697,6 +698,113 @@ enum AchievementTier {
   RARE // Significant effort required
   EPIC // Major accomplishment
   LEGENDARY // Exceptional achievement
+}
+
+// =============================================================================
+// READING CHALLENGES - Gamification and goal-based reading
+// =============================================================================
+
+/// Challenge - Reading challenges for users to join and complete
+/// Challenges can be time-based or goal-based
+model Challenge {
+  id String @id @default(cuid())
+
+  // Challenge metadata
+  title       String       @db.VarChar(200) // Challenge name
+  description String       @db.Text // Challenge description
+  icon        String?      @db.VarChar(50) // Icon identifier
+  badgeColor  String?      @db.VarChar(7) // Hex color for badge
+
+  // Challenge type and goals
+  type         ChallengeType
+  goalType     ChallengeGoalType
+  goalValue    Int // e.g., 5 books, 10000 minutes, 100000 words
+  goalUnit     String            @db.VarChar(50) // e.g., "books", "minutes", "words"
+
+  // Time constraints
+  startDate DateTime? // When challenge starts (null = always available)
+  endDate   DateTime? // When challenge ends (null = ongoing)
+  duration  Int? // Duration in days (for personal challenges)
+
+  // Rewards
+  xpReward   Int     @default(0) // XP awarded on completion
+  badgeIcon  String? // Badge icon for completion
+
+  // Challenge properties
+  isOfficial  Boolean @default(false) // Official Read Master challenge
+  isRecurring Boolean @default(false) // Monthly/yearly recurring challenge
+  tier        AchievementTier @default(COMMON)
+  visibility  Visibility      @default(PUBLIC)
+
+  // Status
+  isActive Boolean @default(true)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  participants ChallengeParticipant[]
+
+  // Indexes
+  @@index([type])
+  @@index([isOfficial])
+  @@index([isActive])
+  @@index([startDate, endDate])
+}
+
+/// ChallengeParticipant - Users participating in challenges
+/// Tracks progress and completion status
+model ChallengeParticipant {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  // Progress tracking
+  progress        Int       @default(0) // Current progress value
+  goalValue       Int // Goal value at time of joining (for personal challenges)
+  isCompleted     Boolean   @default(false)
+  completedAt     DateTime?
+  startedAt       DateTime  @default(now())
+
+  // Participation metadata
+  isPublic Boolean @default(true) // Show on leaderboard
+  rank     Int? // Current rank in challenge leaderboard
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraint: user can only join a challenge once
+  @@unique([userId, challengeId])
+  // Indexes
+  @@index([userId])
+  @@index([challengeId])
+  @@index([challengeId, isCompleted])
+  @@index([challengeId, progress]) // For leaderboard queries
+  @@index([userId, isCompleted])
+}
+
+/// ChallengeType - Types of challenges
+enum ChallengeType {
+  OFFICIAL // Official Read Master challenges
+  COMMUNITY // Community-created challenges
+  PERSONAL // Personal user goals
+  SEASONAL // Seasonal/event challenges
+}
+
+/// ChallengeGoalType - What metric the challenge tracks
+enum ChallengeGoalType {
+  BOOKS_READ // Complete X books
+  PAGES_READ // Read X pages
+  TIME_READING // Read for X minutes
+  WORDS_READ // Read X words
+  STREAK_DAYS // Maintain X day streak
+  BOOKS_IN_GENRE // Read X books in specific genre
+  FLASHCARDS_CREATED // Create X flashcards
+  ASSESSMENTS_COMPLETED // Complete X assessments
 }
 
 // =============================================================================

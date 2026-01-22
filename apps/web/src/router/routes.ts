@@ -46,6 +46,10 @@ export const ROUTES = {
   CURRICULUM_CREATE: "/curriculums/create",
   CURRICULUM_BROWSE: "/curriculums/browse",
 
+  // Challenges
+  CHALLENGES: "/challenges",
+  CHALLENGE_DETAIL: "/challenges/:challengeId",
+
   // Settings
   SETTINGS: "/settings",
   SETTINGS_PROFILE: "/settings/profile",
@@ -95,6 +99,7 @@ export const routeHelpers = {
   forumPost: (postId: string): string => `/forum/post/${postId}`,
   forumEdit: (postId: string): string => `/forum/edit/${postId}`,
   curriculum: (curriculumId: string): string => `/curriculums/${curriculumId}`,
+  challenge: (challengeId: string): string => `/challenges/${challengeId}`,
 } as const;
 
 /**
@@ -121,6 +126,8 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.CURRICULUMS,
   ROUTES.CURRICULUM_DETAIL,
   ROUTES.CURRICULUM_CREATE,
+  ROUTES.CHALLENGES,
+  ROUTES.CHALLENGE_DETAIL,
   ROUTES.SETTINGS,
   ROUTES.SETTINGS_PROFILE,
   ROUTES.SETTINGS_READING,

@@ -34,6 +34,8 @@ import {
   CurriculumDetailPage,
   CurriculumCreatePage,
   CurriculumBrowsePage,
+  ChallengesPage,
+  ChallengeDetailPage,
   SettingsPage,
   SettingsProfilePage,
   SettingsReadingPage,
@@ -218,6 +220,16 @@ function createAppRouter() {
             {
               path: ROUTES.CURRICULUM_DETAIL,
               element: <CurriculumDetailPage />,
+            },
+
+            // Challenges
+            {
+              path: ROUTES.CHALLENGES,
+              element: <ChallengesPage />,
+            },
+            {
+              path: ROUTES.CHALLENGE_DETAIL,
+              element: <ChallengeDetailPage />,
             },
 
             // Settings
