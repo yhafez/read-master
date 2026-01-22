@@ -264,6 +264,29 @@ async function unfollowCurriculum(id: string): Promise<void> {
   }
 }
 
+async function cloneCurriculum(
+  id: string,
+  input?: { title?: string; visibility?: "PUBLIC" | "PRIVATE" | "UNLISTED" }
+): Promise<Curriculum> {
+  const response = await fetch(`/api/curriculums/${id}/clone`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input || {}),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({
+      message: "Failed to clone curriculum",
+    }));
+    throw new Error(error.message || "Failed to clone curriculum");
+  }
+
+  const result = await response.json();
+  return result.data || result;
+}
+
 // ============================================================================
 // React Query Hooks
 // ============================================================================
@@ -347,6 +370,26 @@ export function useUnfollowCurriculum() {
     mutationFn: unfollowCurriculum,
     onSuccess: (_data, curriculumId) => {
       queryClient.invalidateQueries({ queryKey: ["curriculum", curriculumId] });
+      queryClient.invalidateQueries({ queryKey: ["curriculums"] });
+    },
+  });
+}
+
+export function useCloneCurriculum() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      input,
+    }: {
+      id: string;
+      input?: {
+        title?: string;
+        visibility?: "PUBLIC" | "PRIVATE" | "UNLISTED";
+      };
+    }) => cloneCurriculum(id, input),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["curriculums"] });
     },
   });

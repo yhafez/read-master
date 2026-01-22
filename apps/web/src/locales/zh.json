@@ -1351,7 +1351,20 @@
         "general": "发布失败，请重试。"
       }
     },
-    "markBestAnswer": "标记为最佳答案"
+    "markBestAnswer": "标记为最佳答案",
+    "reportContent": "举报内容",
+    "reportType": "举报类型",
+    "reportReason": "其他详情（可选）",
+    "reportReasonPlaceholder": "请提供可能帮助我们审核此举报的任何其他详情...",
+    "reportInfo": "感谢您帮助保持我们的社区安全。举报将由版主审核，如果{{contentType}}违反了我们的社区准则，将采取适当的行动。",
+    "submitReport": "提交举报",
+    "reportTypes": {
+      "spam": "垃圾信息或广告",
+      "harassment": "骚扰或仇恨言论",
+      "inappropriate": "不当内容",
+      "offTopic": "偏离主题",
+      "other": "其他"
+    }
   },
   "curriculums": {
     "detail": "课程详情",

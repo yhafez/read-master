@@ -166,6 +166,7 @@ describe("Type Exports", () => {
         avatarUrl: null,
       },
       isFollowing: false,
+      isOfficial: false,
       createdAt: "2024-01-01T00:00:00.000Z",
       updatedAt: "2024-01-01T00:00:00.000Z",
     };
@@ -642,6 +643,7 @@ describe("mapToBrowseCurriculumSummary", () => {
     visibility: "PUBLIC" as Visibility,
     totalItems: 5,
     followersCount: 100,
+    isOfficial: false,
     createdAt: new Date("2024-01-01T00:00:00.000Z"),
     updatedAt: new Date("2024-01-15T12:00:00.000Z"),
     user: {

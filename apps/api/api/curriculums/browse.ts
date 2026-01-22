@@ -154,6 +154,7 @@ export type BrowseCurriculumSummary = {
   followersCount: number;
   creator: BrowseUserInfo;
   isFollowing: boolean;
+  isOfficial: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -410,6 +411,7 @@ export function mapToBrowseCurriculumSummary(
     visibility: Visibility;
     totalItems: number;
     followersCount: number;
+    isOfficial: boolean;
     createdAt: Date;
     updatedAt: Date;
     user: {
@@ -440,6 +442,7 @@ export function mapToBrowseCurriculumSummary(
     followersCount: curriculum.followersCount,
     creator: mapToBrowseUserInfo(curriculum.user),
     isFollowing,
+    isOfficial: curriculum.isOfficial,
     createdAt: formatDate(curriculum.createdAt),
     updatedAt: formatDate(curriculum.updatedAt),
   };

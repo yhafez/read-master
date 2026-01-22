@@ -1351,7 +1351,20 @@
         "general": "Hindi nakapag-post. Pakisubukang muli."
       }
     },
-    "markBestAnswer": "Markahan bilang Pinakamahusay na Sagot"
+    "markBestAnswer": "Markahan bilang Pinakamahusay na Sagot",
+    "reportContent": "I-ulat ang Nilalaman",
+    "reportType": "Uri ng Ulat",
+    "reportReason": "Karagdagang Detalye (Opsyonal)",
+    "reportReasonPlaceholder": "Mangyaring magbigay ng anumang karagdagang detalye na maaaring makatulong sa amin na suriin ang ulat na ito...",
+    "reportInfo": "Salamat sa pagtulong na panatilihing ligtas ang aming komunidad. Sinusuri ng mga moderator ang mga ulat, at gagawin ang naaangkop na aksyon kung lumalabag ang {{contentType}} sa aming mga alituntunin ng komunidad.",
+    "submitReport": "Isumite ang Ulat",
+    "reportTypes": {
+      "spam": "Spam o Advertising",
+      "harassment": "Panliligalig o Malisyosong Pananalita",
+      "inappropriate": "Hindi Angkop na Nilalaman",
+      "offTopic": "Wala sa Paksa",
+      "other": "Iba pa"
+    }
   },
   "curriculums": {
     "detail": "Mga Detalye ng Curriculum",

@@ -12,6 +12,7 @@
 
 import { PrismaClient } from "@prisma/client";
 import { seedEmailTemplates } from "./seedEmailTemplates.js";
+import { CURRICULUM_TEMPLATES } from "./curriculum-templates.js";
 
 const prisma = new PrismaClient();
 
@@ -1181,7 +1182,10 @@ async function seedBooks(users: Array<{ id: string }>) {
 /**
  * Seed TTS downloads
  */
-async function seedTTSDownloads(users: any[], books: any[]) {
+async function seedTTSDownloads(
+  users: Array<{ id: string; tier: string }>,
+  books: Array<{ id: string; title: string }>
+) {
   console.log("📥 Seeding TTS downloads...");
 
   let downloadCount = 0;
@@ -1332,6 +1336,82 @@ async function seedTTSDownloads(users: any[], books: any[]) {
   console.log(`   ✓ Seeded ${downloadCount} TTS downloads`);
 }
 
+/**
+ * Seed Curriculum Templates
+ * Official Read Master curriculum templates that users can clone
+ */
+async function seedCurriculumTemplates() {
+  console.log("📚 Seeding curriculum templates...");
+
+  // Create a system user for official templates (if needed)
+  let systemUser = await prisma.user.findFirst({
+    where: { email: "system@readmaster.app" },
+  });
+
+  if (!systemUser) {
+    systemUser = await prisma.user.create({
+      data: {
+        id: "system-user",
+        clerkId: "system-clerk-id",
+        email: "system@readmaster.app",
+        username: "readmaster",
+        displayName: "Read Master Official",
+        tier: "FREE",
+        stripeCustomerId: null,
+      },
+    });
+  }
+
+  let templatesCount = 0;
+
+  for (const template of CURRICULUM_TEMPLATES) {
+    const curriculumId = `template-${template.title.toLowerCase().replace(/\s+/g, "-")}`;
+
+    // Create curriculum
+    const curriculum = await prisma.curriculum.upsert({
+      where: { id: curriculumId },
+      update: {},
+      create: {
+        id: curriculumId,
+        title: template.title,
+        description: template.description,
+        category: template.category,
+        difficulty: template.difficulty,
+        visibility: template.visibility,
+        isOfficial: template.isOfficial,
+        userId: systemUser.id,
+      },
+    });
+
+    // Create curriculum items
+    for (const item of template.items) {
+      const itemId = `${curriculumId}-item-${item.orderIndex}`;
+
+      await prisma.curriculumItem.upsert({
+        where: { id: itemId },
+        update: {},
+        create: {
+          id: itemId,
+          curriculumId: curriculum.id,
+          orderIndex: item.orderIndex,
+          bookId: null, // Templates don't reference specific books
+          externalTitle: item.externalTitle,
+          externalAuthor: item.externalAuthor,
+          externalIsbn: item.externalIsbn,
+          externalUrl: item.externalUrl,
+          notes: item.notes,
+          estimatedTime: item.estimatedTime,
+          isOptional: item.isOptional,
+        },
+      });
+    }
+
+    templatesCount++;
+  }
+
+  console.log(`   ✓ Seeded ${templatesCount} curriculum templates`);
+}
+
 async function main() {
   console.log("");
   console.log("🌱 Starting database seed...");
@@ -1344,6 +1424,7 @@ async function main() {
     const users = await seedUsers();
     const books = await seedBooks(users);
     await seedTTSDownloads(users, books);
+    await seedCurriculumTemplates();
     await seedDailyAnalytics();
     await seedEmailTemplates();
 
@@ -1356,6 +1437,7 @@ async function main() {
     console.log(`  - ${SAMPLE_USERS.length} sample users`);
     console.log(`  - ${SAMPLE_BOOKS.length} sample books`);
     console.log(`  - 5 TTS downloads (various states)`);
+    console.log(`  - ${CURRICULUM_TEMPLATES.length} curriculum templates`);
     console.log(`  - 30 days of analytics data`);
     console.log(`  - 10 email templates`);
     console.log("");

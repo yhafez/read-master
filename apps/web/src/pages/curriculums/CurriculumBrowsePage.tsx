@@ -49,6 +49,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 // ============================================================================
 // Types
@@ -71,6 +72,7 @@ type Curriculum = {
     avatarUrl: string | null;
   };
   isFollowing: boolean;
+  isOfficial?: boolean;
   createdAt: string;
 };
 
@@ -176,6 +178,27 @@ async function unfollowCurriculum(curriculumId: string): Promise<void> {
   }
 }
 
+async function cloneCurriculum(curriculumId: string): Promise<{ id: string }> {
+  const response = await fetch(`/api/curriculums/${curriculumId}/clone`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ visibility: "PRIVATE" }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({
+      message: "Failed to clone curriculum",
+    }));
+    throw new Error(
+      error.message || error.error || "Failed to clone curriculum"
+    );
+  }
+
+  return await response.json();
+}
+
 // ============================================================================
 // Main Component
 // ============================================================================
@@ -196,12 +219,16 @@ export function CurriculumBrowsePage(): React.ReactElement {
   const [sortBy, setSortBy] = useState<SortOption>("popularity");
 
   // Fetch curriculums
-  const {
-    data,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["curriculums", "browse", page, search, category, difficulty, sortBy],
+  const { data, isLoading, error } = useQuery({
+    queryKey: [
+      "curriculums",
+      "browse",
+      page,
+      search,
+      category,
+      difficulty,
+      sortBy,
+    ],
     queryFn: () => fetchCurriculums(page, search, category, difficulty, sortBy),
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
@@ -218,6 +245,16 @@ export function CurriculumBrowsePage(): React.ReactElement {
     mutationFn: unfollowCurriculum,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["curriculums", "browse"] });
+    },
+  });
+
+  // Clone mutation
+  const cloneMutation = useMutation({
+    mutationFn: cloneCurriculum,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["curriculums"] });
+      // Navigate to the newly cloned curriculum
+      navigate(`/curriculums/${data.id}`);
     },
   });
 
@@ -252,7 +289,10 @@ export function CurriculumBrowsePage(): React.ReactElement {
     setPage(1);
   };
 
-  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -269,10 +309,19 @@ export function CurriculumBrowsePage(): React.ReactElement {
     navigate(`/curriculums/${curriculumId}`);
   };
 
+  const handleCloneCurriculum = (curriculumId: string) => {
+    cloneMutation.mutate(curriculumId);
+  };
+
   // Loading state
   if (isLoading && !data) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="60vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -363,7 +412,9 @@ export function CurriculumBrowsePage(): React.ReactElement {
                 <InputLabel>Difficulty</InputLabel>
                 <Select
                   value={difficulty}
-                  onChange={(e) => handleDifficultyChange(e.target.value as DifficultyOption)}
+                  onChange={(e) =>
+                    handleDifficultyChange(e.target.value as DifficultyOption)
+                  }
                   label="Difficulty"
                 >
                   {DIFFICULTY_OPTIONS.map((diff) => (
@@ -381,7 +432,9 @@ export function CurriculumBrowsePage(): React.ReactElement {
                 <InputLabel>Sort By</InputLabel>
                 <Select
                   value={sortBy}
-                  onChange={(e) => handleSortChange(e.target.value as SortOption)}
+                  onChange={(e) =>
+                    handleSortChange(e.target.value as SortOption)
+                  }
                   label="Sort By"
                 >
                   {SORT_OPTIONS.map((option) => (
@@ -433,7 +486,8 @@ export function CurriculumBrowsePage(): React.ReactElement {
       {data && (
         <Box mb={2}>
           <Typography variant="body2" color="text.secondary">
-            {data.pagination.total} {data.pagination.total === 1 ? "curriculum" : "curriculums"} found
+            {data.pagination.total}{" "}
+            {data.pagination.total === 1 ? "curriculum" : "curriculums"} found
           </Typography>
         </Box>
       )}
@@ -475,7 +529,12 @@ export function CurriculumBrowsePage(): React.ReactElement {
                         justifyContent: "center",
                       }}
                     >
-                      <MenuBookIcon sx={{ fontSize: 60, color: theme.palette.action.disabled }} />
+                      <MenuBookIcon
+                        sx={{
+                          fontSize: 60,
+                          color: theme.palette.action.disabled,
+                        }}
+                      />
                     </Box>
                   )}
 
@@ -502,7 +561,13 @@ export function CurriculumBrowsePage(): React.ReactElement {
                     </Typography>
 
                     {/* Tags */}
-                    <Stack direction="row" spacing={1} flexWrap="wrap" gap={0.5} mb={2}>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      flexWrap="wrap"
+                      gap={0.5}
+                      mb={2}
+                    >
                       {curriculum.difficulty && (
                         <Chip
                           label={curriculum.difficulty}
@@ -521,17 +586,34 @@ export function CurriculumBrowsePage(): React.ReactElement {
                     </Stack>
 
                     {/* Stats */}
-                    <Stack direction="row" spacing={2} alignItems="center" mb={1}>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      alignItems="center"
+                      mb={1}
+                    >
                       <Tooltip title="Total items">
-                        <Stack direction="row" spacing={0.5} alignItems="center">
+                        <Stack
+                          direction="row"
+                          spacing={0.5}
+                          alignItems="center"
+                        >
                           <MenuBookIcon fontSize="small" color="action" />
-                          <Typography variant="caption">{curriculum.totalItems}</Typography>
+                          <Typography variant="caption">
+                            {curriculum.totalItems}
+                          </Typography>
                         </Stack>
                       </Tooltip>
                       <Tooltip title="Followers">
-                        <Stack direction="row" spacing={0.5} alignItems="center">
+                        <Stack
+                          direction="row"
+                          spacing={0.5}
+                          alignItems="center"
+                        >
                           <FavoriteIcon fontSize="small" color="action" />
-                          <Typography variant="caption">{curriculum.followersCount}</Typography>
+                          <Typography variant="caption">
+                            {curriculum.followersCount}
+                          </Typography>
                         </Stack>
                       </Tooltip>
                     </Stack>
@@ -539,18 +621,23 @@ export function CurriculumBrowsePage(): React.ReactElement {
                     {/* Creator */}
                     <Stack direction="row" spacing={1} alignItems="center">
                       <Avatar
-                        {...(curriculum.creator.avatarUrl && { src: curriculum.creator.avatarUrl })}
+                        {...(curriculum.creator.avatarUrl && {
+                          src: curriculum.creator.avatarUrl,
+                        })}
                         sx={{ width: 24, height: 24 }}
                       >
                         <PersonIcon fontSize="small" />
                       </Avatar>
                       <Typography variant="caption" color="text.secondary">
-                        {curriculum.creator.displayName || curriculum.creator.username}
+                        {curriculum.creator.displayName ||
+                          curriculum.creator.username}
                       </Typography>
                     </Stack>
                   </CardContent>
 
-                  <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
+                  <CardActions
+                    sx={{ justifyContent: "space-between", px: 2, pb: 2 }}
+                  >
                     <Button
                       size="small"
                       startIcon={<VisibilityIcon />}
@@ -558,19 +645,36 @@ export function CurriculumBrowsePage(): React.ReactElement {
                     >
                       View
                     </Button>
-                    <Button
-                      size="small"
-                      startIcon={
-                        curriculum.isFollowing ? <FavoriteIcon /> : <FavoriteBorderIcon />
-                      }
-                      color={curriculum.isFollowing ? "error" : "primary"}
-                      onClick={() => handleFollowToggle(curriculum)}
-                      disabled={
-                        followMutation.isPending || unfollowMutation.isPending
-                      }
-                    >
-                      {curriculum.isFollowing ? "Following" : "Follow"}
-                    </Button>
+                    <Stack direction="row" spacing={1}>
+                      {curriculum.isOfficial && (
+                        <Button
+                          size="small"
+                          startIcon={<ContentCopyIcon />}
+                          onClick={() => handleCloneCurriculum(curriculum.id)}
+                          disabled={cloneMutation.isPending}
+                          variant="outlined"
+                        >
+                          Clone
+                        </Button>
+                      )}
+                      <Button
+                        size="small"
+                        startIcon={
+                          curriculum.isFollowing ? (
+                            <FavoriteIcon />
+                          ) : (
+                            <FavoriteBorderIcon />
+                          )
+                        }
+                        color={curriculum.isFollowing ? "error" : "primary"}
+                        onClick={() => handleFollowToggle(curriculum)}
+                        disabled={
+                          followMutation.isPending || unfollowMutation.isPending
+                        }
+                      >
+                        {curriculum.isFollowing ? "Following" : "Follow"}
+                      </Button>
+                    </Stack>
                   </CardActions>
                 </Card>
               </Grid>

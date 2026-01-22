@@ -1351,7 +1351,20 @@
         "general": "投稿に失敗しました。もう一度お試しください。"
       }
     },
-    "markBestAnswer": "ベストアンサーにする"
+    "markBestAnswer": "ベストアンサーにする",
+    "reportContent": "コンテンツを報告",
+    "reportType": "報告の種類",
+    "reportReason": "追加の詳細（オプション）",
+    "reportReasonPlaceholder": "このレポートのレビューに役立つ追加の詳細を提供してください...",
+    "reportInfo": "コミュニティの安全を保つためにご協力いただきありがとうございます。レポートはモデレーターによって審査され、{{contentType}}がコミュニティガイドラインに違反している場合は適切な措置が取られます。",
+    "submitReport": "レポートを送信",
+    "reportTypes": {
+      "spam": "スパムまたは広告",
+      "harassment": "嫌がらせまたはヘイトスピーチ",
+      "inappropriate": "不適切なコンテンツ",
+      "offTopic": "オフトピック",
+      "other": "その他"
+    }
   },
   "curriculums": {
     "detail": "Curriculum Details",

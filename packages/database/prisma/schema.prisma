@@ -837,6 +837,7 @@ model Curriculum {
 
   // Visibility settings
   visibility Visibility @default(PRIVATE)
+  isOfficial Boolean     @default(false) // Official Read Master templates
 
   // Statistics (denormalized for performance)
   totalItems     Int @default(0) // Number of items in curriculum

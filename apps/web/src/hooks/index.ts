@@ -110,3 +110,26 @@ export {
   type UserPreferences,
   type ReadingGoals,
 } from "./usePersonalizedRecommendations";
+
+export {
+  useForumCategories,
+  useForumPosts,
+  useForumPost,
+  useForumReplies,
+  useCreatePost,
+  useUpdatePost,
+  useDeletePost,
+  useCreateReply,
+  useVotePost,
+  useVoteReply,
+  useMarkBestAnswer,
+  useReportContent,
+  type ForumCategory,
+  type ForumPost,
+  type ForumReply,
+  type CreatePostInput,
+  type UpdatePostInput,
+  type CreateReplyInput,
+  type ReportInput,
+  type ForumListFilters,
+} from "./useForum";

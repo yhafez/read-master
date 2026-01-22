@@ -1351,7 +1351,20 @@
         "general": "Error al publicar. Por favor intenta de nuevo."
       }
     },
-    "markBestAnswer": "Marcar como Mejor Respuesta"
+    "markBestAnswer": "Marcar como Mejor Respuesta",
+    "reportContent": "Reportar contenido",
+    "reportType": "Tipo de reporte",
+    "reportReason": "Detalles adicionales (opcional)",
+    "reportReasonPlaceholder": "Por favor proporciona cualquier detalle adicional que pueda ayudarnos a revisar este reporte...",
+    "reportInfo": "Gracias por ayudarnos a mantener segura nuestra comunidad. Los reportes son revisados por moderadores y se tomará la acción apropiada si el {{contentType}} viola nuestras pautas comunitarias.",
+    "submitReport": "Enviar reporte",
+    "reportTypes": {
+      "spam": "Spam o publicidad",
+      "harassment": "Acoso o discurso de odio",
+      "inappropriate": "Contenido inapropiado",
+      "offTopic": "Fuera de tema",
+      "other": "Otro"
+    }
   },
   "curriculums": {
     "detail": "Detalles del currículo",

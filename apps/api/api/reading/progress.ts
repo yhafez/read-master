@@ -49,6 +49,7 @@ import {
 import { logger } from "../../src/utils/logger.js";
 import { db, getUserByClerkId } from "../../src/services/db.js";
 import type { Prisma } from "@read-master/database";
+import { updateCurriculumProgressForBook } from "../../src/services/curriculumAutoProgressService.js";
 
 // ============================================================================
 // Constants
@@ -509,6 +510,10 @@ async function handlePut(
       });
       xpAwarded += achievementXp;
     }
+
+    // Update curriculum progress (auto-progress)
+    // This is non-blocking and won't throw errors
+    await updateCurriculumProgressForBook(user.id, bookId);
 
     // Log completion
     logger.info("Book completed", {

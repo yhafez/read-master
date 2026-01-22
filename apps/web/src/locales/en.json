@@ -1400,6 +1400,19 @@
         "categoryRequired": "Please select a category",
         "general": "Failed to submit post. Please try again."
       }
+    },
+    "reportContent": "Report Content",
+    "reportType": "Report Type",
+    "reportReason": "Additional Details (Optional)",
+    "reportReasonPlaceholder": "Please provide any additional details that may help us review this report...",
+    "reportInfo": "Thank you for helping keep our community safe. Reports are reviewed by moderators, and appropriate action will be taken if the {{contentType}} violates our community guidelines.",
+    "submitReport": "Submit Report",
+    "reportTypes": {
+      "spam": "Spam or Advertising",
+      "harassment": "Harassment or Hate Speech",
+      "inappropriate": "Inappropriate Content",
+      "offTopic": "Off-Topic",
+      "other": "Other"
     }
   },
   "curriculums": {
