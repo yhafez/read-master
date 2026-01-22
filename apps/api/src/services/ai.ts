@@ -36,6 +36,7 @@ export type AIOperation =
   | "summarize-notes"
   | "assess-difficulty"
   | "recommendations"
+  | "study-guide"
   | "custom";
 
 /**

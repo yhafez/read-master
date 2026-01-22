@@ -1,44 +1,71 @@
 /**
- * Study Guide Generation API
- *
  * POST /api/ai/study-guide
- * Generates comprehensive study guides from book content using AI.
+ *
+ * Generate comprehensive study guides from book content using AI.
+ *
+ * This endpoint:
+ * - Requires authentication
+ * - Checks if user has AI enabled
+ * - Enforces tier-based rate limits
+ * - Uses customizable study guide styles and sections
+ * - Includes user annotations for personalization
+ * - Logs AI usage for billing/monitoring
  */
 
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelResponse } from "@vercel/node";
 import { z } from "zod";
-import { getAuth } from "@clerk/nextjs/server";
 
-import { prisma } from "@read-master/database";
 import {
-  studyGuidePrompt,
-  type StudyGuideInput,
-  type StudyGuideStyle,
+  withAuth,
+  type AuthenticatedRequest,
+} from "../../src/middleware/auth.js";
+import {
+  checkRateLimit,
+  applyRateLimitHeaders,
+  createRateLimitResponse,
+} from "../../src/middleware/rateLimit.js";
+import {
+  sendSuccess,
+  sendError,
+  ErrorCodes,
+} from "../../src/utils/response.js";
+import { logger } from "../../src/utils/logger.js";
+import { db, getUserByClerkId, getBookById } from "../../src/services/db.js";
+import { completion, isAIAvailable } from "../../src/services/ai.js";
+import {
+  buildStudyGuidePrompt,
   DEFAULT_STUDY_GUIDE_SECTIONS,
-} from "@read-master/ai/prompts/studyGuidePrompt";
-import { callAI } from "../../src/services/aiService";
-import { logAIUsage } from "../../src/services/aiUsageLogger";
+  type StudyGuideInput,
+} from "@read-master/ai";
 
 // ============================================================================
-// Validation Schemas
+// Constants
 // ============================================================================
+
+const MAX_CONTENT_LENGTH = 15000;
+const MAX_ANNOTATIONS = 50;
+const MAX_TOKENS = 4000;
+
+// ============================================================================
+// Validation Schema
+// ============================================================================
+
+const studyGuideSectionsSchema = z.object({
+  includeOverview: z.boolean().optional(),
+  includeKeyPoints: z.boolean().optional(),
+  includeVocabulary: z.boolean().optional(),
+  includeQuestions: z.boolean().optional(),
+  includeTimeline: z.boolean().optional(),
+  includeThemes: z.boolean().optional(),
+  includeSummary: z.boolean().optional(),
+});
 
 const studyGuideRequestSchema = z.object({
-  bookId: z.string().uuid(),
+  bookId: z.string().min(1, "Book ID is required"),
   style: z
     .enum(["comprehensive", "summary", "exam-prep", "discussion", "visual"])
     .default("comprehensive"),
-  sections: z
-    .object({
-      includeOverview: z.boolean().optional(),
-      includeKeyPoints: z.boolean().optional(),
-      includeVocabulary: z.boolean().optional(),
-      includeQuestions: z.boolean().optional(),
-      includeTimeline: z.boolean().optional(),
-      includeThemes: z.boolean().optional(),
-      includeSummary: z.boolean().optional(),
-    })
-    .optional(),
+  sections: studyGuideSectionsSchema.optional(),
   targetAudience: z
     .enum(["high-school", "college", "graduate", "general"])
     .optional(),
@@ -48,170 +75,316 @@ const studyGuideRequestSchema = z.object({
 type StudyGuideRequest = z.infer<typeof studyGuideRequestSchema>;
 
 // ============================================================================
-// Main Handler
+// Handler
 // ============================================================================
 
-export default async function handler(
-  req: VercelRequest,
+async function handler(
+  req: AuthenticatedRequest,
   res: VercelResponse
 ): Promise<void> {
   // Only allow POST
   if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).json({ error: "Method not allowed" });
+    sendError(
+      res,
+      ErrorCodes.VALIDATION_ERROR,
+      "Method not allowed. Use POST.",
+      405
+    );
+    return;
   }
 
-  try {
-    // Authenticate user
-    const auth = getAuth(req);
-    const userId = auth.userId;
+  const { userId } = req.auth;
 
-    if (!userId) {
-      return res.status(401).json({ error: "Unauthorized" });
+  try {
+    // Check AI availability
+    if (!isAIAvailable()) {
+      sendError(
+        res,
+        ErrorCodes.SERVICE_UNAVAILABLE,
+        "AI service is not available. Please try again later.",
+        503
+      );
+      return;
     }
 
-    // Validate request body
+    // Validate request
     const validationResult = studyGuideRequestSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({
-        error: "Invalid request",
-        details: validationResult.error.errors,
-      });
+      sendError(
+        res,
+        ErrorCodes.VALIDATION_ERROR,
+        "Invalid request body",
+        400,
+        validationResult.error.flatten()
+      );
+      return;
     }
 
     const data: StudyGuideRequest = validationResult.data;
 
-    // Fetch book
-    const book = await prisma.book.findFirst({
-      where: {
-        id: data.bookId,
-        userId,
-        deletedAt: null,
-      },
-    });
+    // Get user from database
+    const user = await getUserByClerkId(userId);
+    if (!user) {
+      sendError(res, ErrorCodes.NOT_FOUND, "User not found", 404);
+      return;
+    }
 
+    // Check if user has AI enabled
+    if (!user.aiEnabled) {
+      sendError(
+        res,
+        ErrorCodes.FORBIDDEN,
+        "AI features are disabled for your account. Enable them in settings.",
+        403
+      );
+      return;
+    }
+
+    // Check rate limits
+    const rateLimitResult = await checkRateLimit("ai", user.id, user.tier);
+    applyRateLimitHeaders(res, rateLimitResult, "ai");
+
+    if (!rateLimitResult.success) {
+      const rateLimitResponse = createRateLimitResponse(rateLimitResult, "ai");
+      res.status(rateLimitResponse.statusCode).json(rateLimitResponse.body);
+      return;
+    }
+
+    // Get the book
+    const book = await getBookById(data.bookId, { includeChapters: false });
     if (!book) {
-      return res.status(404).json({ error: "Book not found" });
+      sendError(res, ErrorCodes.NOT_FOUND, "Book not found", 404);
+      return;
     }
 
-    // Fetch book content
-    let content = "";
-    if (book.rawContentUrl) {
-      // Fetch from R2 storage
-      const response = await fetch(book.rawContentUrl);
-      if (response.ok) {
-        content = await response.text();
-      }
+    // Verify book belongs to user
+    if (book.userId !== user.id) {
+      sendError(
+        res,
+        ErrorCodes.FORBIDDEN,
+        "You do not have access to this book",
+        403
+      );
+      return;
     }
 
-    if (!content) {
-      return res.status(400).json({
-        error: "Book content not available for study guide generation",
-      });
+    // Get content
+    let content = book.rawContent || "";
+
+    if (!content || content.length < 100) {
+      sendError(
+        res,
+        ErrorCodes.VALIDATION_ERROR,
+        "Book content not available or too short for study guide generation",
+        400
+      );
+      return;
     }
 
-    // Fetch user annotations if requested
-    let annotations: Array<{
+    // Truncate content if too long
+    if (content.length > MAX_CONTENT_LENGTH) {
+      content = content.slice(0, MAX_CONTENT_LENGTH);
+    }
+
+    // Fetch annotations if requested
+    const annotations: Array<{
       type: "HIGHLIGHT" | "NOTE" | "BOOKMARK";
       text?: string;
       note?: string;
     }> = [];
 
     if (data.includeAnnotations) {
-      const dbAnnotations = await prisma.annotation.findMany({
+      const dbAnnotations = await db.annotation.findMany({
         where: {
           bookId: data.bookId,
-          userId,
+          userId: user.id,
           deletedAt: null,
         },
         orderBy: {
           startOffset: "asc",
         },
-        take: 50, // Limit annotations
+        take: MAX_ANNOTATIONS,
+        select: {
+          type: true,
+          selectedText: true,
+          note: true,
+        },
       });
 
-      annotations = dbAnnotations.map((ann) => ({
-        type: ann.type as "HIGHLIGHT" | "NOTE" | "BOOKMARK",
-        text: ann.selectedText || undefined,
-        note: ann.note || undefined,
-      }));
+      for (const ann of dbAnnotations) {
+        const exportAnn: {
+          type: "HIGHLIGHT" | "NOTE" | "BOOKMARK";
+          text?: string;
+          note?: string;
+        } = {
+          type: ann.type as "HIGHLIGHT" | "NOTE" | "BOOKMARK",
+        };
+
+        if (ann.selectedText) {
+          exportAnn.text = ann.selectedText;
+        }
+        if (ann.note) {
+          exportAnn.note = ann.note;
+        }
+
+        annotations.push(exportAnn);
+      }
     }
 
-    // Build AI context
-    const context: StudyGuideInput = {
+    // Build sections with proper type handling for exactOptionalPropertyTypes
+    const sections = data.sections || DEFAULT_STUDY_GUIDE_SECTIONS;
+    const cleanSections: StudyGuideInput["sections"] = {};
+    if (sections.includeOverview !== undefined)
+      cleanSections.includeOverview = sections.includeOverview;
+    if (sections.includeKeyPoints !== undefined)
+      cleanSections.includeKeyPoints = sections.includeKeyPoints;
+    if (sections.includeVocabulary !== undefined)
+      cleanSections.includeVocabulary = sections.includeVocabulary;
+    if (sections.includeQuestions !== undefined)
+      cleanSections.includeQuestions = sections.includeQuestions;
+    if (sections.includeTimeline !== undefined)
+      cleanSections.includeTimeline = sections.includeTimeline;
+    if (sections.includeThemes !== undefined)
+      cleanSections.includeThemes = sections.includeThemes;
+    if (sections.includeSummary !== undefined)
+      cleanSections.includeSummary = sections.includeSummary;
+
+    // Build prompt context
+    const promptInput: StudyGuideInput = {
       bookTitle: book.title,
-      bookAuthor: book.author || undefined,
       content,
       annotations,
-      style: data.style as StudyGuideStyle,
-      sections: data.sections || DEFAULT_STUDY_GUIDE_SECTIONS,
-      targetAudience: data.targetAudience,
+      style: data.style,
+      sections: cleanSections,
     };
 
-    // Generate prompt
-    const userPrompt = studyGuidePrompt.buildPrompt(context);
+    // Add optional properties only if defined
+    if (book.author) promptInput.bookAuthor = book.author;
+    if (data.targetAudience) promptInput.targetAudience = data.targetAudience;
+
+    const prompt = buildStudyGuidePrompt(promptInput);
 
     // Call AI
-    const startTime = Date.now();
-    const aiResponse = await callAI({
-      systemPrompt: studyGuidePrompt.systemPrompt,
-      userPrompt,
-      temperature: studyGuidePrompt.temperature || 0.7,
-      maxTokens: studyGuidePrompt.maxTokens || 4000,
+    const aiResult = await completion([{ role: "user", content: prompt }], {
+      maxTokens: MAX_TOKENS,
+      temperature: 0.7,
+      userId: user.id,
+      operation: "study-guide",
+      metadata: {
+        bookId: data.bookId,
+        bookTitle: book.title,
+        style: data.style,
+        targetAudience: data.targetAudience,
+        includeAnnotations: data.includeAnnotations,
+        annotationsCount: annotations.length,
+      },
     });
-    const duration = Date.now() - startTime;
 
-    // Log AI usage
-    await logAIUsage({
-      userId,
-      operation: "STUDY_GUIDE",
+    // Log usage
+    await db.aIUsageLog.create({
+      data: {
+        userId: user.id,
+        operation: "study-guide",
+        model: aiResult.model,
+        provider: "anthropic",
+        promptTokens: aiResult.usage.promptTokens,
+        completionTokens: aiResult.usage.completionTokens,
+        totalTokens: aiResult.usage.totalTokens,
+        cost: aiResult.cost.totalCost,
+        durationMs: aiResult.durationMs,
+        success: true,
+        bookId: data.bookId,
+        metadata: {
+          bookTitle: book.title,
+          style: data.style,
+          targetAudience: data.targetAudience,
+          includeAnnotations: data.includeAnnotations,
+          annotationsCount: annotations.length,
+          finishReason: aiResult.finishReason,
+        },
+      },
+    });
+
+    logger.info("Study guide generated", {
+      userId: user.id,
       bookId: data.bookId,
-      tokensUsed: aiResponse.tokensUsed,
-      cost: aiResponse.cost,
-      duration,
-      success: true,
+      style: data.style,
+      tokensUsed: aiResult.usage.totalTokens,
+      cost: aiResult.cost.totalCost,
+      durationMs: aiResult.durationMs,
     });
 
-    // Return study guide
-    return res.status(200).json({
-      studyGuide: aiResponse.content,
+    // Return response
+    sendSuccess(res, {
+      studyGuide: aiResult.text,
       metadata: {
         bookTitle: book.title,
         bookAuthor: book.author,
         style: data.style,
         generatedAt: new Date().toISOString(),
-        tokensUsed: aiResponse.tokensUsed,
-        cost: aiResponse.cost,
+      },
+      usage: {
+        promptTokens: aiResult.usage.promptTokens,
+        completionTokens: aiResult.usage.completionTokens,
+        totalTokens: aiResult.usage.totalTokens,
+      },
+      cost: {
+        totalCost: aiResult.cost.totalCost,
       },
     });
   } catch (error) {
-    // Log failed AI usage
+    logger.error("Study guide generation error", {
+      error,
+      userId,
+      bookId: req.body?.bookId,
+    });
+
+    // Log failed usage
     try {
-      const auth = getAuth(req);
-      if (auth.userId && req.body?.bookId) {
-        await logAIUsage({
-          userId: auth.userId,
-          operation: "STUDY_GUIDE",
-          bookId: req.body.bookId,
-          tokensUsed: 0,
-          cost: 0,
-          duration: 0,
-          success: false,
-          errorMessage:
-            error instanceof Error ? error.message : "Unknown error",
+      const user = await getUserByClerkId(userId);
+      if (user) {
+        await db.aIUsageLog.create({
+          data: {
+            userId: user.id,
+            operation: "study-guide",
+            model: "unknown",
+            provider: "anthropic",
+            promptTokens: 0,
+            completionTokens: 0,
+            totalTokens: 0,
+            cost: 0,
+            durationMs: 0,
+            success: false,
+            bookId: req.body?.bookId || null,
+            metadata: {
+              error: error instanceof Error ? error.message : "Unknown error",
+            },
+          },
         });
       }
     } catch {
-      // Failed to log AI usage
+      // Failed to log
     }
 
-    if (error instanceof Error) {
-      return res.status(500).json({
-        error: "Failed to generate study guide",
-        message: error.message,
-      });
-    }
-
-    return res.status(500).json({ error: "Internal server error" });
+    sendError(
+      res,
+      ErrorCodes.INTERNAL_ERROR,
+      error instanceof Error ? error.message : "Failed to generate study guide",
+      500
+    );
   }
 }
+
+// ============================================================================
+// Export
+// ============================================================================
+
+export default withAuth(handler);
+
+export {
+  studyGuideRequestSchema,
+  studyGuideSectionsSchema,
+  MAX_CONTENT_LENGTH,
+  MAX_ANNOTATIONS,
+  MAX_TOKENS,
+};
