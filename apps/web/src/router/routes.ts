@@ -69,6 +69,7 @@ export const ROUTES = {
   // Stats
   STATS: "/stats",
   ACHIEVEMENTS: "/achievements",
+  LEADERBOARDS: "/leaderboards",
   ANALYTICS: "/analytics",
 
   // Admin
@@ -144,6 +145,7 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.TTS_DOWNLOADS,
   ROUTES.STATS,
   ROUTES.ACHIEVEMENTS,
+  ROUTES.LEADERBOARDS,
   ROUTES.ANALYTICS,
 ] as const;
 

@@ -134,3 +134,4 @@ export {
   type ForumListFilters,
 } from "./useForum";
 export * from "./useStudyGuide";
+export * from "./useNewLeaderboard";

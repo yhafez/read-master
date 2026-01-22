@@ -50,6 +50,7 @@ import {
   TTSDownloadsPage,
   UserStatsPage,
   AchievementsPage,
+  LeaderboardsPage,
   AnalyticsChartsPage,
   AdminDashboardPage,
   AdminProtectedRoute,
@@ -294,6 +295,10 @@ function createAppRouter() {
             {
               path: ROUTES.ACHIEVEMENTS,
               element: <AchievementsPage />,
+            },
+            {
+              path: ROUTES.LEADERBOARDS,
+              element: <LeaderboardsPage />,
             },
             {
               path: ROUTES.ANALYTICS,

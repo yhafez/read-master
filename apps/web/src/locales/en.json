@@ -2395,6 +2395,37 @@
     "resetRatio": "Reset to 50/50",
     "selectBooksHint": "Select books for both panes to enable all features"
   },
+  "leaderboards": {
+    "title": "Leaderboards",
+    "subtitle": "Compete with readers worldwide or challenge your friends",
+    "global": "Global",
+    "friends": "Friends",
+    "metric": "Metric",
+    "period": "Period",
+    "rank": "Rank",
+    "user": "User",
+    "score": "Score",
+    "change": "Change",
+    "you": "You",
+    "yourRank": "Your Rank",
+    "errorLoading": "Failed to load leaderboard",
+    "noFriends": "Follow users to see their rankings",
+    "noData": "No data available",
+    "metrics": {
+      "books": "Books",
+      "pages": "Pages",
+      "time": "Time",
+      "streak": "Streak",
+      "xp": "XP",
+      "assessments": "Assessments"
+    },
+    "periods": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "alltime": "All Time"
+    }
+  },
   "parallelText": {
     "controls": "Parallel Text",
     "leftText": "Left Text",

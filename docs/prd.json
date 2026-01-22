@@ -248,7 +248,7 @@
         "Privacy settings respected",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "forum-enhancements-001",
@@ -256,7 +256,7 @@
       "phase": "medium-priority",
       "priority": "medium",
       "description": "Enhance Forum with advanced features",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Add image upload support in forum posts",
         "Add file attachment support (PDF, EPUB for sharing excerpts)",
@@ -437,7 +437,7 @@
       "phase": "medium-priority",
       "priority": "medium",
       "description": "Database optimization and query performance",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Run EXPLAIN ANALYZE on slow queries",
         "Add database indexes for:",
@@ -472,7 +472,7 @@
       "phase": "medium-priority",
       "priority": "medium",
       "description": "Set up CDN for static assets",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Configure Cloudflare CDN for R2 bucket",
         "Set up custom domain for CDN (cdn.readmaster.com)",
@@ -500,7 +500,7 @@
       "phase": "medium-priority",
       "priority": "low",
       "description": "Optimize screen reader support",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Audit all components with screen reader",
         "Add comprehensive ARIA labels",
@@ -528,7 +528,7 @@
       "phase": "medium-priority",
       "priority": "low",
       "description": "Add voice command support",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Integrate Web Speech API",
         "Define voice command vocabulary",
@@ -558,7 +558,7 @@
       "phase": "future",
       "priority": "low",
       "description": "Add podcast integration",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Research podcast RSS feed parsing",
         "Create Podcast model (id, title, author, rssUrl, coverUrl)",
@@ -587,7 +587,7 @@
       "phase": "future",
       "priority": "low",
       "description": "Add video content support",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Research video hosting options",
         "Create Video model (id, title, description, videoUrl, duration)",
@@ -615,7 +615,7 @@
       "phase": "future",
       "priority": "low",
       "description": "Allow custom AI model selection",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Add model selection to AI settings",
         "Support multiple AI providers:",
@@ -645,7 +645,7 @@
       "phase": "future",
       "priority": "low",
       "description": "Add voice interaction with AI",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Integrate speech-to-text API",
         "Integrate text-to-speech for AI responses",
@@ -673,7 +673,7 @@
       "phase": "high-priority",
       "priority": "medium",
       "description": "Create comprehensive user guide",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Create /docs route for user documentation",
         "Write getting started guide",
@@ -701,7 +701,7 @@
       "phase": "medium-priority",
       "priority": "low",
       "description": "Create API documentation for developers",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Set up API documentation with Swagger/OpenAPI",
         "Document all API endpoints",

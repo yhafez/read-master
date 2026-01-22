@@ -2353,6 +2353,37 @@
     "resetRatio": "Restablecer a 50/50",
     "selectBooksHint": "Seleccione libros para ambos paneles para activar todas las funciones"
   },
+  "leaderboards": {
+    "title": "Tablas de Clasificación",
+    "subtitle": "Compite con lectores de todo el mundo o desafía a tus amigos",
+    "global": "Global",
+    "friends": "Amigos",
+    "metric": "Métrica",
+    "period": "Período",
+    "rank": "Rango",
+    "user": "Usuario",
+    "score": "Puntuación",
+    "change": "Cambio",
+    "you": "Tú",
+    "yourRank": "Tu Rango",
+    "errorLoading": "Error al cargar la tabla de clasificación",
+    "noFriends": "Sigue a usuarios para ver sus clasificaciones",
+    "noData": "No hay datos disponibles",
+    "metrics": {
+      "books": "Libros",
+      "pages": "Páginas",
+      "time": "Tiempo",
+      "streak": "Racha",
+      "xp": "XP",
+      "assessments": "Evaluaciones"
+    },
+    "periods": {
+      "daily": "Diario",
+      "weekly": "Semanal",
+      "monthly": "Mensual",
+      "alltime": "Todo el Tiempo"
+    }
+  },
   "parallelText": {
     "controls": "Texto Paralelo",
     "leftText": "Texto Izquierdo",

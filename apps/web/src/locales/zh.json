@@ -2353,6 +2353,37 @@
     "resetRatio": "重置为50/50",
     "selectBooksHint": "为两个窗格选择书籍以启用所有功能"
   },
+  "leaderboards": {
+    "title": "排行榜",
+    "subtitle": "与全球读者竞争或挑战您的朋友",
+    "global": "全球",
+    "friends": "好友",
+    "metric": "指标",
+    "period": "时期",
+    "rank": "排名",
+    "user": "用户",
+    "score": "分数",
+    "change": "变化",
+    "you": "你",
+    "yourRank": "您的排名",
+    "errorLoading": "加载排行榜失败",
+    "noFriends": "关注用户以查看他们的排名",
+    "noData": "无可用数据",
+    "metrics": {
+      "books": "书籍",
+      "pages": "页数",
+      "time": "时间",
+      "streak": "连续天数",
+      "xp": "经验值",
+      "assessments": "评估"
+    },
+    "periods": {
+      "daily": "每日",
+      "weekly": "每周",
+      "monthly": "每月",
+      "alltime": "全部时间"
+    }
+  },
   "parallelText": {
     "controls": "对照文本",
     "leftText": "左侧文本",

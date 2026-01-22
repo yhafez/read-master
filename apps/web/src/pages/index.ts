@@ -77,7 +77,12 @@ export {
 export { TTSDownloadsPage } from "./TTSDownloadsPage";
 
 // Stats
-export { UserStatsPage, AchievementsPage, AnalyticsChartsPage } from "./stats";
+export {
+  UserStatsPage,
+  AchievementsPage,
+  LeaderboardsPage,
+  AnalyticsChartsPage,
+} from "./stats";
 
 // Admin
 export { AdminDashboardPage, AdminProtectedRoute } from "./admin";

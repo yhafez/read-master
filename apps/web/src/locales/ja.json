@@ -2353,6 +2353,37 @@
     "resetRatio": "50/50にリセット",
     "selectBooksHint": "すべての機能を有効にするには、両方のペインで本を選択してください"
   },
+  "leaderboards": {
+    "title": "リーダーボード",
+    "subtitle": "世界中の読者と競い合ったり、友達に挑戦したりできます",
+    "global": "グローバル",
+    "friends": "フレンド",
+    "metric": "指標",
+    "period": "期間",
+    "rank": "順位",
+    "user": "ユーザー",
+    "score": "スコア",
+    "change": "変動",
+    "you": "あなた",
+    "yourRank": "あなたの順位",
+    "errorLoading": "リーダーボードの読み込みに失敗しました",
+    "noFriends": "ユーザーをフォローしてランキングを見る",
+    "noData": "データがありません",
+    "metrics": {
+      "books": "本",
+      "pages": "ページ",
+      "time": "時間",
+      "streak": "連続日数",
+      "xp": "経験値",
+      "assessments": "評価"
+    },
+    "periods": {
+      "daily": "デイリー",
+      "weekly": "ウィークリー",
+      "monthly": "マンスリー",
+      "alltime": "全期間"
+    }
+  },
   "parallelText": {
     "controls": "対訳テキスト",
     "leftText": "左のテキスト",

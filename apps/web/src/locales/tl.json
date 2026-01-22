@@ -2353,6 +2353,37 @@
     "resetRatio": "I-reset sa 50/50",
     "selectBooksHint": "Pumili ng mga aklat para sa parehong panel upang paganahin ang lahat ng features"
   },
+  "leaderboards": {
+    "title": "Leaderboards",
+    "subtitle": "Makipag-kumpitensya sa mga mambabasa sa buong mundo o hamunin ang iyong mga kaibigan",
+    "global": "Pandaigdig",
+    "friends": "Mga Kaibigan",
+    "metric": "Sukatan",
+    "period": "Panahon",
+    "rank": "Ranggo",
+    "user": "User",
+    "score": "Puntos",
+    "change": "Pagbabago",
+    "you": "Ikaw",
+    "yourRank": "Ang Iyong Ranggo",
+    "errorLoading": "Nabigo ang pag-load ng leaderboard",
+    "noFriends": "Sundan ang mga user para makita ang kanilang ranggo",
+    "noData": "Walang available na data",
+    "metrics": {
+      "books": "Mga Aklat",
+      "pages": "Mga Pahina",
+      "time": "Oras",
+      "streak": "Streak",
+      "xp": "XP",
+      "assessments": "Mga Pagtatasa"
+    },
+    "periods": {
+      "daily": "Araw-araw",
+      "weekly": "Lingguhan",
+      "monthly": "Buwanan",
+      "alltime": "Lahat ng Oras"
+    }
+  },
   "parallelText": {
     "controls": "Parallel na Teksto",
     "leftText": "Kaliwang Teksto",
