@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 import {
   CurriculumForm,
@@ -35,30 +34,13 @@ import type {
   CurriculumItem,
 } from "@/components/curriculum";
 import { useUser } from "@/auth";
-
-// ============================================================================
-// Types
-// ============================================================================
-
-interface CreateCurriculumPayload {
-  title: string;
-  description: string;
-  category: string;
-  difficulty: string;
-  visibility: string;
-  tags?: string[];
-  coverImageUrl?: string;
-  estimatedTimeMinutes?: number;
-  items: Array<{
-    type: "BOOK" | "EXTERNAL_RESOURCE";
-    orderIndex: number;
-    bookId?: string;
-    externalUrl?: string;
-    externalTitle?: string;
-    notes?: string;
-    estimatedTimeMinutes?: number;
-  }>;
-}
+import {
+  useCurriculum,
+  useCreateCurriculum,
+  useUpdateCurriculum,
+  type CreateCurriculumInput,
+} from "@/hooks/useCurriculums";
+import { useBooks } from "@/hooks/useBooks";
 
 // ============================================================================
 // Component
@@ -87,46 +69,17 @@ export function CurriculumCreatePage(): React.ReactElement {
   ];
 
   // Fetch curriculum for edit mode
-  const { data: curriculum, isLoading } = useQuery({
-    queryKey: ["curriculum", id],
-    queryFn: async () => {
-      if (!id) return null;
-      // TODO: Implement API call when backend is ready
-      return null;
-    },
-    enabled: isEditMode,
-  });
+  const { data: curriculum, isLoading } = useCurriculum(id || "", isEditMode);
 
   // Fetch user's books
-  const { data: userBooks = [] } = useQuery({
-    queryKey: ["user-books"],
-    queryFn: async () => {
-      // TODO: Implement API call when backend is ready
-      return [];
-    },
-  });
+  const { data: booksData } = useBooks({});
+  const userBooks = booksData?.data || [];
 
   // Create mutation
-  const createMutation = useMutation({
-    mutationFn: async (_payload: CreateCurriculumPayload) => {
-      // TODO: Implement API call when backend is ready
-      return { id: "temp-id" };
-    },
-    onSuccess: (data) => {
-      navigate(`/curriculums/${data.id}`);
-    },
-  });
+  const createMutation = useCreateCurriculum();
 
   // Update mutation
-  const updateMutation = useMutation({
-    mutationFn: async (_payload: CreateCurriculumPayload) => {
-      // TODO: Implement API call when backend is ready
-      return { id };
-    },
-    onSuccess: (data) => {
-      navigate(`/curriculums/${data.id}`);
-    },
-  });
+  const updateMutation = useUpdateCurriculum();
 
   /**
    * Handle form data submission (step 1)
@@ -142,11 +95,19 @@ export function CurriculumCreatePage(): React.ReactElement {
   const handleFinalSubmit = async () => {
     if (!formData) return;
 
-    const payload: CreateCurriculumPayload = {
-      ...formData,
+    const payload: CreateCurriculumInput = {
+      title: formData.title,
+      description: formData.description,
+      category: formData.category,
+      difficulty: formData.difficulty,
+      visibility: formData.visibility,
+      ...(formData.tags && { tags: formData.tags }),
+      ...(formData.coverImageUrl && { coverImageUrl: formData.coverImageUrl }),
+      ...(formData.estimatedTimeMinutes && {
+        estimatedTimeMinutes: formData.estimatedTimeMinutes,
+      }),
       items: items.map((item) => ({
         type: item.type,
-        orderIndex: item.orderIndex,
         ...(item.bookId && { bookId: item.bookId }),
         ...(item.externalUrl && {
           externalUrl: item.externalUrl,
@@ -159,10 +120,12 @@ export function CurriculumCreatePage(): React.ReactElement {
       })),
     };
 
-    if (isEditMode) {
-      await updateMutation.mutateAsync(payload);
+    if (isEditMode && id) {
+      const result = await updateMutation.mutateAsync({ id, input: payload });
+      navigate(`/curriculums/${result.id}`);
     } else {
-      await createMutation.mutateAsync(payload);
+      const result = await createMutation.mutateAsync(payload);
+      navigate(`/curriculums/${result.id}`);
     }
   };
 
@@ -225,7 +188,7 @@ export function CurriculumCreatePage(): React.ReactElement {
 
         {activeStep === 0 && (
           <CurriculumForm
-            initialData={(curriculum || formData) ?? undefined}
+            initialData={formData || (curriculum as never) || undefined}
             onSubmit={handleFormSubmit}
             onCancel={handleCancel}
             userTier={userTier}
