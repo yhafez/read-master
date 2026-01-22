@@ -133,3 +133,4 @@ export {
   type ReportInput,
   type ForumListFilters,
 } from "./useForum";
+export * from "./useStudyGuide";
