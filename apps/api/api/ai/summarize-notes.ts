@@ -92,7 +92,12 @@ const MAX_NOTE_LENGTH = 1000;
 /**
  * Valid summary styles
  */
-const VALID_SUMMARY_STYLES = ["brief", "structured", "outline", "synthesis"] as const;
+const VALID_SUMMARY_STYLES = [
+  "brief",
+  "structured",
+  "outline",
+  "synthesis",
+] as const;
 
 /**
  * Valid focus areas
@@ -139,8 +144,11 @@ const annotationSchema = z.object({
     .string()
     .max(MAX_NOTE_LENGTH, `Note cannot exceed ${MAX_NOTE_LENGTH} characters`)
     .optional(),
-  type: z.enum(["highlight", "note"]),
-  position: positionSchema.optional(),
+  type: z.enum(["highlight", "note", "bookmark"]),
+  color: z.string().optional(),
+  page: z.number().int().positive().optional(),
+  chapter: z.string().optional(),
+  createdAt: z.string(),
 });
 
 /**
@@ -155,14 +163,9 @@ const summarizeNotesRequestSchema = z.object({
       MAX_ANNOTATIONS,
       `Cannot summarize more than ${MAX_ANNOTATIONS} annotations at once`
     ),
-  summaryStyle: z
-    .enum(VALID_SUMMARY_STYLES)
-    .default("structured"),
-  focusAreas: z
-    .array(z.enum(VALID_FOCUS_AREAS))
-    .min(1, "At least one focus area is required")
-    .optional(),
-  includeQuotes: z.boolean().default(true),
+  style: z.enum(["concise", "detailed", "study-guide"]).optional(),
+  groupBy: z.enum(["chapter", "theme", "chronological"]).optional(),
+  includeQuotes: z.boolean().optional(),
 });
 
 /**
@@ -198,13 +201,14 @@ function mapReadingLevel(
  * Build book context from database book
  */
 function buildBookContext(book: Book): BookContext {
-  return {
+  const context: BookContext = {
     title: book.title,
     author: book.author ?? "Unknown Author",
     content: "", // Content will be fetched separately if needed
-    genre: book.genre ?? undefined,
-    description: book.description ?? undefined,
   };
+  if (book.genre) context.genre = book.genre;
+  if (book.description) context.description = book.description;
+  return context;
 }
 
 // ============================================================================
@@ -259,8 +263,8 @@ async function handler(
     const {
       bookId,
       annotations,
-      summaryStyle,
-      focusAreas,
+      style,
+      groupBy,
       includeQuotes,
     }: SummarizeNotesRequest = validationResult.data;
 
@@ -313,15 +317,27 @@ async function handler(
     // Build book context for AI prompt
     const bookContext = buildBookContext(book);
 
-    // Build summarize notes input
+    // Build summarize notes input - map annotations to ensure proper types
+    const mappedAnnotations = annotations.map((ann) => ({
+      text: ann.text,
+      ...(ann.note && { note: ann.note }),
+      ...(ann.color && { color: ann.color }),
+      ...(ann.page && { page: ann.page }),
+      ...(ann.chapter && { chapter: ann.chapter }),
+      createdAt: ann.createdAt,
+      type: ann.type,
+    }));
+
     const summarizeNotesInput: SummarizeNotesInput = {
       book: bookContext,
-      annotations,
-      summaryStyle,
+      annotations: mappedAnnotations,
     };
 
-    if (focusAreas && focusAreas.length > 0) {
-      summarizeNotesInput.focusAreas = focusAreas;
+    if (style) {
+      summarizeNotesInput.style = style;
+    }
+    if (groupBy) {
+      summarizeNotesInput.groupBy = groupBy;
     }
     if (includeQuotes !== undefined) {
       summarizeNotesInput.includeQuotes = includeQuotes;
@@ -341,7 +357,7 @@ async function handler(
 
     // Build user context for AI prompt
     const userContext: UserContext = {
-      readingLevel: mapReadingLevel(user.readingLevel),
+      readingLevel: mapReadingLevel(user.readingLevel) ?? "college",
       language: user.preferredLang ?? "en",
     };
     if (user.firstName) {
@@ -349,7 +365,10 @@ async function handler(
     }
 
     // Generate prompts
-    const prompt = generateSummarizeNotesPrompt(summarizeNotesInput, userContext);
+    const prompt = generateSummarizeNotesPrompt(
+      summarizeNotesInput,
+      userContext
+    );
 
     // Calculate total annotation text length
     const totalTextLength = annotations.reduce(
@@ -358,26 +377,22 @@ async function handler(
     );
 
     // Call AI to generate summary
-    const aiResult = await completion(
-      [{ role: "user", content: prompt }],
-      {
-        system: undefined, // Prompt already includes system context
-        maxTokens: MAX_TOKENS,
-        temperature: 0.6, // Moderate creativity for summaries
-        userId: user.id,
-        operation: "summarize-notes",
-        metadata: {
-          bookId,
-          bookTitle: book.title,
-          annotationCount: annotations.length,
-          totalTextLength,
-          summaryStyle,
-          focusAreas: focusAreas?.join(",") ?? "all",
-          includeQuotes,
-          readingLevel: userContext.readingLevel,
-        },
-      }
-    );
+    const aiResult = await completion([{ role: "user", content: prompt }], {
+      maxTokens: MAX_TOKENS,
+      temperature: 0.6, // Moderate creativity for summaries
+      userId: user.id,
+      operation: "summarize-notes",
+      metadata: {
+        bookId,
+        bookTitle: book.title,
+        annotationCount: annotations.length,
+        totalTextLength,
+        style: style ?? "concise",
+        groupBy: groupBy ?? "chronological",
+        includeQuotes: includeQuotes ?? true,
+        readingLevel: userContext.readingLevel,
+      },
+    });
 
     // Parse AI response
     const parsedResponse: SummarizeNotesOutput = parseSummarizeNotesResponse(
@@ -402,11 +417,11 @@ async function handler(
           bookTitle: book.title,
           annotationCount: annotations.length,
           totalTextLength,
-          summaryStyle,
-          focusAreas: focusAreas?.join(",") ?? "all",
-          includeQuotes,
+          style: style ?? "concise",
+          groupBy: groupBy ?? "chronological",
+          includeQuotes: includeQuotes ?? true,
           keyThemesCount: parsedResponse.keyThemes?.length ?? 0,
-          actionItemsCount: parsedResponse.actionItems?.length ?? 0,
+          sectionsCount: parsedResponse.sections?.length ?? 0,
           readingLevel: userContext.readingLevel,
           finishReason: aiResult.finishReason,
         },
@@ -417,7 +432,7 @@ async function handler(
       userId: user.id,
       bookId,
       annotationCount: annotations.length,
-      summaryStyle,
+      style: style ?? "concise",
       tokensUsed: aiResult.usage.totalTokens,
       cost: aiResult.cost.totalCost,
       durationMs: aiResult.durationMs,
@@ -425,11 +440,11 @@ async function handler(
 
     // Return the summary
     sendSuccess(res, {
-      summary: parsedResponse.summary,
+      overallSummary: parsedResponse.overallSummary,
+      sections: parsedResponse.sections ?? [],
       keyThemes: parsedResponse.keyThemes ?? [],
-      importantQuotes: parsedResponse.importantQuotes ?? [],
-      actionItems: parsedResponse.actionItems ?? [],
-      insights: parsedResponse.insights ?? [],
+      mainTakeaways: parsedResponse.mainTakeaways ?? [],
+      reviewTopics: parsedResponse.reviewTopics ?? [],
       bookId,
       annotationCount: annotations.length,
       usage: {

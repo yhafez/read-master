@@ -134,8 +134,14 @@ const studyBuddyRequestSchema = z.object({
   bookId: z.string().min(1, "Book ID is required"),
   userMessage: z
     .string()
-    .min(MIN_MESSAGE_LENGTH, `Message must be at least ${MIN_MESSAGE_LENGTH} character`)
-    .max(MAX_MESSAGE_LENGTH, `Message cannot exceed ${MAX_MESSAGE_LENGTH} characters`),
+    .min(
+      MIN_MESSAGE_LENGTH,
+      `Message must be at least ${MIN_MESSAGE_LENGTH} character`
+    )
+    .max(
+      MAX_MESSAGE_LENGTH,
+      `Message cannot exceed ${MAX_MESSAGE_LENGTH} characters`
+    ),
   currentPosition: readingPositionSchema.optional(),
   currentText: z
     .string()
@@ -146,7 +152,10 @@ const studyBuddyRequestSchema = z.object({
     .optional(),
   conversationHistory: z
     .array(conversationMessageSchema)
-    .max(MAX_HISTORY_MESSAGES, `Maximum ${MAX_HISTORY_MESSAGES} conversation messages allowed`)
+    .max(
+      MAX_HISTORY_MESSAGES,
+      `Maximum ${MAX_HISTORY_MESSAGES} conversation messages allowed`
+    )
     .optional(),
   recentAnnotations: z
     .array(recentAnnotationSchema)
@@ -187,13 +196,14 @@ function mapReadingLevel(
  * Build book context from database book
  */
 function buildBookContext(book: Book): BookContext {
-  return {
+  const context: BookContext = {
     title: book.title,
     author: book.author ?? "Unknown Author",
     content: "", // Content will be fetched separately if needed
-    genre: book.genre ?? undefined,
-    description: book.description ?? undefined,
   };
+  if (book.genre) context.genre = book.genre;
+  if (book.description) context.description = book.description;
+  return context;
 }
 
 // ============================================================================
@@ -309,8 +319,14 @@ async function handler(
       userMessage,
     };
 
-    if (currentPosition) {
-      studyBuddyInput.currentPosition = currentPosition;
+    if (currentPosition && Object.keys(currentPosition).length > 0) {
+      studyBuddyInput.currentPosition = {
+        ...(currentPosition.chapter && { chapter: currentPosition.chapter }),
+        ...(currentPosition.page && { page: currentPosition.page }),
+        ...(currentPosition.percentage !== undefined && {
+          percentage: currentPosition.percentage,
+        }),
+      };
     }
     if (currentText) {
       studyBuddyInput.currentText = currentText;
@@ -319,7 +335,11 @@ async function handler(
       studyBuddyInput.conversationHistory = conversationHistory;
     }
     if (recentAnnotations && recentAnnotations.length > 0) {
-      studyBuddyInput.recentAnnotations = recentAnnotations;
+      studyBuddyInput.recentAnnotations = recentAnnotations.map((ann) => ({
+        text: ann.text,
+        ...(ann.note && { note: ann.note }),
+        type: ann.type,
+      }));
     }
 
     // Validate prompt input
@@ -336,7 +356,7 @@ async function handler(
 
     // Build user context for AI prompt
     const userContext: UserContext = {
-      readingLevel: mapReadingLevel(user.readingLevel),
+      readingLevel: mapReadingLevel(user.readingLevel) ?? "college",
       language: user.preferredLang ?? "en",
     };
     if (user.firstName) {
@@ -347,28 +367,24 @@ async function handler(
     const prompt = generateStudyBuddyPrompt(studyBuddyInput, userContext);
 
     // Call AI to generate response
-    const aiResult = await completion(
-      [{ role: "user", content: prompt }],
-      {
-        system: undefined, // Prompt already includes system context
-        maxTokens: MAX_TOKENS,
-        temperature: 0.7,
-        userId: user.id,
-        operation: "study-buddy",
-        metadata: {
-          bookId,
-          bookTitle: book.title,
-          messageLength: userMessage.length,
-          hasPosition: !!currentPosition,
-          hasCurrentText: !!currentText,
-          hasHistory: !!(conversationHistory && conversationHistory.length > 0),
-          historyLength: conversationHistory?.length ?? 0,
-          hasAnnotations: !!(recentAnnotations && recentAnnotations.length > 0),
-          annotationsCount: recentAnnotations?.length ?? 0,
-          readingLevel: userContext.readingLevel,
-        },
-      }
-    );
+    const aiResult = await completion([{ role: "user", content: prompt }], {
+      maxTokens: MAX_TOKENS,
+      temperature: 0.7,
+      userId: user.id,
+      operation: "study-buddy",
+      metadata: {
+        bookId,
+        bookTitle: book.title,
+        messageLength: userMessage.length,
+        hasPosition: !!currentPosition,
+        hasCurrentText: !!currentText,
+        hasHistory: !!(conversationHistory && conversationHistory.length > 0),
+        historyLength: conversationHistory?.length ?? 0,
+        hasAnnotations: !!(recentAnnotations && recentAnnotations.length > 0),
+        annotationsCount: recentAnnotations?.length ?? 0,
+        readingLevel: userContext.readingLevel,
+      },
+    });
 
     // Parse AI response
     const parsedResponse: StudyBuddyOutput = parseStudyBuddyResponse(

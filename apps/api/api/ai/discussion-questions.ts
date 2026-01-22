@@ -105,11 +105,31 @@ const MAX_TOKENS = 3000;
 /**
  * Difficulty range schema
  */
-const difficultyRangeSchema = z.object({
-  min: z.number().int().min(1).max(5),
-  max: z.number().int().min(1).max(5),
-}).refine((data) => data.min <= data.max, {
-  message: "Minimum difficulty must be less than or equal to maximum",
+const difficultyRangeSchema = z
+  .object({
+    min: z.number().int().min(1).max(5),
+    max: z.number().int().min(1).max(5),
+  })
+  .refine((data) => data.min <= data.max, {
+    message: "Minimum difficulty must be less than or equal to maximum",
+  });
+
+/**
+ * Section schema for focusing on specific parts
+ */
+const sectionSchema = z.object({
+  title: z.string().optional(),
+  startPage: z.number().int().positive().optional(),
+  endPage: z.number().int().positive().optional(),
+  summary: z.string().optional(),
+});
+
+/**
+ * Progress schema for avoiding spoilers
+ */
+const progressSchema = z.object({
+  percentage: z.number().min(0).max(100).optional(),
+  currentChapter: z.string().optional(),
 });
 
 /**
@@ -117,28 +137,31 @@ const difficultyRangeSchema = z.object({
  */
 const discussionQuestionsRequestSchema = z.object({
   bookId: z.string().min(1, "Book ID is required"),
-  contentFocus: z
-    .string()
-    .min(MIN_CONTENT_LENGTH, `Content must be at least ${MIN_CONTENT_LENGTH} characters`)
-    .max(MAX_CONTENT_LENGTH, `Content cannot exceed ${MAX_CONTENT_LENGTH} characters`),
+  section: sectionSchema.optional(),
+  progress: progressSchema.optional(),
+  questionType: z
+    .enum(["comprehension", "analysis", "application", "creative", "mixed"])
+    .optional(),
   questionCount: z
     .number()
     .int()
-    .min(MIN_QUESTION_COUNT, `Must generate at least ${MIN_QUESTION_COUNT} question`)
-    .max(MAX_QUESTION_COUNT, `Cannot generate more than ${MAX_QUESTION_COUNT} questions`)
-    .default(5),
-  categories: z
-    .array(z.enum(VALID_CATEGORIES))
-    .min(1, "At least one category is required")
+    .min(
+      MIN_QUESTION_COUNT,
+      `Must generate at least ${MIN_QUESTION_COUNT} question`
+    )
+    .max(
+      MAX_QUESTION_COUNT,
+      `Cannot generate more than ${MAX_QUESTION_COUNT} questions`
+    )
     .optional(),
-  difficultyRange: difficultyRangeSchema.optional(),
-  specificTopics: z.array(z.string()).max(10, "Maximum 10 topics allowed").optional(),
 });
 
 /**
  * Discussion questions request type
  */
-type DiscussionQuestionsRequest = z.infer<typeof discussionQuestionsRequestSchema>;
+type DiscussionQuestionsRequest = z.infer<
+  typeof discussionQuestionsRequestSchema
+>;
 
 // ============================================================================
 // Helper Functions
@@ -168,13 +191,14 @@ function mapReadingLevel(
  * Build book context from database book
  */
 function buildBookContext(book: Book): BookContext {
-  return {
+  const context: BookContext = {
     title: book.title,
     author: book.author ?? "Unknown Author",
     content: "", // Content will be fetched separately if needed
-    genre: book.genre ?? undefined,
-    description: book.description ?? undefined,
   };
+  if (book.genre) context.genre = book.genre;
+  if (book.description) context.description = book.description;
+  return context;
 }
 
 // ============================================================================
@@ -214,7 +238,9 @@ async function handler(
     }
 
     // Validate request body
-    const validationResult = discussionQuestionsRequestSchema.safeParse(req.body);
+    const validationResult = discussionQuestionsRequestSchema.safeParse(
+      req.body
+    );
     if (!validationResult.success) {
       sendError(
         res,
@@ -228,11 +254,10 @@ async function handler(
 
     const {
       bookId,
-      contentFocus,
+      section,
+      progress,
+      questionType,
       questionCount,
-      categories,
-      difficultyRange,
-      specificTopics,
     }: DiscussionQuestionsRequest = validationResult.data;
 
     // Get user from database
@@ -287,22 +312,37 @@ async function handler(
     // Build discussion questions input
     const discussionQuestionsInput: DiscussionQuestionsInput = {
       book: bookContext,
-      contentFocus,
-      questionCount,
     };
 
-    if (categories && categories.length > 0) {
-      discussionQuestionsInput.categories = categories;
+    if (section && Object.keys(section).length > 0) {
+      discussionQuestionsInput.section = {
+        ...(section.title && { title: section.title }),
+        ...(section.startPage && { startPage: section.startPage }),
+        ...(section.endPage && { endPage: section.endPage }),
+        ...(section.summary && { summary: section.summary }),
+      };
     }
-    if (difficultyRange) {
-      discussionQuestionsInput.difficultyRange = difficultyRange;
+    if (progress && Object.keys(progress).length > 0) {
+      discussionQuestionsInput.progress = {
+        ...(progress.percentage !== undefined && {
+          percentage: progress.percentage,
+        }),
+        ...(progress.currentChapter && {
+          currentChapter: progress.currentChapter,
+        }),
+      };
     }
-    if (specificTopics && specificTopics.length > 0) {
-      discussionQuestionsInput.specificTopics = specificTopics;
+    if (questionType) {
+      discussionQuestionsInput.questionType = questionType;
+    }
+    if (questionCount) {
+      discussionQuestionsInput.questionCount = questionCount;
     }
 
     // Validate prompt input
-    const inputValidation = validateDiscussionQuestionsInput(discussionQuestionsInput);
+    const inputValidation = validateDiscussionQuestionsInput(
+      discussionQuestionsInput
+    );
     if (!inputValidation.valid) {
       sendError(
         res,
@@ -315,7 +355,7 @@ async function handler(
 
     // Build user context for AI prompt
     const userContext: UserContext = {
-      readingLevel: mapReadingLevel(user.readingLevel),
+      readingLevel: mapReadingLevel(user.readingLevel) ?? "college",
       language: user.preferredLang ?? "en",
     };
     if (user.firstName) {
@@ -329,32 +369,25 @@ async function handler(
     );
 
     // Call AI to generate questions
-    const aiResult = await completion(
-      [{ role: "user", content: prompt }],
-      {
-        system: undefined, // Prompt already includes system context
-        maxTokens: MAX_TOKENS,
-        temperature: 0.8, // Higher temperature for more creative questions
-        userId: user.id,
-        operation: "discussion-questions",
-        metadata: {
-          bookId,
-          bookTitle: book.title,
-          contentLength: contentFocus.length,
-          questionCount,
-          categories: categories?.join(",") ?? "all",
-          hasDifficultyRange: !!difficultyRange,
-          hasTopics: !!(specificTopics && specificTopics.length > 0),
-          topicsCount: specificTopics?.length ?? 0,
-          readingLevel: userContext.readingLevel,
-        },
-      }
-    );
+    const aiResult = await completion([{ role: "user", content: prompt }], {
+      maxTokens: MAX_TOKENS,
+      temperature: 0.8, // Higher temperature for more creative questions
+      userId: user.id,
+      operation: "discussion-questions",
+      metadata: {
+        bookId,
+        bookTitle: book.title,
+        questionCount: questionCount ?? 5,
+        questionType: questionType ?? "mixed",
+        hasSection: !!section,
+        hasProgress: !!progress,
+        readingLevel: userContext.readingLevel,
+      },
+    });
 
     // Parse AI response
-    const parsedResponse: DiscussionQuestionsOutput = parseDiscussionQuestionsResponse(
-      aiResult.text
-    );
+    const parsedResponse: DiscussionQuestionsOutput =
+      parseDiscussionQuestionsResponse(aiResult.text);
 
     // Log AI usage to AIUsageLog table
     await db.aIUsageLog.create({
@@ -372,13 +405,11 @@ async function handler(
         bookId,
         metadata: {
           bookTitle: book.title,
-          contentLength: contentFocus.length,
-          questionCount,
+          questionCount: questionCount ?? 5,
           questionsGenerated: parsedResponse.questions.length,
-          categories: categories?.join(",") ?? "all",
-          hasDifficultyRange: !!difficultyRange,
-          hasTopics: !!(specificTopics && specificTopics.length > 0),
-          topicsCount: specificTopics?.length ?? 0,
+          questionType: questionType ?? "mixed",
+          hasSection: !!section,
+          hasProgress: !!progress,
           readingLevel: userContext.readingLevel,
           finishReason: aiResult.finishReason,
         },
@@ -398,7 +429,7 @@ async function handler(
     // Return the questions
     sendSuccess(res, {
       questions: parsedResponse.questions,
-      guidanceNotes: parsedResponse.guidanceNotes ?? [],
+      themes: parsedResponse.themes ?? [],
       bookId,
       usage: {
         promptTokens: aiResult.usage.promptTokens,

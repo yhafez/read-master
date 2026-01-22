@@ -93,14 +93,30 @@ const assessDifficultyRequestSchema = z.object({
   bookId: z.string().min(1, "Book ID is required"),
   sampleText: z
     .string()
-    .min(MIN_SAMPLE_LENGTH, `Sample text must be at least ${MIN_SAMPLE_LENGTH} characters for accurate analysis`)
-    .max(MAX_SAMPLE_LENGTH, `Sample text cannot exceed ${MAX_SAMPLE_LENGTH} characters`),
+    .min(
+      MIN_SAMPLE_LENGTH,
+      `Sample text must be at least ${MIN_SAMPLE_LENGTH} characters for accurate analysis`
+    )
+    .max(
+      MAX_SAMPLE_LENGTH,
+      `Sample text cannot exceed ${MAX_SAMPLE_LENGTH} characters`
+    ),
   userReadingLevel: z
-    .enum(["beginner", "elementary", "middle_school", "high_school", "college", "advanced"])
+    .enum([
+      "beginner",
+      "elementary",
+      "middle_school",
+      "high_school",
+      "college",
+      "advanced",
+    ])
     .optional(),
   readingGoals: z
     .array(z.string().min(1).max(200))
-    .max(MAX_READING_GOALS, `Maximum ${MAX_READING_GOALS} reading goals allowed`)
+    .max(
+      MAX_READING_GOALS,
+      `Maximum ${MAX_READING_GOALS} reading goals allowed`
+    )
     .optional(),
 });
 
@@ -147,13 +163,14 @@ function mapReadingLevel(
  * Build book context from database book
  */
 function buildBookContext(book: Book): BookContext {
-  return {
+  const context: BookContext = {
     title: book.title,
     author: book.author ?? "Unknown Author",
     content: "", // Content will be fetched separately if needed
-    genre: book.genre ?? undefined,
-    description: book.description ?? undefined,
   };
+  if (book.genre) context.genre = book.genre;
+  if (book.description) context.description = book.description;
+  return context;
 }
 
 // ============================================================================
@@ -268,19 +285,22 @@ async function handler(
     };
 
     // Use provided user reading level, or fallback to user's profile level
-    const effectiveUserLevel = mapRequestReadingLevel(userReadingLevel) ?? 
-                                mapReadingLevel(user.readingLevel);
-    
+    const effectiveUserLevel =
+      mapRequestReadingLevel(userReadingLevel) ??
+      mapReadingLevel(user.readingLevel);
+
     if (effectiveUserLevel) {
       assessDifficultyInput.userReadingLevel = effectiveUserLevel;
     }
-    
+
     if (readingGoals && readingGoals.length > 0) {
       assessDifficultyInput.readingGoals = readingGoals;
     }
 
     // Validate prompt input
-    const inputValidation = validateAssessDifficultyInput(assessDifficultyInput);
+    const inputValidation = validateAssessDifficultyInput(
+      assessDifficultyInput
+    );
     if (!inputValidation.valid) {
       sendError(
         res,
@@ -293,7 +313,7 @@ async function handler(
 
     // Build user context for AI prompt
     const userContext: UserContext = {
-      readingLevel: effectiveUserLevel,
+      readingLevel: effectiveUserLevel ?? "college",
       language: user.preferredLang ?? "en",
     };
     if (user.firstName) {
@@ -301,34 +321,32 @@ async function handler(
     }
 
     // Generate prompts
-    const prompt = generateAssessDifficultyPrompt(assessDifficultyInput, userContext);
+    const prompt = generateAssessDifficultyPrompt(
+      assessDifficultyInput,
+      userContext
+    );
 
     // Call AI to assess difficulty
-    const aiResult = await completion(
-      [{ role: "user", content: prompt }],
-      {
-        system: undefined, // Prompt already includes system context
-        maxTokens: MAX_TOKENS,
-        temperature: 0.5, // Lower temperature for more consistent analysis
-        userId: user.id,
-        operation: "assess-difficulty",
-        metadata: {
-          bookId,
-          bookTitle: book.title,
-          sampleLength: sampleText.length,
-          hasUserLevel: !!effectiveUserLevel,
-          userLevel: effectiveUserLevel ?? "unknown",
-          hasGoals: !!(readingGoals && readingGoals.length > 0),
-          goalsCount: readingGoals?.length ?? 0,
-          readingLevel: userContext.readingLevel,
-        },
-      }
-    );
+    const aiResult = await completion([{ role: "user", content: prompt }], {
+      maxTokens: MAX_TOKENS,
+      temperature: 0.5, // Lower temperature for more consistent analysis
+      userId: user.id,
+      operation: "assess-difficulty",
+      metadata: {
+        bookId,
+        bookTitle: book.title,
+        sampleLength: sampleText.length,
+        hasUserLevel: !!effectiveUserLevel,
+        userLevel: effectiveUserLevel ?? "unknown",
+        hasGoals: !!(readingGoals && readingGoals.length > 0),
+        goalsCount: readingGoals?.length ?? 0,
+        readingLevel: userContext.readingLevel,
+      },
+    });
 
     // Parse AI response
-    const parsedResponse: AssessDifficultyOutput = parseAssessDifficultyResponse(
-      aiResult.text
-    );
+    const parsedResponse: AssessDifficultyOutput =
+      parseAssessDifficultyResponse(aiResult.text);
 
     // Log AI usage to AIUsageLog table
     await db.aIUsageLog.create({

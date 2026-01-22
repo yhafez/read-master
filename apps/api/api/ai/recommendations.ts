@@ -63,6 +63,7 @@ import {
   type ReadingHistoryItem,
   type UserContext,
   type ReadingLevel,
+  type BookContext,
 } from "@read-master/ai";
 
 // ============================================================================
@@ -102,18 +103,33 @@ const MAX_TOKENS = 4000;
  * User preferences schema
  */
 const preferencesSchema = z.object({
-  favoriteGenres: z.array(z.string()).max(10, "Maximum 10 favorite genres").optional(),
-  favoriteAuthors: z.array(z.string()).max(20, "Maximum 20 favorite authors").optional(),
+  favoriteGenres: z
+    .array(z.string())
+    .max(10, "Maximum 10 favorite genres")
+    .optional(),
+  favoriteAuthors: z
+    .array(z.string())
+    .max(20, "Maximum 20 favorite authors")
+    .optional(),
   topics: z.array(z.string()).max(20, "Maximum 20 topics").optional(),
-  avoidTopics: z.array(z.string()).max(10, "Maximum 10 avoid topics").optional(),
+  avoidTopics: z
+    .array(z.string())
+    .max(10, "Maximum 10 avoid topics")
+    .optional(),
 });
 
 /**
  * Reading goals schema
  */
 const goalsSchema = z.object({
-  skillDevelopment: z.array(z.string()).max(10, "Maximum 10 skill development goals").optional(),
-  topicsToExplore: z.array(z.string()).max(10, "Maximum 10 topics to explore").optional(),
+  skillDevelopment: z
+    .array(z.string())
+    .max(10, "Maximum 10 skill development goals")
+    .optional(),
+  topicsToExplore: z
+    .array(z.string())
+    .max(10, "Maximum 10 topics to explore")
+    .optional(),
   challengeLevel: z.enum(["maintain", "increase", "decrease"]).optional(),
 });
 
@@ -126,8 +142,14 @@ const recommendationsRequestSchema = z.object({
   recommendationCount: z
     .number()
     .int()
-    .min(MIN_RECOMMENDATION_COUNT, `Must request at least ${MIN_RECOMMENDATION_COUNT} recommendation`)
-    .max(MAX_RECOMMENDATION_COUNT, `Cannot request more than ${MAX_RECOMMENDATION_COUNT} recommendations`)
+    .min(
+      MIN_RECOMMENDATION_COUNT,
+      `Must request at least ${MIN_RECOMMENDATION_COUNT} recommendation`
+    )
+    .max(
+      MAX_RECOMMENDATION_COUNT,
+      `Cannot request more than ${MAX_RECOMMENDATION_COUNT} recommendations`
+    )
     .default(5),
 });
 
@@ -163,8 +185,10 @@ function mapReadingLevel(
 /**
  * Fetch user's reading history from database
  */
-async function fetchReadingHistory(userId: string): Promise<ReadingHistoryItem[]> {
-  // Get completed and currently reading books with their progress
+async function fetchReadingHistory(
+  userId: string
+): Promise<ReadingHistoryItem[]> {
+  // Get completed and currently reading books
   const books = await db.book.findMany({
     where: {
       userId,
@@ -173,37 +197,44 @@ async function fetchReadingHistory(userId: string): Promise<ReadingHistoryItem[]
       },
       deletedAt: null,
     },
-    include: {
-      progress: {
-        where: {
-          userId,
-        },
-        take: 1,
-      },
-    },
     orderBy: {
       updatedAt: "desc",
     },
     take: MAX_HISTORY_ITEMS,
   });
 
+  // Get progress for these books separately
+  const bookIds = books.map((b) => b.id);
+  const progressRecords = await db.readingProgress.findMany({
+    where: {
+      userId,
+      bookId: { in: bookIds },
+    },
+  });
+
+  // Create a map of progress by bookId
+  const progressMap = new Map(progressRecords.map((p) => [p.bookId, p]));
+
   return books.map((book) => {
-    const progress = book.progress[0];
-    
-    const historyItem: ReadingHistoryItem = {
-      book: {
-        title: book.title,
-        author: book.author ?? undefined,
-        genre: book.genre ?? undefined,
-        description: book.description ?? undefined,
-      },
-      completionDate: book.status === "COMPLETED" ? book.updatedAt.toISOString() : undefined,
-      rating: undefined, // Could be added if book ratings exist
-      comprehensionScore: undefined, // Could be calculated from assessment scores
-      readingSpeed: progress?.averageWpm ?? undefined,
-      notes: undefined, // Could be added from annotations
-      difficulty: undefined, // Could be determined from actual difficulty
+    const progress = progressMap.get(book.id);
+
+    const bookContext: BookContext = {
+      title: book.title,
+      author: book.author ?? "Unknown Author",
+      content: "", // Not needed for recommendations
     };
+    if (book.genre) bookContext.genre = book.genre;
+    if (book.description) bookContext.description = book.description;
+
+    const historyItem: ReadingHistoryItem = {
+      book: bookContext,
+    };
+    if (book.status === "COMPLETED") {
+      historyItem.completionDate = book.updatedAt.toISOString();
+    }
+    if (progress?.averageWpm) {
+      historyItem.readingSpeed = progress.averageWpm;
+    }
 
     return historyItem;
   });
@@ -258,11 +289,8 @@ async function handler(
       return;
     }
 
-    const {
-      preferences,
-      goals,
-      recommendationCount,
-    }: RecommendationsRequest = validationResult.data;
+    const { preferences, goals, recommendationCount }: RecommendationsRequest =
+      validationResult.data;
 
     // Get user from database
     const user = await getUserByClerkId(userId);
@@ -294,7 +322,7 @@ async function handler(
 
     // Fetch user's reading history
     const readingHistory = await fetchReadingHistory(user.id);
-    
+
     if (readingHistory.length === 0) {
       sendError(
         res,
@@ -311,15 +339,35 @@ async function handler(
       recommendationCount,
     };
 
-    if (preferences) {
-      recommendationsInput.preferences = preferences;
+    if (preferences && Object.keys(preferences).length > 0) {
+      recommendationsInput.preferences = {
+        ...(preferences.favoriteGenres && {
+          favoriteGenres: preferences.favoriteGenres,
+        }),
+        ...(preferences.favoriteAuthors && {
+          favoriteAuthors: preferences.favoriteAuthors,
+        }),
+        ...(preferences.topics && { topics: preferences.topics }),
+        ...(preferences.avoidTopics && {
+          avoidTopics: preferences.avoidTopics,
+        }),
+      };
     }
-    if (goals) {
-      recommendationsInput.goals = goals;
+    if (goals && Object.keys(goals).length > 0) {
+      recommendationsInput.goals = {
+        ...(goals.skillDevelopment && {
+          skillDevelopment: goals.skillDevelopment,
+        }),
+        ...(goals.topicsToExplore && {
+          topicsToExplore: goals.topicsToExplore,
+        }),
+        ...(goals.challengeLevel && { challengeLevel: goals.challengeLevel }),
+      };
     }
 
     // Validate prompt input
-    const inputValidation = validatePersonalizedRecommendationsInput(recommendationsInput);
+    const inputValidation =
+      validatePersonalizedRecommendationsInput(recommendationsInput);
     if (!inputValidation.valid) {
       sendError(
         res,
@@ -332,7 +380,7 @@ async function handler(
 
     // Build user context for AI prompt
     const userContext: UserContext = {
-      readingLevel: mapReadingLevel(user.readingLevel),
+      readingLevel: mapReadingLevel(user.readingLevel) ?? "college",
       language: user.preferredLang ?? "en",
     };
     if (user.firstName) {
@@ -346,28 +394,24 @@ async function handler(
     );
 
     // Call AI to generate recommendations
-    const aiResult = await completion(
-      [{ role: "user", content: prompt }],
-      {
-        system: undefined, // Prompt already includes system context
-        maxTokens: MAX_TOKENS,
-        temperature: 0.7, // Balanced creativity for recommendations
-        userId: user.id,
-        operation: "recommendations",
-        metadata: {
-          historyCount: readingHistory.length,
-          requestedCount: recommendationCount,
-          hasPreferences: !!preferences,
-          hasGoals: !!goals,
-          favoriteGenresCount: preferences?.favoriteGenres?.length ?? 0,
-          favoriteAuthorsCount: preferences?.favoriteAuthors?.length ?? 0,
-          readingLevel: userContext.readingLevel,
-        },
-      }
-    );
+    const aiResult = await completion([{ role: "user", content: prompt }], {
+      maxTokens: MAX_TOKENS,
+      temperature: 0.7, // Balanced creativity for recommendations
+      userId: user.id,
+      operation: "recommendations",
+      metadata: {
+        historyCount: readingHistory.length,
+        requestedCount: recommendationCount,
+        hasPreferences: !!preferences,
+        hasGoals: !!goals,
+        favoriteGenresCount: preferences?.favoriteGenres?.length ?? 0,
+        favoriteAuthorsCount: preferences?.favoriteAuthors?.length ?? 0,
+        readingLevel: userContext.readingLevel,
+      },
+    });
 
     // Parse AI response
-    const parsedResponse: PersonalizedRecommendationsOutput = 
+    const parsedResponse: PersonalizedRecommendationsOutput =
       parsePersonalizedRecommendationsResponse(aiResult.text);
 
     // Log AI usage to AIUsageLog table
