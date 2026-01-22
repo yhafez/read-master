@@ -31,6 +31,11 @@ export type AIOperation =
   | "generate_flashcards"
   | "summarize"
   | "translate"
+  | "study-buddy"
+  | "discussion-questions"
+  | "summarize-notes"
+  | "assess-difficulty"
+  | "recommendations"
   | "custom";
 
 /**
