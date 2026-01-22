@@ -1,38 +1,8 @@
 {
   "common": {
-    "appName": "Read Master",
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "close": "Close",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "search": "Search",
-    "filter": "Filter",
-    "sort": "Sort",
-    "submit": "Submit",
-    "confirm": "Confirm",
-    "yes": "Yes",
-    "no": "No",
-    "retry": "再試行",
-    "create": "作成",
-    "moreOptions": "その他のオプション",
-    "filters": "フィルター",
-    "clearFilters": "フィルターをクリア",
-    "rowsPerPage": "1ページあたりの行数:",
-    "expand": "展開",
-    "collapse": "折りたたむ",
-    "play": "再生",
-    "pause": "一時停止",
-    "add": "追加",
-    "saveChanges": "変更を保存",
     "share": "共有",
-    "update": "更新",
-    "copy": "コピー"
+    "copiedToClipboard": "クリップボードにコピーしました！",
+    "copyFailed": "リンクのコピーに失敗しました"
   },
   "collections": {
     "title": "コレクション",
@@ -717,12 +687,40 @@
         "rateLimited": "リクエストが多すぎます。後でもう一度お試しください",
         "unauthorized": "プレミアム音声を使用するにはプランをアップグレードしてください"
       },
+      "sleepTimerPresets": {
+        "off": "Off",
+        "10min": "10 min",
+        "20min": "20 min",
+        "30min": "30 min",
+        "60min": "60 min"
+      },
+      "sleepTimer": "Sleep Timer",
+      "cancelTimer": "Cancel Timer",
+      "remaining": "Remaining",
       "downloads": {
-        "title": "オーディオダウンロード",
+        "title": "Audiobook Downloads",
+        "description": "Manage your audiobook downloads",
         "downloadBook": "オーディオをダウンロード",
         "downloading": "ダウンロード中...",
         "downloadComplete": "ダウンロード完了",
         "downloadFailed": "ダウンロード失敗",
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed",
+        "play": "Play",
+        "download": "Download",
+        "voice": "Voice",
+        "requested": "Requested",
+        "size": "Size",
+        "duration": "Duration",
+        "active": "Active",
+        "noActive": "No active downloads",
+        "noCompleted": "No completed downloads",
+        "noFailed": "No failed downloads",
+        "deleteTitle": "Delete Download?",
+        "deleteMessage": "Are you sure you want to delete this download?",
+        "error": "Failed to load downloads",
         "status": {
           "PENDING": "待機中",
           "PROCESSING": "処理中",
@@ -757,8 +755,35 @@
           "processingFailed": "オーディオの処理に失敗しました。もう一度お試しください。",
           "downloadExpired": "このダウンロードは期限切れです",
           "unknownError": "ダウンロードの作成に失敗しました。もう一度お試しください。"
-        }
-      }
+        },
+        "description": "Manage your audiobook downloads",
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed",
+        "play": "Play",
+        "download": "Download",
+        "voice": "Voice",
+        "requested": "Requested",
+        "size": "Size",
+        "duration": "Duration",
+        "active": "Active",
+        "noActive": "No active downloads",
+        "noCompleted": "No completed downloads",
+        "noFailed": "No failed downloads",
+        "deleteTitle": "Delete Download?",
+        "deleteMessage": "Are you sure you want to delete this download?",
+        "error": "Failed to load downloads"
+      },
+      "sleepTimerPresets": {
+        "off": "Off",
+        "10min": "10 min",
+        "20min": "20 min",
+        "30min": "30 min",
+        "60min": "60 min"
+      },
+      "sleepTimer": "Sleep Timer",
+      "remaining": "Remaining"
     },
     "viewMode": "表示モード",
     "singlePage": "単一ページ",
@@ -1179,7 +1204,18 @@
     "user": "{{username}}'s Profile"
   },
   "social": {
-    "feed": "Activity Feed"
+    "follow": "フォロー",
+    "following": "フォロー中",
+    "followers": "フォロワー",
+    "unfollow": "フォロー解除",
+    "search": {
+      "title": "ユーザーを検索",
+      "placeholder": "ユーザー名または名前で検索...",
+      "error": "ユーザーの検索に失敗しました",
+      "minChars": "検索するには2文字以上入力してください",
+      "noResults": "ユーザーが見つかりませんでした",
+      "moreResults": "{{total}}件中{{count}}件を表示"
+    }
   },
   "groups": {
     "detail": "Group Details",
@@ -2167,20 +2203,6 @@
     "manageBillingPortalDescription": "請求ポータルで請求履歴を表示し、支払い方法を管理します。",
     "viewBillingHistory": "請求履歴を表示"
   },
-  "social": {
-    "follow": "フォロー",
-    "following": "フォロー中",
-    "followers": "フォロワー",
-    "unfollow": "フォロー解除",
-    "search": {
-      "title": "ユーザーを検索",
-      "placeholder": "ユーザー名または名前で検索...",
-      "error": "ユーザーの検索に失敗しました",
-      "minChars": "検索するには2文字以上入力してください",
-      "noResults": "ユーザーが見つかりませんでした",
-      "moreResults": "{{total}}件中{{count}}件を表示"
-    }
-  },
   "share": {
     "native": "共有...",
     "twitter": "Twitter",
@@ -2189,11 +2211,6 @@
     "whatsapp": "WhatsApp",
     "reddit": "Reddit",
     "copyLink": "リンクをコピー"
-  },
-  "common": {
-    "share": "共有",
-    "copiedToClipboard": "クリップボードにコピーしました！",
-    "copyFailed": "リンクのコピーに失敗しました"
   },
   "stats": {
     "analytics": {
@@ -2218,6 +2235,55 @@
       "booksByStatus": "Books by Status",
       "topGenres": "Top Genres",
       "errorLoading": "Failed to load analytics data"
+    }
+  },
+  "challenges": {
+    "title": "Reading Challenges",
+    "subtitle": "Join challenges to boost your reading habits and compete with others",
+    "tabs": {
+      "active": "Active Challenges",
+      "upcoming": "Upcoming",
+      "myActive": "My Active",
+      "myCompleted": "Completed"
+    },
+    "tabsLabel": "Challenge categories",
+    "official": "Official",
+    "goal": "Goal",
+    "progress": "Progress",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "participant": "participant",
+    "participants": "participants",
+    "viewDetails": "View Details",
+    "join": "Join Challenge",
+    "leave": "Leave Challenge",
+    "yourProgress": "Your Progress",
+    "yourRank": "Your Rank",
+    "backToChallenges": "Back to Challenges",
+    "notFound": "Challenge not found",
+    "noChallenges": "No challenges available",
+    "errorLoading": "Failed to load challenges",
+    "goalTypes": {
+      "booksRead": "Books Read",
+      "pagesRead": "Pages Read",
+      "timeReading": "Reading Time",
+      "wordsRead": "Words Read",
+      "streakDays": "Day Streak",
+      "booksInGenre": "Books in Genre",
+      "flashcardsCreated": "Flashcards Created",
+      "assessmentsCompleted": "Assessments Completed"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "all": "All Participants",
+      "completed": "Completed",
+      "active": "Active",
+      "rank": "Rank",
+      "user": "User",
+      "progress": "Progress",
+      "percent": "% Complete",
+      "status": "Status",
+      "empty": "No participants yet"
     }
   }
 }

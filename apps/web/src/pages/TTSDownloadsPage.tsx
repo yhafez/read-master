@@ -29,8 +29,6 @@ import {
   Tab,
   List,
   ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
   Tooltip,
 } from "@mui/material";
 import {
@@ -282,9 +280,7 @@ export function TTSDownloadsPage(): React.ReactElement {
           </Alert>
         )}
 
-        {download.status === "processing" && (
-          <LinearProgress sx={{ mt: 2 }} />
-        )}
+        {download.status === "processing" && <LinearProgress sx={{ mt: 2 }} />}
       </CardContent>
 
       <CardActions>
@@ -414,7 +410,10 @@ export function TTSDownloadsPage(): React.ReactElement {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} disabled={deleteMutation.isPending}>
+          <Button
+            onClick={handleDeleteCancel}
+            disabled={deleteMutation.isPending}
+          >
             {t("common.cancel") || "Cancel"}
           </Button>
           <Button

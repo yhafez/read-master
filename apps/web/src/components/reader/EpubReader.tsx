@@ -73,6 +73,41 @@ export function EpubReader({
     setState((prev) => ({ ...prev, ...updates }));
   }, []);
 
+  // Extract text from current page for TTS
+  const extractCurrentPageText = useCallback(() => {
+    const rendition = renditionRef.current;
+    const container = containerRef.current;
+
+    if (!rendition || !container) {
+      setCurrentPageText("");
+      return;
+    }
+
+    try {
+      // Get the iframe from the container
+      const iframe = container.querySelector("iframe");
+      if (!iframe || !iframe.contentDocument) {
+        setCurrentPageText("");
+        return;
+      }
+
+      const doc = iframe.contentDocument;
+      const body = doc.body;
+
+      if (!body) {
+        setCurrentPageText("");
+        return;
+      }
+
+      // Extract text content from the visible body
+      const text = body.textContent || body.innerText || "";
+      setCurrentPageText(text.trim());
+    } catch {
+      // Silently fail if text extraction doesn't work
+      setCurrentPageText("");
+    }
+  }, []);
+
   // Handle location change from epub.js
   const handleLocationChange = useCallback(
     (loc: {
@@ -119,39 +154,6 @@ export function EpubReader({
     },
     [onLocationChange, updateState, extractCurrentPageText]
   );
-
-  // Extract text from current page for TTS
-  const extractCurrentPageText = useCallback(() => {
-    const rendition = renditionRef.current;
-    if (!rendition || !rendition.manager || !rendition.manager.container) {
-      setCurrentPageText("");
-      return;
-    }
-
-    try {
-      // Get the current iframe's document
-      const iframe = rendition.manager.container.querySelector("iframe");
-      if (!iframe || !iframe.contentDocument) {
-        setCurrentPageText("");
-        return;
-      }
-
-      const doc = iframe.contentDocument;
-      const body = doc.body;
-
-      if (!body) {
-        setCurrentPageText("");
-        return;
-      }
-
-      // Extract text content from the visible body
-      const text = body.textContent || body.innerText || "";
-      setCurrentPageText(text.trim());
-    } catch (error) {
-      console.error("Error extracting EPUB text:", error);
-      setCurrentPageText("");
-    }
-  }, []);
 
   // Handle text selection
   const handleTextSelection = useCallback(

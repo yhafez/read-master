@@ -734,7 +734,6 @@
         "60min": "60 دقيقة"
       },
       "sleepTimer": "مؤقت النوم",
-      "cancelTimer": "إلغاء المؤقت",
       "remaining": "المتبقي",
       "downloads": {
         "title": "تنزيلات الكتب الصوتية",
@@ -2246,55 +2245,6 @@
       "booksByStatus": "Books by Status",
       "topGenres": "Top Genres",
       "errorLoading": "Failed to load analytics data"
-    }
-  },
-  "challenges": {
-    "title": "Reading Challenges",
-    "subtitle": "Join challenges to boost your reading habits and compete with others",
-    "tabs": {
-      "active": "Active Challenges",
-      "upcoming": "Upcoming",
-      "myActive": "My Active",
-      "myCompleted": "Completed"
-    },
-    "tabsLabel": "Challenge categories",
-    "official": "Official",
-    "goal": "Goal",
-    "progress": "Progress",
-    "completed": "Completed",
-    "inProgress": "In Progress",
-    "participant": "participant",
-    "participants": "participants",
-    "viewDetails": "View Details",
-    "join": "Join Challenge",
-    "leave": "Leave Challenge",
-    "yourProgress": "Your Progress",
-    "yourRank": "Your Rank",
-    "backToChallenges": "Back to Challenges",
-    "notFound": "Challenge not found",
-    "noChallenges": "No challenges available",
-    "errorLoading": "Failed to load challenges",
-    "goalTypes": {
-      "booksRead": "Books Read",
-      "pagesRead": "Pages Read",
-      "timeReading": "Reading Time",
-      "wordsRead": "Words Read",
-      "streakDays": "Day Streak",
-      "booksInGenre": "Books in Genre",
-      "flashcardsCreated": "Flashcards Created",
-      "assessmentsCompleted": "Assessments Completed"
-    },
-    "leaderboard": {
-      "title": "Leaderboard",
-      "all": "All Participants",
-      "completed": "Completed",
-      "active": "Active",
-      "rank": "Rank",
-      "user": "User",
-      "progress": "Progress",
-      "percent": "% Complete",
-      "status": "Status",
-      "empty": "No participants yet"
     }
   }
 }

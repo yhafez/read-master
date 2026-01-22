@@ -131,6 +131,7 @@ describe("TTS Types and Utilities", () => {
         highlightText: true,
         autoScroll: true,
         preferredLanguage: "en",
+        sleepTimerMinutes: 0,
       });
     });
 
@@ -200,7 +201,9 @@ describe("TTS Types and Utilities", () => {
     });
 
     it("should convert SpeechSynthesisVoice to TTSVoice", () => {
-      const mockVoice = mockVoices[0]!;
+      const mockVoice = mockVoices[0];
+      expect(mockVoice).toBeDefined();
+      if (!mockVoice) return;
       const converted = convertWebSpeechVoice(mockVoice);
 
       expect(converted.id).toBe("web-english-us-voice");

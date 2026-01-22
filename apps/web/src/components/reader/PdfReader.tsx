@@ -154,8 +154,8 @@ export function PdfReader({
         }
 
         setCurrentPageText(text);
-      } catch (error) {
-        console.error("Error extracting page text:", error);
+      } catch {
+        // Silently fail if text extraction doesn't work
         setCurrentPageText("");
       }
     },
@@ -282,7 +282,7 @@ export function PdfReader({
         // Update location
         updateLocation(pageNumber, pdfDoc.numPages);
         setPageInput(String(pageNumber));
-        
+
         // Extract text for TTS
         void extractPageText(pageNumber);
       } catch (err) {
@@ -302,7 +302,14 @@ export function PdfReader({
         onError?.(error);
       }
     },
-    [state.scale, updateLocation, updateState, onError, extractPageText, isSpreadMode]
+    [
+      state.scale,
+      updateLocation,
+      updateState,
+      onError,
+      extractPageText,
+      isSpreadMode,
+    ]
   );
 
   // Initialize PDF document

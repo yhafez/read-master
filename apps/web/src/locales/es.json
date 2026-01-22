@@ -717,12 +717,40 @@
         "rateLimited": "Demasiadas solicitudes, intente de nuevo más tarde",
         "unauthorized": "Actualice su plan para usar voces premium"
       },
+      "sleepTimerPresets": {
+        "off": "Apagado",
+        "10min": "10 min",
+        "20min": "20 min",
+        "30min": "30 min",
+        "60min": "60 min"
+      },
+      "sleepTimer": "Temporizador de Sueño",
+      "cancelTimer": "Cancelar Temporizador",
+      "remaining": "Restante",
       "downloads": {
-        "title": "Descargas de Audio",
+        "title": "Descargas de Audiolibros",
+        "description": "Administra tus descargas de audiolibros",
         "downloadBook": "Descargar Audio",
         "downloading": "Descargando...",
         "downloadComplete": "Descarga Completa",
         "downloadFailed": "Descarga Fallida",
+        "pending": "Pendiente",
+        "processing": "Procesando",
+        "completed": "Completado",
+        "failed": "Fallido",
+        "play": "Reproducir",
+        "download": "Descargar",
+        "voice": "Voz",
+        "requested": "Solicitado",
+        "size": "Tamaño",
+        "duration": "Duración",
+        "active": "Activo",
+        "noActive": "No hay descargas activas",
+        "noCompleted": "No hay descargas completadas",
+        "noFailed": "No hay descargas fallidas",
+        "deleteTitle": "¿Eliminar descarga?",
+        "deleteMessage": "¿Estás seguro de que deseas eliminar esta descarga?",
+        "error": "Error al cargar las descargas",
         "status": {
           "PENDING": "En Cola",
           "PROCESSING": "Procesando",
@@ -2218,6 +2246,55 @@
       "booksByStatus": "Books by Status",
       "topGenres": "Top Genres",
       "errorLoading": "Failed to load analytics data"
+    }
+  },
+  "challenges": {
+    "title": "Reading Challenges",
+    "subtitle": "Join challenges to boost your reading habits and compete with others",
+    "tabs": {
+      "active": "Active Challenges",
+      "upcoming": "Upcoming",
+      "myActive": "My Active",
+      "myCompleted": "Completed"
+    },
+    "tabsLabel": "Challenge categories",
+    "official": "Official",
+    "goal": "Goal",
+    "progress": "Progress",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "participant": "participant",
+    "participants": "participants",
+    "viewDetails": "View Details",
+    "join": "Join Challenge",
+    "leave": "Leave Challenge",
+    "yourProgress": "Your Progress",
+    "yourRank": "Your Rank",
+    "backToChallenges": "Back to Challenges",
+    "notFound": "Challenge not found",
+    "noChallenges": "No challenges available",
+    "errorLoading": "Failed to load challenges",
+    "goalTypes": {
+      "booksRead": "Books Read",
+      "pagesRead": "Pages Read",
+      "timeReading": "Reading Time",
+      "wordsRead": "Words Read",
+      "streakDays": "Day Streak",
+      "booksInGenre": "Books in Genre",
+      "flashcardsCreated": "Flashcards Created",
+      "assessmentsCompleted": "Assessments Completed"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "all": "All Participants",
+      "completed": "Completed",
+      "active": "Active",
+      "rank": "Rank",
+      "user": "User",
+      "progress": "Progress",
+      "percent": "% Complete",
+      "status": "Status",
+      "empty": "No participants yet"
     }
   }
 }

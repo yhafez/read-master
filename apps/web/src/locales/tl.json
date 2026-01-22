@@ -1,38 +1,8 @@
 {
   "common": {
-    "appName": "Read Master",
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "close": "Close",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "search": "Search",
-    "filter": "Filter",
-    "sort": "Sort",
-    "submit": "Submit",
-    "confirm": "Confirm",
-    "yes": "Yes",
-    "no": "No",
-    "retry": "Subukan muli",
-    "create": "Lumikha",
-    "moreOptions": "Mas maraming opsyon",
-    "filters": "Mga Filter",
-    "clearFilters": "I-clear ang mga Filter",
-    "rowsPerPage": "Mga hilera kada pahina:",
-    "expand": "Palawakin",
-    "collapse": "I-collapse",
-    "play": "I-play",
-    "pause": "I-pause",
-    "add": "Magdagdag",
-    "saveChanges": "I-save ang mga Pagbabago",
     "share": "Ibahagi",
-    "update": "I-update",
-    "copy": "Kopyahin"
+    "copiedToClipboard": "Nakopya sa clipboard!",
+    "copyFailed": "Hindi makopya ang link"
   },
   "collections": {
     "title": "Mga Koleksyon",
@@ -717,12 +687,40 @@
         "rateLimited": "Masyadong maraming requests, subukan ulit mamaya",
         "unauthorized": "I-upgrade ang iyong plan para gamitin ang mga premium na boses"
       },
+      "sleepTimerPresets": {
+        "off": "Off",
+        "10min": "10 min",
+        "20min": "20 min",
+        "30min": "30 min",
+        "60min": "60 min"
+      },
+      "sleepTimer": "Sleep Timer",
+      "cancelTimer": "Cancel Timer",
+      "remaining": "Remaining",
       "downloads": {
-        "title": "Mga Audio Download",
+        "title": "Audiobook Downloads",
+        "description": "Manage your audiobook downloads",
         "downloadBook": "I-download ang Audio",
         "downloading": "Nag-download...",
         "downloadComplete": "Kumpleto ang Download",
         "downloadFailed": "Nabigo ang Download",
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed",
+        "play": "Play",
+        "download": "Download",
+        "voice": "Voice",
+        "requested": "Requested",
+        "size": "Size",
+        "duration": "Duration",
+        "active": "Active",
+        "noActive": "No active downloads",
+        "noCompleted": "No completed downloads",
+        "noFailed": "No failed downloads",
+        "deleteTitle": "Delete Download?",
+        "deleteMessage": "Are you sure you want to delete this download?",
+        "error": "Failed to load downloads",
         "status": {
           "PENDING": "Nakapila",
           "PROCESSING": "Pinoproseso",
@@ -757,8 +755,35 @@
           "processingFailed": "Nabigo ang pagproseso ng audio. Mangyaring subukan muli.",
           "downloadExpired": "Ang download na ito ay nag-expire na",
           "unknownError": "Nabigo ang paglikha ng download. Mangyaring subukan muli."
-        }
-      }
+        },
+        "description": "Manage your audiobook downloads",
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed",
+        "play": "Play",
+        "download": "Download",
+        "voice": "Voice",
+        "requested": "Requested",
+        "size": "Size",
+        "duration": "Duration",
+        "active": "Active",
+        "noActive": "No active downloads",
+        "noCompleted": "No completed downloads",
+        "noFailed": "No failed downloads",
+        "deleteTitle": "Delete Download?",
+        "deleteMessage": "Are you sure you want to delete this download?",
+        "error": "Failed to load downloads"
+      },
+      "sleepTimerPresets": {
+        "off": "Off",
+        "10min": "10 min",
+        "20min": "20 min",
+        "30min": "30 min",
+        "60min": "60 min"
+      },
+      "sleepTimer": "Sleep Timer",
+      "remaining": "Remaining"
     },
     "viewMode": "Modo ng view",
     "singlePage": "Isang pahina",
@@ -1179,7 +1204,18 @@
     "user": "{{username}}'s Profile"
   },
   "social": {
-    "feed": "Activity Feed"
+    "follow": "Sundan",
+    "following": "Sumusunod",
+    "followers": "tagasunod",
+    "unfollow": "Huwag sundan",
+    "search": {
+      "title": "Maghanap ng Users",
+      "placeholder": "Maghanap gamit ang username o pangalan...",
+      "error": "Hindi makahanap ng users",
+      "minChars": "Maglagay ng kahit 2 character para maghanap",
+      "noResults": "Walang nahanap na users",
+      "moreResults": "Nagpapakita ng {{count}} sa {{total}} resulta"
+    }
   },
   "groups": {
     "detail": "Group Details",
@@ -2167,20 +2203,6 @@
     "manageBillingPortalDescription": "Tingnan ang iyong kasaysayan ng billing at pamahalaan ang iyong mga paraan ng pagbabayad sa billing portal.",
     "viewBillingHistory": "Tingnan ang Kasaysayan ng Billing"
   },
-  "social": {
-    "follow": "Sundan",
-    "following": "Sumusunod",
-    "followers": "tagasunod",
-    "unfollow": "Huwag sundan",
-    "search": {
-      "title": "Maghanap ng Users",
-      "placeholder": "Maghanap gamit ang username o pangalan...",
-      "error": "Hindi makahanap ng users",
-      "minChars": "Maglagay ng kahit 2 character para maghanap",
-      "noResults": "Walang nahanap na users",
-      "moreResults": "Nagpapakita ng {{count}} sa {{total}} resulta"
-    }
-  },
   "share": {
     "native": "Ibahagi...",
     "twitter": "Twitter",
@@ -2189,11 +2211,6 @@
     "whatsapp": "WhatsApp",
     "reddit": "Reddit",
     "copyLink": "Kopyahin ang Link"
-  },
-  "common": {
-    "share": "Ibahagi",
-    "copiedToClipboard": "Nakopya sa clipboard!",
-    "copyFailed": "Hindi makopya ang link"
   },
   "stats": {
     "analytics": {
@@ -2218,6 +2235,55 @@
       "booksByStatus": "Books by Status",
       "topGenres": "Top Genres",
       "errorLoading": "Failed to load analytics data"
+    }
+  },
+  "challenges": {
+    "title": "Reading Challenges",
+    "subtitle": "Join challenges to boost your reading habits and compete with others",
+    "tabs": {
+      "active": "Active Challenges",
+      "upcoming": "Upcoming",
+      "myActive": "My Active",
+      "myCompleted": "Completed"
+    },
+    "tabsLabel": "Challenge categories",
+    "official": "Official",
+    "goal": "Goal",
+    "progress": "Progress",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "participant": "participant",
+    "participants": "participants",
+    "viewDetails": "View Details",
+    "join": "Join Challenge",
+    "leave": "Leave Challenge",
+    "yourProgress": "Your Progress",
+    "yourRank": "Your Rank",
+    "backToChallenges": "Back to Challenges",
+    "notFound": "Challenge not found",
+    "noChallenges": "No challenges available",
+    "errorLoading": "Failed to load challenges",
+    "goalTypes": {
+      "booksRead": "Books Read",
+      "pagesRead": "Pages Read",
+      "timeReading": "Reading Time",
+      "wordsRead": "Words Read",
+      "streakDays": "Day Streak",
+      "booksInGenre": "Books in Genre",
+      "flashcardsCreated": "Flashcards Created",
+      "assessmentsCompleted": "Assessments Completed"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "all": "All Participants",
+      "completed": "Completed",
+      "active": "Active",
+      "rank": "Rank",
+      "user": "User",
+      "progress": "Progress",
+      "percent": "% Complete",
+      "status": "Status",
+      "empty": "No participants yet"
     }
   }
 }
