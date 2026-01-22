@@ -516,3 +516,7 @@ export { SplitScreenBookSelector } from "./SplitScreenBookSelector";
 // Translation Comparison
 export { TranslationControls } from "./TranslationControls";
 export { TranslationHighlighter } from "./TranslationHighlighter";
+
+// Parallel Text
+export { ParallelTextRenderer } from "./ParallelTextRenderer";
+export { ParallelTextControls } from "./ParallelTextControls";

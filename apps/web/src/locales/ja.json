@@ -2352,5 +2352,29 @@
     "splitRatio": "分割比率",
     "resetRatio": "50/50にリセット",
     "selectBooksHint": "すべての機能を有効にするには、両方のペインで本を選択してください"
+  },
+  "parallelText": {
+    "controls": "対訳テキスト",
+    "leftText": "左のテキスト",
+    "rightText": "右のテキスト",
+    "lines": "行",
+    "aligned": "整列済み",
+    "leftOnly": "左のみ",
+    "rightOnly": "右のみ",
+    "quality": "品質",
+    "qualityExcellent": "優秀",
+    "qualityGood": "良好",
+    "qualityFair": "普通",
+    "qualityPoor": "不良",
+    "alignmentStrategy": "整列戦略",
+    "strategyAuto": "自動（スマートライン）",
+    "strategyLine": "行ごと",
+    "strategyParagraph": "段落ごと",
+    "strategySentence": "文ごと",
+    "displayOptions": "表示オプション",
+    "showLineNumbers": "行番号を表示",
+    "showConfidence": "信頼度スコアを表示",
+    "highlightMismatches": "不一致を強調表示",
+    "realign": "テキストを再整列"
   }
 }

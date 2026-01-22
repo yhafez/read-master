@@ -2352,5 +2352,29 @@
     "splitRatio": "分屏比例",
     "resetRatio": "重置为50/50",
     "selectBooksHint": "为两个窗格选择书籍以启用所有功能"
+  },
+  "parallelText": {
+    "controls": "对照文本",
+    "leftText": "左侧文本",
+    "rightText": "右侧文本",
+    "lines": "行",
+    "aligned": "已对齐",
+    "leftOnly": "仅左侧",
+    "rightOnly": "仅右侧",
+    "quality": "质量",
+    "qualityExcellent": "优秀",
+    "qualityGood": "良好",
+    "qualityFair": "一般",
+    "qualityPoor": "较差",
+    "alignmentStrategy": "对齐策略",
+    "strategyAuto": "自动（智能行）",
+    "strategyLine": "逐行",
+    "strategyParagraph": "按段落",
+    "strategySentence": "按句子",
+    "displayOptions": "显示选项",
+    "showLineNumbers": "显示行号",
+    "showConfidence": "显示置信度分数",
+    "highlightMismatches": "高亮不匹配项",
+    "realign": "重新对齐文本"
   }
 }

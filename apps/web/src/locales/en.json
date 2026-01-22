@@ -2394,5 +2394,29 @@
     "splitRatio": "Split Ratio",
     "resetRatio": "Reset to 50/50",
     "selectBooksHint": "Select books for both panes to enable all features"
+  },
+  "parallelText": {
+    "controls": "Parallel Text",
+    "leftText": "Left Text",
+    "rightText": "Right Text",
+    "lines": "lines",
+    "aligned": "aligned",
+    "leftOnly": "left only",
+    "rightOnly": "right only",
+    "quality": "Quality",
+    "qualityExcellent": "Excellent",
+    "qualityGood": "Good",
+    "qualityFair": "Fair",
+    "qualityPoor": "Poor",
+    "alignmentStrategy": "Alignment Strategy",
+    "strategyAuto": "Auto (Smart Lines)",
+    "strategyLine": "Line by Line",
+    "strategyParagraph": "By Paragraph",
+    "strategySentence": "By Sentence",
+    "displayOptions": "Display Options",
+    "showLineNumbers": "Show Line Numbers",
+    "showConfidence": "Show Confidence Scores",
+    "highlightMismatches": "Highlight Mismatches",
+    "realign": "Realign Texts"
   }
 }

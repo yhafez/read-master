@@ -2390,5 +2390,29 @@
     "splitRatio": "نسبة التقسيم",
     "resetRatio": "إعادة تعيين إلى 50/50",
     "selectBooksHint": "اختر كتباً لكلا الجزئين لتفعيل جميع المزايا"
+  },
+  "parallelText": {
+    "controls": "النصوص المتوازية",
+    "leftText": "النص الأيسر",
+    "rightText": "النص الأيمن",
+    "lines": "أسطر",
+    "aligned": "متطابق",
+    "leftOnly": "الأيسر فقط",
+    "rightOnly": "الأيمن فقط",
+    "quality": "الجودة",
+    "qualityExcellent": "ممتاز",
+    "qualityGood": "جيد",
+    "qualityFair": "مقبول",
+    "qualityPoor": "ضعيف",
+    "alignmentStrategy": "استراتيجية المحاذاة",
+    "strategyAuto": "تلقائي (أسطر ذكية)",
+    "strategyLine": "سطر بسطر",
+    "strategyParagraph": "حسب الفقرة",
+    "strategySentence": "حسب الجملة",
+    "displayOptions": "خيارات العرض",
+    "showLineNumbers": "إظهار أرقام الأسطر",
+    "showConfidence": "إظهار نسبة الثقة",
+    "highlightMismatches": "تمييز عدم التطابق",
+    "realign": "إعادة المحاذاة"
   }
 }

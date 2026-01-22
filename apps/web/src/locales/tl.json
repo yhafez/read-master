@@ -2352,5 +2352,29 @@
     "splitRatio": "Ratio ng Paghahati",
     "resetRatio": "I-reset sa 50/50",
     "selectBooksHint": "Pumili ng mga aklat para sa parehong panel upang paganahin ang lahat ng features"
+  },
+  "parallelText": {
+    "controls": "Parallel na Teksto",
+    "leftText": "Kaliwang Teksto",
+    "rightText": "Kanang Teksto",
+    "lines": "mga linya",
+    "aligned": "naka-align",
+    "leftOnly": "kaliwa lamang",
+    "rightOnly": "kanan lamang",
+    "quality": "Kalidad",
+    "qualityExcellent": "Napakahusay",
+    "qualityGood": "Mabuti",
+    "qualityFair": "Katamtaman",
+    "qualityPoor": "Mahina",
+    "alignmentStrategy": "Diskarte sa Pag-align",
+    "strategyAuto": "Awtomatiko (Matalinong mga Linya)",
+    "strategyLine": "Linya-linya",
+    "strategyParagraph": "Ayon sa Talata",
+    "strategySentence": "Ayon sa Pangungusap",
+    "displayOptions": "Mga Opsyon sa Pagpapakita",
+    "showLineNumbers": "Ipakita ang mga Numero ng Linya",
+    "showConfidence": "Ipakita ang mga Marka ng Katiyakan",
+    "highlightMismatches": "I-highlight ang mga Hindi Tugma",
+    "realign": "Muling I-align ang mga Teksto"
   }
 }

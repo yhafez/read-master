@@ -2352,5 +2352,29 @@
     "splitRatio": "Proporción de División",
     "resetRatio": "Restablecer a 50/50",
     "selectBooksHint": "Seleccione libros para ambos paneles para activar todas las funciones"
+  },
+  "parallelText": {
+    "controls": "Texto Paralelo",
+    "leftText": "Texto Izquierdo",
+    "rightText": "Texto Derecho",
+    "lines": "líneas",
+    "aligned": "alineado",
+    "leftOnly": "solo izquierda",
+    "rightOnly": "solo derecha",
+    "quality": "Calidad",
+    "qualityExcellent": "Excelente",
+    "qualityGood": "Buena",
+    "qualityFair": "Regular",
+    "qualityPoor": "Pobre",
+    "alignmentStrategy": "Estrategia de Alineación",
+    "strategyAuto": "Auto (Líneas Inteligentes)",
+    "strategyLine": "Línea por Línea",
+    "strategyParagraph": "Por Párrafo",
+    "strategySentence": "Por Oración",
+    "displayOptions": "Opciones de Visualización",
+    "showLineNumbers": "Mostrar Números de Línea",
+    "showConfidence": "Mostrar Puntuaciones de Confianza",
+    "highlightMismatches": "Resaltar Discrepancias",
+    "realign": "Realinear Textos"
   }
 }
