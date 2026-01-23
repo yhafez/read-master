@@ -3,6 +3,115 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 16:15]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: social-bookclubs-001 - Book Clubs Enhancement (Continued: Add Book Dialog)
+
+WHAT WAS DONE:
+✅ **Created AddBookToGroupDialog Component** (`apps/web/src/components/groups/AddBookToGroupDialog.tsx`)
+- Dialog for adding books from user's library to group reading list
+- Search functionality to filter books by title or author
+- Book selection with visual preview (cover, title, author)
+- Schedule options: status (UPCOMING/CURRENT/COMPLETED), dates, target page
+- Proper loading, empty, and error states
+- Form validation and error handling
+- Uses existing useBooks and useAddGroupBook hooks
+- Follows existing dialog patterns (InviteToGroupDialog, ManageMembersDialog)
+
+✅ **Integrated AddBookToGroupDialog into GroupDetailPage**
+- Added state for controlling dialog visibility
+- Changed onAddBook callback from navigation to dialog opening
+- Dialog opens when "Add Book" button clicked in GroupBooksPanel
+
+✅ **Added i18n Translations** (all 6 languages)
+- Added `groups.books.*` translation keys
+- English, Arabic, Spanish, Japanese, Chinese, Tagalog
+- 25 new translation keys per language
+
+✅ **Created Tests** (59 tests, all passing)
+- `apps/web/src/components/groups/AddBookToGroupDialog.test.tsx`
+- Tests cover:
+  - Props interface validation
+  - Book search/filtering logic
+  - Status options and date formatting
+  - Target page validation
+  - Form state management
+  - Error handling
+  - Book display rendering
+  - Button states (disabled/enabled conditions)
+
+WHY IT MATTERS:
+- **Book Club Feature Complete**: Groups can now add books to their reading list
+- **Better UX**: Dialog-based approach avoids page navigation
+- **Internationalized**: Works in all 6 supported languages
+- **Connected to Backend**: Uses API created in previous iteration
+
+TECHNICAL DETAILS:
+**AddBookToGroupDialog Component:**
+- Uses useBooks hook to fetch user's library
+- Uses useAddGroupBook hook for mutations
+- Memoized filtering for search performance
+- Two-step workflow: select book → configure schedule → add
+- Resets state on close for clean re-use
+
+**Integration:**
+- Changed GroupDetailPage from navigation to dialog
+- Added showAddBookDialog state
+- Passed groupId and groupName to dialog
+
+REMAINING WORK (social-bookclubs-001):
+- [ ] Discussion scheduling UI with calendar view
+- [ ] Email notifications for upcoming discussions
+- [ ] Club invitation system enhancement
+
+DISCOVERIES:
+- Existing useBooks hook works well for fetching user's library
+- Dialog approach is more user-friendly than page navigation
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, pre-existing warnings)
+✅ pnpm vitest run - 4333 tests pass
+  - New tests: 59/59 passed
+  - All existing tests continue to pass
+
+FILES CREATED:
+- apps/web/src/components/groups/AddBookToGroupDialog.tsx (280 lines)
+- apps/web/src/components/groups/AddBookToGroupDialog.test.tsx (590 lines)
+
+FILES MODIFIED:
+- apps/web/src/components/groups/index.ts (export AddBookToGroupDialog)
+- apps/web/src/pages/social/GroupDetailPage.tsx (added dialog integration)
+- apps/web/src/locales/en.json (added groups.books.* translations)
+- apps/web/src/locales/ar.json (added groups.books.* translations)
+- apps/web/src/locales/es.json (added groups.books.* translations)
+- apps/web/src/locales/ja.json (added groups.books.* translations)
+- apps/web/src/locales/zh.json (added groups.books.* translations)
+- apps/web/src/locales/tl.json (added groups.books.* translations)
+
+NEXT RECOMMENDED TASKS:
+1. **social-bookclubs-001** (continued) - Discussion scheduling calendar
+   - Create ScheduleDiscussionDialog
+   - Add calendar view for group discussions
+   - Link to GroupBook for book-specific discussions
+
+2. **email-marketing-001** - Build email marketing funnel
+   - Discussion reminders
+   - Weekly digest for book clubs
+
+3. **payments-stripe-complete-001** - Complete Stripe integration
+   - Subscription management
+   - Usage limits
+
+SPRINT STATUS:
+- In Progress (155/174 tasks complete - 89.1%)
+- 19 active tasks remaining
+- social-bookclubs-001: Backend + GroupBooksPanel + AddBookToGroupDialog complete
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 16:00]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

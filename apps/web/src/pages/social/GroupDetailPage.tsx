@@ -19,6 +19,7 @@ import {
   ManageMembersDialog,
   GroupReadingSchedule,
   GroupBooksPanel,
+  AddBookToGroupDialog,
 } from "@/components/groups";
 import {
   Box,
@@ -118,6 +119,7 @@ export function GroupDetailPage(): React.ReactElement {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showInviteDialog, setShowInviteDialog] = useState(false);
   const [showMembersDialog, setShowMembersDialog] = useState(false);
+  const [showAddBookDialog, setShowAddBookDialog] = useState(false);
 
   // Fetch group data
   const {
@@ -512,7 +514,7 @@ export function GroupDetailPage(): React.ReactElement {
         <GroupBooksPanel
           groupId={group.id}
           canEdit={isOwner}
-          onAddBook={() => navigate(`/groups/${groupId}/books/add`)}
+          onAddBook={() => setShowAddBookDialog(true)}
         />
       </Box>
 
@@ -629,6 +631,16 @@ export function GroupDetailPage(): React.ReactElement {
           groupId={group.id}
           groupName={group.name}
           currentUserId={clerkUserId}
+        />
+      )}
+
+      {/* Add Book Dialog */}
+      {group && (
+        <AddBookToGroupDialog
+          open={showAddBookDialog}
+          onClose={() => setShowAddBookDialog(false)}
+          groupId={group.id}
+          groupName={group.name}
         />
       )}
     </Box>
