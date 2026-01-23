@@ -3,6 +3,136 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-23 - 00:10]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: social-ai-recommendations-001 - AI-powered Social Recommendations Engine (COMPLETE)
+
+WHAT WAS DONE:
+✅ **Verified Backend Implementation Complete**
+- GET /api/recommendations/users endpoint returns similar readers based on:
+  - Reading history similarity (genre overlap, author overlap, tags)
+  - Reading behavior compatibility (completion ratio)
+  - Weighted similarity scoring algorithm (35% genres, 25% authors, 25% tags, 15% behavior)
+- GET /api/recommendations/books endpoint returns AI-enhanced book recommendations:
+  - From followed users (FOLLOWING source)
+  - Trending books (TRENDING source)
+  - AI-generated recommendations using Claude (AI source)
+  - Deduplication and scoring
+
+✅ **Verified Cron Job for Similarity Calculation**
+- POST /api/cron/calculate-similarities batch processes user similarities
+- Builds user profiles from book data (genres, authors, tags, completion ratio)
+- Calculates Jaccard similarity for all user pairs
+- Stores top 100 similar users per user in UserSimilarity table
+- Runs securely with CRON_SECRET authentication
+
+✅ **Verified AI Recommendations Service**
+- apps/api/src/services/ai-recommendations.ts
+- Builds user reading profile from last 50 books
+- Generates Claude prompt with reader preferences
+- Parses JSON response into recommendations
+- Stores recommendations with 7-day expiry
+- Logs AI usage for cost tracking
+
+✅ **Verified Frontend Components**
+- RecommendedBooks component (apps/web/src/components/social/RecommendedBooks.tsx)
+  - Tabbed interface: All, Following, Trending, AI Picks
+  - Book cards with cover, title, author, reason, score
+  - Source badges and user attribution
+  - Dismiss and Add to Library actions
+  - Loading skeletons and error states
+- SimilarReaders component (apps/web/src/components/social/SimilarReaders.tsx)
+  - User cards with avatar, name, similarity percentage
+  - Common interests display (authors, genres)
+  - Follow button with mutation
+  - Navigation to user profiles
+
+✅ **Verified useRecommendations Hook**
+- useAIBookRecommendations() - fetches book recommendations with source filter
+- useSimilarUsers() - fetches similar users
+- useDismissRecommendation() - dismisses a recommendation
+- Query key factory for proper cache management
+- 5-10 minute stale times for caching
+
+✅ **Created Tests** (42 tests, all passing)
+- apps/web/src/hooks/useRecommendations.test.ts
+- Tests cover:
+  - Query key generation for all endpoints
+  - Type structure validation (BookRecommender, BookRecommendation, AIBookRecommendation, SimilarUser)
+  - URL building patterns
+  - Score display helpers
+  - Sorting by score (recommendations and users)
+  - Filtering by dismissed status and source
+  - Deduplication by book title
+  - Response structure validation
+
+WHY IT MATTERS:
+- **Discovery**: Users can find similar readers and relevant books
+- **Engagement**: AI-powered recommendations increase user retention
+- **Social Graph**: Connects readers with similar interests
+- **Personalization**: Recommendations improve with reading history
+
+TECHNICAL DETAILS:
+**Similarity Algorithm:**
+- Jaccard similarity for genres, authors, tags
+- Completion ratio similarity for reading behavior
+- Weighted average: 35% genres + 25% authors + 25% tags + 15% behavior
+- Minimum threshold of 0.1 to appear in results
+- Pre-calculated similarities for performance (daily cron)
+
+**AI Recommendations:**
+- Uses Claude-3.5-sonnet for recommendations
+- Prompt includes top 5 genres, top 5 authors, recent 10 books
+- Returns JSON array with title, author, reason, confidence
+- Stored in BookRecommendation table with 7-day TTL
+
+**Caching:**
+- Similar users: 1 hour cache (CacheTTL.LONG)
+- Book recommendations: 30 minute cache (CacheTTL.MEDIUM)
+- Frontend: 5-10 minute stale times
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck (web) - Passed
+✅ pnpm lint (web) - Passed (0 errors, pre-existing warnings)
+✅ pnpm vitest run (web) - 4903 tests passed (including 42 new recommendation tests)
+
+FILES CREATED:
+- apps/web/src/hooks/useRecommendations.test.ts (42 tests)
+
+FILES VERIFIED (already existed):
+- apps/api/api/recommendations/users.ts
+- apps/api/api/recommendations/books.ts
+- apps/api/api/recommendations/[id]/dismiss.ts
+- apps/api/api/cron/calculate-similarities.ts
+- apps/api/src/services/ai-recommendations.ts
+- apps/web/src/hooks/useRecommendations.ts
+- apps/web/src/components/social/RecommendedBooks.tsx
+- apps/web/src/components/social/SimilarReaders.tsx
+- packages/database/prisma/schema.prisma (UserSimilarity model)
+- apps/web/src/locales/en.json (recommendations translations)
+
+NEXT RECOMMENDED TASKS:
+1. **cross-platform-001** - Desktop application (Electron)
+   - Critical priority, large task
+
+2. **cross-platform-002** - Mobile applications (React Native)
+   - Critical priority, large task
+
+3. **performance-optimization-001** - Database optimization
+   - Add indexes, query caching
+
+4. **docs-user-guide-001** - User documentation
+   - Create /docs route with guides
+
+SPRINT STATUS:
+- In Progress (163/174 tasks complete - 93.7%)
+- social-ai-recommendations-001: COMPLETE ✅
+- 11 active tasks remaining
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 21:01]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

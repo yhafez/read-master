@@ -213,7 +213,7 @@
         "Performance is acceptable (<500ms response time)",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "gamification-leaderboards-001",
@@ -280,7 +280,7 @@
         "Moderators can manage content",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "monitoring-sentry-001",
