@@ -38,6 +38,8 @@ import {
   ChallengeDetailPage,
   PodcastsPage,
   PodcastDetailPage,
+  VideosPage,
+  VideoDetailPage,
   SettingsPage,
   SettingsProfilePage,
   SettingsReadingPage,
@@ -252,6 +254,16 @@ function createAppRouter() {
             {
               path: ROUTES.PODCAST_DETAIL,
               element: <PodcastDetailPage />,
+            },
+
+            // Videos
+            {
+              path: ROUTES.VIDEOS,
+              element: <VideosPage />,
+            },
+            {
+              path: ROUTES.VIDEO_DETAIL,
+              element: <VideoDetailPage />,
             },
 
             // Settings

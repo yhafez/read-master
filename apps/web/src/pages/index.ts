@@ -107,3 +107,6 @@ export {
 
 // Podcasts
 export { PodcastsPage, PodcastDetailPage } from "./podcasts";
+
+// Videos
+export { VideosPage, VideoDetailPage } from "./videos";

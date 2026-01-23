@@ -74,6 +74,9 @@ export * from "./books";
 // Podcast schemas
 export * from "./podcasts";
 
+// Video schemas
+export * from "./videos";
+
 // Annotation schemas
 export * from "./annotations";
 

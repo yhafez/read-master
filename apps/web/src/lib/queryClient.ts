@@ -165,6 +165,20 @@ export const queryKeys = {
     episodeDetail: (podcastId: string, episodeId: string) =>
       [...queryKeys.podcasts.episodes(podcastId), episodeId] as const,
   },
+
+  /** Videos queries */
+  videos: {
+    all: ["videos"] as const,
+    lists: () => [...queryKeys.videos.all, "list"] as const,
+    list: (filters?: Record<string, unknown>) =>
+      [...queryKeys.videos.lists(), filters] as const,
+    details: () => [...queryKeys.videos.all, "detail"] as const,
+    detail: (id: string) => [...queryKeys.videos.details(), id] as const,
+    annotations: (videoId: string) =>
+      [...queryKeys.videos.detail(videoId), "annotations"] as const,
+    transcript: (videoId: string) =>
+      [...queryKeys.videos.detail(videoId), "transcript"] as const,
+  },
 } as const;
 
 /**

@@ -54,6 +54,10 @@ export const ROUTES = {
   PODCASTS: "/podcasts",
   PODCAST_DETAIL: "/podcasts/:id",
 
+  // Videos
+  VIDEOS: "/videos",
+  VIDEO_DETAIL: "/videos/:id",
+
   // Settings
   SETTINGS: "/settings",
   SETTINGS_PROFILE: "/settings/profile",
@@ -119,6 +123,7 @@ export const routeHelpers = {
   curriculum: (curriculumId: string): string => `/curriculums/${curriculumId}`,
   challenge: (challengeId: string): string => `/challenges/${challengeId}`,
   podcast: (podcastId: string): string => `/podcasts/${podcastId}`,
+  video: (videoId: string): string => `/videos/${videoId}`,
 } as const;
 
 /**
@@ -149,6 +154,8 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.CHALLENGE_DETAIL,
   ROUTES.PODCASTS,
   ROUTES.PODCAST_DETAIL,
+  ROUTES.VIDEOS,
+  ROUTES.VIDEO_DETAIL,
   ROUTES.SETTINGS,
   ROUTES.SETTINGS_PROFILE,
   ROUTES.SETTINGS_READING,
