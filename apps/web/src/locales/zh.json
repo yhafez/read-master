@@ -1221,6 +1221,7 @@
     "following": "正在关注",
     "followers": "关注者",
     "unfollow": "取消关注",
+    "anonymous": "匿名",
     "search": {
       "title": "搜索用户",
       "placeholder": "按用户名或姓名搜索...",
@@ -1941,6 +1942,23 @@
     "loadingComplete": "Content loaded",
     "error": "Error: {{message}}",
     "success": "Success: {{message}}",
+    "loadingContext": "正在加载{{context}}，请稍候",
+    "formErrors": "{{count}}个验证错误",
+    "itemAdded": "{{item}}已添加",
+    "itemRemoved": "{{item}}已移除",
+    "itemUpdated": "{{item}}已更新",
+    "searchResults": "找到{{count}}个结果",
+    "noSearchResults": "未找到结果",
+    "pageOf": "第{{current}}页，共{{total}}页",
+    "sortedBy": "按{{field}}排序",
+    "filtered": "按{{filter}}筛选",
+    "selectionCount": "已选择{{count}}个项目",
+    "expandedSection": "{{section}}部分已展开",
+    "collapsedSection": "{{section}}部分已折叠",
+    "dialogOpened": "对话框已打开: {{title}}",
+    "dialogClosed": "对话框已关闭",
+    "menuOpened": "菜单已打开",
+    "menuClosed": "菜单已关闭",
     "skipToMain": "Skip to main content",
     "skipToNav": "Skip to navigation",
     "skipToSearch": "Skip to search",
@@ -2426,6 +2444,35 @@
       "error": "加载发票失败"
     }
   },
+  "recommendations": {
+    "similarReaders": "相似读者",
+    "forYou": "为您推荐",
+    "commonBooks": "{{count}} 位共同作者",
+    "commonGenres": "喜欢 {{genres}}",
+    "viewMore": "查看更多",
+    "loadMore": "加载更多",
+    "errorLoading": "加载推荐失败",
+    "noSimilarReaders": "向您的书库添加更多书籍以找到相似的读者！",
+    "noRecs": "我们暂时没有为您提供任何推荐。继续阅读吧！",
+    "noFollowingRecs": "关注更多读者以获取基于他们阅读的推荐！",
+    "noAIRecs": "向您的书库添加更多书籍以获取AI驱动的推荐！",
+    "addToLibrary": "添加到书库",
+    "alreadyAdded": "已在书库中",
+    "dismiss": "忽略",
+    "readBy": "读过的人",
+    "source": {
+      "ai": "AI精选",
+      "trending": "热门",
+      "following": "来自关注",
+      "social": "社交"
+    },
+    "tab": {
+      "all": "全部",
+      "following": "关注",
+      "trending": "热门",
+      "ai": "AI精选"
+    }
+  },
   "share": {
     "native": "分享...",
     "twitter": "Twitter",
@@ -2721,6 +2768,421 @@
       "cancelMessage": "此会话尚未开始。要取消吗？",
       "leaveTitle": "离开会话？",
       "leaveMessage": "您将被移出此会话。"
+    }
+  },
+  "docs": {
+    "title": "文档",
+    "search": "搜索文档...",
+    "nav": {
+      "gettingStarted": "入门指南",
+      "overview": "概述",
+      "createAccount": "创建账户",
+      "importBooks": "导入书籍",
+      "readingBasics": "阅读基础",
+      "features": "功能",
+      "readingInterface": "阅读界面",
+      "annotations": "注释和笔记",
+      "textToSpeech": "文字转语音",
+      "offlineReading": "离线阅读",
+      "flashcards": "闪卡",
+      "srsOverview": "间隔重复概述",
+      "reviewingCards": "复习卡片",
+      "creatingCards": "创建卡片",
+      "aiFeatures": "AI功能",
+      "aiOverview": "AI概述",
+      "preReadingGuides": "阅读前指南",
+      "aiChat": "AI聊天",
+      "assessments": "评估",
+      "social": "社交",
+      "socialOverview": "社交概述",
+      "forum": "论坛",
+      "readingGroups": "阅读小组",
+      "challenges": "挑战",
+      "keyboardShortcuts": "键盘快捷键",
+      "faq": "常见问题"
+    },
+    "index": {
+      "title": "欢迎来到 Read Master",
+      "description": "通过我们全面的文档，了解如何充分利用您的阅读体验。",
+      "newUser": "新用户？",
+      "startGuide": "查看入门指南，了解如何设置账户和导入第一本书。",
+      "gettingStarted": "入门指南",
+      "step1": {
+        "title": "创建账户",
+        "description": "免费注册并设置您的阅读档案。"
+      },
+      "step2": {
+        "title": "导入书籍",
+        "description": "上传 EPUB、PDF 或 DOC 文件。"
+      },
+      "step3": {
+        "title": "开始阅读",
+        "description": "打开一本书，探索 AI 功能。"
+      },
+      "exploreFeatures": "探索功能",
+      "keyFeatures": "主要功能",
+      "feature1": {
+        "title": "AI 辅助理解",
+        "description": "获取指南、解释和评估。"
+      },
+      "feature2": {
+        "title": "间隔重复闪卡",
+        "description": "使用科学调度自动生成的卡片。"
+      },
+      "feature3": {
+        "title": "丰富的注释",
+        "description": "阅读时高亮和添加笔记。"
+      },
+      "feature4": {
+        "title": "离线阅读",
+        "description": "下载书籍以便无网络时阅读。"
+      },
+      "feature5": {
+        "title": "文字转语音",
+        "description": "用自然的声音聆听您的书籍。"
+      },
+      "feature6": {
+        "title": "社交功能",
+        "description": "加入阅读小组和挑战。"
+      },
+      "needHelp": "需要帮助？",
+      "helpDescription": "查看常见问题或联系支持团队。"
+    },
+    "cards": {
+      "features": {
+        "title": "阅读功能",
+        "description": "了解阅读界面和注释。"
+      },
+      "flashcards": {
+        "title": "闪卡和间隔重复",
+        "description": "掌握间隔重复。"
+      },
+      "ai": { "title": "AI 功能", "description": "发现 AI 理解工具。" },
+      "social": { "title": "社交功能", "description": "与其他读者建立联系。" },
+      "shortcuts": {
+        "title": "键盘快捷键",
+        "description": "像专业人士一样导航。"
+      },
+      "faq": { "title": "常见问题", "description": "查找常见问题的答案。" }
+    },
+    "shortcuts": {
+      "title": "键盘快捷键",
+      "description": "掌握键盘快捷键以在 Read Master 中导航。",
+      "macTip": "您使用的是 Mac。请使用 Command 键 (⌘) 代替 Ctrl。",
+      "windowsTip": "您使用的是 Windows/Linux。请使用 Ctrl。",
+      "quickRef": "快速参考",
+      "quickRefDesc": "随时按 ? 显示快捷键帮助。",
+      "shortcut": "快捷键",
+      "action": "操作",
+      "navigation": "导航",
+      "nextPage": "下一页",
+      "prevPage": "上一页",
+      "goToStart": "跳到开头",
+      "goToEnd": "跳到结尾",
+      "goToPage": "跳到指定页",
+      "search": "在书中搜索",
+      "reading": "阅读",
+      "fullscreen": "全屏",
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "resetZoom": "重置缩放",
+      "toggleTheme": "切换主题",
+      "toggleSidebar": "切换侧边栏",
+      "annotations": "注释",
+      "highlight": "高亮选中文本",
+      "addNote": "添加笔记",
+      "addBookmark": "添加书签",
+      "copy": "复制",
+      "selectAll": "全选",
+      "tts": "文字转语音",
+      "playPause": "播放/暂停",
+      "slowDown": "减速",
+      "speedUp": "加速",
+      "mute": "静音",
+      "flashcards": "闪卡",
+      "showAnswer": "显示答案",
+      "rateAgain": "评分：重来",
+      "rateHard": "评分：困难",
+      "rateGood": "评分：良好",
+      "rateEasy": "评分：简单",
+      "undoRating": "撤销评分",
+      "general": "通用",
+      "settings": "打开设置",
+      "library": "前往书库",
+      "dashboard": "前往仪表板",
+      "help": "显示帮助",
+      "escape": "关闭",
+      "customization": "自定义",
+      "customizationDesc": "可以在设置中自定义键盘快捷键。"
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "查找常见问题的答案。",
+      "searchPlaceholder": "搜索...",
+      "allCategories": "全部",
+      "noResults": "没有匹配的结果。",
+      "stillNeedHelp": "仍需帮助？",
+      "contactDesc": "联系我们的支持团队。",
+      "category": {
+        "general": "通用",
+        "reading": "阅读",
+        "ai": "AI",
+        "flashcards": "闪卡",
+        "billing": "账单",
+        "technical": "技术"
+      },
+      "q1": "什么是 Read Master？",
+      "a1": "Read Master 是一个使用 AI 提高阅读理解能力的平台。",
+      "q2": "Read Master 免费吗？",
+      "a2": "Read Master 提供具有基本功能的免费套餐。",
+      "q3": "支持哪些设备？",
+      "a3": "可在浏览器以及 Windows、macOS、Linux、iOS 和 Android 应用上使用。",
+      "q4": "支持哪些文件格式？",
+      "a4": "我们支持 EPUB、PDF 和 DOC/DOCX。",
+      "q5": "可以离线阅读吗？",
+      "a5": "是的，您可以下载书籍以便在没有网络时阅读。",
+      "q6": "注释功能如何使用？",
+      "a6": "选择任何文本进行高亮或添加笔记。",
+      "q7": "AI 理解功能如何工作？",
+      "a7": "AI 分析您的书籍以提供指南和解释。",
+      "q8": "可以禁用 AI 功能吗？",
+      "a8": "是的，可以在设置中禁用。",
+      "q9": "什么是间隔重复？",
+      "a9": "一种以最佳间隔展示卡片的学习技术。",
+      "q10": "卡片是如何创建的？",
+      "a10": "可以自动或手动创建。",
+      "q11": "如何取消订阅？",
+      "a11": "从设置 > 订阅中取消。",
+      "q12": "接受哪些付款方式？",
+      "a12": "我们接受主要信用卡和 PayPal。",
+      "q13": "我的书籍显示不正确，怎么办？",
+      "a13": "尝试刷新页面或清除缓存。",
+      "q14": "我的阅读数据是私密的吗？",
+      "a14": "是的，您的数据默认是私密的。"
+    },
+    "gettingStarted": {
+      "title": "入门指南",
+      "description": "了解如何设置账户并开始提高阅读理解能力。",
+      "welcome": "欢迎使用 Read Master！",
+      "welcomeDesc": "按照以下步骤充分利用您的阅读体验。",
+      "quickStart": "快速入门指南",
+      "step1": {
+        "label": "创建账户",
+        "description": "免费注册开始您的阅读之旅。",
+        "detail1": "选择您喜欢的注册方式",
+        "detail2": "设置您的阅读偏好",
+        "detail3": "自定义您的阅读目标"
+      },
+      "step2": {
+        "label": "导入您的第一本书",
+        "description": "从各种来源向您的个人图书馆添加书籍。",
+        "detail1": "从设备上传 EPUB、PDF 或 DOC 文件",
+        "detail2": "直接拖放文件到图书馆",
+        "detail3": "书籍会自动处理并索引"
+      },
+      "step3": {
+        "label": "开始阅读",
+        "description": "打开一本书并探索阅读界面。",
+        "detail1": "使用目录在章节间导航",
+        "detail2": "阅读时高亮文本并添加笔记",
+        "detail3": "尝试 AI 功能如「解释这个」"
+      },
+      "step4": {
+        "label": "自定义体验",
+        "description": "调整设置以匹配您的阅读偏好。",
+        "detail1": "选择您喜欢的主题",
+        "detail2": "调整字体大小和行距",
+        "detail3": "启用文字转语音"
+      },
+      "formats": {
+        "title": "支持的文件格式",
+        "epub": "流式文本带来最佳体验，适应您的屏幕大小。",
+        "pdf": "带缩放控制的固定布局文档。",
+        "doc": "Microsoft Word 文档。转换后获得最佳阅读体验。"
+      },
+      "nextSteps": "下一步",
+      "learnShortcuts": "学习快捷键",
+      "readFaq": "阅读常见问题",
+      "troubleshoot": "故障排除",
+      "goToLibrary": "前往图书馆"
+    },
+    "troubleshooting": {
+      "title": "故障排除",
+      "description": "找到常见问题的解决方案。",
+      "quickTip": "快速提示：",
+      "quickTipDesc": "大多数问题可以通过刷新页面、清除浏览器缓存或检查网络连接来解决。",
+      "searchPlaceholder": "搜索问题...",
+      "allCategories": "所有问题",
+      "noResults": "没有匹配您搜索的问题。",
+      "stepsToResolve": "解决步骤：",
+      "stillStuck": "仍然有问题？",
+      "contactDesc": "如果您找不到解决方案，我们的支持团队随时为您提供帮助。",
+      "category": {
+        "reading": "阅读",
+        "sync": "同步和离线",
+        "ai": "AI 功能",
+        "account": "账户",
+        "performance": "性能"
+      },
+      "items": {
+        "bookNotLoading": {
+          "title": "书籍无法加载",
+          "description": "书籍内容不显示或显示空白页面。",
+          "step1": "刷新页面并等待书籍加载",
+          "step2": "清除浏览器缓存和 Cookie",
+          "step3": "尝试其他浏览器",
+          "step4": "重新上传书籍"
+        },
+        "displayIssues": {
+          "title": "显示问题",
+          "description": "文字或图片显示不正确。",
+          "step1": "在其他阅读器中检查原始文件",
+          "step2": "尝试转换为其他格式",
+          "step3": "联系支持"
+        },
+        "annotationsNotSaving": {
+          "title": "批注未保存",
+          "description": "高亮和笔记消失了。",
+          "step1": "检查网络连接",
+          "step2": "关闭前等待几秒",
+          "step3": "登出并重新登录"
+        },
+        "syncNotWorking": {
+          "title": "设备间不同步",
+          "description": "进度不在其他设备显示。",
+          "step1": "确保在所有设备上使用同一账户",
+          "step2": "检查两个设备的网络连接",
+          "step3": "强制同步"
+        },
+        "offlineIssues": {
+          "title": "离线阅读不工作",
+          "description": "离线时书籍不可用。",
+          "step1": "离线前下载书籍",
+          "step2": "检查存储权限",
+          "step3": "清除旧的离线数据"
+        },
+        "aiNotResponding": {
+          "title": "AI 功能无响应",
+          "description": "AI 功能不工作。",
+          "step1": "检查网络连接",
+          "step2": "检查设置中是否启用 AI",
+          "step3": "检查是否达到每日使用限制"
+        },
+        "flashcardsNotGenerating": {
+          "title": "闪卡未生成",
+          "description": "自动生成的闪卡不出现。",
+          "step1": "确保有高亮或批注",
+          "step2": "检查设置",
+          "step3": "等待片刻"
+        },
+        "loginIssues": {
+          "title": "无法登录",
+          "description": "登录失败。",
+          "step1": "检查凭据",
+          "step2": "尝试重置密码",
+          "step3": "清除 Cookie"
+        },
+        "subscriptionIssues": {
+          "title": "订阅功能不工作",
+          "description": "Pro 功能不可用。",
+          "step1": "登出并重新登录",
+          "step2": "检查订阅状态",
+          "step3": "联系支持"
+        },
+        "slowPerformance": {
+          "title": "应用运行缓慢",
+          "description": "页面加载时间长。",
+          "step1": "关闭其他标签页",
+          "step2": "清除缓存",
+          "step3": "禁用扩展程序",
+          "step4": "尝试其他浏览器"
+        },
+        "highMemoryUsage": {
+          "title": "内存使用高",
+          "description": "浏览器内存不足。",
+          "step1": "关闭未在阅读的书籍",
+          "step2": "减少离线存储的书籍",
+          "step3": "定期重启浏览器"
+        }
+      }
+    },
+    "glossary": {
+      "title": "术语表",
+      "description": "了解 Read Master 中使用的术语。",
+      "tip": "使用搜索框快速查找特定术语。",
+      "searchPlaceholder": "搜索术语...",
+      "allTerms": "所有术语",
+      "showing": "显示 {{count}} 个术语",
+      "noResults": "没有匹配您搜索的术语。",
+      "category": {
+        "general": "通用",
+        "reading": "阅读",
+        "ai": "AI 功能",
+        "flashcards": "闪卡",
+        "social": "社交"
+      },
+      "terms": {
+        "library": "图书馆",
+        "book": "书籍",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "collection": "收藏",
+        "shelf": "书架",
+        "annotation": "批注",
+        "highlight": "高亮",
+        "bookmark": "书签",
+        "note": "笔记",
+        "tts": "文字转语音",
+        "readingProgress": "阅读进度",
+        "wpm": "每分钟字数",
+        "aiAssistant": "AI 助手",
+        "preReadingGuide": "预读指南",
+        "assessment": "评估",
+        "comprehension": "理解力",
+        "explainThis": "解释这个",
+        "flashcard": "闪卡",
+        "srs": "间隔重复系统",
+        "interval": "间隔",
+        "dueDate": "到期日",
+        "ease": "难度系数",
+        "retention": "记忆保持率",
+        "readingGroup": "阅读小组",
+        "challenge": "挑战",
+        "achievement": "成就",
+        "streak": "连续天数",
+        "leaderboard": "排行榜"
+      },
+      "definitions": {
+        "library": "您导入的所有书籍的个人收藏。",
+        "book": "您导入到 Read Master 的文档。",
+        "epub": "电子出版格式。一种流行的电子书格式，文字可适应不同屏幕尺寸。",
+        "pdf": "便携式文档格式。保持精确格式的固定布局格式。",
+        "collection": "您创建的自定义书籍分组。",
+        "shelf": "书籍的视觉组织系统。",
+        "annotation": "您在书中所做的任何标记——高亮、笔记或书签。",
+        "highlight": "用颜色标记的选中文字。",
+        "bookmark": "书中保存的位置。",
+        "note": "附加到高亮文字的书面评论。",
+        "tts": "使用 AI 语音朗读文字的功能。",
+        "readingProgress": "您在一本书中读了多少。",
+        "wpm": "阅读速度的测量。",
+        "aiAssistant": "可以解释段落和回答问题的 AI 助手。",
+        "preReadingGuide": "AI 生成的关键概念预览。",
+        "assessment": "AI 生成的测验以检查您的理解。",
+        "comprehension": "您对所读内容的理解。",
+        "explainThis": "提供选中文字详细解释的 AI 功能。",
+        "flashcard": "一面是问题另一面是答案的数字卡片。",
+        "srs": "以最佳间隔显示闪卡以最大化长期记忆的学习技术。",
+        "interval": "闪卡复习之间的时间。",
+        "dueDate": "闪卡计划复习的时间。",
+        "ease": "影响间隔增加速度的乘数。",
+        "retention": "正确回忆的闪卡百分比。",
+        "readingGroup": "用户一起阅读同一本书的社交功能。",
+        "challenge": "有截止日期的阅读目标。",
+        "achievement": "达到里程碑获得的徽章。",
+        "streak": "连续阅读天数。",
+        "leaderboard": "按各种指标对用户的排名。"
+      }
     }
   }
 }

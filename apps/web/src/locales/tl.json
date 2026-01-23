@@ -1221,6 +1221,7 @@
     "following": "Sumusunod",
     "followers": "tagasunod",
     "unfollow": "Huwag sundan",
+    "anonymous": "Hindi kilala",
     "search": {
       "title": "Maghanap ng Users",
       "placeholder": "Maghanap gamit ang username o pangalan...",
@@ -1941,6 +1942,23 @@
     "loadingComplete": "Content loaded",
     "error": "Error: {{message}}",
     "success": "Success: {{message}}",
+    "loadingContext": "Nilo-load ang {{context}}, mangyaring maghintay",
+    "formErrors": "{{count}} mga error sa validation",
+    "itemAdded": "Naidagdag ang {{item}}",
+    "itemRemoved": "Naalis ang {{item}}",
+    "itemUpdated": "Na-update ang {{item}}",
+    "searchResults": "{{count}} mga resulta ang nahanap",
+    "noSearchResults": "Walang nahanap na resulta",
+    "pageOf": "Pahina {{current}} ng {{total}}",
+    "sortedBy": "Inayos ayon sa {{field}}",
+    "filtered": "Na-filter ayon sa {{filter}}",
+    "selectionCount": "{{count}} mga item ang napili",
+    "expandedSection": "Na-expand ang seksyong {{section}}",
+    "collapsedSection": "Na-collapse ang seksyong {{section}}",
+    "dialogOpened": "Nabuksan ang dialog: {{title}}",
+    "dialogClosed": "Naisara ang dialog",
+    "menuOpened": "Nabuksan ang menu",
+    "menuClosed": "Naisara ang menu",
     "skipToMain": "Skip to main content",
     "skipToNav": "Skip to navigation",
     "skipToSearch": "Skip to search",
@@ -2426,6 +2444,35 @@
       "error": "Hindi na-load ang mga invoice"
     }
   },
+  "recommendations": {
+    "similarReaders": "Mga Katulad na Mambabasa",
+    "forYou": "Inirerekomenda Para Sa Iyo",
+    "commonBooks": "{{count}} magkakatulad na may-akda",
+    "commonGenres": "Nag-eenjoy sa {{genres}}",
+    "viewMore": "Tingnan ang Higit Pa",
+    "loadMore": "Mag-load Pa",
+    "errorLoading": "Hindi na-load ang mga rekomendasyon",
+    "noSimilarReaders": "Magdagdag ng higit pang mga libro sa iyong library para makahanap ng mga katulad na mambabasa!",
+    "noRecs": "Wala pa kaming mga rekomendasyon para sa iyo. Magpatuloy sa pagbabasa!",
+    "noFollowingRecs": "Mag-follow ng higit pang mga mambabasa para makakuha ng mga rekomendasyon batay sa kanilang pagbabasa!",
+    "noAIRecs": "Magdagdag ng higit pang mga libro sa iyong library para makakuha ng mga rekomendasyong pinapagana ng AI!",
+    "addToLibrary": "Idagdag sa Library",
+    "alreadyAdded": "Nasa Library Na",
+    "dismiss": "I-dismiss",
+    "readBy": "Binasa ni",
+    "source": {
+      "ai": "Pinili ng AI",
+      "trending": "Trending",
+      "following": "Mula sa Mga Sinusundan",
+      "social": "Social"
+    },
+    "tab": {
+      "all": "Lahat",
+      "following": "Sinusundan",
+      "trending": "Trending",
+      "ai": "Mga Pinili ng AI"
+    }
+  },
   "share": {
     "native": "Ibahagi...",
     "twitter": "Twitter",
@@ -2721,6 +2768,430 @@
       "cancelMessage": "Kanselahin ang sesyon?",
       "leaveTitle": "Umalis?",
       "leaveMessage": "Maaalis ka sa sesyon."
+    }
+  },
+  "docs": {
+    "title": "Dokumentasyon",
+    "search": "Maghanap sa dokumentasyon...",
+    "nav": {
+      "gettingStarted": "Pagsisimula",
+      "overview": "Pangkalahatang-tanaw",
+      "createAccount": "Gumawa ng Account",
+      "importBooks": "Mag-import ng mga Libro",
+      "readingBasics": "Mga Batayan sa Pagbabasa",
+      "features": "Mga Feature",
+      "readingInterface": "Interface sa Pagbabasa",
+      "annotations": "Mga Anotasyon at Tala",
+      "textToSpeech": "Text-to-Speech",
+      "offlineReading": "Offline na Pagbabasa",
+      "flashcards": "Mga Flashcard",
+      "srsOverview": "Pangkalahatang-tanaw ng SRS",
+      "reviewingCards": "Pagsusuri ng mga Card",
+      "creatingCards": "Paggawa ng mga Card",
+      "aiFeatures": "Mga AI Feature",
+      "aiOverview": "Pangkalahatang-tanaw ng AI",
+      "preReadingGuides": "Mga Gabay Bago Magbasa",
+      "aiChat": "AI Chat",
+      "assessments": "Mga Pagtatasa",
+      "social": "Social",
+      "socialOverview": "Pangkalahatang-tanaw ng Social",
+      "forum": "Forum",
+      "readingGroups": "Mga Grupo sa Pagbabasa",
+      "challenges": "Mga Hamon",
+      "keyboardShortcuts": "Mga Keyboard Shortcut",
+      "faq": "FAQ"
+    },
+    "index": {
+      "title": "Maligayang Pagdating sa Read Master",
+      "description": "Alamin kung paano masulit ang iyong karanasan sa pagbabasa gamit ang aming komprehensibong dokumentasyon.",
+      "newUser": "Bago sa Read Master?",
+      "startGuide": "Tingnan ang gabay sa pagsisimula para sa pag-setup ng account at pag-import ng unang libro.",
+      "gettingStarted": "Pagsisimula",
+      "step1": {
+        "title": "Gumawa ng Account",
+        "description": "Mag-sign up nang libre at i-set up ang iyong profile sa pagbabasa."
+      },
+      "step2": {
+        "title": "Mag-import ng mga Libro",
+        "description": "Mag-upload ng EPUB, PDF, o DOC files."
+      },
+      "step3": {
+        "title": "Magsimulang Magbasa",
+        "description": "Magbukas ng libro at tuklasin ang mga AI feature."
+      },
+      "exploreFeatures": "Tuklasin ang mga Feature",
+      "keyFeatures": "Mga Pangunahing Feature",
+      "feature1": {
+        "title": "AI-Powered na Pag-unawa",
+        "description": "Kumuha ng mga gabay, paliwanag, at pagtatasa."
+      },
+      "feature2": {
+        "title": "Spaced Repetition Flashcards",
+        "description": "Awtomatikong nililikha na mga card na may scientific scheduling."
+      },
+      "feature3": {
+        "title": "Mayamang Anotasyon",
+        "description": "Mag-highlight at mag-add ng mga tala habang nagbabasa."
+      },
+      "feature4": {
+        "title": "Offline na Pagbabasa",
+        "description": "Mag-download ng mga libro para basahin nang walang internet."
+      },
+      "feature5": {
+        "title": "Text-to-Speech",
+        "description": "Makinig sa iyong mga libro gamit ang natural na mga boses."
+      },
+      "feature6": {
+        "title": "Mga Social Feature",
+        "description": "Sumali sa mga grupo sa pagbabasa at mga hamon."
+      },
+      "needHelp": "Kailangan ng Tulong?",
+      "helpDescription": "Tingnan ang FAQ o makipag-ugnayan sa support."
+    },
+    "cards": {
+      "features": {
+        "title": "Mga Feature sa Pagbabasa",
+        "description": "Alamin ang tungkol sa interface at anotasyon."
+      },
+      "flashcards": {
+        "title": "Flashcards at SRS",
+        "description": "Master ang spaced repetition."
+      },
+      "ai": {
+        "title": "Mga AI Feature",
+        "description": "Tuklasin ang mga AI tool sa pag-unawa."
+      },
+      "social": {
+        "title": "Mga Social Feature",
+        "description": "Kumonekta sa ibang mga mambabasa."
+      },
+      "shortcuts": {
+        "title": "Mga Keyboard Shortcut",
+        "description": "Mag-navigate tulad ng isang pro."
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Maghanap ng mga sagot sa mga karaniwang tanong."
+      }
+    },
+    "shortcuts": {
+      "title": "Mga Keyboard Shortcut",
+      "description": "Master ang mga keyboard shortcut para sa pag-navigate sa Read Master.",
+      "macTip": "Ikaw ay nasa Mac. Gumamit ng Command (⌘) sa halip na Ctrl.",
+      "windowsTip": "Ikaw ay nasa Windows/Linux. Gumamit ng Ctrl.",
+      "quickRef": "Mabilisang Sanggunian",
+      "quickRefDesc": "Pindutin ang ? anumang oras para ipakita ang tulong sa shortcut.",
+      "shortcut": "Shortcut",
+      "action": "Aksyon",
+      "navigation": "Navigation",
+      "nextPage": "Susunod na Pahina",
+      "prevPage": "Nakaraang Pahina",
+      "goToStart": "Pumunta sa Simula",
+      "goToEnd": "Pumunta sa Dulo",
+      "goToPage": "Pumunta sa Pahina",
+      "search": "Maghanap sa Libro",
+      "reading": "Pagbabasa",
+      "fullscreen": "Fullscreen",
+      "zoomIn": "Mag-zoom In",
+      "zoomOut": "Mag-zoom Out",
+      "resetZoom": "I-reset ang Zoom",
+      "toggleTheme": "I-toggle ang Theme",
+      "toggleSidebar": "I-toggle ang Sidebar",
+      "annotations": "Mga Anotasyon",
+      "highlight": "I-highlight ang Napiling Teksto",
+      "addNote": "Mag-add ng Tala",
+      "addBookmark": "Mag-add ng Bookmark",
+      "copy": "Kopyahin",
+      "selectAll": "Piliin Lahat",
+      "tts": "Text-to-Speech",
+      "playPause": "Play/Pause",
+      "slowDown": "Bagalan",
+      "speedUp": "Bilisan",
+      "mute": "I-mute",
+      "flashcards": "Mga Flashcard",
+      "showAnswer": "Ipakita ang Sagot",
+      "rateAgain": "Rate: Ulitin",
+      "rateHard": "Rate: Mahirap",
+      "rateGood": "Rate: Mabuti",
+      "rateEasy": "Rate: Madali",
+      "undoRating": "I-undo ang Rating",
+      "general": "Pangkalahatan",
+      "settings": "Buksan ang Settings",
+      "library": "Pumunta sa Library",
+      "dashboard": "Pumunta sa Dashboard",
+      "help": "Ipakita ang Tulong",
+      "escape": "Isara",
+      "customization": "Customization",
+      "customizationDesc": "Maaaring i-customize ang mga keyboard shortcut sa settings."
+    },
+    "faq": {
+      "title": "Mga Madalas Itanong",
+      "description": "Maghanap ng mga sagot sa mga karaniwang tanong.",
+      "searchPlaceholder": "Maghanap...",
+      "allCategories": "Lahat",
+      "noResults": "Walang tumutugmang resulta.",
+      "stillNeedHelp": "Kailangan pa rin ng tulong?",
+      "contactDesc": "Makipag-ugnayan sa aming support team.",
+      "category": {
+        "general": "Pangkalahatan",
+        "reading": "Pagbabasa",
+        "ai": "AI",
+        "flashcards": "Mga Flashcard",
+        "billing": "Billing",
+        "technical": "Teknikal"
+      },
+      "q1": "Ano ang Read Master?",
+      "a1": "Ang Read Master ay isang platform para sa pagpapabuti ng pag-unawa sa pagbabasa gamit ang AI.",
+      "q2": "Libre ba ang Read Master?",
+      "a2": "Ang Read Master ay may libreng tier na may mga pangunahing feature.",
+      "q3": "Anong mga device ang sinusuportahan?",
+      "a3": "Gumagana ito sa mga browser at Windows, macOS, Linux, iOS, at Android apps.",
+      "q4": "Anong mga file format ang sinusuportahan?",
+      "a4": "Sinusuportahan namin ang EPUB, PDF, at DOC/DOCX.",
+      "q5": "Maaari ba akong magbasa offline?",
+      "a5": "Oo, maaari kang mag-download ng mga libro para basahin nang walang internet.",
+      "q6": "Paano gumagana ang mga anotasyon?",
+      "a6": "Pumili ng anumang teksto para mag-highlight o mag-add ng tala.",
+      "q7": "Paano gumagana ang AI comprehension?",
+      "a7": "Sinusuri ng AI ang iyong mga libro para magbigay ng mga gabay at paliwanag.",
+      "q8": "Maaari ko bang i-disable ang mga AI feature?",
+      "a8": "Oo, mula sa settings.",
+      "q9": "Ano ang spaced repetition?",
+      "a9": "Isang learning technique na nagpapakita ng mga card sa optimal na pagitan.",
+      "q10": "Paano nililikha ang mga card?",
+      "a10": "Maaari silang malikha nang awtomatiko o manu-mano.",
+      "q11": "Paano ko kakanselahin ang aking subscription?",
+      "a11": "Mula sa Settings > Subscription.",
+      "q12": "Anong mga payment method ang tinatanggap?",
+      "a12": "Tumatanggap kami ng mga pangunahing credit card at PayPal.",
+      "q13": "Hindi tama ang pagpapakita ng aking libro. Ano ang gagawin ko?",
+      "a13": "Subukang i-refresh ang page o i-clear ang cache.",
+      "q14": "Pribado ba ang aking reading data?",
+      "a14": "Oo, ang iyong data ay pribado bilang default."
+    },
+    "gettingStarted": {
+      "title": "Pagsisimula",
+      "description": "Alamin kung paano i-setup ang iyong account at simulan ang pagpapabuti ng iyong pag-unawa sa pagbabasa.",
+      "welcome": "Maligayang pagdating sa Read Master!",
+      "welcomeDesc": "Sundin ang mga hakbang na ito para masulit ang iyong karanasan sa pagbabasa.",
+      "quickStart": "Quick Start Guide",
+      "step1": {
+        "label": "Gumawa ng Account",
+        "description": "Mag-sign up ng libre para simulan ang iyong reading journey.",
+        "detail1": "Piliin ang preferred na paraan ng sign-up",
+        "detail2": "I-setup ang iyong reading profile",
+        "detail3": "I-customize ang iyong mga reading goals"
+      },
+      "step2": {
+        "label": "Mag-import ng Libro",
+        "description": "Magdagdag ng mga libro sa iyong personal na library.",
+        "detail1": "Mag-upload ng EPUB, PDF, o DOC files",
+        "detail2": "I-drag and drop ang mga file",
+        "detail3": "Awtomatikong pinoproseso ang mga libro"
+      },
+      "step3": {
+        "label": "Magsimulang Magbasa",
+        "description": "Buksan ang isang libro at tuklasin ang reading interface.",
+        "detail1": "Gamitin ang table of contents para mag-navigate",
+        "detail2": "Mag-highlight ng text at magdagdag ng notes",
+        "detail3": "Subukan ang AI features"
+      },
+      "step4": {
+        "label": "I-customize ang Iyong Karanasan",
+        "description": "Ayusin ang mga settings ayon sa iyong kagustuhan.",
+        "detail1": "Pumili ng preferred na theme",
+        "detail2": "Ayusin ang font size at line spacing",
+        "detail3": "I-enable ang text-to-speech"
+      },
+      "formats": {
+        "title": "Mga Suportadong File Format",
+        "epub": "Pinakamahusay na karanasan na may flowing text.",
+        "pdf": "Fixed layout documents na may zoom controls.",
+        "doc": "Microsoft Word documents."
+      },
+      "nextSteps": "Mga Susunod na Hakbang",
+      "learnShortcuts": "Alamin ang Shortcuts",
+      "readFaq": "Basahin ang FAQ",
+      "troubleshoot": "Troubleshooting",
+      "goToLibrary": "Pumunta sa Library"
+    },
+    "troubleshooting": {
+      "title": "Troubleshooting",
+      "description": "Maghanap ng mga solusyon sa mga karaniwang problema.",
+      "quickTip": "Mabilis na Tip:",
+      "quickTipDesc": "Karamihan sa mga problema ay nasosolusyunan sa pamamagitan ng pag-refresh ng page o pag-clear ng cache.",
+      "searchPlaceholder": "Maghanap ng mga problema...",
+      "allCategories": "Lahat ng Problema",
+      "noResults": "Walang nakitang tumutugma sa iyong search.",
+      "stepsToResolve": "Mga Hakbang para Masolusyunan:",
+      "stillStuck": "May problema pa rin?",
+      "contactDesc": "Kung hindi mo nahanap ang solusyon, handa ang aming support team na tumulong.",
+      "category": {
+        "reading": "Pagbabasa",
+        "sync": "Sync at Offline",
+        "ai": "AI Features",
+        "account": "Account",
+        "performance": "Performance"
+      },
+      "items": {
+        "bookNotLoading": {
+          "title": "Hindi naglo-load ang libro",
+          "description": "Hindi lumalabas ang content ng libro.",
+          "step1": "I-refresh ang page",
+          "step2": "I-clear ang browser cache",
+          "step3": "Subukan ang ibang browser",
+          "step4": "Muling i-upload ang libro"
+        },
+        "displayIssues": {
+          "title": "Mga problema sa display",
+          "description": "Hindi tama ang pagpapakita ng text o images.",
+          "step1": "Suriin ang original file",
+          "step2": "Subukang i-convert sa ibang format",
+          "step3": "Kontakin ang support"
+        },
+        "annotationsNotSaving": {
+          "title": "Hindi nase-save ang annotations",
+          "description": "Nawawala ang mga highlights at notes.",
+          "step1": "Suriin ang internet connection",
+          "step2": "Maghintay ng ilang segundo bago isara",
+          "step3": "Mag-logout at mag-login ulit"
+        },
+        "syncNotWorking": {
+          "title": "Hindi nagsi-sync sa mga device",
+          "description": "Hindi lumalabas ang progress sa ibang device.",
+          "step1": "Siguraduhing parehong account ang gamit",
+          "step2": "Suriin ang connection sa parehong device",
+          "step3": "Piliting mag-sync"
+        },
+        "offlineIssues": {
+          "title": "Hindi gumagana ang offline reading",
+          "description": "Hindi available ang mga libro kapag offline.",
+          "step1": "I-download ang mga libro bago mag-offline",
+          "step2": "Suriin ang storage permissions",
+          "step3": "I-clear ang lumang offline data"
+        },
+        "aiNotResponding": {
+          "title": "Hindi tumutugon ang AI features",
+          "description": "Hindi gumagana ang AI functions.",
+          "step1": "Suriin ang internet connection",
+          "step2": "Suriin kung enabled ang AI sa Settings",
+          "step3": "Suriin kung naabot na ang daily limit"
+        },
+        "flashcardsNotGenerating": {
+          "title": "Hindi nagge-generate ang flashcards",
+          "description": "Hindi lumalabas ang auto-generated cards.",
+          "step1": "Siguraduhing may highlights o annotations",
+          "step2": "Suriin ang settings",
+          "step3": "Maghintay ng ilang sandali"
+        },
+        "loginIssues": {
+          "title": "Hindi makapag-login",
+          "description": "Nabibigo ang login.",
+          "step1": "Suriin ang credentials",
+          "step2": "Subukan ang forgot password",
+          "step3": "I-clear ang cookies"
+        },
+        "subscriptionIssues": {
+          "title": "Hindi gumagana ang subscription features",
+          "description": "Hindi available ang Pro features.",
+          "step1": "Mag-logout at mag-login ulit",
+          "step2": "Suriin ang subscription status",
+          "step3": "Kontakin ang support"
+        },
+        "slowPerformance": {
+          "title": "Mabagal ang app",
+          "description": "Matagal mag-load ang mga pages.",
+          "step1": "Isara ang ibang tabs",
+          "step2": "I-clear ang cache",
+          "step3": "I-disable ang mga extensions",
+          "step4": "Subukan ang ibang browser"
+        },
+        "highMemoryUsage": {
+          "title": "Mataas na memory usage",
+          "description": "Nauubusan ng memory ang browser.",
+          "step1": "Isara ang mga librong hindi binabasa",
+          "step2": "Bawasan ang offline books",
+          "step3": "I-restart ang browser"
+        }
+      }
+    },
+    "glossary": {
+      "title": "Glossary",
+      "description": "Alamin ang mga terminolohiyang ginagamit sa Read Master.",
+      "tip": "Gamitin ang search box para mabilis na mahanap ang mga tiyak na termino.",
+      "searchPlaceholder": "Maghanap ng mga termino...",
+      "allTerms": "Lahat ng Termino",
+      "showing": "Nagpapakita ng {{count}} termino",
+      "noResults": "Walang nakitang tumutugma sa iyong search.",
+      "category": {
+        "general": "General",
+        "reading": "Pagbabasa",
+        "ai": "AI Features",
+        "flashcards": "Flashcards",
+        "social": "Social"
+      },
+      "terms": {
+        "library": "Library",
+        "book": "Libro",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "collection": "Collection",
+        "shelf": "Shelf",
+        "annotation": "Annotation",
+        "highlight": "Highlight",
+        "bookmark": "Bookmark",
+        "note": "Note",
+        "tts": "Text-to-Speech",
+        "readingProgress": "Reading Progress",
+        "wpm": "Words Per Minute",
+        "aiAssistant": "AI Assistant",
+        "preReadingGuide": "Pre-Reading Guide",
+        "assessment": "Assessment",
+        "comprehension": "Comprehension",
+        "explainThis": "Explain This",
+        "flashcard": "Flashcard",
+        "srs": "Spaced Repetition System",
+        "interval": "Interval",
+        "dueDate": "Due Date",
+        "ease": "Ease Factor",
+        "retention": "Retention",
+        "readingGroup": "Reading Group",
+        "challenge": "Challenge",
+        "achievement": "Achievement",
+        "streak": "Streak",
+        "leaderboard": "Leaderboard"
+      },
+      "definitions": {
+        "library": "Ang iyong personal na koleksyon ng lahat ng naimport na libro.",
+        "book": "Isang dokumentong na-import mo sa Read Master.",
+        "epub": "Electronic Publication format. Popular na e-book format na may reflowable text.",
+        "pdf": "Portable Document Format. Fixed-layout format.",
+        "collection": "Custom grouping ng mga libro na iyong ginawa.",
+        "shelf": "Visual organization system para sa iyong mga libro.",
+        "annotation": "Anumang marka sa libro - highlights, notes, o bookmarks.",
+        "highlight": "Selected text na may kulay.",
+        "bookmark": "Saved position sa isang libro.",
+        "note": "Mga nakasulat na komento na nakakabit sa text.",
+        "tts": "Feature na nagbabasa ng text gamit ang AI voices.",
+        "readingProgress": "Gaano ka na kalayo sa isang libro.",
+        "wpm": "Sukat ng reading speed.",
+        "aiAssistant": "AI helper na nagpapaliwanag at sumasagot ng tanong.",
+        "preReadingGuide": "AI-generated overview ng mga key concepts.",
+        "assessment": "AI-generated quiz para suriin ang pag-unawa.",
+        "comprehension": "Ang iyong pag-unawa sa binabasa.",
+        "explainThis": "AI feature na nagbibigay ng detailed explanations.",
+        "flashcard": "Digital card na may tanong sa isang side at sagot sa kabila.",
+        "srs": "Learning technique na nagpapakita ng cards sa optimal intervals.",
+        "interval": "Oras sa pagitan ng flashcard reviews.",
+        "dueDate": "Kailan naka-schedule ang card para sa review.",
+        "ease": "Multiplier na nakakaapekto sa interval increases.",
+        "retention": "Porsyento ng cards na tama ang recall.",
+        "readingGroup": "Social feature kung saan sabay nagbabasa ang users.",
+        "challenge": "Reading goal na may deadline.",
+        "achievement": "Badge na nakukuha sa pagkamit ng milestones.",
+        "streak": "Sunod-sunod na araw ng pagbabasa.",
+        "leaderboard": "Ranking ng users ayon sa iba't ibang metrics."
+      }
     }
   }
 }

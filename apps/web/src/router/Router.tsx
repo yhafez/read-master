@@ -56,6 +56,12 @@ import {
   AdminProtectedRoute,
   AccessibilityStatementPage,
   KeyboardShortcutsPage,
+  DocsIndexPage,
+  GettingStartedPage,
+  ShortcutsPage as DocsShortcutsPage,
+  FAQPage,
+  TroubleshootingPage,
+  GlossaryPage,
 } from "@/pages";
 
 /**
@@ -334,6 +340,32 @@ function createAppRouter() {
         {
           path: ROUTES.KEYBOARD_SHORTCUTS,
           element: <KeyboardShortcutsPage />,
+        },
+
+        // Documentation pages (public)
+        {
+          path: ROUTES.DOCS,
+          element: <DocsIndexPage />,
+        },
+        {
+          path: ROUTES.DOCS_GETTING_STARTED,
+          element: <GettingStartedPage />,
+        },
+        {
+          path: ROUTES.DOCS_SHORTCUTS,
+          element: <DocsShortcutsPage />,
+        },
+        {
+          path: ROUTES.DOCS_FAQ,
+          element: <FAQPage />,
+        },
+        {
+          path: ROUTES.DOCS_TROUBLESHOOTING,
+          element: <TroubleshootingPage />,
+        },
+        {
+          path: ROUTES.DOCS_GLOSSARY,
+          element: <GlossaryPage />,
         },
 
         // 404 - catch all unmatched routes

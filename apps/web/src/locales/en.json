@@ -1957,9 +1957,26 @@
     "collapseSection": "Collapse section",
     "navigatedTo": "Navigated to {{page}}",
     "loading": "Loading content, please wait",
+    "loadingContext": "Loading {{context}}, please wait",
     "loadingComplete": "Content loaded",
     "error": "Error: {{message}}",
     "success": "Success: {{message}}",
+    "formErrors": "{{count}} validation errors",
+    "itemAdded": "{{item}} added",
+    "itemRemoved": "{{item}} removed",
+    "itemUpdated": "{{item}} updated",
+    "searchResults": "{{count}} results found",
+    "noSearchResults": "No results found",
+    "pageOf": "Page {{current}} of {{total}}",
+    "sortedBy": "Sorted by {{field}}",
+    "filtered": "Filtered by {{filter}}",
+    "selectionCount": "{{count}} items selected",
+    "expandedSection": "{{section}} expanded",
+    "collapsedSection": "{{section}} collapsed",
+    "dialogOpened": "Dialog opened: {{title}}",
+    "dialogClosed": "Dialog closed",
+    "menuOpened": "Menu opened",
+    "menuClosed": "Menu closed",
     "settings": {
       "title": "Accessibility Settings",
       "description": "Customize your reading experience for better accessibility",
@@ -2420,6 +2437,7 @@
     "following": "Following",
     "followers": "followers",
     "unfollow": "Unfollow",
+    "anonymous": "Anonymous",
     "search": {
       "title": "Search Users",
       "placeholder": "Search by username or name...",
@@ -2427,6 +2445,35 @@
       "minChars": "Enter at least 2 characters to search",
       "noResults": "No users found",
       "moreResults": "Showing {{count}} of {{total}} results"
+    }
+  },
+  "recommendations": {
+    "similarReaders": "Similar Readers",
+    "forYou": "Recommended for You",
+    "commonBooks": "{{count}} authors in common",
+    "commonGenres": "Enjoys {{genres}}",
+    "viewMore": "View More",
+    "loadMore": "Load More",
+    "errorLoading": "Failed to load recommendations",
+    "noSimilarReaders": "Add more books to your library to find similar readers!",
+    "noRecs": "We don't have any recommendations for you yet. Keep reading!",
+    "noFollowingRecs": "Follow more readers to get recommendations based on their reading!",
+    "noAIRecs": "Add more books to your library to get AI-powered recommendations!",
+    "addToLibrary": "Add to Library",
+    "alreadyAdded": "In Library",
+    "dismiss": "Dismiss",
+    "readBy": "Read by",
+    "source": {
+      "ai": "AI Pick",
+      "trending": "Trending",
+      "following": "From Following",
+      "social": "Social"
+    },
+    "tab": {
+      "all": "All",
+      "following": "Following",
+      "trending": "Trending",
+      "ai": "AI Picks"
     }
   },
   "share": {
@@ -2724,6 +2771,430 @@
       "cancelMessage": "This session hasn't started yet. Cancel it?",
       "leaveTitle": "Leave Session?",
       "leaveMessage": "You'll be removed from this session."
+    }
+  },
+  "docs": {
+    "title": "Documentation",
+    "search": "Search documentation...",
+    "nav": {
+      "gettingStarted": "Getting Started",
+      "overview": "Overview",
+      "createAccount": "Create Account",
+      "importBooks": "Import Books",
+      "readingBasics": "Reading Basics",
+      "features": "Features",
+      "readingInterface": "Reading Interface",
+      "annotations": "Annotations & Notes",
+      "textToSpeech": "Text-to-Speech",
+      "offlineReading": "Offline Reading",
+      "flashcards": "Flashcards",
+      "srsOverview": "SRS Overview",
+      "reviewingCards": "Reviewing Cards",
+      "creatingCards": "Creating Cards",
+      "aiFeatures": "AI Features",
+      "aiOverview": "AI Overview",
+      "preReadingGuides": "Pre-Reading Guides",
+      "aiChat": "AI Chat",
+      "assessments": "Assessments",
+      "social": "Social",
+      "socialOverview": "Social Overview",
+      "forum": "Forum",
+      "readingGroups": "Reading Groups",
+      "challenges": "Challenges",
+      "keyboardShortcuts": "Keyboard Shortcuts",
+      "faq": "FAQ"
+    },
+    "index": {
+      "title": "Welcome to Read Master",
+      "description": "Learn how to get the most out of your reading experience with our comprehensive documentation.",
+      "newUser": "New to Read Master?",
+      "startGuide": "Check out our getting started guide to set up your account and import your first book.",
+      "gettingStarted": "Getting Started",
+      "step1": {
+        "title": "Create Account",
+        "description": "Sign up for free and set up your reading profile with your preferences and goals."
+      },
+      "step2": {
+        "title": "Import Books",
+        "description": "Upload your EPUB, PDF, or DOC files to build your personal library."
+      },
+      "step3": {
+        "title": "Start Reading",
+        "description": "Open a book and explore AI-powered features to enhance your comprehension."
+      },
+      "exploreFeatures": "Explore Features",
+      "keyFeatures": "Key Features",
+      "feature1": {
+        "title": "AI-Powered Comprehension",
+        "description": "Get pre-reading guides, contextual explanations, and personalized assessments."
+      },
+      "feature2": {
+        "title": "Spaced Repetition Flashcards",
+        "description": "Automatically generated flashcards with scientifically-proven review scheduling."
+      },
+      "feature3": {
+        "title": "Rich Annotations",
+        "description": "Highlight, add notes, and organize your thoughts while reading."
+      },
+      "feature4": {
+        "title": "Offline Reading",
+        "description": "Download books for offline access on any device."
+      },
+      "feature5": {
+        "title": "Text-to-Speech",
+        "description": "Listen to your books with natural AI-generated voices."
+      },
+      "feature6": {
+        "title": "Social Features",
+        "description": "Join reading groups, participate in challenges, and discuss books."
+      },
+      "needHelp": "Need Help?",
+      "helpDescription": "Check our FAQ or contact support if you can't find what you're looking for."
+    },
+    "cards": {
+      "features": {
+        "title": "Reading Features",
+        "description": "Learn about the reading interface, annotations, and text-to-speech."
+      },
+      "flashcards": {
+        "title": "Flashcards & SRS",
+        "description": "Master spaced repetition to improve retention."
+      },
+      "ai": {
+        "title": "AI Features",
+        "description": "Discover AI-powered comprehension tools."
+      },
+      "social": {
+        "title": "Social Features",
+        "description": "Connect with other readers and join discussions."
+      },
+      "shortcuts": {
+        "title": "Keyboard Shortcuts",
+        "description": "Navigate like a pro with keyboard shortcuts."
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Find answers to common questions."
+      }
+    },
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "description": "Master keyboard shortcuts to navigate Read Master like a pro.",
+      "macTip": "You're on Mac. Use ⌘ (Command) instead of Ctrl for most shortcuts.",
+      "windowsTip": "You're on Windows/Linux. Use Ctrl for modifier shortcuts.",
+      "quickRef": "Quick Reference",
+      "quickRefDesc": "Press ? at any time to show the keyboard shortcuts help overlay.",
+      "shortcut": "Shortcut",
+      "action": "Action",
+      "navigation": "Navigation",
+      "nextPage": "Next page",
+      "prevPage": "Previous page",
+      "goToStart": "Go to start",
+      "goToEnd": "Go to end",
+      "goToPage": "Go to page",
+      "search": "Search in book",
+      "reading": "Reading",
+      "fullscreen": "Toggle fullscreen",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "resetZoom": "Reset zoom",
+      "toggleTheme": "Toggle theme",
+      "toggleSidebar": "Toggle sidebar",
+      "annotations": "Annotations",
+      "highlight": "Highlight selection",
+      "addNote": "Add note",
+      "addBookmark": "Add bookmark",
+      "copy": "Copy selection",
+      "selectAll": "Select all",
+      "tts": "Text-to-Speech",
+      "playPause": "Play/Pause TTS",
+      "slowDown": "Slow down",
+      "speedUp": "Speed up",
+      "mute": "Mute/Unmute",
+      "flashcards": "Flashcards",
+      "showAnswer": "Show answer",
+      "rateAgain": "Rate: Again",
+      "rateHard": "Rate: Hard",
+      "rateGood": "Rate: Good",
+      "rateEasy": "Rate: Easy",
+      "undoRating": "Undo rating",
+      "general": "General",
+      "settings": "Open settings",
+      "library": "Go to library",
+      "dashboard": "Go to dashboard",
+      "help": "Show help",
+      "escape": "Close dialog/menu",
+      "customization": "Customization",
+      "customizationDesc": "Keyboard shortcuts can be customized in Settings > Keyboard Shortcuts. You can also disable shortcuts if they conflict with your browser or operating system."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Find answers to common questions about Read Master.",
+      "searchPlaceholder": "Search questions...",
+      "allCategories": "All",
+      "noResults": "No questions match your search. Try different keywords or browse all categories.",
+      "stillNeedHelp": "Still need help?",
+      "contactDesc": "Can't find what you're looking for? Our support team is here to help.",
+      "category": {
+        "general": "General",
+        "reading": "Reading",
+        "ai": "AI Features",
+        "flashcards": "Flashcards",
+        "billing": "Billing",
+        "technical": "Technical"
+      },
+      "q1": "What is Read Master?",
+      "a1": "Read Master is an AI-powered reading comprehension platform that helps you read more effectively. It provides pre-reading guides, contextual explanations, assessments, and spaced repetition flashcards to improve your retention and understanding.",
+      "q2": "Is Read Master free to use?",
+      "a2": "Read Master offers a free tier with basic features. Premium features like unlimited AI interactions, advanced analytics, and priority support require a Pro or Scholar subscription.",
+      "q3": "What devices can I use Read Master on?",
+      "a3": "Read Master works on any modern web browser, and we also have native apps for Windows, macOS, Linux, iOS, and Android. Your reading progress syncs across all devices.",
+      "q4": "What file formats are supported?",
+      "a4": "Read Master supports EPUB, PDF, and DOC/DOCX files. EPUB provides the best reading experience with flowing text that adapts to your screen size.",
+      "q5": "Can I read offline?",
+      "a5": "Yes! You can download books for offline reading. Your progress will sync when you're back online. Note that AI features require an internet connection.",
+      "q6": "How do annotations work?",
+      "a6": "Select any text to highlight it or add a note. You can choose different highlight colors and organize notes by tag. All annotations sync across your devices and can be exported.",
+      "q7": "How does the AI comprehension feature work?",
+      "a7": "Our AI analyzes your books to provide pre-reading guides with key concepts, explain difficult passages when you ask, generate comprehension questions, and create flashcards from important content.",
+      "q8": "Can I disable AI features?",
+      "a8": "Yes, you can disable AI features globally in Settings, or for individual books. Some users prefer to read without AI assistance, and we respect that choice.",
+      "q9": "What is spaced repetition?",
+      "a9": "Spaced repetition is a learning technique that shows you flashcards at optimal intervals to maximize retention. Cards you know well appear less often, while challenging cards appear more frequently.",
+      "q10": "How are flashcards generated?",
+      "a10": "Read Master can automatically generate flashcards from your highlights, annotations, and book content. You can also create cards manually. The AI identifies key concepts, vocabulary, and comprehension questions.",
+      "q11": "How do I cancel my subscription?",
+      "a11": "You can cancel your subscription at any time from Settings > Subscription. Your access continues until the end of your billing period, and you can resubscribe anytime.",
+      "q12": "What payment methods are accepted?",
+      "a12": "We accept all major credit cards and PayPal. Payments are processed securely through Stripe. We also support regional payment methods in many countries.",
+      "q13": "My book isn't displaying correctly. What should I do?",
+      "a13": "Try these steps: 1) Refresh the page, 2) Clear your browser cache, 3) Try a different browser, 4) Re-upload the book. If issues persist, contact support with the book details.",
+      "q14": "Is my reading data private?",
+      "a14": "Yes, your reading data is private by default. You control what to share publicly. We never sell your data, and you can export or delete all your data at any time."
+    },
+    "gettingStarted": {
+      "title": "Getting Started",
+      "description": "Learn how to set up your account and start improving your reading comprehension.",
+      "welcome": "Welcome to Read Master!",
+      "welcomeDesc": "Follow these steps to get the most out of your reading experience.",
+      "quickStart": "Quick Start Guide",
+      "step1": {
+        "label": "Create Your Account",
+        "description": "Sign up for a free account to start your reading journey.",
+        "detail1": "Choose your preferred sign-up method (email, Google, or Apple)",
+        "detail2": "Set up your reading profile with language preferences",
+        "detail3": "Customize your reading goals and daily targets"
+      },
+      "step2": {
+        "label": "Import Your First Book",
+        "description": "Add books to your personal library from various sources.",
+        "detail1": "Upload EPUB, PDF, or DOC files from your device",
+        "detail2": "Drag and drop files directly into the library",
+        "detail3": "Books are automatically processed and indexed for search"
+      },
+      "step3": {
+        "label": "Start Reading",
+        "description": "Open a book and explore the reading interface.",
+        "detail1": "Use the table of contents to navigate chapters",
+        "detail2": "Highlight text and add notes as you read",
+        "detail3": "Try AI features like 'Explain This' for difficult passages"
+      },
+      "step4": {
+        "label": "Customize Your Experience",
+        "description": "Adjust settings to match your reading preferences.",
+        "detail1": "Choose your preferred theme (light, dark, sepia)",
+        "detail2": "Adjust font size and line spacing for comfort",
+        "detail3": "Enable text-to-speech for audio reading"
+      },
+      "formats": {
+        "title": "Supported File Formats",
+        "epub": "Best experience with flowing text that adapts to your screen. Supports highlights, notes, and bookmarks.",
+        "pdf": "Fixed layout documents with zoom controls. Perfect for textbooks and academic papers.",
+        "doc": "Microsoft Word documents. Converted for optimal reading experience."
+      },
+      "nextSteps": "Next Steps",
+      "learnShortcuts": "Learn Shortcuts",
+      "readFaq": "Read FAQ",
+      "troubleshoot": "Troubleshooting",
+      "goToLibrary": "Go to Library"
+    },
+    "troubleshooting": {
+      "title": "Troubleshooting",
+      "description": "Find solutions to common issues and get your reading experience back on track.",
+      "quickTip": "Quick Tip:",
+      "quickTipDesc": "Most issues can be resolved by refreshing the page, clearing your browser cache, or checking your internet connection.",
+      "searchPlaceholder": "Search issues...",
+      "allCategories": "All Issues",
+      "noResults": "No issues match your search. Try different keywords or contact support.",
+      "stepsToResolve": "Steps to Resolve:",
+      "stillStuck": "Still having issues?",
+      "contactDesc": "If you couldn't find a solution, our support team is ready to help. Please include details about the issue and any error messages you see.",
+      "category": {
+        "reading": "Reading",
+        "sync": "Sync & Offline",
+        "ai": "AI Features",
+        "account": "Account",
+        "performance": "Performance"
+      },
+      "items": {
+        "bookNotLoading": {
+          "title": "Book not loading or showing blank page",
+          "description": "The book content doesn't appear or shows a white screen.",
+          "step1": "Refresh the page and wait for the book to load",
+          "step2": "Clear your browser cache and cookies",
+          "step3": "Try a different browser (Chrome, Firefox, Safari)",
+          "step4": "Re-upload the book if the issue persists"
+        },
+        "displayIssues": {
+          "title": "Text or images displaying incorrectly",
+          "description": "Text is garbled, images are missing, or formatting looks wrong.",
+          "step1": "Check if the original file is corrupted by opening in another reader",
+          "step2": "Try converting the file to a different format",
+          "step3": "Contact support with the file details if the issue persists"
+        },
+        "annotationsNotSaving": {
+          "title": "Annotations not saving",
+          "description": "Highlights, notes, or bookmarks disappear after closing the book.",
+          "step1": "Check your internet connection - annotations sync to the cloud",
+          "step2": "Wait a few seconds after making annotations before closing",
+          "step3": "Try logging out and back in to force a sync"
+        },
+        "syncNotWorking": {
+          "title": "Progress not syncing across devices",
+          "description": "Reading progress or annotations don't appear on other devices.",
+          "step1": "Ensure you're logged into the same account on all devices",
+          "step2": "Check your internet connection on both devices",
+          "step3": "Force a sync by pulling down on the library page"
+        },
+        "offlineIssues": {
+          "title": "Offline reading not working",
+          "description": "Books aren't available when you're offline.",
+          "step1": "Download books for offline use before going offline",
+          "step2": "Check that your browser allows storage for Read Master",
+          "step3": "Clear old offline data if storage is full"
+        },
+        "aiNotResponding": {
+          "title": "AI features not responding",
+          "description": "AI explanations, summaries, or chat aren't working.",
+          "step1": "Check your internet connection - AI requires online access",
+          "step2": "Verify AI is enabled in Settings > AI",
+          "step3": "Check if you've reached your daily AI usage limit"
+        },
+        "flashcardsNotGenerating": {
+          "title": "Flashcards not generating",
+          "description": "Auto-generated flashcards aren't appearing.",
+          "step1": "Ensure you have highlights or annotations to generate cards from",
+          "step2": "Check that flashcard generation is enabled in Settings",
+          "step3": "Wait a few moments - generation can take time for long texts"
+        },
+        "loginIssues": {
+          "title": "Can't log in to my account",
+          "description": "Login fails or you're stuck on the login screen.",
+          "step1": "Check that you're using the correct email/password",
+          "step2": "Try the 'Forgot Password' option to reset",
+          "step3": "Clear cookies and try logging in again"
+        },
+        "subscriptionIssues": {
+          "title": "Subscription features not working",
+          "description": "Pro features aren't available even though you've subscribed.",
+          "step1": "Log out and log back in to refresh your subscription status",
+          "step2": "Check Settings > Subscription to verify your plan",
+          "step3": "Contact support with your payment confirmation"
+        },
+        "slowPerformance": {
+          "title": "App running slowly",
+          "description": "Pages take a long time to load or the app feels sluggish.",
+          "step1": "Close other browser tabs to free up memory",
+          "step2": "Clear your browser cache",
+          "step3": "Disable browser extensions that might interfere",
+          "step4": "Try using a different browser"
+        },
+        "highMemoryUsage": {
+          "title": "High memory usage",
+          "description": "Your browser or device is running out of memory.",
+          "step1": "Close books you're not actively reading",
+          "step2": "Reduce the number of offline books stored",
+          "step3": "Restart your browser periodically during long sessions"
+        }
+      }
+    },
+    "glossary": {
+      "title": "Glossary",
+      "description": "Learn the terminology used throughout Read Master.",
+      "tip": "Use the search box to quickly find specific terms or filter by category.",
+      "searchPlaceholder": "Search terms...",
+      "allTerms": "All Terms",
+      "showing": "Showing {{count}} terms",
+      "noResults": "No terms match your search. Try different keywords.",
+      "category": {
+        "general": "General",
+        "reading": "Reading",
+        "ai": "AI Features",
+        "flashcards": "Flashcards",
+        "social": "Social"
+      },
+      "terms": {
+        "library": "Library",
+        "book": "Book",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "collection": "Collection",
+        "shelf": "Shelf",
+        "annotation": "Annotation",
+        "highlight": "Highlight",
+        "bookmark": "Bookmark",
+        "note": "Note",
+        "tts": "Text-to-Speech (TTS)",
+        "readingProgress": "Reading Progress",
+        "wpm": "Words Per Minute (WPM)",
+        "aiAssistant": "AI Assistant",
+        "preReadingGuide": "Pre-Reading Guide",
+        "assessment": "Assessment",
+        "comprehension": "Comprehension",
+        "explainThis": "Explain This",
+        "flashcard": "Flashcard",
+        "srs": "Spaced Repetition System (SRS)",
+        "interval": "Interval",
+        "dueDate": "Due Date",
+        "ease": "Ease Factor",
+        "retention": "Retention",
+        "readingGroup": "Reading Group",
+        "challenge": "Challenge",
+        "achievement": "Achievement",
+        "streak": "Streak",
+        "leaderboard": "Leaderboard"
+      },
+      "definitions": {
+        "library": "Your personal collection of all imported books. Access it from the sidebar to browse, search, and organize your reading material.",
+        "book": "A document you've imported into Read Master. Can be an EPUB, PDF, or DOC file.",
+        "epub": "Electronic Publication format. A popular e-book format with reflowable text that adapts to different screen sizes.",
+        "pdf": "Portable Document Format. A fixed-layout format that preserves exact formatting, common for academic papers and textbooks.",
+        "collection": "A custom grouping of books you create. Use collections to organize books by topic, project, or any criteria you choose.",
+        "shelf": "A visual organization system for your books. Similar to a physical bookshelf, but digital.",
+        "annotation": "Any mark you make in a book - highlights, notes, or bookmarks. Annotations are saved and synced across devices.",
+        "highlight": "Selected text marked with a color. Use highlights to mark important passages for later review.",
+        "bookmark": "A saved position in a book. Use bookmarks to quickly return to specific pages or sections.",
+        "note": "Written comments attached to highlighted text or a position in the book. Notes help you capture thoughts while reading.",
+        "tts": "A feature that reads text aloud using AI-generated voices. Great for listening to books or accessibility needs.",
+        "readingProgress": "How far you've read in a book, shown as a percentage or page count. Progress syncs across all your devices.",
+        "wpm": "A measurement of reading speed. Read Master calculates your WPM to estimate time remaining and track improvement.",
+        "aiAssistant": "The AI-powered helper that can explain passages, answer questions, and generate learning materials from your books.",
+        "preReadingGuide": "An AI-generated overview of key concepts, vocabulary, and themes before you start reading a book or chapter.",
+        "assessment": "A quiz or test generated by AI to check your understanding of what you've read. Can include multiple choice and short answer questions.",
+        "comprehension": "Your understanding of what you read. Read Master's AI features are designed to improve comprehension through active learning.",
+        "explainThis": "An AI feature that provides detailed explanations of selected text, including context, definitions, and related concepts.",
+        "flashcard": "A digital card with a question on one side and answer on the other. Used for memorization and active recall practice.",
+        "srs": "A learning technique that shows flashcards at optimal intervals to maximize long-term memory retention.",
+        "interval": "The time between flashcard reviews. Intervals increase as you demonstrate mastery of the material.",
+        "dueDate": "When a flashcard is scheduled for review. Cards become due based on your previous performance.",
+        "ease": "A multiplier that affects how quickly intervals increase. Cards you find easy get longer intervals.",
+        "retention": "The percentage of flashcards you recall correctly. SRS aims to maintain high retention with minimal reviews.",
+        "readingGroup": "A social feature where users read the same book together and discuss it. Groups can be public or private.",
+        "challenge": "A reading goal with a deadline, like 'Read 5 books this month'. Challenges motivate consistent reading habits.",
+        "achievement": "A badge earned for reaching milestones like finishing books, maintaining streaks, or completing challenges.",
+        "streak": "Consecutive days of reading. Maintaining a streak builds a daily reading habit.",
+        "leaderboard": "A ranking of users by various metrics like books read, pages per week, or streak length. Compete with friends or globally."
+      }
     }
   }
 }

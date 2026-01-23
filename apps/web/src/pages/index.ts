@@ -92,3 +92,14 @@ export {
   AccessibilityStatementPage,
   KeyboardShortcutsPage,
 } from "./accessibility";
+
+// Documentation
+export {
+  DocsLayout,
+  DocsIndexPage,
+  GettingStartedPage,
+  ShortcutsPage,
+  FAQPage,
+  TroubleshootingPage,
+  GlossaryPage,
+} from "./docs";

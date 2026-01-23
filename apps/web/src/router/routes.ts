@@ -80,6 +80,14 @@ export const ROUTES = {
   ACCESSIBILITY_STATEMENT: "/accessibility-statement",
   KEYBOARD_SHORTCUTS: "/keyboard-shortcuts",
 
+  // Documentation (public)
+  DOCS: "/docs",
+  DOCS_GETTING_STARTED: "/docs/getting-started",
+  DOCS_SHORTCUTS: "/docs/shortcuts",
+  DOCS_FAQ: "/docs/faq",
+  DOCS_TROUBLESHOOTING: "/docs/troubleshooting",
+  DOCS_GLOSSARY: "/docs/glossary",
+
   // 404
   NOT_FOUND: "*",
 } as const;
@@ -164,6 +172,12 @@ export const PUBLIC_ROUTES: readonly RoutePath[] = [
   ROUTES.CURRICULUM_BROWSE,
   ROUTES.ACCESSIBILITY_STATEMENT,
   ROUTES.KEYBOARD_SHORTCUTS,
+  ROUTES.DOCS,
+  ROUTES.DOCS_GETTING_STARTED,
+  ROUTES.DOCS_SHORTCUTS,
+  ROUTES.DOCS_FAQ,
+  ROUTES.DOCS_TROUBLESHOOTING,
+  ROUTES.DOCS_GLOSSARY,
 ] as const;
 
 /**

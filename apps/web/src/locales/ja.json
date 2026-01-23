@@ -1221,6 +1221,7 @@
     "following": "フォロー中",
     "followers": "フォロワー",
     "unfollow": "フォロー解除",
+    "anonymous": "匿名",
     "search": {
       "title": "ユーザーを検索",
       "placeholder": "ユーザー名または名前で検索...",
@@ -1941,6 +1942,23 @@
     "loadingComplete": "Content loaded",
     "error": "Error: {{message}}",
     "success": "Success: {{message}}",
+    "loadingContext": "{{context}}を読み込み中、お待ちください",
+    "formErrors": "{{count}}件の検証エラー",
+    "itemAdded": "{{item}}が追加されました",
+    "itemRemoved": "{{item}}が削除されました",
+    "itemUpdated": "{{item}}が更新されました",
+    "searchResults": "{{count}}件の結果が見つかりました",
+    "noSearchResults": "結果が見つかりませんでした",
+    "pageOf": "{{total}}ページ中{{current}}ページ",
+    "sortedBy": "{{field}}で並べ替え",
+    "filtered": "{{filter}}でフィルタリング",
+    "selectionCount": "{{count}}件選択中",
+    "expandedSection": "{{section}}セクションを展開しました",
+    "collapsedSection": "{{section}}セクションを折りたたみました",
+    "dialogOpened": "ダイアログが開きました: {{title}}",
+    "dialogClosed": "ダイアログが閉じました",
+    "menuOpened": "メニューが開きました",
+    "menuClosed": "メニューが閉じました",
     "skipToMain": "Skip to main content",
     "skipToNav": "Skip to navigation",
     "skipToSearch": "Skip to search",
@@ -2426,6 +2444,35 @@
       "error": "請求書の読み込みに失敗しました"
     }
   },
+  "recommendations": {
+    "similarReaders": "類似の読者",
+    "forYou": "あなたへのおすすめ",
+    "commonBooks": "{{count}}人の共通著者",
+    "commonGenres": "{{genres}}を楽しんでいます",
+    "viewMore": "もっと見る",
+    "loadMore": "さらに読み込む",
+    "errorLoading": "おすすめの読み込みに失敗しました",
+    "noSimilarReaders": "類似の読者を見つけるには、ライブラリにもっと本を追加してください！",
+    "noRecs": "まだおすすめがありません。読書を続けてください！",
+    "noFollowingRecs": "読書に基づいたおすすめを得るには、もっと読者をフォローしてください！",
+    "noAIRecs": "AIによるおすすめを得るには、ライブラリにもっと本を追加してください！",
+    "addToLibrary": "ライブラリに追加",
+    "alreadyAdded": "ライブラリにあります",
+    "dismiss": "非表示",
+    "readBy": "読んだ人",
+    "source": {
+      "ai": "AIのおすすめ",
+      "trending": "トレンド",
+      "following": "フォロー中から",
+      "social": "ソーシャル"
+    },
+    "tab": {
+      "all": "すべて",
+      "following": "フォロー中",
+      "trending": "トレンド",
+      "ai": "AIのおすすめ"
+    }
+  },
   "share": {
     "native": "共有...",
     "twitter": "Twitter",
@@ -2721,6 +2768,427 @@
       "cancelMessage": "キャンセルしますか？",
       "leaveTitle": "退出？",
       "leaveMessage": "退出しますか？"
+    }
+  },
+  "docs": {
+    "title": "ドキュメント",
+    "search": "ドキュメントを検索...",
+    "nav": {
+      "gettingStarted": "はじめに",
+      "overview": "概要",
+      "createAccount": "アカウント作成",
+      "importBooks": "本のインポート",
+      "readingBasics": "読書の基本",
+      "features": "機能",
+      "readingInterface": "読書インターフェース",
+      "annotations": "注釈とメモ",
+      "textToSpeech": "テキスト読み上げ",
+      "offlineReading": "オフライン読書",
+      "flashcards": "フラッシュカード",
+      "srsOverview": "間隔反復の概要",
+      "reviewingCards": "カードのレビュー",
+      "creatingCards": "カードの作成",
+      "aiFeatures": "AI機能",
+      "aiOverview": "AI概要",
+      "preReadingGuides": "読書前ガイド",
+      "aiChat": "AIチャット",
+      "assessments": "評価",
+      "social": "ソーシャル",
+      "socialOverview": "ソーシャル概要",
+      "forum": "フォーラム",
+      "readingGroups": "読書グループ",
+      "challenges": "チャレンジ",
+      "keyboardShortcuts": "キーボードショートカット",
+      "faq": "よくある質問"
+    },
+    "index": {
+      "title": "Read Masterへようこそ",
+      "description": "包括的なドキュメントで読書体験を最大限に活用する方法を学びましょう。",
+      "newUser": "Read Masterは初めてですか？",
+      "startGuide": "アカウント設定と最初の本のインポートについては、はじめにガイドをご覧ください。",
+      "gettingStarted": "はじめに",
+      "step1": {
+        "title": "アカウント作成",
+        "description": "無料で登録し、読書プロフィールを設定。"
+      },
+      "step2": {
+        "title": "本のインポート",
+        "description": "EPUB、PDF、DOCファイルをアップロード。"
+      },
+      "step3": {
+        "title": "読書開始",
+        "description": "本を開いてAI機能を探索。"
+      },
+      "exploreFeatures": "機能を探索",
+      "keyFeatures": "主な機能",
+      "feature1": {
+        "title": "AI支援の理解",
+        "description": "ガイド、説明、評価を取得。"
+      },
+      "feature2": {
+        "title": "間隔反復フラッシュカード",
+        "description": "科学的なスケジュールで自動生成されるカード。"
+      },
+      "feature3": {
+        "title": "豊富な注釈",
+        "description": "読みながらハイライトとメモを追加。"
+      },
+      "feature4": {
+        "title": "オフライン読書",
+        "description": "インターネットなしで読むために本をダウンロード。"
+      },
+      "feature5": {
+        "title": "テキスト読み上げ",
+        "description": "自然な音声で本を聴く。"
+      },
+      "feature6": {
+        "title": "ソーシャル機能",
+        "description": "読書グループやチャレンジに参加。"
+      },
+      "needHelp": "ヘルプが必要ですか？",
+      "helpDescription": "FAQを確認するか、サポートにお問い合わせください。"
+    },
+    "cards": {
+      "features": {
+        "title": "読書機能",
+        "description": "読書インターフェースと注釈について学ぶ。"
+      },
+      "flashcards": {
+        "title": "フラッシュカードとSRS",
+        "description": "間隔反復をマスター。"
+      },
+      "ai": { "title": "AI機能", "description": "AI理解ツールを発見。" },
+      "social": {
+        "title": "ソーシャル機能",
+        "description": "他の読者とつながる。"
+      },
+      "shortcuts": {
+        "title": "キーボードショートカット",
+        "description": "プロのようにナビゲート。"
+      },
+      "faq": {
+        "title": "よくある質問",
+        "description": "一般的な質問への回答を見つける。"
+      }
+    },
+    "shortcuts": {
+      "title": "キーボードショートカット",
+      "description": "Read Masterをナビゲートするためのキーボードショートカットをマスターしましょう。",
+      "macTip": "Macをお使いです。CtrlではなくCommandキー(⌘)を使用してください。",
+      "windowsTip": "Windows/Linuxをお使いです。Ctrlを使用してください。",
+      "quickRef": "クイックリファレンス",
+      "quickRefDesc": "いつでも?を押してショートカットヘルプを表示。",
+      "shortcut": "ショートカット",
+      "action": "アクション",
+      "navigation": "ナビゲーション",
+      "nextPage": "次のページ",
+      "prevPage": "前のページ",
+      "goToStart": "最初に移動",
+      "goToEnd": "最後に移動",
+      "goToPage": "ページに移動",
+      "search": "本内を検索",
+      "reading": "読書",
+      "fullscreen": "フルスクリーン",
+      "zoomIn": "拡大",
+      "zoomOut": "縮小",
+      "resetZoom": "ズームをリセット",
+      "toggleTheme": "テーマを切り替え",
+      "toggleSidebar": "サイドバーを切り替え",
+      "annotations": "注釈",
+      "highlight": "選択テキストをハイライト",
+      "addNote": "メモを追加",
+      "addBookmark": "ブックマークを追加",
+      "copy": "コピー",
+      "selectAll": "すべて選択",
+      "tts": "テキスト読み上げ",
+      "playPause": "再生/一時停止",
+      "slowDown": "遅く",
+      "speedUp": "速く",
+      "mute": "ミュート",
+      "flashcards": "フラッシュカード",
+      "showAnswer": "答えを表示",
+      "rateAgain": "評価: もう一度",
+      "rateHard": "評価: 難しい",
+      "rateGood": "評価: 良い",
+      "rateEasy": "評価: 簡単",
+      "undoRating": "評価を取り消し",
+      "general": "一般",
+      "settings": "設定を開く",
+      "library": "ライブラリに移動",
+      "dashboard": "ダッシュボードに移動",
+      "help": "ヘルプを表示",
+      "escape": "閉じる",
+      "customization": "カスタマイズ",
+      "customizationDesc": "キーボードショートカットは設定でカスタマイズできます。"
+    },
+    "faq": {
+      "title": "よくある質問",
+      "description": "一般的な質問への回答を見つけましょう。",
+      "searchPlaceholder": "検索...",
+      "allCategories": "すべて",
+      "noResults": "一致する結果がありません。",
+      "stillNeedHelp": "まだヘルプが必要ですか？",
+      "contactDesc": "サポートチームにお問い合わせください。",
+      "category": {
+        "general": "一般",
+        "reading": "読書",
+        "ai": "AI",
+        "flashcards": "フラッシュカード",
+        "billing": "請求",
+        "technical": "技術"
+      },
+      "q1": "Read Masterとは何ですか？",
+      "a1": "Read MasterはAIを使用して読解力を向上させるプラットフォームです。",
+      "q2": "Read Masterは無料ですか？",
+      "a2": "Read Masterには基本機能付きの無料プランがあります。",
+      "q3": "どのデバイスがサポートされていますか？",
+      "a3": "ブラウザ、Windows、macOS、Linux、iOS、Androidアプリで動作します。",
+      "q4": "どのファイル形式がサポートされていますか？",
+      "a4": "EPUB、PDF、DOC/DOCXをサポートしています。",
+      "q5": "オフラインで読めますか？",
+      "a5": "はい、インターネットなしで読むために本をダウンロードできます。",
+      "q6": "注釈はどのように機能しますか？",
+      "a6": "テキストを選択してハイライトまたはメモを追加します。",
+      "q7": "AI理解はどのように機能しますか？",
+      "a7": "AIが本を分析してガイドと説明を提供します。",
+      "q8": "AI機能を無効にできますか？",
+      "a8": "はい、設定から無効にできます。",
+      "q9": "間隔反復とは何ですか？",
+      "a9": "最適な間隔でカードを表示する学習テクニックです。",
+      "q10": "カードはどのように作成されますか？",
+      "a10": "自動または手動で作成できます。",
+      "q11": "サブスクリプションをキャンセルするには？",
+      "a11": "設定 > サブスクリプションから行えます。",
+      "q12": "どの支払い方法が使えますか？",
+      "a12": "主要なクレジットカードとPayPalを受け付けています。",
+      "q13": "本が正しく表示されません。どうすればいいですか？",
+      "a13": "ページを更新するかキャッシュをクリアしてみてください。",
+      "q14": "読書データはプライベートですか？",
+      "a14": "はい、デフォルトでデータはプライベートです。"
+    },
+    "gettingStarted": {
+      "title": "はじめに",
+      "description": "アカウントの設定方法と読解力向上の始め方を学びましょう。",
+      "welcome": "Read Masterへようこそ！",
+      "welcomeDesc": "これらのステップに従って、読書体験を最大限に活用しましょう。",
+      "quickStart": "クイックスタートガイド",
+      "step1": {
+        "label": "アカウントを作成",
+        "description": "無料でサインアップして読書の旅を始めましょう。",
+        "detail1": "お好みのサインアップ方法を選択",
+        "detail2": "言語設定でリーディングプロファイルを設定",
+        "detail3": "読書目標をカスタマイズ"
+      },
+      "step2": {
+        "label": "最初の本をインポート",
+        "description": "様々なソースから個人ライブラリに本を追加。",
+        "detail1": "デバイスからEPUB、PDF、DOCファイルをアップロード",
+        "detail2": "ライブラリに直接ドラッグ＆ドロップ",
+        "detail3": "本は自動的に処理されインデックス化"
+      },
+      "step3": {
+        "label": "読書を開始",
+        "description": "本を開いて読書インターフェースを探索。",
+        "detail1": "目次を使用してチャプター間を移動",
+        "detail2": "テキストをハイライトしてメモを追加",
+        "detail3": "難しい箇所にはAI機能を試す"
+      },
+      "step4": {
+        "label": "体験をカスタマイズ",
+        "description": "読書の好みに合わせて設定を調整。",
+        "detail1": "お好みのテーマを選択",
+        "detail2": "フォントサイズと行間を調整",
+        "detail3": "テキスト読み上げを有効化"
+      },
+      "formats": {
+        "title": "サポートされているファイル形式",
+        "epub": "画面サイズに適応するフローテキストで最高の体験。",
+        "pdf": "ズームコントロール付きの固定レイアウト文書。",
+        "doc": "Microsoft Word文書。最適な読書体験のために変換されます。"
+      },
+      "nextSteps": "次のステップ",
+      "learnShortcuts": "ショートカットを学ぶ",
+      "readFaq": "FAQを読む",
+      "troubleshoot": "トラブルシューティング",
+      "goToLibrary": "ライブラリへ"
+    },
+    "troubleshooting": {
+      "title": "トラブルシューティング",
+      "description": "一般的な問題の解決策を見つけましょう。",
+      "quickTip": "クイックヒント：",
+      "quickTipDesc": "ほとんどの問題は、ページの更新、ブラウザキャッシュのクリア、またはインターネット接続の確認で解決できます。",
+      "searchPlaceholder": "問題を検索...",
+      "allCategories": "すべての問題",
+      "noResults": "検索に一致する問題がありません。",
+      "stepsToResolve": "解決手順：",
+      "stillStuck": "まだ問題がありますか？",
+      "contactDesc": "解決策が見つからない場合は、サポートチームがお手伝いします。",
+      "category": {
+        "reading": "読書",
+        "sync": "同期とオフライン",
+        "ai": "AI機能",
+        "account": "アカウント",
+        "performance": "パフォーマンス"
+      },
+      "items": {
+        "bookNotLoading": {
+          "title": "本が読み込まれない",
+          "description": "本の内容が表示されません。",
+          "step1": "ページを更新",
+          "step2": "ブラウザキャッシュをクリア",
+          "step3": "別のブラウザを試す",
+          "step4": "本を再アップロード"
+        },
+        "displayIssues": {
+          "title": "表示の問題",
+          "description": "テキストや画像が正しく表示されない。",
+          "step1": "別のリーダーで元のファイルを確認",
+          "step2": "別の形式に変換を試す",
+          "step3": "サポートに連絡"
+        },
+        "annotationsNotSaving": {
+          "title": "注釈が保存されない",
+          "description": "ハイライトやメモが消える。",
+          "step1": "インターネット接続を確認",
+          "step2": "閉じる前に数秒待つ",
+          "step3": "ログアウトして再ログイン"
+        },
+        "syncNotWorking": {
+          "title": "デバイス間で同期しない",
+          "description": "進捗が他のデバイスに表示されない。",
+          "step1": "同じアカウントでログインしていることを確認",
+          "step2": "両方のデバイスの接続を確認",
+          "step3": "同期を強制"
+        },
+        "offlineIssues": {
+          "title": "オフライン読書が機能しない",
+          "description": "オフライン時に本が利用できない。",
+          "step1": "オフライン前に本をダウンロード",
+          "step2": "ストレージの許可を確認",
+          "step3": "古いオフラインデータをクリア"
+        },
+        "aiNotResponding": {
+          "title": "AI機能が応答しない",
+          "description": "AI機能が動作しない。",
+          "step1": "インターネット接続を確認",
+          "step2": "設定でAIが有効か確認",
+          "step3": "日次制限に達していないか確認"
+        },
+        "flashcardsNotGenerating": {
+          "title": "フラッシュカードが生成されない",
+          "description": "自動生成カードが表示されない。",
+          "step1": "ハイライトや注釈があることを確認",
+          "step2": "設定を確認",
+          "step3": "しばらく待つ"
+        },
+        "loginIssues": {
+          "title": "ログインできない",
+          "description": "ログインが失敗する。",
+          "step1": "資格情報を確認",
+          "step2": "パスワードリセットを試す",
+          "step3": "Cookieをクリア"
+        },
+        "subscriptionIssues": {
+          "title": "サブスクリプション機能が動作しない",
+          "description": "Pro機能が利用できない。",
+          "step1": "ログアウトして再ログイン",
+          "step2": "サブスクリプションを確認",
+          "step3": "サポートに連絡"
+        },
+        "slowPerformance": {
+          "title": "アプリが遅い",
+          "description": "ページの読み込みに時間がかかる。",
+          "step1": "他のタブを閉じる",
+          "step2": "キャッシュをクリア",
+          "step3": "拡張機能を無効化",
+          "step4": "別のブラウザを試す"
+        },
+        "highMemoryUsage": {
+          "title": "メモリ使用量が高い",
+          "description": "ブラウザのメモリ不足。",
+          "step1": "読んでいない本を閉じる",
+          "step2": "オフライン本を減らす",
+          "step3": "ブラウザを再起動"
+        }
+      }
+    },
+    "glossary": {
+      "title": "用語集",
+      "description": "Read Masterで使用される用語を学びましょう。",
+      "tip": "検索ボックスを使用して特定の用語をすばやく見つけましょう。",
+      "searchPlaceholder": "用語を検索...",
+      "allTerms": "すべての用語",
+      "showing": "{{count}}件の用語を表示中",
+      "noResults": "検索に一致する用語がありません。",
+      "category": {
+        "general": "一般",
+        "reading": "読書",
+        "ai": "AI機能",
+        "flashcards": "フラッシュカード",
+        "social": "ソーシャル"
+      },
+      "terms": {
+        "library": "ライブラリ",
+        "book": "本",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "collection": "コレクション",
+        "shelf": "棚",
+        "annotation": "注釈",
+        "highlight": "ハイライト",
+        "bookmark": "ブックマーク",
+        "note": "メモ",
+        "tts": "テキスト読み上げ",
+        "readingProgress": "読書進捗",
+        "wpm": "分あたりの単語数",
+        "aiAssistant": "AIアシスタント",
+        "preReadingGuide": "事前読書ガイド",
+        "assessment": "評価",
+        "comprehension": "読解力",
+        "explainThis": "これを説明",
+        "flashcard": "フラッシュカード",
+        "srs": "間隔反復システム",
+        "interval": "間隔",
+        "dueDate": "期日",
+        "ease": "難易度係数",
+        "retention": "保持率",
+        "readingGroup": "読書グループ",
+        "challenge": "チャレンジ",
+        "achievement": "実績",
+        "streak": "連続記録",
+        "leaderboard": "リーダーボード"
+      },
+      "definitions": {
+        "library": "インポートした本の個人コレクション。",
+        "book": "Read Masterにインポートしたドキュメント。",
+        "epub": "画面サイズに適応するリフローテキストを持つ電子書籍フォーマット。",
+        "pdf": "正確なフォーマットを保持する固定レイアウトフォーマット。",
+        "collection": "作成したカスタム本のグループ。",
+        "shelf": "本の視覚的な整理システム。",
+        "annotation": "ハイライト、メモ、ブックマークなど本に付けた印。",
+        "highlight": "色で印付けされた選択テキスト。",
+        "bookmark": "本の保存された位置。",
+        "note": "ハイライトされたテキストに添付された書き込みコメント。",
+        "tts": "AIの音声でテキストを読み上げる機能。",
+        "readingProgress": "本をどこまで読んだか。",
+        "wpm": "読書速度の測定値。",
+        "aiAssistant": "文章を説明し質問に答えるAIヘルパー。",
+        "preReadingGuide": "読書前にAIが生成する重要概念の概要。",
+        "assessment": "理解度を確認するAI生成のクイズ。",
+        "comprehension": "読んだ内容の理解度。",
+        "explainThis": "選択したテキストの詳細な説明を提供するAI機能。",
+        "flashcard": "片面に質問、反対面に答えがあるデジタルカード。",
+        "srs": "長期記憶を最大化する最適な間隔でカードを表示する学習技術。",
+        "interval": "フラッシュカードレビュー間の時間。",
+        "dueDate": "カードがレビュー予定の日時。",
+        "ease": "間隔の増加速度に影響する倍数。",
+        "retention": "正しく思い出せたカードの割合。",
+        "readingGroup": "ユーザーが同じ本を一緒に読むソーシャル機能。",
+        "challenge": "締め切りのある読書目標。",
+        "achievement": "マイルストーン達成で獲得するバッジ。",
+        "streak": "連続読書日数。",
+        "leaderboard": "様々な指標によるユーザーランキング。"
+      }
     }
   }
 }

@@ -1221,6 +1221,7 @@
     "following": "Siguiendo",
     "followers": "seguidores",
     "unfollow": "Dejar de seguir",
+    "anonymous": "Anónimo",
     "search": {
       "title": "Buscar Usuarios",
       "placeholder": "Buscar por nombre de usuario o nombre...",
@@ -1228,6 +1229,35 @@
       "minChars": "Ingresa al menos 2 caracteres para buscar",
       "noResults": "No se encontraron usuarios",
       "moreResults": "Mostrando {{count}} de {{total}} resultados"
+    }
+  },
+  "recommendations": {
+    "similarReaders": "Lectores Similares",
+    "forYou": "Recomendado para Ti",
+    "commonBooks": "{{count}} autores en común",
+    "commonGenres": "Disfruta {{genres}}",
+    "viewMore": "Ver Más",
+    "loadMore": "Cargar Más",
+    "errorLoading": "Error al cargar recomendaciones",
+    "noSimilarReaders": "¡Añade más libros a tu biblioteca para encontrar lectores similares!",
+    "noRecs": "Aún no tenemos recomendaciones para ti. ¡Sigue leyendo!",
+    "noFollowingRecs": "¡Sigue a más lectores para obtener recomendaciones basadas en su lectura!",
+    "noAIRecs": "¡Añade más libros a tu biblioteca para obtener recomendaciones con IA!",
+    "addToLibrary": "Añadir a Biblioteca",
+    "alreadyAdded": "En Biblioteca",
+    "dismiss": "Descartar",
+    "readBy": "Leído por",
+    "source": {
+      "ai": "Selección IA",
+      "trending": "Tendencia",
+      "following": "De Seguidos",
+      "social": "Social"
+    },
+    "tab": {
+      "all": "Todo",
+      "following": "Siguiendo",
+      "trending": "Tendencias",
+      "ai": "Selecciones IA"
     }
   },
   "groups": {
@@ -1941,6 +1971,23 @@
     "loadingComplete": "Content loaded",
     "error": "Error: {{message}}",
     "success": "Success: {{message}}",
+    "loadingContext": "Cargando {{context}}, por favor espere",
+    "formErrors": "{{count}} errores de validacion",
+    "itemAdded": "{{item}} agregado",
+    "itemRemoved": "{{item}} eliminado",
+    "itemUpdated": "{{item}} actualizado",
+    "searchResults": "{{count}} resultados encontrados",
+    "noSearchResults": "No se encontraron resultados",
+    "pageOf": "Pagina {{current}} de {{total}}",
+    "sortedBy": "Ordenado por {{field}}",
+    "filtered": "Filtrado por {{filter}}",
+    "selectionCount": "{{count}} elementos seleccionados",
+    "expandedSection": "Seccion {{section}} expandida",
+    "collapsedSection": "Seccion {{section}} contraida",
+    "dialogOpened": "Dialogo abierto: {{title}}",
+    "dialogClosed": "Dialogo cerrado",
+    "menuOpened": "Menu abierto",
+    "menuClosed": "Menu cerrado",
     "skipToMain": "Skip to main content",
     "skipToNav": "Skip to navigation",
     "skipToSearch": "Skip to search",
@@ -2721,6 +2768,430 @@
       "cancelMessage": "¿Cancelar esta sesión?",
       "leaveTitle": "¿Abandonar?",
       "leaveMessage": "Serás removido."
+    }
+  },
+  "docs": {
+    "title": "Documentación",
+    "search": "Buscar en documentación...",
+    "nav": {
+      "gettingStarted": "Primeros Pasos",
+      "overview": "Descripción General",
+      "createAccount": "Crear Cuenta",
+      "importBooks": "Importar Libros",
+      "readingBasics": "Fundamentos de Lectura",
+      "features": "Características",
+      "readingInterface": "Interfaz de Lectura",
+      "annotations": "Anotaciones y Notas",
+      "textToSpeech": "Texto a Voz",
+      "offlineReading": "Lectura Sin Conexión",
+      "flashcards": "Tarjetas",
+      "srsOverview": "Visión General SRS",
+      "reviewingCards": "Revisar Tarjetas",
+      "creatingCards": "Crear Tarjetas",
+      "aiFeatures": "Funciones de IA",
+      "aiOverview": "Visión General de IA",
+      "preReadingGuides": "Guías de Pre-lectura",
+      "aiChat": "Chat de IA",
+      "assessments": "Evaluaciones",
+      "social": "Social",
+      "socialOverview": "Visión General Social",
+      "forum": "Foro",
+      "readingGroups": "Grupos de Lectura",
+      "challenges": "Desafíos",
+      "keyboardShortcuts": "Atajos de Teclado",
+      "faq": "Preguntas Frecuentes"
+    },
+    "index": {
+      "title": "Bienvenido a Read Master",
+      "description": "Aprende a sacar el máximo provecho de tu experiencia de lectura con nuestra documentación completa.",
+      "newUser": "¿Nuevo en Read Master?",
+      "startGuide": "Consulta nuestra guía de inicio para configurar tu cuenta e importar tu primer libro.",
+      "gettingStarted": "Primeros Pasos",
+      "step1": {
+        "title": "Crear Cuenta",
+        "description": "Regístrate gratis y configura tu perfil de lectura con tus preferencias y metas."
+      },
+      "step2": {
+        "title": "Importar Libros",
+        "description": "Sube tus archivos EPUB, PDF o DOC para construir tu biblioteca personal."
+      },
+      "step3": {
+        "title": "Comenzar a Leer",
+        "description": "Abre un libro y explora las funciones de IA para mejorar tu comprensión."
+      },
+      "exploreFeatures": "Explorar Características",
+      "keyFeatures": "Características Principales",
+      "feature1": {
+        "title": "Comprensión con IA",
+        "description": "Obtén guías de pre-lectura, explicaciones contextuales y evaluaciones personalizadas."
+      },
+      "feature2": {
+        "title": "Tarjetas de Repetición Espaciada",
+        "description": "Tarjetas generadas automáticamente con programación científicamente probada."
+      },
+      "feature3": {
+        "title": "Anotaciones Enriquecidas",
+        "description": "Resalta, agrega notas y organiza tus pensamientos mientras lees."
+      },
+      "feature4": {
+        "title": "Lectura Sin Conexión",
+        "description": "Descarga libros para acceso sin conexión en cualquier dispositivo."
+      },
+      "feature5": {
+        "title": "Texto a Voz",
+        "description": "Escucha tus libros con voces naturales generadas por IA."
+      },
+      "feature6": {
+        "title": "Funciones Sociales",
+        "description": "Únete a grupos de lectura, participa en desafíos y discute libros."
+      },
+      "needHelp": "¿Necesitas Ayuda?",
+      "helpDescription": "Revisa nuestras preguntas frecuentes o contacta soporte si no encuentras lo que buscas."
+    },
+    "cards": {
+      "features": {
+        "title": "Funciones de Lectura",
+        "description": "Aprende sobre la interfaz de lectura, anotaciones y texto a voz."
+      },
+      "flashcards": {
+        "title": "Tarjetas y SRS",
+        "description": "Domina la repetición espaciada para mejorar la retención."
+      },
+      "ai": {
+        "title": "Funciones de IA",
+        "description": "Descubre herramientas de comprensión con IA."
+      },
+      "social": {
+        "title": "Funciones Sociales",
+        "description": "Conecta con otros lectores y únete a discusiones."
+      },
+      "shortcuts": {
+        "title": "Atajos de Teclado",
+        "description": "Navega como un profesional con atajos de teclado."
+      },
+      "faq": {
+        "title": "Preguntas Frecuentes",
+        "description": "Encuentra respuestas a preguntas comunes."
+      }
+    },
+    "shortcuts": {
+      "title": "Atajos de Teclado",
+      "description": "Domina los atajos de teclado para navegar Read Master como un profesional.",
+      "macTip": "Estás en Mac. Usa ⌘ (Comando) en lugar de Ctrl para la mayoría de los atajos.",
+      "windowsTip": "Estás en Windows/Linux. Usa Ctrl para atajos con modificadores.",
+      "quickRef": "Referencia Rápida",
+      "quickRefDesc": "Presiona ? en cualquier momento para mostrar la ayuda de atajos de teclado.",
+      "shortcut": "Atajo",
+      "action": "Acción",
+      "navigation": "Navegación",
+      "nextPage": "Página siguiente",
+      "prevPage": "Página anterior",
+      "goToStart": "Ir al inicio",
+      "goToEnd": "Ir al final",
+      "goToPage": "Ir a página",
+      "search": "Buscar en libro",
+      "reading": "Lectura",
+      "fullscreen": "Pantalla completa",
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar",
+      "resetZoom": "Restablecer zoom",
+      "toggleTheme": "Cambiar tema",
+      "toggleSidebar": "Mostrar/ocultar barra lateral",
+      "annotations": "Anotaciones",
+      "highlight": "Resaltar selección",
+      "addNote": "Agregar nota",
+      "addBookmark": "Agregar marcador",
+      "copy": "Copiar selección",
+      "selectAll": "Seleccionar todo",
+      "tts": "Texto a Voz",
+      "playPause": "Reproducir/Pausar",
+      "slowDown": "Más lento",
+      "speedUp": "Más rápido",
+      "mute": "Silenciar",
+      "flashcards": "Tarjetas",
+      "showAnswer": "Mostrar respuesta",
+      "rateAgain": "Calificar: Otra vez",
+      "rateHard": "Calificar: Difícil",
+      "rateGood": "Calificar: Bien",
+      "rateEasy": "Calificar: Fácil",
+      "undoRating": "Deshacer calificación",
+      "general": "General",
+      "settings": "Abrir ajustes",
+      "library": "Ir a biblioteca",
+      "dashboard": "Ir al panel",
+      "help": "Mostrar ayuda",
+      "escape": "Cerrar diálogo/menú",
+      "customization": "Personalización",
+      "customizationDesc": "Los atajos de teclado se pueden personalizar en Ajustes > Atajos de Teclado. También puedes desactivar atajos si entran en conflicto con tu navegador o sistema operativo."
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "description": "Encuentra respuestas a preguntas comunes sobre Read Master.",
+      "searchPlaceholder": "Buscar preguntas...",
+      "allCategories": "Todas",
+      "noResults": "No hay preguntas que coincidan con tu búsqueda. Prueba diferentes palabras clave o navega por todas las categorías.",
+      "stillNeedHelp": "¿Aún necesitas ayuda?",
+      "contactDesc": "¿No encuentras lo que buscas? Nuestro equipo de soporte está aquí para ayudarte.",
+      "category": {
+        "general": "General",
+        "reading": "Lectura",
+        "ai": "Funciones de IA",
+        "flashcards": "Tarjetas",
+        "billing": "Facturación",
+        "technical": "Técnico"
+      },
+      "q1": "¿Qué es Read Master?",
+      "a1": "Read Master es una plataforma de comprensión lectora con IA que te ayuda a leer de manera más efectiva. Proporciona guías de pre-lectura, explicaciones contextuales, evaluaciones y tarjetas de repetición espaciada para mejorar tu retención y comprensión.",
+      "q2": "¿Read Master es gratis?",
+      "a2": "Read Master ofrece un nivel gratuito con funciones básicas. Las funciones premium como interacciones ilimitadas con IA, análisis avanzados y soporte prioritario requieren una suscripción Pro o Scholar.",
+      "q3": "¿En qué dispositivos puedo usar Read Master?",
+      "a3": "Read Master funciona en cualquier navegador web moderno, y también tenemos aplicaciones nativas para Windows, macOS, Linux, iOS y Android. Tu progreso de lectura se sincroniza en todos los dispositivos.",
+      "q4": "¿Qué formatos de archivo son compatibles?",
+      "a4": "Read Master admite archivos EPUB, PDF y DOC/DOCX. EPUB proporciona la mejor experiencia de lectura con texto fluido que se adapta al tamaño de tu pantalla.",
+      "q5": "¿Puedo leer sin conexión?",
+      "a5": "¡Sí! Puedes descargar libros para leer sin conexión. Tu progreso se sincronizará cuando vuelvas a estar en línea. Ten en cuenta que las funciones de IA requieren conexión a internet.",
+      "q6": "¿Cómo funcionan las anotaciones?",
+      "a6": "Selecciona cualquier texto para resaltarlo o agregar una nota. Puedes elegir diferentes colores de resaltado y organizar notas por etiqueta. Todas las anotaciones se sincronizan entre tus dispositivos y se pueden exportar.",
+      "q7": "¿Cómo funciona la comprensión con IA?",
+      "a7": "Nuestra IA analiza tus libros para proporcionar guías de pre-lectura con conceptos clave, explicar pasajes difíciles cuando preguntas, generar preguntas de comprensión y crear tarjetas del contenido importante.",
+      "q8": "¿Puedo desactivar las funciones de IA?",
+      "a8": "Sí, puedes desactivar las funciones de IA globalmente en Ajustes, o para libros individuales. Algunos usuarios prefieren leer sin asistencia de IA, y respetamos esa elección.",
+      "q9": "¿Qué es la repetición espaciada?",
+      "a9": "La repetición espaciada es una técnica de aprendizaje que te muestra tarjetas en intervalos óptimos para maximizar la retención. Las tarjetas que conoces bien aparecen con menos frecuencia, mientras que las tarjetas difíciles aparecen más a menudo.",
+      "q10": "¿Cómo se generan las tarjetas?",
+      "a10": "Read Master puede generar automáticamente tarjetas de tus resaltados, anotaciones y contenido del libro. También puedes crear tarjetas manualmente. La IA identifica conceptos clave, vocabulario y preguntas de comprensión.",
+      "q11": "¿Cómo cancelo mi suscripción?",
+      "a11": "Puedes cancelar tu suscripción en cualquier momento desde Ajustes > Suscripción. Tu acceso continúa hasta el final de tu período de facturación, y puedes volver a suscribirte cuando quieras.",
+      "q12": "¿Qué métodos de pago se aceptan?",
+      "a12": "Aceptamos todas las tarjetas de crédito principales y PayPal. Los pagos se procesan de forma segura a través de Stripe. También admitimos métodos de pago regionales en muchos países.",
+      "q13": "Mi libro no se muestra correctamente. ¿Qué debo hacer?",
+      "a13": "Prueba estos pasos: 1) Actualiza la página, 2) Borra la caché del navegador, 3) Prueba un navegador diferente, 4) Vuelve a subir el libro. Si los problemas persisten, contacta soporte con los detalles del libro.",
+      "q14": "¿Mis datos de lectura son privados?",
+      "a14": "Sí, tus datos de lectura son privados por defecto. Tú controlas qué compartir públicamente. Nunca vendemos tus datos, y puedes exportar o eliminar todos tus datos en cualquier momento."
+    },
+    "gettingStarted": {
+      "title": "Primeros Pasos",
+      "description": "Aprende cómo configurar tu cuenta y mejorar tu comprensión lectora.",
+      "welcome": "¡Bienvenido a Read Master!",
+      "welcomeDesc": "Sigue estos pasos para aprovechar al máximo tu experiencia de lectura.",
+      "quickStart": "Guía de Inicio Rápido",
+      "step1": {
+        "label": "Crea Tu Cuenta",
+        "description": "Regístrate gratis para comenzar tu viaje de lectura.",
+        "detail1": "Elige tu método de registro preferido",
+        "detail2": "Configura tu perfil de lectura",
+        "detail3": "Personaliza tus objetivos de lectura"
+      },
+      "step2": {
+        "label": "Importa Tu Primer Libro",
+        "description": "Añade libros a tu biblioteca personal.",
+        "detail1": "Sube archivos EPUB, PDF o DOC",
+        "detail2": "Arrastra y suelta archivos directamente",
+        "detail3": "Los libros se procesan automáticamente"
+      },
+      "step3": {
+        "label": "Comienza a Leer",
+        "description": "Abre un libro y explora la interfaz.",
+        "detail1": "Usa la tabla de contenidos para navegar",
+        "detail2": "Resalta texto y añade notas",
+        "detail3": "Prueba las funciones de IA"
+      },
+      "step4": {
+        "label": "Personaliza Tu Experiencia",
+        "description": "Ajusta la configuración según tus preferencias.",
+        "detail1": "Elige tu tema preferido",
+        "detail2": "Ajusta el tamaño de fuente",
+        "detail3": "Activa texto a voz"
+      },
+      "formats": {
+        "title": "Formatos de Archivo Soportados",
+        "epub": "Mejor experiencia con texto fluido.",
+        "pdf": "Documentos con diseño fijo.",
+        "doc": "Documentos de Microsoft Word."
+      },
+      "nextSteps": "Próximos Pasos",
+      "learnShortcuts": "Aprende Atajos",
+      "readFaq": "Leer FAQ",
+      "troubleshoot": "Solución de Problemas",
+      "goToLibrary": "Ir a la Biblioteca"
+    },
+    "troubleshooting": {
+      "title": "Solución de Problemas",
+      "description": "Encuentra soluciones a problemas comunes.",
+      "quickTip": "Consejo Rápido:",
+      "quickTipDesc": "La mayoría de los problemas se resuelven actualizando la página o limpiando la caché.",
+      "searchPlaceholder": "Buscar problemas...",
+      "allCategories": "Todos los Problemas",
+      "noResults": "No hay problemas que coincidan con tu búsqueda.",
+      "stepsToResolve": "Pasos para Resolver:",
+      "stillStuck": "¿Aún tienes problemas?",
+      "contactDesc": "Si no encontraste una solución, nuestro equipo de soporte está listo para ayudar.",
+      "category": {
+        "reading": "Lectura",
+        "sync": "Sincronización",
+        "ai": "Funciones IA",
+        "account": "Cuenta",
+        "performance": "Rendimiento"
+      },
+      "items": {
+        "bookNotLoading": {
+          "title": "El libro no carga",
+          "description": "El contenido no aparece.",
+          "step1": "Actualiza la página",
+          "step2": "Limpia la caché",
+          "step3": "Prueba otro navegador",
+          "step4": "Vuelve a subir el libro"
+        },
+        "displayIssues": {
+          "title": "Problemas de visualización",
+          "description": "Texto o imágenes no se muestran correctamente.",
+          "step1": "Verifica el archivo original",
+          "step2": "Convierte a otro formato",
+          "step3": "Contacta soporte"
+        },
+        "annotationsNotSaving": {
+          "title": "Anotaciones no se guardan",
+          "description": "Las notas desaparecen.",
+          "step1": "Verifica tu conexión",
+          "step2": "Espera antes de cerrar",
+          "step3": "Cierra e inicia sesión"
+        },
+        "syncNotWorking": {
+          "title": "No sincroniza entre dispositivos",
+          "description": "El progreso no aparece en otros dispositivos.",
+          "step1": "Verifica la misma cuenta",
+          "step2": "Verifica la conexión",
+          "step3": "Fuerza la sincronización"
+        },
+        "offlineIssues": {
+          "title": "Lectura offline no funciona",
+          "description": "Los libros no están disponibles sin conexión.",
+          "step1": "Descarga libros antes",
+          "step2": "Verifica permisos de almacenamiento",
+          "step3": "Limpia datos antiguos"
+        },
+        "aiNotResponding": {
+          "title": "IA no responde",
+          "description": "Las funciones de IA no funcionan.",
+          "step1": "Verifica tu conexión",
+          "step2": "Verifica configuración de IA",
+          "step3": "Verifica tu límite diario"
+        },
+        "flashcardsNotGenerating": {
+          "title": "Tarjetas no se generan",
+          "description": "Las tarjetas automáticas no aparecen.",
+          "step1": "Asegúrate de tener resaltados",
+          "step2": "Verifica la configuración",
+          "step3": "Espera un momento"
+        },
+        "loginIssues": {
+          "title": "No puedo iniciar sesión",
+          "description": "El inicio de sesión falla.",
+          "step1": "Verifica credenciales",
+          "step2": "Usa 'Olvidé contraseña'",
+          "step3": "Limpia cookies"
+        },
+        "subscriptionIssues": {
+          "title": "Funciones Pro no funcionan",
+          "description": "Las funciones premium no están disponibles.",
+          "step1": "Cierra e inicia sesión",
+          "step2": "Verifica tu suscripción",
+          "step3": "Contacta soporte"
+        },
+        "slowPerformance": {
+          "title": "La app va lenta",
+          "description": "Las páginas tardan en cargar.",
+          "step1": "Cierra otras pestañas",
+          "step2": "Limpia la caché",
+          "step3": "Desactiva extensiones",
+          "step4": "Prueba otro navegador"
+        },
+        "highMemoryUsage": {
+          "title": "Alto uso de memoria",
+          "description": "El navegador se queda sin memoria.",
+          "step1": "Cierra libros no activos",
+          "step2": "Reduce libros offline",
+          "step3": "Reinicia el navegador"
+        }
+      }
+    },
+    "glossary": {
+      "title": "Glosario",
+      "description": "Aprende la terminología usada en Read Master.",
+      "tip": "Usa la búsqueda para encontrar términos específicos.",
+      "searchPlaceholder": "Buscar términos...",
+      "allTerms": "Todos los Términos",
+      "showing": "Mostrando {{count}} términos",
+      "noResults": "No hay términos que coincidan.",
+      "category": {
+        "general": "General",
+        "reading": "Lectura",
+        "ai": "Funciones IA",
+        "flashcards": "Tarjetas",
+        "social": "Social"
+      },
+      "terms": {
+        "library": "Biblioteca",
+        "book": "Libro",
+        "epub": "EPUB",
+        "pdf": "PDF",
+        "collection": "Colección",
+        "shelf": "Estante",
+        "annotation": "Anotación",
+        "highlight": "Resaltado",
+        "bookmark": "Marcador",
+        "note": "Nota",
+        "tts": "Texto a Voz",
+        "readingProgress": "Progreso de Lectura",
+        "wpm": "Palabras Por Minuto",
+        "aiAssistant": "Asistente IA",
+        "preReadingGuide": "Guía Pre-Lectura",
+        "assessment": "Evaluación",
+        "comprehension": "Comprensión",
+        "explainThis": "Explicar Esto",
+        "flashcard": "Tarjeta",
+        "srs": "Sistema de Repetición Espaciada",
+        "interval": "Intervalo",
+        "dueDate": "Fecha de Vencimiento",
+        "ease": "Factor de Facilidad",
+        "retention": "Retención",
+        "readingGroup": "Grupo de Lectura",
+        "challenge": "Desafío",
+        "achievement": "Logro",
+        "streak": "Racha",
+        "leaderboard": "Tabla de Líderes"
+      },
+      "definitions": {
+        "library": "Tu colección personal de libros importados.",
+        "book": "Un documento que importaste a Read Master.",
+        "epub": "Formato de Publicación Electrónica con texto adaptable.",
+        "pdf": "Formato de Documento Portátil con diseño fijo.",
+        "collection": "Un grupo personalizado de libros.",
+        "shelf": "Sistema de organización visual para tus libros.",
+        "annotation": "Cualquier marca en un libro: resaltados, notas o marcadores.",
+        "highlight": "Texto seleccionado marcado con un color.",
+        "bookmark": "Una posición guardada en un libro.",
+        "note": "Comentarios escritos adjuntos al texto.",
+        "tts": "Función que lee el texto en voz alta.",
+        "readingProgress": "Cuánto has leído de un libro.",
+        "wpm": "Medición de velocidad de lectura.",
+        "aiAssistant": "El asistente de IA que puede explicar pasajes y responder preguntas.",
+        "preReadingGuide": "Resumen generado por IA de conceptos clave.",
+        "assessment": "Prueba generada por IA para verificar comprensión.",
+        "comprehension": "Tu entendimiento de lo que lees.",
+        "explainThis": "Función de IA que proporciona explicaciones detalladas.",
+        "flashcard": "Una tarjeta digital con pregunta y respuesta.",
+        "srs": "Técnica de aprendizaje que muestra tarjetas en intervalos óptimos.",
+        "interval": "Tiempo entre revisiones de tarjetas.",
+        "dueDate": "Cuándo una tarjeta está programada para revisión.",
+        "ease": "Multiplicador que afecta los intervalos.",
+        "retention": "Porcentaje de tarjetas recordadas correctamente.",
+        "readingGroup": "Función social para leer juntos.",
+        "challenge": "Un objetivo de lectura con fecha límite.",
+        "achievement": "Insignia ganada por alcanzar hitos.",
+        "streak": "Días consecutivos de lectura.",
+        "leaderboard": "Ranking de usuarios por métricas."
+      }
     }
   }
 }

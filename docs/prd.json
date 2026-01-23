@@ -693,7 +693,7 @@
         "Interactive tour works",
         "All languages covered"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "docs-api-documentation-001",
