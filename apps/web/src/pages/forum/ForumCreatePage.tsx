@@ -347,8 +347,8 @@ export function ForumCreatePage(): React.ReactElement {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Navigate to the new/updated post
-      const newPostId = isEditMode ? postId : "new-post-id";
-      navigate(routeHelpers.forumPost(newPostId!), { replace: true });
+      const newPostId = isEditMode ? (postId ?? "new-post-id") : "new-post-id";
+      navigate(routeHelpers.forumPost(newPostId), { replace: true });
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : t("forum.form.errors.general")

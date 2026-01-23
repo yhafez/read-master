@@ -367,11 +367,12 @@ describe("Editable Flashcard Functions", () => {
     it("should convert to editable format", () => {
       const editable = toEditableFlashcards(mockFlashcards);
       expect(editable).toHaveLength(2);
-      const first = editable[0]!;
-      expect(first.isEditing).toBe(false);
-      expect(first.isSelected).toBe(true);
-      expect(first.editedFront).toBe("Front 1");
-      expect(first.editedBack).toBe("Back 1");
+      const first = editable[0];
+      expect(first).toBeDefined();
+      expect(first?.isEditing).toBe(false);
+      expect(first?.isSelected).toBe(true);
+      expect(first?.editedFront).toBe("Front 1");
+      expect(first?.editedBack).toBe("Back 1");
     });
   });
 
@@ -379,16 +380,16 @@ describe("Editable Flashcard Functions", () => {
     it("should start editing a card", () => {
       const editable = toEditableFlashcards(mockFlashcards);
       const result = startEditingCard(editable, "1");
-      expect(result[0]!.isEditing).toBe(true);
-      expect(result[1]!.isEditing).toBe(false);
+      expect(result[0]?.isEditing).toBe(true);
+      expect(result[1]?.isEditing).toBe(false);
     });
 
     it("should stop editing other cards", () => {
       let editable = toEditableFlashcards(mockFlashcards);
       editable = startEditingCard(editable, "1");
       editable = startEditingCard(editable, "2");
-      expect(editable[0]!.isEditing).toBe(false);
-      expect(editable[1]!.isEditing).toBe(true);
+      expect(editable[0]?.isEditing).toBe(false);
+      expect(editable[1]?.isEditing).toBe(true);
     });
   });
 
@@ -398,8 +399,8 @@ describe("Editable Flashcard Functions", () => {
       editable = startEditingCard(editable, "1");
       editable = updateEditedFront(editable, "1", "Changed");
       editable = cancelEditingCard(editable, "1");
-      expect(editable[0]!.isEditing).toBe(false);
-      expect(editable[0]!.editedFront).toBe("Front 1");
+      expect(editable[0]?.isEditing).toBe(false);
+      expect(editable[0]?.editedFront).toBe("Front 1");
     });
   });
 
@@ -410,9 +411,9 @@ describe("Editable Flashcard Functions", () => {
       editable = updateEditedFront(editable, "1", "New Front");
       editable = updateEditedBack(editable, "1", "New Back");
       editable = saveEditedCard(editable, "1");
-      expect(editable[0]!.isEditing).toBe(false);
-      expect(editable[0]!.front).toBe("New Front");
-      expect(editable[0]!.back).toBe("New Back");
+      expect(editable[0]?.isEditing).toBe(false);
+      expect(editable[0]?.front).toBe("New Front");
+      expect(editable[0]?.back).toBe("New Back");
     });
   });
 
@@ -420,13 +421,13 @@ describe("Editable Flashcard Functions", () => {
     it("should update edited front text", () => {
       const editable = toEditableFlashcards(mockFlashcards);
       const result = updateEditedFront(editable, "1", "Changed");
-      expect(result[0]!.editedFront).toBe("Changed");
+      expect(result[0]?.editedFront).toBe("Changed");
     });
 
     it("should update edited back text", () => {
       const editable = toEditableFlashcards(mockFlashcards);
       const result = updateEditedBack(editable, "1", "Changed");
-      expect(result[0]!.editedBack).toBe("Changed");
+      expect(result[0]?.editedBack).toBe("Changed");
     });
   });
 
@@ -434,9 +435,9 @@ describe("Editable Flashcard Functions", () => {
     it("should toggle card selection", () => {
       const editable = toEditableFlashcards(mockFlashcards);
       const result = toggleCardSelection(editable, "1");
-      expect(result[0]!.isSelected).toBe(false);
+      expect(result[0]?.isSelected).toBe(false);
       const result2 = toggleCardSelection(result, "1");
-      expect(result2[0]!.isSelected).toBe(true);
+      expect(result2[0]?.isSelected).toBe(true);
     });
   });
 
@@ -445,15 +446,15 @@ describe("Editable Flashcard Functions", () => {
       let editable = toEditableFlashcards(mockFlashcards);
       editable = deselectAllCards(editable);
       editable = selectAllCards(editable);
-      expect(editable[0]!.isSelected).toBe(true);
-      expect(editable[1]!.isSelected).toBe(true);
+      expect(editable[0]?.isSelected).toBe(true);
+      expect(editable[1]?.isSelected).toBe(true);
     });
 
     it("should deselect all cards", () => {
       const editable = toEditableFlashcards(mockFlashcards);
       const result = deselectAllCards(editable);
-      expect(result[0]!.isSelected).toBe(false);
-      expect(result[1]!.isSelected).toBe(false);
+      expect(result[0]?.isSelected).toBe(false);
+      expect(result[1]?.isSelected).toBe(false);
     });
   });
 
@@ -463,7 +464,7 @@ describe("Editable Flashcard Functions", () => {
       editable = toggleCardSelection(editable, "2");
       const selected = getSelectedCards(editable);
       expect(selected).toHaveLength(1);
-      expect(selected[0]!.id).toBe("1");
+      expect(selected[0]?.id).toBe("1");
     });
 
     it("should get selected count", () => {
@@ -489,7 +490,7 @@ describe("Editable Flashcard Functions", () => {
       editable = toggleCardSelection(editable, "2");
       const generated = toGeneratedFlashcards(editable);
       expect(generated).toHaveLength(1);
-      expect(generated[0]!.id).toBe("1");
+      expect(generated[0]?.id).toBe("1");
     });
   });
 });
@@ -571,7 +572,7 @@ describe("Storage Functions", () => {
       });
       const stored = localStorage.getItem(GENERATION_PREFS_STORAGE_KEY);
       expect(stored).toBeTruthy();
-      const parsed = JSON.parse(stored!);
+      const parsed = JSON.parse(stored ?? "{}");
       expect(parsed.cardTypes).toEqual(["vocabulary", "concept"]);
       expect(parsed.cardCount).toBe(20);
       expect(parsed.autoSave).toBe(true);
@@ -688,17 +689,17 @@ describe("getTypeBreakdown", () => {
     const byType = { vocabulary: 3, concept: 7, comprehension: 2 };
     const breakdown = getTypeBreakdown(byType);
     expect(breakdown).toHaveLength(3);
-    expect(breakdown[0]!.type).toBe("concept");
-    expect(breakdown[0]!.count).toBe(7);
-    expect(breakdown[1]!.type).toBe("vocabulary");
-    expect(breakdown[1]!.count).toBe(3);
+    expect(breakdown[0]?.type).toBe("concept");
+    expect(breakdown[0]?.count).toBe(7);
+    expect(breakdown[1]?.type).toBe("vocabulary");
+    expect(breakdown[1]?.count).toBe(3);
   });
 
   it("should filter out zero counts", () => {
     const byType = { vocabulary: 5, concept: 0 };
     const breakdown = getTypeBreakdown(byType);
     expect(breakdown).toHaveLength(1);
-    expect(breakdown[0]!.type).toBe("vocabulary");
+    expect(breakdown[0]?.type).toBe("vocabulary");
   });
 });
 

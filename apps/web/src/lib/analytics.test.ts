@@ -21,13 +21,18 @@ import {
 // Mock posthog-js
 vi.mock("posthog-js", () => {
   const mockPostHog = {
-    init: vi.fn((_key: string, options?: any) => {
-      // Immediately call the loaded callback to simulate successful initialization
-      if (options?.loaded) {
-        options.loaded(mockPostHog);
+    init: vi.fn(
+      (
+        _key: string,
+        options?: { loaded?: (instance: typeof mockPostHog) => void }
+      ) => {
+        // Immediately call the loaded callback to simulate successful initialization
+        if (options?.loaded) {
+          options.loaded(mockPostHog);
+        }
+        return mockPostHog;
       }
-      return mockPostHog;
-    }),
+    ),
     identify: vi.fn(),
     setPersonProperties: vi.fn(),
     reset: vi.fn(),

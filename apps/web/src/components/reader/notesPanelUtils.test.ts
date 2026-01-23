@@ -264,7 +264,7 @@ describe("notesPanelUtils", () => {
         "First"
       );
       expect(result).toHaveLength(1);
-      expect(result[0]!.id).toBe("n1");
+      expect(result[0]?.id).toBe("n1");
     });
 
     it("sorts by createdAt descending", () => {
@@ -274,8 +274,8 @@ describe("notesPanelUtils", () => {
         sortDirection: "desc" as const,
       };
       const result = getFilteredAnnotations(mockAnnotations, settings);
-      expect(result[0]!.id).toBe("b1"); // 2024-01-05
-      expect(result[1]!.id).toBe("n2"); // 2024-01-04
+      expect(result[0]?.id).toBe("b1"); // 2024-01-05
+      expect(result[1]?.id).toBe("n2"); // 2024-01-04
     });
 
     it("sorts by createdAt ascending", () => {
@@ -285,8 +285,8 @@ describe("notesPanelUtils", () => {
         sortDirection: "asc" as const,
       };
       const result = getFilteredAnnotations(mockAnnotations, settings);
-      expect(result[0]!.id).toBe("h2"); // 2024-01-01
-      expect(result[1]!.id).toBe("n1"); // 2024-01-02
+      expect(result[0]?.id).toBe("h2"); // 2024-01-01
+      expect(result[1]?.id).toBe("n1"); // 2024-01-02
     });
   });
 

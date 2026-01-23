@@ -57,7 +57,10 @@ function formatRelativeTime(date: Date): string {
 // Types
 // ============================================================================
 
-type ActivityType = "book_completed" | "achievement_earned" | "highlight_shared";
+type ActivityType =
+  | "book_completed"
+  | "achievement_earned"
+  | "highlight_shared";
 
 type FeedUserInfo = {
   id: string;
@@ -124,7 +127,7 @@ function getActivityIcon(type: ActivityType): React.ReactElement {
   }
 }
 
-function getActivityColor(type: ActivityType): string {
+function getActivityColor(type: ActivityType): "success" | "warning" | "info" {
   switch (type) {
     case "book_completed":
       return "success";
@@ -167,13 +170,10 @@ export function FeedPage(): React.ReactElement {
   const limit = 20;
 
   // Fetch feed data
-  const {
-    data,
-    isLoading,
-    error,
-    refetch,
-    isFetching,
-  } = useQuery<FeedResponse, Error>({
+  const { data, isLoading, error, refetch, isFetching } = useQuery<
+    FeedResponse,
+    Error
+  >({
     queryKey: ["activityFeed", page, limit],
     queryFn: async () => {
       const params = new URLSearchParams({
@@ -205,7 +205,10 @@ export function FeedPage(): React.ReactElement {
   }, [data?.activities, filterType]);
 
   // Handlers
-  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -269,7 +272,12 @@ export function FeedPage(): React.ReactElement {
   if (!data || filteredActivities.length === 0) {
     return (
       <Box>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
+        >
           <Typography variant="h4" component="h1">
             {t("social.activityFeed")}
           </Typography>
@@ -306,7 +314,12 @@ export function FeedPage(): React.ReactElement {
   return (
     <Box>
       {/* Header */}
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
         <Typography variant="h4" component="h1">
           {t("social.activityFeed")}
         </Typography>
@@ -338,7 +351,9 @@ export function FeedPage(): React.ReactElement {
           {isMobile ? "" : t("social.books")}
         </Button>
         <Button
-          variant={filterType === "achievement_earned" ? "contained" : "outlined"}
+          variant={
+            filterType === "achievement_earned" ? "contained" : "outlined"
+          }
           onClick={() => setFilterType("achievement_earned")}
           startIcon={<EmojiEventsOutlined />}
         >
@@ -376,7 +391,11 @@ export function FeedPage(): React.ReactElement {
                 onClick={() => handleUserClick(activity.user.username)}
                 sx={{ cursor: "pointer" }}
               >
-                <Avatar {...(activity.user.avatarUrl ? { src: activity.user.avatarUrl } : {})}>
+                <Avatar
+                  {...(activity.user.avatarUrl
+                    ? { src: activity.user.avatarUrl }
+                    : {})}
+                >
                   <PersonOutline />
                 </Avatar>
                 <Box flex={1}>
@@ -391,7 +410,7 @@ export function FeedPage(): React.ReactElement {
                   icon={getActivityIcon(activity.type)}
                   label={t(`social.activityType.${activity.type}`)}
                   size="small"
-                  color={getActivityColor(activity.type) as any}
+                  color={getActivityColor(activity.type)}
                 />
               </Stack>
 
@@ -402,7 +421,9 @@ export function FeedPage(): React.ReactElement {
                 <Stack
                   direction="row"
                   spacing={2}
-                  onClick={() => handleBookClick(activity.book!.id)}
+                  onClick={() =>
+                    activity.book && handleBookClick(activity.book.id)
+                  }
                   sx={{ cursor: "pointer" }}
                 >
                   {activity.book.coverImage && (
@@ -432,42 +453,45 @@ export function FeedPage(): React.ReactElement {
                 </Stack>
               )}
 
-              {activity.type === "achievement_earned" && activity.achievement && (
-                <Box>
-                  <Typography variant="body1" fontWeight="medium" mb={1}>
-                    {t("social.unlockedAchievement")}
-                  </Typography>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {activity.achievement.icon && (
-                      <Box
-                        sx={{
-                          fontSize: 48,
-                          color: getRarityColor(activity.achievement.rarity),
-                        }}
-                      >
-                        {activity.achievement.icon}
+              {activity.type === "achievement_earned" &&
+                activity.achievement && (
+                  <Box>
+                    <Typography variant="body1" fontWeight="medium" mb={1}>
+                      {t("social.unlockedAchievement")}
+                    </Typography>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      {activity.achievement.icon && (
+                        <Box
+                          sx={{
+                            fontSize: 48,
+                            color: getRarityColor(activity.achievement.rarity),
+                          }}
+                        >
+                          {activity.achievement.icon}
+                        </Box>
+                      )}
+                      <Box>
+                        <Typography variant="h6">
+                          {activity.achievement.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {activity.achievement.description}
+                        </Typography>
+                        <Chip
+                          label={activity.achievement.rarity}
+                          size="small"
+                          sx={{
+                            mt: 1,
+                            bgcolor: getRarityColor(
+                              activity.achievement.rarity
+                            ),
+                            color: "white",
+                          }}
+                        />
                       </Box>
-                    )}
-                    <Box>
-                      <Typography variant="h6">
-                        {activity.achievement.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {activity.achievement.description}
-                      </Typography>
-                      <Chip
-                        label={activity.achievement.rarity}
-                        size="small"
-                        sx={{
-                          mt: 1,
-                          bgcolor: getRarityColor(activity.achievement.rarity),
-                          color: "white",
-                        }}
-                      />
-                    </Box>
-                  </Stack>
-                </Box>
-              )}
+                    </Stack>
+                  </Box>
+                )}
 
               {activity.type === "highlight_shared" && activity.highlight && (
                 <Box>

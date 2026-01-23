@@ -111,7 +111,7 @@ describe("offlineReadingProgressSync", () => {
       const stored = localStorage.getItem(PROGRESS_STORAGE_KEY);
       expect(stored).not.toBeNull();
 
-      const parsed = JSON.parse(stored!);
+      const parsed = JSON.parse(stored ?? "{}");
       expect(parsed[bookId]).toBeDefined();
     });
   });

@@ -574,7 +574,7 @@ describe("saveAssessmentProgress", () => {
 
     const saved = localStorage.getItem("assessment_test-id");
     expect(saved).not.toBeNull();
-    const parsed = JSON.parse(saved!);
+    const parsed = JSON.parse(saved ?? "{}");
     expect(parsed.assessmentId).toBe("test-id");
     expect(parsed.currentQuestionIndex).toBe(2);
     expect(parsed.elapsedSeconds).toBe(120);
@@ -598,9 +598,9 @@ describe("loadAssessmentProgress", () => {
 
     const progress = loadAssessmentProgress("test-id");
     expect(progress).not.toBeNull();
-    expect(progress!.currentQuestionIndex).toBe(3);
-    expect(progress!.elapsedSeconds).toBe(180);
-    expect(progress!.answers.get("1")?.answer).toBe("A");
+    expect(progress?.currentQuestionIndex).toBe(3);
+    expect(progress?.elapsedSeconds).toBe(180);
+    expect(progress?.answers.get("1")?.answer).toBe("A");
   });
 
   it("should return null for non-existent progress", () => {

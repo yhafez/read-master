@@ -128,15 +128,15 @@ describe("Type exports", () => {
 describe("Constants", () => {
   it("should export RATING_BUTTONS with 4 ratings", () => {
     expect(RATING_BUTTONS).toHaveLength(4);
-    expect(RATING_BUTTONS[0]!.rating).toBe(1);
-    expect(RATING_BUTTONS[3]!.rating).toBe(4);
+    expect(RATING_BUTTONS[0]?.rating).toBe(1);
+    expect(RATING_BUTTONS[3]?.rating).toBe(4);
   });
 
   it("should have correct colors for rating buttons", () => {
-    expect(RATING_BUTTONS[0]!.color).toBe("error");
-    expect(RATING_BUTTONS[1]!.color).toBe("warning");
-    expect(RATING_BUTTONS[2]!.color).toBe("info");
-    expect(RATING_BUTTONS[3]!.color).toBe("success");
+    expect(RATING_BUTTONS[0]?.color).toBe("error");
+    expect(RATING_BUTTONS[1]?.color).toBe("warning");
+    expect(RATING_BUTTONS[2]?.color).toBe("info");
+    expect(RATING_BUTTONS[3]?.color).toBe("success");
   });
 
   it("should export DEFAULT_SESSION_LIMIT", () => {
@@ -823,7 +823,7 @@ describe("getShortcutDescriptions", () => {
     const shortcuts = getShortcutDescriptions();
     const spaceShortcut = shortcuts.find((s) => s.key === "Space");
     expect(spaceShortcut).toBeDefined();
-    expect(spaceShortcut!.action).toContain("answer");
+    expect(spaceShortcut?.action).toContain("answer");
   });
 
   it("should include rating shortcuts", () => {
@@ -888,7 +888,7 @@ describe("Integration scenarios", () => {
     const results: CardReviewResult[] = [];
 
     for (let i = 0; i < ratings.length; i++) {
-      const rating = ratings[i]!;
+      const rating = ratings[i] ?? 3;
       progress = updateProgress(progress, rating);
       results.push({
         cardId: `card-${i}`,

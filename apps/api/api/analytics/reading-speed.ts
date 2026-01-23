@@ -252,7 +252,7 @@ async function handler(
       .filter(
         (p) => p.lastReadAt && p.lastReadAt >= sevenDaysAgo && p.averageWpm
       )
-      .map((p) => p.averageWpm!)
+      .map((p) => p.averageWpm)
       .filter((wpm): wpm is number => wpm !== null);
 
     const currentAvgWpm =
@@ -274,14 +274,14 @@ async function handler(
           p.lastReadAt < firstHalfEnd &&
           p.averageWpm
       )
-      .map((p) => p.averageWpm!)
+      .map((p) => p.averageWpm)
       .filter((wpm): wpm is number => wpm !== null);
 
     const secondHalfWpms = progressData
       .filter(
         (p) => p.lastReadAt && p.lastReadAt >= firstHalfEnd && p.averageWpm
       )
-      .map((p) => p.averageWpm!)
+      .map((p) => p.averageWpm)
       .filter((wpm): wpm is number => wpm !== null);
 
     const firstAvg =

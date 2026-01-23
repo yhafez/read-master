@@ -119,7 +119,7 @@ describe("Message Utilities", () => {
       const after = Date.now();
 
       const parts = id.split("_");
-      const timestamp = parseInt(parts[1]!, 10);
+      const timestamp = parseInt(parts[1] ?? "0", 10);
       expect(timestamp).toBeGreaterThanOrEqual(before);
       expect(timestamp).toBeLessThanOrEqual(after);
     });
@@ -288,8 +288,8 @@ describe("Session Utilities", () => {
         status: "complete",
       });
 
-      expect(updated.messages[0]!.content).toBe("Updated content");
-      expect(updated.messages[0]!.status).toBe("complete");
+      expect(updated.messages[0]?.content).toBe("Updated content");
+      expect(updated.messages[0]?.status).toBe("complete");
     });
 
     it("should return same session if no messages", () => {
@@ -305,8 +305,8 @@ describe("Session Utilities", () => {
 
       const updated = updateLastMessage(session, { content: "Updated" });
 
-      expect(updated.messages[0]!.content).toBe("First");
-      expect(updated.messages[1]!.content).toBe("Updated");
+      expect(updated.messages[0]?.content).toBe("First");
+      expect(updated.messages[1]?.content).toBe("Updated");
     });
 
     it("should not mutate original session", () => {
@@ -318,7 +318,7 @@ describe("Session Utilities", () => {
 
       updateLastMessage(session, { content: "Updated" });
 
-      expect(session.messages[0]!.content).toBe("Original");
+      expect(session.messages[0]?.content).toBe("Original");
     });
   });
 
@@ -378,7 +378,7 @@ describe("Session Utilities", () => {
 
       const history = getHistoryForApi(messages);
       expect(history).toHaveLength(1);
-      expect(history[0]!.role).toBe("user");
+      expect(history[0]?.role).toBe("user");
     });
 
     it("should limit to max messages", () => {
@@ -396,16 +396,16 @@ describe("Session Utilities", () => {
       );
 
       const history = getHistoryForApi(messages, 10);
-      expect(history[0]!.content).toBe("Message 5");
-      expect(history[9]!.content).toBe("Message 14");
+      expect(history[0]?.content).toBe("Message 5");
+      expect(history[9]?.content).toBe("Message 14");
     });
 
     it("should return only role and content", () => {
       const messages: ChatMessage[] = [createUserMessage("Hello")];
       const history = getHistoryForApi(messages);
 
-      expect(history[0]!).toEqual({ role: "user", content: "Hello" });
-      expect(Object.keys(history[0]!)).toEqual(["role", "content"]);
+      expect(history[0]).toEqual({ role: "user", content: "Hello" });
+      expect(Object.keys(history[0] ?? {})).toEqual(["role", "content"]);
     });
   });
 });
@@ -649,7 +649,7 @@ describe("Storage Utilities", () => {
 
       const loaded = loadSessionFromStorage("book-123");
       expect(loaded?.messages).toHaveLength(1);
-      expect(loaded?.messages[0]!.content).toBe("Hello");
+      expect(loaded?.messages[0]?.content).toBe("Hello");
     });
   });
 

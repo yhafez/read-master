@@ -170,7 +170,9 @@ function formatReadingTime(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
   if (hours < 24) {
-    return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}m` : `${hours}h`;
+    return remainingMinutes > 0
+      ? `${hours}h ${remainingMinutes}m`
+      : `${hours}h`;
   }
   const days = Math.floor(hours / 24);
   const remainingHours = hours % 24;
@@ -246,7 +248,7 @@ export function ProfilePage(): React.ReactElement {
     error,
   } = useQuery({
     queryKey: ["profile", username, showActivity, showAchievements],
-    queryFn: () => fetchProfile(username!, showActivity, showAchievements),
+    queryFn: () => fetchProfile(username ?? "", showActivity, showAchievements),
     enabled: !!username,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
@@ -292,7 +294,12 @@ export function ProfilePage(): React.ReactElement {
   // Loading state
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="60vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -303,7 +310,9 @@ export function ProfilePage(): React.ReactElement {
     return (
       <Box>
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error instanceof Error ? error.message : "Profile not found or is private"}
+          {error instanceof Error
+            ? error.message
+            : "Profile not found or is private"}
         </Alert>
         <Button variant="outlined" onClick={() => navigate("/")}>
           Go Home
@@ -331,7 +340,9 @@ export function ProfilePage(): React.ReactElement {
           >
             {/* Avatar */}
             <Avatar
-              {...(profile.user.avatarUrl ? { src: profile.user.avatarUrl } : {})}
+              {...(profile.user.avatarUrl
+                ? { src: profile.user.avatarUrl }
+                : {})}
               sx={{ width: 120, height: 120 }}
             >
               <PersonIcon sx={{ fontSize: 60 }} />
@@ -339,7 +350,13 @@ export function ProfilePage(): React.ReactElement {
 
             {/* User Info */}
             <Box flex={1} textAlign={isMobile ? "center" : "left"}>
-              <Stack direction="row" spacing={1} alignItems="center" justifyContent={isMobile ? "center" : "flex-start"} mb={1}>
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                justifyContent={isMobile ? "center" : "flex-start"}
+                mb={1}
+              >
                 <Typography variant="h4" component="h1">
                   {profile.user.displayName || profile.user.username}
                 </Typography>
@@ -359,7 +376,12 @@ export function ProfilePage(): React.ReactElement {
               )}
 
               {/* Action Buttons */}
-              <Stack direction="row" spacing={2} mt={2} justifyContent={isMobile ? "center" : "flex-start"}>
+              <Stack
+                direction="row"
+                spacing={2}
+                mt={2}
+                justifyContent={isMobile ? "center" : "flex-start"}
+              >
                 {profile.social.isOwnProfile ? (
                   <Button
                     variant="outlined"
@@ -370,12 +392,20 @@ export function ProfilePage(): React.ReactElement {
                   </Button>
                 ) : (
                   <Button
-                    variant={profile.social.isFollowing ? "outlined" : "contained"}
+                    variant={
+                      profile.social.isFollowing ? "outlined" : "contained"
+                    }
                     startIcon={
-                      profile.social.isFollowing ? <PersonRemoveIcon /> : <PersonAddIcon />
+                      profile.social.isFollowing ? (
+                        <PersonRemoveIcon />
+                      ) : (
+                        <PersonAddIcon />
+                      )
                     }
                     onClick={handleFollowToggle}
-                    disabled={followMutation.isPending || unfollowMutation.isPending}
+                    disabled={
+                      followMutation.isPending || unfollowMutation.isPending
+                    }
                   >
                     {profile.social.isFollowing ? "Unfollow" : "Follow"}
                   </Button>
@@ -396,15 +426,25 @@ export function ProfilePage(): React.ReactElement {
 
             {/* Level Info */}
             <Box mb={3}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1}>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={1}
+              >
                 <Typography variant="body1">
-                  Level {profile.stats.levelInfo.level} - {profile.stats.levelInfo.title}
+                  Level {profile.stats.levelInfo.level} -{" "}
+                  {profile.stats.levelInfo.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {currentLevelXP} / {xpForNextLevel} XP
                 </Typography>
               </Stack>
-              <LinearProgress variant="determinate" value={levelProgress} sx={{ height: 8, borderRadius: 4 }} />
+              <LinearProgress
+                variant="determinate"
+                value={levelProgress}
+                sx={{ height: 8, borderRadius: 4 }}
+              />
             </Box>
 
             {/* Stats Grid */}
@@ -412,7 +452,9 @@ export function ProfilePage(): React.ReactElement {
               <Grid item xs={6} sm={4}>
                 <Stack alignItems="center">
                   <MenuBookIcon color="primary" fontSize="large" />
-                  <Typography variant="h4">{profile.stats.booksCompleted}</Typography>
+                  <Typography variant="h4">
+                    {profile.stats.booksCompleted}
+                  </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Books Completed
                   </Typography>
@@ -434,7 +476,9 @@ export function ProfilePage(): React.ReactElement {
               <Grid item xs={6} sm={4}>
                 <Stack alignItems="center">
                   <LocalFireDepartmentIcon color="error" fontSize="large" />
-                  <Typography variant="h4">{profile.stats.currentStreak}</Typography>
+                  <Typography variant="h4">
+                    {profile.stats.currentStreak}
+                  </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Current Streak
                   </Typography>
@@ -444,7 +488,9 @@ export function ProfilePage(): React.ReactElement {
               <Grid item xs={6} sm={4}>
                 <Stack alignItems="center">
                   <EmojiEventsIcon color="warning" fontSize="large" />
-                  <Typography variant="h4">{profile.stats.longestStreak}</Typography>
+                  <Typography variant="h4">
+                    {profile.stats.longestStreak}
+                  </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Longest Streak
                   </Typography>
@@ -452,9 +498,15 @@ export function ProfilePage(): React.ReactElement {
               </Grid>
 
               <Grid item xs={6} sm={4}>
-                <Stack alignItems="center" onClick={handleViewFollowers} sx={{ cursor: "pointer" }}>
+                <Stack
+                  alignItems="center"
+                  onClick={handleViewFollowers}
+                  sx={{ cursor: "pointer" }}
+                >
                   <PeopleIcon color="primary" fontSize="large" />
-                  <Typography variant="h4">{profile.stats.followersCount}</Typography>
+                  <Typography variant="h4">
+                    {profile.stats.followersCount}
+                  </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Followers
                   </Typography>
@@ -462,9 +514,15 @@ export function ProfilePage(): React.ReactElement {
               </Grid>
 
               <Grid item xs={6} sm={4}>
-                <Stack alignItems="center" onClick={handleViewFollowing} sx={{ cursor: "pointer" }}>
+                <Stack
+                  alignItems="center"
+                  onClick={handleViewFollowing}
+                  sx={{ cursor: "pointer" }}
+                >
                   <PeopleIcon color="primary" fontSize="large" />
-                  <Typography variant="h4">{profile.stats.followingCount}</Typography>
+                  <Typography variant="h4">
+                    {profile.stats.followingCount}
+                  </Typography>
                   <Typography variant="caption" color="text.secondary">
                     Following
                   </Typography>
@@ -558,7 +616,10 @@ export function ProfilePage(): React.ReactElement {
                           {item.description && (
                             <>
                               <Typography variant="caption">•</Typography>
-                              <Typography variant="caption" color="text.secondary">
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                              >
                                 {item.description}
                               </Typography>
                             </>

@@ -248,7 +248,10 @@ describe("offlineCacheUtils", () => {
     it("saves current time by default", () => {
       const before = Date.now();
       saveLastOnlineTime();
-      const stored = parseInt(localStorageMock.getItem(LAST_ONLINE_KEY)!, 10);
+      const stored = parseInt(
+        localStorageMock.getItem(LAST_ONLINE_KEY) ?? "0",
+        10
+      );
       expect(stored).toBeGreaterThanOrEqual(before);
     });
 
@@ -349,7 +352,7 @@ describe("offlineCacheUtils", () => {
       localStorageMock.setItem(SYNC_QUEUE_KEY, JSON.stringify(queue));
       const result = getSyncQueue();
       expect(result.length).toBe(1);
-      expect(result[0]!.url).toBe("/api/books");
+      expect(result[0]?.url).toBe("/api/books");
     });
 
     it("handles invalid JSON", () => {
@@ -362,13 +365,17 @@ describe("offlineCacheUtils", () => {
     it("saves queue to storage", () => {
       const queue = [createSyncQueueItem("/api/books", "POST")];
       saveSyncQueue(queue);
-      const stored = JSON.parse(localStorageMock.getItem(SYNC_QUEUE_KEY)!);
+      const stored = JSON.parse(
+        localStorageMock.getItem(SYNC_QUEUE_KEY) ?? "[]"
+      );
       expect(stored.length).toBe(1);
     });
 
     it("saves empty queue", () => {
       saveSyncQueue([]);
-      const stored = JSON.parse(localStorageMock.getItem(SYNC_QUEUE_KEY)!);
+      const stored = JSON.parse(
+        localStorageMock.getItem(SYNC_QUEUE_KEY) ?? "[]"
+      );
       expect(stored).toEqual([]);
     });
   });
@@ -378,7 +385,7 @@ describe("offlineCacheUtils", () => {
       const item = createSyncQueueItem("/api/books", "POST");
       const result = addToSyncQueue(item);
       expect(result.length).toBe(1);
-      expect(result[0]!.id).toBe(item.id);
+      expect(result[0]?.id).toBe(item.id);
     });
 
     it("adds item to existing queue", () => {
@@ -398,7 +405,7 @@ describe("offlineCacheUtils", () => {
       addToSyncQueue(item2);
       const result = removeFromSyncQueue(item1.id);
       expect(result.length).toBe(1);
-      expect(result[0]!.id).toBe(item2.id);
+      expect(result[0]?.id).toBe(item2.id);
     });
 
     it("handles non-existent ID", () => {
@@ -435,7 +442,7 @@ describe("offlineCacheUtils", () => {
       addToSyncQueue(item);
       incrementRetryCount(item.id);
       const queue = getSyncQueue();
-      expect(queue[0]!.retryCount).toBe(1);
+      expect(queue[0]?.retryCount).toBe(1);
     });
   });
 

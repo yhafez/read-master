@@ -547,9 +547,9 @@ describe("Keyboard Navigation", () => {
       ];
       updateRovingTabindex(elements, 1);
 
-      expect(elements[0]!.getAttribute("tabindex")).toBe("-1");
-      expect(elements[1]!.getAttribute("tabindex")).toBe("0");
-      expect(elements[2]!.getAttribute("tabindex")).toBe("-1");
+      expect(elements[0]?.getAttribute("tabindex")).toBe("-1");
+      expect(elements[1]?.getAttribute("tabindex")).toBe("0");
+      expect(elements[2]?.getAttribute("tabindex")).toBe("-1");
     });
   });
 });
@@ -629,8 +629,8 @@ describe("Accessibility Audit", () => {
       container.innerHTML = '<img src="test.jpg" />';
       const issues = auditImages(container);
       expect(issues.length).toBe(1);
-      expect(issues[0]!.type).toBe("alt-text");
-      expect(issues[0]!.severity).toBe("error");
+      expect(issues[0]?.type).toBe("alt-text");
+      expect(issues[0]?.severity).toBe("error");
     });
 
     it("should not report images with alt", () => {
@@ -643,7 +643,7 @@ describe("Accessibility Audit", () => {
       container.innerHTML = '<img src="test.jpg" alt="" />';
       const issues = auditImages(container);
       expect(issues.length).toBe(1);
-      expect(issues[0]!.severity).toBe("warning");
+      expect(issues[0]?.severity).toBe("warning");
     });
 
     it("should not warn about empty alt with presentation role", () => {
@@ -658,7 +658,7 @@ describe("Accessibility Audit", () => {
       container.innerHTML = '<input type="text" />';
       const issues = auditFormLabels(container);
       expect(issues.length).toBe(1);
-      expect(issues[0]!.type).toBe("label");
+      expect(issues[0]?.type).toBe("label");
     });
 
     it("should not report inputs with labels", () => {

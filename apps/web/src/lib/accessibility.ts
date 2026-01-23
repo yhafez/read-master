@@ -498,8 +498,13 @@ export function createFocusTrap(container: HTMLElement): {
       return;
     }
 
-    const firstElement = focusable[0]!;
-    const lastElement = focusable[focusable.length - 1]!;
+    const firstElement = focusable[0];
+    const lastElement = focusable[focusable.length - 1];
+
+    if (!firstElement || !lastElement) {
+      event.preventDefault();
+      return;
+    }
 
     if (event.shiftKey && document.activeElement === firstElement) {
       event.preventDefault();

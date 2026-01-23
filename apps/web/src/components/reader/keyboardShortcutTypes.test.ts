@@ -864,7 +864,9 @@ describe("keyboardShortcutTypes", () => {
 
   describe("getEffectiveBinding", () => {
     it("returns default binding when no custom binding", () => {
-      const shortcut = findShortcutById("nextPage")!;
+      const shortcut = findShortcutById("nextPage");
+      expect(shortcut).toBeDefined();
+      if (!shortcut) return;
       const prefs = DEFAULT_SHORTCUT_PREFERENCES;
       const binding = getEffectiveBinding(shortcut, prefs);
       expect(binding.key).toBe(shortcut.key);
@@ -872,7 +874,9 @@ describe("keyboardShortcutTypes", () => {
     });
 
     it("returns custom binding when set", () => {
-      const shortcut = findShortcutById("nextPage")!;
+      const shortcut = findShortcutById("nextPage");
+      expect(shortcut).toBeDefined();
+      if (!shortcut) return;
       const prefs: ShortcutPreferences = {
         ...DEFAULT_SHORTCUT_PREFERENCES,
         customBindings: { nextPage: { key: "j", modifiers: ["ctrl"] } },

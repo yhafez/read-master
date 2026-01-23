@@ -84,7 +84,9 @@ async function fetchFollowers(
   });
   if (search) params.set("search", search);
 
-  const response = await fetch(`/api/users/${userId}/followers?${params.toString()}`);
+  const response = await fetch(
+    `/api/users/${userId}/followers?${params.toString()}`
+  );
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({
@@ -135,13 +137,10 @@ export function FollowersPage(): React.ReactElement {
   const [searchInput, setSearchInput] = useState("");
 
   // Fetch followers
-  const {
-    data,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["followers", userId, page, search],
-    queryFn: () => fetchFollowers(userId!, page, ITEMS_PER_PAGE, search || undefined),
+    queryFn: () =>
+      fetchFollowers(userId ?? "", page, ITEMS_PER_PAGE, search || undefined),
     enabled: !!userId,
     staleTime: 30 * 1000, // 30 seconds
   });
@@ -168,7 +167,10 @@ export function FollowersPage(): React.ReactElement {
     setPage(1);
   };
 
-  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -190,7 +192,12 @@ export function FollowersPage(): React.ReactElement {
   // Loading state
   if (isLoading && !data) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="60vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -224,7 +231,8 @@ export function FollowersPage(): React.ReactElement {
           )}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {data?.pagination.total || 0} {data?.pagination.total === 1 ? "follower" : "followers"}
+          {data?.pagination.total || 0}{" "}
+          {data?.pagination.total === 1 ? "follower" : "followers"}
         </Typography>
       </Box>
 
@@ -259,9 +267,17 @@ export function FollowersPage(): React.ReactElement {
                   <Button
                     size="small"
                     variant={user.isFollowing ? "outlined" : "contained"}
-                    startIcon={user.isFollowing ? <PersonRemoveIcon /> : <PersonAddIcon />}
+                    startIcon={
+                      user.isFollowing ? (
+                        <PersonRemoveIcon />
+                      ) : (
+                        <PersonAddIcon />
+                      )
+                    }
                     onClick={() => handleFollowToggle(user)}
-                    disabled={followMutation.isPending || unfollowMutation.isPending}
+                    disabled={
+                      followMutation.isPending || unfollowMutation.isPending
+                    }
                   >
                     {user.isFollowing ? "Unfollow" : "Follow"}
                   </Button>
@@ -284,7 +300,11 @@ export function FollowersPage(): React.ReactElement {
                           {user.displayName || user.username || "Anonymous"}
                         </Typography>
                         {user.isFollowedBy && (
-                          <Chip label="Follows you" size="small" variant="outlined" />
+                          <Chip
+                            label="Follows you"
+                            size="small"
+                            variant="outlined"
+                          />
                         )}
                       </Stack>
                     }

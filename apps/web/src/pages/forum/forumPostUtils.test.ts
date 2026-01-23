@@ -371,8 +371,8 @@ describe("Reply Threading Utilities", () => {
       ];
       const result = buildReplyTree(replies);
       expect(result.length).toBe(2);
-      expect(result[0]!.id).toBe("r1");
-      expect(result[1]!.id).toBe("r2");
+      expect(result[0]?.id).toBe("r1");
+      expect(result[1]?.id).toBe("r2");
     });
 
     it("should nest child replies under parent", () => {
@@ -383,10 +383,10 @@ describe("Reply Threading Utilities", () => {
       ];
       const result = buildReplyTree(replies);
       expect(result.length).toBe(1);
-      expect(result[0]!.id).toBe("r1");
-      expect(result[0]!.replies?.length).toBe(2);
-      expect(result[0]!.replies![0]!.id).toBe("r2");
-      expect(result[0]!.replies![1]!.id).toBe("r3");
+      expect(result[0]?.id).toBe("r1");
+      expect(result[0]?.replies?.length).toBe(2);
+      expect(result[0]?.replies?.[0]?.id).toBe("r2");
+      expect(result[0]?.replies?.[1]?.id).toBe("r3");
     });
 
     it("should handle deeply nested replies", () => {
@@ -397,7 +397,9 @@ describe("Reply Threading Utilities", () => {
         createMockReply({ id: "r4", parentReplyId: "r3" }),
       ];
       const result = buildReplyTree(replies);
-      expect(result[0]!.replies![0]!.replies![0]!.replies![0]!.id).toBe("r4");
+      expect(result[0]?.replies?.[0]?.replies?.[0]?.replies?.[0]?.id).toBe(
+        "r4"
+      );
     });
 
     it("should treat orphan replies as top-level", () => {
@@ -406,7 +408,7 @@ describe("Reply Threading Utilities", () => {
       ];
       const result = buildReplyTree(replies);
       expect(result.length).toBe(1);
-      expect(result[0]!.id).toBe("r1");
+      expect(result[0]?.id).toBe("r1");
     });
   });
 
@@ -519,25 +521,25 @@ describe("Reply Threading Utilities", () => {
     it("should sort by newest first", () => {
       const replies = createRepliesForSorting();
       const result = sortReplies(replies, "newest");
-      expect(result[0]!.id).toBe("r3");
-      expect(result[1]!.id).toBe("r2");
-      expect(result[2]!.id).toBe("r1");
+      expect(result[0]?.id).toBe("r3");
+      expect(result[1]?.id).toBe("r2");
+      expect(result[2]?.id).toBe("r1");
     });
 
     it("should sort by oldest first", () => {
       const replies = createRepliesForSorting();
       const result = sortReplies(replies, "oldest");
-      expect(result[0]!.id).toBe("r1");
-      expect(result[1]!.id).toBe("r2");
-      expect(result[2]!.id).toBe("r3");
+      expect(result[0]?.id).toBe("r1");
+      expect(result[1]?.id).toBe("r2");
+      expect(result[2]?.id).toBe("r3");
     });
 
     it("should sort by best (highest score)", () => {
       const replies = createRepliesForSorting();
       const result = sortReplies(replies, "best");
-      expect(result[0]!.id).toBe("r2"); // 20-1 = 19
-      expect(result[1]!.id).toBe("r1"); // 10-2 = 8
-      expect(result[2]!.id).toBe("r3"); // 5-0 = 5
+      expect(result[0]?.id).toBe("r2"); // 20-1 = 19
+      expect(result[1]?.id).toBe("r1"); // 10-2 = 8
+      expect(result[2]?.id).toBe("r3"); // 5-0 = 5
     });
 
     it("should sort by controversial (most total votes)", () => {
@@ -547,9 +549,9 @@ describe("Reply Threading Utilities", () => {
         createMockReply({ id: "r3", upvotes: 3, downvotes: 1 }), // 4 total
       ];
       const result = sortReplies(replies, "controversial");
-      expect(result[0]!.id).toBe("r2");
-      expect(result[1]!.id).toBe("r1");
-      expect(result[2]!.id).toBe("r3");
+      expect(result[0]?.id).toBe("r2");
+      expect(result[1]?.id).toBe("r1");
+      expect(result[2]?.id).toBe("r3");
     });
 
     it("should sort nested replies recursively", () => {
@@ -564,8 +566,8 @@ describe("Reply Threading Utilities", () => {
         }),
       ];
       const result = sortReplies(replies, "newest");
-      expect(result[0]!.replies![0]!.id).toBe("r3");
-      expect(result[0]!.replies![1]!.id).toBe("r2");
+      expect(result[0]?.replies?.[0]?.id).toBe("r3");
+      expect(result[0]?.replies?.[1]?.id).toBe("r2");
     });
   });
 

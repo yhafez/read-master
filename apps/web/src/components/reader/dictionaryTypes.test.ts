@@ -405,9 +405,9 @@ describe("parseDictionaryResponse", () => {
     const result = parseDictionaryResponse("test", mockResponse);
     expect(result.success).toBe(true);
     expect(result.entry).toBeDefined();
-    expect(result.entry!.word).toBe("test");
-    expect(result.entry!.phonetics).toHaveLength(1);
-    expect(result.entry!.meanings).toHaveLength(1);
+    expect(result.entry?.word).toBe("test");
+    expect(result.entry?.phonetics).toHaveLength(1);
+    expect(result.entry?.meanings).toHaveLength(1);
   });
 
   it("should return error for empty array", () => {
@@ -695,8 +695,8 @@ describe("parseWikipediaResponse", () => {
     const result = parseWikipediaResponse("Albert Einstein", mockResponse);
     expect(result.success).toBe(true);
     expect(result.summary).toBeDefined();
-    expect(result.summary!.title).toBe("Albert Einstein");
-    expect(result.summary!.extract).toContain("theoretical physicist");
+    expect(result.summary?.title).toBe("Albert Einstein");
+    expect(result.summary?.extract).toContain("theoretical physicist");
   });
 
   it("should handle disambiguation page", () => {
@@ -726,8 +726,8 @@ describe("parseWikipediaResponse", () => {
       },
     };
     const result = parseWikipediaResponse("test", mockResponse);
-    expect(result.summary!.thumbnail).toBeDefined();
-    expect(result.summary!.thumbnail!.source).toBe(
+    expect(result.summary?.thumbnail).toBeDefined();
+    expect(result.summary?.thumbnail?.source).toBe(
       "https://example.com/thumb.jpg"
     );
   });
@@ -809,7 +809,9 @@ describe("saveLookupSettings", () => {
       autoLookup: true,
     };
     saveLookupSettings(settings);
-    const stored = JSON.parse(localStorage.getItem(LOOKUP_SETTINGS_KEY)!);
+    const stored = JSON.parse(
+      localStorage.getItem(LOOKUP_SETTINGS_KEY) ?? "{}"
+    );
     expect(stored.autoLookup).toBe(true);
   });
 });

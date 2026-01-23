@@ -482,9 +482,8 @@ export function useAIModels(
         models = models.filter((m) => tierOrder[m.tier] <= userTierLevel);
       }
       if (params?.capability) {
-        models = models.filter((m) =>
-          m.capabilities.includes(params.capability!)
-        );
+        const capability = params.capability;
+        models = models.filter((m) => m.capabilities.includes(capability));
       }
       if (!params?.includeUnavailable) {
         models = models.filter((m) => m.available);

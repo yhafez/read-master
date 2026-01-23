@@ -632,56 +632,56 @@ describe("sortDecks", () => {
   it("should sort by dueCount desc", () => {
     const sorted = sortDecks([deck1, deck2], "dueCount", "desc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck2");
+    expect(sorted[0]?.id).toBe("deck2");
   });
 
   it("should sort by dueCount asc", () => {
     const sorted = sortDecks([deck1, deck2], "dueCount", "asc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck1");
+    expect(sorted[0]?.id).toBe("deck1");
   });
 
   it("should sort by totalCards desc", () => {
     const sorted = sortDecks([deck1, deck2], "totalCards", "desc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck2");
+    expect(sorted[0]?.id).toBe("deck2");
   });
 
   it("should sort by bookTitle asc", () => {
     const sorted = sortDecks([deck1, deck2], "bookTitle", "asc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck1");
+    expect(sorted[0]?.id).toBe("deck1");
   });
 
   it("should sort by bookTitle desc", () => {
     const sorted = sortDecks([deck1, deck2], "bookTitle", "desc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck2");
+    expect(sorted[0]?.id).toBe("deck2");
   });
 
   it("should sort by retentionRate desc", () => {
     const sorted = sortDecks([deck1, deck2], "retentionRate", "desc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck1");
+    expect(sorted[0]?.id).toBe("deck1");
   });
 
   it("should sort by createdAt asc", () => {
     const sorted = sortDecks([deck1, deck2], "createdAt", "asc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck1");
+    expect(sorted[0]?.id).toBe("deck1");
   });
 
   it("should sort by lastReviewed desc", () => {
     const sorted = sortDecks([deck1, deck2], "lastReviewed", "desc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck2");
+    expect(sorted[0]?.id).toBe("deck2");
   });
 
   it("should handle null lastReviewedAt", () => {
     const deckWithNull = createMockDeck({ id: "deck3", lastReviewedAt: null });
     const sorted = sortDecks([deck1, deckWithNull], "lastReviewed", "desc");
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("deck1");
+    expect(sorted[0]?.id).toBe("deck1");
   });
 });
 
@@ -710,13 +710,13 @@ describe("filterDecksByStatus", () => {
   it("should filter to only decks with due cards", () => {
     const result = filterDecksByStatus([deckWithDue, deckNoDue], "hasDue");
     expect(result).toHaveLength(1);
-    expect(result[0]!.id).toBe("with-due");
+    expect(result[0]?.id).toBe("with-due");
   });
 
   it("should filter to only decks without due cards", () => {
     const result = filterDecksByStatus([deckWithDue, deckNoDue], "noDue");
     expect(result).toHaveLength(1);
-    expect(result[0]!.id).toBe("no-due");
+    expect(result[0]?.id).toBe("no-due");
   });
 
   it("should filter to only decks with new cards", () => {
@@ -751,19 +751,19 @@ describe("filterDecksBySearch", () => {
   it("should filter by book title", () => {
     const result = filterDecksBySearch([deck1, deck2], "javascript");
     expect(result).toHaveLength(1);
-    expect(result[0]!.id).toBe("deck1");
+    expect(result[0]?.id).toBe("deck1");
   });
 
   it("should filter by author", () => {
     const result = filterDecksBySearch([deck1, deck2], "jane");
     expect(result).toHaveLength(1);
-    expect(result[0]!.id).toBe("deck2");
+    expect(result[0]?.id).toBe("deck2");
   });
 
   it("should filter by tags", () => {
     const result = filterDecksBySearch([deck1, deck2], "python");
     expect(result).toHaveLength(1);
-    expect(result[0]!.id).toBe("deck2");
+    expect(result[0]?.id).toBe("deck2");
   });
 
   it("should be case insensitive", () => {
@@ -822,7 +822,7 @@ describe("applyFiltersAndSort", () => {
     const result = applyFiltersAndSort(decks, DEFAULT_DECK_FILTERS);
     expect(result).toHaveLength(2);
     // Should be sorted by dueCount desc, so deck1 first
-    expect(result[0]!.id).toBe("deck1");
+    expect(result[0]?.id).toBe("deck1");
   });
 
   it("should apply combined filters", () => {
@@ -835,7 +835,7 @@ describe("applyFiltersAndSort", () => {
     };
     const result = applyFiltersAndSort(decks, filters);
     expect(result).toHaveLength(1);
-    expect(result[0]!.id).toBe("deck1");
+    expect(result[0]?.id).toBe("deck1");
   });
 });
 
@@ -1058,8 +1058,8 @@ describe("getDecksWithDue", () => {
 
     const result = getDecksWithDue([deck1, deck2, deck3]);
     expect(result).toHaveLength(2);
-    expect(result[0]!.id).toBe("deck3"); // Higher due count
-    expect(result[1]!.id).toBe("deck1");
+    expect(result[0]?.id).toBe("deck3"); // Higher due count
+    expect(result[1]?.id).toBe("deck1");
   });
 });
 
@@ -1122,7 +1122,7 @@ describe("sortByStudyPriority", () => {
 
     const sorted = sortByStudyPriority([deck1, deck2]);
     expect(sorted).toHaveLength(2);
-    expect(sorted[0]!.id).toBe("high-priority");
+    expect(sorted[0]?.id).toBe("high-priority");
   });
 });
 

@@ -663,10 +663,11 @@ export async function getOfflineBooks(
 
   // Apply sorting
   if (filter?.sortBy) {
+    const sortKey = filter.sortBy;
     const sortOrder = filter.sortOrder === "desc" ? -1 : 1;
     books.sort((a, b) => {
-      const aVal = a[filter.sortBy!];
-      const bVal = b[filter.sortBy!];
+      const aVal = a[sortKey];
+      const bVal = b[sortKey];
       if (typeof aVal === "string" && typeof bVal === "string") {
         return aVal.localeCompare(bVal) * sortOrder;
       }

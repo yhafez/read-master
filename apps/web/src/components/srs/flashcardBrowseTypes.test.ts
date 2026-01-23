@@ -290,7 +290,7 @@ describe("Filtering Functions", () => {
     it("filters by front text", () => {
       const result = filterBySearch(testCards, "Card One");
       expect(result.length).toBe(1);
-      expect(result[0]!.id).toBe("card-1");
+      expect(result[0]?.id).toBe("card-1");
     });
 
     it("filters by back text", () => {
@@ -306,7 +306,7 @@ describe("Filtering Functions", () => {
     it("filters by book title", () => {
       const result = filterBySearch(testCards, "Book Two");
       expect(result.length).toBe(1);
-      expect(result[0]!.id).toBe("card-2");
+      expect(result[0]?.id).toBe("card-2");
     });
 
     it("is case insensitive", () => {
@@ -394,7 +394,7 @@ describe("Filtering Functions", () => {
     it("filters by specific book", () => {
       const result = filterByBook(testCards, "book-2");
       expect(result.length).toBe(1);
-      expect(result[0]!.book?.id).toBe("book-2");
+      expect(result[0]?.book?.id).toBe("book-2");
     });
 
     it("returns empty for non-existent book", () => {
@@ -438,9 +438,9 @@ describe("Sorting Functions", () => {
         createTestCard({ id: "c", createdAt: "2024-01-02T00:00:00Z" }),
       ];
       const result = sortCards(cards, "createdAt", "asc");
-      expect(result[0]!.id).toBe("b");
-      expect(result[1]!.id).toBe("c");
-      expect(result[2]!.id).toBe("a");
+      expect(result[0]?.id).toBe("b");
+      expect(result[1]?.id).toBe("c");
+      expect(result[2]?.id).toBe("a");
     });
 
     it("sorts by createdAt descending", () => {
@@ -450,9 +450,9 @@ describe("Sorting Functions", () => {
         createTestCard({ id: "c", createdAt: "2024-01-02T00:00:00Z" }),
       ];
       const result = sortCards(cards, "createdAt", "desc");
-      expect(result[0]!.id).toBe("b");
-      expect(result[1]!.id).toBe("c");
-      expect(result[2]!.id).toBe("a");
+      expect(result[0]?.id).toBe("b");
+      expect(result[1]?.id).toBe("c");
+      expect(result[2]?.id).toBe("a");
     });
 
     it("sorts by easeFactor", () => {
@@ -462,9 +462,9 @@ describe("Sorting Functions", () => {
         createTestCard({ id: "c", easeFactor: 2.5 }),
       ];
       const result = sortCards(cards, "easeFactor", "asc");
-      expect(result[0]!.id).toBe("a");
-      expect(result[1]!.id).toBe("c");
-      expect(result[2]!.id).toBe("b");
+      expect(result[0]?.id).toBe("a");
+      expect(result[1]?.id).toBe("c");
+      expect(result[2]?.id).toBe("b");
     });
 
     it("sorts by interval", () => {
@@ -474,9 +474,9 @@ describe("Sorting Functions", () => {
         createTestCard({ id: "c", interval: 7 }),
       ];
       const result = sortCards(cards, "interval", "desc");
-      expect(result[0]!.id).toBe("a");
-      expect(result[1]!.id).toBe("c");
-      expect(result[2]!.id).toBe("b");
+      expect(result[0]?.id).toBe("a");
+      expect(result[1]?.id).toBe("c");
+      expect(result[2]?.id).toBe("b");
     });
 
     it("sorts by front text alphabetically", () => {
@@ -486,9 +486,9 @@ describe("Sorting Functions", () => {
         createTestCard({ id: "c", front: "Mango" }),
       ];
       const result = sortCards(cards, "front", "asc");
-      expect(result[0]!.id).toBe("b");
-      expect(result[1]!.id).toBe("c");
-      expect(result[2]!.id).toBe("a");
+      expect(result[0]?.id).toBe("b");
+      expect(result[1]?.id).toBe("c");
+      expect(result[2]?.id).toBe("a");
     });
 
     it("sorts by type", () => {
@@ -498,7 +498,7 @@ describe("Sorting Functions", () => {
         createTestCard({ id: "c", type: "QUOTE" }),
       ];
       const result = sortCards(cards, "type", "asc");
-      expect(result[0]!.type).toBe("CONCEPT");
+      expect(result[0]?.type).toBe("CONCEPT");
     });
   });
 });
@@ -604,8 +604,8 @@ describe("Tag and Book Extraction", () => {
     it("extracts unique books sorted by title", () => {
       const books = getAllBooks(testCards);
       expect(books.length).toBe(2);
-      expect(books[0]!.title).toBe("Book Two");
-      expect(books[1]!.title).toBe("Test Book");
+      expect(books[0]?.title).toBe("Book Two");
+      expect(books[1]?.title).toBe("Test Book");
     });
 
     it("skips cards without books", () => {
@@ -924,6 +924,6 @@ describe("applyFiltersAndSort Integration", () => {
     };
     const result = applyFiltersAndSort(testCards, filters);
     expect(result.length).toBe(1);
-    expect(result[0]!.id).toBe("card-1");
+    expect(result[0]?.id).toBe("card-1");
   });
 });

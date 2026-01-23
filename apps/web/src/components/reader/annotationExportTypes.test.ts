@@ -209,7 +209,7 @@ describe("generateExportFilename", () => {
     const result = generateExportFilename(longTitle, "markdown");
     const beforeAnnotations = result.split("-annotations")[0];
     expect(beforeAnnotations).toBeDefined();
-    expect(beforeAnnotations!.length).toBeLessThanOrEqual(50);
+    expect(beforeAnnotations?.length ?? 0).toBeLessThanOrEqual(50);
   });
 });
 
@@ -270,7 +270,7 @@ describe("filterAnnotationsForExport", () => {
     const filters: ExportFilters = { publicOnly: true };
     const result = filterAnnotationsForExport(sampleAnnotations, filters);
     expect(result.length).toBe(1);
-    expect(result[0]!.isPublic).toBe(true);
+    expect(result[0]?.isPublic).toBe(true);
   });
 
   it("filters by highlight color", () => {
@@ -295,9 +295,9 @@ describe("sortAnnotationsForExport", () => {
       createBookmark({ id: "b1", startOffset: 200 }),
     ];
     const result = sortAnnotationsForExport(unsorted);
-    expect(result[0]!.startOffset).toBe(100);
-    expect(result[1]!.startOffset).toBe(200);
-    expect(result[2]!.startOffset).toBe(300);
+    expect(result[0]?.startOffset).toBe(100);
+    expect(result[1]?.startOffset).toBe(200);
+    expect(result[2]?.startOffset).toBe(300);
   });
 
   it("does not mutate original array", () => {
@@ -665,8 +665,8 @@ describe("prepareAnnotationsForPdf", () => {
     ];
     const options: ExportOptions = { format: "pdf", bookTitle: "Test" };
     const result = prepareAnnotationsForPdf(unsorted, options);
-    expect(result.highlights[0]!.index).toBe(1);
-    expect(result.highlights[1]!.index).toBe(2);
+    expect(result.highlights[0]?.index).toBe(1);
+    expect(result.highlights[1]?.index).toBe(2);
   });
 
   it("applies filters", () => {

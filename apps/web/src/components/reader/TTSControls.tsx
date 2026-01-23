@@ -413,7 +413,8 @@ export function TTSControls({
 
     sleepTimerIntervalRef.current = setInterval(() => {
       const now = Date.now();
-      const remaining = Math.max(0, Math.ceil((sleepTimer.endTime! - now) / 1000));
+      const endTime = sleepTimer.endTime ?? now;
+      const remaining = Math.max(0, Math.ceil((endTime - now) / 1000));
 
       if (remaining === 0) {
         // Timer expired - stop playback
@@ -607,10 +608,14 @@ export function TTSControls({
           sx={{ mt: 1 }}
           onClose={() => setError(null)}
           action={
-            <Button color="inherit" size="small" onClick={() => {
-              setError(null);
-              togglePlayPause();
-            }}>
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setError(null);
+                togglePlayPause();
+              }}
+            >
               {t("common.retry")}
             </Button>
           }

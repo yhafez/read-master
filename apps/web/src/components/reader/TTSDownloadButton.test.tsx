@@ -66,7 +66,9 @@ describe.skip("TTSDownloadButton", () => {
         status: null,
         progress: 0,
         isDownloading: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useTTSDownloadStatus
+      >);
 
       vi.mocked(useTTSDownloadsHook.useCreateTTSDownload).mockReturnValue({
         mutate: vi.fn(),
@@ -76,7 +78,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -89,7 +93,9 @@ describe.skip("TTSDownloadButton", () => {
         status: null,
         progress: 0,
         isDownloading: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useTTSDownloadStatus
+      >);
 
       vi.mocked(useTTSDownloadsHook.useCreateTTSDownload).mockReturnValue({
         mutate: vi.fn(),
@@ -99,7 +105,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent({ userTier: "FREE" });
 
@@ -116,7 +124,9 @@ describe.skip("TTSDownloadButton", () => {
         status: null,
         progress: 0,
         isDownloading: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useTTSDownloadStatus
+      >);
 
       vi.mocked(useTTSDownloadsHook.useCreateTTSDownload).mockReturnValue({
         mutate: vi.fn(),
@@ -126,7 +136,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent({ userTier: "SCHOLAR" });
 
@@ -144,7 +156,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -164,7 +178,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -189,7 +205,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent({ userTier: "PRO" });
 
@@ -209,7 +227,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -232,7 +252,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -263,7 +285,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -285,7 +309,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: { id: "dl_new" },
         reset: mockReset,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -302,7 +328,9 @@ describe.skip("TTSDownloadButton", () => {
         error: new Error("Download failed"),
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -323,7 +351,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent({ userTier: "PRO" });
 
@@ -343,7 +373,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent({ userTier: "SCHOLAR" });
 
@@ -365,7 +397,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -386,7 +420,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -414,7 +450,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 
@@ -431,7 +469,9 @@ describe.skip("TTSDownloadButton", () => {
         error: null,
         data: undefined,
         reset: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useCreateTTSDownload
+      >);
 
       renderComponent();
 

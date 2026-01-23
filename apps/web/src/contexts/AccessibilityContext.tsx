@@ -604,7 +604,7 @@ export function useFormErrorAnnouncement(
       const count = errorMessages.length;
       const message =
         count === 1
-          ? errorMessages[0]!
+          ? (errorMessages[0] ?? "Validation error")
           : `${count} validation errors: ${errorString}`;
       announceError(message);
       previousErrorsRef.current = errorString;

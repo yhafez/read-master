@@ -255,10 +255,10 @@ describe("useAchievementsStore", () => {
       ACHIEVEMENTS.forEach((achievement) => {
         const progress = state.progress[achievement.id];
         expect(progress).toBeDefined();
-        expect(progress!.achievementId).toBe(achievement.id);
-        expect(progress!.currentValue).toBe(0);
-        expect(progress!.isUnlocked).toBe(false);
-        expect(progress!.unlockedAt).toBeNull();
+        expect(progress?.achievementId).toBe(achievement.id);
+        expect(progress?.currentValue).toBe(0);
+        expect(progress?.isUnlocked).toBe(false);
+        expect(progress?.unlockedAt).toBeNull();
       });
     });
 
@@ -278,7 +278,7 @@ describe("useAchievementsStore", () => {
       useAchievementsStore.getState().updateProgress("first_book", 1);
 
       const state = useAchievementsStore.getState();
-      expect(state.progress["first_book"]!.currentValue).toBe(1);
+      expect(state.progress["first_book"]?.currentValue).toBe(1);
     });
 
     it("should not update progress for an invalid achievement", () => {
@@ -292,15 +292,15 @@ describe("useAchievementsStore", () => {
       useAchievementsStore.getState().updateProgress("first_book", 1);
 
       const state = useAchievementsStore.getState();
-      expect(state.progress["first_book"]!.isUnlocked).toBe(true);
-      expect(state.progress["first_book"]!.unlockedAt).not.toBeNull();
+      expect(state.progress["first_book"]?.isUnlocked).toBe(true);
+      expect(state.progress["first_book"]?.unlockedAt).not.toBeNull();
     });
 
     it("should not decrease progress below 0", () => {
       useAchievementsStore.getState().updateProgress("first_book", -5);
 
       const state = useAchievementsStore.getState();
-      expect(state.progress["first_book"]!.currentValue).toBe(0);
+      expect(state.progress["first_book"]?.currentValue).toBe(0);
     });
 
     it("should not update progress for already unlocked achievement", () => {
@@ -312,7 +312,7 @@ describe("useAchievementsStore", () => {
 
       const state = useAchievementsStore.getState();
       // Value should remain at 1 since it was unlocked
-      expect(state.progress["first_book"]!.currentValue).toBe(1);
+      expect(state.progress["first_book"]?.currentValue).toBe(1);
     });
   });
 
@@ -348,8 +348,8 @@ describe("useAchievementsStore", () => {
       useAchievementsStore.getState().unlockAchievement("first_book");
 
       const state = useAchievementsStore.getState();
-      expect(state.progress["first_book"]!.isUnlocked).toBe(true);
-      expect(state.progress["first_book"]!.unlockedAt).not.toBeNull();
+      expect(state.progress["first_book"]?.isUnlocked).toBe(true);
+      expect(state.progress["first_book"]?.unlockedAt).not.toBeNull();
     });
 
     it("should add to newlyUnlocked array", () => {
@@ -363,13 +363,13 @@ describe("useAchievementsStore", () => {
       useAchievementsStore.getState().unlockAchievement("first_book");
 
       const firstState = useAchievementsStore.getState();
-      const firstUnlockTime = firstState.progress["first_book"]!.unlockedAt;
+      const firstUnlockTime = firstState.progress["first_book"]?.unlockedAt;
 
       // Try to unlock again
       useAchievementsStore.getState().unlockAchievement("first_book");
 
       const secondState = useAchievementsStore.getState();
-      expect(secondState.progress["first_book"]!.unlockedAt).toBe(
+      expect(secondState.progress["first_book"]?.unlockedAt).toBe(
         firstUnlockTime
       );
       // Should not add duplicate to newlyUnlocked
@@ -651,9 +651,9 @@ describe("useAchievementsStore", () => {
       useAchievementsStore.getState().reset();
 
       const state = useAchievementsStore.getState();
-      expect(state.progress["first_book"]!.isUnlocked).toBe(false);
-      expect(state.progress["first_book"]!.unlockedAt).toBeNull();
-      expect(state.progress["bookworm"]!.currentValue).toBe(0);
+      expect(state.progress["first_book"]?.isUnlocked).toBe(false);
+      expect(state.progress["first_book"]?.unlockedAt).toBeNull();
+      expect(state.progress["bookworm"]?.currentValue).toBe(0);
       expect(state.newlyUnlocked).toEqual([]);
     });
   });

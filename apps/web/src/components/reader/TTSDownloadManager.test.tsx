@@ -119,16 +119,23 @@ describe.skip("TTSDownloadManager", () => {
   describe("Rendering", () => {
     it("should render title and quota info", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: mockDownloads, quota: mockQuota },
+        data: {
+          success: true,
+          downloads: mockDownloads,
+          quota: mockQuota,
+          pagination: { total: 3, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -142,12 +149,14 @@ describe.skip("TTSDownloadManager", () => {
         isLoading: true,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -160,12 +169,14 @@ describe.skip("TTSDownloadManager", () => {
         isLoading: false,
         error: new Error("Failed to fetch downloads"),
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -176,16 +187,23 @@ describe.skip("TTSDownloadManager", () => {
 
     it("should show empty state", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: [], quota: mockQuota },
+        data: {
+          success: true,
+          downloads: [],
+          quota: mockQuota,
+          pagination: { total: 0, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -197,16 +215,23 @@ describe.skip("TTSDownloadManager", () => {
 
     it("should show upgrade message for FREE tier", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: [], quota: { used: 0, limit: 0, remaining: 0 } },
+        data: {
+          success: true,
+          downloads: [],
+          quota: { used: 0, limit: 0, remaining: 0 },
+          pagination: { total: 0, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent("FREE");
 
@@ -219,16 +244,23 @@ describe.skip("TTSDownloadManager", () => {
   describe("Download List", () => {
     it("should render all downloads", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: mockDownloads, quota: mockQuota },
+        data: {
+          success: true,
+          downloads: mockDownloads,
+          quota: mockQuota,
+          pagination: { total: 3, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -240,18 +272,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show completed status chip", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[0]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -261,18 +297,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show processing status with progress bar", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[1]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -284,18 +324,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show failed status with error message", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[2]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -306,18 +350,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show download button for completed downloads", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[0]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -328,18 +376,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show file size for completed downloads", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[0]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -352,18 +404,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should open delete confirmation dialog", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[0]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -383,18 +439,22 @@ describe.skip("TTSDownloadManager", () => {
 
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[0]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: mockMutate,
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -417,18 +477,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should close dialog when cancel clicked", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [mockDownloads[0]],
           quota: mockQuota,
+          pagination: { total: 1, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -453,16 +517,23 @@ describe.skip("TTSDownloadManager", () => {
   describe("Refresh Functionality", () => {
     it("should have refresh button", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: mockDownloads, quota: mockQuota },
+        data: {
+          success: true,
+          downloads: mockDownloads,
+          quota: mockQuota,
+          pagination: { total: 3, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -474,16 +545,23 @@ describe.skip("TTSDownloadManager", () => {
       const mockRefetch = vi.fn();
 
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: mockDownloads, quota: mockQuota },
+        data: {
+          success: true,
+          downloads: mockDownloads,
+          quota: mockQuota,
+          pagination: { total: 3, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: mockRefetch,
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -497,16 +575,23 @@ describe.skip("TTSDownloadManager", () => {
   describe("Quota Display", () => {
     it("should show remaining quota", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
-        data: { downloads: [], quota: mockQuota },
+        data: {
+          success: true,
+          downloads: [],
+          quota: mockQuota,
+          pagination: { total: 0, limit: 10, offset: 0, hasMore: false },
+        },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -516,18 +601,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show warning color when quota low", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [],
           quota: { used: 9, limit: 10, remaining: 1 },
+          pagination: { total: 0, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent();
 
@@ -537,18 +626,22 @@ describe.skip("TTSDownloadManager", () => {
     it("should show unlimited for SCHOLAR tier", () => {
       vi.mocked(useTTSDownloadsHook.useTTSDownloads).mockReturnValue({
         data: {
+          success: true,
           downloads: [],
-          quota: { used: 100, limit: "unlimited", remaining: Infinity },
+          quota: { used: 100, limit: "unlimited", remaining: "unlimited" },
+          pagination: { total: 0, limit: 10, offset: 0, hasMore: false },
         },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
-      } as any);
+      } as unknown as ReturnType<typeof useTTSDownloadsHook.useTTSDownloads>);
 
       vi.mocked(useTTSDownloadsHook.useDeleteTTSDownload).mockReturnValue({
         mutate: vi.fn(),
         isPending: false,
-      } as any);
+      } as unknown as ReturnType<
+        typeof useTTSDownloadsHook.useDeleteTTSDownload
+      >);
 
       renderComponent("SCHOLAR");
 

@@ -129,7 +129,10 @@ function buildReplyTree(
     if (!tree.has(parentId)) {
       tree.set(parentId, []);
     }
-    tree.get(parentId)!.push(reply);
+    const replies = tree.get(parentId);
+    if (replies) {
+      replies.push(reply);
+    }
   });
 
   return tree;

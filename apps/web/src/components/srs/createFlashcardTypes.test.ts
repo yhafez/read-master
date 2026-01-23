@@ -487,7 +487,7 @@ describe("Preference helpers", () => {
       savePreferences(prefs);
       const stored = localStorage.getItem(PREFERENCES_KEY);
       expect(stored).toBeTruthy();
-      expect(JSON.parse(stored!)).toEqual(prefs);
+      expect(JSON.parse(stored ?? "{}")).toEqual(prefs);
     });
   });
 
