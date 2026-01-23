@@ -1279,7 +1279,31 @@
     "detail": "Detalye ng Grupo",
     "placeholder": "Ang detalye ng grupo {{groupId}} ay makikita dito.",
     "discussions": "Mga Diskusyon",
-    "discussionsPlaceholder": "Ang mga diskusyon ng grupo {{groupId}} ay makikita dito."
+    "discussionsPlaceholder": "Ang mga diskusyon ng grupo {{groupId}} ay makikita dito.",
+    "scheduleDiscussion": "Mag-iskedyul ng Diskusyon",
+    "scheduledFor": "Naka-iskedyul sa",
+    "discussionStarted": "Nagsimula na ang Diskusyon",
+    "discussion": {
+      "scheduleTitle": "Mag-iskedyul ng Diskusyon",
+      "creatingIn": "Gumagawa ng diskusyon sa:",
+      "scheduleForLater": "Mag-iskedyul para sa ibang pagkakataon",
+      "scheduled": "Naka-iskedyul",
+      "scheduleHint": "Makikita na ang diskusyon ngayon pero markado bilang naka-iskedyul sa tiyak na oras",
+      "immediateHint": "Magsisimula kaagad ang diskusyon",
+      "scheduledAt": "Petsa at Oras ng Iskedyul",
+      "mustBeFuture": "Ang oras ng iskedyul ay dapat sa hinaharap",
+      "titleLabel": "Pamagat ng Diskusyon",
+      "titlePlaceholder": "Ano ang gusto mong pag-usapan?",
+      "contentLabel": "Nilalaman ng Diskusyon",
+      "contentPlaceholder": "Ibahagi ang iyong mga kaisipan, tanong, o paksa para sa diskusyon...",
+      "selectBook": "Kaugnay na Libro (Opsyonal)",
+      "noBook": "Walang tiyak na libro",
+      "noBooksInGroup": "Walang libro sa listahan ng pagbabasa ng grupo",
+      "schedule": "Mag-iskedyul ng Diskusyon",
+      "create": "Gumawa ng Diskusyon",
+      "createError": "Hindi nagawa ang diskusyon",
+      "validationError": "Pakipunan ang lahat ng kinakailangang field"
+    }
   },
   "forum": {
     "title": "Forum",

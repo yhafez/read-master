@@ -46,9 +46,11 @@ import {
   PushPin,
   Lock,
   PersonOutline,
+  Schedule as ScheduleIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, format, isFuture } from "date-fns";
+import { ScheduleDiscussionDialog } from "@/components/groups";
 
 // ============================================================================
 // Types
@@ -75,6 +77,8 @@ type DiscussionSummary = {
   book: DiscussionBookInfo | null;
   isPinned: boolean;
   isLocked: boolean;
+  isScheduled: boolean;
+  scheduledAt: string | null;
   repliesCount: number;
   lastReplyAt: string | null;
   user: DiscussionUserInfo;
@@ -118,17 +122,16 @@ export function GroupDiscussionsPage(): React.ReactElement {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState<SortOption>("lastReplyAt");
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
   const limit = 20;
 
   // Fetch discussions
-  const {
-    data,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery<DiscussionsResponse, Error>({
+  const { data, isLoading, error, refetch } = useQuery<
+    DiscussionsResponse,
+    Error
+  >({
     queryKey: ["groupDiscussions", groupId, page, limit, sortBy],
     queryFn: async () => {
       const params = new URLSearchParams({
@@ -138,11 +141,14 @@ export function GroupDiscussionsPage(): React.ReactElement {
         sortDirection: "desc",
       });
 
-      const response = await fetch(`/api/groups/${groupId}/discussions?${params}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `/api/groups/${groupId}/discussions?${params}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch discussions");
@@ -173,7 +179,9 @@ export function GroupDiscussionsPage(): React.ReactElement {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["groupDiscussions", groupId] });
+      queryClient.invalidateQueries({
+        queryKey: ["groupDiscussions", groupId],
+      });
       setShowCreateDialog(false);
       setNewTitle("");
       setNewContent("");
@@ -196,10 +204,15 @@ export function GroupDiscussionsPage(): React.ReactElement {
   const handleDiscussionClick = (discussionId: string) => {
     // TODO: Navigate to discussion detail page
     // For now, just show an alert
-    alert(`Discussion detail page would show here for discussion: ${discussionId}`);
+    alert(
+      `Discussion detail page would show here for discussion: ${discussionId}`
+    );
   };
 
-  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -207,7 +220,12 @@ export function GroupDiscussionsPage(): React.ReactElement {
   // Loading state
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="60vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -233,7 +251,12 @@ export function GroupDiscussionsPage(): React.ReactElement {
   return (
     <Box>
       {/* Header */}
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
         <Box>
           <Typography variant="h4" component="h1" gutterBottom>
             {t("groups.discussions")}
@@ -243,14 +266,22 @@ export function GroupDiscussionsPage(): React.ReactElement {
           </Typography>
         </Box>
         {!isMobile && (
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => setShowCreateDialog(true)}
-            size="large"
-          >
-            {t("groups.newDiscussion")}
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="outlined"
+              startIcon={<ScheduleIcon />}
+              onClick={() => setShowScheduleDialog(true)}
+            >
+              {t("groups.scheduleDiscussion")}
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={() => setShowCreateDialog(true)}
+            >
+              {t("groups.newDiscussion")}
+            </Button>
+          </Stack>
         )}
       </Stack>
 
@@ -302,14 +333,22 @@ export function GroupDiscussionsPage(): React.ReactElement {
                 <CardContent>
                   <Stack direction="row" spacing={2} alignItems="flex-start">
                     <Avatar
-                      {...(discussion.user.avatarUrl ? { src: discussion.user.avatarUrl } : {})}
+                      {...(discussion.user.avatarUrl
+                        ? { src: discussion.user.avatarUrl }
+                        : {})}
                       sx={{ width: 48, height: 48 }}
                     >
                       <PersonOutline />
                     </Avatar>
                     <Box flex={1}>
                       {/* Title and Badges */}
-                      <Stack direction="row" spacing={1} alignItems="center" mb={1} flexWrap="wrap">
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        alignItems="center"
+                        mb={1}
+                        flexWrap="wrap"
+                      >
                         <Typography variant="h6" component="h3">
                           {discussion.title}
                         </Typography>
@@ -327,6 +366,22 @@ export function GroupDiscussionsPage(): React.ReactElement {
                             label={t("groups.locked")}
                             size="small"
                             color="default"
+                          />
+                        )}
+                        {discussion.isScheduled && discussion.scheduledAt && (
+                          <Chip
+                            icon={<ScheduleIcon />}
+                            label={
+                              isFuture(new Date(discussion.scheduledAt))
+                                ? `${t("groups.scheduledFor")} ${format(new Date(discussion.scheduledAt), "PPp")}`
+                                : t("groups.discussionStarted")
+                            }
+                            size="small"
+                            color={
+                              isFuture(new Date(discussion.scheduledAt))
+                                ? "warning"
+                                : "success"
+                            }
                           />
                         )}
                       </Stack>
@@ -364,7 +419,9 @@ export function GroupDiscussionsPage(): React.ReactElement {
                         flexWrap="wrap"
                       >
                         <Typography variant="caption" color="text.secondary">
-                          {discussion.user.displayName || discussion.user.username || "Anonymous"}
+                          {discussion.user.displayName ||
+                            discussion.user.username ||
+                            "Anonymous"}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
                           •
@@ -375,7 +432,11 @@ export function GroupDiscussionsPage(): React.ReactElement {
                         <Typography variant="caption" color="text.secondary">
                           •
                         </Typography>
-                        <Stack direction="row" spacing={0.5} alignItems="center">
+                        <Stack
+                          direction="row"
+                          spacing={0.5}
+                          alignItems="center"
+                        >
                           <ChatBubbleOutline fontSize="small" color="action" />
                           <Typography variant="caption" color="text.secondary">
                             {discussion.repliesCount} {t("groups.replies")}
@@ -383,11 +444,20 @@ export function GroupDiscussionsPage(): React.ReactElement {
                         </Stack>
                         {discussion.lastReplyAt && (
                           <>
-                            <Typography variant="caption" color="text.secondary">
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
                               •
                             </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                              {t("groups.lastReply")} {formatRelativeTime(new Date(discussion.lastReplyAt))}
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              {t("groups.lastReply")}{" "}
+                              {formatRelativeTime(
+                                new Date(discussion.lastReplyAt)
+                              )}
                             </Typography>
                           </>
                         )}
@@ -472,12 +542,30 @@ export function GroupDiscussionsPage(): React.ReactElement {
           <Button
             variant="contained"
             onClick={handleCreateDiscussion}
-            disabled={!newTitle.trim() || !newContent.trim() || createMutation.isPending}
+            disabled={
+              !newTitle.trim() || !newContent.trim() || createMutation.isPending
+            }
           >
-            {createMutation.isPending ? t("common.creating") : t("common.create")}
+            {createMutation.isPending
+              ? t("common.creating")
+              : t("common.create")}
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Schedule Discussion Dialog */}
+      {groupId && (
+        <ScheduleDiscussionDialog
+          open={showScheduleDialog}
+          onClose={() => setShowScheduleDialog(false)}
+          groupId={groupId}
+          groupName={t("groups.discussions")}
+          onSuccess={() => {
+            setPage(1);
+            refetch();
+          }}
+        />
+      )}
     </Box>
   );
 }

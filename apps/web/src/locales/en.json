@@ -1324,7 +1324,31 @@
     "detail": "Group Details",
     "placeholder": "Group {{groupId}} details will appear here.",
     "discussions": "Discussions",
-    "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here."
+    "discussionsPlaceholder": "Discussions for group {{groupId}} will appear here.",
+    "scheduleDiscussion": "Schedule Discussion",
+    "scheduledFor": "Scheduled for",
+    "discussionStarted": "Discussion Started",
+    "discussion": {
+      "scheduleTitle": "Schedule Discussion",
+      "creatingIn": "Creating discussion in:",
+      "scheduleForLater": "Schedule for later",
+      "scheduled": "Scheduled",
+      "scheduleHint": "Discussion will be visible now but marked as scheduled for a specific time",
+      "immediateHint": "Discussion will start immediately",
+      "scheduledAt": "Scheduled Date & Time",
+      "mustBeFuture": "Scheduled time must be in the future",
+      "titleLabel": "Discussion Title",
+      "titlePlaceholder": "What would you like to discuss?",
+      "contentLabel": "Discussion Content",
+      "contentPlaceholder": "Share your thoughts, questions, or topics for discussion...",
+      "selectBook": "Related Book (Optional)",
+      "noBook": "No specific book",
+      "noBooksInGroup": "No books in group reading list",
+      "schedule": "Schedule Discussion",
+      "create": "Create Discussion",
+      "createError": "Failed to create discussion",
+      "validationError": "Please fill in all required fields"
+    }
   },
   "forum": {
     "bestAnswer": "Best Answer",

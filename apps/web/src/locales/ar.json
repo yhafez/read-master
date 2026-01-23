@@ -1303,7 +1303,31 @@
     "detail": "تفاصيل المجموعة",
     "placeholder": "ستظهر تفاصيل المجموعة {{groupId}} هنا.",
     "discussions": "المناقشات",
-    "discussionsPlaceholder": "ستظهر مناقشات المجموعة {{groupId}} هنا."
+    "discussionsPlaceholder": "ستظهر مناقشات المجموعة {{groupId}} هنا.",
+    "scheduleDiscussion": "جدولة مناقشة",
+    "scheduledFor": "مجدولة في",
+    "discussionStarted": "بدأت المناقشة",
+    "discussion": {
+      "scheduleTitle": "جدولة مناقشة",
+      "creatingIn": "إنشاء مناقشة في:",
+      "scheduleForLater": "جدولة لوقت لاحق",
+      "scheduled": "مجدولة",
+      "scheduleHint": "ستكون المناقشة مرئية الآن ولكن موسومة كمجدولة لوقت محدد",
+      "immediateHint": "ستبدأ المناقشة فوراً",
+      "scheduledAt": "التاريخ والوقت المجدول",
+      "mustBeFuture": "يجب أن يكون الوقت المجدول في المستقبل",
+      "titleLabel": "عنوان المناقشة",
+      "titlePlaceholder": "ما الذي تريد مناقشته؟",
+      "contentLabel": "محتوى المناقشة",
+      "contentPlaceholder": "شارك أفكارك أو أسئلتك أو مواضيع للمناقشة...",
+      "selectBook": "الكتاب المرتبط (اختياري)",
+      "noBook": "بدون كتاب محدد",
+      "noBooksInGroup": "لا توجد كتب في قائمة قراءة المجموعة",
+      "schedule": "جدولة المناقشة",
+      "create": "إنشاء مناقشة",
+      "createError": "فشل في إنشاء المناقشة",
+      "validationError": "يرجى ملء جميع الحقول المطلوبة"
+    }
   },
   "forum": {
     "markBestAnswer": "تحديد كأفضل إجابة",

@@ -136,6 +136,8 @@ export type DiscussionSummary = {
   book: DiscussionBookInfo | null;
   isPinned: boolean;
   isLocked: boolean;
+  isScheduled: boolean;
+  scheduledAt: string | null;
   repliesCount: number;
   lastReplyAt: string | null;
   user: DiscussionUserInfo;
@@ -169,6 +171,8 @@ export type CreateDiscussionInput = {
   title: string;
   content: string;
   bookId?: string | null | undefined;
+  isScheduled?: boolean;
+  scheduledAt?: string | null | undefined;
 };
 
 /**
@@ -209,6 +213,20 @@ export const createDiscussionSchema = z.object({
     .regex(/^c[a-z0-9]+$/, "Invalid book ID format")
     .optional()
     .nullable(),
+  isScheduled: z.boolean().optional().default(false),
+  scheduledAt: z
+    .string()
+    .datetime({ message: "Invalid date format. Use ISO 8601 format." })
+    .optional()
+    .nullable()
+    .refine(
+      (val) => {
+        if (!val) return true;
+        const date = new Date(val);
+        return date > new Date();
+      },
+      { message: "Scheduled date must be in the future" }
+    ),
 });
 
 // ============================================================================
@@ -442,6 +460,8 @@ export function mapToDiscussionSummary(discussion: {
   book: { id: string; title: string; author: string | null } | null;
   isPinned: boolean;
   isLocked: boolean;
+  isScheduled: boolean;
+  scheduledAt: Date | null;
   repliesCount: number;
   lastReplyAt: Date | null;
   user: {
@@ -461,6 +481,8 @@ export function mapToDiscussionSummary(discussion: {
     book: mapToDiscussionBookInfo(discussion.book),
     isPinned: discussion.isPinned,
     isLocked: discussion.isLocked,
+    isScheduled: discussion.isScheduled,
+    scheduledAt: formatDate(discussion.scheduledAt),
     repliesCount: discussion.repliesCount,
     lastReplyAt: formatDate(discussion.lastReplyAt),
     user: mapToDiscussionUserInfo(discussion.user),
@@ -602,6 +624,8 @@ async function listDiscussions(
         },
         isPinned: true,
         isLocked: true,
+        isScheduled: true,
+        scheduledAt: true,
         repliesCount: true,
         lastReplyAt: true,
         user: {
@@ -639,6 +663,8 @@ async function createDiscussion(
         title: input.title,
         content: input.content,
         bookId: input.bookId ?? null,
+        isScheduled: input.isScheduled ?? false,
+        scheduledAt: input.scheduledAt ? new Date(input.scheduledAt) : null,
       },
       select: {
         id: true,
@@ -654,6 +680,8 @@ async function createDiscussion(
         },
         isPinned: true,
         isLocked: true,
+        isScheduled: true,
+        scheduledAt: true,
         repliesCount: true,
         lastReplyAt: true,
         user: {

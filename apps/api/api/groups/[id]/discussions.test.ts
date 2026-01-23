@@ -143,6 +143,8 @@ describe("Type Exports", () => {
       book: { id: "book-1", title: "Test Book", author: "Author" },
       isPinned: false,
       isLocked: false,
+      isScheduled: false,
+      scheduledAt: null,
       repliesCount: 5,
       lastReplyAt: "2026-01-18T00:00:00.000Z",
       user: {
@@ -205,6 +207,8 @@ describe("Type Exports", () => {
         book: null,
         isPinned: false,
         isLocked: false,
+        isScheduled: false,
+        scheduledAt: null,
         repliesCount: 0,
         lastReplyAt: null,
         user: {
@@ -781,6 +785,8 @@ describe("mapToDiscussionSummary", () => {
       book: { id: "book-1", title: "Test Book", author: "Author" },
       isPinned: true,
       isLocked: false,
+      isScheduled: true,
+      scheduledAt: new Date("2026-01-20T10:00:00.000Z"),
       repliesCount: 10,
       lastReplyAt: new Date("2026-01-18T12:00:00.000Z"),
       user: {
@@ -796,6 +802,8 @@ describe("mapToDiscussionSummary", () => {
     expect(result.id).toBe("disc-1");
     expect(result.title).toBe("Test Discussion");
     expect(result.isPinned).toBe(true);
+    expect(result.isScheduled).toBe(true);
+    expect(result.scheduledAt).toBe("2026-01-20T10:00:00.000Z");
     expect(result.repliesCount).toBe(10);
     expect(result.lastReplyAt).toBe("2026-01-18T12:00:00.000Z");
     expect(result.book?.id).toBe("book-1");
@@ -811,6 +819,8 @@ describe("mapToDiscussionSummary", () => {
       book: null,
       isPinned: false,
       isLocked: false,
+      isScheduled: false,
+      scheduledAt: null,
       repliesCount: 0,
       lastReplyAt: null,
       user: {
@@ -825,6 +835,8 @@ describe("mapToDiscussionSummary", () => {
     const result = mapToDiscussionSummary(discussion);
     expect(result.lastReplyAt).toBeNull();
     expect(result.book).toBeNull();
+    expect(result.isScheduled).toBe(false);
+    expect(result.scheduledAt).toBeNull();
   });
 });
 
@@ -958,6 +970,8 @@ describe("Response Structure", () => {
       book: null,
       isPinned: false,
       isLocked: false,
+      isScheduled: false,
+      scheduledAt: null,
       repliesCount: 0,
       lastReplyAt: null,
       user: { id: "u1", username: "test", displayName: null, avatarUrl: null },
@@ -1033,6 +1047,8 @@ describe("Integration Scenarios", () => {
       },
       isPinned: true,
       isLocked: false,
+      isScheduled: true,
+      scheduledAt: new Date("2026-01-25T18:00:00.000Z"),
       repliesCount: 15,
       lastReplyAt: new Date("2026-01-18T15:30:00.000Z"),
       user: {
@@ -1051,6 +1067,8 @@ describe("Integration Scenarios", () => {
     expect(result.book?.title).toBe("The Great Gatsby");
     expect(result.user.username).toBe("booklover");
     expect(result.isPinned).toBe(true);
+    expect(result.isScheduled).toBe(true);
+    expect(result.scheduledAt).toBe("2026-01-25T18:00:00.000Z");
     expect(result.repliesCount).toBe(15);
   });
 });

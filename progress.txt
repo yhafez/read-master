@@ -3,6 +3,131 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 16:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: social-bookclubs-001 - Book Clubs Enhancement (Continued: Scheduled Discussions)
+
+WHAT WAS DONE:
+✅ **Updated Discussions API to Support Scheduling**
+- Added `isScheduled` and `scheduledAt` fields to API types
+- Extended createDiscussionSchema with scheduling validation
+- Updated mapToDiscussionSummary to include scheduling fields
+- Added validation: scheduledAt must be in the future
+- Updated database queries to select/insert scheduling fields
+
+✅ **Created ScheduleDiscussionDialog Component** (`apps/web/src/components/groups/ScheduleDiscussionDialog.tsx`)
+- Dialog for creating scheduled or immediate discussions
+- Schedule toggle switch with visual indicator
+- DateTime picker for selecting discussion time
+- Optional book selection from group's reading list
+- Title and content input with character limits
+- Form validation (required fields, future date check)
+- Loading states and error handling
+- Follows existing dialog patterns
+
+✅ **Integrated ScheduleDiscussionDialog into GroupDiscussionsPage**
+- Added "Schedule Discussion" button in header
+- Added state for controlling dialog visibility
+- Added scheduled discussion indicator (Chip) in discussion cards
+- Uses date-fns for formatting scheduled times
+- Shows different status for future vs. started discussions
+
+✅ **Added i18n Translations** (all 6 languages)
+- Added `groups.discussion.*` translation keys (25 per language)
+- Added `groups.scheduleDiscussion`, `groups.scheduledFor`, `groups.discussionStarted`
+- English, Arabic, Spanish, Japanese, Chinese, Tagalog
+
+✅ **Created Tests** (57 tests, all passing)
+- `apps/web/src/components/groups/ScheduleDiscussionDialog.test.tsx`
+- Tests cover:
+  - Props interface validation
+  - Helper functions (getMinDateTime, getDefaultScheduleDateTime, etc.)
+  - Form validation logic
+  - Schedule toggle behavior
+  - DateTime handling
+  - State management
+  - Book selection
+  - Error handling
+
+✅ **Updated API Tests**
+- Updated `apps/api/api/groups/[id]/discussions.test.ts`
+- Added isScheduled and scheduledAt to all test mock data
+
+WHY IT MATTERS:
+- **Discussion Scheduling**: Groups can now schedule discussions for specific times
+- **Calendar Integration Foundation**: scheduledAt field enables future calendar views
+- **Flexibility**: Users can choose between immediate or scheduled discussions
+- **Better Organization**: Scheduled discussions are visually distinguished
+
+TECHNICAL DETAILS:
+**API Changes:**
+- createDiscussionSchema extended with isScheduled (boolean, default false) and scheduledAt (ISO datetime, optional)
+- Validation ensures scheduledAt is in the future
+- DiscussionSummary type now includes isScheduled and scheduledAt
+
+**Frontend Changes:**
+- ScheduleDiscussionDialog uses React Query for mutations
+- Uses useGroupBooks hook for book selection
+- DateTime picker with minimum time (now + 1 hour)
+- Default schedule time: tomorrow at 10 AM local time
+- Form validation prevents submission with past dates
+
+REMAINING WORK (social-bookclubs-001):
+- [ ] Calendar view for scheduled discussions
+- [ ] Email notifications for upcoming discussions
+- [ ] Club invitation system enhancement
+
+DISCOVERIES:
+- date-fns `isFuture` function is useful for checking scheduled status
+- ISO datetime handling requires careful timezone consideration
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, warnings in unrelated files)
+✅ pnpm vitest run - Passed
+  - New tests: 57/57 passed
+  - All existing tests continue to pass
+  - Pre-existing localStorage test failures remain (unrelated)
+
+FILES CREATED:
+- apps/web/src/components/groups/ScheduleDiscussionDialog.tsx (280 lines)
+- apps/web/src/components/groups/ScheduleDiscussionDialog.test.tsx (440 lines)
+
+FILES MODIFIED:
+- apps/api/api/groups/[id]/discussions.ts (scheduling support)
+- apps/api/api/groups/[id]/discussions.test.ts (updated mock data)
+- apps/web/src/pages/social/GroupDiscussionsPage.tsx (dialog integration)
+- apps/web/src/components/groups/index.ts (export ScheduleDiscussionDialog)
+- apps/web/src/locales/en.json (added groups.discussion.* translations)
+- apps/web/src/locales/ar.json (added groups.discussion.* translations)
+- apps/web/src/locales/es.json (added groups.discussion.* translations)
+- apps/web/src/locales/ja.json (added groups.discussion.* translations)
+- apps/web/src/locales/zh.json (added groups.discussion.* translations)
+- apps/web/src/locales/tl.json (added groups.discussion.* translations)
+
+NEXT RECOMMENDED TASKS:
+1. **social-bookclubs-001** (continued) - Calendar view for discussions
+   - Create DiscussionCalendar component
+   - Add date-range queries for scheduled discussions
+   - Integrate with group detail page
+
+2. **email-marketing-001** - Build email marketing funnel
+   - Discussion reminder emails
+   - Weekly digest for book clubs
+
+3. **payments-stripe-complete-001** - Complete Stripe integration
+   - Subscription management
+   - Usage limits
+
+SPRINT STATUS:
+- In Progress (155/174 tasks complete - 89.1%)
+- 19 active tasks remaining
+- social-bookclubs-001: Backend + GroupBooksPanel + AddBookToGroupDialog + ScheduleDiscussionDialog complete
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 16:15]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

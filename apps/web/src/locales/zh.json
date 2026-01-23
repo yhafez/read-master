@@ -1279,7 +1279,31 @@
     "detail": "群组详情",
     "placeholder": "群组{{groupId}}的详情将显示在这里。",
     "discussions": "讨论",
-    "discussionsPlaceholder": "群组{{groupId}}的讨论将显示在这里。"
+    "discussionsPlaceholder": "群组{{groupId}}的讨论将显示在这里。",
+    "scheduleDiscussion": "安排讨论",
+    "scheduledFor": "安排于",
+    "discussionStarted": "讨论已开始",
+    "discussion": {
+      "scheduleTitle": "安排讨论",
+      "creatingIn": "创建讨论于:",
+      "scheduleForLater": "安排在稍后",
+      "scheduled": "已安排",
+      "scheduleHint": "讨论现在可见，但标记为安排在特定时间",
+      "immediateHint": "讨论将立即开始",
+      "scheduledAt": "安排日期和时间",
+      "mustBeFuture": "安排时间必须在未来",
+      "titleLabel": "讨论标题",
+      "titlePlaceholder": "您想讨论什么？",
+      "contentLabel": "讨论内容",
+      "contentPlaceholder": "分享您的想法、问题或讨论主题...",
+      "selectBook": "相关书籍（可选）",
+      "noBook": "无特定书籍",
+      "noBooksInGroup": "群组阅读列表中没有书籍",
+      "schedule": "安排讨论",
+      "create": "创建讨论",
+      "createError": "创建讨论失败",
+      "validationError": "请填写所有必填字段"
+    }
   },
   "forum": {
     "title": "Forum",

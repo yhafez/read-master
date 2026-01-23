@@ -1279,7 +1279,31 @@
     "detail": "グループ詳細",
     "placeholder": "グループ{{groupId}}の詳細がここに表示されます。",
     "discussions": "ディスカッション",
-    "discussionsPlaceholder": "グループ{{groupId}}のディスカッションがここに表示されます。"
+    "discussionsPlaceholder": "グループ{{groupId}}のディスカッションがここに表示されます。",
+    "scheduleDiscussion": "ディスカッションを予約",
+    "scheduledFor": "予定日時",
+    "discussionStarted": "ディスカッション開始",
+    "discussion": {
+      "scheduleTitle": "ディスカッションを予約",
+      "creatingIn": "ディスカッション作成先:",
+      "scheduleForLater": "後で予約する",
+      "scheduled": "予約済み",
+      "scheduleHint": "ディスカッションは今すぐ表示されますが、特定の時間に予約済みとしてマークされます",
+      "immediateHint": "ディスカッションはすぐに始まります",
+      "scheduledAt": "予定日時",
+      "mustBeFuture": "予定時刻は将来の日時である必要があります",
+      "titleLabel": "ディスカッションタイトル",
+      "titlePlaceholder": "何を議論したいですか？",
+      "contentLabel": "ディスカッション内容",
+      "contentPlaceholder": "あなたの考え、質問、議論したいトピックを共有してください...",
+      "selectBook": "関連書籍（任意）",
+      "noBook": "特定の本なし",
+      "noBooksInGroup": "グループの読書リストに本がありません",
+      "schedule": "ディスカッションを予約",
+      "create": "ディスカッションを作成",
+      "createError": "ディスカッションの作成に失敗しました",
+      "validationError": "すべての必須フィールドに入力してください"
+    }
   },
   "forum": {
     "title": "Forum",

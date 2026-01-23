@@ -1279,7 +1279,31 @@
     "detail": "Detalles del Grupo",
     "placeholder": "Los detalles del grupo {{groupId}} aparecerán aquí.",
     "discussions": "Discusiones",
-    "discussionsPlaceholder": "Las discusiones del grupo {{groupId}} aparecerán aquí."
+    "discussionsPlaceholder": "Las discusiones del grupo {{groupId}} aparecerán aquí.",
+    "scheduleDiscussion": "Programar Discusión",
+    "scheduledFor": "Programada para",
+    "discussionStarted": "Discusión Iniciada",
+    "discussion": {
+      "scheduleTitle": "Programar Discusión",
+      "creatingIn": "Creando discusión en:",
+      "scheduleForLater": "Programar para después",
+      "scheduled": "Programada",
+      "scheduleHint": "La discusión será visible ahora pero marcada como programada para un momento específico",
+      "immediateHint": "La discusión comenzará inmediatamente",
+      "scheduledAt": "Fecha y Hora Programada",
+      "mustBeFuture": "El tiempo programado debe ser en el futuro",
+      "titleLabel": "Título de la Discusión",
+      "titlePlaceholder": "¿Qué te gustaría discutir?",
+      "contentLabel": "Contenido de la Discusión",
+      "contentPlaceholder": "Comparte tus pensamientos, preguntas o temas para discutir...",
+      "selectBook": "Libro Relacionado (Opcional)",
+      "noBook": "Sin libro específico",
+      "noBooksInGroup": "No hay libros en la lista de lectura del grupo",
+      "schedule": "Programar Discusión",
+      "create": "Crear Discusión",
+      "createError": "Error al crear la discusión",
+      "validationError": "Por favor complete todos los campos requeridos"
+    }
   },
   "forum": {
     "title": "Forum",
