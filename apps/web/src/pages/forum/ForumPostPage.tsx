@@ -22,7 +22,6 @@ import {
   Avatar,
   Button,
   IconButton,
-  TextField,
   Divider,
   Breadcrumbs,
   Link,
@@ -49,7 +48,11 @@ import {
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { formatDistanceToNow } from "date-fns";
-import { VoteButtons } from "@/components/forum";
+import {
+  VoteButtons,
+  MarkdownPreview,
+  MarkdownEditor,
+} from "@/components/forum";
 
 // ============================================================================
 // Types
@@ -257,12 +260,9 @@ function ReplyItem({
 
                 {/* Reply Content and Actions */}
                 <Box flex={1}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 2, whiteSpace: "pre-wrap" }}
-                  >
-                    {reply.content}
-                  </Typography>
+                  <Box sx={{ mb: 2 }}>
+                    <MarkdownPreview content={reply.content} variant="body2" />
+                  </Box>
 
                   <Stack direction="row" spacing={2} alignItems="center">
                     {canNest && (
@@ -318,7 +318,10 @@ function ReplyItem({
                         <EditIcon fontSize="small" sx={{ mr: 1 }} />
                         {t("common.edit")}
                       </MenuItem>
-                      <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
+                      <MenuItem
+                        onClick={handleDelete}
+                        sx={{ color: "error.main" }}
+                      >
                         <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
                         {t("common.delete")}
                       </MenuItem>
@@ -440,12 +443,15 @@ export function ForumPostPage(): React.ReactElement {
     if (!id) return;
 
     try {
-      const response = await fetch(`/api/forum/posts/${id}/replies/${replyId}/best`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `/api/forum/posts/${id}/replies/${replyId}/best`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to mark best answer");
@@ -629,12 +635,9 @@ export function ForumPostPage(): React.ReactElement {
 
             {/* Post Content */}
             <Box flex={1}>
-              <Typography
-                variant="body1"
-                sx={{ mb: 2, whiteSpace: "pre-wrap" }}
-              >
-                {post.content}
-              </Typography>
+              <Box sx={{ mb: 2 }}>
+                <MarkdownPreview content={post.content} variant="body1" />
+              </Box>
 
               {/* Post Stats */}
               <Stack direction="row" spacing={3} flexWrap="wrap">
@@ -672,15 +675,17 @@ export function ForumPostPage(): React.ReactElement {
                   ? t("forum.replyToComment")
                   : t("forum.addReply")}
             </Typography>
-            <TextField
-              fullWidth
-              multiline
-              rows={4}
-              value={replyContent}
-              onChange={(e) => setReplyContent(e.target.value)}
-              placeholder={t("forum.replyPlaceholder")}
-              sx={{ mb: 2 }}
-            />
+            <Box sx={{ mb: 2 }}>
+              <MarkdownEditor
+                value={replyContent}
+                onChange={setReplyContent}
+                placeholder={t("forum.replyPlaceholder")}
+                rows={4}
+                maxLength={50000}
+                showCharCount={true}
+                showPreviewToggle={true}
+              />
+            </Box>
             <Stack direction="row" spacing={2}>
               <Button
                 variant="contained"

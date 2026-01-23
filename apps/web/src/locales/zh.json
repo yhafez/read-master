@@ -1440,7 +1440,21 @@
     "pinned": "Pinned",
     "answered": "Answered",
     "locked": "Locked",
-    "bestAnswer": "Best Answer",
+    "bestAnswer": "最佳答案",
+    "write": "编写",
+    "preview": "预览",
+    "editorMode": "编辑器模式",
+    "noPreviewContent": "暂无预览内容。开始写作以查看预览。",
+    "formatting": {
+      "bold": "粗体",
+      "italic": "斜体",
+      "strikethrough": "删除线",
+      "code": "代码",
+      "quote": "引用",
+      "list": "无序列表",
+      "orderedList": "有序列表",
+      "link": "插入链接"
+    },
     "form": {
       "createTitle": "创建新帖子",
       "editTitle": "编辑帖子",

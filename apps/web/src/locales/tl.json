@@ -1440,7 +1440,21 @@
     "pinned": "Pinned",
     "answered": "Answered",
     "locked": "Locked",
-    "bestAnswer": "Best Answer",
+    "bestAnswer": "Pinakamahusay na Sagot",
+    "write": "Sumulat",
+    "preview": "Preview",
+    "editorMode": "Mode ng Editor",
+    "noPreviewContent": "Wala pang mapre-preview. Magsimulang magsulat upang makita ang preview.",
+    "formatting": {
+      "bold": "Bold",
+      "italic": "Italiko",
+      "strikethrough": "Strikethrough",
+      "code": "Code",
+      "quote": "Quote",
+      "list": "Listahan na may Bullet",
+      "orderedList": "Numeradong Listahan",
+      "link": "Maglagay ng Link"
+    },
     "form": {
       "createTitle": "Lumikha ng Bagong Post",
       "editTitle": "I-edit ang Post",

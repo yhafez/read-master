@@ -1436,6 +1436,20 @@
     "answered": "Answered",
     "locked": "Locked",
     "bestAnswer": "Best Answer",
+    "write": "كتابة",
+    "preview": "معاينة",
+    "editorMode": "وضع المحرر",
+    "noPreviewContent": "لا شيء للمعاينة. ابدأ الكتابة لرؤية المعاينة.",
+    "formatting": {
+      "bold": "غامق",
+      "italic": "مائل",
+      "strikethrough": "يتوسطه خط",
+      "code": "كود",
+      "quote": "اقتباس",
+      "list": "قائمة نقطية",
+      "orderedList": "قائمة مرقمة",
+      "link": "إدراج رابط"
+    },
     "form": {
       "createTitle": "إنشاء منشور جديد",
       "editTitle": "تعديل المنشور",

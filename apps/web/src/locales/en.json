@@ -1457,6 +1457,20 @@
     "pinned": "Pinned",
     "answered": "Answered",
     "locked": "Locked",
+    "write": "Write",
+    "preview": "Preview",
+    "editorMode": "Editor Mode",
+    "noPreviewContent": "Nothing to preview. Start writing to see the preview.",
+    "formatting": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "strikethrough": "Strikethrough",
+      "code": "Code",
+      "quote": "Quote",
+      "list": "Bullet List",
+      "orderedList": "Numbered List",
+      "link": "Insert Link"
+    },
     "form": {
       "createTitle": "Create New Post",
       "editTitle": "Edit Post",

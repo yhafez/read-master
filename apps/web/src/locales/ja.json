@@ -1440,7 +1440,21 @@
     "pinned": "Pinned",
     "answered": "Answered",
     "locked": "Locked",
-    "bestAnswer": "Best Answer",
+    "bestAnswer": "ベストアンサー",
+    "write": "書く",
+    "preview": "プレビュー",
+    "editorMode": "エディターモード",
+    "noPreviewContent": "プレビューするものがありません。書き始めるとプレビューが表示されます。",
+    "formatting": {
+      "bold": "太字",
+      "italic": "斜体",
+      "strikethrough": "取り消し線",
+      "code": "コード",
+      "quote": "引用",
+      "list": "箇条書き",
+      "orderedList": "番号付きリスト",
+      "link": "リンクを挿入"
+    },
     "form": {
       "createTitle": "新規投稿を作成",
       "editTitle": "投稿を編集",

@@ -1440,7 +1440,21 @@
     "pinned": "Pinned",
     "answered": "Answered",
     "locked": "Locked",
-    "bestAnswer": "Best Answer",
+    "bestAnswer": "Mejor Respuesta",
+    "write": "Escribir",
+    "preview": "Vista Previa",
+    "editorMode": "Modo de Editor",
+    "noPreviewContent": "Nada para previsualizar. Comienza a escribir para ver la vista previa.",
+    "formatting": {
+      "bold": "Negrita",
+      "italic": "Cursiva",
+      "strikethrough": "Tachado",
+      "code": "Código",
+      "quote": "Cita",
+      "list": "Lista con Viñetas",
+      "orderedList": "Lista Numerada",
+      "link": "Insertar Enlace"
+    },
     "form": {
       "createTitle": "Crear Nueva Publicación",
       "editTitle": "Editar Publicación",
