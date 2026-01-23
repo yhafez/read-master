@@ -1,0 +1,30 @@
+{
+  "name": "@read-master/desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read Master Desktop Application - Tauri",
+  "type": "module",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "build:debug": "tauri build --debug",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "^2.0.0",
+    "@tauri-apps/plugin-fs": "^2.0.0",
+    "@tauri-apps/plugin-notification": "^2.0.0",
+    "@tauri-apps/plugin-shell": "^2.0.0",
+    "@tauri-apps/plugin-store": "^2.0.0",
+    "@tauri-apps/plugin-updater": "^2.0.0",
+    "@tauri-apps/plugin-clipboard-manager": "^2.0.0"
+  },
+  "devDependencies": {
+    "@read-master/config": "workspace:*",
+    "@tauri-apps/cli": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}

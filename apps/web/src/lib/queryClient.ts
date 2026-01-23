@@ -151,6 +151,20 @@ export const queryKeys = {
     voices: () => [...queryKeys.tts.all, "voices"] as const,
     downloads: () => [...queryKeys.tts.all, "downloads"] as const,
   },
+
+  /** Podcasts queries */
+  podcasts: {
+    all: ["podcasts"] as const,
+    lists: () => [...queryKeys.podcasts.all, "list"] as const,
+    list: (filters?: Record<string, unknown>) =>
+      [...queryKeys.podcasts.lists(), filters] as const,
+    details: () => [...queryKeys.podcasts.all, "detail"] as const,
+    detail: (id: string) => [...queryKeys.podcasts.details(), id] as const,
+    episodes: (podcastId: string) =>
+      [...queryKeys.podcasts.detail(podcastId), "episodes"] as const,
+    episodeDetail: (podcastId: string, episodeId: string) =>
+      [...queryKeys.podcasts.episodes(podcastId), episodeId] as const,
+  },
 } as const;
 
 /**

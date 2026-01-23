@@ -154,3 +154,25 @@ export {
   type UseVoiceCommandsReturn,
   type VoiceCommandVocabulary,
 } from "./useVoiceCommands";
+
+export {
+  usePodcasts,
+  usePodcast,
+  useSubscribeToPodcast,
+  useUpdatePodcast,
+  useUnsubscribePodcast,
+  useEpisodes,
+  useUpdateEpisodeProgress,
+  useMarkEpisodeCompleted,
+  useRefreshPodcast,
+  usePrefetchPodcast,
+  type Podcast,
+  type PodcastEpisode,
+  type PodcastWithEpisodes,
+  type PodcastListFilters,
+  type EpisodeListFilters,
+  type SubscribeToPodcastInput,
+  type UpdatePodcastInput,
+  type UpdateEpisodeProgressInput,
+  type EpisodeStatus,
+} from "./usePodcasts";

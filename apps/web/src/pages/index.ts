@@ -104,3 +104,6 @@ export {
   GlossaryPage,
   ApiDocsPage,
 } from "./docs";
+
+// Podcasts
+export { PodcastsPage, PodcastDetailPage } from "./podcasts";

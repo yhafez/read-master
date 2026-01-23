@@ -25,6 +25,10 @@ import {
   storageUtils,
   MaxFileSize,
 } from "../../src/services/storage.js";
+import {
+  imageOptimization,
+  IMAGE_SIZE_PRESETS,
+} from "../../src/services/imageOptimization.js";
 import crypto from "crypto";
 
 // ============================================================================
@@ -54,6 +58,10 @@ export type ForumImageUploadResponse = {
   filename: string;
   contentType: string;
   size: number;
+  optimized: boolean;
+  variants?: Record<string, string>;
+  width?: number;
+  height?: number;
 };
 
 /** Response type for upload errors */
@@ -336,13 +344,38 @@ async function handler(
     // Build storage key
     const key = storage.buildForumImageKey(user.id, imageId, finalFilename);
 
-    // Upload to R2
-    const uploadResult = await storage.uploadFile(key, data, {
-      contentType,
-      cacheControl: "public, max-age=31536000", // Cache for 1 year
+    // Optimize image and generate variants
+    const optimizationResult = await imageOptimization.optimizeImage(
+      data,
+      IMAGE_SIZE_PRESETS.forum,
+      {
+        quality: 85,
+        format: "webp",
+        generateVariants: true,
+        maxWidth: 2048,
+        maxHeight: 2048,
+      }
+    );
+
+    // Use optimized original if available, otherwise use raw data
+    const uploadData =
+      optimizationResult.success && optimizationResult.original
+        ? optimizationResult.original.buffer
+        : data;
+
+    const uploadContentType =
+      optimizationResult.success && optimizationResult.original
+        ? `image/${optimizationResult.original.format}`
+        : contentType;
+
+    // Upload main image to R2
+    const uploadResult = await storage.uploadFile(key, uploadData, {
+      contentType: uploadContentType,
+      cacheControl: "public, max-age=31536000, immutable", // Cache for 1 year
       metadata: {
         uploadedBy: user.id,
         originalFilename: filename,
+        optimized: optimizationResult.success ? "true" : "false",
       },
     });
 
@@ -355,24 +388,75 @@ async function handler(
       return;
     }
 
+    // Upload image variants (sizes) in parallel
+    const variantUrls: Record<string, string> = {};
+    if (optimizationResult.success && optimizationResult.variants) {
+      const variantUploads = [...optimizationResult.variants.entries()].map(
+        async ([sizeName, variant]) => {
+          const variantKey = imageOptimization.getImageKeyWithSize(
+            key,
+            sizeName
+          );
+          const variantResult = await storage.uploadFile(
+            variantKey,
+            variant.buffer,
+            {
+              contentType: `image/${variant.format}`,
+              cacheControl: "public, max-age=31536000, immutable",
+              metadata: {
+                uploadedBy: user.id,
+                variant: sizeName,
+                width: String(variant.width),
+                height: String(variant.height),
+              },
+            }
+          );
+
+          if (variantResult.success) {
+            variantUrls[sizeName] =
+              variantResult.publicUrl || `/api/forum/images/${variantKey}`;
+          }
+        }
+      );
+
+      await Promise.all(variantUploads);
+    }
+
     // Build the public URL
     const url = uploadResult.publicUrl || `/api/forum/images/${key}`;
 
     logger.info("Forum image uploaded successfully", {
       userId: user.id,
       key,
-      size: data.length,
-      contentType,
+      originalSize: data.length,
+      optimizedSize: uploadData.length,
+      contentType: uploadContentType,
+      variants: Object.keys(variantUrls),
     });
 
-    sendSuccess(res, {
+    const response: ForumImageUploadResponse = {
       success: true,
       url,
       key,
       filename: finalFilename,
-      contentType,
-      size: data.length,
-    } satisfies ForumImageUploadResponse);
+      contentType: uploadContentType,
+      size: uploadData.length,
+      optimized: optimizationResult.success,
+    };
+
+    if (Object.keys(variantUrls).length > 0) {
+      response.variants = variantUrls;
+    }
+
+    if (optimizationResult.original?.width) {
+      response.width = optimizationResult.original.width;
+    }
+
+    if (optimizationResult.original?.height) {
+      response.height = optimizationResult.original.height;
+    }
+
+    sendSuccess(res, response);
   } catch (error) {
     logger.error("Error uploading forum image", {
       userId: user.id,

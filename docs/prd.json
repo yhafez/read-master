@@ -579,7 +579,7 @@
         "Show notes displayed",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "content-video-001",

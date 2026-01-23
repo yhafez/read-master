@@ -32,7 +32,8 @@
     "stripe": "^20.2.0",
     "svix": "^1.84.1",
     "winston": "^3.17.0",
-    "zod": "^3.24.0"
+    "zod": "^3.24.0",
+    "sharp": "^0.33.0"
   },
   "devDependencies": {
     "@read-master/config": "workspace:*",
@@ -40,6 +41,7 @@
     "@types/pdf-parse": "^1.1.5",
     "@vercel/node": "^5.0.0",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.0"
+    "vitest": "^3.0.0",
+    "@types/sharp": "^0.32.0"
   }
 }

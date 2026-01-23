@@ -36,6 +36,8 @@ import {
   CurriculumBrowsePage,
   ChallengesPage,
   ChallengeDetailPage,
+  PodcastsPage,
+  PodcastDetailPage,
   SettingsPage,
   SettingsProfilePage,
   SettingsReadingPage,
@@ -240,6 +242,16 @@ function createAppRouter() {
             {
               path: ROUTES.CHALLENGE_DETAIL,
               element: <ChallengeDetailPage />,
+            },
+
+            // Podcasts
+            {
+              path: ROUTES.PODCASTS,
+              element: <PodcastsPage />,
+            },
+            {
+              path: ROUTES.PODCAST_DETAIL,
+              element: <PodcastDetailPage />,
             },
 
             // Settings

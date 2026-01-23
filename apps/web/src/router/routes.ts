@@ -50,6 +50,10 @@ export const ROUTES = {
   CHALLENGES: "/challenges",
   CHALLENGE_DETAIL: "/challenges/:challengeId",
 
+  // Podcasts
+  PODCASTS: "/podcasts",
+  PODCAST_DETAIL: "/podcasts/:id",
+
   // Settings
   SETTINGS: "/settings",
   SETTINGS_PROFILE: "/settings/profile",
@@ -114,6 +118,7 @@ export const routeHelpers = {
   forumEdit: (postId: string): string => `/forum/edit/${postId}`,
   curriculum: (curriculumId: string): string => `/curriculums/${curriculumId}`,
   challenge: (challengeId: string): string => `/challenges/${challengeId}`,
+  podcast: (podcastId: string): string => `/podcasts/${podcastId}`,
 } as const;
 
 /**
@@ -142,6 +147,8 @@ export const PROTECTED_ROUTES: readonly RoutePath[] = [
   ROUTES.CURRICULUM_CREATE,
   ROUTES.CHALLENGES,
   ROUTES.CHALLENGE_DETAIL,
+  ROUTES.PODCASTS,
+  ROUTES.PODCAST_DETAIL,
   ROUTES.SETTINGS,
   ROUTES.SETTINGS_PROFILE,
   ROUTES.SETTINGS_READING,
