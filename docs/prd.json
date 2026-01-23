@@ -665,7 +665,7 @@
         "Multiple languages supported",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "docs-user-guide-001",

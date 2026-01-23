@@ -191,6 +191,20 @@ export const queryKeys = {
     transcript: (videoId: string) =>
       [...queryKeys.videos.detail(videoId), "transcript"] as const,
   },
+
+  /** Voice interaction queries */
+  voice: {
+    all: ["voice"] as const,
+    settings: () => [...queryKeys.voice.all, "settings"] as const,
+    voices: () => [...queryKeys.voice.all, "voices"] as const,
+    sessions: () => [...queryKeys.voice.all, "sessions"] as const,
+    sessionsList: (filters?: Record<string, unknown>) =>
+      [...queryKeys.voice.sessions(), "list", filters] as const,
+    session: (sessionId: string) =>
+      [...queryKeys.voice.sessions(), sessionId] as const,
+    messages: (sessionId: string) =>
+      [...queryKeys.voice.session(sessionId), "messages"] as const,
+  },
 } as const;
 
 /**

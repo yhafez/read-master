@@ -1745,6 +1745,35 @@
         "currentModel": "Modelo Activo Actual"
       }
     },
+    "voice": {
+      "title": "Interacción por Voz",
+      "description": "Habla con tu asistente de lectura IA usando comandos de voz. Habla naturalmente y recibe respuestas por voz.",
+      "enabled": "Habilitar Interacción por Voz",
+      "enabledDescription": "Permitir entrada y salida de voz para conversaciones con IA.",
+      "language": "Idioma de Voz",
+      "languageDescription": "Idioma para reconocimiento y síntesis de voz.",
+      "speechRate": "Velocidad del Habla",
+      "speechRateDescription": "Qué tan rápido habla la IA las respuestas.",
+      "autoPlay": "Reproducción Automática de Respuestas",
+      "autoPlayDescription": "Reproducir automáticamente las respuestas de voz de la IA.",
+      "showWaveform": "Mostrar Forma de Onda",
+      "showWaveformDescription": "Mostrar visualización de forma de onda durante la grabación.",
+      "pushToTalk": "Tecla de Pulsar para Hablar",
+      "pushToTalkDescription": "Atajo de teclado para iniciar la grabación.",
+      "microphone": {
+        "title": "Configuración del Micrófono",
+        "permission": "Permiso del Micrófono",
+        "permissionDenied": "Permiso de micrófono denegado. Por favor habilítalo en la configuración de tu navegador.",
+        "notSupported": "El reconocimiento de voz no es compatible con tu navegador."
+      },
+      "synthesis": {
+        "title": "Salida de Voz",
+        "voiceSelect": "Seleccionar Voz",
+        "previewVoice": "Vista Previa de Voz",
+        "pitch": "Tono",
+        "volume": "Volumen"
+      }
+    },
     "notificationPreferences": "Preferencias de Notificaciones",
     "manageNotifications": "Administra tu correo electrónico y configuración de notificaciones push",
     "emailNotifications": "Notificaciones por Correo",
@@ -2228,6 +2257,38 @@
       "description": "Instala nuestra app para una mejor experiencia",
       "install": "Instalar",
       "notNow": "Ahora no"
+    }
+  },
+  "voice": {
+    "title": "Chat de Voz",
+    "startPrompt": "Comienza a hablar",
+    "instructions": "Haz clic en el micrófono para comenzar a hablar, o escribe un mensaje abajo.",
+    "settings": "Configuración de Voz",
+    "clearChat": "Limpiar chat",
+    "contextActive": "Contexto activo",
+    "typePlaceholder": "Escribe o habla...",
+    "send": "Enviar mensaje",
+    "startListening": "Comenzar a escuchar",
+    "stopListening": "Dejar de escuchar",
+    "stopSpeaking": "Dejar de hablar",
+    "language": "Idioma",
+    "speechRate": "Velocidad del Habla",
+    "autoPlay": "Reproducción automática de respuestas",
+    "availableVoices": "{{count}} voces disponibles",
+    "status": {
+      "ready": "Listo",
+      "listening": "Escuchando...",
+      "processing": "Procesando...",
+      "thinking": "Pensando...",
+      "speaking": "Hablando...",
+      "error": "Ocurrió un error"
+    },
+    "errors": {
+      "noSpeech": "No se detectó voz",
+      "microphoneDenied": "Acceso al micrófono denegado",
+      "notSupported": "Las funciones de voz no son compatibles con tu navegador",
+      "networkError": "Ocurrió un error de red",
+      "unknown": "Ocurrió un error inesperado"
     }
   },
   "offline": {

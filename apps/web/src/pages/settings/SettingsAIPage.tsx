@@ -22,6 +22,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Slider,
   Snackbar,
   Stack,
   Switch,
@@ -43,6 +44,12 @@ import type {
 } from "@/stores";
 import { AIPersonalitySection } from "./AIPersonalitySection";
 import { AIModelSelector } from "@/components/ai";
+import {
+  useVoiceSettings,
+  useUpdateVoiceSettings,
+  SUPPORTED_LANGUAGES,
+} from "@/hooks";
+import type { VoiceLanguage } from "@/hooks";
 
 /**
  * Feature toggle item component
@@ -95,6 +102,185 @@ function FeatureToggle({
         inputProps={{ "aria-label": label }}
       />
     </Box>
+  );
+}
+
+/**
+ * Voice Interaction Settings component
+ */
+function VoiceInteractionSettings(): React.ReactElement {
+  const { t } = useTranslation();
+  const { data: voiceSettings } = useVoiceSettings();
+  const { mutate: updateSettings } = useUpdateVoiceSettings();
+
+  const handleVoiceEnabledToggle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateSettings({ enabled: event.target.checked });
+    },
+    [updateSettings]
+  );
+
+  const handleLanguageChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      updateSettings({
+        recognition: { language: event.target.value as VoiceLanguage },
+        synthesis: { language: event.target.value as VoiceLanguage },
+      });
+    },
+    [updateSettings]
+  );
+
+  const handleRateChange = useCallback(
+    (_: Event, value: number | number[]) => {
+      updateSettings({
+        synthesis: { rate: value as number },
+      });
+    },
+    [updateSettings]
+  );
+
+  const handleAutoPlayToggle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateSettings({
+        synthesis: { autoPlay: event.target.checked },
+      });
+    },
+    [updateSettings]
+  );
+
+  const handleWaveformToggle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateSettings({
+        showWaveform: event.target.checked,
+      });
+    },
+    [updateSettings]
+  );
+
+  return (
+    <Card>
+      <CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            mb: 2,
+          }}
+        >
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              {t("settings.voice.title")}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {t("settings.voice.description")}
+            </Typography>
+          </Box>
+          <Switch
+            checked={voiceSettings?.enabled ?? true}
+            onChange={handleVoiceEnabledToggle}
+            inputProps={{
+              "aria-label": t("settings.voice.enabled"),
+            }}
+          />
+        </Box>
+
+        <Divider sx={{ my: 2 }} />
+
+        {/* Language Selection */}
+        <FormControl
+          fullWidth
+          sx={{ mb: 3 }}
+          disabled={!voiceSettings?.enabled}
+        >
+          <InputLabel id="voice-language-label">
+            {t("settings.voice.language")}
+          </InputLabel>
+          <Select
+            labelId="voice-language-label"
+            id="voice-language"
+            value={voiceSettings?.recognition?.language ?? "en-US"}
+            label={t("settings.voice.language")}
+            onChange={handleLanguageChange}
+          >
+            {SUPPORTED_LANGUAGES.map((lang) => (
+              <MenuItem key={lang} value={lang}>
+                {lang}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>
+            {t("settings.voice.languageDescription")}
+          </FormHelperText>
+        </FormControl>
+
+        {/* Speech Rate */}
+        <Box sx={{ mb: 3 }}>
+          <Typography gutterBottom>
+            {t("settings.voice.speechRate")}:{" "}
+            {(voiceSettings?.synthesis?.rate ?? 1).toFixed(1)}x
+          </Typography>
+          <Slider
+            value={voiceSettings?.synthesis?.rate ?? 1}
+            onChange={handleRateChange}
+            min={0.5}
+            max={2}
+            step={0.1}
+            marks={[
+              { value: 0.5, label: "0.5x" },
+              { value: 1, label: "1x" },
+              { value: 1.5, label: "1.5x" },
+              { value: 2, label: "2x" },
+            ]}
+            disabled={!voiceSettings?.enabled}
+            sx={{ maxWidth: 400 }}
+          />
+          <Typography variant="body2" color="text.secondary">
+            {t("settings.voice.speechRateDescription")}
+          </Typography>
+        </Box>
+
+        {/* Auto-play Toggle */}
+        <FormControlLabel
+          control={
+            <Switch
+              checked={voiceSettings?.synthesis?.autoPlay ?? true}
+              onChange={handleAutoPlayToggle}
+              disabled={!voiceSettings?.enabled}
+            />
+          }
+          label={
+            <Box>
+              <Typography>{t("settings.voice.autoPlay")}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t("settings.voice.autoPlayDescription")}
+              </Typography>
+            </Box>
+          }
+          sx={{ mb: 2, alignItems: "flex-start" }}
+        />
+
+        {/* Waveform Toggle */}
+        <FormControlLabel
+          control={
+            <Switch
+              checked={voiceSettings?.showWaveform ?? true}
+              onChange={handleWaveformToggle}
+              disabled={!voiceSettings?.enabled}
+            />
+          }
+          label={
+            <Box>
+              <Typography>{t("settings.voice.showWaveform")}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t("settings.voice.showWaveformDescription")}
+              </Typography>
+            </Box>
+          }
+          sx={{ alignItems: "flex-start" }}
+        />
+      </CardContent>
+    </Card>
   );
 }
 
@@ -432,6 +618,9 @@ export function SettingsAIPage(): React.ReactElement {
 
         {/* AI Model Selection */}
         <AIModelSelector userTier="free" />
+
+        {/* Voice Interaction Settings */}
+        <VoiceInteractionSettings />
 
         {/* Reset Settings */}
         <Card>

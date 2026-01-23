@@ -71,6 +71,9 @@
 // AI Model schemas
 export * from "./ai-models";
 
+// Voice Interaction schemas
+export * from "./voice-interaction";
+
 // Book schemas
 export * from "./books";
 

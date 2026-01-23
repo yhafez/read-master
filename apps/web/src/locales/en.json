@@ -1730,6 +1730,35 @@
         "currentModel": "Current Active Model"
       }
     },
+    "voice": {
+      "title": "Voice Interaction",
+      "description": "Talk to your AI reading assistant using voice commands. Speak naturally and get voice responses.",
+      "enabled": "Enable Voice Interaction",
+      "enabledDescription": "Allow voice input and output for AI conversations.",
+      "language": "Voice Language",
+      "languageDescription": "Language for speech recognition and synthesis.",
+      "speechRate": "Speech Rate",
+      "speechRateDescription": "How fast the AI speaks responses.",
+      "autoPlay": "Auto-play Responses",
+      "autoPlayDescription": "Automatically play AI voice responses.",
+      "showWaveform": "Show Waveform",
+      "showWaveformDescription": "Display voice waveform visualization during recording.",
+      "pushToTalk": "Push-to-Talk Key",
+      "pushToTalkDescription": "Keyboard shortcut to start recording.",
+      "microphone": {
+        "title": "Microphone Settings",
+        "permission": "Microphone Permission",
+        "permissionDenied": "Microphone permission denied. Please enable it in your browser settings.",
+        "notSupported": "Speech recognition is not supported in your browser."
+      },
+      "synthesis": {
+        "title": "Voice Output",
+        "voiceSelect": "Select Voice",
+        "previewVoice": "Preview Voice",
+        "pitch": "Pitch",
+        "volume": "Volume"
+      }
+    },
     "notificationPreferences": "Notification Preferences",
     "manageNotifications": "Manage your email and push notification settings",
     "emailNotifications": "Email Notifications",
@@ -2204,6 +2233,38 @@
         "noCards": "No flashcards could be generated from this content.",
         "unknown": "An unexpected error occurred. Please try again."
       }
+    }
+  },
+  "voice": {
+    "title": "Voice Chat",
+    "startPrompt": "Start talking",
+    "instructions": "Click the microphone to start speaking, or type a message below.",
+    "settings": "Voice Settings",
+    "clearChat": "Clear chat",
+    "contextActive": "Context active",
+    "typePlaceholder": "Type or speak...",
+    "send": "Send message",
+    "startListening": "Start listening",
+    "stopListening": "Stop listening",
+    "stopSpeaking": "Stop speaking",
+    "language": "Language",
+    "speechRate": "Speech Rate",
+    "autoPlay": "Auto-play responses",
+    "availableVoices": "{{count}} voices available",
+    "status": {
+      "ready": "Ready",
+      "listening": "Listening...",
+      "processing": "Processing...",
+      "thinking": "Thinking...",
+      "speaking": "Speaking...",
+      "error": "Error occurred"
+    },
+    "errors": {
+      "noSpeech": "No speech detected",
+      "microphoneDenied": "Microphone access denied",
+      "notSupported": "Voice features are not supported in your browser",
+      "networkError": "Network error occurred",
+      "unknown": "An unexpected error occurred"
     }
   },
   "offline": {

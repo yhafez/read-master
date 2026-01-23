@@ -3121,3 +3121,111 @@ DISCOVERIES:
 2. **Cost Scoring Algorithm** - Using log-based scoring for cost comparison provides intuitive rankings. Higher scores mean better value.
 
 COMMIT: feat(ai): add custom AI model selection with multi-provider support (ai-custom-models-001)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-23 - Iteration 13]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: ai-voice-interaction-001 - Add voice interaction with AI (COMPLETE)
+
+WHAT WAS DONE:
+✅ **Implemented Full Voice Interaction Feature**
+
+1. **Voice Interaction Schemas** (packages/shared/src/schemas/voice-interaction.ts):
+   - Created comprehensive Zod schemas for voice interaction
+   - VoiceLanguage enum (en-US, en-GB, es-ES, es-MX, ar-SA, ja-JP, zh-CN, tl-PH, etc.)
+   - TextToSpeechEngine enum (web-speech-api, elevenlabs, openai-tts, azure, google-cloud)
+   - Voice interaction status enum (idle, listening, processing, thinking, speaking, paused, error)
+   - Speech recognition settings schema (language, continuous, interimResults, etc.)
+   - Text-to-speech settings schema (engine, voiceId, rate, pitch, volume, autoPlay)
+   - Voice interaction settings schema (enabled, recognition, synthesis, wakeWord, etc.)
+   - Voice message schema (id, role, text, audioUrl, duration, confidence, timestamp)
+   - Voice chat session schema (id, userId, messages, status, context, duration)
+   - Voice command schemas (wake word, shortcuts, navigation)
+   - Exported via packages/shared/src/schemas/index.ts
+
+2. **React Hooks** (apps/web/src/hooks/useVoiceInteraction.ts):
+   - useSpeechRecognition() - Web Speech API speech-to-text
+   - useSpeechSynthesis() - Web Speech API text-to-speech
+   - useVoiceChat() - Combined voice chat with AI
+   - useVoiceSettings() - Get voice interaction settings
+   - useUpdateVoiceSettings() - Update voice settings
+   - useVoiceChatSessions() - List voice chat sessions
+   - useDeleteVoiceChatSession() - Delete a voice session
+   - useAvailableVoices() - Get available TTS voices
+   - Helper: getAvailableVoices() - Runtime voice catalog
+   - Helper: SUPPORTED_LANGUAGES - Language list
+   - Added voice query keys to queryClient.ts
+
+3. **VoiceChat UI Component** (apps/web/src/components/ai/VoiceChat.tsx):
+   - Full-featured voice chat interface
+   - Animated microphone button with status indicator
+   - Message bubbles with role indicators (user/assistant)
+   - Real-time transcript display with interim results
+   - Waveform visualization placeholder
+   - Settings menu (language, speech rate, auto-play, voices)
+   - Context indicator (book title, page number)
+   - Message replay functionality
+   - Responsive design
+
+4. **Voice Interaction Settings** (integrated in SettingsAIPage.tsx):
+   - Enable/disable voice interaction toggle
+   - Voice language selector (14 languages)
+   - Speech rate slider (0.5x - 2x)
+   - Auto-play responses toggle
+   - Show waveform toggle
+   - Settings persist to localStorage
+
+5. **i18n Translations** (all locale files):
+   - Added settings.voice namespace (30+ keys)
+   - Added top-level voice namespace (25+ keys)
+   - Status translations (ready, listening, processing, thinking, speaking, error)
+   - Error translations (noSpeech, microphoneDenied, notSupported, networkError)
+   - Updated en.json, ar.json, es.json, ja.json, zh.json, tl.json
+
+6. **Integration**:
+   - Added VoiceInteractionSettings to SettingsAIPage.tsx
+   - Exported VoiceChat component from apps/web/src/components/ai/index.ts
+   - Exported voice hooks from apps/web/src/hooks/index.ts
+   - Updated queryClient.test.ts to include voice query keys
+
+ACCEPTANCE CRITERIA STATUS:
+✅ Users can talk to AI - Speech recognition via Web Speech API
+✅ AI responds with voice - Text-to-speech via Web Speech API
+✅ Transcription accurate - Real-time interim and final results
+✅ Multiple languages supported - 14 languages configured
+✅ Tests pass - Typecheck, lint, and all tests pass
+
+FILES CREATED:
+- packages/shared/src/schemas/voice-interaction.ts (Voice interaction Zod schemas)
+- apps/web/src/hooks/useVoiceInteraction.ts (React hooks for voice)
+- apps/web/src/components/ai/VoiceChat.tsx (Voice chat UI component)
+
+FILES MODIFIED:
+- packages/shared/src/schemas/index.ts (Added voice-interaction export)
+- apps/web/src/lib/queryClient.ts (Added voice query keys)
+- apps/web/src/lib/queryClient.test.ts (Added voice to expected keys)
+- apps/web/src/hooks/index.ts (Added voice hooks export)
+- apps/web/src/components/ai/index.ts (Added VoiceChat export)
+- apps/web/src/pages/settings/SettingsAIPage.tsx (Added VoiceInteractionSettings)
+- apps/web/src/locales/en.json (Added voice translations)
+- apps/web/src/locales/ar.json (Added voice translations)
+- apps/web/src/locales/es.json (Added voice translations)
+- apps/web/src/locales/ja.json (Added voice translations)
+- apps/web/src/locales/zh.json (Added voice translations)
+- apps/web/src/locales/tl.json (Added voice translations)
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - PASSED
+✅ pnpm lint - PASSED (0 errors, 255 warnings in pre-existing files)
+✅ pnpm vitest run - PASSED (4983 tests pass, 50 skipped)
+
+DISCOVERIES:
+1. **Web Speech API Types** - Browser's native SpeechRecognition types conflict with TypeScript's lib.dom.d.ts. Created custom interface wrappers (WebSpeechRecognitionEvent, WebSpeechErrorEvent) to avoid conflicts.
+
+2. **exactOptionalPropertyTypes** - TypeScript's exactOptionalPropertyTypes requires explicit `| undefined` in union types when assigning undefined to optional properties. Used conditional spreads: `...(value && { key: value })`.
+
+3. **Cross-Language Support** - Web Speech API has varying support across browsers and languages. The implementation falls back gracefully when features aren't available.
+
+COMMIT: feat(ai): add voice interaction with speech-to-text and text-to-speech (ai-voice-interaction-001)

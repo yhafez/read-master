@@ -1716,6 +1716,35 @@
         "currentModel": "Kasalukuyang Active na Model"
       }
     },
+    "voice": {
+      "title": "Voice Interaction",
+      "description": "Makipag-usap sa iyong AI reading assistant gamit ang voice commands. Magsalita ng natural at makatanggap ng voice responses.",
+      "enabled": "I-enable ang Voice Interaction",
+      "enabledDescription": "Payagan ang voice input at output para sa AI conversations.",
+      "language": "Voice Language",
+      "languageDescription": "Wika para sa speech recognition at synthesis.",
+      "speechRate": "Bilis ng Pagsasalita",
+      "speechRateDescription": "Gaano kabilis magsalita ng tugon ang AI.",
+      "autoPlay": "Auto-play Responses",
+      "autoPlayDescription": "Awtomatikong i-play ang AI voice responses.",
+      "showWaveform": "Ipakita ang Waveform",
+      "showWaveformDescription": "Ipakita ang waveform visualization habang nagre-record.",
+      "pushToTalk": "Push-to-Talk Key",
+      "pushToTalkDescription": "Keyboard shortcut para simulan ang recording.",
+      "microphone": {
+        "title": "Mga Setting ng Microphone",
+        "permission": "Pahintulot sa Microphone",
+        "permissionDenied": "Tinanggihan ang pahintulot sa microphone. Pakibukas sa iyong browser settings.",
+        "notSupported": "Hindi suportado ang speech recognition sa iyong browser."
+      },
+      "synthesis": {
+        "title": "Voice Output",
+        "voiceSelect": "Pumili ng Boses",
+        "previewVoice": "Preview ng Boses",
+        "pitch": "Pitch",
+        "volume": "Volume"
+      }
+    },
     "notificationPreferences": "Mga Kagustuhan sa Notification",
     "manageNotifications": "Pamahalaan ang iyong email at push notification settings",
     "emailNotifications": "Mga Email Notification",
@@ -2199,6 +2228,38 @@
       "description": "I-install ang aming app para sa pinakamahusay na karanasan",
       "install": "I-install",
       "notNow": "Hindi ngayon"
+    }
+  },
+  "voice": {
+    "title": "Voice Chat",
+    "startPrompt": "Magsimulang magsalita",
+    "instructions": "I-click ang microphone para magsimulang magsalita, o mag-type ng mensahe sa ibaba.",
+    "settings": "Voice Settings",
+    "clearChat": "Burahin ang chat",
+    "contextActive": "Aktibo ang context",
+    "typePlaceholder": "Mag-type o magsalita...",
+    "send": "Ipadala ang mensahe",
+    "startListening": "Simulan ang pakikinig",
+    "stopListening": "Itigil ang pakikinig",
+    "stopSpeaking": "Itigil ang pagsasalita",
+    "language": "Wika",
+    "speechRate": "Bilis ng Pagsasalita",
+    "autoPlay": "Auto-play ng mga tugon",
+    "availableVoices": "{{count}} boses ang available",
+    "status": {
+      "ready": "Handa na",
+      "listening": "Nakikinig...",
+      "processing": "Pinoproseso...",
+      "thinking": "Nag-iisip...",
+      "speaking": "Nagsasalita...",
+      "error": "May naganap na error"
+    },
+    "errors": {
+      "noSpeech": "Walang nadetect na pagsasalita",
+      "microphoneDenied": "Tinanggihan ang access sa microphone",
+      "notSupported": "Hindi suportado ang voice features sa iyong browser",
+      "networkError": "May naganap na network error",
+      "unknown": "May naganap na hindi inaasahang error"
     }
   },
   "offline": {

@@ -1709,6 +1709,35 @@
         "currentModel": "النموذج النشط الحالي"
       }
     },
+    "voice": {
+      "title": "التفاعل الصوتي",
+      "description": "تحدث مع مساعد القراءة الذكي باستخدام الأوامر الصوتية. تحدث بشكل طبيعي واحصل على ردود صوتية.",
+      "enabled": "تفعيل التفاعل الصوتي",
+      "enabledDescription": "السماح بالإدخال والإخراج الصوتي لمحادثات الذكاء الاصطناعي.",
+      "language": "لغة الصوت",
+      "languageDescription": "اللغة للتعرف على الكلام والتوليف الصوتي.",
+      "speechRate": "سرعة الكلام",
+      "speechRateDescription": "مدى سرعة تحدث الذكاء الاصطناعي بالردود.",
+      "autoPlay": "تشغيل تلقائي للردود",
+      "autoPlayDescription": "تشغيل ردود الذكاء الاصطناعي الصوتية تلقائيًا.",
+      "showWaveform": "عرض الموجة الصوتية",
+      "showWaveformDescription": "عرض تصور الموجة الصوتية أثناء التسجيل.",
+      "pushToTalk": "مفتاح الضغط للتحدث",
+      "pushToTalkDescription": "اختصار لوحة المفاتيح لبدء التسجيل.",
+      "microphone": {
+        "title": "إعدادات الميكروفون",
+        "permission": "إذن الميكروفون",
+        "permissionDenied": "تم رفض إذن الميكروفون. يرجى تفعيله في إعدادات المتصفح.",
+        "notSupported": "التعرف على الكلام غير مدعوم في متصفحك."
+      },
+      "synthesis": {
+        "title": "إخراج الصوت",
+        "voiceSelect": "اختر الصوت",
+        "previewVoice": "معاينة الصوت",
+        "pitch": "طبقة الصوت",
+        "volume": "مستوى الصوت"
+      }
+    },
     "notificationPreferences": "تفضيلات الإشعارات",
     "manageNotifications": "إدارة إعدادات البريد الإلكتروني والإشعارات",
     "emailNotifications": "إشعارات البريد الإلكتروني",
@@ -2192,6 +2221,38 @@
       "description": "ثبت تطبيقنا للحصول على أفضل تجربة",
       "install": "تثبيت",
       "notNow": "ليس الآن"
+    }
+  },
+  "voice": {
+    "title": "الدردشة الصوتية",
+    "startPrompt": "ابدأ التحدث",
+    "instructions": "انقر على الميكروفون لبدء التحدث، أو اكتب رسالة أدناه.",
+    "settings": "إعدادات الصوت",
+    "clearChat": "مسح الدردشة",
+    "contextActive": "السياق نشط",
+    "typePlaceholder": "اكتب أو تحدث...",
+    "send": "إرسال رسالة",
+    "startListening": "بدء الاستماع",
+    "stopListening": "إيقاف الاستماع",
+    "stopSpeaking": "إيقاف التحدث",
+    "language": "اللغة",
+    "speechRate": "سرعة الكلام",
+    "autoPlay": "تشغيل تلقائي للردود",
+    "availableVoices": "{{count}} أصوات متاحة",
+    "status": {
+      "ready": "جاهز",
+      "listening": "يستمع...",
+      "processing": "جارٍ المعالجة...",
+      "thinking": "يفكر...",
+      "speaking": "يتحدث...",
+      "error": "حدث خطأ"
+    },
+    "errors": {
+      "noSpeech": "لم يتم اكتشاف كلام",
+      "microphoneDenied": "تم رفض الوصول إلى الميكروفون",
+      "notSupported": "ميزات الصوت غير مدعومة في متصفحك",
+      "networkError": "حدث خطأ في الشبكة",
+      "unknown": "حدث خطأ غير متوقع"
     }
   },
   "offline": {

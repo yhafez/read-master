@@ -1716,6 +1716,35 @@
         "currentModel": "当前活动模型"
       }
     },
+    "voice": {
+      "title": "语音交互",
+      "description": "使用语音命令与您的AI阅读助手交流。自然地说话并获得语音回复。",
+      "enabled": "启用语音交互",
+      "enabledDescription": "允许AI对话中的语音输入和输出。",
+      "language": "语音语言",
+      "languageDescription": "语音识别和合成的语言。",
+      "speechRate": "语速",
+      "speechRateDescription": "AI朗读回复的速度。",
+      "autoPlay": "自动播放回复",
+      "autoPlayDescription": "自动播放AI语音回复。",
+      "showWaveform": "显示波形",
+      "showWaveformDescription": "录音时显示波形可视化。",
+      "pushToTalk": "按键说话",
+      "pushToTalkDescription": "开始录音的键盘快捷键。",
+      "microphone": {
+        "title": "麦克风设置",
+        "permission": "麦克风权限",
+        "permissionDenied": "麦克风权限被拒绝。请在浏览器设置中启用。",
+        "notSupported": "您的浏览器不支持语音识别。"
+      },
+      "synthesis": {
+        "title": "语音输出",
+        "voiceSelect": "选择语音",
+        "previewVoice": "预览语音",
+        "pitch": "音调",
+        "volume": "音量"
+      }
+    },
     "notificationPreferences": "通知偏好",
     "manageNotifications": "管理您的电子邮件和推送通知设置",
     "emailNotifications": "电子邮件通知",
@@ -2199,6 +2228,38 @@
       "description": "安装我们的应用以获得最佳体验",
       "install": "安装",
       "notNow": "暂不安装"
+    }
+  },
+  "voice": {
+    "title": "语音聊天",
+    "startPrompt": "开始说话",
+    "instructions": "点击麦克风开始说话，或在下方输入消息。",
+    "settings": "语音设置",
+    "clearChat": "清除聊天",
+    "contextActive": "上下文已激活",
+    "typePlaceholder": "输入或说话...",
+    "send": "发送消息",
+    "startListening": "开始听",
+    "stopListening": "停止听",
+    "stopSpeaking": "停止说话",
+    "language": "语言",
+    "speechRate": "语速",
+    "autoPlay": "自动播放回复",
+    "availableVoices": "{{count}}个语音可用",
+    "status": {
+      "ready": "就绪",
+      "listening": "正在听...",
+      "processing": "处理中...",
+      "thinking": "思考中...",
+      "speaking": "说话中...",
+      "error": "发生错误"
+    },
+    "errors": {
+      "noSpeech": "未检测到语音",
+      "microphoneDenied": "麦克风访问被拒绝",
+      "notSupported": "您的浏览器不支持语音功能",
+      "networkError": "发生网络错误",
+      "unknown": "发生意外错误"
     }
   },
   "offline": {

@@ -1716,6 +1716,35 @@
         "currentModel": "現在のアクティブモデル"
       }
     },
+    "voice": {
+      "title": "音声インタラクション",
+      "description": "音声コマンドを使ってAI読書アシスタントと話しましょう。自然に話しかけて、音声で回答を受け取れます。",
+      "enabled": "音声インタラクションを有効にする",
+      "enabledDescription": "AI会話で音声入力と出力を許可します。",
+      "language": "音声言語",
+      "languageDescription": "音声認識と合成の言語。",
+      "speechRate": "話速",
+      "speechRateDescription": "AIが応答を話す速さ。",
+      "autoPlay": "応答を自動再生",
+      "autoPlayDescription": "AIの音声応答を自動的に再生します。",
+      "showWaveform": "波形を表示",
+      "showWaveformDescription": "録音中に波形ビジュアライゼーションを表示します。",
+      "pushToTalk": "プッシュトゥトークキー",
+      "pushToTalkDescription": "録音を開始するためのキーボードショートカット。",
+      "microphone": {
+        "title": "マイク設定",
+        "permission": "マイクの許可",
+        "permissionDenied": "マイクの許可が拒否されました。ブラウザの設定で有効にしてください。",
+        "notSupported": "お使いのブラウザでは音声認識がサポートされていません。"
+      },
+      "synthesis": {
+        "title": "音声出力",
+        "voiceSelect": "音声を選択",
+        "previewVoice": "音声をプレビュー",
+        "pitch": "ピッチ",
+        "volume": "音量"
+      }
+    },
     "notificationPreferences": "通知設定",
     "manageNotifications": "メールとプッシュ通知の設定を管理する",
     "emailNotifications": "メール通知",
@@ -2199,6 +2228,38 @@
       "description": "アプリをインストールして最高の体験を",
       "install": "インストール",
       "notNow": "今は不要"
+    }
+  },
+  "voice": {
+    "title": "音声チャット",
+    "startPrompt": "話し始めてください",
+    "instructions": "マイクをクリックして話し始めるか、下にメッセージを入力してください。",
+    "settings": "音声設定",
+    "clearChat": "チャットをクリア",
+    "contextActive": "コンテキストがアクティブ",
+    "typePlaceholder": "入力または話す...",
+    "send": "メッセージを送信",
+    "startListening": "聞き取りを開始",
+    "stopListening": "聞き取りを停止",
+    "stopSpeaking": "話すのを停止",
+    "language": "言語",
+    "speechRate": "話速",
+    "autoPlay": "応答を自動再生",
+    "availableVoices": "{{count}}個の音声が利用可能",
+    "status": {
+      "ready": "準備完了",
+      "listening": "聞いています...",
+      "processing": "処理中...",
+      "thinking": "考え中...",
+      "speaking": "話しています...",
+      "error": "エラーが発生しました"
+    },
+    "errors": {
+      "noSpeech": "音声が検出されませんでした",
+      "microphoneDenied": "マイクへのアクセスが拒否されました",
+      "notSupported": "お使いのブラウザでは音声機能がサポートされていません",
+      "networkError": "ネットワークエラーが発生しました",
+      "unknown": "予期しないエラーが発生しました"
     }
   },
   "offline": {

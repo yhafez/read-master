@@ -447,6 +447,7 @@ describe("queryKeys", () => {
         "tts",
         "podcasts",
         "videos",
+        "voice",
       ];
 
       expect(Object.keys(queryKeys)).toEqual(expectedKeys);
