@@ -1303,6 +1303,30 @@
       "create": "Gumawa ng Diskusyon",
       "createError": "Hindi nagawa ang diskusyon",
       "validationError": "Pakipunan ang lahat ng kinakailangang field"
+    },
+    "calendar": {
+      "title": "Kalendaryo ng Diskusyon",
+      "viewMode": "Mode ng pagtingin",
+      "list": "Listahan",
+      "calendar": "Kalendaryo",
+      "listView": "Pagtingin sa listahan",
+      "calendarView": "Pagtingin sa kalendaryo",
+      "today": "Ngayon",
+      "previousMonth": "Nakaraang buwan",
+      "nextMonth": "Susunod na buwan",
+      "upcoming": "Paparating",
+      "started": "Nagsimula na",
+      "noScheduledDiscussions": "Walang naka-iskedyul na diskusyon. Gamitin ang 'Mag-iskedyul ng Diskusyon' upang gumawa.",
+      "moreDiscussions": "+{{count}} pa",
+      "days": {
+        "sun": "Lin",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Miy",
+        "thu": "Huw",
+        "fri": "Biy",
+        "sat": "Sab"
+      }
     }
   },
   "forum": {

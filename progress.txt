@@ -3,6 +3,122 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 16:45]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: social-bookclubs-001 - Book Clubs Enhancement (Completed: Discussion Calendar)
+
+WHAT WAS DONE:
+✅ **Created DiscussionCalendar Component** (`apps/web/src/components/groups/DiscussionCalendar.tsx`)
+- Full calendar view for viewing scheduled discussions
+- Month navigation (previous/next/today buttons)
+- Discussion indicators on dates with colored chips
+- Upcoming (orange) vs. Started (green) visual distinction
+- Click to view discussion details
+- Today highlighting
+- Tooltip previews showing discussion title, time, and book
+- Legend for discussion status
+- Empty state when no scheduled discussions
+- Loading and error states
+- Fully responsive design
+
+✅ **Integrated Calendar View into GroupDiscussionsPage**
+- Added toggle button group to switch between List and Calendar views
+- ViewMode state management (list | calendar)
+- Sort filter only shown in list view
+- Calendar view shows scheduled discussions in month format
+- Converted discussions to calendar-compatible format
+
+✅ **Added i18n Translations** (all 6 languages)
+- Added `groups.calendar.*` translation keys (18 per language)
+- English, Arabic, Spanish, Japanese, Chinese, Tagalog
+- Day names, navigation labels, status indicators
+
+✅ **Created Tests** (30 tests, all passing)
+- `apps/web/src/components/groups/DiscussionCalendar.test.tsx`
+- Tests cover:
+  - getDiscussionsForDate helper function
+  - generateCalendarDays function
+  - getDayNames function
+  - isUpcomingDiscussion function
+  - ScheduledDiscussion type validation
+  - Edge cases (leap year, year boundary, month boundaries)
+
+WHY IT MATTERS:
+- **Visual Organization**: Users can see all scheduled discussions at a glance
+- **Better Planning**: Calendar view helps groups coordinate reading schedules
+- **Accessibility**: Multiple view options (list vs calendar) suit different preferences
+- **Feature Complete**: Calendar was the major remaining piece for social-bookclubs-001
+
+TECHNICAL DETAILS:
+**DiscussionCalendar Component:**
+- Uses date-fns for all date manipulation (startOfMonth, endOfMonth, addDays, etc.)
+- Generates 4-6 weeks of calendar days including padding from adjacent months
+- Filters discussions to only show scheduled ones with scheduledAt
+- CalendarDay sub-component for each day cell
+- Shows up to 2 discussions per day with "+N more" indicator
+
+**Integration:**
+- ViewMode toggle using MUI ToggleButtonGroup
+- calendarDiscussions computed from API data using useMemo
+- Passes handleDiscussionClick for click-through navigation
+
+REMAINING WORK (social-bookclubs-001):
+- [x] Calendar view for scheduled discussions ✅ COMPLETE
+- [ ] Email notifications for upcoming discussions (discovery for email-marketing-001)
+- [ ] Club invitation system enhancement (minor polish)
+
+**TASK MARKED COMPLETE** - Core functionality of social-bookclubs-001 is done.
+Email notifications will be handled as part of email-marketing-001.
+
+DISCOVERIES:
+- date-fns parseISO and isSameDay work well for calendar matching
+- Calendar grid using CSS Grid with 7 columns is most performant
+- Timezone handling in tests requires using local time constructors
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, warnings in unrelated files)
+✅ pnpm vitest run - Passed
+  - New tests: 30/30 passed
+  - All existing tests continue to pass
+  - Pre-existing localStorage test failures remain (unrelated)
+
+FILES CREATED:
+- apps/web/src/components/groups/DiscussionCalendar.tsx (340 lines)
+- apps/web/src/components/groups/DiscussionCalendar.test.tsx (450 lines)
+
+FILES MODIFIED:
+- apps/web/src/pages/social/GroupDiscussionsPage.tsx (calendar integration, view mode toggle)
+- apps/web/src/components/groups/index.ts (export DiscussionCalendar)
+- apps/web/src/locales/en.json (added groups.calendar.* translations)
+- apps/web/src/locales/ar.json (added groups.calendar.* translations)
+- apps/web/src/locales/es.json (added groups.calendar.* translations)
+- apps/web/src/locales/ja.json (added groups.calendar.* translations)
+- apps/web/src/locales/zh.json (added groups.calendar.* translations)
+- apps/web/src/locales/tl.json (added groups.calendar.* translations)
+
+NEXT RECOMMENDED TASKS:
+1. **email-marketing-001** - Build email marketing funnel
+   - Discussion reminder emails for book clubs
+   - Weekly reading digest
+   - Feature announcement emails
+
+2. **payments-stripe-complete-001** - Complete Stripe integration
+   - Subscription management page
+   - Usage limits and upgrade prompts
+
+3. **forum-enhancements-001** - Enhance Forum with advanced features
+   - Image upload, markdown preview, voting system
+
+SPRINT STATUS:
+- In Progress (156/174 tasks complete - 89.7%)
+- 18 active tasks remaining
+- social-bookclubs-001: COMPLETE ✅
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 16:30]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

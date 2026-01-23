@@ -4,3 +4,4 @@ export { GroupReadingSchedule } from "./GroupReadingSchedule";
 export { GroupBooksPanel } from "./GroupBooksPanel";
 export { AddBookToGroupDialog } from "./AddBookToGroupDialog";
 export { ScheduleDiscussionDialog } from "./ScheduleDiscussionDialog";
+export { DiscussionCalendar } from "./DiscussionCalendar";

@@ -11,7 +11,7 @@
  * Note: Full discussion thread view with nested replies would be in a separate detail page
  */
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-react";
@@ -39,6 +39,8 @@ import {
   useTheme,
   useMediaQuery,
   Fab,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import {
   ChatBubbleOutline,
@@ -47,10 +49,16 @@ import {
   Lock,
   PersonOutline,
   Schedule as ScheduleIcon,
+  ViewList as ListIcon,
+  CalendarMonth as CalendarIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { formatDistanceToNow, format, isFuture } from "date-fns";
-import { ScheduleDiscussionDialog } from "@/components/groups";
+import {
+  ScheduleDiscussionDialog,
+  DiscussionCalendar,
+} from "@/components/groups";
+import type { ScheduledDiscussion } from "@/components/groups/DiscussionCalendar";
 
 // ============================================================================
 // Types
@@ -97,6 +105,7 @@ type DiscussionsResponse = {
 };
 
 type SortOption = "lastReplyAt" | "createdAt" | "repliesCount";
+type ViewMode = "list" | "calendar";
 
 // ============================================================================
 // Helper Functions
@@ -121,6 +130,7 @@ export function GroupDiscussionsPage(): React.ReactElement {
   // State
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState<SortOption>("lastReplyAt");
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showScheduleDialog, setShowScheduleDialog] = useState(false);
   const [newTitle, setNewTitle] = useState("");
@@ -209,6 +219,33 @@ export function GroupDiscussionsPage(): React.ReactElement {
     );
   };
 
+  const handleViewModeChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newMode: ViewMode | null
+  ) => {
+    if (newMode !== null) {
+      setViewMode(newMode);
+    }
+  };
+
+  // Convert discussions to calendar format
+  const calendarDiscussions: ScheduledDiscussion[] = useMemo(() => {
+    if (!data?.discussions) return [];
+    return data.discussions
+      .filter((d) => d.isScheduled && d.scheduledAt)
+      .map((d) => ({
+        id: d.id,
+        title: d.title,
+        scheduledAt: d.scheduledAt as string,
+        isScheduled: d.isScheduled,
+        book: d.book,
+        user: {
+          displayName: d.user.displayName,
+          username: d.user.username,
+        },
+      }));
+  }, [data?.discussions]);
+
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
     value: number
@@ -285,206 +322,258 @@ export function GroupDiscussionsPage(): React.ReactElement {
         )}
       </Stack>
 
-      {/* Sort Filter */}
-      <FormControl sx={{ mb: 3, minWidth: 200 }}>
-        <InputLabel>{t("common.sortBy")}</InputLabel>
-        <Select
-          value={sortBy}
-          label={t("common.sortBy")}
-          onChange={(e) => setSortBy(e.target.value as SortOption)}
+      {/* View Mode Toggle and Filters */}
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        mb={3}
+        flexWrap="wrap"
+      >
+        <ToggleButtonGroup
+          value={viewMode}
+          exclusive
+          onChange={handleViewModeChange}
+          size="small"
+          aria-label={t("groups.calendar.viewMode")}
         >
-          <MenuItem value="lastReplyAt">{t("groups.sortByRecent")}</MenuItem>
-          <MenuItem value="createdAt">{t("groups.sortByCreated")}</MenuItem>
-          <MenuItem value="repliesCount">{t("groups.sortByReplies")}</MenuItem>
-        </Select>
-      </FormControl>
+          <ToggleButton value="list" aria-label={t("groups.calendar.listView")}>
+            <ListIcon sx={{ mr: 0.5 }} />
+            {!isMobile && t("groups.calendar.list")}
+          </ToggleButton>
+          <ToggleButton
+            value="calendar"
+            aria-label={t("groups.calendar.calendarView")}
+          >
+            <CalendarIcon sx={{ mr: 0.5 }} />
+            {!isMobile && t("groups.calendar.calendar")}
+          </ToggleButton>
+        </ToggleButtonGroup>
+
+        {viewMode === "list" && (
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel>{t("common.sortBy")}</InputLabel>
+            <Select
+              value={sortBy}
+              label={t("common.sortBy")}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+              size="small"
+            >
+              <MenuItem value="lastReplyAt">
+                {t("groups.sortByRecent")}
+              </MenuItem>
+              <MenuItem value="createdAt">{t("groups.sortByCreated")}</MenuItem>
+              <MenuItem value="repliesCount">
+                {t("groups.sortByReplies")}
+              </MenuItem>
+            </Select>
+          </FormControl>
+        )}
+      </Stack>
+
+      {/* Calendar View */}
+      {viewMode === "calendar" && (
+        <DiscussionCalendar
+          discussions={calendarDiscussions}
+          isLoading={isLoading}
+          error={error}
+          onDiscussionClick={handleDiscussionClick}
+        />
+      )}
 
       {/* Discussions List */}
-      {data && data.discussions.length === 0 ? (
-        <Alert severity="info" sx={{ mt: 3 }}>
-          <Typography variant="body1">
-            {t("groups.noDiscussionsYet")}
-          </Typography>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => setShowCreateDialog(true)}
-            sx={{ mt: 2 }}
-          >
-            {t("groups.startFirstDiscussion")}
-          </Button>
-        </Alert>
-      ) : (
-        <>
-          <Stack spacing={2}>
-            {data?.discussions.map((discussion) => (
-              <Card
-                key={discussion.id}
-                sx={{
-                  cursor: "pointer",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: theme.shadows[4],
-                  },
-                }}
-                onClick={() => handleDiscussionClick(discussion.id)}
-              >
-                <CardContent>
-                  <Stack direction="row" spacing={2} alignItems="flex-start">
-                    <Avatar
-                      {...(discussion.user.avatarUrl
-                        ? { src: discussion.user.avatarUrl }
-                        : {})}
-                      sx={{ width: 48, height: 48 }}
-                    >
-                      <PersonOutline />
-                    </Avatar>
-                    <Box flex={1}>
-                      {/* Title and Badges */}
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        mb={1}
-                        flexWrap="wrap"
+      {viewMode === "list" &&
+        (data && data.discussions.length === 0 ? (
+          <Alert severity="info" sx={{ mt: 3 }}>
+            <Typography variant="body1">
+              {t("groups.noDiscussionsYet")}
+            </Typography>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={() => setShowCreateDialog(true)}
+              sx={{ mt: 2 }}
+            >
+              {t("groups.startFirstDiscussion")}
+            </Button>
+          </Alert>
+        ) : (
+          <>
+            <Stack spacing={2}>
+              {data?.discussions.map((discussion) => (
+                <Card
+                  key={discussion.id}
+                  sx={{
+                    cursor: "pointer",
+                    transition: "transform 0.2s, box-shadow 0.2s",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
+                      boxShadow: theme.shadows[4],
+                    },
+                  }}
+                  onClick={() => handleDiscussionClick(discussion.id)}
+                >
+                  <CardContent>
+                    <Stack direction="row" spacing={2} alignItems="flex-start">
+                      <Avatar
+                        {...(discussion.user.avatarUrl
+                          ? { src: discussion.user.avatarUrl }
+                          : {})}
+                        sx={{ width: 48, height: 48 }}
                       >
-                        <Typography variant="h6" component="h3">
-                          {discussion.title}
-                        </Typography>
-                        {discussion.isPinned && (
-                          <Chip
-                            icon={<PushPin />}
-                            label={t("groups.pinned")}
-                            size="small"
-                            color="primary"
-                          />
-                        )}
-                        {discussion.isLocked && (
-                          <Chip
-                            icon={<Lock />}
-                            label={t("groups.locked")}
-                            size="small"
-                            color="default"
-                          />
-                        )}
-                        {discussion.isScheduled && discussion.scheduledAt && (
-                          <Chip
-                            icon={<ScheduleIcon />}
-                            label={
-                              isFuture(new Date(discussion.scheduledAt))
-                                ? `${t("groups.scheduledFor")} ${format(new Date(discussion.scheduledAt), "PPp")}`
-                                : t("groups.discussionStarted")
-                            }
-                            size="small"
-                            color={
-                              isFuture(new Date(discussion.scheduledAt))
-                                ? "warning"
-                                : "success"
-                            }
-                          />
-                        )}
-                      </Stack>
-
-                      {/* Content Preview */}
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{
-                          mb: 2,
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {discussion.content}
-                      </Typography>
-
-                      {/* Book Reference */}
-                      {discussion.book && (
-                        <Chip
-                          label={`📚 ${discussion.book.title}`}
-                          size="small"
-                          variant="outlined"
-                          sx={{ mb: 1 }}
-                        />
-                      )}
-
-                      {/* Footer */}
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        alignItems="center"
-                        flexWrap="wrap"
-                      >
-                        <Typography variant="caption" color="text.secondary">
-                          {discussion.user.displayName ||
-                            discussion.user.username ||
-                            "Anonymous"}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          •
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {formatRelativeTime(new Date(discussion.createdAt))}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          •
-                        </Typography>
+                        <PersonOutline />
+                      </Avatar>
+                      <Box flex={1}>
+                        {/* Title and Badges */}
                         <Stack
                           direction="row"
-                          spacing={0.5}
+                          spacing={1}
                           alignItems="center"
+                          mb={1}
+                          flexWrap="wrap"
                         >
-                          <ChatBubbleOutline fontSize="small" color="action" />
-                          <Typography variant="caption" color="text.secondary">
-                            {discussion.repliesCount} {t("groups.replies")}
+                          <Typography variant="h6" component="h3">
+                            {discussion.title}
                           </Typography>
+                          {discussion.isPinned && (
+                            <Chip
+                              icon={<PushPin />}
+                              label={t("groups.pinned")}
+                              size="small"
+                              color="primary"
+                            />
+                          )}
+                          {discussion.isLocked && (
+                            <Chip
+                              icon={<Lock />}
+                              label={t("groups.locked")}
+                              size="small"
+                              color="default"
+                            />
+                          )}
+                          {discussion.isScheduled && discussion.scheduledAt && (
+                            <Chip
+                              icon={<ScheduleIcon />}
+                              label={
+                                isFuture(new Date(discussion.scheduledAt))
+                                  ? `${t("groups.scheduledFor")} ${format(new Date(discussion.scheduledAt), "PPp")}`
+                                  : t("groups.discussionStarted")
+                              }
+                              size="small"
+                              color={
+                                isFuture(new Date(discussion.scheduledAt))
+                                  ? "warning"
+                                  : "success"
+                              }
+                            />
+                          )}
                         </Stack>
-                        {discussion.lastReplyAt && (
-                          <>
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                            >
-                              •
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                            >
-                              {t("groups.lastReply")}{" "}
-                              {formatRelativeTime(
-                                new Date(discussion.lastReplyAt)
-                              )}
-                            </Typography>
-                          </>
-                        )}
-                      </Stack>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-            ))}
-          </Stack>
 
-          {/* Pagination */}
-          {data && data.pagination.totalPages > 1 && (
-            <Box display="flex" justifyContent="center" mt={4}>
-              <Pagination
-                count={data.pagination.totalPages}
-                page={page}
-                onChange={handlePageChange}
-                color="primary"
-                size={isMobile ? "small" : "medium"}
-                showFirstButton
-                showLastButton
-              />
-            </Box>
-          )}
-        </>
-      )}
+                        {/* Content Preview */}
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{
+                            mb: 2,
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {discussion.content}
+                        </Typography>
+
+                        {/* Book Reference */}
+                        {discussion.book && (
+                          <Chip
+                            label={`📚 ${discussion.book.title}`}
+                            size="small"
+                            variant="outlined"
+                            sx={{ mb: 1 }}
+                          />
+                        )}
+
+                        {/* Footer */}
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          alignItems="center"
+                          flexWrap="wrap"
+                        >
+                          <Typography variant="caption" color="text.secondary">
+                            {discussion.user.displayName ||
+                              discussion.user.username ||
+                              "Anonymous"}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            •
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {formatRelativeTime(new Date(discussion.createdAt))}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            •
+                          </Typography>
+                          <Stack
+                            direction="row"
+                            spacing={0.5}
+                            alignItems="center"
+                          >
+                            <ChatBubbleOutline
+                              fontSize="small"
+                              color="action"
+                            />
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              {discussion.repliesCount} {t("groups.replies")}
+                            </Typography>
+                          </Stack>
+                          {discussion.lastReplyAt && (
+                            <>
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                              >
+                                •
+                              </Typography>
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                              >
+                                {t("groups.lastReply")}{" "}
+                                {formatRelativeTime(
+                                  new Date(discussion.lastReplyAt)
+                                )}
+                              </Typography>
+                            </>
+                          )}
+                        </Stack>
+                      </Box>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              ))}
+            </Stack>
+
+            {/* Pagination */}
+            {data && data.pagination.totalPages > 1 && (
+              <Box display="flex" justifyContent="center" mt={4}>
+                <Pagination
+                  count={data.pagination.totalPages}
+                  page={page}
+                  onChange={handlePageChange}
+                  color="primary"
+                  size={isMobile ? "small" : "medium"}
+                  showFirstButton
+                  showLastButton
+                />
+              </Box>
+            )}
+          </>
+        ))}
 
       {/* Mobile FAB */}
       {isMobile && (

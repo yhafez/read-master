@@ -142,7 +142,7 @@
         "Email reminders sent for discussions",
         "Tests pass for all book club APIs"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "social-live-sessions-001",

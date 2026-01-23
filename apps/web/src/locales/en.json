@@ -1348,6 +1348,30 @@
       "create": "Create Discussion",
       "createError": "Failed to create discussion",
       "validationError": "Please fill in all required fields"
+    },
+    "calendar": {
+      "title": "Discussion Calendar",
+      "viewMode": "View mode",
+      "list": "List",
+      "calendar": "Calendar",
+      "listView": "List view",
+      "calendarView": "Calendar view",
+      "today": "Today",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month",
+      "upcoming": "Upcoming",
+      "started": "Started",
+      "noScheduledDiscussions": "No scheduled discussions. Use 'Schedule Discussion' to create one.",
+      "moreDiscussions": "+{{count}} more",
+      "days": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+      }
     }
   },
   "forum": {

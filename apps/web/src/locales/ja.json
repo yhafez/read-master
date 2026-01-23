@@ -1303,6 +1303,30 @@
       "create": "ディスカッションを作成",
       "createError": "ディスカッションの作成に失敗しました",
       "validationError": "すべての必須フィールドに入力してください"
+    },
+    "calendar": {
+      "title": "ディスカッションカレンダー",
+      "viewMode": "表示モード",
+      "list": "リスト",
+      "calendar": "カレンダー",
+      "listView": "リスト表示",
+      "calendarView": "カレンダー表示",
+      "today": "今日",
+      "previousMonth": "前月",
+      "nextMonth": "翌月",
+      "upcoming": "予定",
+      "started": "開始済み",
+      "noScheduledDiscussions": "予定されているディスカッションはありません。「ディスカッションを予約」で作成してください。",
+      "moreDiscussions": "+{{count}}件",
+      "days": {
+        "sun": "日",
+        "mon": "月",
+        "tue": "火",
+        "wed": "水",
+        "thu": "木",
+        "fri": "金",
+        "sat": "土"
+      }
     }
   },
   "forum": {

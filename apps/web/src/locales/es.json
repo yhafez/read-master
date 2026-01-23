@@ -1303,6 +1303,30 @@
       "create": "Crear Discusión",
       "createError": "Error al crear la discusión",
       "validationError": "Por favor complete todos los campos requeridos"
+    },
+    "calendar": {
+      "title": "Calendario de Discusiones",
+      "viewMode": "Modo de vista",
+      "list": "Lista",
+      "calendar": "Calendario",
+      "listView": "Vista de lista",
+      "calendarView": "Vista de calendario",
+      "today": "Hoy",
+      "previousMonth": "Mes anterior",
+      "nextMonth": "Mes siguiente",
+      "upcoming": "Próxima",
+      "started": "Iniciada",
+      "noScheduledDiscussions": "No hay discusiones programadas. Usa 'Programar Discusión' para crear una.",
+      "moreDiscussions": "+{{count}} más",
+      "days": {
+        "sun": "Dom",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mié",
+        "thu": "Jue",
+        "fri": "Vie",
+        "sat": "Sáb"
+      }
     }
   },
   "forum": {

@@ -1327,6 +1327,30 @@
       "create": "إنشاء مناقشة",
       "createError": "فشل في إنشاء المناقشة",
       "validationError": "يرجى ملء جميع الحقول المطلوبة"
+    },
+    "calendar": {
+      "title": "تقويم المناقشات",
+      "viewMode": "وضع العرض",
+      "list": "قائمة",
+      "calendar": "تقويم",
+      "listView": "عرض القائمة",
+      "calendarView": "عرض التقويم",
+      "today": "اليوم",
+      "previousMonth": "الشهر السابق",
+      "nextMonth": "الشهر التالي",
+      "upcoming": "قادمة",
+      "started": "بدأت",
+      "noScheduledDiscussions": "لا توجد مناقشات مجدولة. استخدم 'جدولة مناقشة' لإنشاء واحدة.",
+      "moreDiscussions": "+{{count}} إضافية",
+      "days": {
+        "sun": "أحد",
+        "mon": "إثنين",
+        "tue": "ثلاثاء",
+        "wed": "أربعاء",
+        "thu": "خميس",
+        "fri": "جمعة",
+        "sat": "سبت"
+      }
     }
   },
   "forum": {
