@@ -138,3 +138,4 @@ export * from "./useNewLeaderboard";
 export * from "./useGroupBooks";
 export * from "./useEmailPreferences";
 export * from "./useSessionRealtime";
+export * from "./useSubscription";

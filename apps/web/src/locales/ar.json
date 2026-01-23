@@ -2376,7 +2376,29 @@
     "popular": "الأكثر شعبية",
     "billingHistory": "سجل الفواتير",
     "manageBillingPortalDescription": "اعرض سجل الفواتير وقم بإدارة طرق الدفع في بوابة الفواتير.",
-    "viewBillingHistory": "عرض سجل الفواتير"
+    "viewBillingHistory": "عرض سجل الفواتير",
+    "usage": {
+      "title": "الاستخدام",
+      "books": "الكتب",
+      "aiInteractions": "تفاعلات الذكاء الاصطناعي (اليوم)",
+      "flashcards": "البطاقات التعليمية",
+      "ttsDownloads": "تنزيلات TTS (الشهر)",
+      "unlimited": "غير محدود",
+      "remaining": "{{count}} متبقي",
+      "limitReached": "تم الوصول للحد",
+      "error": "فشل في تحميل بيانات الاستخدام",
+      "noData": "لا توجد بيانات استخدام"
+    },
+    "invoices": {
+      "title": "سجل الفواتير",
+      "empty": "لا توجد فواتير بعد",
+      "date": "التاريخ",
+      "amount": "المبلغ",
+      "status": "الحالة",
+      "download": "تنزيل",
+      "viewInvoice": "عرض الفاتورة",
+      "error": "فشل في تحميل الفواتير"
+    }
   },
   "social": {
     "follow": "متابعة",

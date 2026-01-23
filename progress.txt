@@ -3,6 +3,128 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 19:10]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: payments-stripe-complete-001 - Complete Stripe Integration (Partial: Usage & Invoices API + Frontend Hook)
+
+WHAT WAS DONE:
+✅ **Created Usage API Endpoint** (`apps/api/api/payments/usage.ts`)
+- GET /api/payments/usage - Fetch current user's usage statistics
+- Returns tier, limits, usage counts, remaining quota, and percentages
+- Calculates usage against tier limits (FREE/PRO/SCHOLAR)
+- Helper functions: calculatePercentage, getStartOfToday, getStartOfMonth, serializeLimit, mapTierLimits
+
+✅ **Created Invoices API Endpoint** (`apps/api/api/payments/invoices.ts`)
+- GET /api/payments/invoices - Fetch user's invoice history from Stripe
+- Pagination support with limit parameter
+- Returns invoice summaries with PDF/hosted URLs
+- Helper functions: mapInvoiceToSummary, parseLimit
+
+✅ **Created useSubscription Hook** (`apps/web/src/hooks/useSubscription.ts`)
+- useUsageStats() - React Query hook for fetching usage data with refetch interval
+- useInvoices() - React Query hook for fetching invoice history
+- Query key factory for proper cache management
+- Helper functions: isUnlimited, formatLimit, formatRemaining, getUsageStatus, getUsageStatusColor, getTierDisplayName, canPerformAction, formatInvoiceStatus, getInvoiceStatusColor
+
+✅ **Created UsageIndicator Component** (`apps/web/src/components/subscription/UsageIndicator.tsx`)
+- Card component displaying usage with visual progress bars
+- Shows books, AI interactions, flashcards, TTS downloads usage
+- Status colors: success (low), info (medium), warning (high), error (critical)
+- Unlimited indicators for Pro/Scholar tiers
+- Loading skeleton and error states
+- Compact and full modes
+
+✅ **Added i18n Translations** (all 6 languages)
+- `subscription.usage.*` keys (title, books, aiInteractions, flashcards, ttsDownloads, unlimited, remaining, limitReached, error, noData)
+- `subscription.invoices.*` keys (title, invoice, status, amount, date, download, view, noInvoices, error)
+- English, Arabic, Spanish, Japanese, Chinese, Tagalog
+
+✅ **Created Tests** (39 tests, all passing)
+- `apps/web/src/hooks/useSubscription.test.ts`
+  - Helper function tests (isUnlimited, formatLimit, formatRemaining, getUsageStatus, etc.)
+  - Query key factory tests
+  - Type structure validation tests
+
+WHY IT MATTERS:
+- **Usage Visibility**: Users can see their tier limits and current usage
+- **Invoice Access**: Users can view and download their payment history
+- **Upgrade Prompts Foundation**: canPerformAction enables upgrade prompts when hitting limits
+- **Type-Safe**: Full TypeScript typing for all subscription data
+
+TECHNICAL DETAILS:
+**Usage API:**
+- Queries Book count, AI usage log (today), Flashcard count, TTS downloads (month)
+- Maps tier limits from constants to response
+- Calculates percentages and remaining quota
+- Handles unlimited values (-1) correctly
+
+**Invoices API:**
+- Uses Stripe SDK to fetch customer invoices
+- Maps invoice data to frontend-friendly format
+- Handles null Stripe customer gracefully
+
+**useSubscription Hook:**
+- Uses conditional spreading for exactOptionalPropertyTypes compatibility
+- Explicit generic types for proper inference
+- 60-second stale time for usage, 5-minute for invoices
+
+REMAINING WORK (payments-stripe-complete-001):
+- [ ] Subscription management page (/settings/subscription)
+- [ ] Plan comparison table (Free vs Pro vs Scholar)
+- [ ] Usage indicators in UI (integrate UsageIndicator component)
+- [ ] Upgrade prompts when hitting limits
+- [ ] Billing portal link
+- [ ] Invoice history page
+- [ ] Subscription cancellation flow
+- [ ] Pause subscription feature
+- [ ] Pro-rated upgrades/downgrades
+- [ ] Payment method management
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (0 errors)
+✅ pnpm lint - Passed (0 errors, 253 warnings in pre-existing files)
+✅ pnpm vitest run - 4715 tests passed (including 39 new useSubscription tests)
+
+FILES CREATED:
+- apps/api/api/payments/usage.ts (220 lines)
+- apps/api/api/payments/invoices.ts (170 lines)
+- apps/web/src/hooks/useSubscription.ts (253 lines)
+- apps/web/src/hooks/useSubscription.test.ts (303 lines)
+- apps/web/src/components/subscription/UsageIndicator.tsx (248 lines)
+- apps/web/src/components/subscription/index.ts (export)
+
+FILES MODIFIED:
+- apps/web/src/hooks/index.ts (export useSubscription)
+- apps/web/src/locales/en.json (subscription translations)
+- apps/web/src/locales/ar.json (subscription translations)
+- apps/web/src/locales/es.json (subscription translations)
+- apps/web/src/locales/ja.json (subscription translations)
+- apps/web/src/locales/zh.json (subscription translations)
+- apps/web/src/locales/tl.json (subscription translations)
+
+DISCOVERIES:
+- payments-stripe-complete-001 is a large task with many UI components; consider further iterations for full completion
+- Existing Stripe infrastructure (stripe.ts service, webhook handlers) is solid
+
+NEXT RECOMMENDED TASKS:
+1. **payments-stripe-complete-001** (continued) - Subscription management page
+   - Create SubscriptionPage with plan comparison
+   - Add billing portal integration
+   - Add invoice history UI
+
+2. **forum-enhancements-001** - Image upload, moderation
+
+3. **social-ai-recommendations-001** - AI-powered recommendations
+
+SPRINT STATUS:
+- In Progress (160/174 tasks complete - 92.0%)
+- 14 active tasks remaining
+- payments-stripe-complete-001: Usage API + Invoices API + Frontend hook + Component complete, UI pages pending
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 18:35]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

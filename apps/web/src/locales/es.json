@@ -2391,7 +2391,29 @@
     "popular": "Más popular",
     "billingHistory": "Historial de facturación",
     "manageBillingPortalDescription": "Ve tu historial de facturación y gestiona tus métodos de pago en el portal de facturación.",
-    "viewBillingHistory": "Ver historial de facturación"
+    "viewBillingHistory": "Ver historial de facturación",
+    "usage": {
+      "title": "Uso",
+      "books": "Libros",
+      "aiInteractions": "Interacciones IA (hoy)",
+      "flashcards": "Tarjetas de estudio",
+      "ttsDownloads": "Descargas TTS (mes)",
+      "unlimited": "Ilimitado",
+      "remaining": "{{count}} restantes",
+      "limitReached": "Límite alcanzado",
+      "error": "Error al cargar datos de uso",
+      "noData": "No hay datos de uso disponibles"
+    },
+    "invoices": {
+      "title": "Historial de facturas",
+      "empty": "Sin facturas aún",
+      "date": "Fecha",
+      "amount": "Monto",
+      "status": "Estado",
+      "download": "Descargar",
+      "viewInvoice": "Ver factura",
+      "error": "Error al cargar facturas"
+    }
   },
   "share": {
     "native": "Compartir...",

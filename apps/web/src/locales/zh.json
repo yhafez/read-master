@@ -2391,7 +2391,29 @@
     "popular": "最受欢迎",
     "billingHistory": "账单历史",
     "manageBillingPortalDescription": "在账单门户中查看您的账单历史并管理您的付款方式。",
-    "viewBillingHistory": "查看账单历史"
+    "viewBillingHistory": "查看账单历史",
+    "usage": {
+      "title": "使用情况",
+      "books": "图书",
+      "aiInteractions": "AI交互（今日）",
+      "flashcards": "闪卡",
+      "ttsDownloads": "TTS下载（本月）",
+      "unlimited": "无限制",
+      "remaining": "剩余{{count}}",
+      "limitReached": "已达上限",
+      "error": "加载使用数据失败",
+      "noData": "暂无使用数据"
+    },
+    "invoices": {
+      "title": "发票历史",
+      "empty": "暂无发票",
+      "date": "日期",
+      "amount": "金额",
+      "status": "状态",
+      "download": "下载",
+      "viewInvoice": "查看发票",
+      "error": "加载发票失败"
+    }
   },
   "share": {
     "native": "分享...",

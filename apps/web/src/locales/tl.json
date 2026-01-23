@@ -2391,7 +2391,29 @@
     "popular": "Pinaka-Popular",
     "billingHistory": "Kasaysayan ng Billing",
     "manageBillingPortalDescription": "Tingnan ang iyong kasaysayan ng billing at pamahalaan ang iyong mga paraan ng pagbabayad sa billing portal.",
-    "viewBillingHistory": "Tingnan ang Kasaysayan ng Billing"
+    "viewBillingHistory": "Tingnan ang Kasaysayan ng Billing",
+    "usage": {
+      "title": "Paggamit",
+      "books": "Mga Libro",
+      "aiInteractions": "AI Interactions (ngayon)",
+      "flashcards": "Mga Flashcard",
+      "ttsDownloads": "TTS Downloads (buwan)",
+      "unlimited": "Walang Limitasyon",
+      "remaining": "{{count}} natitira",
+      "limitReached": "Naabot na ang limit",
+      "error": "Hindi na-load ang usage data",
+      "noData": "Walang available na usage data"
+    },
+    "invoices": {
+      "title": "Kasaysayan ng Invoice",
+      "empty": "Wala pang mga invoice",
+      "date": "Petsa",
+      "amount": "Halaga",
+      "status": "Status",
+      "download": "I-download",
+      "viewInvoice": "Tingnan ang Invoice",
+      "error": "Hindi na-load ang mga invoice"
+    }
   },
   "share": {
     "native": "Ibahagi...",

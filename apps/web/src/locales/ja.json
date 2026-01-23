@@ -2391,7 +2391,29 @@
     "popular": "最も人気",
     "billingHistory": "請求履歴",
     "manageBillingPortalDescription": "請求ポータルで請求履歴を表示し、支払い方法を管理します。",
-    "viewBillingHistory": "請求履歴を表示"
+    "viewBillingHistory": "請求履歴を表示",
+    "usage": {
+      "title": "使用状況",
+      "books": "本",
+      "aiInteractions": "AI操作（今日）",
+      "flashcards": "フラッシュカード",
+      "ttsDownloads": "TTSダウンロード（月）",
+      "unlimited": "無制限",
+      "remaining": "残り{{count}}",
+      "limitReached": "上限に達しました",
+      "error": "使用状況データの読み込みに失敗しました",
+      "noData": "使用状況データがありません"
+    },
+    "invoices": {
+      "title": "請求書履歴",
+      "empty": "請求書はまだありません",
+      "date": "日付",
+      "amount": "金額",
+      "status": "ステータス",
+      "download": "ダウンロード",
+      "viewInvoice": "請求書を表示",
+      "error": "請求書の読み込みに失敗しました"
+    }
   },
   "share": {
     "native": "共有...",

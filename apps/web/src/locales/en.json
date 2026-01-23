@@ -2380,7 +2380,29 @@
     "popular": "Most Popular",
     "billingHistory": "Billing History",
     "manageBillingPortalDescription": "View your billing history and manage your payment methods in the billing portal.",
-    "viewBillingHistory": "View Billing History"
+    "viewBillingHistory": "View Billing History",
+    "usage": {
+      "title": "Usage",
+      "books": "Books",
+      "aiInteractions": "AI Interactions (today)",
+      "flashcards": "Flashcards",
+      "ttsDownloads": "TTS Downloads (month)",
+      "unlimited": "Unlimited",
+      "remaining": "{{count}} remaining",
+      "limitReached": "Limit reached",
+      "error": "Failed to load usage data",
+      "noData": "No usage data available"
+    },
+    "invoices": {
+      "title": "Invoice History",
+      "empty": "No invoices yet",
+      "date": "Date",
+      "amount": "Amount",
+      "status": "Status",
+      "download": "Download",
+      "viewInvoice": "View Invoice",
+      "error": "Failed to load invoices"
+    }
   },
   "social": {
     "follow": "Follow",
