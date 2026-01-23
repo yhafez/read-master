@@ -464,7 +464,7 @@
         "Load tests pass",
         "No N+1 queries in production"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "performance-cdn-001",

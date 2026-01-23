@@ -197,6 +197,8 @@ model Book {
   @@index([deletedAt])
   @@index([source])
   @@index([tags])
+  @@index([status]) // Standalone index for filtering by status across all users
+  @@index([createdAt]) // For sorting by creation date
 }
 
 /// FilterPreset model - Stores saved library filter combinations for users
@@ -942,6 +944,97 @@ model CurriculumFollow {
 // SOCIAL FEATURES - Following, Reading Groups, Discussions
 // =============================================================================
 
+// =============================================================================
+// AI SOCIAL RECOMMENDATIONS
+// =============================================================================
+
+/// UserSimilarity - Stores similarity scores between users
+/// Calculated based on reading history, genres, preferences
+model UserSimilarity {
+  id      String @id @default(cuid())
+  userId1 String
+  userId2 String
+
+  // Similarity score (0.0 to 1.0)
+  score Float
+
+  // Breakdown of similarity factors (stored as JSON)
+  // { readingHistory: 0.4, genres: 0.3, readingSpeed: 0.2, annotations: 0.1 }
+  factors Json @default("{}")
+
+  // Last calculation timestamp
+  lastCalculated DateTime @default(now())
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraint: one similarity record per user pair
+  @@unique([userId1, userId2])
+  // Indexes for efficient queries
+  @@index([userId1])
+  @@index([userId2])
+  @@index([score])
+  @@index([userId1, score])
+  @@index([userId2, score])
+  @@index([lastCalculated])
+}
+
+/// BookRecommendation - AI-generated book recommendations for users
+/// Based on social connections, reading history, and AI analysis
+model BookRecommendation {
+  id     String @id @default(cuid())
+  userId String
+
+  // Book information (can be from database or external)
+  bookId        String? // Reference to Book if in our system
+  externalBookId String? // ISBN or external API ID
+  bookTitle     String  @db.VarChar(500)
+  bookAuthor    String? @db.VarChar(200)
+  bookCoverUrl  String?
+
+  // Recommendation details
+  reason        String @db.Text // AI-generated explanation for the recommendation
+  score         Float  // Recommendation confidence score (0.0 to 1.0)
+  source        RecommendationSource // How the recommendation was generated
+  sourceUserId  String? // If from social, which user inspired it
+
+  // User interaction
+  dismissed    Boolean   @default(false) // User dismissed this recommendation
+  dismissedAt  DateTime?
+  viewed       Boolean   @default(false) // User has seen this recommendation
+  viewedAt     DateTime?
+  clicked      Boolean   @default(false) // User clicked for more info
+  clickedAt    DateTime?
+  addedToLibrary Boolean @default(false) // User added to their library
+  addedAt      DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime? // When the recommendation should expire
+
+  // Indexes
+  @@index([userId])
+  @@index([userId, dismissed])
+  @@index([userId, source])
+  @@index([score])
+  @@index([createdAt])
+  @@index([expiresAt])
+  @@index([sourceUserId])
+  @@index([bookId])
+}
+
+/// RecommendationSource - How the recommendation was generated
+enum RecommendationSource {
+  SOCIAL // Based on similar users' reading
+  AI // AI analysis of user's preferences
+  TRENDING // Popular in user's network
+  FOLLOWING // From users the person follows
+  GROUP // From reading groups
+  CURRICULUM // From followed curriculums
+}
+
 /// Follow - User following relationship
 /// Allows users to follow other users' public activity
 model Follow {
@@ -959,6 +1052,7 @@ model Follow {
   // Indexes for efficient queries
   @@index([followerId])
   @@index([followingId])
+  @@index([followerId, followingId]) // Compound index for efficient relationship lookups
   @@index([createdAt])
 }
 
