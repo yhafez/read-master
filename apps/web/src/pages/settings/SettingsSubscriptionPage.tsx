@@ -21,12 +21,24 @@ import {
   CircularProgress,
   Divider,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Tooltip,
+  Skeleton,
 } from "@mui/material";
 import {
   CheckCircle as CheckIcon,
   Cancel as CancelIcon,
   Star as StarIcon,
   Workspaces as ScholarIcon,
+  Download as DownloadIcon,
+  OpenInNew as OpenInNewIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
@@ -37,6 +49,12 @@ import {
   redirectToCheckout,
   redirectToCustomerPortal,
 } from "@/hooks/usePayments";
+import {
+  useInvoices,
+  formatInvoiceStatus,
+  getInvoiceStatusColor,
+} from "@/hooks/useSubscription";
+import { UsageIndicator } from "@/components/subscription";
 import { logger } from "@/lib/logger";
 
 // ============================================================================
@@ -70,7 +88,8 @@ export function SettingsSubscriptionPage(): React.ReactElement {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Get user tier from Clerk metadata
-  const currentTier = (user?.publicMetadata?.tier as SubscriptionTier) || "FREE";
+  const currentTier =
+    (user?.publicMetadata?.tier as SubscriptionTier) || "FREE";
 
   // Check for successful checkout
   useEffect(() => {
@@ -115,12 +134,30 @@ export function SettingsSubscriptionPage(): React.ReactElement {
       name: t("subscription.tiers.free.name", "Free"),
       price: "$0",
       features: [
-        { name: t("subscription.features.books.free", "10 books"), included: true },
-        { name: t("subscription.features.ai.free", "5 AI guides/month"), included: true },
-        { name: t("subscription.features.flashcards.free", "100 flashcards"), included: true },
-        { name: t("subscription.features.tts.free", "Basic TTS"), included: true },
-        { name: t("subscription.features.downloads", "TTS Downloads"), included: false },
-        { name: t("subscription.features.support.priority", "Priority Support"), included: false },
+        {
+          name: t("subscription.features.books.free", "10 books"),
+          included: true,
+        },
+        {
+          name: t("subscription.features.ai.free", "5 AI guides/month"),
+          included: true,
+        },
+        {
+          name: t("subscription.features.flashcards.free", "100 flashcards"),
+          included: true,
+        },
+        {
+          name: t("subscription.features.tts.free", "Basic TTS"),
+          included: true,
+        },
+        {
+          name: t("subscription.features.downloads", "TTS Downloads"),
+          included: false,
+        },
+        {
+          name: t("subscription.features.support.priority", "Priority Support"),
+          included: false,
+        },
       ],
       color: "default",
       icon: <CancelIcon />,
@@ -130,12 +167,36 @@ export function SettingsSubscriptionPage(): React.ReactElement {
       price: "$9.99",
       priceAnnual: "$99/year",
       features: [
-        { name: t("subscription.features.books.unlimited", "Unlimited books"), included: true },
-        { name: t("subscription.features.ai.unlimited", "Unlimited AI guides"), included: true },
-        { name: t("subscription.features.flashcards.unlimited", "Unlimited flashcards"), included: true },
-        { name: t("subscription.features.tts.openai", "OpenAI TTS Voices"), included: true },
-        { name: t("subscription.features.downloads.pro", "5 TTS downloads/month"), included: true },
-        { name: t("subscription.features.support.priority", "Priority Support"), included: true },
+        {
+          name: t("subscription.features.books.unlimited", "Unlimited books"),
+          included: true,
+        },
+        {
+          name: t("subscription.features.ai.unlimited", "Unlimited AI guides"),
+          included: true,
+        },
+        {
+          name: t(
+            "subscription.features.flashcards.unlimited",
+            "Unlimited flashcards"
+          ),
+          included: true,
+        },
+        {
+          name: t("subscription.features.tts.openai", "OpenAI TTS Voices"),
+          included: true,
+        },
+        {
+          name: t(
+            "subscription.features.downloads.pro",
+            "5 TTS downloads/month"
+          ),
+          included: true,
+        },
+        {
+          name: t("subscription.features.support.priority", "Priority Support"),
+          included: true,
+        },
       ],
       color: "primary",
       icon: <StarIcon />,
@@ -145,13 +206,46 @@ export function SettingsSubscriptionPage(): React.ReactElement {
       price: "$29.99",
       priceAnnual: "$299/year",
       features: [
-        { name: t("subscription.features.books.unlimited", "Unlimited books"), included: true },
-        { name: t("subscription.features.ai.unlimited", "Unlimited AI guides"), included: true },
-        { name: t("subscription.features.flashcards.unlimited", "Unlimited flashcards"), included: true },
-        { name: t("subscription.features.tts.elevenlabs", "ElevenLabs Premium Voices"), included: true },
-        { name: t("subscription.features.downloads.unlimited", "Unlimited TTS downloads"), included: true },
-        { name: t("subscription.features.support.premium", "Premium 1-on-1 Support"), included: true },
-        { name: t("subscription.features.custom", "Custom themes & features"), included: true },
+        {
+          name: t("subscription.features.books.unlimited", "Unlimited books"),
+          included: true,
+        },
+        {
+          name: t("subscription.features.ai.unlimited", "Unlimited AI guides"),
+          included: true,
+        },
+        {
+          name: t(
+            "subscription.features.flashcards.unlimited",
+            "Unlimited flashcards"
+          ),
+          included: true,
+        },
+        {
+          name: t(
+            "subscription.features.tts.elevenlabs",
+            "ElevenLabs Premium Voices"
+          ),
+          included: true,
+        },
+        {
+          name: t(
+            "subscription.features.downloads.unlimited",
+            "Unlimited TTS downloads"
+          ),
+          included: true,
+        },
+        {
+          name: t(
+            "subscription.features.support.premium",
+            "Premium 1-on-1 Support"
+          ),
+          included: true,
+        },
+        {
+          name: t("subscription.features.custom", "Custom themes & features"),
+          included: true,
+        },
       ],
       color: "secondary",
       icon: <ScholarIcon />,
@@ -193,7 +287,10 @@ export function SettingsSubscriptionPage(): React.ReactElement {
 
       {showSuccessMessage && (
         <Alert severity="success" sx={{ mb: 3 }}>
-          {t("subscription.upgradeSuccess", "Subscription updated successfully! Your new features are now available.")}
+          {t(
+            "subscription.upgradeSuccess",
+            "Subscription updated successfully! Your new features are now available."
+          )}
         </Alert>
       )}
 
@@ -219,9 +316,11 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                 onClick={handleManageBilling}
                 disabled={createBillingPortal.isPending}
               >
-                {createBillingPortal.isPending
-                  ? <CircularProgress size={20} />
-                  : t("subscription.manageBilling", "Manage Billing")}
+                {createBillingPortal.isPending ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  t("subscription.manageBilling", "Manage Billing")
+                )}
               </Button>
             </>
           )}
@@ -255,7 +354,11 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                         </Typography>
                         <Typography variant="h3" color="primary">
                           {tiers.PRO.price}
-                          <Typography component="span" variant="body2" color="text.secondary">
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                          >
                             /month
                           </Typography>
                         </Typography>
@@ -280,7 +383,9 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                               primary={feature.name}
                               primaryTypographyProps={{
                                 variant: "body2",
-                                color: feature.included ? "text.primary" : "text.disabled",
+                                color: feature.included
+                                  ? "text.primary"
+                                  : "text.disabled",
                               }}
                             />
                           </ListItem>
@@ -295,9 +400,11 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                         onClick={() => handleUpgrade("PRO")}
                         disabled={createCheckoutSession.isPending}
                       >
-                        {createCheckoutSession.isPending
-                          ? <CircularProgress size={24} />
-                          : t("subscription.upgradeToPro", "Upgrade to Pro")}
+                        {createCheckoutSession.isPending ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          t("subscription.upgradeToPro", "Upgrade to Pro")
+                        )}
                       </Button>
                     </Stack>
                   </CardContent>
@@ -333,7 +440,11 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                       </Typography>
                       <Typography variant="h3" color="secondary">
                         {tiers.SCHOLAR.price}
-                        <Typography component="span" variant="body2" color="text.secondary">
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="text.secondary"
+                        >
                           /month
                         </Typography>
                       </Typography>
@@ -358,7 +469,9 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                             primary={feature.name}
                             primaryTypographyProps={{
                               variant: "body2",
-                              color: feature.included ? "text.primary" : "text.disabled",
+                              color: feature.included
+                                ? "text.primary"
+                                : "text.disabled",
                             }}
                           />
                         </ListItem>
@@ -373,9 +486,11 @@ export function SettingsSubscriptionPage(): React.ReactElement {
                       onClick={() => handleUpgrade("SCHOLAR")}
                       disabled={createCheckoutSession.isPending}
                     >
-                      {createCheckoutSession.isPending
-                        ? <CircularProgress size={24} />
-                        : t("subscription.upgradeToScholar", "Upgrade to Scholar")}
+                      {createCheckoutSession.isPending ? (
+                        <CircularProgress size={24} />
+                      ) : (
+                        t("subscription.upgradeToScholar", "Upgrade to Scholar")
+                      )}
                     </Button>
                   </Stack>
                 </CardContent>
@@ -385,30 +500,149 @@ export function SettingsSubscriptionPage(): React.ReactElement {
         </>
       )}
 
-      {/* Billing History Section (Placeholder for now) */}
+      {/* Usage Section */}
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          {t("subscription.usage.title", "Usage")}
+        </Typography>
+        <UsageIndicator showAll />
+      </Box>
+
+      {/* Invoice History Section */}
       {currentTier !== "FREE" && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h5" gutterBottom>
-            {t("subscription.billingHistory", "Billing History")}
+            {t("subscription.invoices.title", "Invoice History")}
           </Typography>
-          <Card>
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {t("subscription.manageBillingPortalDescription", "View your billing history and manage your payment methods in the billing portal.")}
-              </Typography>
-              <Button
-                variant="text"
-                onClick={handleManageBilling}
-                sx={{ mt: 2 }}
-                disabled={createBillingPortal.isPending}
-              >
-                {t("subscription.viewBillingHistory", "View Billing History")}
-              </Button>
-            </CardContent>
-          </Card>
+          <InvoiceHistoryTable />
+          <Box sx={{ mt: 2 }}>
+            <Button
+              variant="outlined"
+              onClick={handleManageBilling}
+              disabled={createBillingPortal.isPending}
+            >
+              {createBillingPortal.isPending ? (
+                <CircularProgress size={20} />
+              ) : (
+                t("subscription.manageBilling", "Manage Billing")
+              )}
+            </Button>
+          </Box>
         </Box>
       )}
     </Box>
+  );
+}
+
+// ============================================================================
+// Invoice History Table Component
+// ============================================================================
+
+function InvoiceHistoryTable(): React.ReactElement {
+  const { t } = useTranslation();
+  const { data: invoicesData, isLoading, error } = useInvoices({ limit: 10 });
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardContent>
+          <Stack spacing={2}>
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} variant="rectangular" height={48} />
+            ))}
+          </Stack>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Alert severity="error">
+        {t("subscription.invoices.error", "Failed to load invoices")}
+      </Alert>
+    );
+  }
+
+  if (!invoicesData?.invoices || invoicesData.invoices.length === 0) {
+    return (
+      <Card>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {t("subscription.invoices.empty", "No invoices yet")}
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>{t("subscription.invoices.date", "Date")}</TableCell>
+            <TableCell>{t("subscription.invoices.amount", "Amount")}</TableCell>
+            <TableCell>{t("subscription.invoices.status", "Status")}</TableCell>
+            <TableCell align="right">
+              {t("common.moreOptions", "Actions")}
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {invoicesData.invoices.map((invoice) => (
+            <TableRow key={invoice.id}>
+              <TableCell>
+                {new Date(invoice.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell>{invoice.amount}</TableCell>
+              <TableCell>
+                <Chip
+                  label={formatInvoiceStatus(invoice.status)}
+                  color={getInvoiceStatusColor(invoice.status)}
+                  size="small"
+                />
+              </TableCell>
+              <TableCell align="right">
+                {invoice.pdfUrl && (
+                  <Tooltip
+                    title={t("subscription.invoices.download", "Download")}
+                  >
+                    <IconButton
+                      size="small"
+                      component="a"
+                      href={invoice.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <DownloadIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
+                {invoice.hostedUrl && (
+                  <Tooltip
+                    title={t(
+                      "subscription.invoices.viewInvoice",
+                      "View Invoice"
+                    )}
+                  >
+                    <IconButton
+                      size="small"
+                      component="a"
+                      href={invoice.hostedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <OpenInNewIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
