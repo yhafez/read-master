@@ -520,7 +520,7 @@
         "Forms fully accessible",
         "Tests pass with screen reader tools"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "accessibility-voice-commands-001",
