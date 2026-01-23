@@ -29,13 +29,24 @@ const localStorageMock = (() => {
   };
 })();
 
-// Define localStorage on global if not already defined
-if (typeof globalThis.localStorage === "undefined") {
-  Object.defineProperty(globalThis, "localStorage", {
+// Define localStorage on global and window (always override for consistent test behavior)
+Object.defineProperty(globalThis, "localStorage", {
+  value: localStorageMock,
+  writable: true,
+  configurable: true,
+});
+
+// Also define on window for jsdom compatibility
+if (typeof window !== "undefined") {
+  Object.defineProperty(window, "localStorage", {
     value: localStorageMock,
     writable: true,
+    configurable: true,
   });
 }
+
+// Create a direct global reference for code that uses `localStorage` directly
+(global as Record<string, unknown>).localStorage = localStorageMock;
 
 // Mock sessionStorage similarly
 const sessionStorageMock = (() => {
@@ -58,12 +69,24 @@ const sessionStorageMock = (() => {
   };
 })();
 
-if (typeof globalThis.sessionStorage === "undefined") {
-  Object.defineProperty(globalThis, "sessionStorage", {
+// Define sessionStorage on global and window (always override for consistent test behavior)
+Object.defineProperty(globalThis, "sessionStorage", {
+  value: sessionStorageMock,
+  writable: true,
+  configurable: true,
+});
+
+// Also define on window for jsdom compatibility
+if (typeof window !== "undefined") {
+  Object.defineProperty(window, "sessionStorage", {
     value: sessionStorageMock,
     writable: true,
+    configurable: true,
   });
 }
+
+// Create a direct global reference for code that uses `sessionStorage` directly
+(global as Record<string, unknown>).sessionStorage = sessionStorageMock;
 
 // Reset storage mocks before each test
 beforeEach(() => {

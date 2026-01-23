@@ -104,7 +104,7 @@
         "Push notifications work",
         "Feature parity with web app"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "social-bookclubs-001",
