@@ -1214,6 +1214,9 @@ model ForumPost {
   title   String @db.VarChar(200) // Post title (3-200 chars enforced at app level)
   content String @db.Text // Post content (10-50000 chars enforced at app level)
 
+  // Image attachments (stored as JSON array of URLs)
+  imageUrls Json @default("[]") // Array of R2 image URLs
+
   // Optional book reference (for book-specific discussions)
   bookId String?
   book   Book?   @relation("ForumBookPosts", fields: [bookId], references: [id], onDelete: SetNull)
@@ -1269,6 +1272,9 @@ model ForumReply {
 
   // Reply content
   content String @db.Text // Reply content
+
+  // Image attachments (stored as JSON array of URLs)
+  imageUrls Json @default("[]") // Array of R2 image URLs
 
   // Nested reply support
   parentReplyId String? // For nested replies (null = top-level reply)

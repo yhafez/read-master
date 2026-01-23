@@ -1455,6 +1455,17 @@
       "orderedList": "有序列表",
       "link": "插入链接"
     },
+    "images": {
+      "addImage": "添加图片",
+      "uploadImage": "上传图片",
+      "uploading": "上传中...",
+      "removeImage": "移除图片",
+      "limitReached": "最多允许{{max}}张图片",
+      "uploadError": "图片上传失败",
+      "invalidType": "无效文件类型。允许: JPG, PNG, WebP, GIF",
+      "fileTooLarge": "文件过大。最大5MB",
+      "emptyFile": "文件为空"
+    },
     "form": {
       "createTitle": "创建新帖子",
       "editTitle": "编辑帖子",

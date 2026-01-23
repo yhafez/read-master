@@ -3,6 +3,125 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 21:01]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: forum-enhancements-001 - Forum Enhancements (Continued: Image Upload Support)
+
+WHAT WAS DONE:
+✅ **Created Forum Image Upload API Endpoint**
+- Created `apps/api/api/forum/upload-image.ts` with POST endpoint for image uploads
+- Validates MIME types (JPEG, PNG, WebP, GIF)
+- Validates file size (max 5MB)
+- Validates image buffer via magic bytes (file signatures)
+- Sanitizes filenames to prevent path traversal attacks
+- Uploads to Cloudflare R2 storage with user/image namespacing
+- Returns URL, key, filename, contentType, and size
+
+✅ **Updated Storage Service**
+- Added `FORUM: "forum"` to StorageNamespace in `apps/api/src/services/storage.ts`
+- Added `FORUM_IMAGE: 5 * 1024 * 1024` (5MB) to MaxFileSize
+- Created `buildForumImageKey()` function for consistent key generation
+- Updated storage exports
+
+✅ **Updated Database Schema**
+- Added `imageUrls Json @default("[]")` to ForumPost model
+- Added `imageUrls Json @default("[]")` to ForumReply model
+- Allows storing array of image URLs per post/reply
+
+✅ **Created Frontend Components**
+- Created `ForumImageUpload` component with file selection, validation, and upload progress
+- Created `ImagePreviewList` component for displaying uploaded images with remove buttons
+- Helper functions: validateImageFile, formatFileSize, generateImageId
+- Supports icon variant (for toolbar) and button variant
+- Error display with dismiss functionality
+- Respects max images limit (5 per post/reply)
+
+✅ **Integrated with MarkdownEditor**
+- Added image upload props: enableImageUpload, images, onImageUploaded, onImageRemoved
+- Image upload icon appears in toolbar when enabled
+- Inserts `![filename](url)` markdown when image uploaded
+- Shows ImagePreviewList below character count
+
+✅ **Added i18n Translations**
+- Added `forum.images.*` keys to all 6 locale files (en, ar, es, ja, zh, tl)
+- Keys: addImage, uploadImage, uploading, limitReached, removeImage
+
+✅ **Created Comprehensive Tests** (87 tests total)
+- `apps/api/api/forum/upload-image.test.ts` (52 tests)
+  - isAllowedMimeType validation tests
+  - getExtensionFromMimeType tests
+  - isValidImageBuffer magic byte tests
+  - sanitizeFilename security tests
+  - generateImageId uniqueness tests
+  - Type definition tests
+
+- `apps/web/src/components/forum/ForumImageUpload.test.ts` (35 tests)
+  - validateImageFile tests
+  - formatFileSize tests
+  - Constants validation tests
+
+WHY IT MATTERS:
+- **Enhanced Forum UX**: Users can now add images to forum posts and replies
+- **Security**: File validation via magic bytes prevents malicious uploads
+- **Storage Integration**: Consistent R2 storage pattern with other uploads
+- **Reusable Components**: ForumImageUpload can be used in posts, replies, or other contexts
+
+TECHNICAL DETAILS:
+**Backend:**
+- Uses `withAuth` middleware for authentication
+- Extracts file from multipart form data or base64 data URL
+- Validates content type, file size, and image buffer
+- Generates unique 16-character image IDs from crypto.randomUUID()
+- Builds storage key: `forum/{userId}/{imageId}/{filename}`
+
+**Frontend:**
+- Uses hidden file input triggered by button/icon click
+- Validates client-side before upload (type, size, empty check)
+- Posts FormData to /api/forum/upload-image
+- Provides onImageUploaded callback with UploadedImage object
+- MarkdownEditor integration auto-inserts markdown image syntax
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, pre-existing warnings in unrelated files)
+✅ pnpm vitest run "upload-image" - 52 tests passed
+✅ pnpm vitest run "ForumImageUpload" - 35 tests passed
+
+FILES CREATED:
+- apps/api/api/forum/upload-image.ts (373 lines)
+- apps/api/api/forum/upload-image.test.ts (52 tests)
+- apps/web/src/components/forum/ForumImageUpload.tsx (418 lines)
+- apps/web/src/components/forum/ForumImageUpload.test.ts (35 tests)
+
+FILES MODIFIED:
+- apps/api/src/services/storage.ts (added FORUM namespace, buildForumImageKey)
+- packages/database/prisma/schema.prisma (added imageUrls to ForumPost and ForumReply)
+- apps/web/src/components/forum/MarkdownEditor.tsx (added image upload integration)
+- apps/web/src/components/forum/index.ts (exported new components)
+- apps/web/src/locales/en.json, ar.json, es.json, ja.json, zh.json, tl.json (added translations)
+
+NEXT RECOMMENDED TASKS:
+1. **forum-enhancements-001** (continued) - Remaining features:
+   - Post editing with edit history
+   - Moderation tools (pin, lock, delete)
+
+2. **social-ai-recommendations-001** - AI-powered recommendations
+   - User similarity algorithm
+   - Book recommendations based on social graph
+
+3. **performance-optimization-001** - Database optimization
+   - Add indexes for slow queries
+   - Query caching with Redis
+
+SPRINT STATUS:
+- In Progress (forum-enhancements-001 image upload feature complete)
+- Total: 161/174 tasks complete (92.5%)
+- forum-enhancements-001: PARTIAL (image upload ✅, voting ✅, editing and moderation remaining)
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 19:50]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

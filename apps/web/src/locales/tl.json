@@ -1455,6 +1455,17 @@
       "orderedList": "Numeradong Listahan",
       "link": "Maglagay ng Link"
     },
+    "images": {
+      "addImage": "Magdagdag ng larawan",
+      "uploadImage": "Mag-upload ng Larawan",
+      "uploading": "Nag-a-upload...",
+      "removeImage": "Alisin ang larawan",
+      "limitReached": "Maximum {{max}} larawan lamang",
+      "uploadError": "Nabigong mag-upload ng larawan",
+      "invalidType": "Hindi valid na file type. Pwede: JPG, PNG, WebP, GIF",
+      "fileTooLarge": "Masyadong malaki ang file. Maximum ay 5MB",
+      "emptyFile": "Walang laman ang file"
+    },
     "form": {
       "createTitle": "Lumikha ng Bagong Post",
       "editTitle": "I-edit ang Post",

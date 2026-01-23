@@ -163,6 +163,8 @@ export const StorageNamespace = {
   AUDIO: "audio",
   /** User avatar images */
   AVATARS: "avatars",
+  /** Forum post/reply images */
+  FORUM: "forum",
   /** Temporary files */
   TEMP: "temp",
 } as const;
@@ -182,6 +184,8 @@ export const MaxFileSize = {
   AUDIO: 500 * 1024 * 1024,
   /** Maximum avatar size: 2MB */
   AVATAR: 2 * 1024 * 1024,
+  /** Maximum forum image size: 5MB */
+  FORUM_IMAGE: 5 * 1024 * 1024,
 } as const;
 
 /**
@@ -952,6 +956,28 @@ export function buildTempKey(uniqueId: string, filename: string): string {
 }
 
 /**
+ * Build a storage key for a forum image
+ *
+ * @param userId - The user ID who uploaded the image
+ * @param imageId - A unique ID for the image
+ * @param filename - The original filename
+ * @returns The storage key
+ *
+ * @example
+ * ```typescript
+ * const key = buildForumImageKey('user_123', 'img_456', 'screenshot.png');
+ * // Returns: 'forum/user_123/img_456/screenshot.png'
+ * ```
+ */
+export function buildForumImageKey(
+  userId: string,
+  imageId: string,
+  filename: string
+): string {
+  return `${StorageNamespace.FORUM}/${userId}/${imageId}/${filename}`;
+}
+
+/**
  * Extract the filename from a storage key
  */
 export function getFilenameFromKey(key: string): string {
@@ -1072,6 +1098,7 @@ export const storage = {
   buildAudioKey,
   buildAvatarKey,
   buildTempKey,
+  buildForumImageKey,
   getFilenameFromKey,
   getExtension,
   inferContentType,

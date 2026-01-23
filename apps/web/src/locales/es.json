@@ -1455,6 +1455,17 @@
       "orderedList": "Lista Numerada",
       "link": "Insertar Enlace"
     },
+    "images": {
+      "addImage": "Agregar imagen",
+      "uploadImage": "Subir Imagen",
+      "uploading": "Subiendo...",
+      "removeImage": "Eliminar imagen",
+      "limitReached": "Máximo {{max}} imágenes permitidas",
+      "uploadError": "Error al subir imagen",
+      "invalidType": "Tipo de archivo inválido. Permitidos: JPG, PNG, WebP, GIF",
+      "fileTooLarge": "Archivo muy grande. Tamaño máximo es 5MB",
+      "emptyFile": "El archivo está vacío"
+    },
     "form": {
       "createTitle": "Crear Nueva Publicación",
       "editTitle": "Editar Publicación",

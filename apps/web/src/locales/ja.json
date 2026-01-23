@@ -1455,6 +1455,17 @@
       "orderedList": "番号付きリスト",
       "link": "リンクを挿入"
     },
+    "images": {
+      "addImage": "画像を追加",
+      "uploadImage": "画像をアップロード",
+      "uploading": "アップロード中...",
+      "removeImage": "画像を削除",
+      "limitReached": "最大{{max}}枚の画像が許可されています",
+      "uploadError": "画像のアップロードに失敗しました",
+      "invalidType": "無効なファイル形式です。許可: JPG, PNG, WebP, GIF",
+      "fileTooLarge": "ファイルが大きすぎます。最大5MB",
+      "emptyFile": "ファイルが空です"
+    },
     "form": {
       "createTitle": "新規投稿を作成",
       "editTitle": "投稿を編集",

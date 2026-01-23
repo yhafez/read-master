@@ -1450,6 +1450,17 @@
       "orderedList": "قائمة مرقمة",
       "link": "إدراج رابط"
     },
+    "images": {
+      "addImage": "إضافة صورة",
+      "uploadImage": "رفع صورة",
+      "uploading": "جاري الرفع...",
+      "removeImage": "إزالة الصورة",
+      "limitReached": "الحد الأقصى {{max}} صور مسموح",
+      "uploadError": "فشل رفع الصورة",
+      "invalidType": "نوع ملف غير صالح. المسموح: JPG, PNG, WebP, GIF",
+      "fileTooLarge": "الملف كبير جداً. الحد الأقصى 5MB",
+      "emptyFile": "الملف فارغ"
+    },
     "form": {
       "createTitle": "إنشاء منشور جديد",
       "editTitle": "تعديل المنشور",

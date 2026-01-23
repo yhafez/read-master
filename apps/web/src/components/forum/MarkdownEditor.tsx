@@ -32,6 +32,11 @@ import {
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { MarkdownPreview } from "./MarkdownPreview";
+import {
+  ForumImageUpload,
+  ImagePreviewList,
+  type UploadedImage,
+} from "./ForumImageUpload";
 
 // ============================================================================
 // Types
@@ -68,6 +73,14 @@ export interface MarkdownEditorProps {
   label?: string;
   /** Additional props for the TextField */
   textFieldProps?: Partial<TextFieldProps>;
+  /** Whether to enable image upload */
+  enableImageUpload?: boolean;
+  /** List of already uploaded images */
+  images?: UploadedImage[];
+  /** Callback when an image is uploaded */
+  onImageUploaded?: (image: UploadedImage) => void;
+  /** Callback when an image is removed */
+  onImageRemoved?: (imageId: string) => void;
 }
 
 // ============================================================================
@@ -201,10 +214,41 @@ export function MarkdownEditor({
   helperText,
   label,
   textFieldProps,
+  enableImageUpload = false,
+  images = [],
+  onImageUploaded,
+  onImageRemoved,
 }: MarkdownEditorProps): React.ReactElement {
   const { t } = useTranslation();
   const textFieldRef = useRef<HTMLTextAreaElement>(null);
   const [mode, setMode] = useState<EditorMode>("write");
+
+  // Handle image upload - insert markdown image syntax
+  const handleImageUploaded = (image: UploadedImage) => {
+    // Insert image markdown at cursor position or end
+    const textarea = textFieldRef.current;
+    const imageMarkdown = `![${image.filename}](${image.url})`;
+
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const before = value.slice(0, start);
+      const after = value.slice(start);
+
+      // Add newline before if not at start and no newline
+      const prefix = before.length > 0 && !before.endsWith("\n") ? "\n" : "";
+      // Add newline after
+      const suffix = "\n";
+
+      onChange(`${before}${prefix}${imageMarkdown}${suffix}${after}`);
+    } else {
+      // Append at end
+      const prefix = value.length > 0 && !value.endsWith("\n") ? "\n" : "";
+      onChange(`${value}${prefix}${imageMarkdown}\n`);
+    }
+
+    // Notify parent
+    onImageUploaded?.(image);
+  };
 
   // Toolbar buttons
   const toolbarButtons: ToolbarButton[] = [
@@ -317,6 +361,16 @@ export function MarkdownEditor({
           </Tooltip>
         ))}
 
+        {/* Image upload button */}
+        {enableImageUpload && (
+          <ForumImageUpload
+            onImageUploaded={handleImageUploaded}
+            disabled={disabled || mode === "preview"}
+            currentImageCount={images.length}
+            variant="icon"
+          />
+        )}
+
         {showPreviewToggle && (
           <>
             <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
@@ -390,6 +444,15 @@ export function MarkdownEditor({
         >
           {charCount.toLocaleString()}/{maxLength.toLocaleString()}
         </Typography>
+      )}
+
+      {/* Image preview list */}
+      {enableImageUpload && images.length > 0 && (
+        <ImagePreviewList
+          images={images}
+          onRemove={(imageId) => onImageRemoved?.(imageId)}
+          disabled={disabled}
+        />
       )}
     </Box>
   );
