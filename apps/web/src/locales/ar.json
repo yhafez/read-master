@@ -1665,6 +1665,50 @@
       "resetConfirm": "هل أنت متأكد من أنك تريد إعادة تعيين جميع إعدادات الذكاء الاصطناعي إلى الافتراضي؟",
       "saved": "تم حفظ إعدادات الذكاء الاصطناعي"
     },
+    "aiModels": {
+      "title": "اختيار نموذج الذكاء الاصطناعي",
+      "description": "اختر نموذج الذكاء الاصطناعي الذي يشغل مساعد القراءة الخاص بك. تقدم النماذج المختلفة قدرات وسرعات وتكاليف متنوعة.",
+      "provider": "مزود الذكاء الاصطناعي",
+      "recommended": "موصى به",
+      "fast": "سريع",
+      "pricing": "التسعير (لكل مليون رمز)",
+      "contextWindow": "نافذة السياق",
+      "requiresTier": "يتطلب اشتراك {{tier}}",
+      "compare": "مقارنة",
+      "testConnection": "اختبار الاتصال",
+      "connectionSuccess": "نجح الاتصال ({{time}} مللي ثانية)",
+      "tabs": {
+        "models": "النماذج",
+        "calculator": "حاسبة التكلفة",
+        "settings": "الإعدادات"
+      },
+      "costCalculator": {
+        "title": "حاسبة التكلفة",
+        "description": "قدّر تكلفة عمليات الذكاء الاصطناعي بناءً على طول النص.",
+        "inputText": "نص الإدخال النموذجي",
+        "inputPlaceholder": "الصق النص هنا لتقدير عدد الرموز...",
+        "expectedOutput": "الإخراج المتوقع",
+        "inputCost": "تكلفة الإدخال",
+        "outputCost": "تكلفة الإخراج",
+        "totalCost": "التكلفة الإجمالية"
+      },
+      "comparison": {
+        "title": "مقارنة النماذج",
+        "bestOverall": "الأفضل بشكل عام",
+        "bestValue": "أفضل قيمة",
+        "bestQuality": "أفضل جودة",
+        "costScore": "كفاءة التكلفة",
+        "speedScore": "السرعة",
+        "qualityScore": "الجودة"
+      },
+      "settings": {
+        "autoSelect": "اختيار تلقائي للنموذج",
+        "autoSelectDescription": "اختر تلقائيًا أفضل نموذج بناءً على المهمة.",
+        "costWarnings": "إظهار تحذيرات التكلفة",
+        "costWarningsDescription": "عرض تحذيرات قبل عمليات الذكاء الاصطناعي المكلفة.",
+        "currentModel": "النموذج النشط الحالي"
+      }
+    },
     "notificationPreferences": "تفضيلات الإشعارات",
     "manageNotifications": "إدارة إعدادات البريد الإلكتروني والإشعارات",
     "emailNotifications": "إشعارات البريد الإلكتروني",

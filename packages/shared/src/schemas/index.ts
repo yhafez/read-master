@@ -68,6 +68,9 @@
  * ```
  */
 
+// AI Model schemas
+export * from "./ai-models";
+
 // Book schemas
 export * from "./books";
 

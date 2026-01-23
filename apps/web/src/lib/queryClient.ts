@@ -80,6 +80,18 @@ export const queryKeys = {
     preReadingGuide: (bookId: string) =>
       [...queryKeys.ai.all, "preReadingGuide", bookId] as const,
     usage: () => [...queryKeys.ai.all, "usage"] as const,
+    models: () => [...queryKeys.ai.all, "models"] as const,
+    modelsList: (filters?: Record<string, unknown>) =>
+      [...queryKeys.ai.models(), "list", filters] as const,
+    modelDetail: (modelId: string) =>
+      [...queryKeys.ai.models(), "detail", modelId] as const,
+    preferences: () => [...queryKeys.ai.all, "preferences"] as const,
+    costEstimate: (params?: Record<string, unknown>) =>
+      [...queryKeys.ai.all, "costEstimate", params] as const,
+    comparison: (modelIds: string[]) =>
+      [...queryKeys.ai.all, "comparison", modelIds] as const,
+    usageSummary: (period?: string) =>
+      [...queryKeys.ai.all, "usageSummary", period] as const,
   },
 
   /** Leaderboard queries */

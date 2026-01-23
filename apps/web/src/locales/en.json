@@ -1686,6 +1686,50 @@
       "resetConfirm": "Are you sure you want to reset all AI settings to defaults?",
       "saved": "AI settings saved"
     },
+    "aiModels": {
+      "title": "AI Model Selection",
+      "description": "Choose which AI model powers your reading assistant. Different models offer varying capabilities, speeds, and costs.",
+      "provider": "AI Provider",
+      "recommended": "Recommended",
+      "fast": "Fast",
+      "pricing": "Pricing (per 1M tokens)",
+      "contextWindow": "Context Window",
+      "requiresTier": "Requires {{tier}} subscription",
+      "compare": "Compare",
+      "testConnection": "Test Connection",
+      "connectionSuccess": "Connection successful ({{time}}ms)",
+      "tabs": {
+        "models": "Models",
+        "calculator": "Cost Calculator",
+        "settings": "Settings"
+      },
+      "costCalculator": {
+        "title": "Cost Calculator",
+        "description": "Estimate the cost of AI operations based on text length.",
+        "inputText": "Sample Input Text",
+        "inputPlaceholder": "Paste text here to estimate token count...",
+        "expectedOutput": "Expected Output",
+        "inputCost": "Input Cost",
+        "outputCost": "Output Cost",
+        "totalCost": "Total Cost"
+      },
+      "comparison": {
+        "title": "Model Comparison",
+        "bestOverall": "Best Overall",
+        "bestValue": "Best Value",
+        "bestQuality": "Best Quality",
+        "costScore": "Cost Efficiency",
+        "speedScore": "Speed",
+        "qualityScore": "Quality"
+      },
+      "settings": {
+        "autoSelect": "Auto-select Model",
+        "autoSelectDescription": "Automatically choose the best model based on the task.",
+        "costWarnings": "Show Cost Warnings",
+        "costWarningsDescription": "Display warnings before expensive AI operations.",
+        "currentModel": "Current Active Model"
+      }
+    },
     "notificationPreferences": "Notification Preferences",
     "manageNotifications": "Manage your email and push notification settings",
     "emailNotifications": "Email Notifications",

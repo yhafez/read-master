@@ -1672,6 +1672,50 @@
       "resetConfirm": "您确定要将所有AI设置重置为默认值吗？",
       "saved": "AI设置已保存"
     },
+    "aiModels": {
+      "title": "AI模型选择",
+      "description": "选择为您的阅读助手提供动力的AI模型。不同的模型提供不同的功能、速度和成本。",
+      "provider": "AI提供商",
+      "recommended": "推荐",
+      "fast": "快速",
+      "pricing": "定价（每百万token）",
+      "contextWindow": "上下文窗口",
+      "requiresTier": "需要{{tier}}订阅",
+      "compare": "比较",
+      "testConnection": "测试连接",
+      "connectionSuccess": "连接成功（{{time}}毫秒）",
+      "tabs": {
+        "models": "模型",
+        "calculator": "成本计算器",
+        "settings": "设置"
+      },
+      "costCalculator": {
+        "title": "成本计算器",
+        "description": "根据文本长度估算AI操作的成本。",
+        "inputText": "示例输入文本",
+        "inputPlaceholder": "在此粘贴文本以估算token数量...",
+        "expectedOutput": "预期输出",
+        "inputCost": "输入成本",
+        "outputCost": "输出成本",
+        "totalCost": "总成本"
+      },
+      "comparison": {
+        "title": "模型比较",
+        "bestOverall": "综合最佳",
+        "bestValue": "最佳性价比",
+        "bestQuality": "最佳质量",
+        "costScore": "成本效率",
+        "speedScore": "速度",
+        "qualityScore": "质量"
+      },
+      "settings": {
+        "autoSelect": "自动选择模型",
+        "autoSelectDescription": "根据任务自动选择最佳模型。",
+        "costWarnings": "显示成本警告",
+        "costWarningsDescription": "在执行昂贵的AI操作前显示警告。",
+        "currentModel": "当前活动模型"
+      }
+    },
     "notificationPreferences": "通知偏好",
     "manageNotifications": "管理您的电子邮件和推送通知设置",
     "emailNotifications": "电子邮件通知",

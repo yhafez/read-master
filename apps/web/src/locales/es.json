@@ -1701,6 +1701,50 @@
       "resetConfirm": "¿Estás seguro de que quieres restablecer todas las configuraciones de IA a los valores predeterminados?",
       "saved": "Configuración de IA guardada"
     },
+    "aiModels": {
+      "title": "Selección de Modelo de IA",
+      "description": "Elige qué modelo de IA potencia tu asistente de lectura. Diferentes modelos ofrecen distintas capacidades, velocidades y costos.",
+      "provider": "Proveedor de IA",
+      "recommended": "Recomendado",
+      "fast": "Rápido",
+      "pricing": "Precios (por 1M tokens)",
+      "contextWindow": "Ventana de Contexto",
+      "requiresTier": "Requiere suscripción {{tier}}",
+      "compare": "Comparar",
+      "testConnection": "Probar Conexión",
+      "connectionSuccess": "Conexión exitosa ({{time}}ms)",
+      "tabs": {
+        "models": "Modelos",
+        "calculator": "Calculadora de Costos",
+        "settings": "Configuración"
+      },
+      "costCalculator": {
+        "title": "Calculadora de Costos",
+        "description": "Estima el costo de operaciones de IA basándose en la longitud del texto.",
+        "inputText": "Texto de Entrada de Muestra",
+        "inputPlaceholder": "Pega texto aquí para estimar el conteo de tokens...",
+        "expectedOutput": "Salida Esperada",
+        "inputCost": "Costo de Entrada",
+        "outputCost": "Costo de Salida",
+        "totalCost": "Costo Total"
+      },
+      "comparison": {
+        "title": "Comparación de Modelos",
+        "bestOverall": "Mejor General",
+        "bestValue": "Mejor Valor",
+        "bestQuality": "Mejor Calidad",
+        "costScore": "Eficiencia de Costo",
+        "speedScore": "Velocidad",
+        "qualityScore": "Calidad"
+      },
+      "settings": {
+        "autoSelect": "Selección Automática de Modelo",
+        "autoSelectDescription": "Seleccionar automáticamente el mejor modelo según la tarea.",
+        "costWarnings": "Mostrar Advertencias de Costo",
+        "costWarningsDescription": "Mostrar advertencias antes de operaciones de IA costosas.",
+        "currentModel": "Modelo Activo Actual"
+      }
+    },
     "notificationPreferences": "Preferencias de Notificaciones",
     "manageNotifications": "Administra tu correo electrónico y configuración de notificaciones push",
     "emailNotifications": "Notificaciones por Correo",

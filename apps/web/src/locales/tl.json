@@ -1672,6 +1672,50 @@
       "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng AI setting sa default?",
       "saved": "Na-save ang mga AI setting"
     },
+    "aiModels": {
+      "title": "Pagpili ng AI Model",
+      "description": "Piliin kung aling AI model ang nagpapatakbo sa iyong reading assistant. Nag-aalok ang iba't ibang model ng iba't ibang kakayahan, bilis, at gastos.",
+      "provider": "AI Provider",
+      "recommended": "Inirerekomenda",
+      "fast": "Mabilis",
+      "pricing": "Presyo (bawat 1M token)",
+      "contextWindow": "Context Window",
+      "requiresTier": "Kailangan ng {{tier}} subscription",
+      "compare": "Ihambing",
+      "testConnection": "Subukan ang Koneksyon",
+      "connectionSuccess": "Matagumpay ang koneksyon ({{time}}ms)",
+      "tabs": {
+        "models": "Mga Model",
+        "calculator": "Cost Calculator",
+        "settings": "Mga Setting"
+      },
+      "costCalculator": {
+        "title": "Cost Calculator",
+        "description": "Tantiyahin ang gastos ng mga AI operation batay sa haba ng teksto.",
+        "inputText": "Sample na Input Text",
+        "inputPlaceholder": "I-paste ang teksto dito para tantiyahin ang bilang ng token...",
+        "expectedOutput": "Inaasahang Output",
+        "inputCost": "Gastos sa Input",
+        "outputCost": "Gastos sa Output",
+        "totalCost": "Kabuuang Gastos"
+      },
+      "comparison": {
+        "title": "Paghahambing ng Model",
+        "bestOverall": "Pinakamahusay sa Pangkalahatan",
+        "bestValue": "Pinakamahusay na Halaga",
+        "bestQuality": "Pinakamahusay na Kalidad",
+        "costScore": "Kahusayan sa Gastos",
+        "speedScore": "Bilis",
+        "qualityScore": "Kalidad"
+      },
+      "settings": {
+        "autoSelect": "Awtomatikong Pumili ng Model",
+        "autoSelectDescription": "Awtomatikong piliin ang pinakamahusay na model batay sa gawain.",
+        "costWarnings": "Ipakita ang mga Babala sa Gastos",
+        "costWarningsDescription": "Magpakita ng mga babala bago ang mamahaling AI operation.",
+        "currentModel": "Kasalukuyang Active na Model"
+      }
+    },
     "notificationPreferences": "Mga Kagustuhan sa Notification",
     "manageNotifications": "Pamahalaan ang iyong email at push notification settings",
     "emailNotifications": "Mga Email Notification",

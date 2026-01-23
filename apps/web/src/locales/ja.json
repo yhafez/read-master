@@ -1672,6 +1672,50 @@
       "resetConfirm": "すべてのAI設定をデフォルトにリセットしてもよろしいですか？",
       "saved": "AI設定を保存しました"
     },
+    "aiModels": {
+      "title": "AIモデル選択",
+      "description": "読書アシスタントを動かすAIモデルを選択してください。異なるモデルは様々な機能、速度、コストを提供します。",
+      "provider": "AIプロバイダー",
+      "recommended": "推奨",
+      "fast": "高速",
+      "pricing": "料金（100万トークンあたり）",
+      "contextWindow": "コンテキストウィンドウ",
+      "requiresTier": "{{tier}}サブスクリプションが必要",
+      "compare": "比較",
+      "testConnection": "接続テスト",
+      "connectionSuccess": "接続成功（{{time}}ms）",
+      "tabs": {
+        "models": "モデル",
+        "calculator": "コスト計算機",
+        "settings": "設定"
+      },
+      "costCalculator": {
+        "title": "コスト計算機",
+        "description": "テキストの長さに基づいてAI操作のコストを見積もります。",
+        "inputText": "サンプル入力テキスト",
+        "inputPlaceholder": "トークン数を見積もるためにテキストを貼り付けてください...",
+        "expectedOutput": "予想出力",
+        "inputCost": "入力コスト",
+        "outputCost": "出力コスト",
+        "totalCost": "合計コスト"
+      },
+      "comparison": {
+        "title": "モデル比較",
+        "bestOverall": "総合ベスト",
+        "bestValue": "ベストバリュー",
+        "bestQuality": "最高品質",
+        "costScore": "コスト効率",
+        "speedScore": "速度",
+        "qualityScore": "品質"
+      },
+      "settings": {
+        "autoSelect": "モデル自動選択",
+        "autoSelectDescription": "タスクに基づいて最適なモデルを自動的に選択します。",
+        "costWarnings": "コスト警告を表示",
+        "costWarningsDescription": "高コストのAI操作の前に警告を表示します。",
+        "currentModel": "現在のアクティブモデル"
+      }
+    },
     "notificationPreferences": "通知設定",
     "manageNotifications": "メールとプッシュ通知の設定を管理する",
     "emailNotifications": "メール通知",
