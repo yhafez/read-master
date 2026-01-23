@@ -177,7 +177,7 @@
         "Host can control session pace",
         "Tests pass for WebSocket connections"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "social-ai-recommendations-001",

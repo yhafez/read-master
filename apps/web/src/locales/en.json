@@ -31,8 +31,18 @@
     "add": "Add",
     "saveChanges": "Save Changes",
     "share": "Share",
+    "copiedToClipboard": "Copied to clipboard!",
+    "copyFailed": "Failed to copy link",
     "update": "Update",
-    "copy": "Copy"
+    "copy": "Copy",
+    "you": "you",
+    "online": "Online",
+    "away": "Away",
+    "total": "total",
+    "by": "by",
+    "moderator": "Moderator",
+    "loadMore": "Load more",
+    "unknown": "Unknown"
   },
   "curriculum": {
     "share": {
@@ -2381,11 +2391,6 @@
     "reddit": "Reddit",
     "copyLink": "Copy Link"
   },
-  "common": {
-    "share": "Share",
-    "copiedToClipboard": "Copied to clipboard!",
-    "copyFailed": "Failed to copy link"
-  },
   "stats": {
     "analytics": {
       "title": "Enhanced Analytics",
@@ -2643,7 +2648,8 @@
       "noSessions": "No active sessions",
       "noSessionsHint": "Be the first to start a live reading session!",
       "noMySessions": "You haven't created any sessions",
-      "noMySessionsHint": "Create a session to read with others"
+      "noMySessionsHint": "Create a session to read with others",
+      "noParticipants": "No participants yet"
     },
     "errors": {
       "loadFailed": "Failed to load sessions",

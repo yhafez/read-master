@@ -4,3 +4,4 @@ export { LeaderboardPage } from "./LeaderboardPage";
 export { GroupsPage } from "./GroupsPage";
 export { GroupDetailPage } from "./GroupDetailPage";
 export { GroupDiscussionsPage } from "./GroupDiscussionsPage";
+export { LiveSessionPage } from "./LiveSessionPage";

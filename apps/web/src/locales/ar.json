@@ -31,8 +31,18 @@
     "add": "إضافة",
     "saveChanges": "حفظ التغييرات",
     "share": "مشاركة",
+    "copiedToClipboard": "تم النسخ إلى الحافظة!",
+    "copyFailed": "فشل نسخ الرابط",
     "update": "تحديث",
-    "copy": "نسخ"
+    "copy": "نسخ",
+    "you": "أنت",
+    "online": "متصل",
+    "away": "بعيد",
+    "total": "الإجمالي",
+    "by": "بواسطة",
+    "moderator": "مشرف",
+    "loadMore": "تحميل المزيد",
+    "unknown": "غير معروف"
   },
   "curriculum": {
     "share": {
@@ -2377,11 +2387,6 @@
     "reddit": "ريديت",
     "copyLink": "نسخ الرابط"
   },
-  "common": {
-    "share": "مشاركة",
-    "copiedToClipboard": "تم النسخ إلى الحافظة!",
-    "copyFailed": "فشل نسخ الرابط"
-  },
   "stats": {
     "analytics": {
       "title": "Enhanced Analytics",
@@ -2639,7 +2644,8 @@
       "noSessions": "لا توجد جلسات نشطة",
       "noSessionsHint": "كن أول من يبدأ جلسة قراءة حية!",
       "noMySessions": "لم تنشئ أي جلسات بعد",
-      "noMySessionsHint": "أنشئ جلسة للقراءة مع الآخرين"
+      "noMySessionsHint": "أنشئ جلسة للقراءة مع الآخرين",
+      "noParticipants": "لا يوجد مشاركون بعد"
     },
     "errors": {
       "loadFailed": "فشل تحميل الجلسات",
