@@ -112,6 +112,7 @@ export type ForumReplyInfo = {
   downvotes: number;
   voteScore: number;
   isBestAnswer: boolean;
+  currentUserVote: number; // 1 for upvote, -1 for downvote, 0 for no vote
   createdAt: string;
   updatedAt: string;
 };
@@ -136,6 +137,7 @@ export type ForumPostDetailResponse = {
   upvotes: number;
   downvotes: number;
   voteScore: number;
+  currentUserVote: number; // 1 for upvote, -1 for downvote, 0 for no vote
   viewCount: number;
   repliesCount: number;
   replies: ForumReplyInfo[];
@@ -255,77 +257,8 @@ export function mapToBookInfo(
 /**
  * Map reply to response format
  */
-export function mapToReplyInfo(reply: {
-  id: string;
-  content: string;
-  userId: string;
-  user: {
-    id: string;
-    username: string | null;
-    displayName: string | null;
-    avatarUrl: string | null;
-  };
-  parentReplyId: string | null;
-  upvotes: number;
-  downvotes: number;
-  voteScore: number;
-  isBestAnswer: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}): ForumReplyInfo {
-  return {
-    id: reply.id,
-    content: reply.content,
-    userId: reply.userId,
-    user: mapToUserInfo(reply.user),
-    parentReplyId: reply.parentReplyId,
-    upvotes: reply.upvotes,
-    downvotes: reply.downvotes,
-    voteScore: reply.voteScore,
-    isBestAnswer: reply.isBestAnswer,
-    createdAt: formatDateRequired(reply.createdAt),
-    updatedAt: formatDateRequired(reply.updatedAt),
-  };
-}
-
-/**
- * Map post to full detail response
- */
-export function mapToPostDetailResponse(post: {
-  id: string;
-  title: string;
-  content: string;
-  categoryId: string;
-  category: {
-    id: string;
-    slug: string;
-    name: string;
-    color: string | null;
-  };
-  userId: string;
-  user: {
-    id: string;
-    username: string | null;
-    displayName: string | null;
-    avatarUrl: string | null;
-  };
-  bookId: string | null;
-  book: {
-    id: string;
-    title: string;
-    author: string | null;
-    coverImage: string | null;
-  } | null;
-  isPinned: boolean;
-  isLocked: boolean;
-  isFeatured: boolean;
-  isAnswered: boolean;
-  upvotes: number;
-  downvotes: number;
-  voteScore: number;
-  viewCount: number;
-  repliesCount: number;
-  replies: Array<{
+export function mapToReplyInfo(
+  reply: {
     id: string;
     content: string;
     userId: string;
@@ -342,11 +275,95 @@ export function mapToPostDetailResponse(post: {
     isBestAnswer: boolean;
     createdAt: Date;
     updatedAt: Date;
-  }>;
-  lastReplyAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}): ForumPostDetailResponse {
+  },
+  userVotesMap: Map<string, number>
+): ForumReplyInfo {
+  return {
+    id: reply.id,
+    content: reply.content,
+    userId: reply.userId,
+    user: mapToUserInfo(reply.user),
+    parentReplyId: reply.parentReplyId,
+    upvotes: reply.upvotes,
+    downvotes: reply.downvotes,
+    voteScore: reply.voteScore,
+    isBestAnswer: reply.isBestAnswer,
+    currentUserVote: userVotesMap.get(reply.id) ?? 0,
+    createdAt: formatDateRequired(reply.createdAt),
+    updatedAt: formatDateRequired(reply.updatedAt),
+  };
+}
+
+/**
+ * User votes for post and replies
+ */
+export type UserVotes = {
+  postVote: number; // 1, -1, or 0
+  replyVotes: Map<string, number>; // replyId -> vote value
+};
+
+/**
+ * Map post to full detail response
+ */
+export function mapToPostDetailResponse(
+  post: {
+    id: string;
+    title: string;
+    content: string;
+    categoryId: string;
+    category: {
+      id: string;
+      slug: string;
+      name: string;
+      color: string | null;
+    };
+    userId: string;
+    user: {
+      id: string;
+      username: string | null;
+      displayName: string | null;
+      avatarUrl: string | null;
+    };
+    bookId: string | null;
+    book: {
+      id: string;
+      title: string;
+      author: string | null;
+      coverImage: string | null;
+    } | null;
+    isPinned: boolean;
+    isLocked: boolean;
+    isFeatured: boolean;
+    isAnswered: boolean;
+    upvotes: number;
+    downvotes: number;
+    voteScore: number;
+    viewCount: number;
+    repliesCount: number;
+    replies: Array<{
+      id: string;
+      content: string;
+      userId: string;
+      user: {
+        id: string;
+        username: string | null;
+        displayName: string | null;
+        avatarUrl: string | null;
+      };
+      parentReplyId: string | null;
+      upvotes: number;
+      downvotes: number;
+      voteScore: number;
+      isBestAnswer: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+    }>;
+    lastReplyAt: Date | null;
+    createdAt: Date;
+    updatedAt: Date;
+  },
+  userVotes: UserVotes
+): ForumPostDetailResponse {
   return {
     id: post.id,
     title: post.title,
@@ -364,9 +381,12 @@ export function mapToPostDetailResponse(post: {
     upvotes: post.upvotes,
     downvotes: post.downvotes,
     voteScore: post.voteScore,
+    currentUserVote: userVotes.postVote,
     viewCount: post.viewCount,
     repliesCount: post.repliesCount,
-    replies: post.replies.map(mapToReplyInfo),
+    replies: post.replies.map((reply) =>
+      mapToReplyInfo(reply, userVotes.replyVotes)
+    ),
     lastReplyAt: formatDate(post.lastReplyAt),
     createdAt: formatDateRequired(post.createdAt),
     updatedAt: formatDateRequired(post.updatedAt),
@@ -472,6 +492,48 @@ async function incrementViewCount(postId: string) {
     },
     select: { viewCount: true },
   });
+}
+
+/**
+ * Get user's votes for a post and its replies
+ */
+async function getUserVotes(
+  userId: string,
+  postId: string,
+  replyIds: string[]
+): Promise<UserVotes> {
+  // Fetch the user's vote on the post
+  const postVote = await db.forumVote.findUnique({
+    where: {
+      userId_postId: {
+        userId,
+        postId,
+      },
+    },
+    select: { value: true },
+  });
+
+  // Fetch the user's votes on replies
+  const replyVotes = await db.forumVote.findMany({
+    where: {
+      userId,
+      replyId: { in: replyIds },
+    },
+    select: { replyId: true, value: true },
+  });
+
+  // Build the reply votes map
+  const replyVotesMap = new Map<string, number>();
+  replyVotes.forEach((vote) => {
+    if (vote.replyId) {
+      replyVotesMap.set(vote.replyId, vote.value);
+    }
+  });
+
+  return {
+    postVote: postVote?.value ?? 0,
+    replyVotes: replyVotesMap,
+  };
 }
 
 /**
@@ -620,8 +682,12 @@ async function handleGetPost(
       });
     });
 
+    // Fetch user's votes for post and replies
+    const replyIds = post.replies.map((r) => r.id);
+    const userVotes = await getUserVotes(user.id, postId, replyIds);
+
     const response: GetPostResponse = {
-      post: mapToPostDetailResponse(post),
+      post: mapToPostDetailResponse(post, userVotes),
     };
 
     sendSuccess(res, response);
@@ -710,8 +776,12 @@ async function handleUpdatePost(
     }
     const updatedPost = await updatePost(postId, updateData);
 
+    // Fetch user's votes for post and replies
+    const replyIds = updatedPost.replies.map((r) => r.id);
+    const userVotes = await getUserVotes(user.id, postId, replyIds);
+
     const response: UpdatePostResponse = {
-      post: mapToPostDetailResponse(updatedPost),
+      post: mapToPostDetailResponse(updatedPost, userVotes),
     };
 
     logger.info("Forum post updated", {

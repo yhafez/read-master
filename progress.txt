@@ -3,6 +3,95 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 19:45]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: forum-enhancements-001 - Forum Enhancements (Continued: Voting System Integration)
+
+WHAT WAS DONE:
+✅ **Enhanced Forum Post API to Return User's Vote State**
+- Modified `apps/api/api/forum/posts/[id].ts` to include `currentUserVote` in post and reply responses
+- Added `getUserVotes()` function to fetch user's votes from ForumVote table
+- Added `UserVotes` type for organizing post vote and reply votes map
+- Updated `mapToReplyInfo()` to accept userVotesMap and return currentUserVote
+- Updated `mapToPostDetailResponse()` to include currentUserVote for post and all replies
+- Extended `ForumReplyInfo` and `ForumPostDetailResponse` types with currentUserVote field
+
+✅ **Integrated Voting in ForumPostPage Frontend**
+- Updated ForumPost and ForumReply types to include voteScore, downvotes, and currentUserVote
+- Changed post VoteButtons to use `post.voteScore` and `post.currentUserVote` from API
+- Changed reply VoteButtons to use `reply.voteScore` and `reply.currentUserVote` from API
+- Added `replyVoteMutation` for voting on replies (calls `/api/forum/replies/:id/vote`)
+- Added `handleReplyVote()` handler and passed `onVote` prop to all ReplyItem components
+- Removed TODO comments for voting - voting is now fully functional
+
+✅ **Updated Tests** (32 tests passing)
+- Updated `apps/api/api/forum/posts/[id].test.ts` with new type signatures
+- Updated `mapToReplyInfo` tests to pass userVotesMap parameter
+- Updated `mapToPostDetailResponse` tests to pass userVotes parameter
+- Added assertions for currentUserVote in test expectations
+- Added tests for different vote states (1, -1, 0)
+
+WHY IT MATTERS:
+- **Complete Voting UX**: Users can now see their current vote on posts and replies
+- **Proper Vote Display**: Vote buttons show correct color/state based on user's vote
+- **Reply Voting Works**: Clicking upvote/downvote on replies now calls the API
+- **Optimistic Updates**: Vote changes are reflected after mutation success
+
+TECHNICAL DETAILS:
+**Backend Changes:**
+- New `getUserVotes()` function queries ForumVote table for user's votes
+- Uses Prisma compound unique constraint `userId_postId` and `userId_replyId`
+- Returns Map<string, number> for efficient O(1) lookup per reply
+- postVote is 1, -1, or 0 (no vote)
+
+**Frontend Changes:**
+- ReplyItemProps extended with `onVote: (replyId: string, value: number) => void`
+- VoteButtons receives actual API data instead of hardcoded 0
+- Query invalidation ensures fresh data after voting
+
+REMAINING WORK (forum-enhancements-001):
+- [ ] Image upload support in forum posts
+- [ ] Post editing with edit history
+- [ ] Moderation tools (pin, lock, delete posts)
+- [ ] Report/flag system for inappropriate content
+- [ ] Forum search improvements
+- [ ] Trending topics
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, 65 warnings in pre-existing files)
+✅ pnpm vitest run - 230 forum tests passed
+  - Pre-existing localStorage test failures (176 failures, unrelated to this change)
+
+FILES MODIFIED:
+- apps/api/api/forum/posts/[id].ts (added getUserVotes, updated types, updated mapping functions)
+- apps/api/api/forum/posts/[id].test.ts (updated tests for new signatures and types)
+- apps/web/src/pages/forum/ForumPostPage.tsx (integrated voting, added reply vote mutation)
+
+DISCOVERIES:
+- Voting system backend was already complete (VoteButtons, vote APIs, database schema)
+- Only missing piece was returning currentUserVote from the post API and wiring up reply voting
+
+NEXT RECOMMENDED TASKS:
+1. **forum-enhancements-001** (continued) - Image upload support
+   - Integrate with R2 for image storage
+   - Add image preview in markdown editor
+
+2. **payments-stripe-complete-001** - Subscription management page
+   - Create SubscriptionPage with plan comparison
+   - Add billing portal integration
+
+3. **social-ai-recommendations-001** - AI-powered recommendations
+
+SPRINT STATUS:
+- In Progress (160/174 tasks complete - 92.0%)
+- 14 active tasks remaining
+- forum-enhancements-001: Markdown editor + Voting complete, other features pending
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 19:10]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -69,6 +69,9 @@ type ForumReply = {
   };
   parentReplyId: string | null;
   upvotes: number;
+  downvotes: number;
+  voteScore: number;
+  currentUserVote: number;
   isBestAnswer: boolean;
   createdAt: string;
   updatedAt: string;
@@ -92,6 +95,9 @@ type ForumPost = {
   repliesCount: number;
   viewCount: number;
   upvotes: number;
+  downvotes: number;
+  voteScore: number;
+  currentUserVote: number;
   isPinned: boolean;
   isLocked: boolean;
   isAnswered: boolean;
@@ -140,6 +146,7 @@ type ReplyItemProps = {
   onReply: (replyId: string) => void;
   onEdit: (reply: ForumReply) => void;
   onDelete: (replyId: string) => void;
+  onVote: (replyId: string, value: number) => void;
   onMarkBestAnswer?: ((replyId: string) => void) | undefined;
   isPostAuthor?: boolean | undefined;
   currentUserId?: string | undefined;
@@ -152,6 +159,7 @@ function ReplyItem({
   onReply,
   onEdit,
   onDelete,
+  onVote,
   onMarkBestAnswer,
   isPostAuthor = false,
   currentUserId,
@@ -248,13 +256,10 @@ function ReplyItem({
               <Stack direction="row" spacing={2}>
                 {/* Vote Buttons */}
                 <VoteButtons
-                  voteScore={reply.upvotes}
+                  voteScore={reply.voteScore}
                   upvotes={reply.upvotes}
-                  userVote={0} // TODO: Get user's vote from API response
-                  onVote={async () => {
-                    // TODO: Implement reply voting API
-                    // POST /api/forum/posts/:postId/replies/:replyId/vote
-                  }}
+                  userVote={reply.currentUserVote}
+                  onVote={(value) => onVote(reply.id, value)}
                   size="small"
                 />
 
@@ -347,6 +352,7 @@ function ReplyItem({
                 onReply={onReply}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                onVote={onVote}
                 onMarkBestAnswer={onMarkBestAnswer}
                 isPostAuthor={isPostAuthor}
                 currentUserId={currentUserId}
@@ -405,7 +411,7 @@ export function ForumPostPage(): React.ReactElement {
   const replyTree = post ? buildReplyTree(post.replies) : new Map();
   const topLevelReplies = replyTree.get(null) || [];
 
-  // Vote mutation
+  // Vote mutation for post
   const voteMutation = useMutation({
     mutationFn: async ({ value }: { value: number }) => {
       const method = value === 0 ? "DELETE" : "POST";
@@ -421,6 +427,37 @@ export function ForumPostPage(): React.ReactElement {
 
       if (!response.ok) {
         throw new Error("Failed to vote");
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forumPost", id] });
+    },
+  });
+
+  // Vote mutation for replies
+  const replyVoteMutation = useMutation({
+    mutationFn: async ({
+      replyId,
+      value,
+    }: {
+      replyId: string;
+      value: number;
+    }) => {
+      const method = value === 0 ? "DELETE" : "POST";
+      const url = `/api/forum/replies/${replyId}/vote`;
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        ...(value !== 0 && { body: JSON.stringify({ value }) }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to vote on reply");
       }
 
       return response.json();
@@ -468,6 +505,10 @@ export function ForumPostPage(): React.ReactElement {
   const handleReply = (parentReplyId: string | null) => {
     setReplyingTo(parentReplyId);
     setEditingReply(null);
+  };
+
+  const handleReplyVote = (replyId: string, value: number) => {
+    replyVoteMutation.mutate({ replyId, value });
   };
 
   const handleSubmitReply = async () => {
@@ -626,9 +667,9 @@ export function ForumPostPage(): React.ReactElement {
           <Stack direction="row" spacing={2}>
             {/* Vote Buttons */}
             <VoteButtons
-              voteScore={post.upvotes}
+              voteScore={post.voteScore}
               upvotes={post.upvotes}
-              userVote={0} // TODO: Get user's vote from API response
+              userVote={post.currentUserVote}
               onVote={(value) => voteMutation.mutate({ value })}
               size="large"
             />
@@ -721,6 +762,7 @@ export function ForumPostPage(): React.ReactElement {
                 onReply={handleReply}
                 onEdit={handleEditReply}
                 onDelete={handleDeleteReply}
+                onVote={handleReplyVote}
                 onMarkBestAnswer={handleMarkBestAnswer}
                 isPostAuthor={post.author.id === post.author.id} // TODO: Compare with actual current user ID
                 currentUserId={post.author.id} // TODO: Get actual current user ID
@@ -738,6 +780,7 @@ export function ForumPostPage(): React.ReactElement {
                 onReply={handleReply}
                 onEdit={handleEditReply}
                 onDelete={handleDeleteReply}
+                onVote={handleReplyVote}
                 onMarkBestAnswer={handleMarkBestAnswer}
                 isPostAuthor={post.author.id === post.author.id} // TODO: Compare with actual current user ID
                 currentUserId={post.author.id} // TODO: Get actual current user ID

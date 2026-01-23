@@ -229,8 +229,9 @@ describe("mapToReplyInfo", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotesMap = new Map<string, number>([["reply-123", 1]]);
 
-    const result = mapToReplyInfo(reply);
+    const result = mapToReplyInfo(reply, userVotesMap);
 
     expect(result.id).toBe("reply-123");
     expect(result.content).toBe("This is a reply.");
@@ -241,6 +242,7 @@ describe("mapToReplyInfo", () => {
     expect(result.downvotes).toBe(1);
     expect(result.voteScore).toBe(4);
     expect(result.isBestAnswer).toBe(false);
+    expect(result.currentUserVote).toBe(1);
     expect(result.createdAt).toBe("2026-01-18T12:00:00.000Z");
   });
 
@@ -264,10 +266,12 @@ describe("mapToReplyInfo", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotesMap = new Map<string, number>();
 
-    const result = mapToReplyInfo(reply);
+    const result = mapToReplyInfo(reply, userVotesMap);
 
     expect(result.parentReplyId).toBe("reply-123");
+    expect(result.currentUserVote).toBe(0);
   });
 
   it("should map best answer reply", () => {
@@ -290,11 +294,13 @@ describe("mapToReplyInfo", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotesMap = new Map<string, number>([["reply-789", -1]]);
 
-    const result = mapToReplyInfo(reply);
+    const result = mapToReplyInfo(reply, userVotesMap);
 
     expect(result.isBestAnswer).toBe(true);
     expect(result.voteScore).toBe(20);
+    expect(result.currentUserVote).toBe(-1);
   });
 });
 
@@ -378,17 +384,24 @@ describe("mapToPostDetailResponse", () => {
       createdAt: now,
       updatedAt: replyDate,
     };
+    const userVotes = {
+      postVote: 1,
+      replyVotes: new Map<string, number>([["reply-1", -1]]),
+    };
 
-    const result = mapToPostDetailResponse(post);
+    const result = mapToPostDetailResponse(post, userVotes);
 
     expect(result.id).toBe("post-123");
     expect(result.title).toBe("Test Post");
     expect(result.content).toBe("Full post content here.");
     expect(result.category.slug).toBe("general");
     expect(result.user.username).toBe("poster");
+    expect(result.currentUserVote).toBe(1);
     expect(result.replies).toHaveLength(2);
     expect(result.replies[0]?.id).toBe("reply-1");
+    expect(result.replies[0]?.currentUserVote).toBe(-1);
     expect(result.replies[1]?.id).toBe("reply-2");
+    expect(result.replies[1]?.currentUserVote).toBe(0);
     expect(result.lastReplyAt).toBe("2026-01-18T14:00:00.000Z");
   });
 
@@ -434,8 +447,12 @@ describe("mapToPostDetailResponse", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotes = {
+      postVote: 0,
+      replyVotes: new Map<string, number>(),
+    };
 
-    const result = mapToPostDetailResponse(post);
+    const result = mapToPostDetailResponse(post, userVotes);
 
     expect(result.bookId).toBe("book-123");
     expect(result.book).not.toBeNull();
@@ -443,6 +460,7 @@ describe("mapToPostDetailResponse", () => {
     expect(result.isPinned).toBe(true);
     expect(result.isFeatured).toBe(true);
     expect(result.isAnswered).toBe(true);
+    expect(result.currentUserVote).toBe(0);
     expect(result.lastReplyAt).toBeNull();
     expect(result.replies).toHaveLength(0);
   });
@@ -484,10 +502,15 @@ describe("mapToPostDetailResponse", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotes = {
+      postVote: -1,
+      replyVotes: new Map<string, number>(),
+    };
 
-    const result = mapToPostDetailResponse(post);
+    const result = mapToPostDetailResponse(post, userVotes);
 
     expect(result.isLocked).toBe(true);
+    expect(result.currentUserVote).toBe(-1);
   });
 });
 
@@ -542,6 +565,7 @@ describe("Type Exports", () => {
       downvotes: 0,
       voteScore: 0,
       isBestAnswer: false,
+      currentUserVote: 0,
       createdAt: "2026-01-18T12:00:00.000Z",
       updatedAt: "2026-01-18T12:00:00.000Z",
     };
@@ -571,6 +595,7 @@ describe("Type Exports", () => {
       upvotes: 0,
       downvotes: 0,
       voteScore: 0,
+      currentUserVote: 0,
       viewCount: 0,
       repliesCount: 0,
       replies: [],
@@ -605,6 +630,7 @@ describe("Type Exports", () => {
         upvotes: 0,
         downvotes: 0,
         voteScore: 0,
+        currentUserVote: 0,
         viewCount: 0,
         repliesCount: 0,
         replies: [],
@@ -640,6 +666,7 @@ describe("Type Exports", () => {
         upvotes: 0,
         downvotes: 0,
         voteScore: 0,
+        currentUserVote: 0,
         viewCount: 0,
         repliesCount: 0,
         replies: [],
@@ -698,8 +725,12 @@ describe("Edge Cases", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotes = {
+      postVote: 0,
+      replyVotes: new Map<string, number>(),
+    };
 
-    const result = mapToPostDetailResponse(post);
+    const result = mapToPostDetailResponse(post, userVotes);
 
     expect(result.replies).toHaveLength(0);
     expect(result.repliesCount).toBe(0);
@@ -738,13 +769,18 @@ describe("Edge Cases", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotes = {
+      postVote: 1,
+      replyVotes: new Map<string, number>(),
+    };
 
-    const result = mapToPostDetailResponse(post);
+    const result = mapToPostDetailResponse(post, userVotes);
 
     expect(result.isPinned).toBe(true);
     expect(result.isLocked).toBe(true);
     expect(result.isFeatured).toBe(true);
     expect(result.isAnswered).toBe(true);
+    expect(result.currentUserVote).toBe(1);
   });
 
   it("should handle post with negative vote score", () => {
@@ -779,11 +815,16 @@ describe("Edge Cases", () => {
       createdAt: now,
       updatedAt: now,
     };
+    const userVotes = {
+      postVote: -1,
+      replyVotes: new Map<string, number>(),
+    };
 
-    const result = mapToPostDetailResponse(post);
+    const result = mapToPostDetailResponse(post, userVotes);
 
     expect(result.upvotes).toBe(2);
     expect(result.downvotes).toBe(10);
     expect(result.voteScore).toBe(-8);
+    expect(result.currentUserVote).toBe(-1);
   });
 });
