@@ -29,10 +29,10 @@ model User {
   bio         String? @db.Text // User bio for profile
 
   // Subscription & Tier
-  tier                  UserTier  @default(FREE)
-  tierExpiresAt         DateTime?
-  stripeCustomerId      String?   @unique
-  stripeSubscriptionId  String?   @unique
+  tier                 UserTier  @default(FREE)
+  tierExpiresAt        DateTime?
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
 
   // Admin & Moderation
   role UserRole @default(USER)
@@ -59,20 +59,20 @@ model User {
   deletedAt DateTime? // Soft delete
 
   // Relations
-  books             Book[]
-  readingProgress   ReadingProgress[]
-  annotations       Annotation[]
-  annotationLikes   AnnotationLike[] // Likes on annotations
-  assessments       Assessment[]
-  flashcards        Flashcard[]
-  stats             UserStats?
-  achievements      UserAchievement[]
+  books                   Book[]
+  readingProgress         ReadingProgress[]
+  annotations             Annotation[]
+  annotationLikes         AnnotationLike[] // Likes on annotations
+  assessments             Assessment[]
+  flashcards              Flashcard[]
+  stats                   UserStats?
+  achievements            UserAchievement[]
   challengeParticipations ChallengeParticipant[] // Challenges this user is participating in
-  curriculums       Curriculum[] // Curriculums created by this user
-  readingLists      ReadingList[] // Personal reading lists created by this user
-  curriculumFollows CurriculumFollow[] // Curriculums this user is following
-  filterPresets     FilterPreset[] // Saved library filter presets
-  ttsDownloads      TTSDownload[] // TTS audio downloads for books
+  curriculums             Curriculum[] // Curriculums created by this user
+  readingLists            ReadingList[] // Personal reading lists created by this user
+  curriculumFollows       CurriculumFollow[] // Curriculums this user is following
+  filterPresets           FilterPreset[] // Saved library filter presets
+  ttsDownloads            TTSDownload[] // TTS audio downloads for books
 
   // Social relations
   following         Follow[]             @relation("Following") // Users this user follows
@@ -90,6 +90,11 @@ model User {
   // Email relations
   emails           Email[] // Emails sent to this user
   emailPreferences UserEmailPreferences? // Email preferences
+
+  // Live session relations
+  hostedSessions        ReadingSession[]     @relation("HostedSessions") // Sessions this user hosts
+  sessionParticipations SessionParticipant[] @relation("SessionParticipations") // Sessions this user participates in
+  sessionMessages       SessionMessage[]     @relation("SessionMessages") // Messages sent in sessions
 
   // Indexes for common queries
   @@index([clerkId])
@@ -144,7 +149,7 @@ model Book {
   fileType FileType?
 
   // Content metadata
-  language          String @default("en")
+  language          String  @default("en")
   wordCount         Int?
   estimatedReadTime Int? // minutes
   lexileScore       Float?
@@ -164,14 +169,14 @@ model Book {
   deletedAt DateTime? // Soft delete
 
   // Relations
-  chapters        Chapter[]
-  readingProgress ReadingProgress[]
-  annotations     Annotation[]
-  preReadingGuide PreReadingGuide?
-  assessments     Assessment[]
-  flashcards      Flashcard[]
-  curriculumItems CurriculumItem[] // Curriculum items that reference this book
-  ttsDownloads    TTSDownload[] // TTS audio downloads for this book
+  chapters         Chapter[]
+  readingProgress  ReadingProgress[]
+  annotations      Annotation[]
+  preReadingGuide  PreReadingGuide?
+  assessments      Assessment[]
+  flashcards       Flashcard[]
+  curriculumItems  CurriculumItem[] // Curriculum items that reference this book
+  ttsDownloads     TTSDownload[] // TTS audio downloads for this book
   readingListItems ReadingListItem[] // Reading list items that reference this book
 
   // Social relations
@@ -181,6 +186,9 @@ model Book {
 
   // Forum relations
   forumPosts ForumPost[] @relation("ForumBookPosts") // Forum posts about this book
+
+  // Live session relations
+  readingSessions ReadingSession[] @relation("SessionBook") // Live reading sessions for this book
 
   // Indexes for common queries
   @@index([userId])
@@ -711,16 +719,16 @@ model Challenge {
   id String @id @default(cuid())
 
   // Challenge metadata
-  title       String       @db.VarChar(200) // Challenge name
-  description String       @db.Text // Challenge description
-  icon        String?      @db.VarChar(50) // Icon identifier
-  badgeColor  String?      @db.VarChar(7) // Hex color for badge
+  title       String  @db.VarChar(200) // Challenge name
+  description String  @db.Text // Challenge description
+  icon        String? @db.VarChar(50) // Icon identifier
+  badgeColor  String? @db.VarChar(7) // Hex color for badge
 
   // Challenge type and goals
-  type         ChallengeType
-  goalType     ChallengeGoalType
-  goalValue    Int // e.g., 5 books, 10000 minutes, 100000 words
-  goalUnit     String            @db.VarChar(50) // e.g., "books", "minutes", "words"
+  type      ChallengeType
+  goalType  ChallengeGoalType
+  goalValue Int // e.g., 5 books, 10000 minutes, 100000 words
+  goalUnit  String            @db.VarChar(50) // e.g., "books", "minutes", "words"
 
   // Time constraints
   startDate DateTime? // When challenge starts (null = always available)
@@ -728,12 +736,12 @@ model Challenge {
   duration  Int? // Duration in days (for personal challenges)
 
   // Rewards
-  xpReward   Int     @default(0) // XP awarded on completion
-  badgeIcon  String? // Badge icon for completion
+  xpReward  Int     @default(0) // XP awarded on completion
+  badgeIcon String? // Badge icon for completion
 
   // Challenge properties
-  isOfficial  Boolean @default(false) // Official Read Master challenge
-  isRecurring Boolean @default(false) // Monthly/yearly recurring challenge
+  isOfficial  Boolean         @default(false) // Official Read Master challenge
+  isRecurring Boolean         @default(false) // Monthly/yearly recurring challenge
   tier        AchievementTier @default(COMMON)
   visibility  Visibility      @default(PUBLIC)
 
@@ -764,11 +772,11 @@ model ChallengeParticipant {
   challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   // Progress tracking
-  progress        Int       @default(0) // Current progress value
-  goalValue       Int // Goal value at time of joining (for personal challenges)
-  isCompleted     Boolean   @default(false)
-  completedAt     DateTime?
-  startedAt       DateTime  @default(now())
+  progress    Int       @default(0) // Current progress value
+  goalValue   Int // Goal value at time of joining (for personal challenges)
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+  startedAt   DateTime  @default(now())
 
   // Participation metadata
   isPublic Boolean @default(true) // Show on leaderboard
@@ -838,7 +846,7 @@ model Curriculum {
 
   // Visibility settings
   visibility Visibility @default(PRIVATE)
-  isOfficial Boolean     @default(false) // Official Read Master templates
+  isOfficial Boolean    @default(false) // Official Read Master templates
 
   // Statistics (denormalized for performance)
   totalItems     Int @default(0) // Number of items in curriculum
@@ -1014,17 +1022,17 @@ model GroupBook {
   book    Book         @relation("GroupBooks", fields: [bookId], references: [id], onDelete: Cascade)
 
   // Schedule
-  startDate   DateTime? // When the group starts reading this book
-  endDate     DateTime? // Target completion date
-  targetPage  Int? // Current target page for the group
-  status      GroupBookStatus @default(UPCOMING) // Reading status
+  startDate  DateTime? // When the group starts reading this book
+  endDate    DateTime? // Target completion date
+  targetPage Int? // Current target page for the group
+  status     GroupBookStatus @default(UPCOMING) // Reading status
 
   // Order in the reading list
   orderIndex Int @default(0)
 
   // Timestamps
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Unique constraint: each book can only be in a group's list once
   @@unique([groupId, bookId])
@@ -1513,11 +1521,11 @@ model ReadingList {
 /// ReadingListItem - Books in a reading list with ordering
 /// Junction table with additional metadata
 model ReadingListItem {
-  id     String @id @default(cuid())
+  id     String      @id @default(cuid())
   listId String
   list   ReadingList @relation(fields: [listId], references: [id], onDelete: Cascade)
   bookId String
-  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  book   Book        @relation(fields: [bookId], references: [id], onDelete: Cascade)
 
   // Ordering within the list
   orderIndex Int // 0-indexed position in the list
@@ -1782,4 +1790,202 @@ model UserEmailPreferences {
   @@index([userId])
   @@index([emailEnabled])
   @@index([unsubscribeToken])
+}
+
+// =============================================================================
+// LIVE READING SESSIONS - Real-time collaborative reading
+// =============================================================================
+
+/// ReadingSession - Live reading session for collaborative reading
+/// Allows users to read together in real-time with synchronized page turns
+model ReadingSession {
+  id String @id @default(cuid())
+
+  // Host user who started the session
+  hostId String
+  host   User   @relation("HostedSessions", fields: [hostId], references: [id], onDelete: Cascade)
+
+  // Book being read
+  bookId String
+  book   Book   @relation("SessionBook", fields: [bookId], references: [id], onDelete: Cascade)
+
+  // Session details
+  title       String  @db.VarChar(200) // Session title
+  description String? @db.Text // Optional description
+
+  // Session state
+  status       SessionStatus @default(SCHEDULED) // scheduled, active, paused, ended
+  currentPage  Int           @default(0) // Current page the group is on
+  currentSpeed Float? // Reading speed for pacing
+
+  // Timing
+  scheduledAt DateTime? // When the session is scheduled to start
+  startedAt   DateTime? // When the session actually started
+  endedAt     DateTime? // When the session ended
+
+  // Limits and settings
+  maxParticipants Int     @default(50) // Maximum participants allowed
+  isPublic        Boolean @default(true) // Can anyone join, or invite-only
+  inviteCode      String? @unique // Unique invite code for private sessions
+  allowChat       Boolean @default(true) // Whether chat is enabled
+  syncEnabled     Boolean @default(true) // Whether page sync is enabled
+
+  // Statistics (denormalized)
+  participantCount   Int    @default(0)
+  peakParticipants   Int    @default(0) // Highest participant count during session
+  totalMessages      Int    @default(0)
+  totalPageTurns     Int    @default(0)
+  avgEngagementScore Float? // Calculated engagement metric
+
+  // Recording
+  isRecorded  Boolean @default(false) // Whether to record for replay
+  recordingId String? // Reference to recording if recorded
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  participants SessionParticipant[]
+  messages     SessionMessage[]
+  pageEvents   SessionPageEvent[]
+
+  // Indexes
+  @@index([hostId])
+  @@index([bookId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([startedAt])
+  @@index([isPublic])
+  @@index([deletedAt])
+  @@index([inviteCode])
+}
+
+/// SessionStatus - Status of a reading session
+enum SessionStatus {
+  SCHEDULED // Session is scheduled for the future
+  ACTIVE // Session is currently active
+  PAUSED // Session is temporarily paused
+  ENDED // Session has ended
+  CANCELLED // Session was cancelled before starting
+}
+
+/// SessionParticipant - Users participating in a reading session
+/// Tracks join/leave times and activity
+model SessionParticipant {
+  id        String         @id @default(cuid())
+  sessionId String
+  session   ReadingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User           @relation("SessionParticipations", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Participation status
+  isActive    Boolean @default(true) // Currently in the session
+  isHost      Boolean @default(false) // Is this the host
+  isModerator Boolean @default(false) // Can moderate chat
+  isMuted     Boolean @default(false) // Chat muted by moderator
+
+  // Activity tracking
+  currentPage Int      @default(0) // Participant's current page (if not synced)
+  isSynced    Boolean  @default(true) // Following host's page
+  lastActive  DateTime @default(now()) // Last activity timestamp
+
+  // Join/leave tracking
+  joinedAt DateTime  @default(now())
+  leftAt   DateTime?
+
+  // Statistics
+  messagesCount  Int @default(0) // Messages sent during session
+  pageViewsCount Int @default(0) // Pages viewed
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Unique constraint: one participation record per user per session
+  @@unique([sessionId, userId])
+  // Indexes
+  @@index([sessionId])
+  @@index([userId])
+  @@index([sessionId, isActive])
+  @@index([joinedAt])
+}
+
+/// SessionMessage - Chat messages in a reading session
+/// Real-time chat during collaborative reading
+model SessionMessage {
+  id        String         @id @default(cuid())
+  sessionId String
+  session   ReadingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User           @relation("SessionMessages", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Message content
+  content String             @db.VarChar(2000) // Message content (max 2000 chars)
+  type    SessionMessageType @default(CHAT) // chat, system, highlight, question
+
+  // Optional reference to a specific page/position
+  pageNumber Int? // Page the message references
+  textOffset Int? // Character offset if highlighting
+
+  // Reactions (stored as JSON for flexibility)
+  reactions Json @default("{}") // { "👍": ["userId1", "userId2"], "❤️": ["userId3"] }
+
+  // Moderation
+  isHidden Boolean   @default(false) // Hidden by moderator
+  hiddenBy String? // User ID of moderator who hid it
+  hiddenAt DateTime?
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  deletedAt DateTime? // Soft delete
+
+  // Indexes
+  @@index([sessionId])
+  @@index([userId])
+  @@index([sessionId, createdAt])
+  @@index([type])
+  @@index([deletedAt])
+}
+
+/// SessionMessageType - Types of messages in a session
+enum SessionMessageType {
+  CHAT // Regular chat message
+  SYSTEM // System notification (joined, left, page turned)
+  HIGHLIGHT // Shared highlight
+  QUESTION // Question for discussion
+  ANNOTATION // Shared annotation
+}
+
+/// SessionPageEvent - Page turn and navigation events
+/// For recording and analytics
+model SessionPageEvent {
+  id        String         @id @default(cuid())
+  sessionId String
+  session   ReadingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId    String? // Null for system-triggered events
+
+  // Event details
+  eventType   PageEventType
+  fromPage    Int?
+  toPage      Int
+  triggeredBy String? // "host", "system", or userId
+
+  // Timestamp
+  createdAt DateTime @default(now())
+
+  // Indexes
+  @@index([sessionId])
+  @@index([sessionId, createdAt])
+  @@index([eventType])
+}
+
+/// PageEventType - Types of page events
+enum PageEventType {
+  TURN // Normal page turn
+  JUMP // Jump to specific page
+  SYNC // Sync to host's page
+  START // Session started at page
+  END // Session ended at page
 }
