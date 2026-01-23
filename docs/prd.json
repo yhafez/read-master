@@ -550,7 +550,7 @@
         "Works in multiple languages",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "content-podcast-001",

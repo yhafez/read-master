@@ -2600,3 +2600,88 @@ DISCOVERIES:
 2. **Complete mobile implementation** - The mobile app was already fully implemented with all core features, navigation, state management, and API integration.
 
 COMMIT: feat(mobile): verify mobile app implementation (cross-platform-002)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-23 - Iteration 8]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: accessibility-voice-commands-001 - Add voice command support (COMPLETE)
+
+WHAT WAS DONE:
+✅ **Implemented Comprehensive Voice Command System**
+
+1. **useVoiceCommands Hook** (apps/web/src/hooks/useVoiceCommands.ts):
+   - Integrates Web Speech API for speech recognition
+   - Supports multiple languages: English, Spanish, Arabic
+   - Navigation commands: home, library, flashcards, assessments, settings, groups, forum, leaderboard, curriculums, back, forward
+   - Reading commands: next_page, previous_page, read_aloud, stop_reading, pause, resume, add_bookmark, remove_bookmark, create_note, highlight, increase_font, decrease_font, toggle_fullscreen
+   - Action commands: search, help, close, cancel, confirm, save, undo, redo, refresh
+   - Configurable confidence threshold (0.3-0.9)
+   - Visual and audio feedback options
+   - Continuous listening mode option
+   - Error handling for: not-supported, not-allowed, no-speech, network errors
+   - Smart command matching prioritizes longer phrases (more specific)
+
+2. **VoiceCommandButton Component** (apps/web/src/components/common/VoiceCommandButton.tsx):
+   - Toggle button with microphone icon
+   - Visual pulse animation when listening
+   - Badge indicator for active listening
+   - Real-time transcript display
+   - Integrated help dialog showing all available commands
+   - Snackbar feedback for recognized commands and errors
+   - Screen reader announcements for accessibility
+
+3. **VoiceCommandSettings Component** (apps/web/src/components/common/VoiceCommandSettings.tsx):
+   - Enable/disable voice commands
+   - Language selection (8 language options)
+   - Confidence threshold slider
+   - Visual feedback toggle
+   - Audio feedback toggle
+   - Continuous listening toggle
+   - Microphone test button
+   - Collapsible list of all available commands
+   - Graceful handling when browser doesn't support Web Speech API
+
+4. **Comprehensive Test Suite** (apps/web/src/hooks/useVoiceCommands.test.ts):
+   - 28 tests covering all functionality
+   - Mock SpeechRecognition implementation
+   - Tests for browser support detection
+   - Tests for command recognition in multiple languages
+   - Tests for error handling scenarios
+   - Tests for listening state management
+   - Tests for vocabulary functions
+
+5. **Multi-language Voice Command Vocabulary**:
+   - English (default): Full vocabulary with natural phrases
+   - Spanish: "ir a biblioteca", "siguiente página", etc.
+   - Arabic: "اذهب للمكتبة", "الصفحة التالية", etc.
+
+ACCEPTANCE CRITERIA STATUS:
+✅ Voice commands work for core actions - Navigation, reading, and action commands implemented
+✅ Commands recognized accurately - Smart matching prioritizes more specific phrases
+✅ Feedback provided for commands - Visual (badge, transcript), audio announcements
+✅ Works in multiple languages - English, Spanish, Arabic vocabularies
+✅ Tests pass - 28 tests passing
+
+FILES CREATED:
+- apps/web/src/hooks/useVoiceCommands.ts (Voice commands hook with Web Speech API)
+- apps/web/src/hooks/useVoiceCommands.test.ts (Comprehensive test suite)
+- apps/web/src/components/common/VoiceCommandButton.tsx (UI button component)
+- apps/web/src/components/common/VoiceCommandSettings.tsx (Settings panel)
+
+FILES MODIFIED:
+- apps/web/src/hooks/index.ts (Added voice command exports)
+- apps/web/src/components/common/index.ts (Added component exports)
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - PASSED
+✅ pnpm lint - PASSED (0 errors, 65 warnings in pre-existing files)
+✅ pnpm vitest run - PASSED (4983 tests, 50 skipped)
+
+DISCOVERIES:
+1. **Web Speech API Browser Support** - The Web Speech API is well-supported in modern browsers (Chrome, Edge, Safari) but not in Firefox. The implementation gracefully falls back when not supported.
+
+2. **Command Matching Priority** - When multiple commands match (e.g., "next" vs "next page"), the implementation prioritizes longer phrase matches to ensure more specific commands are recognized correctly.
+
+COMMIT: feat(accessibility): add voice command support (accessibility-voice-commands-001)

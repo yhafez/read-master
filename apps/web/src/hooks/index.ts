@@ -139,3 +139,18 @@ export * from "./useGroupBooks";
 export * from "./useEmailPreferences";
 export * from "./useSessionRealtime";
 export * from "./useSubscription";
+
+export {
+  useVoiceCommands,
+  isVoiceCommandsSupported,
+  getVoiceCommandVocabulary,
+  type NavigationCommand,
+  type ReadingCommand,
+  type ActionCommand,
+  type VoiceCommand,
+  type VoiceCommandResult,
+  type VoiceCommandError,
+  type UseVoiceCommandsOptions,
+  type UseVoiceCommandsReturn,
+  type VoiceCommandVocabulary,
+} from "./useVoiceCommands";
