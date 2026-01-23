@@ -6,10 +6,10 @@
  * - Push notifications (PWA)
  * - Different notification categories (achievements, social, reading, etc.)
  *
- * Note: Backend integration needed to persist preferences
+ * Connected to /api/users/me/email-preferences API for persistence.
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -40,6 +40,11 @@ import {
   Save as SaveIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import {
+  useEmailPreferences,
+  useUpdateEmailPreferences,
+  type EmailPreferences,
+} from "@/hooks/useEmailPreferences";
 
 // ============================================================================
 // Types
@@ -95,16 +100,41 @@ export function NotificationPreferencesPage(): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // State
-  const [preferences, setPreferences] = useState<NotificationPreferences>(DEFAULT_PREFERENCES);
+  // API hooks for email preferences
+  const {
+    data: emailPrefs,
+    isLoading: isLoadingEmailPrefs,
+    error: emailPrefsError,
+  } = useEmailPreferences();
+  const updateEmailPrefsMutation = useUpdateEmailPreferences();
+
+  // Local state for UI (includes push notifications which are not stored on backend)
+  const [preferences, setPreferences] =
+    useState<NotificationPreferences>(DEFAULT_PREFERENCES);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Sync email preferences from API to local state
+  useEffect(() => {
+    if (emailPrefs) {
+      setPreferences((prev) => ({
+        ...prev,
+        emailEnabled: emailPrefs.emailEnabled,
+        emailAchievements: emailPrefs.achievementEmails,
+        emailSocial: emailPrefs.socialEmails,
+        emailReadingReminders: emailPrefs.marketingEmails, // Using marketing for reading reminders
+        emailGroups: emailPrefs.socialEmails, // Using social for groups
+        emailForum: emailPrefs.socialEmails, // Using social for forum
+        emailWeeklySummary: emailPrefs.weeklyDigest,
+      }));
+    }
+  }, [emailPrefs]);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [pushSupported, setPushSupported] = useState(false);
 
   // Check if push notifications are supported
   React.useEffect(() => {
-    const supported = 'Notification' in window && 'serviceWorker' in navigator;
+    const supported = "Notification" in window && "serviceWorker" in navigator;
     setPushSupported(supported);
   }, []);
 
@@ -136,17 +166,19 @@ export function NotificationPreferencesPage(): React.ReactElement {
       // Request permission for push notifications
       try {
         const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
+        if (permission === "granted") {
           setPreferences((prev) => ({
             ...prev,
             pushEnabled: true,
           }));
         } else {
-          setSaveError('Push notifications permission denied. Please enable in your browser settings.');
+          setSaveError(
+            "Push notifications permission denied. Please enable in your browser settings."
+          );
           return;
         }
       } catch (_error) {
-        setSaveError('Failed to request push notification permission.');
+        setSaveError("Failed to request push notification permission.");
         return;
       }
     } else {
@@ -169,11 +201,22 @@ export function NotificationPreferencesPage(): React.ReactElement {
     setSaveSuccess(false);
 
     try {
-      // TODO: Save preferences to backend API
-      // This would be a PUT request to /api/users/me/notification-preferences
+      // Map local preferences to API format
+      const emailUpdates: Partial<EmailPreferences> = {
+        emailEnabled: preferences.emailEnabled,
+        achievementEmails: preferences.emailAchievements,
+        socialEmails:
+          preferences.emailSocial ||
+          preferences.emailGroups ||
+          preferences.emailForum,
+        marketingEmails: preferences.emailReadingReminders,
+        weeklyDigest: preferences.emailWeeklySummary,
+      };
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Save email preferences to backend API
+      await updateEmailPrefsMutation.mutateAsync(emailUpdates);
+
+      // TODO: Save push notification preferences (stored locally or in separate API)
 
       setSaveSuccess(true);
 
@@ -220,8 +263,19 @@ export function NotificationPreferencesPage(): React.ReactElement {
 
       {/* Error Message */}
       {saveError && (
-        <Alert severity="error" sx={{ mb: 3 }} onClose={() => setSaveError(null)}>
+        <Alert
+          severity="error"
+          sx={{ mb: 3 }}
+          onClose={() => setSaveError(null)}
+        >
           {saveError}
+        </Alert>
+      )}
+
+      {/* API Error Message */}
+      {emailPrefsError && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          {t("settings.failedToLoadPreferences")}
         </Alert>
       )}
 
@@ -268,7 +322,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.emailAchievements}
-                    onChange={() => handleToggle('emailAchievements')}
+                    onChange={() => handleToggle("emailAchievements")}
                     disabled={!preferences.emailEnabled}
                   />
                 }
@@ -286,7 +340,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.emailSocial}
-                    onChange={() => handleToggle('emailSocial')}
+                    onChange={() => handleToggle("emailSocial")}
                     disabled={!preferences.emailEnabled}
                   />
                 }
@@ -304,7 +358,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.emailReadingReminders}
-                    onChange={() => handleToggle('emailReadingReminders')}
+                    onChange={() => handleToggle("emailReadingReminders")}
                     disabled={!preferences.emailEnabled}
                   />
                 }
@@ -322,7 +376,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.emailGroups}
-                    onChange={() => handleToggle('emailGroups')}
+                    onChange={() => handleToggle("emailGroups")}
                     disabled={!preferences.emailEnabled}
                   />
                 }
@@ -340,7 +394,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.emailForum}
-                    onChange={() => handleToggle('emailForum')}
+                    onChange={() => handleToggle("emailForum")}
                     disabled={!preferences.emailEnabled}
                   />
                 }
@@ -360,7 +414,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.emailWeeklySummary}
-                    onChange={() => handleToggle('emailWeeklySummary')}
+                    onChange={() => handleToggle("emailWeeklySummary")}
                     disabled={!preferences.emailEnabled}
                   />
                 }
@@ -388,9 +442,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
             <Typography variant="h6">
               {t("settings.pushNotifications")}
             </Typography>
-            {pushSupported && (
-              <Chip label="PWA" size="small" color="success" />
-            )}
+            {pushSupported && <Chip label="PWA" size="small" color="success" />}
           </Stack>
           <Typography variant="body2" color="text.secondary" mb={2}>
             {pushSupported
@@ -435,7 +487,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.pushAchievements}
-                    onChange={() => handleToggle('pushAchievements')}
+                    onChange={() => handleToggle("pushAchievements")}
                     disabled={!preferences.pushEnabled || !pushSupported}
                   />
                 }
@@ -453,7 +505,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.pushSocial}
-                    onChange={() => handleToggle('pushSocial')}
+                    onChange={() => handleToggle("pushSocial")}
                     disabled={!preferences.pushEnabled || !pushSupported}
                   />
                 }
@@ -471,7 +523,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.pushReadingReminders}
-                    onChange={() => handleToggle('pushReadingReminders')}
+                    onChange={() => handleToggle("pushReadingReminders")}
                     disabled={!preferences.pushEnabled || !pushSupported}
                   />
                 }
@@ -489,7 +541,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.pushGroups}
-                    onChange={() => handleToggle('pushGroups')}
+                    onChange={() => handleToggle("pushGroups")}
                     disabled={!preferences.pushEnabled || !pushSupported}
                   />
                 }
@@ -507,7 +559,7 @@ export function NotificationPreferencesPage(): React.ReactElement {
                 control={
                   <Switch
                     checked={preferences.pushForum}
-                    onChange={() => handleToggle('pushForum')}
+                    onChange={() => handleToggle("pushForum")}
                     disabled={!preferences.pushEnabled || !pushSupported}
                   />
                 }
@@ -530,9 +582,15 @@ export function NotificationPreferencesPage(): React.ReactElement {
         <Button
           variant="contained"
           size="large"
-          startIcon={isSaving ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+          startIcon={
+            isSaving ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              <SaveIcon />
+            )
+          }
           onClick={handleSave}
-          disabled={isSaving}
+          disabled={isSaving || isLoadingEmailPrefs}
           fullWidth={isMobile}
         >
           {isSaving ? t("common.saving") : t("common.saveChanges")}

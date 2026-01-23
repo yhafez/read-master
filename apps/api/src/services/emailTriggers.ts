@@ -747,9 +747,7 @@ export async function sendMilestoneEmail(
         icon: string;
         title: string;
         description: string;
-        getStats: (
-          user: any
-        ) => Array<{ label: string; value: string }>;
+        getStats: (user: any) => Array<{ label: string; value: string }>;
       }
     > = {
       books_completed: {
@@ -1007,10 +1005,13 @@ export async function sendWeeklyDigest(
         completedBooks: completedBooks.map((b) => ({
           title: b.title,
           author: b.author || "Unknown Author",
-          completedDate: b.readingProgress[0]?.completedAt?.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          }),
+          completedDate: b.readingProgress[0]?.completedAt?.toLocaleDateString(
+            "en-US",
+            {
+              month: "short",
+              day: "numeric",
+            }
+          ),
         })),
         booksInProgress: inProgressBooks.length,
         inProgressBooks: inProgressBooks.map((b) => ({
@@ -1355,6 +1356,267 @@ export async function sendTTSUpgradeEmail(
       error: error instanceof Error ? error.message : "Unknown error",
     };
   }
+}
+
+/**
+ * Send discussion reminder email for book clubs
+ */
+export async function sendDiscussionReminderEmail(
+  userId: string,
+  discussionId: string,
+  hoursUntil: 24 | 1
+): Promise<SendEmailResult> {
+  try {
+    // Get user info
+    const user = await db.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      logger.error("User not found for discussion reminder", { userId });
+      return {
+        success: false,
+        error: "User not found",
+      };
+    }
+
+    // Get discussion with group and book info
+    const discussion = await db.groupDiscussion.findUnique({
+      where: { id: discussionId },
+      include: {
+        group: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        book: {
+          select: {
+            id: true,
+            title: true,
+            author: true,
+          },
+        },
+      },
+    });
+
+    if (!discussion) {
+      logger.error("Discussion not found for reminder", { discussionId });
+      return {
+        success: false,
+        error: "Discussion not found",
+      };
+    }
+
+    if (!discussion.scheduledAt) {
+      return {
+        success: false,
+        error: "Discussion has no scheduled time",
+      };
+    }
+
+    // Format time
+    const discussionTime = discussion.scheduledAt.toLocaleString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short",
+    });
+
+    // Choose template based on time remaining
+    const templateName =
+      hoursUntil === 24 ? "discussion_reminder_24h" : "discussion_reminder_1h";
+
+    // Send reminder email
+    const result = await sendTemplateEmail(
+      userId,
+      templateName,
+      user.email,
+      {
+        firstName: user.firstName || user.displayName || "there",
+        groupName: discussion.group.name,
+        discussionTitle: discussion.title,
+        bookTitle: discussion.book?.title || "TBD",
+        bookAuthor: discussion.book?.author || "Unknown Author",
+        discussionTime,
+        discussionUrl: `${APP_URL}/groups/${discussion.group.id}/discussions/${discussionId}`,
+        groupUrl: `${APP_URL}/groups/${discussion.group.id}`,
+        appUrl: APP_URL,
+        year: new Date().getFullYear(),
+      },
+      {
+        toName: user.displayName || "",
+        tags: ["groups", "discussion_reminder", `reminder_${hoursUntil}h`],
+        metadata: {
+          trigger: "discussion_reminder",
+          discussionId,
+          groupId: discussion.group.id,
+          hoursUntil,
+          timestamp: new Date().toISOString(),
+        },
+      }
+    );
+
+    if (result.success) {
+      logger.info("Discussion reminder email sent", {
+        userId,
+        discussionId,
+        hoursUntil,
+        emailId: result.emailId,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    logger.error("Error sending discussion reminder email", {
+      error: error instanceof Error ? error.message : String(error),
+      userId,
+      discussionId,
+      hoursUntil,
+    });
+
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Process discussion reminders (to be called by cron)
+ * Sends reminder emails for discussions happening in 24h or 1h
+ */
+export async function processDiscussionReminders(): Promise<{
+  processed: number;
+  sent: number;
+  failed: number;
+}> {
+  let processed = 0;
+  let sent = 0;
+  let failed = 0;
+
+  try {
+    logger.info("Starting discussion reminders processing");
+
+    // Check for discussions happening in 24 hours (+/- 30 minutes)
+    const now = new Date();
+    const twentyFourHoursFromNow = new Date(
+      now.getTime() + 24 * 60 * 60 * 1000
+    );
+    const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
+
+    // Define reminder windows
+    const reminderWindows: Array<{
+      hoursUntil: 24 | 1;
+      start: Date;
+      end: Date;
+    }> = [
+      {
+        hoursUntil: 24,
+        start: new Date(twentyFourHoursFromNow.getTime() - 30 * 60 * 1000),
+        end: new Date(twentyFourHoursFromNow.getTime() + 30 * 60 * 1000),
+      },
+      {
+        hoursUntil: 1,
+        start: new Date(oneHourFromNow.getTime() - 15 * 60 * 1000),
+        end: new Date(oneHourFromNow.getTime() + 15 * 60 * 1000),
+      },
+    ];
+
+    for (const window of reminderWindows) {
+      // Find discussions in this window
+      const discussions = await db.groupDiscussion.findMany({
+        where: {
+          scheduledAt: {
+            gte: window.start,
+            lte: window.end,
+          },
+          deletedAt: null,
+        },
+        include: {
+          group: {
+            include: {
+              members: {
+                select: {
+                  userId: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      logger.info(
+        `Found ${discussions.length} discussions for ${window.hoursUntil}h reminder window`,
+        {
+          hoursUntil: window.hoursUntil,
+          count: discussions.length,
+        }
+      );
+
+      // Send reminders to all group members
+      for (const discussion of discussions) {
+        for (const member of discussion.group.members) {
+          processed++;
+
+          // Check if reminder already sent
+          const existingReminder = await db.email.findFirst({
+            where: {
+              userId: member.userId,
+              tags: {
+                hasEvery: [
+                  "discussion_reminder",
+                  `reminder_${window.hoursUntil}h`,
+                ],
+              },
+              metadata: {
+                path: ["discussionId"],
+                equals: discussion.id,
+              },
+              sentAt: {
+                gte: new Date(now.getTime() - 2 * 60 * 60 * 1000), // Last 2 hours
+              },
+              deletedAt: null,
+            },
+          });
+
+          if (existingReminder) {
+            continue;
+          }
+
+          // Send reminder
+          const result = await sendDiscussionReminderEmail(
+            member.userId,
+            discussion.id,
+            window.hoursUntil
+          );
+
+          if (result.success) {
+            sent++;
+          } else {
+            failed++;
+          }
+
+          // Rate limiting
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
+    }
+
+    logger.info("Discussion reminders processing complete", {
+      processed,
+      sent,
+      failed,
+    });
+  } catch (error) {
+    logger.error("Error processing discussion reminders", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  return { processed, sent, failed };
 }
 
 /**

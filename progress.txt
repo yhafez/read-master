@@ -3,6 +3,129 @@
 Started: 2026-01-17
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-22 - 17:05]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: email-marketing-001 - Email Marketing Funnel (Completed: Email Preferences API + Frontend Integration)
+
+WHAT WAS DONE:
+✅ **Created Email Preferences API Endpoint** (`apps/api/api/users/me/email-preferences.ts`)
+- GET /api/users/me/email-preferences - Fetch current user's email preferences
+- PUT /api/users/me/email-preferences - Update specific email preference settings
+- DELETE /api/users/me/email-preferences - Unsubscribe from all emails
+- Zod schema validation for all inputs
+- Maps between API response format and database format
+- Integrates with existing emailService.ts functions
+
+✅ **Created Frontend Hook** (`apps/web/src/hooks/useEmailPreferences.ts`)
+- useEmailPreferences() - React Query hook for fetching preferences
+- useUpdateEmailPreferences() - Mutation hook for updating preferences
+- useUnsubscribeFromEmails() - Mutation hook for complete unsubscribe
+- Helper functions: getDigestFrequencyLabel, hasAnyEmailEnabled, getEnabledCategoryCount
+- Query key factory for cache management
+- Optimistic updates with rollback on error
+
+✅ **Connected NotificationPreferencesPage to Backend**
+- Integrated useEmailPreferences and useUpdateEmailPreferences hooks
+- Syncs API preferences to local state on load
+- Maps between local preferences and API format on save
+- Displays API error messages
+- Disables save button while loading preferences
+- Removed placeholder TODO comments
+
+✅ **Added Discussion Reminder Email Trigger** (`apps/api/src/services/emailTriggers.ts`)
+- sendDiscussionReminderEmail() - Sends reminder before scheduled discussions
+- processDiscussionReminders() - Processes upcoming discussions for reminders
+- Created cron endpoint (apps/api/api/cron/discussion-reminders.ts)
+- Integrates with existing email infrastructure
+
+✅ **Added i18n Translations** (all 6 languages)
+- settings.notificationPreferences, settings.manageNotifications
+- settings.emailNotifications, settings.pushNotifications
+- settings.achievementUnlocks, settings.socialInteractions, settings.readingReminders
+- settings.groupActivity, settings.forumReplies, settings.weeklySummary
+- settings.enableEmailNotifications, settings.enablePushNotifications
+- settings.masterToggle, settings.pushNotSupported, settings.pushNotSupportedInfo
+- settings.preferencesSaved, settings.failedToLoadPreferences, settings.saving
+
+✅ **Created Tests**
+- apps/api/api/users/me/email-preferences.test.ts (API schema & helper tests)
+- apps/web/src/hooks/useEmailPreferences.test.ts (hook helper function tests)
+
+WHY IT MATTERS:
+- **User Control**: Users can now manage their email preferences from the UI
+- **Backend Integration**: NotificationPreferencesPage now saves to database instead of localStorage
+- **Foundation for Marketing**: API enables future email campaigns and digest features
+- **Discussion Reminders**: Book clubs can now receive automated reminders
+
+TECHNICAL DETAILS:
+**API Structure:**
+- updatePreferencesSchema validates optional boolean fields for each email category
+- cleanUpdates pattern filters undefined values for exactOptionalPropertyTypes compatibility
+- Maps digestFrequency enum between Zod and API response types
+
+**Frontend Integration:**
+- useEffect syncs API data to local state when emailPrefs changes
+- handleSave maps local preferences to API format before mutation
+- isLoadingEmailPrefs disables save button during initial load
+
+**Email Categories Supported:**
+- emailEnabled (master toggle)
+- marketingEmails
+- productUpdates
+- weeklyDigest
+- achievementEmails
+- recommendationEmails
+- socialEmails
+- digestFrequency (weekly/biweekly/monthly/never)
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - Passed (all workspaces)
+✅ pnpm lint - Passed (0 errors, warnings in unrelated files)
+✅ pnpm vitest run - Passed
+  - All 110 test files passed
+  - 4449 tests passed
+  - i18n consistency tests verified (all 6 languages have matching keys)
+
+FILES CREATED:
+- apps/api/api/users/me/email-preferences.ts (275 lines)
+- apps/api/api/users/me/email-preferences.test.ts (tests)
+- apps/api/api/cron/discussion-reminders.ts (cron endpoint)
+- apps/web/src/hooks/useEmailPreferences.ts (240 lines)
+- apps/web/src/hooks/useEmailPreferences.test.ts (tests)
+
+FILES MODIFIED:
+- apps/web/src/pages/settings/NotificationPreferencesPage.tsx (API integration)
+- apps/web/src/hooks/index.ts (export useEmailPreferences)
+- apps/api/src/services/emailTriggers.ts (discussion reminders)
+- apps/web/src/locales/en.json (notification settings translations)
+- apps/web/src/locales/ar.json (notification settings translations)
+- apps/web/src/locales/es.json (notification settings translations)
+- apps/web/src/locales/ja.json (notification settings translations)
+- apps/web/src/locales/zh.json (notification settings translations)
+- apps/web/src/locales/tl.json (notification settings translations)
+
+NEXT RECOMMENDED TASKS:
+1. **email-marketing-001** (continued) - Weekly reading digest
+   - Create digest generation logic
+   - Schedule weekly cron job
+   - Beautiful HTML email template
+
+2. **payments-stripe-complete-001** - Complete Stripe integration
+   - Subscription management page
+   - Usage limits and upgrade prompts
+
+3. **forum-enhancements-001** - Enhance Forum
+   - Image upload, markdown preview, voting system
+
+SPRINT STATUS:
+- In Progress (157/174 tasks complete - 90.2%)
+- 17 active tasks remaining
+- email-marketing-001: Email Preferences API + Frontend Integration complete ✅
+
+BLOCKERS: None
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RALPH ITERATION [DATE: 2026-01-22 - 16:45]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
