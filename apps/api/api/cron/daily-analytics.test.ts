@@ -3,6 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { Decimal } from "@prisma/client/runtime/library";
 import {
   calculateDailyMetrics,
   storeDailyMetrics,
@@ -98,7 +99,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user1",
           operation: "pre_reading_guide",
           totalTokens: 1000,
-          cost: 0.1,
+          cost: new Decimal(0.1),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 500,
@@ -106,10 +107,10 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 1000,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
         {
@@ -117,7 +118,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user2",
           operation: "explain",
           totalTokens: 500,
-          cost: 0.05,
+          cost: new Decimal(0.05),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 250,
@@ -125,13 +126,13 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 800,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
-      ] as any);
+      ]);
 
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
@@ -212,7 +213,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user1",
           operation: "pre_reading_guide",
           totalTokens: 1000,
-          cost: 0.1,
+          cost: new Decimal(0.1),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 500,
@@ -220,10 +221,10 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 1000,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
         {
@@ -231,7 +232,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user2",
           operation: "pre_reading_guide",
           totalTokens: 1200,
-          cost: 0.12,
+          cost: new Decimal(0.12),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 600,
@@ -239,10 +240,10 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 1100,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
         {
@@ -250,7 +251,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user3",
           operation: "explain",
           totalTokens: 500,
-          cost: 0.05,
+          cost: new Decimal(0.05),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 250,
@@ -258,10 +259,10 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 800,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
         {
@@ -269,7 +270,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user4",
           operation: "assessment",
           totalTokens: 800,
-          cost: 0.08,
+          cost: new Decimal(0.08),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 400,
@@ -277,10 +278,10 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 1200,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
         {
@@ -288,7 +289,7 @@ describe("Daily Analytics Cron Job", () => {
           userId: "user5",
           operation: "flashcards",
           totalTokens: 600,
-          cost: 0.06,
+          cost: new Decimal(0.06),
           model: "claude-3-5-sonnet",
           provider: "anthropic",
           promptTokens: 300,
@@ -296,13 +297,13 @@ describe("Daily Analytics Cron Job", () => {
           durationMs: 900,
           success: true,
           createdAt: new Date(),
-          updatedAt: new Date(),
           bookId: null,
           requestId: null,
           errorMessage: null,
+          errorCode: null,
           metadata: null,
         },
-      ] as any);
+      ]);
 
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);

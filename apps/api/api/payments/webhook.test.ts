@@ -100,7 +100,9 @@ describe("Stripe Webhook Event Processing", () => {
       } as Partial<Stripe.Subscription>;
 
       expect(mockSubscription.status).toBe("active");
-      expect(mockSubscription.items?.data[0]?.price.id).toBe("price_pro_monthly");
+      expect(mockSubscription.items?.data[0]?.price.id).toBe(
+        "price_pro_monthly"
+      );
       expect(mockSubscription.items?.data[0]?.price.unit_amount).toBe(999);
       expect(mockSubscription.metadata?.userId).toBe("user_123");
     });
@@ -345,14 +347,14 @@ describe("Stripe Webhook Event Processing", () => {
     it("should handle missing customer ID gracefully", () => {
       const mockSubscription = {
         id: "sub_test_123",
-        customer: undefined as any,
+        customer: undefined,
         status: "active",
         items: {
           data: [],
         } as unknown as Stripe.ApiList<Stripe.SubscriptionItem>,
         current_period_start: 1234567890,
         current_period_end: 1234567890,
-      } as Partial<Stripe.Subscription>;
+      } as unknown as Partial<Stripe.Subscription>;
 
       expect(mockSubscription.customer).toBeUndefined();
     });

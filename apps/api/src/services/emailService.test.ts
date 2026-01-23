@@ -156,12 +156,12 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.email.create).mockResolvedValue(mockEmail as any);
+      vi.mocked(db.email.create).mockResolvedValue(mockEmail);
       vi.mocked(db.email.update).mockResolvedValue({
         ...mockEmail,
         sendgridStatus: "logged",
         sentAt: new Date(),
-      } as any);
+      });
 
       const result = await emailService.sendEmail(mockUserId, mockEmailOptions);
 
@@ -213,12 +213,12 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.email.create).mockResolvedValue(mockEmail as any);
+      vi.mocked(db.email.create).mockResolvedValue(mockEmail);
       vi.mocked(db.email.update).mockResolvedValue({
         ...mockEmail,
         sendgridStatus: "logged",
         sentAt: new Date(),
-      } as any);
+      });
 
       const result = await emailService.sendEmail(mockUserId, mockEmailOptions);
 
@@ -266,7 +266,7 @@ describe("EmailService", () => {
         htmlBody: "<p>Hello {{name}}, welcome to Read Master!</p>",
         textBody: "Hello {{name}}, welcome to Read Master!",
         sendgridTemplateId: null,
-        category: "WELCOME",
+        category: "WELCOME" as const,
         isActive: true,
         sentCount: 0,
         createdAt: new Date(),
@@ -274,7 +274,7 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate as any);
+      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate);
 
       const result = await emailService.renderTemplate({
         templateName: "welcome",
@@ -295,7 +295,7 @@ describe("EmailService", () => {
         htmlBody: "<p>Hello {{name}}!</p>",
         textBody: "Hello {{name}}!",
         sendgridTemplateId: null,
-        category: "WELCOME",
+        category: "WELCOME" as const,
         isActive: false,
         sentCount: 0,
         createdAt: new Date(),
@@ -303,7 +303,7 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate as any);
+      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate);
 
       const result = await emailService.renderTemplate({
         templateName: "welcome",
@@ -335,7 +335,7 @@ describe("EmailService", () => {
         htmlBody: "<p>Hello {{name}}!</p>",
         textBody: "Hello {{name}}!",
         sendgridTemplateId: null,
-        category: "WELCOME",
+        category: "WELCOME" as const,
         isActive: true,
         sentCount: 0,
         createdAt: new Date(),
@@ -343,7 +343,7 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate as any);
+      vi.mocked(db.emailTemplate.findUnique).mockResolvedValue(mockTemplate);
       vi.mocked(db.userEmailPreferences.findUnique).mockResolvedValue(null);
 
       const mockEmail = {
@@ -355,7 +355,7 @@ describe("EmailService", () => {
         subject: "Welcome John!",
         htmlBody: "<p>Hello John!</p>",
         textBody: "Hello John!",
-        category: "WELCOME",
+        category: "WELCOME" as const,
         tags: [],
         sendgridMessageId: null,
         sendgridStatus: null,
@@ -377,12 +377,12 @@ describe("EmailService", () => {
         deletedAt: null,
       };
 
-      vi.mocked(db.email.create).mockResolvedValue(mockEmail as any);
+      vi.mocked(db.email.create).mockResolvedValue(mockEmail);
       vi.mocked(db.email.update).mockResolvedValue({
         ...mockEmail,
         sendgridStatus: "logged",
         sentAt: new Date(),
-      } as any);
+      });
 
       const result = await emailService.sendTemplateEmail(
         "user-123",
@@ -458,7 +458,9 @@ describe("EmailService", () => {
         updatedAt: new Date(),
       };
 
-      vi.mocked(db.userEmailPreferences.findUnique).mockResolvedValue(mockPrefs);
+      vi.mocked(db.userEmailPreferences.findUnique).mockResolvedValue(
+        mockPrefs
+      );
 
       const prefs = await emailService.getEmailPreferences("user-123");
 

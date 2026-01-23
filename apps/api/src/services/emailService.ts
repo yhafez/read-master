@@ -6,12 +6,15 @@
  */
 
 import sgMail from "@sendgrid/mail";
+import type { MailDataRequired } from "@sendgrid/mail";
+import type { Prisma } from "@read-master/database";
 import { db } from "./db.js";
 import { logger } from "../utils/logger.js";
 
 // Initialize SendGrid
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || "";
-const SENDGRID_FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || "no-reply@readmaster.ai";
+const SENDGRID_FROM_EMAIL =
+  process.env.SENDGRID_FROM_EMAIL || "no-reply@readmaster.ai";
 const SENDGRID_FROM_NAME = process.env.SENDGRID_FROM_NAME || "Read Master";
 const EMAIL_ENABLED = process.env.EMAIL_ENABLED === "true";
 const SEND_REAL_EMAILS = process.env.EMAIL_SEND_REAL_EMAILS === "true";
@@ -88,7 +91,10 @@ export async function sendEmail(
     });
 
     if (emailPrefs && !emailPrefs.emailEnabled) {
-      logger.info("User has opted out of emails", { userId, email: options.to });
+      logger.info("User has opted out of emails", {
+        userId,
+        email: options.to,
+      });
       return {
         success: false,
         error: "User has opted out of emails",
@@ -97,7 +103,10 @@ export async function sendEmail(
 
     // Check category-specific preferences
     if (emailPrefs && options.category !== "TRANSACTIONAL") {
-      const shouldSkip = shouldSkipEmailByCategory(emailPrefs, options.category);
+      const shouldSkip = shouldSkipEmailByCategory(
+        emailPrefs,
+        options.category
+      );
       if (shouldSkip) {
         logger.info("User has opted out of this email category", {
           userId,
@@ -130,7 +139,7 @@ export async function sendEmail(
         textBody: options.textBody,
         category: options.category,
         tags: options.tags || [],
-        metadata: (options.metadata || {}) as any,
+        metadata: (options.metadata || {}) as Prisma.InputJsonValue,
       },
     });
 
@@ -159,7 +168,7 @@ export async function sendEmail(
     }
 
     // Send via SendGrid
-    const msg: any = {
+    const msg: MailDataRequired = {
       to: {
         email: options.to,
         ...(options.toName && { name: options.toName }),

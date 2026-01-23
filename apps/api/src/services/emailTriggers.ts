@@ -4,6 +4,7 @@
  * Handles automated email sending based on user actions and time-based triggers.
  */
 
+import type { User, UserStats } from "@read-master/database";
 import { db } from "./db.js";
 import {
   sendTemplateEmail,
@@ -11,6 +12,11 @@ import {
   type SendEmailResult,
 } from "./emailService.js";
 import { logger } from "../utils/logger.js";
+
+// Type for user with stats included
+type UserWithStats = User & {
+  stats?: UserStats | null;
+};
 
 const APP_URL = process.env.VITE_APP_URL || "https://readmaster.ai";
 
@@ -747,7 +753,9 @@ export async function sendMilestoneEmail(
         icon: string;
         title: string;
         description: string;
-        getStats: (user: any) => Array<{ label: string; value: string }>;
+        getStats: (
+          user: UserWithStats
+        ) => Array<{ label: string; value: string }>;
       }
     > = {
       books_completed: {
@@ -765,7 +773,7 @@ export async function sendMilestoneEmail(
           },
           {
             label: "⏱️ Reading Time",
-            value: `${Math.floor((user.stats?.totalReadTime || 0) / 3600)}h`,
+            value: `${Math.floor((user.stats?.totalReadingTime || 0) / 3600)}h`,
           },
           { label: "📊 Current Level", value: String(user.stats?.level || 1) },
         ],

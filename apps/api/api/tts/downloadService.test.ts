@@ -51,9 +51,10 @@ describe("TTS Download Service", () => {
         updatedAt: new Date(),
         completedAt: null,
         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        deletedAt: null,
       };
 
-      vi.mocked(db.tTSDownload.create).mockResolvedValue(mockDownload as any);
+      vi.mocked(db.tTSDownload.create).mockResolvedValue(mockDownload);
 
       const result = await downloadService.createDownloadRecord({
         userId: "user_1",
@@ -200,9 +201,10 @@ describe("TTS Download Service", () => {
         updatedAt: new Date(),
         completedAt: null,
         expiresAt: new Date(),
+        deletedAt: null,
       };
 
-      vi.mocked(db.tTSDownload.update).mockResolvedValue(mockUpdated as any);
+      vi.mocked(db.tTSDownload.update).mockResolvedValue(mockUpdated);
 
       const result = await downloadService.updateDownloadStatus("dl_123", {
         status: "PROCESSING",
@@ -260,7 +262,10 @@ describe("TTS Download Service", () => {
     it("should return false for non-existent download", async () => {
       vi.mocked(db.tTSDownload.findFirst).mockResolvedValue(null);
 
-      const result = await downloadService.deleteDownload("nonexistent", "user_1");
+      const result = await downloadService.deleteDownload(
+        "nonexistent",
+        "user_1"
+      );
 
       expect(result).toBe(false);
       expect(db.tTSDownload.update).not.toHaveBeenCalled();

@@ -51,6 +51,7 @@ describe("TTS Download Endpoints", () => {
           updatedAt: new Date("2026-01-01"),
           completedAt: new Date("2026-01-01"),
           expiresAt: new Date("2026-02-01"),
+          deletedAt: null,
         },
       ];
 
@@ -62,7 +63,7 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.getUserDownloads).mockResolvedValue(
-        mockDownloads as any
+        mockDownloads
       );
       vi.mocked(downloadService.checkDownloadQuota).mockResolvedValue(
         mockQuota
@@ -119,10 +120,11 @@ describe("TTS Download Endpoints", () => {
         updatedAt: new Date(),
         completedAt: new Date(),
         expiresAt: new Date(),
+        deletedAt: null,
       };
 
       vi.mocked(downloadService.getDownloadRecord).mockResolvedValue(
-        mockDownload as any
+        mockDownload
       );
 
       const result = await downloadService.getDownloadRecord("dl_123");
@@ -163,16 +165,20 @@ describe("TTS Download Endpoints", () => {
         updatedAt: new Date(),
         completedAt: new Date(),
         expiresAt: new Date(),
+        deletedAt: null,
       };
 
       vi.mocked(downloadService.getDownloadRecord).mockResolvedValue(
-        mockDownload as any
+        mockDownload
       );
       vi.mocked(downloadService.deleteDownload).mockResolvedValue(true);
 
       await downloadService.deleteDownload("dl_123", "user_1");
 
-      expect(downloadService.deleteDownload).toHaveBeenCalledWith("dl_123", "user_1");
+      expect(downloadService.deleteDownload).toHaveBeenCalledWith(
+        "dl_123",
+        "user_1"
+      );
     });
   });
 
@@ -200,6 +206,7 @@ describe("TTS Download Endpoints", () => {
         updatedAt: new Date(),
         completedAt: null,
         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        deletedAt: null,
       };
 
       const mockQuota = {
@@ -210,10 +217,10 @@ describe("TTS Download Endpoints", () => {
       };
 
       vi.mocked(downloadService.checkDownloadQuota).mockResolvedValue(
-        mockQuota as any
+        mockQuota
       );
       vi.mocked(downloadService.createDownloadRecord).mockResolvedValue(
-        mockDownload as any
+        mockDownload
       );
 
       const quota = await downloadService.checkDownloadQuota("user_1", "PRO");
@@ -258,11 +265,11 @@ describe("TTS Download Endpoints", () => {
         allowed: true,
         remaining: Infinity,
         used: 100,
-        limit: "unlimited" as const,
+        limit: Infinity,
       };
 
       vi.mocked(downloadService.checkDownloadQuota).mockResolvedValue(
-        mockQuota as any
+        mockQuota
       );
 
       const quota = await downloadService.checkDownloadQuota(
@@ -271,7 +278,7 @@ describe("TTS Download Endpoints", () => {
       );
 
       expect(quota.allowed).toBe(true);
-      expect(quota.limit).toBe("unlimited");
+      expect(quota.limit).toBe(Infinity);
     });
   });
 
@@ -307,14 +314,14 @@ describe("TTS Download Endpoints", () => {
         allowed: true,
         remaining: Infinity,
         used: 999,
-        limit: "unlimited",
-      } as any);
+        limit: Infinity,
+      });
 
       const quota = await downloadService.checkDownloadQuota(
         "user_1",
         "SCHOLAR"
       );
-      expect(quota.limit).toBe("unlimited");
+      expect(quota.limit).toBe(Infinity);
     });
   });
 });

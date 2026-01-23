@@ -9,10 +9,27 @@
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type Stripe from "stripe";
-import { constructWebhookEvent, getTierFromPriceId } from "../../src/services/stripe.js";
+
+// Extended Stripe types with fields that exist in webhook events but may not be in type definitions
+type StripeSubscriptionWithPeriods = Stripe.Subscription & {
+  current_period_start?: number;
+  current_period_end?: number;
+};
+
+type StripeInvoiceWithSubscription = Stripe.Invoice & {
+  subscription?: string | Stripe.Subscription | null;
+};
+import {
+  constructWebhookEvent,
+  getTierFromPriceId,
+} from "../../src/services/stripe.js";
 import { db } from "../../src/services/db.js";
 import { logger } from "../../src/utils/logger.js";
-import { sendError, sendSuccess, ErrorCodes } from "../../src/utils/response.js";
+import {
+  sendError,
+  sendSuccess,
+  ErrorCodes,
+} from "../../src/utils/response.js";
 
 // ============================================================================
 // Webhook Handler
@@ -24,7 +41,12 @@ export default async function handler(
 ): Promise<void> {
   // Only allow POST
   if (req.method !== "POST") {
-    return sendError(res, ErrorCodes.METHOD_NOT_ALLOWED, "Method not allowed", 405);
+    return sendError(
+      res,
+      ErrorCodes.METHOD_NOT_ALLOWED,
+      "Method not allowed",
+      405
+    );
   }
 
   // Get raw body and signature
@@ -69,23 +91,33 @@ export default async function handler(
   try {
     switch (event.type) {
       case "checkout.session.completed":
-        await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
+        await handleCheckoutSessionCompleted(
+          event.data.object as Stripe.Checkout.Session
+        );
         break;
 
       case "customer.subscription.created":
-        await handleSubscriptionCreated(event.data.object as Stripe.Subscription);
+        await handleSubscriptionCreated(
+          event.data.object as Stripe.Subscription
+        );
         break;
 
       case "customer.subscription.updated":
-        await handleSubscriptionUpdated(event.data.object as Stripe.Subscription);
+        await handleSubscriptionUpdated(
+          event.data.object as Stripe.Subscription
+        );
         break;
 
       case "customer.subscription.deleted":
-        await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
+        await handleSubscriptionDeleted(
+          event.data.object as Stripe.Subscription
+        );
         break;
 
       case "invoice.payment_succeeded":
-        await handleInvoicePaymentSucceeded(event.data.object as Stripe.Invoice);
+        await handleInvoicePaymentSucceeded(
+          event.data.object as Stripe.Invoice
+        );
         break;
 
       case "invoice.payment_failed":
@@ -131,7 +163,9 @@ async function handleCheckoutSessionCompleted(
   const tier = session.metadata?.tier as "PRO" | "SCHOLAR" | undefined;
 
   if (!userId) {
-    logger.error("Missing userId in checkout session", { sessionId: session.id });
+    logger.error("Missing userId in checkout session", {
+      sessionId: session.id,
+    });
     return;
   }
 
@@ -162,7 +196,7 @@ async function handleCheckoutSessionCompleted(
  * New subscription created
  */
 async function handleSubscriptionCreated(
-  subscription: Stripe.Subscription
+  subscription: StripeSubscriptionWithPeriods
 ): Promise<void> {
   const userId = subscription.metadata?.userId;
   const customerId = subscription.customer as string;
@@ -214,8 +248,12 @@ async function handleSubscriptionCreated(
       metadata: {
         tier,
         status: subscription.status,
-        currentPeriodStart: new Date((subscription as any).current_period_start * 1000).toISOString(),
-        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000).toISOString(),
+        currentPeriodStart: subscription.current_period_start
+          ? new Date(subscription.current_period_start * 1000).toISOString()
+          : null,
+        currentPeriodEnd: subscription.current_period_end
+          ? new Date(subscription.current_period_end * 1000).toISOString()
+          : null,
       },
     },
   });
@@ -226,7 +264,7 @@ async function handleSubscriptionCreated(
  * Subscription plan changed or status updated
  */
 async function handleSubscriptionUpdated(
-  subscription: Stripe.Subscription
+  subscription: StripeSubscriptionWithPeriods
 ): Promise<void> {
   const customerId = subscription.customer as string;
 
@@ -297,8 +335,12 @@ async function handleSubscriptionUpdated(
         entityType: "Subscription",
         entityId: subscription.id,
         metadata: {
-          cancelAt: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
-          periodEnd: new Date((subscription as any).current_period_end * 1000).toISOString(),
+          cancelAt: subscription.cancel_at
+            ? new Date(subscription.cancel_at * 1000).toISOString()
+            : null,
+          periodEnd: subscription.current_period_end
+            ? new Date(subscription.current_period_end * 1000).toISOString()
+            : null,
         },
       },
     });
@@ -368,10 +410,15 @@ async function handleSubscriptionDeleted(
  * Successful payment for subscription
  */
 async function handleInvoicePaymentSucceeded(
-  invoice: Stripe.Invoice
+  invoice: StripeInvoiceWithSubscription
 ): Promise<void> {
   const customerId = invoice.customer as string;
-  const subscriptionId = (invoice as any).subscription as string;
+  // Stripe.Invoice.subscription can be string | Stripe.Subscription | null
+  const subscriptionRaw = invoice.subscription;
+  const subscriptionId =
+    typeof subscriptionRaw === "string"
+      ? subscriptionRaw
+      : (subscriptionRaw?.id ?? null);
 
   // Find user by customer ID
   const user = await db.user.findFirst({
@@ -477,7 +524,9 @@ async function handleInvoicePaymentFailed(
   });
 
   // TODO: Send email notification to user about failed payment
-  logger.info("Payment failed notification should be sent", { userId: user.id });
+  logger.info("Payment failed notification should be sent", {
+    userId: user.id,
+  });
 }
 
 /**
