@@ -37,6 +37,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import PeopleIcon from "@mui/icons-material/People";
 import KeyboardIcon from "@mui/icons-material/Keyboard";
 import HelpIcon from "@mui/icons-material/Help";
+import CodeIcon from "@mui/icons-material/Code";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -136,6 +137,11 @@ const NAV_ITEMS: NavItem[] = [
     label: "docs.nav.faq",
     path: "/docs/faq",
     icon: <HelpIcon />,
+  },
+  {
+    label: "docs.nav.apiDocs",
+    path: "/docs/api",
+    icon: <CodeIcon />,
   },
 ];
 

@@ -721,7 +721,7 @@
         "Developer portal live",
         "Tests pass"
       ],
-      "passes": false
+      "passes": true
     }
   ]
 }

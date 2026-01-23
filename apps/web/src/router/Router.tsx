@@ -62,6 +62,7 @@ import {
   FAQPage,
   TroubleshootingPage,
   GlossaryPage,
+  ApiDocsPage,
 } from "@/pages";
 
 /**
@@ -366,6 +367,10 @@ function createAppRouter() {
         {
           path: ROUTES.DOCS_GLOSSARY,
           element: <GlossaryPage />,
+        },
+        {
+          path: ROUTES.DOCS_API,
+          element: <ApiDocsPage />,
         },
 
         // 404 - catch all unmatched routes

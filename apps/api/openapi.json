@@ -1,0 +1,1491 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Read Master API",
+    "description": "AI-powered reading comprehension platform API. This API provides endpoints for managing books, flashcards, annotations, social features, and AI-powered reading assistance.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Read Master Support",
+      "url": "https://readmaster.com/support"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://readmaster.com/terms"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.readmaster.com",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Books",
+      "description": "Book management operations"
+    },
+    {
+      "name": "Flashcards",
+      "description": "Flashcard and SRS operations"
+    },
+    {
+      "name": "Annotations",
+      "description": "Book annotation operations"
+    },
+    {
+      "name": "AI",
+      "description": "AI-powered features"
+    },
+    {
+      "name": "Users",
+      "description": "User profile and social operations"
+    },
+    {
+      "name": "Forum",
+      "description": "Forum and discussion operations"
+    },
+    {
+      "name": "TTS",
+      "description": "Text-to-speech operations"
+    },
+    {
+      "name": "Stats",
+      "description": "Statistics and analytics"
+    }
+  ],
+  "paths": {
+    "/books/{id}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get book by ID",
+        "description": "Retrieves a single book by ID. Returns book details including chapters and reading progress for the authenticated user.",
+        "operationId": "getBook",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The book ID (CUID format)",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookDetailResponse"
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Books"],
+        "summary": "Update book",
+        "description": "Updates book metadata. Only the book owner can update.",
+        "operationId": "updateBook",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBookRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookUpdateResponse"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/ValidationError" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Books"],
+        "summary": "Delete book",
+        "description": "Soft deletes a book and its related annotations and flashcards. Only the book owner can delete.",
+        "operationId": "deleteBook",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/books/search": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Search books",
+        "description": "Search public library for books to add",
+        "operationId": "searchBooks",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Book source to search",
+            "schema": {
+              "type": "string",
+              "enum": ["GUTENBERG", "OPEN_LIBRARY", "INTERNET_ARCHIVE"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "default": 20, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BookSearchResult"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flashcards": {
+      "get": {
+        "tags": ["Flashcards"],
+        "summary": "List flashcards",
+        "description": "List user's flashcards with filters and pagination",
+        "operationId": "listFlashcards",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "Filter by book ID",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by flashcard status",
+            "schema": {
+              "type": "string",
+              "enum": ["NEW", "LEARNING", "REVIEW", "SUSPENDED"]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by flashcard type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "VOCABULARY",
+                "CONCEPT",
+                "COMPREHENSION",
+                "QUOTE",
+                "CUSTOM"
+              ]
+            }
+          },
+          {
+            "name": "dueOnly",
+            "in": "query",
+            "description": "Only return cards due for review",
+            "schema": { "type": "boolean" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "default": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "default": 20, "maximum": 100 }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "updatedAt",
+                "dueDate",
+                "easeFactor",
+                "interval",
+                "front"
+              ],
+              "default": "dueDate"
+            }
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"],
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flashcards list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedFlashcardsResponse"
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      },
+      "post": {
+        "tags": ["Flashcards"],
+        "summary": "Create flashcard",
+        "description": "Create a new flashcard manually",
+        "operationId": "createFlashcard",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFlashcardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Flashcard created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlashcardResponse"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/ValidationError" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/flashcards/{id}/review": {
+      "post": {
+        "tags": ["Flashcards"],
+        "summary": "Review flashcard",
+        "description": "Submit a flashcard review using SM-2 algorithm",
+        "operationId": "reviewFlashcard",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["rating"],
+                "properties": {
+                  "rating": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3,
+                    "description": "0=Again, 1=Hard, 2=Good, 3=Easy"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlashcardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flashcards/due": {
+      "get": {
+        "tags": ["Flashcards"],
+        "summary": "Get due flashcards",
+        "description": "Get flashcards due for review today",
+        "operationId": "getDueFlashcards",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "Filter by book ID",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "default": 20 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Due flashcards",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlashcardResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flashcards/stats": {
+      "get": {
+        "tags": ["Flashcards"],
+        "summary": "Get flashcard statistics",
+        "description": "Get user's flashcard review statistics",
+        "operationId": "getFlashcardStats",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Flashcard statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlashcardStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ai/pre-reading-guide": {
+      "post": {
+        "tags": ["AI"],
+        "summary": "Generate pre-reading guide",
+        "description": "Generate an AI-powered pre-reading guide for a book",
+        "operationId": "generatePreReadingGuide",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["bookId"],
+                "properties": {
+                  "bookId": { "type": "string" },
+                  "language": { "type": "string", "default": "en" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pre-reading guide generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreReadingGuideResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ai/explain": {
+      "post": {
+        "tags": ["AI"],
+        "summary": "Explain selected text",
+        "description": "Get AI explanation for selected text from a book",
+        "operationId": "explainText",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["bookId", "text"],
+                "properties": {
+                  "bookId": { "type": "string" },
+                  "text": { "type": "string", "maxLength": 5000 },
+                  "context": {
+                    "type": "string",
+                    "description": "Surrounding context"
+                  },
+                  "language": { "type": "string", "default": "en" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Explanation generated (streaming)",
+            "content": {
+              "text/event-stream": {
+                "schema": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ai/generate-flashcards": {
+      "post": {
+        "tags": ["AI"],
+        "summary": "Generate flashcards",
+        "description": "AI-generate flashcards from book content",
+        "operationId": "generateFlashcards",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["bookId"],
+                "properties": {
+                  "bookId": { "type": "string" },
+                  "chapterId": { "type": "string" },
+                  "count": { "type": "integer", "default": 10, "maximum": 50 },
+                  "types": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "VOCABULARY",
+                        "CONCEPT",
+                        "COMPREHENSION",
+                        "QUOTE"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Flashcards generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlashcardResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tts/speak": {
+      "post": {
+        "tags": ["TTS"],
+        "summary": "Convert text to speech",
+        "description": "Convert text to speech audio",
+        "operationId": "textToSpeech",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["text"],
+                "properties": {
+                  "text": { "type": "string", "maxLength": 5000 },
+                  "voice": { "type": "string" },
+                  "provider": {
+                    "type": "string",
+                    "enum": ["BROWSER", "GOOGLE", "AMAZON"]
+                  },
+                  "speed": { "type": "number", "minimum": 0.5, "maximum": 2.0 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audio stream",
+            "content": {
+              "audio/mpeg": {
+                "schema": { "type": "string", "format": "binary" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tts/voices": {
+      "get": {
+        "tags": ["TTS"],
+        "summary": "List available voices",
+        "description": "Get list of available TTS voices",
+        "operationId": "listVoices",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["BROWSER", "GOOGLE", "AMAZON"]
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available voices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoicesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{username}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user profile",
+        "description": "Get public profile for a user",
+        "operationId": "getUserProfile",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/users/{id}/follow": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Follow user",
+        "description": "Follow another user",
+        "operationId": "followUser",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User followed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "following": { "type": "boolean" },
+                        "followedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Unfollow user",
+        "description": "Unfollow a user",
+        "operationId": "unfollowUser",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User unfollowed"
+          }
+        }
+      }
+    },
+    "/leaderboard": {
+      "get": {
+        "tags": ["Stats"],
+        "summary": "Get leaderboard",
+        "description": "Get reading leaderboard",
+        "operationId": "getLeaderboard",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GLOBAL", "FRIENDS", "GROUP"],
+              "default": "GLOBAL"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["DAILY", "WEEKLY", "MONTHLY", "ALL_TIME"],
+              "default": "WEEKLY"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["BOOKS_READ", "PAGES_READ", "TIME_READING", "STREAK"],
+              "default": "BOOKS_READ"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "default": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Leaderboard data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaderboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "tags": ["Stats"],
+        "summary": "Get user statistics",
+        "description": "Get reading statistics for the authenticated user",
+        "operationId": "getUserStats",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "User statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserStatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forum/categories": {
+      "get": {
+        "tags": ["Forum"],
+        "summary": "List forum categories",
+        "description": "Get all forum categories",
+        "operationId": "listForumCategories",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Forum categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/ForumCategory" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forum/posts": {
+      "get": {
+        "tags": ["Forum"],
+        "summary": "List forum posts",
+        "description": "Get forum posts with filters",
+        "operationId": "listForumPosts",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "default": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "default": 20 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Forum posts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedForumPostsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Forum"],
+        "summary": "Create forum post",
+        "description": "Create a new forum post",
+        "operationId": "createForumPost",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateForumPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPostResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Health check",
+        "description": "Check API health status",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" },
+                    "timestamp": { "type": "string", "format": "date-time" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Clerk JWT token. Obtain from Clerk authentication flow."
+      }
+    },
+    "schemas": {
+      "BookDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "coverImage": { "type": "string", "nullable": true },
+          "source": { "type": "string" },
+          "sourceId": { "type": "string", "nullable": true },
+          "sourceUrl": { "type": "string", "nullable": true },
+          "filePath": { "type": "string", "nullable": true },
+          "fileType": { "type": "string", "nullable": true },
+          "language": { "type": "string" },
+          "wordCount": { "type": "integer", "nullable": true },
+          "estimatedReadTime": { "type": "integer", "nullable": true },
+          "lexileScore": { "type": "integer", "nullable": true },
+          "genre": { "type": "string", "nullable": true },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "status": {
+            "type": "string",
+            "enum": ["WANT_TO_READ", "READING", "COMPLETED", "ABANDONED"]
+          },
+          "isPublic": { "type": "boolean" },
+          "chapters": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Chapter" }
+          },
+          "progress": {
+            "$ref": "#/components/schemas/ReadingProgress",
+            "nullable": true
+          },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Chapter": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string", "nullable": true },
+          "orderIndex": { "type": "integer" },
+          "startPosition": { "type": "integer" },
+          "endPosition": { "type": "integer" },
+          "wordCount": { "type": "integer", "nullable": true }
+        }
+      },
+      "ReadingProgress": {
+        "type": "object",
+        "properties": {
+          "percentage": { "type": "number" },
+          "currentPosition": { "type": "integer" },
+          "totalReadTime": { "type": "integer" },
+          "averageWpm": { "type": "number", "nullable": true },
+          "lastReadAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "startedAt": { "type": "string", "format": "date-time" },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateBookRequest": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "author": { "type": "string", "maxLength": 255, "nullable": true },
+          "description": {
+            "type": "string",
+            "maxLength": 5000,
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": ["WANT_TO_READ", "READING", "COMPLETED", "ABANDONED"]
+          },
+          "genre": { "type": "string", "maxLength": 100, "nullable": true },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "maxItems": 20
+          },
+          "coverImage": { "type": "string", "nullable": true },
+          "isPublic": { "type": "boolean" },
+          "language": { "type": "string", "minLength": 2, "maxLength": 10 }
+        }
+      },
+      "BookUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "coverImage": { "type": "string", "nullable": true },
+          "genre": { "type": "string", "nullable": true },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "status": { "type": "string" },
+          "isPublic": { "type": "boolean" },
+          "language": { "type": "string" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "BookDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "message": { "type": "string" },
+          "deletedAt": { "type": "string", "format": "date-time" },
+          "relatedDeletions": {
+            "type": "object",
+            "properties": {
+              "annotations": { "type": "integer" },
+              "flashcards": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "BookSearchResult": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string", "nullable": true },
+          "source": { "type": "string" },
+          "coverUrl": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true }
+        }
+      },
+      "FlashcardResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "userId": { "type": "string" },
+          "bookId": { "type": "string", "nullable": true },
+          "front": { "type": "string" },
+          "back": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": [
+              "VOCABULARY",
+              "CONCEPT",
+              "COMPREHENSION",
+              "QUOTE",
+              "CUSTOM"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["NEW", "LEARNING", "REVIEW", "SUSPENDED"]
+          },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "sourceChapterId": { "type": "string", "nullable": true },
+          "sourceOffset": { "type": "integer", "nullable": true },
+          "easeFactor": { "type": "number" },
+          "interval": { "type": "integer" },
+          "repetitions": { "type": "integer" },
+          "dueDate": { "type": "string", "format": "date-time" },
+          "totalReviews": { "type": "integer" },
+          "correctReviews": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CreateFlashcardRequest": {
+        "type": "object",
+        "required": ["front", "back", "type"],
+        "properties": {
+          "front": { "type": "string", "minLength": 1, "maxLength": 5000 },
+          "back": { "type": "string", "minLength": 1, "maxLength": 10000 },
+          "type": {
+            "type": "string",
+            "enum": [
+              "VOCABULARY",
+              "CONCEPT",
+              "COMPREHENSION",
+              "QUOTE",
+              "CUSTOM"
+            ]
+          },
+          "bookId": { "type": "string" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "maxItems": 10
+          },
+          "sourceChapterId": { "type": "string" },
+          "sourceOffset": { "type": "integer" }
+        }
+      },
+      "PaginatedFlashcardsResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FlashcardResponse" }
+          },
+          "pagination": { "$ref": "#/components/schemas/Pagination" }
+        }
+      },
+      "FlashcardStatsResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "total": { "type": "integer" },
+              "new": { "type": "integer" },
+              "learning": { "type": "integer" },
+              "review": { "type": "integer" },
+              "suspended": { "type": "integer" },
+              "dueToday": { "type": "integer" },
+              "reviewedToday": { "type": "integer" },
+              "streak": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "PreReadingGuideResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "bookId": { "type": "string" },
+              "summary": { "type": "string" },
+              "themes": { "type": "array", "items": { "type": "string" } },
+              "vocabulary": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "term": { "type": "string" },
+                    "definition": { "type": "string" }
+                  }
+                }
+              },
+              "discussionQuestions": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "generatedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      },
+      "VoicesResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "language": { "type": "string" },
+                "gender": {
+                  "type": "string",
+                  "enum": ["male", "female", "neutral"]
+                },
+                "provider": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "UserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "username": { "type": "string" },
+              "displayName": { "type": "string", "nullable": true },
+              "bio": { "type": "string", "nullable": true },
+              "avatarUrl": { "type": "string", "nullable": true },
+              "isPublic": { "type": "boolean" },
+              "followerCount": { "type": "integer" },
+              "followingCount": { "type": "integer" },
+              "booksRead": { "type": "integer" },
+              "readingStreak": { "type": "integer" },
+              "isFollowing": { "type": "boolean" },
+              "createdAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      },
+      "LeaderboardResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "entries": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rank": { "type": "integer" },
+                    "userId": { "type": "string" },
+                    "username": { "type": "string" },
+                    "displayName": { "type": "string", "nullable": true },
+                    "avatarUrl": { "type": "string", "nullable": true },
+                    "score": { "type": "number" },
+                    "change": {
+                      "type": "integer",
+                      "description": "Rank change from last period"
+                    }
+                  }
+                }
+              },
+              "currentUserRank": { "type": "integer", "nullable": true }
+            }
+          }
+        }
+      },
+      "UserStatsResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "totalBooks": { "type": "integer" },
+              "booksCompleted": { "type": "integer" },
+              "booksInProgress": { "type": "integer" },
+              "totalPagesRead": { "type": "integer" },
+              "totalReadingTime": {
+                "type": "integer",
+                "description": "Total reading time in seconds"
+              },
+              "averageWpm": { "type": "number", "nullable": true },
+              "readingStreak": { "type": "integer" },
+              "longestStreak": { "type": "integer" },
+              "flashcardsCreated": { "type": "integer" },
+              "flashcardsReviewed": { "type": "integer" },
+              "achievementsEarned": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "ForumCategory": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
+          "slug": { "type": "string" },
+          "postCount": { "type": "integer" },
+          "icon": { "type": "string", "nullable": true }
+        }
+      },
+      "ForumPostResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "categoryId": { "type": "string" },
+          "authorId": { "type": "string" },
+          "author": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string" },
+              "displayName": { "type": "string", "nullable": true },
+              "avatarUrl": { "type": "string", "nullable": true }
+            }
+          },
+          "upvotes": { "type": "integer" },
+          "downvotes": { "type": "integer" },
+          "replyCount": { "type": "integer" },
+          "isPinned": { "type": "boolean" },
+          "isLocked": { "type": "boolean" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CreateForumPostRequest": {
+        "type": "object",
+        "required": ["title", "content", "categoryId"],
+        "properties": {
+          "title": { "type": "string", "minLength": 5, "maxLength": 200 },
+          "content": { "type": "string", "minLength": 10, "maxLength": 50000 },
+          "categoryId": { "type": "string" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "maxItems": 5
+          }
+        }
+      },
+      "PaginatedForumPostsResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ForumPostResponse" }
+          },
+          "pagination": { "$ref": "#/components/schemas/Pagination" }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" },
+          "totalPages": { "type": "integer" },
+          "hasNext": { "type": "boolean" },
+          "hasPrev": { "type": "boolean" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": { "type": "string" },
+              "message": { "type": "string" },
+              "details": { "type": "object" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Authentication required",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": {
+              "success": false,
+              "error": {
+                "code": "UNAUTHORIZED",
+                "message": "Authentication required"
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Access denied",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": {
+              "success": false,
+              "error": {
+                "code": "FORBIDDEN",
+                "message": "You do not have permission to access this resource"
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": {
+              "success": false,
+              "error": {
+                "code": "NOT_FOUND",
+                "message": "Resource not found"
+              }
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "Validation error",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": {
+              "success": false,
+              "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Invalid request data",
+                "details": {
+                  "fieldErrors": {
+                    "title": ["Title is required"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Too many requests",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": {
+              "success": false,
+              "error": {
+                "code": "RATE_LIMITED",
+                "message": "Too many requests. Please try again later."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

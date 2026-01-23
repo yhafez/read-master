@@ -87,6 +87,7 @@ export const ROUTES = {
   DOCS_FAQ: "/docs/faq",
   DOCS_TROUBLESHOOTING: "/docs/troubleshooting",
   DOCS_GLOSSARY: "/docs/glossary",
+  DOCS_API: "/docs/api",
 
   // 404
   NOT_FOUND: "*",
@@ -178,6 +179,7 @@ export const PUBLIC_ROUTES: readonly RoutePath[] = [
   ROUTES.DOCS_FAQ,
   ROUTES.DOCS_TROUBLESHOOTING,
   ROUTES.DOCS_GLOSSARY,
+  ROUTES.DOCS_API,
 ] as const;
 
 /**

@@ -102,4 +102,5 @@ export {
   FAQPage,
   TroubleshootingPage,
   GlossaryPage,
+  ApiDocsPage,
 } from "./docs";
