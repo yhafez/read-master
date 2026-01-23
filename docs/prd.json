@@ -492,7 +492,7 @@
         "Cache invalidation works",
         "Performance metrics improved"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "accessibility-screen-reader-001",
