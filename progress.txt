@@ -3325,3 +3325,43 @@ NOTES:
 - Web tests (4983) all pass with no issues
 - Codebase is stable and ready for next sprint planning
 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RALPH ITERATION [DATE: 2026-01-23 - Iteration 15]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK: testing-api-fixes-001 - Fix pre-existing API test failures
+
+WORK COMPLETED:
+
+1. **api/annotations/index.test.ts**
+   - Updated property count assertion from 12 to 14
+   - The formatAnnotationResponse function returns 14 properties including likeCount and isLikedByCurrentUser
+
+2. **api/books/index.test.ts**
+   - Added rawContent to expected OR conditions in search filter test
+   - The buildWhereClause function now searches rawContent in addition to title, author, and description
+
+3. **api/email/webhook.test.ts**
+   - Updated error response format to match new sendError signature
+   - Changed from `{code: 405, message: "METHOD_NOT_ALLOWED"}` to `{code: "VALIDATION_ERROR", message: "Method not allowed"}`
+
+4. **src/services/emailTriggers.test.ts**
+   - Added readingProgress array to mock book data with percentage: 45
+   - The sendInactiveUserEmail function accesses book.readingProgress[0]?.percentage which was missing from mock
+
+5. **src/services/stripe.ts**
+   - Added test environment handling for Stripe API key
+   - Uses dummy key 'sk_test_dummy_key_for_testing' when in test environment to prevent SDK initialization failure
+   - Fixes api/payments/invoices.test.ts which was failing due to Stripe SDK requiring API key at import time
+
+FEEDBACK LOOPS:
+✅ pnpm typecheck - PASSED
+✅ pnpm lint - PASSED (0 errors, 64 pre-existing warnings)
+✅ pnpm test (api) - PASSED (97 test files, 5694 tests, 5 skipped)
+✅ pnpm test (web) - PASSED (125 test files, 4983 tests, 50 skipped)
+
+DISCOVERIES: None
+
+COMMIT: fix(api): resolve 4 pre-existing API test failures (testing-api-fixes-001)
+

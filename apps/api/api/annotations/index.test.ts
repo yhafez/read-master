@@ -585,7 +585,7 @@ describe("Response structure", () => {
       };
       const result = formatAnnotationResponse(annotation);
 
-      expect(Object.keys(result)).toHaveLength(12);
+      expect(Object.keys(result)).toHaveLength(14);
     });
 
     it("should have all expected properties", () => {

@@ -580,6 +580,7 @@ describe("buildWhereClause", () => {
       { title: { contains: "dragons", mode: "insensitive" } },
       { author: { contains: "dragons", mode: "insensitive" } },
       { description: { contains: "dragons", mode: "insensitive" } },
+      { rawContent: { contains: "dragons", mode: "insensitive" } },
     ]);
   });
 

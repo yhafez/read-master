@@ -15,14 +15,22 @@ const STRIPE_API_KEY = process.env.STRIPE_SECRET_KEY || "";
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 if (!STRIPE_API_KEY && process.env.NODE_ENV !== "test") {
-  logger.warn("STRIPE_SECRET_KEY not set - Stripe functionality will be disabled");
+  logger.warn(
+    "STRIPE_SECRET_KEY not set - Stripe functionality will be disabled"
+  );
 }
 
 // ============================================================================
 // Stripe Client
 // ============================================================================
 
-export const stripe = new Stripe(STRIPE_API_KEY, {
+// Use a dummy key for test environment to prevent Stripe SDK from throwing
+// during module initialization. Actual Stripe calls are mocked in tests.
+const stripeApiKey =
+  STRIPE_API_KEY ||
+  (process.env.NODE_ENV === "test" ? "sk_test_dummy_key_for_testing" : "");
+
+export const stripe = new Stripe(stripeApiKey, {
   apiVersion: "2025-12-15.clover",
   typescript: true,
   appInfo: {

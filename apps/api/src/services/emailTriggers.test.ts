@@ -442,7 +442,9 @@ describe("Email Triggers", () => {
 
       vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.findUnique).mockResolvedValue(mockBook as any);
-      vi.mocked(db.readingProgress.findFirst).mockResolvedValue(mockProgress as any);
+      vi.mocked(db.readingProgress.findFirst).mockResolvedValue(
+        mockProgress as any
+      );
       vi.mocked(db.annotation.count).mockResolvedValue(15);
       vi.mocked(emailService.sendTemplateEmail).mockResolvedValue({
         success: true,
@@ -657,10 +659,24 @@ describe("Email Triggers", () => {
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null,
+            readingProgress: [
+              {
+                id: "progress-123",
+                bookId: "book-123",
+                userId: "user-123",
+                percentage: 45,
+                currentPage: 100,
+                totalPages: 222,
+                lastReadAt: new Date(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              },
+            ],
           },
         ],
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test mock requires any for partial mock data
       vi.mocked(db.user.findUnique).mockResolvedValue(mockUser as any);
       vi.mocked(db.book.count).mockResolvedValue(2);
       vi.mocked(emailService.getEmailPreferences).mockResolvedValue({

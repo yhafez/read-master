@@ -740,7 +740,7 @@
       "phase": "critical",
       "priority": "critical",
       "description": "Fix pre-existing API test failures",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Fix api/annotations/index.test.ts - Update property count assertion (12 to 14)",
         "Fix api/books/index.test.ts - Add rawContent to expected search filter",
@@ -754,7 +754,7 @@
         "No test skips or disabled tests",
         "CI/CD pipeline passes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "quality-eslint-warnings-001",
@@ -762,7 +762,7 @@
       "phase": "medium-priority",
       "priority": "medium",
       "description": "Address ESLint warnings across codebase",
-      "defer_to_next_sprint": true,
+      "defer_to_next_sprint": false,
       "steps": [
         "Fix @typescript-eslint/no-non-null-assertion warnings (replace with proper null checks)",
         "Fix @typescript-eslint/no-explicit-any in test files (use proper types or unknown)",

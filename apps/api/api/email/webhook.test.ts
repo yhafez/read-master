@@ -55,8 +55,8 @@ describe("SendGrid Webhook Handler", () => {
     expect(mockJson).toHaveBeenCalledWith({
       success: false,
       error: {
-        code: 405,
-        message: "METHOD_NOT_ALLOWED",
+        code: "VALIDATION_ERROR",
+        message: "Method not allowed",
       },
     });
   });
@@ -94,7 +94,10 @@ describe("SendGrid Webhook Handler", () => {
     };
 
     vi.mocked(db.email.findUnique).mockResolvedValue(mockEmail as any);
-    vi.mocked(db.email.update).mockResolvedValue({ ...mockEmail, deliveredAt: new Date() } as any);
+    vi.mocked(db.email.update).mockResolvedValue({
+      ...mockEmail,
+      deliveredAt: new Date(),
+    } as any);
 
     const events = [
       {
@@ -535,7 +538,11 @@ describe("SendGrid Webhook Handler", () => {
 
     vi.mocked(db.email.update)
       .mockResolvedValueOnce({ ...mockEmail1, deliveredAt: new Date() } as any)
-      .mockResolvedValueOnce({ ...mockEmail2, openedAt: new Date(), openCount: 1 } as any);
+      .mockResolvedValueOnce({
+        ...mockEmail2,
+        openedAt: new Date(),
+        openCount: 1,
+      } as any);
 
     const events = [
       {
